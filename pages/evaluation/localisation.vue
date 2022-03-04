@@ -24,7 +24,7 @@
       </div>
     </form>
 
-    <div class="field" v-if="assessmentStore.assessments?.length">
+    <div class="field mb-6" v-if="assessmentStore.assessments?.length">
       <label class="label">Êtes-vous intéressé·e par la démocratie dans votre commune ou votre intercommunalité?</label>
       <div class="buttons">
         <a class="button is-normal" v-if="assessmentStore.municipalityAssessment">Commune</a>
