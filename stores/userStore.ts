@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { User } from "~/composables/types"
-import { useApiGet, useApiPost } from "~~/composables/api"
+import { useApiGet, useApiPost } from "~/composables/api"
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -14,7 +14,7 @@ export const useUserStore = defineStore('user', {
             if (!error.value) {
                 this.updateState(data.value)
                 const router = useRouter()
-                router.push("/profile")
+                router.push("/")
             }
         },
         async logout() {
@@ -35,5 +35,10 @@ export const useUserStore = defineStore('user', {
             this.username = data.username
             this.email = data.email
         }
+    },
+    getters: {
+        isLoggedIn() {
+            return !!this.email
+        },
     },
 })

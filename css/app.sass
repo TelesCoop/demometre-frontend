@@ -10,13 +10,6 @@ $primary: $cyan
 $info: $blue
 $link: $purple
 
-// add borders for each color
-@import "../node_modules/bulma/sass/utilities/derived-variables"
-@each $name, $pair in $colors
-  $color: nth($pair, 1)
-  .has-border-#{$name}
-    border: 1px solid $color !important
-
 // FONTS
 $family-sans-serif: Inter, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default
 $family-serif: "IBM Plex Serif", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default
@@ -51,6 +44,21 @@ $family-secondary: $family-serif
   src: url('../fonts/inter-inter.e8') /* IE9 Compat Modes */
   src: local(''), url('../fonts/inter-inter.e8?#iefix') format('embedded-opentype'), url('../fonts/inter-inter.w8f2') format('woff2'), url('../fonts/inter-inter.w8f') format('woff'), url('../fonts/inter-inter.t8') format('truetype'), url('../fonts/inter-inter.s8#IBMPlexSerif') format('svg')
 
+// CUSTOM
+// add borders for each color
+@import "../node_modules/bulma/sass/utilities/derived-variables"
+@each $name, $pair in $colors
+  $color: nth($pair, 1)
+  .has-border-#{$name}
+    border: 1px solid $color !important
+
+.is-flex
+  display: flex
+
+.flex-center
+  justify-content: center
+  align-items: center
+
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/utilities/_all.sass"
 @import "../node_modules/bulma/sass/base/_all.sass"
@@ -62,5 +70,17 @@ $family-secondary: $family-serif
 @import "../node_modules/bulma/sass/elements/title.sass"
 @import "../node_modules/bulma/sass/form/_all.sass"
 @import "../node_modules/bulma/sass/components/navbar.sass"
-@import "../node_modules/bulma/sass/layout/hero.sass"
 @import "../node_modules/bulma/sass/layout/section.sass"
+
+// we use directly svg as icons, so we need to add spacing
+.control
+  // Modifiers
+  &.has-icons-left,
+  &.has-icons-right
+    .icon
+      top: 8px
+  &.has-icons-left
+    .icon.is-left
+      left: 8px
+  &.has-icons-right
+    right: 8px
