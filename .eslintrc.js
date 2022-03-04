@@ -18,6 +18,7 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   rules: {
     "vue/script-setup-no-uses-vars": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     semi: [2, "never"],
   },
 }

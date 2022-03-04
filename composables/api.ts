@@ -1,6 +1,5 @@
 import { NuxtApp } from "nuxt3/dist/app/nuxt"
 import { useLoadingStore } from "~/stores/loadingStore"
-import { User } from "./types"
 
 let base_url = ""
 type MyHeaders = { [key: string]: string }
