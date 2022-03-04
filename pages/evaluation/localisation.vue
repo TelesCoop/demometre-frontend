@@ -25,17 +25,17 @@
     </form>
 
     <div class="field mb-6" v-if="assessmentStore.assessments?.length">
-      <label class="label">Êtes-vous intéressé·e par la démocratie dans votre commune ou votre intercommunalité?</label>
+      <label class="label">Êtes-vous intéressé·e par la démocratie dans votre commune ou votre intercommunalité&nbsp;?</label>
       <div class="buttons">
         <a class="button is-normal" v-if="assessmentStore.municipalityAssessment">Commune</a>
         <a class="button is-normal" v-if="assessmentStore.intercommunalityAssessment">Intercommunalité</a>
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup lang="ts">
+// import CountrySelect from "~/components/country-select"
 import {ref} from "@vue/reactivity";
 import {useAssessmentStore} from "~/stores/assessmentStore";
 
