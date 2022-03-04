@@ -11,10 +11,16 @@
             />
         </div>
         <h2 class="title is-2">{{ title }}</h2>
+        <Answers :answers="answers" v-model="selectedAnswer" />
+        <div class="mb-6"></div>
+        <p>Selected answer id : {{ selectedAnswer }}</p>
+        <div class="mb-6"></div>
     </div>
 </template>
 
-<script setup lang="ts">import { wordTitleCase } from '~~/utils';
+<script setup lang="ts">
+import { Answer as AnswerType } from '~/composables/types';
+import { wordTitleCase } from '~/utils';
 
 const activePillar = ref("représentation")
 const names = [
@@ -24,4 +30,13 @@ const names = [
     'coopération',
 ]
 const title = computed(() => wordTitleCase(activePillar.value))
+const isAnswerSelected = ref(false)
+const selectedAnswer = ref(0)
+const answers: AnswerType[] = [
+    { title: "Réponse A", description: "Une description super longue pour comprendre plus mieux", id: 0 },
+    { title: "Réponse B", description: "Une description super longue pour comprendre plus mieux", id: 1 },
+    { title: "Réponse C", description: "Une description super longue pour comprendre plus mieux", id: 2 },
+    { title: "Réponse D", description: "Une description super longue pour comprendre plus mieux", id: 3 },
+    { title: "Réponse E", description: "Une description super longue pour comprendre plus mieux", id: 4 },
+]
 </script>

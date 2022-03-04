@@ -27,8 +27,8 @@ $family-secondary: $family-serif
   font-family: 'IBM Plex Serif'
   font-style: normal
   font-weight: 700
-  src: url('../fonts/ibm-plex-serif-v14-latin-700.eot') /* IE9 Compat Modes */
-  src: local(''), url('../fonts/ibm-plex-serif-v14-latin-700.eot?#iefix') format('embedded-opentype'), url('../fonts/ibm-plex-serif-v14-latin-700.woff2') format('woff2'), url('../fonts/ibm-plex-serif-v14-latin-700.woff') format('woff'), url('../fonts/ibm-plex-serif-v14-latin-700.ttf') format('truetype'), url('../fonts/ibm-plex-serif-v14-latin-700.svg#IBMPlexSerif') format('svg')
+  src: url('~/assets/fonts/ibm-plex-serif-v14-latin-700.eot') /* IE9 Compat Modes */
+  src: local(''), url('~/assets/fonts/ibm-plex-serif-v14-latin-700.eot?#iefix') format('embedded-opentype'), url('~/assets/fonts/ibm-plex-serif-v14-latin-700.woff2') format('woff2'), url('~/assets/fonts/ibm-plex-serif-v14-latin-700.woff') format('woff'), url('~/assets/fonts/ibm-plex-serif-v14-latin-700.ttf') format('truetype'), url('~/assets/fonts/ibm-plex-serif-v14-latin-700.svg#IBMPlexSerif') format('svg')
 
 @font-face
   font-family: 'Inter'
@@ -41,8 +41,8 @@ $family-secondary: $family-serif
   font-family: 'Inter'
   font-style: normal
   font-weight: 700
-  src: url('../fonts/inter-inter.e8') /* IE9 Compat Modes */
-  src: local(''), url('../fonts/inter-inter.e8?#iefix') format('embedded-opentype'), url('../fonts/inter-inter.w8f2') format('woff2'), url('../fonts/inter-inter.w8f') format('woff'), url('../fonts/inter-inter.t8') format('truetype'), url('../fonts/inter-inter.s8#IBMPlexSerif') format('svg')
+  src: url('~/assets/fonts/inter/inter-v8-latin-700.eot') /* IE9 Compat Modes */
+  src: local(''), url('~/assets/fonts/inter/inter-v8-latin-700.eot?#iefix') format('embedded-opentype'), url('~/assets/fonts/inter/inter-v8-latin-700.woff2') format('woff2'), url('~/assets/fonts/inter/inter-v8-latin-700.woff') format('woff'), url('~/assets/fonts/inter/inter-v8-latin-700.ttf') format('truetype'), url('~/assets/fonts/inter/inter-v8-latin-700.svg#Inter') format('svg')
 
 // CUSTOM
 // add borders for each color
@@ -58,6 +58,12 @@ $family-secondary: $family-serif
 .flex-center
   justify-content: center
   align-items: center
+
+.is-size-6bis
+  font-size: 0.875em !important
+
+.has-border-transparent
+  border: 1px solid transparent
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/utilities/_all.sass"

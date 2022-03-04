@@ -36,7 +36,6 @@ const circleClass = computed(() => {
             ? `has-background-${colorClass.value} has-text-white`
             : `has-background-${colorClass.value}-light has-text-${colorClass.value}`
     )
-    console.log("### circleCLass", props.active, toReturn, other)
     return `${toReturn} ${other}`
 })
 </script>
