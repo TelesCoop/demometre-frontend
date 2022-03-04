@@ -73,7 +73,6 @@ export async function useApiGet<Type>(path: string) {
         key,
         (ctx) => $fetch(BASE_URL + "/api/" + path, { method: 'GET', credentials: 'include', headers: getHeaders(ctx) })
     )
-    console.log("### apiGet results", key, data.value, error.value);
     if (error.value) {
         loadingStore.markError(key)
     } else {
@@ -91,7 +90,6 @@ export async function useApiPost<Type>(path: string, payload: any = {}) {
         key,
         (ctx) => $fetch(BASE_URL + "/api/" + path, { method: 'POST', body: payload, credentials: 'include', headers: getHeaders(ctx, true) })
     )
-    console.log("### apiPost results", key, data.value, error.value);
     if (error.value) {
         loadingStore.markError(key)
     } else {

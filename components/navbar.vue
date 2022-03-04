@@ -11,6 +11,8 @@
                 aria-label="menu"
                 aria-expanded="false"
                 data-target="navbarBasicExample"
+                :class="isBurgerOpen ? 'is-active' : ''"
+                @click="isBurgerOpen = !isBurgerOpen"
             >
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -18,9 +20,14 @@
             </a>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
+        <div id="navbarBasicExample" class="navbar-menu" :class="isBurgerOpen ? 'is-active' : ''">
             <div class="navbar-start">
-                <NuxtLink class="navbar-item" v-for="item of navItems" :to="item.to">{{ item.name }}</NuxtLink>
+                <NuxtLink
+                    v-for="item of navItems"
+                    :to="item.to"
+                    :class="isRouteActive(item.to) ? 'is-active' : ''"
+                    class="navbar-item"
+                >{{ item.name }}</NuxtLink>
             </div>
 
             <div class="navbar-end">
@@ -52,7 +59,12 @@ import { useUserStore } from '~/stores/userStore'
 
 const userStore = useUserStore()
 // TODO : use router to highlight active route
-const router = useRouter()
+const route = useRoute()
+const isBurgerOpen = ref(false)
+
+const isRouteActive = computed(() => (path) => {
+    return route.path === path
+})
 
 const navItems = [
     {
