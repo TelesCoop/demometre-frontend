@@ -7,7 +7,6 @@
     {{ question.code }}
     {{ question.name }}
   </div>
-  <o-button>Click Me</o-button>
 </template>
 
 <script setup lang="ts">
