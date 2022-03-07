@@ -10,7 +10,7 @@ export const useQuestionnaireStore = defineStore('questionnaire', {
     }),
     actions: {
         async loadQuestions() {
-            const { data, error } = await useApiGet<QuestionResponse>("questionnaire-questions")
+            const { data, error } = await useApiGet<QuestionResponse>("cms/questionnaire-questions")
             if (!error.value) {
                 for (const question of data.value.items) {
                     this.questionById[question.id] = question

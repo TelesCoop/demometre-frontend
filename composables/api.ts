@@ -63,6 +63,7 @@ const getHeaders = (ctx: NuxtApp, includeCsrf = false): MyHeaders => {
 
 
 export const BASE_URL = base_url;
+export const BASE_API_URL = BASE_URL + "/api/";
 
 export async function useApiGet<Type>(path: string) {
     const loadingStore = useLoadingStore()
@@ -71,7 +72,7 @@ export async function useApiGet<Type>(path: string) {
     loadingStore.markLoading(key)
     const { data, error } = await useAsyncData<Type>(
         key,
-        (ctx) => $fetch(BASE_URL + "/api/" + path, { method: 'GET', credentials: 'include', headers: getHeaders(ctx) })
+        (ctx) => $fetch(BASE_API_URL + path, { method: 'GET', credentials: 'include', headers: getHeaders(ctx) })
     )
     if (error.value) {
         loadingStore.markError(key)
@@ -88,7 +89,7 @@ export async function useApiPost<Type>(path: string, payload: any = {}) {
     loadingStore.markLoading(key)
     const { data, error } = await useAsyncData<Type>(
         key,
-        (ctx) => $fetch(BASE_URL + "/api/" + path, { method: 'POST', body: payload, credentials: 'include', headers: getHeaders(ctx, true) })
+        (ctx) => $fetch(BASE_API_URL + path, { method: 'POST', body: payload, credentials: 'include', headers: getHeaders(ctx, true) })
     )
     if (error.value) {
         loadingStore.markError(key)
