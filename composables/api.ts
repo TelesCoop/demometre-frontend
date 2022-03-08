@@ -1,7 +1,7 @@
 import { NuxtApp } from "nuxt3/dist/app/nuxt"
 import { useLoadingStore } from "~/stores/loadingStore"
 
-let base_url = ""
+let base_url = "/"
 type MyHeaders = { [key: string]: string }
 
 // local
@@ -61,7 +61,7 @@ const getHeaders = (ctx: NuxtApp, includeCsrf = false): MyHeaders => {
 }
 
 export const BASE_URL = base_url
-export const BASE_API_URL = BASE_URL + "/api/"
+export const BASE_API_URL = BASE_URL + "api/"
 
 export async function useApiGet<Type>(path: string) {
   const loadingStore = useLoadingStore()
