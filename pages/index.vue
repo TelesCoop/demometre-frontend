@@ -1,8 +1,10 @@
 <template>
-  <h1>COUCOU</h1>
-  <div v-for="question of Object.values(questionnaireStore.questionById)" :key="question.id">
-    {{ question.code }}
-    {{ question.name }}
+  <div class="container">
+    <h1>COUCOU</h1>
+    <div v-for="question of Object.values(questionnaireStore.questionById)" :key="question.id">
+      {{ question.code }}
+      {{ question.name }}
+    </div>
   </div>
 </template>
 
