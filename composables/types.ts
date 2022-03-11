@@ -22,12 +22,14 @@ export type Pillar = {
   code: string
   name: string
   description: string
+  markers: number[]
 }
 export type Marker = {
   id: number
   pillar_id: number
   concatenated_code: string
   name: string
+  criterias: number[]
   description: string
   score_1: string
   score_2: string
@@ -39,7 +41,8 @@ export type Criteria = {
   marker_id: number
   concatenated_code: string
   name: string
-  thematic_tags: [number]
+  questions: number[]
+  thematic_tags: number[]
   description: string
   score_1: string
   score_2: string
@@ -60,7 +63,7 @@ export type Question = {
   method: Method
   description: string
   type: QuestionType
-  response_choices: [ResponseChoice]
+  response_choices: ResponseChoice[]
   min: number
   max: number
   min_label: string

@@ -21,6 +21,13 @@
 <script setup lang="ts">
 import { Answer as AnswerType } from "~/composables/types"
 import { wordTitleCase } from "~/utils"
+import { useQuestionnaireStore } from "~/stores/questionnaireStore"
+
+const questionnaireStore = useQuestionnaireStore()
+
+if (!Object.keys(questionnaireStore.questionById).length) {
+  questionnaireStore.loadQuestionnaire()
+}
 
 const activePillar = ref("représentation")
 const names = ["représentation", "transparence", "participation", "coopération"]

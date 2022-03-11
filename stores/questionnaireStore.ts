@@ -1,8 +1,6 @@
-import { defineStore } from "pinia"
+import { defineStore, mapActions } from "pinia"
 import { Criteria, Marker, Pillar, Question } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
-
-type QuestionResponse = { items: Question[] }
 
 export const useQuestionnaireStore = defineStore("questionnaire", {
   state: () => ({
@@ -12,15 +10,52 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     questionById: <{ [key: number]: Question }>{},
   }),
   actions: {
-    async loadQuestions() {
-      const { data, error } = await useApiGet<QuestionResponse>(
-        "cms/questionnaire-questions/"
+    async loadPillars() {
+      const { data, error } = await useApiGet<Pillar[]>(
+        "pillars/"
       )
       if (!error.value) {
-        for (const question of data.value.items) {
+        for (const pillar of data.value) {
+          console.log(pillar)
+          this.pillarById[pillar.id] = pillar
+        }
+      }
+    },
+    async loadMarkers() {
+      const { data, error } = await useApiGet<Marker[]>(
+        "markers/"
+      )
+      if (!error.value) {
+        for (const marker of data.value) {
+          this.markerById[marker.id] = marker
+        }
+      }
+    },
+    async loadCriterias() {
+      const { data, error } = await useApiGet<Criteria[]>(
+        "criterias/"
+      )
+      if (!error.value) {
+        for (const criteria of data.value) {
+          this.criteriaById[criteria.id] = criteria
+        }
+      }
+    },
+    async loadQuestions() {
+      const { data, error } = await useApiGet<Question[]>(
+        "questionnaire-questions/"
+      )
+      if (!error.value) {
+        for (const question of data.value) {
           this.questionById[question.id] = question
         }
       }
     },
+    async loadQuestionnaire() {
+      await this.loadPillars()
+      await this.loadMarkers()
+      await this.loadCriterias()
+      await this.loadQuestions()
+    }
   },
 })
