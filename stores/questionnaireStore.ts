@@ -1,11 +1,14 @@
 import { defineStore } from "pinia"
-import { Question } from "~/composables/types"
+import { Criteria, Marker, Pillar, Question } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 
 type QuestionResponse = { items: Question[] }
 
 export const useQuestionnaireStore = defineStore("questionnaire", {
   state: () => ({
+    pillarById: <{ [key: number]: Pillar }>{},
+    markerById: <{ [key: number]: Marker }>{},
+    criteriaById: <{ [key: number]: Criteria }>{},
     questionById: <{ [key: number]: Question }>{},
   }),
   actions: {
