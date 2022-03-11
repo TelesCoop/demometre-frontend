@@ -1,7 +1,7 @@
 <template>
   <section class="intro columns section">
     <div class="column">
-      <div class="intro__text">
+      <div class="intro__text mb-6">
         <h1 class="title is-1-desktop is-2">{{ homepage.title }}</h1>
         <div class="is-family-secondary is-size-5 is-size-4-desktop">
           {{ homepage.introduction }}
@@ -47,16 +47,14 @@ async function getHomepage() {
 
 <style scoped lang="sass">
 .intro
-  @include desktop
-    padding-top: 120px
-
   .intro__text
-    padding: 0 60px 60px 0
+    @include desktop
+      margin-right: 60px
 
   .intro__visual
     // TODO change when we have the ressource
     background-clip: content-box
-    background-color: #2e738e
+    background-color: $blue
     height: 154px
     @include desktop
       height: revert
