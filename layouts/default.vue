@@ -1,6 +1,7 @@
 <template>
   <div>
     <Navbar />
+    <!-- TODO insert breadcrumbs -->
     <slot></slot>
     <Footer />
   </div>

@@ -79,3 +79,4 @@ export type Answer = {
   id?: number
 }
 export type Assessment = { id: number; zipCode: string[]; type: string }
+export type Homepage = { title: string; introduction: string }
