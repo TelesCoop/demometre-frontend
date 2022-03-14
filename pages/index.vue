@@ -1,6 +1,6 @@
 <template>
   <div class="homepage container">
-    <home-intro />
+    <homepage-home-intro />
 
     <div
       v-for="question of Object.values(questionnaireStore.questionById)"
@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
-import HomeIntro from "~/components/homepage/home-intro.vue"
 
 const questionnaireStore = useQuestionnaireStore()
 
