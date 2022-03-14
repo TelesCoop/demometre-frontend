@@ -6,12 +6,12 @@ type MyHeaders = { [key: string]: string }
 
 // local
 if (process.env.NODE_ENV !== "production") {
-  base_url = "http://localhost:8000/"
+  base_url = "http://localhost:8000"
 } else {
   // production server
   if (process.server) {
     // server-side rendering
-    base_url = "http://localhost:8000/"
+    base_url = "http://localhost:8000"
   }
 }
 
