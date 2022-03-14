@@ -1,6 +1,6 @@
 <template>
   <div class="homepage container">
-    <homepage-home-intro />
+    <HomepageHomeIntro />
 
     <div
       v-for="question of Object.values(questionnaireStore.questionById)"
