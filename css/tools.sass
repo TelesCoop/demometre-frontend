@@ -51,6 +51,15 @@ $family-secondary: $family-serif
   src: url('~/assets/fonts/inter/inter-v8-latin-700.eot') /* IE9 Compat Modes */
   src: local(''), url('~/assets/fonts/inter/inter-v8-latin-700.eot?#iefix') format('embedded-opentype'), url('~/assets/fonts/inter/inter-v8-latin-700.woff2') format('woff2'), url('~/assets/fonts/inter/inter-v8-latin-700.woff') format('woff'), url('~/assets/fonts/inter/inter-v8-latin-700.ttf') format('truetype'), url('~/assets/fonts/inter/inter-v8-latin-700.svg#Inter') format('svg')
 
+// we use svg icons and have to adjust the height inside buttons
+.button
+  .icon
+    &,
+    &.is-small,
+    &.is-medium,
+    &.is-large
+      height: 1.2em !important
+
 $section-padding-desktop: 3rem 0
 
 // Import only what you need from Bulma

@@ -61,7 +61,7 @@ const getHeaders = (ctx: NuxtApp, includeCsrf = false): MyHeaders => {
 }
 
 export const BASE_URL = base_url
-export const BASE_API_URL = BASE_URL + "api/"
+export const BASE_API_URL = BASE_URL + "/api/"
 
 export async function useApiGet<Type>(path: string) {
   const loadingStore = useLoadingStore()
