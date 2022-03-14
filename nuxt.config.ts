@@ -4,4 +4,13 @@ import { defineNuxtConfig } from "nuxt3"
 export default defineNuxtConfig({
   css: ["@/css/app.sass"],
   buildModules: ["@pinia/nuxt"],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        sass: {
+          additionalData: `@import "@/css/tools.sass" \n`,
+        },
+      },
+    },
+  },
 })
