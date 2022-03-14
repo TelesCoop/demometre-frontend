@@ -16,7 +16,6 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
       )
       if (!error.value) {
         for (const pillar of data.value) {
-          console.log(pillar)
           this.pillarById[pillar.id] = pillar
         }
       }
