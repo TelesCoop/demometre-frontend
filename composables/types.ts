@@ -1,9 +1,76 @@
+export enum Objectivity {
+  OBJECTIVE = "objective",
+  SUBJECTIVE = "subjective",
+}
+export enum Method {
+  QUANTITATIVE = "quantitative",
+  QUALITATIVE = "qualitative",
+}
+export enum QuestionType {
+  OPEN = "open",
+  UNIQUE_CHOICE = "unique_choice",
+  MULTIPLE_CHOICE = "multiple_choice",
+  CLOSED_WITH_RANKING = "closed_with_ranking",
+  CLOSED_WITH_SCALE = "closed_with_scale",
+  BOOLEAN = "boolean",
+  NUMERICAL = "numerical",
+}
+
 export type User = { id: number; email: string; username: string }
-export type Question = {
+export type Pillar = {
   id: number
   code: string
   name: string
-  statement: string
+  description: string
+  markers: number[]
+}
+export type Marker = {
+  id: number
+  pillarId: number
+  concatenatedCode: string
+  name: string
+  criterias: number[]
+  description: string
+  score1: string
+  score2: string
+  score3: string
+  score4: string
+}
+export type Criteria = {
+  id: number
+  markerId: number
+  concatenatedCode: string
+  name: string
+  questions: number[]
+  thematicTags: number[]
+  description: string
+  score1: string
+  score2: string
+  score3: string
+  score4: string
+}
+export type ResponseChoice = {
+  id: number
+  responseChoice: string
+}
+export type Question = {
+  id: number
+  criteriaId: number
+  concatenatedCode: string
+  name: string
+  questionStatement: string
+  objectivity: Objectivity
+  method: Method
+  description: string
+  type: QuestionType
+  responseChoices: ResponseChoice[]
+  min: number
+  max: number
+  minLabel: string
+  maxLabel: string
+  legalFrame: string
+  useCase: string
+  resources: string
 }
 export type Answer = {
   title: string
