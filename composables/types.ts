@@ -26,50 +26,50 @@ export type Pillar = {
 }
 export type Marker = {
   id: number
-  pillar_id: number
-  concatenated_code: string
+  pillarId: number
+  concatenatedCode: string
   name: string
   criterias: number[]
   description: string
-  score_1: string
-  score_2: string
-  score_3: string
-  score_4: string
+  score1: string
+  score2: string
+  score3: string
+  score4: string
 }
 export type Criteria = {
   id: number
-  marker_id: number
-  concatenated_code: string
+  markerId: number
+  concatenatedCode: string
   name: string
   questions: number[]
-  thematic_tags: number[]
+  thematicTags: number[]
   description: string
-  score_1: string
-  score_2: string
-  score_3: string
-  score_4: string
+  score1: string
+  score2: string
+  score3: string
+  score4: string
 }
 export type ResponseChoice = {
   id: number
-  response_choice: string
+  responseChoice: string
 }
 export type Question = {
   id: number
-  criteria_id: number
-  concatenated_code: string
+  criteriaId: number
+  concatenatedCode: string
   name: string
-  question_statement: string
+  questionStatement: string
   objectivity: Objectivity
   method: Method
   description: string
   type: QuestionType
-  response_choices: ResponseChoice[]
+  responseChoices: ResponseChoice[]
   min: number
   max: number
-  min_label: string
-  max_label: string
-  legal_frame: string
-  use_case: string
+  minLabel: string
+  maxLabel: string
+  legalFrame: string
+  useCase: string
   resources: string
 }
 export type Answer = {
