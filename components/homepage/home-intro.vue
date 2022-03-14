@@ -20,7 +20,10 @@
           to="/pilliers"
         >
           <span>Découvrir le référentiel</span>
-          <span class="icon"><i class="ri-arrow-right-line" /></span>
+
+          <span class="icon">
+            <icon name="arrow-right-line" />
+          </span>
         </nuxt-link>
       </div>
     </div>
@@ -37,7 +40,7 @@ await getHomepage()
 
 async function getHomepage() {
   const { data, error } = await useApiGet<{ items: Homepage[] }>(
-    "/cms/homepages/"
+    "cms/homepages/"
   )
   if (!error.value) {
     homepage.value = data.value.items[0]

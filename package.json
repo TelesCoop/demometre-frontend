@@ -25,7 +25,6 @@
     "@pinia/nuxt": "^0.1.8",
     "pinia": "^2.0.11",
     "prettier": "^2.5.1",
-    "remixicon": "^2.5.0",
     "typescript": "^4.6.2"
   }
 }
