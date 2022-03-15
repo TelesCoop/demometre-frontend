@@ -17,34 +17,52 @@
       v-if="activePillar"
       style="display: flex; flex-direction: row; align-items: flex-start"
     >
-      <aside class="menu" style="flex: 5">
+      <aside class="menu ml-5" style="flex: 5">
         <div class="tabs">
           <ul>
-            <li class="is-active"><a>Marqueurs</a></li>
+            <li class="is-active">
+              <a
+                :class="`has-text-${colorClass}`"
+                style="border-bottom-color: currentColor"
+                >Marqueurs</a
+              >
+            </li>
           </ul>
         </div>
         <ul class="menu-list">
-          <li
-            v-for="marker of markers"
-            :key="marker.id"
-            :class="marker.name === activeMarker?.name ? 'is-active' : ''"
-          >
-            <a @click="onSelectMarker(marker)">{{ marker.name }}</a>
+          <li v-for="marker of markers" :key="marker.id">
+            <a
+              :class="
+                marker.name === activeMarker?.name
+                  ? `has-background-${colorClass} has-text-white`
+                  : ''
+              "
+              @click="onSelectMarker(marker)"
+              ><span
+                :class="
+                  marker.name === activeMarker?.name
+                    ? `has-text-white is-size-7`
+                    : `has-text-${colorClass} is-size-7`
+                "
+                >{{ marker.concatenatedCode }}</span
+              >
+              {{ wordTitleCase(marker.name) }}</a
+            >
             <div v-if="activeMarker">
               <ul>
                 <li v-for="criteria of criterias" :key="criteria.id">
-                  <a>{{ criteria.name }}</a>
+                  <a style="cursor: unset">{{ criteria.name }}</a>
                 </li>
               </ul>
             </div>
           </li>
         </ul>
       </aside>
-      <div class="content" style="flex: 8">
+      <div class="content m-5" style="flex: 8">
         <div v-if="activeMarker">
           <header>
-            <p>{{ activeMarker.name }}</p>
-            <p>{{ activeMarker.description }}</p>
+            <h2 class="title is-4">{{ markerTitle }}</h2>
+            <span v-html="activeMarker.description"></span>
           </header>
           <div class="score">
             {{ activeMarker.score1 }}
@@ -54,8 +72,8 @@
           </div>
         </div>
         <div v-else>
-          <h2 class="title is-2">{{ title }}</h2>
-          <p>{{ activePillar.description }}</p>
+          <h2 class="title is-3">{{ pillarTitle }}</h2>
+          <span v-html="activePillar.description"></span>
         </div>
       </div>
     </div>
@@ -78,8 +96,14 @@ const markers = ref<Marker[]>()
 const activeMarker = ref<Marker>()
 const criterias = ref<Criteria[]>()
 
-const title = computed<String>(() =>
+const pillarTitle = computed<String>(() =>
   activePillar.value ? wordTitleCase(activePillar.value.name) : ""
+)
+const markerTitle = computed<String>(() =>
+  activeMarker.value ? wordTitleCase(activeMarker.value.name) : ""
+)
+const colorClass = computed(() =>
+  activePillar.value ? PillarStrategy[activePillar.value.name].color : ""
 )
 
 const onSelectPillar = (pillar) => {
