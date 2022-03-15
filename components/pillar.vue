@@ -5,7 +5,9 @@
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <div :class="circleClass" class="pillar-circle">{{ letter }}</div>
+    <div :class="circleClass" class="pillar-circle">
+      <img :src="picto" width height="40" />
+    </div>
     <p :class="`has-text-${colorClass} is-size-4 mt-3`">{{ textTitle }}</p>
   </div>
 </template>
@@ -13,26 +15,17 @@
 <script setup lang="ts">
 import { computed } from "vue"
 
-const colorClassFromName = {
-  représentation: "success",
-  transparence: "info",
-  participation: "link",
-  coopération: "danger",
-}
-
 const props = defineProps({
   name: { type: String, required: true },
   active: { default: true },
 })
 const isHovered = ref(false)
-const a = () => {
-  let b = 23
-  return 35
-}
 
-const colorClass = computed(() => colorClassFromName[props.name])
-const letter = computed(() => props.name[0].toUpperCase())
-const textTitle = computed(() => letter.value + props.name.slice(1))
+const colorClass = computed(() => PilarStrategy[props.name].color)
+const picto = computed(() => "assets/img/" + PilarStrategy[props.name].picto)
+const textTitle = computed(
+  () => props.name[0].toUpperCase() + props.name.slice(1)
+)
 const circleClass = computed(() => {
   props.active
   let toReturn = `pillar-circle has-border-${colorClass.value} `

@@ -4,11 +4,16 @@ import { useApiGet } from "~~/composables/api"
 
 export const useQuestionnaireStore = defineStore("questionnaire", {
   state: () => ({
-    pillarById: <{ [key: number]: Pillar }>{},
+    pillarByName: <{ [key: string]: Pillar }>{},
     markerById: <{ [key: number]: Marker }>{},
     criteriaById: <{ [key: number]: Criteria }>{},
     questionById: <{ [key: number]: Question }>{},
   }),
+  getters: {
+    getPillarByName: (state) => {
+      return (pillarName) => state.pillarByName[pillarName]
+    },
+  },
   actions: {
     async loadPillars() {
       const { data, error } = await useApiGet<Pillar[]>(
@@ -16,7 +21,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
       )
       if (!error.value) {
         for (const pillar of data.value) {
-          this.pillarById[pillar.id] = pillar
+          this.pillarByName[pillar.name] = pillar
         }
       }
     },

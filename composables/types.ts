@@ -15,12 +15,37 @@ export enum QuestionType {
   BOOLEAN = "boolean",
   NUMERICAL = "numerical",
 }
+export enum PillarList {
+  REPRESENTATION = "représentation",
+  COOPERATION = "coopération",
+  TRANSPARENCY = "transparence",
+  PARTICIPATION = "participation",
+}
+
+export const PillarStrategy = {
+  [PillarList.REPRESENTATION]: {
+    color: "success",
+    picto: "picto-representation.png"
+  },
+  [PillarList.COOPERATION]: {
+    color: "danger",
+    picto: "picto-cooperation.png"
+  },
+  [PillarList.TRANSPARENCY]: {
+    color: "info",
+    picto: "picto-transparency.png"
+  },
+  [PillarList.PARTICIPATION]: {
+    color: "link",
+    picto: "picto-participation.png"
+  }
+}
 
 export type User = { id: number; email: string; username: string }
 export type Pillar = {
   id: number
   code: string
-  name: string
+  name: PillarList
   description: string
   markers: number[]
 }
