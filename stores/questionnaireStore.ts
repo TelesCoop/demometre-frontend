@@ -1,10 +1,10 @@
 import { defineStore, mapActions } from "pinia"
-import { Criteria, Marker, Pillar, Question } from "~/composables/types"
+import { Criteria, Marker, PillarType, Question } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 
 export const useQuestionnaireStore = defineStore("questionnaire", {
   state: () => ({
-    pillarByName: <{ [key: string]: Pillar }>{},
+    pillarByName: <{ [key: string]: PillarType }>{},
     markerById: <{ [key: number]: Marker }>{},
     criteriaById: <{ [key: number]: Criteria }>{},
     questionById: <{ [key: number]: Question }>{},
@@ -13,10 +13,13 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     getPillarByName: (state) => {
       return (pillarName) => state.pillarByName[pillarName]
     },
+    pillars: (state) => {
+      return Object.values(state.pillarByName)
+    }
   },
   actions: {
     async loadPillars() {
-      const { data, error } = await useApiGet<Pillar[]>(
+      const { data, error } = await useApiGet<PillarType[]>(
         "pillars/"
       )
       if (!error.value) {

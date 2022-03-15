@@ -42,7 +42,7 @@ export const PillarStrategy = {
 }
 
 export type User = { id: number; email: string; username: string }
-export type Pillar = {
+export type PillarType = {
   id: number
   code: string
   name: PillarList

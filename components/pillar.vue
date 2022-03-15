@@ -21,8 +21,8 @@ const props = defineProps({
 })
 const isHovered = ref(false)
 
-const colorClass = computed(() => PilarStrategy[props.name].color)
-const picto = computed(() => "assets/img/" + PilarStrategy[props.name].picto)
+const colorClass = computed(() => PillarStrategy[props.name].color)
+const picto = computed(() => "assets/img/" + PillarStrategy[props.name].picto)
 const textTitle = computed(
   () => props.name[0].toUpperCase() + props.name.slice(1)
 )
