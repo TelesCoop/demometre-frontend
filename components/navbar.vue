@@ -78,7 +78,7 @@ const isRouteActive = computed(() => (path) => {
 const navItems = [
   {
     name: "Le référentiel",
-    to: "/referentiel",
+    to: "/referential",
   },
   {
     name: "Options d'évaluation",

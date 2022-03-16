@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 64px; background: #fafafa">
+  <div style="padding: 64px; margin-top: 64px; background: #fafafa">
     <div class="container">
       <div class="columns">
         <div class="column footer-column is-3">
