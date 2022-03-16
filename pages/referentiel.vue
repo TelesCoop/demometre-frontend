@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <div style="margin: auto; max-width: 1200px; padding-top: 100px">
-      <div style="display: flex">
+  <div class="container">
+    <div class="columns" style="padding-top: 100px">
+      <div
+        v-for="pillar of questionnaireStore.pillars"
+        :key="pillar.name"
+        class="column"
+      >
         <Pillar
-          v-for="pillar of questionnaireStore.pillars"
-          :key="pillar.name"
           :name="pillar.name"
           :active="pillar.name === activePillar?.name"
           style="cursor: pointer"
@@ -13,11 +15,8 @@
       </div>
     </div>
 
-    <div
-      v-if="activePillar"
-      style="display: flex; flex-direction: row; align-items: flex-start"
-    >
-      <aside class="menu ml-5" style="flex: 5">
+    <div v-if="activePillar" class="columns">
+      <aside class="menu column is-5 mr-2rem">
         <div class="tabs">
           <ul>
             <li class="is-active">
@@ -51,29 +50,58 @@
             <div v-if="activeMarker">
               <ul>
                 <li v-for="criteria of criterias" :key="criteria.id">
-                  <a style="cursor: unset">{{ criteria.name }}</a>
+                  <a style="cursor: unset"
+                    ><span :class="`has-text-${colorClass} is-size-7`">{{
+                      criteria.concatenatedCode
+                    }}</span>
+                    {{ criteria.name }}</a
+                  >
                 </li>
               </ul>
             </div>
           </li>
         </ul>
       </aside>
-      <div class="content m-5" style="flex: 8">
+      <div class="content column is-7 my-5">
         <div v-if="activeMarker">
           <header>
             <h2 class="title is-4">{{ markerTitle }}</h2>
             <span v-html="activeMarker.description"></span>
           </header>
+          <hr />
           <div class="score">
-            {{ activeMarker.score1 }}
-            {{ activeMarker.score2 }}
-            {{ activeMarker.score3 }}
-            {{ activeMarker.score4 }}
+            <div v-for="i in 4" :key="i" class="level">
+              <div class="level-left">
+                <Score :score="i" :color="colorClass" class="level-item mr-5" />
+                <p class="level-item">
+                  {{ wordTitleCase(activeMarker["score" + i]) }}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
         <div v-else>
           <h2 class="title is-3">{{ pillarTitle }}</h2>
           <span v-html="activePillar.description"></span>
+          <div class="buttons are-small mt-2rem">
+            <!-- TODO : change button links -->
+            <nuxt-link
+              :class="`button is-${colorClass} is-rounded is-responsive`"
+              to="/"
+            >
+              <span>Evaluer ce pilier</span>
+              <span class="icon">
+                <icon name="arrow-right-line" size="10" class="icon" />
+              </span>
+            </nuxt-link>
+            <nuxt-link
+              :class="`button
+                is-${colorClass} is-rounded is-responsive is-outlined`"
+              to="/resultats"
+            >
+              Visualiser les résultats de ce pilier
+            </nuxt-link>
+          </div>
         </div>
       </div>
     </div>
@@ -121,3 +149,6 @@ const onSelectMarker = (marker) => {
   )
 }
 </script>
+
+<style scoped lang="sass">
+</style>
