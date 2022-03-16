@@ -2,6 +2,9 @@ import { defineStore, mapActions } from "pinia"
 import { Criteria, Marker, PillarType, Question } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 
+type FullMarkers = Marker & { criterias: Criteria[] }
+type FullPillar = PillarType & { markers: FullMarkers[] }
+
 export const useQuestionnaireStore = defineStore("questionnaire", {
   state: () => ({
     pillarByName: <{ [key: string]: PillarType }>{},
@@ -18,33 +21,19 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     }
   },
   actions: {
-    async loadPillars() {
-      const { data, error } = await useApiGet<PillarType[]>(
-        "pillars/"
+    async loadQuestionnaireStructure() {
+      const { data, error } = await useApiGet<FullPillar[]>(
+        "questionnaire-structure/"
       )
       if (!error.value) {
         for (const pillar of data.value) {
           this.pillarByName[pillar.name] = pillar
-        }
-      }
-    },
-    async loadMarkers() {
-      const { data, error } = await useApiGet<Marker[]>(
-        "markers/"
-      )
-      if (!error.value) {
-        for (const marker of data.value) {
-          this.markerById[marker.id] = marker
-        }
-      }
-    },
-    async loadCriterias() {
-      const { data, error } = await useApiGet<Criteria[]>(
-        "criterias/"
-      )
-      if (!error.value) {
-        for (const criteria of data.value) {
-          this.criteriaById[criteria.id] = criteria
+          for (const marker of pillar.markers) {
+            this.markerById[marker.id] = marker
+            for (const criteria of marker.criterias) {
+              this.criteriaById[criteria.id] = criteria
+            }
+          }
         }
       }
     },
@@ -58,11 +47,5 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         }
       }
     },
-    async loadQuestionnaire() {
-      await this.loadPillars()
-      await this.loadMarkers()
-      await this.loadCriterias()
-      await this.loadQuestions()
-    }
   },
 })

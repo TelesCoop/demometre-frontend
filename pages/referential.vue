@@ -32,7 +32,7 @@ import { Marker, PillarType } from "~/composables/types"
 const questionnaireStore = useQuestionnaireStore()
 
 if (!Object.keys(questionnaireStore.questionById).length) {
-  questionnaireStore.loadQuestionnaire()
+  questionnaireStore.loadQuestionnaireStructure()
 }
 
 const activePillar = ref<PillarType>()
@@ -44,7 +44,7 @@ const colorClass = computed(() =>
 
 const onSelectPillar = (pillar) => {
   activePillar.value = pillar
-  markers.value = activePillar.value?.markers.map(
+  markers.value = activePillar.value?.markerIds.map(
     (markerId) => questionnaireStore.markerById[markerId]
   )
 }

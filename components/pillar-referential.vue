@@ -50,7 +50,10 @@
       <div v-if="activeMarker">
         <header>
           <h2 class="title is-4">{{ markerTitle }}</h2>
-          <RichText :richText="activeMarker.description" />
+          <RichText
+            v-if="activeMarker.description"
+            :richText="activeMarker.description"
+          />
         </header>
         <hr />
         <div class="score">
@@ -66,7 +69,7 @@
       </div>
       <div v-else>
         <h2 class="title is-3">{{ wordTitleCase(pillar.name) }}</h2>
-        <RichText :richText="pillar.description" />
+        <RichText v-if="pillar.description" :richText="pillar.description" />
         <div class="buttons are-small mt-2rem">
           <!-- TODO : change button links -->
           <nuxt-link
@@ -82,6 +85,7 @@
             :class="`button
                 is-${color} is-rounded is-responsive is-outlined`"
             to="/resultats"
+            style="display: none"
           >
             Visualiser les résultats de ce pilier
           </nuxt-link>
@@ -122,7 +126,7 @@ watch(
 
 const onSelectMarker = (marker) => {
   activeMarker.value = marker
-  criterias.value = activeMarker.value.criterias.map(
+  criterias.value = activeMarker.value.criteriaIds.map(
     (criteriaId) => questionnaireStore.criteriaById[criteriaId]
   )
 }

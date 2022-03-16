@@ -47,7 +47,7 @@ export type PillarType = {
   code: string
   name: PillarName
   description: string
-  markers: number[]
+  markerIds: number[]
 }
 export type Marker = {
   id: number
@@ -55,7 +55,7 @@ export type Marker = {
   pillarName: PillarName
   concatenatedCode: string
   name: string
-  criterias: number[]
+  criteriaIds: number[]
   description: string
   score1: string
   score2: string
@@ -67,7 +67,7 @@ export type Criteria = {
   markerId: number
   concatenatedCode: string
   name: string
-  questions: number[]
+  questionIds: number[]
   thematicTags: number[]
   description: string
   score1: string
