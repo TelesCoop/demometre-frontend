@@ -1,34 +1,47 @@
 import { defineStore } from "pinia"
-import { HomePage, ReferentialPage } from "~/composables/types"
+import { EvaluationIntroPage, HomePage, ReferentialPage } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 
 export const usePageStore = defineStore("page", {
   state: () => ({
     homePage: <HomePage>{},
     referentialPage: <ReferentialPage>{},
+    evaluationIntroPage: <EvaluationIntroPage>{},
   }),
   actions: {
     async loadHomePage() {
-      const { data, error } = await useApiGet<{ items: HomePage[] }>(
-        "cms/homepages/"
+      const { data, error } = await useApiGet<HomePage[]>(
+        "home-pages/"
       )
       if (!error.value) {
-        if (data.value.items?.length) {
-          this.homepage = data.value.items[0]
+        if (data.value.length) {
+          this.homepage = data.value[0]
         } else {
           console.error("Impossible to retrieve home page")
         }
       }
     },
     async loadReferentialPage() {
-      const { data, error } = await useApiGet<{ items: ReferentialPage[] }>(
-        "cms/referentialpages/"
+      const { data, error } = await useApiGet<ReferentialPage[]>(
+        "referential-pages/"
       )
       if (!error.value) {
-        if (data.value.items?.length) {
-          this.referentialPage = data.value.items[0]
+        if (data.value.length) {
+          this.referentialPage = data.value[0]
         } else {
           console.error("Impossible to retrieve referential page")
+        }
+      }
+    },
+    async loadEvaluationIntroPage() {
+      const { data, error } = await useApiGet<EvaluationIntroPage[]>(
+        "evaluation-intro-pages/"
+      )
+      if (!error.value) {
+        if (data.value.length) {
+          this.evaluationIntroPage = data.value[0]
+        } else {
+          console.error("Impossible to retrieve evaluation intro page")
         }
       }
     }
