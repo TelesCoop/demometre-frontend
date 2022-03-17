@@ -15,7 +15,7 @@ export const usePageStore = defineStore("page", {
       )
       if (!error.value) {
         if (data.value.length) {
-          this.homepage = data.value[0]
+          this.homePage = data.value[0]
         } else {
           console.error("Impossible to retrieve home page")
         }
