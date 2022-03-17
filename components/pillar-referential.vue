@@ -16,11 +16,15 @@
         <li v-for="marker of markers" :key="marker.id">
           <a
             :class="
-              marker.name === activeMarker?.name
-                ? `has-background-${color} has-text-white`
+              marker === activeMarker
+                ? activeMarkerClass
+                : marker.id === hoverMarkerId
+                ? hoverMarkerClass
                 : ''
             "
             @click="onSelectMarker(marker)"
+            @mouseenter="hoverMarkerId = marker.id"
+            @mouseleave="hoverMarkerId = null"
             ><span
               :class="
                 marker.name === activeMarker?.name
@@ -34,7 +38,7 @@
           <div v-if="activeMarker">
             <ul>
               <li v-for="criteria of criterias" :key="criteria.id">
-                <a style="cursor: unset"
+                <a style="pointer-events: none"
                   ><span :class="`has-text-${color} is-size-7`">{{
                     criteria.concatenatedCode
                   }}</span>
@@ -112,6 +116,7 @@ const props = defineProps({
 
 const activeMarker = ref<Marker>()
 const criterias = ref<Criteria[]>()
+const hoverMarkerId = ref<Number>()
 
 const markerTitle = computed<String>(() =>
   activeMarker.value ? wordTitleCase(activeMarker.value.name) : ""
@@ -130,4 +135,12 @@ const onSelectMarker = (marker) => {
     (criteriaId) => questionnaireStore.criteriaById[criteriaId]
   )
 }
+
+const activeMarkerClass = computed(() => {
+  return `has-background-${props.color} has-text-white`
+})
+
+const hoverMarkerClass = computed(() => {
+  return `has-background-${props.color}-light has-text-black`
+})
 </script>
