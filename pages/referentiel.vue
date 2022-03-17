@@ -1,25 +1,21 @@
 <template>
   <div class="container">
     <section class="columns section">
-      <div class="column">
+      <div class="column is-5">
         <PageIntro
           :title="pageStore.referentialPage.title"
           :introduction="pageStore.referentialPage.introduction"
         />
-        <div class="intro__buttons buttons are-medium-desktop">
+        <div class="buttons are-normal">
           <!-- TODO : change link to the right page -->
           <nuxt-link
-            class="
-              button
-              is-dark is-rounded is-responsive is-outlined is-normal
-              has-text-grey-dark
-            "
+            class="button is-dark is-rounded is-responsive is-outlined"
             to="/"
           >
             <span>Comment on a construit le référentiel</span>
 
             <span class="icon">
-              <icon name="arrow-right-line" />
+              <icon name="arrow-right-line" size="20" />
             </span>
           </nuxt-link>
         </div>
@@ -28,11 +24,11 @@
           les critères qui le composent.
         </p>
       </div>
-      <div class="column" style="background-color: pink">
+      <div class="column is-6 is-offset-1" style="background-color: pink">
         ICI SCHEMA PILIERS
       </div>
     </section>
-    <div class="columns" style="padding-top: 100px">
+    <div class="columns is-multiline" style="padding-top: 100px">
       <div
         v-for="pillar of questionnaireStore.pillars"
         :key="pillar.name"
@@ -89,21 +85,6 @@ const onSelectPillar = (pillar) => {
 </script>
 
 <style scoped lang="sass">
-.intro
-  .intro__visual
-    // TODO change when we have the ressource
-    background-clip: content-box
-    background-color: $blue
-    height: 154px
-    @include desktop
-      height: revert
-
-.buttons
-  &.are-medium-desktop
-    .button:not(.is-normal):not(.is-medium):not(.is-large)
-      @include desktop
-        font-size: 1.25rem
-
-  .button
-    margin-bottom: 1rem
+.buttons .button
+  height: fit-content
 </style>
