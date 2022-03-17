@@ -9,7 +9,6 @@
       </p>
       <div class="consent-container">
         <label class="checkbox">
-          <!-- <div id="custom-checkbox"></div> -->
           <input type="checkbox" />
           <RichText
             :richText="pageStore.evaluationIntroPage.dataConsent"
