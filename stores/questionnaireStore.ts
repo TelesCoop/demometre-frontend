@@ -1,4 +1,4 @@
-import { defineStore, mapActions } from "pinia"
+import { defineStore } from "pinia"
 import { Criteria, Marker, PillarType, Question } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 
