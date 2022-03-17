@@ -105,4 +105,5 @@ export type Answer = {
   id?: number
 }
 export type Assessment = { id: number; zipCode: string[]; type: string }
-export type Homepage = { title: string; introduction: string }
+export type HomePage = { title: string; introduction: string }
+export type ReferentialPage = { title: string; introduction: string }

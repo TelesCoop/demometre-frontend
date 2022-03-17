@@ -57,6 +57,7 @@
           <RichText
             v-if="activeMarker.description"
             :richText="activeMarker.description"
+            class="is-family-secondary"
           />
         </header>
         <hr />
@@ -73,7 +74,11 @@
       </div>
       <div v-else>
         <h2 class="title is-3">{{ wordTitleCase(pillar.name) }}</h2>
-        <RichText v-if="pillar.description" :richText="pillar.description" />
+        <RichText
+          v-if="pillar.description"
+          :richText="pillar.description"
+          class="is-family-secondary"
+        />
         <div class="buttons are-small mt-2rem">
           <!-- TODO : change button links -->
           <nuxt-link

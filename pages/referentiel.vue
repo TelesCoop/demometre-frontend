@@ -1,6 +1,34 @@
 <template>
   <div class="container">
-    <div class="columns" style="padding-top: 100px">
+    <section class="columns section">
+      <div class="column is-5">
+        <PageIntro
+          :title="pageStore.referentialPage.title"
+          :introduction="pageStore.referentialPage.introduction"
+        />
+        <div class="buttons are-normal">
+          <!-- TODO : change link to the right page -->
+          <nuxt-link
+            class="button is-dark is-rounded is-responsive is-outlined"
+            to="/"
+          >
+            <span>Comment on a construit le référentiel</span>
+
+            <span class="icon">
+              <icon name="arrow-right-line" size="20" />
+            </span>
+          </nuxt-link>
+        </div>
+        <p class="is-size-6 has-text-grey">
+          Sélectionnez l’un des piliers pour en savoir plus sur les marqueurs et
+          les critères qui le composent.
+        </p>
+      </div>
+      <div class="column is-6 is-offset-1" style="background-color: pink">
+        ICI SCHEMA PILIERS
+      </div>
+    </section>
+    <div class="columns is-multiline" style="padding-top: 100px">
       <div
         v-for="pillar of questionnaireStore.pillars"
         :key="pillar.name"
@@ -27,12 +55,18 @@
 
 <script setup lang="ts">
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
+import { usePageStore } from "~/stores/pageStore"
 import { Marker, PillarType } from "~/composables/types"
 
 const questionnaireStore = useQuestionnaireStore()
+const pageStore = usePageStore()
 
-if (!Object.keys(questionnaireStore.questionById).length) {
+if (!questionnaireStore.pillars.length) {
   questionnaireStore.loadQuestionnaireStructure()
+}
+
+if (!pageStore.referentialPage.title) {
+  pageStore.loadReferentialPage()
 }
 
 const activePillar = ref<PillarType>()
@@ -49,3 +83,8 @@ const onSelectPillar = (pillar) => {
   )
 }
 </script>
+
+<style scoped lang="sass">
+.buttons .button
+  height: fit-content
+</style>
