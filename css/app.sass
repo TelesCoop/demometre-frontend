@@ -9,6 +9,11 @@
   $color: nth($pair, 1)
   .has-border-#{$name}
     border: 1px solid $color !important
+  @if length($pair) >= 4
+    $color-dark: nth($pair, 4)
+    // Dark
+    .has-border-#{$name}-dark
+      border: 1px solid $color-dark !important
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/base/_all.sass"
