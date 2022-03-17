@@ -13,7 +13,11 @@ export const usePageStore = defineStore("page", {
         "cms/homepages/"
       )
       if (!error.value) {
-        this.homepage = data.value.items[0]
+        if (data.value.items?.length) {
+          this.homepage = data.value.items[0]
+        } else {
+          console.error("Impossible to retrieve home page")
+        }
       }
     },
     async loadReferentialPage() {
@@ -21,7 +25,11 @@ export const usePageStore = defineStore("page", {
         "cms/referentialpages/"
       )
       if (!error.value) {
-        this.referentialPage = data.value.items[0]
+        if (data.value.items?.length) {
+          this.referentialPage = data.value.items[0]
+        } else {
+          console.error("Impossible to retrieve referential page")
+        }
       }
     }
   },
