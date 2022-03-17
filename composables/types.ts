@@ -22,7 +22,7 @@ export enum PillarName {
   PARTICIPATION = "participation",
 }
 
-export const PillarStrategy = {
+export const PillarParams = {
   [PillarName.REPRESENTATION]: {
     color: "success",
     picto: "picto-representation.png"

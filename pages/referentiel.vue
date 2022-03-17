@@ -39,7 +39,7 @@ const activePillar = ref<PillarType>()
 const markers = ref<Marker[]>()
 
 const colorClass = computed(() =>
-  activePillar.value ? PillarStrategy[activePillar.value.name].color : ""
+  activePillar.value ? PillarParams[activePillar.value.name].color : ""
 )
 
 const onSelectPillar = (pillar) => {
