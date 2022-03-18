@@ -1,0 +1,91 @@
+// CUSTOM
+// add borders for each color
+@import "../node_modules/bulma/sass/utilities/derived-variables"
+@each $name, $pair in $colors
+  $color: nth($pair, 1)
+  .has-border-#{$name}
+    border: 1px solid $color !important
+  @if length($pair) >= 4
+    $color-light: nth($pair, 3)
+    $color-dark: nth($pair, 4)
+    // Light
+    .has-border-#{$name}-light
+      border: 1px solid $color-light !important
+    // Dark
+    .has-border-#{$name}-dark
+      border: 1px solid $color-dark !important
+
+@each $name, $pair in $custom-colors
+    $color-active: nth($pair, 2)
+    $color-light: nth($pair, 3)
+    $color-dark: nth($pair, 4)
+    $color-hover: nth($pair, 5)
+    $color-light-active: nth($pair, 6)
+    // active
+    .has-border-#{$name}-active
+      border: 1px solid $color-active !important
+    .has-background-#{$name}-active
+      background-color: $color-active !important
+    .has-text-#{$name}-active
+      color: $color-active !important
+    // Light
+    .has-border-#{$name}-light
+      border: 1px solid $color-light !important
+    .has-background-#{$name}-light
+      background-color: $color-light !important
+    .has-text-#{$name}-light
+      color: $color-light !important
+    // Dark
+    .has-border-#{$name}-dark
+      border: 1px solid $color-dark !important
+    .has-background-#{$name}-dark
+      background-color: $color-dark !important
+    .has-text-#{$name}-dark
+      color: $color-dark !important
+    // Hover
+    .has-border-#{$name}-hover
+      border: 1px solid $color-hover !important
+    .has-background-#{$name}-hover
+      background-color: $color-hover !important
+    .has-text-#{$name}-hover
+      color: $color-hover !important
+    // Light active
+    .has-border-#{$name}-light-active
+      border: 1px solid $color-light-active !important
+    .has-background-#{$name}-light-active
+      background-color: $color-light-active !important
+    .has-text-#{$name}-light-active
+      color: $color-light-active !important
+
+
+.is-representation
+  --color-active: #{$representation-active}
+  --color-hover: #{$representation-hover}
+  --color: #{$representation}
+  --color-light: #{$representation-light}
+  --color-light-active: #{$representation-light-active}
+  --color-dark: #{$representation-dark}
+
+.is-cooperation
+  --color-active: #{$cooperation-active}
+  --color-hover: #{$cooperation-hover}
+  --color: #{$cooperation}
+  --color-light: #{$cooperation-light}
+  --color-light-active: #{$cooperation-light-active}
+  --color-dark: #{$cooperation-dark}
+
+.is-transparency
+  --color-active: #{$transparency-active}
+  --color-hover: #{$transparency-hover}
+  --color: #{$transparency}
+  --color-light: #{$transparency-light}
+  --color-light-active: #{$transparency-light-active}
+  --color-dark: #{$transparency-dark}
+
+.is-participation
+  --color-active: #{$participation-active}
+  --color-hover: #{$participation-hover}
+  --color: #{$participation}
+  --color-light: #{$participation-light}
+  --color-light-active: #{$participation-light-active}
+  --color-dark: #{$participation-dark}
