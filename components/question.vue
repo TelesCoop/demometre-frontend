@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <div class="menu">
+    <div :class="`menu is-${color}`">
       <div class="tabs">
         <ul>
           <li v-for="tab of tabs" :key="tab.id">
@@ -117,14 +117,12 @@ function setTab(tabId) {
     height: 40px
     width: 40px
 
-// todo rename class
-.pillar-try
-  --color: #{$link-hover}
 
 .tabs .tab
+  color: var(--color)
+  border-bottom-color: currentColor
   &.is-active
-    color: var(--color)
-    border-bottom-color: var(--color)
+    color: var(--color-dark)
   &:hover
-    border-bottom-color: var(--color)
+    color: var(--color-active)
 </style>
