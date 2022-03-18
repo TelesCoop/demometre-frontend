@@ -24,21 +24,21 @@ export enum PillarName {
 
 export const PillarParams = {
   [PillarName.REPRESENTATION]: {
-    color: "success",
-    picto: "picto-representation.png"
+    color: "representation",
+    picto: "picto-representation.png",
   },
   [PillarName.COOPERATION]: {
-    color: "danger",
-    picto: "picto-cooperation.png"
+    color: "cooperation",
+    picto: "picto-cooperation.png",
   },
   [PillarName.TRANSPARENCY]: {
-    color: "info",
-    picto: "picto-transparency.png"
+    color: "transparency",
+    picto: "picto-transparency.png",
   },
   [PillarName.PARTICIPATION]: {
-    color: "link",
-    picto: "picto-participation.png"
-  }
+    color: "participation",
+    picto: "picto-participation.png",
+  },
 }
 
 export type User = { id: number; email: string; username: string }
