@@ -7,11 +7,12 @@
     <div class="my-5">
       <QuestionInputOpen
         v-if="question.type === QuestionType.OPEN"
+        v-model="answer"
         :color="props.color"
       />
       <QuestionInputUniqueChoice
         v-else
-        v-model="val"
+        v-model="answer"
         :response-choices="question.responseChoices"
         :color="props.color"
       />
@@ -73,7 +74,7 @@ const props = defineProps({
   color: { type: String, required: true },
 })
 
-const val = ref(0)
+const answer = ref()
 
 const question = ref<Question>(null)
 const { data, error } = await useApiGet<Question>(
@@ -115,4 +116,15 @@ function setTab(tabId) {
   .buttons.rounds .button
     height: 40px
     width: 40px
+
+// todo rename class
+.pillar-try
+  --color: #{$link-hover}
+
+.tabs .tab
+  &.is-active
+    color: var(--color)
+    border-bottom-color: var(--color)
+  &:hover
+    border-bottom-color: var(--color)
 </style>

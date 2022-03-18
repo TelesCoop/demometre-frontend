@@ -4,6 +4,7 @@
       Réponse ouverte
     </label>
     <textarea
+      v-model="answer"
       class="textarea has-text-grey-dark"
       :class="`has-background-${props.color}-light has-border-${props.color}-dark`"
       rows="12"
@@ -13,9 +14,14 @@
 </template>
 
 <script setup lang="ts">
+import { useModel } from "~/composables/modelWrapper"
+
 const props = defineProps({
   color: { type: String, required: true },
+  modelValue: { required: true },
 })
+
+const answer = useModel(props, "modelValue")
 </script>
 
 <style scoped lang="sass">
