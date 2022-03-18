@@ -24,6 +24,7 @@
     $color-light: nth($pair, 3)
     $color-dark: nth($pair, 4)
     $color-hover: nth($pair, 5)
+    $color-light-active: nth($pair, 6)
     // active
     .has-border-#{$name}-active
       border: 1px solid $color-active !important
@@ -52,6 +53,13 @@
       background-color: $color-hover !important
     .has-text-#{$name}-hover
       color: $color-hover !important
+    // Light active
+    .has-border-#{$name}-light-active
+      border: 1px solid $color-light-active !important
+    .has-background-#{$name}-light-active
+      background-color: $color-light-active !important
+    .has-text-#{$name}-light-active
+      color: $color-light-active !important
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/base/_all.sass"
