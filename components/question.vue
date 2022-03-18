@@ -7,12 +7,13 @@
     <div class="my-5">
       <QuestionInputOpen
         v-if="question.type === QuestionType.OPEN"
-        :color="color"
+        :color="props.color"
       />
       <QuestionInputUniqueChoice
         v-else
         v-model="val"
         :response-choices="question.responseChoices"
+        :color="props.color"
       />
     </div>
 
@@ -63,12 +64,13 @@
 </template>
 
 <script setup lang="ts">
-import { PillarName, QuestionType, Question } from "~/composables/types"
+import { QuestionType, Question } from "~/composables/types"
 
 type tabDef = { label: string; id: string }
 
 const props = defineProps({
   questionId: { type: Number, required: true },
+  color: { type: String, required: true },
 })
 
 const val = ref(0)
@@ -80,11 +82,6 @@ const { data, error } = await useApiGet<Question>(
 if (!error.value) {
   question.value = data.value
 }
-
-const pillarName = ref<string>(PillarName.COOPERATION)
-const color = computed<string>(() =>
-  pillarName.value ? PillarParams[pillarName.value].color : ""
-)
 
 const currentTabId = ref<string>("definitions")
 const tabs = ref<tabDef[]>([

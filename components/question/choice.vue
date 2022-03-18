@@ -3,16 +3,16 @@
     class="response-choice"
     :class="
       props.selected
-        ? 'has-border-success has-background-success-light'
-        : 'has-border-transparent'
+        ? `has-border-${props.color}-dark has-background-${props.color}-light-active`
+        : `has-border-transparent has-background-${props.color}-light`
     "
   >
     <div
       class="letter mr-4"
       :class="
-        props.selected
-          ? 'has-border-success has-background-success has-text-white'
-          : 'has-border-black'
+        `has-text-${props.color}-dark ` + props.selected
+          ? `has-border-${props.color}-dark has-background-${props.color}`
+          : `has-border-${props.color}`
       "
     >
       {{ letter }}
@@ -35,6 +35,7 @@ const props = defineProps({
   responseChoice: { required: true, type: Object as PropType<ResponseChoice> },
   responseChoiceIndex: { type: Number, default: 0 },
   selected: { type: Boolean, default: false },
+  color: { type: String, required: true },
 })
 const letters = "ABCDEFGHIJKLMOPQRSTUVWXYZ"
 
@@ -45,16 +46,14 @@ const letter = computed(() => letters[props.responseChoiceIndex])
 .response-choice
   display: flex
   padding: 16px
-  background: #fafafa
   border-radius: 6px
   cursor: pointer
   + .response-choice
     margin-top: 10px
-
-.response-choice .letter
-  text-align: center
-  padding-top: 6px
-  min-width: 40px
-  height: 40px
-  border-radius: 6px
+  .letter
+    text-align: center
+    padding-top: 6px
+    min-width: 40px
+    height: 40px
+    border-radius: 6px
 </style>

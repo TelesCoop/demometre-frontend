@@ -6,6 +6,7 @@
       :response-choice="responseChoice"
       :response-choice-index="responseChoiceIndex"
       :selected="isResponseChoiceSelected(responseChoice.id)"
+      :color="props.color"
       @click="selectResponseChoice(responseChoice.id)"
     />
   </div>
@@ -21,6 +22,7 @@ const props = defineProps({
     required: true,
   },
   modelValue: { type: Number, required: false, default: 0 },
+  color: { type: String, required: true },
 })
 const isResponseChoiceSelected = computed(
   () => (responseChoiceId) => responseChoiceId === props.modelValue
