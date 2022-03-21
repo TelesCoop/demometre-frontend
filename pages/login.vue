@@ -118,7 +118,7 @@ const submit = () => {
       </div>
 
       <!-- submit -->
-      <div class="mt-4">
+      <div class="mt-1">
         <button
           class="button is-success is-medium"
           type="button"

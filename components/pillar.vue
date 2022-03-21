@@ -8,7 +8,7 @@
     <div :class="circleClass" class="pillar-circle">
       <img :src="picto" width height="40" />
     </div>
-    <p :class="`has-text-${colorClass} is-size-4 mt-3`">{{ textTitle }}</p>
+    <p :class="`has-text-${colorClass} is-size-4 mt-0_75`">{{ textTitle }}</p>
   </div>
 </template>
 
