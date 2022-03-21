@@ -4,14 +4,14 @@
       <h1 class="title is-3 has-text-black-ter has-text-centered">
         {{ pageStore.evaluationIntroPage.title }}
       </h1>
-      <p class="is-family-secondary mt-3 mb-2rem">
+      <p class="is-family-secondary mt-0_75 mb-2">
         {{ pageStore.evaluationIntroPage.introduction }}
       </p>
       <div class="consent-container">
         <label class="checkbox">
           <input type="checkbox" />
           <RichText
-            :richText="pageStore.evaluationIntroPage.dataConsent"
+            :rich-text="pageStore.evaluationIntroPage.dataConsent"
             class="is-size-7"
           />
         </label>
