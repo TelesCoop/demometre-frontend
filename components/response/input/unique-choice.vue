@@ -1,6 +1,6 @@
 <template>
   <div>
-    <QuestionChoice
+    <ResponseChoice
       v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
       :key="responseChoiceIndex"
       :response-choice="responseChoice"

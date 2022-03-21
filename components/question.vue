@@ -5,12 +5,12 @@
 
     <!-- all possible inputs -->
     <div class="my-5">
-      <QuestionInputOpen
+      <ResponseInputOpen
         v-if="question.type === QuestionType.OPEN"
         v-model="answer"
         :color="props.color"
       />
-      <QuestionInputUniqueChoice
+      <ResponseInputUniqueChoice
         v-else
         v-model="answer"
         :response-choices="question.responseChoices"
