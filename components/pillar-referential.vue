@@ -79,7 +79,7 @@
           :rich-text="pillar.description"
           class="is-family-secondary"
         />
-        <div class="buttons are-small mt-0_5">
+        <div class="buttons are-small mt-2">
           <!-- TODO : change button links -->
           <nuxt-link
             :class="`button is-${color} is-rounded is-responsive`"
