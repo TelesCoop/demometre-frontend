@@ -2,6 +2,7 @@
   <div>
     <div>
       <Navbar />
+      <Breadcrumb />
       <!-- TODO insert breadcrumbs -->
       <slot></slot>
       <Footer />

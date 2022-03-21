@@ -5,4 +5,8 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  title: "Accueil",
+  breadcrumb: "Accueil",
+})
 </script>
