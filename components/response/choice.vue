@@ -21,8 +21,9 @@
       <p class="response-choice-title has-text-black">
         {{ props.responseChoice.responseChoice }}
       </p>
-      <p class="response-choice-description is-size-6bis">description</p>
-      <!-- TODO actual description-->
+      <p class="response-choice-description is-size-6bis">
+        {{ props.responseChoice.description }}
+      </p>
     </div>
   </div>
 </template>
