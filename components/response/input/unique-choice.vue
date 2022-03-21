@@ -23,6 +23,7 @@ const props = defineProps({
   },
   modelValue: { type: Number, required: false, default: 0 },
   color: { type: String, required: true },
+  questionId: { type: Number, required: true },
 })
 const isResponseChoiceSelected = computed(
   () => (responseChoiceId) => responseChoiceId === props.modelValue

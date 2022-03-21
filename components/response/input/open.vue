@@ -1,9 +1,13 @@
 <template>
   <div class="open">
-    <label class="is-size-6bis mb-3 is-block has-text-grey">
+    <label
+      class="is-size-6bis mb-3 is-block has-text-grey"
+      :for="`$question-${props.questionId}-open`"
+    >
       Réponse ouverte
     </label>
     <textarea
+      :id="`$question-${props.questionId}-open`"
       v-model="answer"
       class="textarea has-text-grey-dark"
       :class="`has-background-${props.color}-light has-border-${props.color}-dark`"
@@ -19,6 +23,7 @@ import { useModel } from "~/composables/modelWrapper"
 const props = defineProps({
   color: { type: String, required: true },
   modelValue: { required: true },
+  questionId: { required: true, type: Number },
 })
 
 const answer = useModel(props, "modelValue")

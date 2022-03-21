@@ -9,12 +9,14 @@
         v-if="question.type === QuestionType.OPEN"
         v-model="answer"
         :color="props.color"
+        :question-id="questionId"
       />
       <ResponseInputUniqueChoice
         v-else
         v-model="answer"
         :response-choices="question.responseChoices"
         :color="props.color"
+        :question-id="questionId"
       />
     </div>
 
