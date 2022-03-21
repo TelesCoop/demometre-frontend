@@ -20,12 +20,15 @@
           />
         </label>
       </div>
-      <div class="buttons mt-6 is-justify-content-center">
+      <div class="buttons mt-4 is-justify-content-center">
         <!-- TODO rediriger vers en savoir plus une fois la page réalisée -->
         <NuxtLink to="/" class="button is-normal is-rounded"
           >En savoir plus</NuxtLink
         >
-        <button class="button is-normal is-rounded">Commencer</button>
+        <button class="button is-normal is-rounded">
+          <span>Commencer</span>
+          <span class="ml-0_5"><check></check></span>
+        </button>
 
         <!-- Permet d'appuyer sur entrer -->
         <input type="submit" hidden />
@@ -36,6 +39,7 @@
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
+import Check from "~/components/icons/check.vue"
 
 const pageStore = usePageStore()
 
