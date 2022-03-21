@@ -8,7 +8,7 @@
     "
   >
     <div
-      class="letter mr-4"
+      class="letter mr-1"
       :class="
         props.selected
           ? 'has-border-success has-background-success has-text-white'
