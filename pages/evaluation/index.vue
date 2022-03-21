@@ -1,6 +1,10 @@
 <template>
   <div class="container is-fluid">
-    <div class="column is-one-third is-offset-one-third">
+    <form
+      class="column is-one-third is-offset-one-third"
+      action="/evaluation/localisation"
+      @submit="onSubmit"
+    >
       <h1 class="title is-3 has-text-black-ter has-text-centered">
         {{ pageStore.evaluationIntroPage.title }}
       </h1>
@@ -9,24 +13,42 @@
       </p>
       <div class="consent-container">
         <label class="checkbox">
-          <input type="checkbox" />
+          <input type="checkbox" required />
           <RichText
             :rich-text="pageStore.evaluationIntroPage.dataConsent"
             class="is-size-7"
           />
         </label>
       </div>
-    </div>
+      <div class="buttons mt-4 is-justify-content-center">
+        <!-- TODO rediriger vers en savoir plus une fois la page réalisée -->
+        <NuxtLink to="/" class="button is-normal is-rounded"
+          >En savoir plus</NuxtLink
+        >
+        <button class="button is-normal is-rounded">
+          <span>Commencer</span>
+          <span class="ml-0_5"><check></check></span>
+        </button>
+
+        <!-- Permet d'appuyer sur entrer -->
+        <input type="submit" hidden />
+      </div>
+    </form>
   </div>
 </template>
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
+import Check from "~/components/icons/check.vue"
 
 const pageStore = usePageStore()
 
 if (!pageStore.evaluationIntroPage.title) {
   pageStore.loadEvaluationIntroPage()
+}
+
+function onSubmit() {
+  this.$route.push("/evaluation/localisation")
 }
 </script>
 
