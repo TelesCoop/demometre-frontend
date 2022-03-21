@@ -1,6 +1,6 @@
 <template>
   <div class="columns">
-    <aside class="menu column is-5 mr-0_5">
+    <aside class="menu column is-5 mr-2">
       <div class="tabs">
         <ul>
           <li class="is-active">
