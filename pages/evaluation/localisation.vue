@@ -24,7 +24,7 @@
         <div class="control">
           <input
             v-model="zipCode"
-            class="input is-normal"
+            class="input is-normal-width"
             type="text"
             placeholder="Text input"
             @input="onInputZipCode"
