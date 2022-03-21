@@ -13,7 +13,7 @@
       </p>
       <div class="consent-container">
         <label class="checkbox">
-          <input v-model="dataConsent" type="checkbox" required />
+          <input type="checkbox" required />
           <RichText
             :rich-text="pageStore.evaluationIntroPage.dataConsent"
             class="is-size-7"
@@ -36,15 +36,12 @@
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
-import { ref } from "@vue/reactivity"
 
 const pageStore = usePageStore()
 
 if (!pageStore.evaluationIntroPage.title) {
   pageStore.loadEvaluationIntroPage()
 }
-
-const dataConsent = ref(false)
 
 function onSubmit() {
   this.$route.push("/evaluation/localisation")
