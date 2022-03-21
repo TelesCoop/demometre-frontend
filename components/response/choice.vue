@@ -10,9 +10,10 @@
     <div
       class="letter mr-4"
       :class="
-        `has-text-${props.color}-dark ` + props.selected
+        `has-text-${props.color}-dark ` +
+        (props.selected
           ? `has-border-${props.color}-dark has-background-${props.color}`
-          : `has-border-${props.color}`
+          : `has-border-${props.color} has-background-white`)
       "
     >
       {{ letter }}
@@ -49,8 +50,6 @@ const letter = computed(() => letters[props.responseChoiceIndex])
   padding: 16px
   border-radius: 6px
   cursor: pointer
-  + .response-choice
-    margin-top: 10px
   .letter
     text-align: center
     padding-top: 6px
