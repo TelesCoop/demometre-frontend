@@ -1,6 +1,6 @@
 <template>
   <div class="columns">
-    <aside class="menu column is-5 mr-2rem">
+    <aside class="menu column is-5 mr-0_5">
       <div class="tabs">
         <ul>
           <li class="is-active">
@@ -50,13 +50,13 @@
         </li>
       </ul>
     </aside>
-    <div class="content column is-7 my-5">
+    <div class="content column is-7 my-1_5">
       <div v-if="activeMarker">
         <header>
           <h2 class="title is-4">{{ markerTitle }}</h2>
           <RichText
             v-if="activeMarker.description"
-            :richText="activeMarker.description"
+            :rich-text="activeMarker.description"
             class="is-family-secondary"
           />
         </header>
@@ -64,7 +64,7 @@
         <div class="score">
           <div v-for="i in 4" :key="i" class="level">
             <div class="level-left">
-              <Score :score="i" :color="color" class="level-item mr-5" />
+              <Score :score="i" :color="color" class="level-item mr-1_5" />
               <p class="level-item">
                 {{ wordTitleCase(activeMarker["score" + i]) }}
               </p>
@@ -76,10 +76,10 @@
         <h2 class="title is-3">{{ wordTitleCase(pillar.name) }}</h2>
         <RichText
           v-if="pillar.description"
-          :richText="pillar.description"
+          :rich-text="pillar.description"
           class="is-family-secondary"
         />
-        <div class="buttons are-small mt-2rem">
+        <div class="buttons are-small mt-0_5">
           <!-- TODO : change button links -->
           <nuxt-link
             :class="`button is-${color} is-rounded is-responsive`"
@@ -121,9 +121,9 @@ const props = defineProps({
 
 const activeMarker = ref<Marker>()
 const criterias = ref<Criteria[]>()
-const hoverMarkerId = ref<Number>()
+const hoverMarkerId = ref<number>()
 
-const markerTitle = computed<String>(() =>
+const markerTitle = computed<string>(() =>
   activeMarker.value ? wordTitleCase(activeMarker.value.name) : ""
 )
 

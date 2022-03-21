@@ -2,7 +2,7 @@
   <div class="container">
     <h1 class="is-size-1">Localisation</h1>
     <!--  TODO changer texte p-->
-    <p class="mb-6">
+    <p class="mb-3">
       Texte précisant la question (définition, exemple, reformulation) et
       pourquoi elle est posée.
     </p>
@@ -19,7 +19,7 @@
       <!--        </div>-->
       <!--      </div>-->
 
-      <div class="field mb-6">
+      <div class="field mb-3">
         <label class="label">Code postal</label>
         <div class="control">
           <input
@@ -33,7 +33,7 @@
       </div>
     </form>
 
-    <div v-if="assessmentStore.assessments?.length" class="field mb-6">
+    <div v-if="assessmentStore.assessments?.length" class="field mb-3">
       <label class="label"
         >Êtes-vous intéressé·e par la démocratie dans votre commune ou votre
         intercommunalité&nbsp;?</label
