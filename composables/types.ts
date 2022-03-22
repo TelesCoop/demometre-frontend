@@ -24,21 +24,21 @@ export enum PillarName {
 
 export const PillarParams = {
   [PillarName.REPRESENTATION]: {
-    color: "success",
-    picto: "picto-representation.png"
+    color: "representation",
+    picto: "picto-representation.png",
   },
   [PillarName.COOPERATION]: {
-    color: "danger",
-    picto: "picto-cooperation.png"
+    color: "cooperation",
+    picto: "picto-cooperation.png",
   },
   [PillarName.TRANSPARENCY]: {
-    color: "info",
-    picto: "picto-transparency.png"
+    color: "transparency",
+    picto: "picto-transparency.png",
   },
   [PillarName.PARTICIPATION]: {
-    color: "link",
-    picto: "picto-participation.png"
-  }
+    color: "participation",
+    picto: "picto-participation.png",
+  },
 }
 
 export type User = { id: number; email: string; username: string }
@@ -78,6 +78,7 @@ export type Criteria = {
 export type ResponseChoice = {
   id: number
   responseChoice: string
+  description: string
 }
 export type Question = {
   id: number
@@ -98,13 +99,11 @@ export type Question = {
   useCase: string
   resources: string
 }
-export type Answer = {
-  title: string
-  description: string
-  answerIndex?: number
-  id?: number
-}
 export type Assessment = { id: number; zipCode: string[]; type: string }
 export type HomePage = { title: string; introduction: string }
 export type ReferentialPage = { title: string; introduction: string }
-export type EvaluationIntroPage = { title: string; introduction: string; dataConsent: string }
+export type EvaluationIntroPage = {
+  title: string
+  introduction: string
+  dataConsent: string
+}
