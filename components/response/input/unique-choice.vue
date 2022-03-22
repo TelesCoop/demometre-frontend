@@ -14,6 +14,7 @@
         type="radio"
         :name="genInputId()"
         :value="responseChoice.id"
+        class="custom"
       />
       <label :for="genInputId(responseChoiceIndex)">
         <ResponseChoice
@@ -55,11 +56,3 @@ function genInputId(responseChoiceIndex = null) {
   return `question-${props.questionId}-unique-choice-${responseChoiceIndex}`
 }
 </script>
-
-<style lang="sass">
-input[type=radio]
-  height: 0
-  opacity: 0
-  width: 0
-  position: absolute
-</style>
