@@ -21,6 +21,7 @@
     $color-dark: nth($pair, 4)
     $color-hover: nth($pair, 5)
     $color-light-active: nth($pair, 6)
+    $color-light-hover: nth($pair, 7)
     // active
     .has-border-#{$name}-active
       border: 1px solid $color-active !important
@@ -56,6 +57,13 @@
       background-color: $color-light-active !important
     .has-text-#{$name}-light-active
       color: $color-light-active !important
+    // Light active
+    .has-border-#{$name}-light-hover
+      border: 1px solid $color-light-hover !important
+    .has-background-#{$name}-light-hover
+      background-color: $color-light-hover !important
+    .has-text-#{$name}-light-hover
+      color: $color-light-hover !important
 
 
 .is-representation
@@ -64,6 +72,7 @@
   --color: #{$representation}
   --color-light: #{$representation-light}
   --color-light-active: #{$representation-light-active}
+  --color-light-hover: #{$representation-light-hover}
   --color-dark: #{$representation-dark}
 
 .is-cooperation
@@ -72,6 +81,7 @@
   --color: #{$cooperation}
   --color-light: #{$cooperation-light}
   --color-light-active: #{$cooperation-light-active}
+  --color-light-hover: #{$cooperation-light-hover}
   --color-dark: #{$cooperation-dark}
 
 .is-transparency
@@ -80,6 +90,7 @@
   --color: #{$transparency}
   --color-light: #{$transparency-light}
   --color-light-active: #{$transparency-light-active}
+  --color-light-hover: #{$transparency-light-hover}
   --color-dark: #{$transparency-dark}
 
 .is-participation
@@ -88,4 +99,5 @@
   --color: #{$participation}
   --color-light: #{$participation-light}
   --color-light-active: #{$participation-light-active}
+  --color-light-hover: #{$participation-light-hover}
   --color-dark: #{$participation-dark}
