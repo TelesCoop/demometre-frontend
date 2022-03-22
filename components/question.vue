@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <h1 class="title is-3">{{ question?.questionStatement }}</h1>
-    <div><RichText :rich-text="question?.description"></RichText></div>
+    <RichText :rich-text="question?.description"></RichText>
 
     <!-- all possible inputs -->
     <div class="my-5">
