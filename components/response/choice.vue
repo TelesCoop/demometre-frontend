@@ -27,6 +27,9 @@
         {{ props.responseChoice.description }}
       </p>
     </div>
+    <div v-if="props.selected" class="mb-auto mt-auto ml-auto">
+      <icon name="check-line" size="24" class="icon mt-0_5 mr-0_5" />
+    </div>
   </div>
 </template>
 
