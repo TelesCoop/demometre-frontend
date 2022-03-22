@@ -4,7 +4,7 @@
     <RichText :rich-text="question?.description"></RichText>
 
     <!-- all possible inputs -->
-    <div class="my-5">
+    <div class="my-1_5">
       <ResponseInputOpen
         v-if="question.type === QuestionType.OPEN"
         v-model="answer"
@@ -23,7 +23,7 @@
     <!-- end inputs -->
 
     <!-- TODO add links -->
-    <div class="button-bar my-5">
+    <div class="button-bar my-1_5">
       <a href="" class="button is-dark is-outlined is-rounded">
         <span>Passer</span>
         <i class="icon">
