@@ -12,7 +12,14 @@
         :question-id="questionId"
       />
       <ResponseInputUniqueChoice
-        v-else
+        v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
+        v-model="answer"
+        :response-choices="question.responseChoices"
+        :color="props.color"
+        :question-id="questionId"
+      />
+      <ResponseInputMultipleChoice
+        v-else-if="question.type === QuestionType.MULTIPLE_CHOICE"
         v-model="answer"
         :response-choices="question.responseChoices"
         :color="props.color"
