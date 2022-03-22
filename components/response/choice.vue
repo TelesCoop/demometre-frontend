@@ -2,9 +2,10 @@
   <div
     class="response-choice"
     :class="
-      props.selected
+      `is-${color} ` +
+      (props.selected
         ? `has-border-${props.color}-dark has-background-${props.color}-light-active`
-        : `has-border-transparent has-background-${props.color}-light`
+        : `has-border-transparent has-background-${props.color}-light`)
     "
   >
     <div
@@ -45,6 +46,13 @@ const letter = computed(() => letters[props.responseChoiceIndex])
 </script>
 
 <style lang="sass">
+input:focus,input:not(:checked):hover + label .response-choice
+  background-color: var(--color-light-hover) !important
+  .letter
+    border-color: var(--color-hover) !important
+    background-color: var(--color-light) !important
+
+
 .response-choice
   display: flex
   padding: 16px
