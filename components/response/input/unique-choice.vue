@@ -6,7 +6,7 @@
     <div
       v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
       :key="responseChoiceIndex"
-      class="mb-0_5"
+      class="mb-1"
     >
       <input
         :id="genInputId(responseChoiceIndex)"

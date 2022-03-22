@@ -1,12 +1,12 @@
 <template>
   <fieldset>
-    <legend class="is-size-6bis mb-1_5 is-block has-text-grey">
+    <legend class="is-size-6bis mb-0_75 is-block has-text-grey">
       Choisissez une réponse
     </legend>
     <div
       v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
       :key="responseChoiceIndex"
-      class="mb-0_5"
+      class="mb-1"
     >
       <input
         :id="genInputId(responseChoiceIndex)"
