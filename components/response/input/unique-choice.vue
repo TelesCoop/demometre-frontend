@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div class="is-size-6bis mb-0_75 is-block has-text-grey">
+  <fieldset>
+    <legend class="is-size-6bis mb-0_75 is-block has-text-grey">
       Choisissez une réponse
-    </div>
+    </legend>
     <div
       v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
       :key="responseChoiceIndex"
@@ -26,7 +26,7 @@
         />
       </label>
     </div>
-  </div>
+  </fieldset>
 </template>
 
 <script setup lang="ts">

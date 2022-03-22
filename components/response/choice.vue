@@ -46,11 +46,12 @@ const letter = computed(() => letters[props.responseChoiceIndex])
 </script>
 
 <style lang="sass">
-input:focus,input:not(:checked):hover + label .response-choice
-  background-color: var(--color-light-hover) !important
-  .letter
-    border-color: var(--color-hover) !important
-    background-color: var(--color-light) !important
+input:focus-visible,input:not(:checked):hover
+  + label .response-choice
+    background-color: var(--color-light-hover) !important
+    .letter
+      border-color: var(--color-hover) !important
+      background-color: var(--color-light) !important
 
 
 .response-choice
