@@ -1,14 +1,8 @@
 /* The utilities that cannot be used after compiling
  should be in tools.sass and not in app.sass */
-@import "./tools.sass"
+@import "tools"
 
-// CUSTOM
-// add borders for each color
-@import "../node_modules/bulma/sass/utilities/derived-variables"
-@each $name, $pair in $colors
-  $color: nth($pair, 1)
-  .has-border-#{$name}
-    border: 1px solid $color !important
+@import "colors"
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/base/_all.sass"
@@ -29,6 +23,9 @@
 
 .is-flex
   display: flex
+
+.is-block
+  display: block
 
 .flex-center
   justify-content: center
@@ -55,3 +52,7 @@
 
 // Custom sass
 @import "inputs"
+
+.container.is-tight
+  @include tablet
+    max-width: 760px !important

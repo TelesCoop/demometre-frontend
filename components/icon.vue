@@ -1,9 +1,18 @@
+<!-- regex
+\s+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="(.*)"/></svg>
+\n    <template v-else-if="props.name === ''">
+        <path
+          :fill="props.color"
+          d="$1"
+        />
+      </template>
+-->
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    :width="size"
-    :height="size"
+    :width="props.size"
+    :height="props.size"
   >
     <path fill="none" d="M0 0h24v24H0z" />
     <template v-if="props.name === 'mail-line'">
@@ -22,6 +31,24 @@
       <path
         :fill="props.color"
         d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+      />
+    </template>
+    <template v-else-if="props.name === 'chat-4'">
+      <path
+        :fill="props.color"
+        d="M5.763 17H20V5H4v13.385L5.763 17zm.692 2L2 22.5V4a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6.455z"
+      />
+    </template>
+    <template v-else-if="props.name === 'bar-chart-box'">
+      <path
+        :fill="props.color"
+        d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm1 2v14h16V5H4zm3 8h2v4H7v-4zm4-6h2v10h-2V7zm4 3h2v7h-2v-7z"
+      />
+    </template>
+    <template v-else-if="props.name === 'question-mark'">
+      <path
+        :fill="props.color"
+        d="M12 19c.828 0 1.5.672 1.5 1.5S12.828 22 12 22s-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm0-17c3.314 0 6 2.686 6 6 0 2.165-.753 3.29-2.674 4.923C13.399 14.56 13 15.297 13 17h-2c0-2.474.787-3.695 3.031-5.601C15.548 10.11 16 9.434 16 8c0-2.21-1.79-4-4-4S8 5.79 8 8v1H6V8c0-3.314 2.686-6 6-6z"
       />
     </template>
   </svg>
