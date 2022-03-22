@@ -74,7 +74,10 @@
 </template>
 
 <script setup lang="ts">
-import { QuestionType, Question } from "~/composables/types"
+import { QuestionType, Question, Definition } from "~/composables/types"
+import { useDefinitionStore } from "~/stores/definitionStore"
+
+const definitionStore = useDefinitionStore()
 
 type tabDef = { label: string; id: string }
 
@@ -92,6 +95,10 @@ const { data, error } = await useApiGet<Question>(
 if (!error.value) {
   question.value = data.value
 }
+
+const definitions = ref<{ [key: number]: Definition }>(
+  definitionStore.definitionsByIdArray(question.value.definitionIds)
+)
 
 const currentTabId = ref<string>("definitions")
 const tabs = ref<tabDef[]>([

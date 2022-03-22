@@ -24,8 +24,9 @@ export const useDefinitionStore = defineStore("definition", {
       if (!Object.keys(this.definitionById).length) await this.loadDefinitions()
       else console.log("tralala")
     },
-    definitionsByIdArray(idArray: number[]) {
-      return pick(this.definitionById, idArray)
+    definitionsByIdArray(ids: number[]) {
+      console.log({ defs: this.definitionById, ids })
+      return pick(this.definitionById, ids)
     },
   },
 })
