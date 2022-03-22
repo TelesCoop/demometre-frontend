@@ -62,9 +62,10 @@ input:focus-visible,input:not(:checked):hover
   padding: 16px
   border-radius: 6px
   cursor: pointer
+  line-height: 1.3
   .letter
     text-align: center
-    padding-top: 6px
+    padding-top: 8px
     min-width: 40px
     height: 40px
     border-radius: 6px
