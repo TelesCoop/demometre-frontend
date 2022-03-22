@@ -28,7 +28,8 @@
         ICI SCHEMA PILIERS
       </div>
     </section>
-    <div class="columns is-multiline" style="padding-top: 100px">
+    <hr />
+    <div class="columns is-multiline mt-4">
       <div
         v-for="pillar of questionnaireStore.pillars"
         :key="pillar.name"
