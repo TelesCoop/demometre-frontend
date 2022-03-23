@@ -27,9 +27,9 @@
         >
         <button class="button is-normal is-rounded">
           <span>Commencer</span>
-          <i class="icon">
-            <Icon height="9" width="12" name="check" />
-          </i>
+          <span class="icon">
+            <icon height="18" width="24" name="check" />
+          </span>
         </button>
 
         <!-- Permet d'appuyer sur entrer -->
