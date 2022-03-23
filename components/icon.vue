@@ -53,7 +53,7 @@
     </template>
     <template v-else-if="props.name === 'check'">
       <path
-        d="M4.66649 7.11463L10.7945 0.985962L11.7378 1.92863L4.66649 8.99996L0.423828 4.7573L1.36649 3.81463L4.66649 7.11463Z"
+        d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"
         :fill="props.color"
       />
     </template>
@@ -63,7 +63,7 @@
 <script setup lang="ts">
 const props = defineProps({
   name: { type: String, required: true },
-  width: { default: "1px" },
+  width: { default: "1x" },
   height: { default: "1x" },
   color: { default: "currentColor" },
 })

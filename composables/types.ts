@@ -120,6 +120,7 @@ export type Assessment = {
   end_date: string
   municipality: Locality | null
   epci: Locality | null
+  participationNb: number
 }
 
 export type HomePage = { title: string; introduction: string }
