@@ -97,7 +97,8 @@ export type Question = {
   maxLabel: string
   legalFrame: string
   useCase: string
-  resources: string
+  sources: string
+  toGoFurther: string
 }
 export type Assessment = { id: number; zipCode: string[]; type: string }
 export type HomePage = { title: string; introduction: string }
