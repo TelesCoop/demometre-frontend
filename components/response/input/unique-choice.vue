@@ -56,7 +56,7 @@ function genInputId(responseChoiceIndex = null) {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 input[type=radio]
   height: 0
   opacity: 0

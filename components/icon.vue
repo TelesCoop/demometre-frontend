@@ -11,8 +11,8 @@
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    :width="props.size"
-    :height="props.size"
+    :width="props.width"
+    :height="props.height"
   >
     <path fill="none" d="M0 0h24v24H0z" />
     <template v-if="props.name === 'mail-line'">
@@ -51,18 +51,28 @@
         d="M12 19c.828 0 1.5.672 1.5 1.5S12.828 22 12 22s-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm0-17c3.314 0 6 2.686 6 6 0 2.165-.753 3.29-2.674 4.923C13.399 14.56 13 15.297 13 17h-2c0-2.474.787-3.695 3.031-5.601C15.548 10.11 16 9.434 16 8c0-2.21-1.79-4-4-4S8 5.79 8 8v1H6V8c0-3.314 2.686-6 6-6z"
       />
     </template>
+    <template v-else-if="props.name === 'check'">
+      <path
+        d="M4.66649 7.11463L10.7945 0.985962L11.7378 1.92863L4.66649 8.99996L0.423828 4.7573L1.36649 3.81463L4.66649 7.11463Z"
+        :fill="props.color"
+      />
+    </template>
   </svg>
 </template>
 
 <script setup lang="ts">
 const props = defineProps({
   name: { type: String, required: true },
-  size: { default: "1x" },
+  width: { default: "1px" },
+  height: { default: "1x" },
   color: { default: "currentColor" },
 })
 
 const size = computed(() => {
-  if (props.size == "1x") {
+  if (props.width == "1x") {
+    return 24
+  }
+  if (props.height == "1x") {
     return 24
   }
 })

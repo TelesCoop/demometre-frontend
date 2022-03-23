@@ -27,23 +27,23 @@
       <a href="" class="button is-dark is-outlined is-rounded">
         <span>Passer</span>
         <i class="icon">
-          <Icon size="16" name="arrow-right-line" />
+          <Icon height="16" width="16" name="arrow-right-line" />
         </i>
       </a>
       <div class="is-flex buttons rounds">
         <a href="" class="button is-dark is-outlined is-rounded">
           <i class="icon">
-            <Icon size="16" name="chat-4" />
+            <Icon height="16" width="16" name="chat-4" />
           </i>
         </a>
         <a href="" class="button is-dark is-outlined is-rounded">
           <i class="icon">
-            <Icon size="16" name="bar-chart-box" />
+            <Icon height="16" width="16" name="bar-chart-box" />
           </i>
         </a>
         <a href="" class="button is-dark is-outlined is-rounded">
           <i class="icon">
-            <Icon size="16" name="question-mark" />
+            <Icon height="16" width="16" name="question-mark" />
           </i>
         </a>
       </div>
@@ -118,7 +118,6 @@ function setTab(tabId) {
   .buttons.rounds .button
     height: 40px
     width: 40px
-
 
 .tabs .tab
   color: var(--color)

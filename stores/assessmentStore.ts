@@ -2,37 +2,51 @@ import { defineStore } from "pinia"
 import { Assessment } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 
-type AssessmentResponse = { items: Assessment[] }
-
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
     assessmentById: <{ [key: number]: Assessment }>{},
+    currentAssessmentId: <number>{},
   }),
   getters: {
     assessments() {
       return Object.values(this.assessmentById)
     },
-    municipalityAssessment() {
+    municipalityAssessments() {
       return this.assessments.find(
         (assessment: Assessment) => assessment.type === "municipality"
       )
     },
-    intercommunalityAssessment() {
+    intercommunalityAssessments() {
       return this.assessments.find(
         (assessment: Assessment) => assessment.type === "intercommunality"
       )
     },
+    currentAssessment() {
+      return this.assessmentById[this.currentAssessmentId]
+    },
   },
   actions: {
-    async loadAssessments({ zipCode }) {
-      const { data, error } = await useApiGet<AssessmentResponse>(
-        `assessments?zip_code=${zipCode}`
+    // async loadAssessments({ zipCode }) {
+    //   const { data, error } = await useApiGet<AssessmentResponse>(
+    //     `assessments/by-locality?zip_code=${zipCode}&locality_type=${locality_type}`
+    //   )
+    //   if (!error.value) {
+    //     for (const assessment of data.value.items) {
+    //       this.assessmentById[assessment.id] = assessment
+    //     }
+    //   }
+    // },
+    async getOrCreateAssessment({ zipCode, localityType }) {
+      const { data, error } = await useApiGet<Assessment>(
+        `assessments/by-locality/?zip_code=${zipCode}&locality_type=${localityType}`
       )
+      console.log("RECEIVE DATA")
+      console.log(data)
+      console.log(error)
       if (!error.value) {
-        for (const assessment of data.value.items) {
-          this.assessmentById[assessment.id] = assessment
-        }
+        this.assessmentById[data.value.id] = data.value
+        this.currentAssessmentId = data.value.id
       }
-    },
+    }
   },
 })

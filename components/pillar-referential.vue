@@ -87,7 +87,12 @@
           >
             <span>Evaluer ce pilier</span>
             <span class="icon">
-              <icon name="arrow-right-line" size="10" class="icon" />
+              <icon
+                name="arrow-right-line"
+                height="10"
+                width="10"
+                class="icon"
+              />
             </span>
           </nuxt-link>
           <nuxt-link
