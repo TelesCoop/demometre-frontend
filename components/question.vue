@@ -1,62 +1,62 @@
 <template>
   <div class="section">
-    <h1 class="title is-3">{{ question?.questionStatement }}</h1>
-    <RichText :rich-text="question?.description"></RichText>
+    <section class="pb-2">
+      <h1 class="title is-3">{{ question?.questionStatement }}</h1>
+      <RichText :rich-text="question?.description"></RichText>
 
-    <!-- all possible inputs -->
-    <div class="my-1_5">
-      <ResponseInputOpen
-        v-if="question.type === QuestionType.OPEN"
-        v-model="answer"
-        :color="props.color"
-        :question-id="questionId"
-      />
-      <ResponseInputUniqueChoice
-        v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
-        v-model="answer"
-        :response-choices="question.responseChoices"
-        :color="props.color"
-        :question-id="questionId"
-      />
-      <ResponseInputMultipleChoice
-        v-else-if="question.type === QuestionType.MULTIPLE_CHOICE"
-        v-model="answer"
-        :response-choices="question.responseChoices"
-        :color="props.color"
-        :question-id="questionId"
-      />
-    </div>
-
-    <!-- end inputs -->
-
-    <!-- TODO add links -->
-    <div class="button-bar my-1_5">
-      <a href="" class="button is-dark is-outlined is-rounded">
-        <span>Passer</span>
-        <i class="icon">
-          <Icon size="16" name="arrow-right-line" />
-        </i>
-      </a>
-      <div class="is-flex buttons rounds">
-        <a href="" class="button is-dark is-outlined is-rounded">
-          <i class="icon">
-            <Icon size="16" name="chat-4" />
-          </i>
-        </a>
-        <a href="" class="button is-dark is-outlined is-rounded">
-          <i class="icon">
-            <Icon size="16" name="bar-chart-box" />
-          </i>
-        </a>
-        <a href="" class="button is-dark is-outlined is-rounded">
-          <i class="icon">
-            <Icon size="16" name="question-mark" />
-          </i>
-        </a>
+      <!-- all possible inputs -->
+      <div class="my-1_5">
+        <ResponseInputOpen
+          v-if="question.type === QuestionType.OPEN"
+          v-model="answer"
+          :color="props.color"
+          :question-id="questionId"
+        />
+        <ResponseInputUniqueChoice
+          v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
+          v-model="answer"
+          :response-choices="question.responseChoices"
+          :color="props.color"
+          :question-id="questionId"
+        />
+        <ResponseInputMultipleChoice
+          v-else-if="question.type === QuestionType.MULTIPLE_CHOICE"
+          v-model="answer"
+          :response-choices="question.responseChoices"
+          :color="props.color"
+          :question-id="questionId"
+        />
       </div>
-    </div>
+      <!-- end inputs -->
 
-    <div :class="`menu is-${color}`">
+      <!-- TODO add links -->
+      <div class="button-bar my-1_5">
+        <a href="" class="button is-dark is-outlined is-rounded">
+          <span>Passer</span>
+          <i class="icon">
+            <Icon size="16" name="arrow-right-line" />
+          </i>
+        </a>
+        <div class="is-flex buttons rounds">
+          <a href="" class="button is-dark is-outlined is-rounded">
+            <i class="icon">
+              <Icon size="16" name="chat-4" />
+            </i>
+          </a>
+          <a href="" class="button is-dark is-outlined is-rounded">
+            <i class="icon">
+              <Icon size="16" name="bar-chart-box" />
+            </i>
+          </a>
+          <a href="" class="button is-dark is-outlined is-rounded">
+            <i class="icon">
+              <Icon size="16" name="question-mark" />
+            </i>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="pt-2" :class="`menu is-${color}`">
       <div class="tabs">
         <ul>
           <li v-for="tab of tabs" :key="tab.id">
@@ -70,14 +70,10 @@
         </ul>
       </div>
       <div v-show="currentTabId === 'definitions'">
-        <section
-          v-for="definition of definitions"
-          :key="definition.id"
-          class="mt-1"
-        >
+        <p v-for="definition of definitions" :key="definition.id" class="mt-1">
           <span class="has-text-weight-bold">{{ definition.word }}</span>
           <RichText class="mt-1 is-block" :rich-text="definition.explanation" />
-        </section>
+        </p>
       </div>
       <div v-show="currentTabId === 'legal-frame'">
         <RichText :rich-text="question.legalFrame" />
@@ -91,7 +87,7 @@
       <div v-show="currentTabId === 'to-go-further'">
         <RichText :rich-text="question.toGoFurther" />
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
