@@ -31,12 +31,28 @@
 
       <!-- TODO add links -->
       <div class="button-bar my-1_5">
-        <a href="" class="button is-dark is-outlined is-rounded">
-          <span>Passer</span>
-          <i class="icon">
-            <Icon size="16" name="arrow-right-line" />
-          </i>
-        </a>
+        <template v-if="isAnswered">
+          <div class="is-flex is-align-items-center">
+            <a href="" class="button is-dark is-outlined is-rounded mr-0_75">
+              <span>Valider</span>
+              <i class="icon">
+                <Icon size="16" name="check-line" />
+              </i>
+            </a>
+            <span class="is-size-7">
+              appuyez sur
+              <span class="has-text-weight-bold">Entrer ⮐</span></span
+            >
+          </div>
+        </template>
+        <template v-else>
+          <a href="" class="button is-dark is-outlined is-rounded">
+            <span>Passer</span>
+            <i class="icon">
+              <Icon size="16" name="arrow-right-line" />
+            </i>
+          </a>
+        </template>
         <a
           href="#menu"
           class="button is-dark is-outlined is-rounded round absolute-centered"
@@ -114,6 +130,10 @@ const props = defineProps({
 })
 
 const answer = ref()
+const isAnswered = computed(() => {
+  if (Array.isArray(answer.value)) return !!answer.value.length
+  return !!answer.value
+})
 
 const question = ref<Question>(null)
 const { data, error } = await useApiGet<Question>(
