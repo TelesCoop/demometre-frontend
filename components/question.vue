@@ -119,15 +119,19 @@ const tabs = ref<tabDef[]>([
   },
   {
     label: "Cadre légal",
-    id: "legal",
+    id: "legal-frame",
   },
   {
-    label: "Cas d'usage",
-    id: "use",
+    label: "Exemples inspirants",
+    id: "use-case",
   },
   {
-    label: "Ressources",
-    id: "ressources",
+    label: "Sources",
+    id: "sources",
+  },
+  {
+    label: "Pour aller plus loin",
+    id: "to-go-further",
   },
 ])
 
