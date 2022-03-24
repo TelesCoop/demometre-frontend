@@ -1,5 +1,5 @@
 <template>
-  <span class="rich-text" v-html="richText"></span>
+  <span class="rich-text" v-html="props.richText"></span>
 </template>
 
 <script setup lang="ts">
