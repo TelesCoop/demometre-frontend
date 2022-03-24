@@ -69,7 +69,7 @@
           </div>
 
           <div class="buttons mt-4">
-            <button class="button is-normal is-rounded">
+            <button class="button is-normal is-rounded" :disabled="disabled">
               <span>Valider</span>
               <span class="icon">
                 <icon size="24" name="check" />
@@ -93,6 +93,9 @@ import { LocalityType } from "~/composables/types"
 
 const zipCode = ref("")
 const localityTypeSelected = ref<string>()
+const disabled = computed(() =>
+  zipCode.value && localityTypeSelected.value ? false : true
+)
 
 const assessmentStore = useAssessmentStore()
 
@@ -101,8 +104,8 @@ async function onSubmit() {
     zipCode: zipCode.value,
     localityType: localityTypeSelected.value,
   })
-  const router = useRouter()
-  router.push("/evaluation/assessment")
+  // const router = useRouter()
+  // router.push("/evaluation/assessment")
 }
 </script>
 

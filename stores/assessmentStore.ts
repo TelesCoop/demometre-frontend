@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import { Assessment } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
+import { useErrorStore } from "./errorStore"
 
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
@@ -30,6 +31,11 @@ export const useAssessmentStore = defineStore("assessment", {
       const { data, error } = await useApiGet<Assessment>(
         `assessments/by-locality/?zip_code=${zipCode}&locality_type=${localityType}`
       )
+      if (error.value) {
+        const errorStore = useErrorStore()
+        errorStore.setError(error.value.data)
+        return error.value.data
+      }
       if (!error.value) {
         this.assessmentById[data.value.id] = data.value
         this.currentAssessmentId = data.value.id
