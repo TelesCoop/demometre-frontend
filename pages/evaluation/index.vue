@@ -27,7 +27,9 @@
         >
         <button class="button is-normal is-rounded">
           <span>Commencer</span>
-          <span class="ml-0_5"><check></check></span>
+          <span class="icon">
+            <icon size="24" name="check" />
+          </span>
         </button>
 
         <!-- Permet d'appuyer sur entrer -->
@@ -39,7 +41,6 @@
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
-import Check from "~/components/icons/check.vue"
 
 const pageStore = usePageStore()
 

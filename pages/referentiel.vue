@@ -29,7 +29,7 @@
       </div>
     </section>
     <hr />
-    <div class="columns is-multiline mt-4">
+    <section class="columns is-multiline mt-4">
       <div
         v-for="pillar of questionnaireStore.pillars"
         :key="pillar.name"
@@ -42,15 +42,15 @@
           @click="onSelectPillar(pillar)"
         />
       </div>
-    </div>
+    </section>
 
-    <div v-if="activePillar">
+    <section v-if="activePillar">
       <PillarReferential
         :pillar="activePillar"
         :color="colorClass"
         :markers="markers"
       />
-    </div>
+    </section>
   </div>
 </template>
 

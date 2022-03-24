@@ -28,7 +28,7 @@
       </p>
     </div>
     <div v-if="props.selected" class="mb-auto mt-auto ml-auto">
-      <icon name="check-line" size="24" class="icon mt-0_5 mr-0_5" />
+      <icon name="check" size="24" class="icon mt-0_5 mr-0_5" />
     </div>
   </div>
 </template>
@@ -48,14 +48,13 @@ const letters = "ABCDEFGHIJKLMOPQRSTUVWXYZ"
 const letter = computed(() => letters[props.responseChoiceIndex])
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 input:focus-visible,input:not(:checked):hover
-  + label .response-choice
-    background-color: var(--color-light-hover) !important
-    .letter
-      border-color: var(--color-hover) !important
-      background-color: var(--color-light) !important
-
++ label .response-choice
+  background-color: var(--color-light-hover) !important
+  .letter
+    border-color: var(--color-hover) !important
+    background-color: var(--color-light) !important
 
 .response-choice
   display: flex

@@ -126,7 +126,6 @@ function setTab(tabId) {
     height: 40px
     width: 40px
 
-
 .tabs .tab
   color: var(--color)
   border-bottom-color: currentColor
