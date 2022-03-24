@@ -79,6 +79,18 @@
           <RichText class="mt-1 is-block" :rich-text="definition.explanation" />
         </section>
       </div>
+      <div v-show="currentTabId === 'legal-frame'">
+        <RichText :rich-text="question.legalFrame" />
+      </div>
+      <div v-show="currentTabId === 'use-case'">
+        <RichText :rich-text="question.useCase" />
+      </div>
+      <div v-show="currentTabId === 'sources'">
+        <RichText :rich-text="question.sources" />
+      </div>
+      <div v-show="currentTabId === 'to-go-further'">
+        <RichText :rich-text="question.toGoFurther" />
+      </div>
     </div>
   </div>
 </template>
