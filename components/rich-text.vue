@@ -9,9 +9,9 @@ const props = defineProps({
 </script>
 
 <style scoped lang="sass">
-.rich-text >>> ol
+.rich-text :deep(ol)
   margin-left: 1.5rem
-.rich-text >>> ul
+.rich-text :deep(ul)
   margin-left: 1.5rem
   list-style-type: inherit
 </style>
