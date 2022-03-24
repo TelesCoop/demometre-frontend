@@ -1,18 +1,18 @@
 <!-- regex
 \s+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="(.*)"/></svg>
 \n    <template v-else-if="props.name === ''">
-        <path
-          :fill="props.color"
-          d="$1"
-        />
-      </template>
+      <path
+        :fill="props.color"
+        d="$1"
+      />
+    </template>
 -->
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    :width="props.width"
-    :height="props.height"
+    :width="props.size"
+    :height="props.size"
   >
     <path fill="none" d="M0 0h24v24H0z" />
     <template v-if="props.name === 'mail-line'">
@@ -63,16 +63,12 @@
 <script setup lang="ts">
 const props = defineProps({
   name: { type: String, required: true },
-  width: { default: "1x" },
-  height: { default: "1x" },
+  size: { default: "1x" },
   color: { default: "currentColor" },
 })
 
 const size = computed(() => {
-  if (props.width == "1x") {
-    return 24
-  }
-  if (props.height == "1x") {
+  if (props.size == "1x") {
     return 24
   }
 })

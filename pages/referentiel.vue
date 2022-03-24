@@ -15,7 +15,7 @@
             <span>Comment on a construit le référentiel</span>
 
             <span class="icon">
-              <icon name="arrow-right-line" height="20" width="20" />
+              <icon name="arrow-right-line" size="20" />
             </span>
           </nuxt-link>
         </div>

@@ -1,7 +1,7 @@
 <template>
   <fieldset>
     <legend class="is-size-6bis mb-0_75 is-block has-text-grey">
-      Choisissez une réponse.
+      Choisissez une ou plusieurs réponses.
     </legend>
     <div
       v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
@@ -11,7 +11,7 @@
       <input
         :id="genInputId(responseChoiceIndex)"
         v-model="answer"
-        type="radio"
+        type="checkbox"
         :name="genInputId()"
         :value="responseChoice.id"
         class="custom-hidden"
@@ -38,7 +38,11 @@ const props = defineProps({
     type: Array as PropType<ResponseChoiceType[]>,
     required: true,
   },
-  modelValue: { type: Number, required: false, default: 0 },
+  modelValue: {
+    type: Array as PropType<number[]>,
+    required: false,
+    default: () => [],
+  },
   color: { type: String, required: true },
   questionId: { type: Number, required: true },
 })
@@ -46,13 +50,13 @@ const props = defineProps({
 const answer = useModel(props, "modelValue")
 
 const isResponseChoiceSelected = computed(
-  () => (responseChoiceId) => responseChoiceId === props.modelValue
+  () => (responseChoiceId) => props.modelValue.includes(responseChoiceId)
 )
 
 function genInputId(responseChoiceIndex = null) {
   if (responseChoiceIndex === null) {
-    return `question-${props.questionId}-unique-choice`
+    return `question-${props.questionId}-multiple-choice`
   }
-  return `question-${props.questionId}-unique-choice-${responseChoiceIndex}`
+  return `question-${props.questionId}-multiple-choice-${responseChoiceIndex}`
 }
 </script>

@@ -72,7 +72,7 @@
             <button class="button is-normal is-rounded">
               <span>Valider</span>
               <span class="icon">
-                <icon height="18" width="24" name="check" />
+                <icon size="24" name="check" />
               </span>
             </button>
 
