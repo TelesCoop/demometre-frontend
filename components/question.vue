@@ -69,6 +69,16 @@
           </li>
         </ul>
       </div>
+      <div v-show="currentTabId === 'definitions'">
+        <section
+          v-for="definition of definitions"
+          :key="definition.id"
+          class="mt-1"
+        >
+          <span class="has-text-weight-bold">{{ definition.word }}</span>
+          <RichText class="mt-1 is-block" :rich-text="definition.explanation" />
+        </section>
+      </div>
     </div>
   </div>
 </template>
@@ -76,6 +86,7 @@
 <script setup lang="ts">
 import { QuestionType, Question, Definition } from "~/composables/types"
 import { useDefinitionStore } from "~/stores/definitionStore"
+import RichText from "~/components/rich-text.vue"
 
 const definitionStore = useDefinitionStore()
 
