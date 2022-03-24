@@ -1,7 +1,7 @@
 <template>
   <fieldset>
     <legend class="is-size-6bis mb-0_75 is-block has-text-grey">
-      Choisissez une réponse
+      Choisissez une réponse.
     </legend>
     <div
       v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
@@ -14,7 +14,7 @@
         type="radio"
         :name="genInputId()"
         :value="responseChoice.id"
-        class="custom"
+        class="custom-hidden"
       />
       <label :for="genInputId(responseChoiceIndex)">
         <ResponseChoice
