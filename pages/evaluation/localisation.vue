@@ -54,7 +54,7 @@
                   v-model="localityTypeSelected"
                   type="radio"
                   :value="localityType.key"
-                  class="invisible"
+                  class="custom-hidden"
                   name="localityType"
                   required
                 />
