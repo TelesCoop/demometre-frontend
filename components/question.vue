@@ -26,7 +26,14 @@
           :color="props.color"
           :question-id="questionId"
         />
+        <ResponseInputBinary
+          v-else-if="question.type === QuestionType.BOOLEAN"
+          v-model="answer"
+          :color="props.color"
+          :question-id="questionId"
+        />
       </div>
+
       <!-- end inputs -->
 
       <!-- TODO add links -->
