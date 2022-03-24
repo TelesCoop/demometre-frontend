@@ -1,12 +1,45 @@
 <template>
   <div class="container">
-    <p>{{ assessmentStore.currentAssessment }}</p>
-    <div></div>
+    <h1 class="is-size-1">
+      Tableau de bord de
+      {{
+        assessmentStore.currentAssessment.municipality
+          ? "ma commune"
+          : "mon inter-communalité"
+      }}
+    </h1>
+    {{ assessmentStore.currentAssessment }}
+    <h2 class="is-size-3 mb-2">
+      {{ assessmentStore.currentAssessment.municipality.name }}
+    </h2>
+    <!-- TODO changer le background -->
+    <div class="has-background-white-ter p-1_5">
+      <div class="columns">
+        <div class="column is-one-third">
+          <h3 class="has-text-weight-bold">Évaluation</h3>
+
+          <div>Participation</div>
+          <div>{{ assessmentStore.currentAssessment.participationNb }}</div>
+
+          <!-- TODO Récupérer le porteur -->
+          <template v-if="assessmentStore.initiatedBy">
+            <div>Portée par</div>
+            <div>{{ assessmentStore.currentAssessment.initiatedBy }}</div>
+          </template>
+
+          <div>Lancée le</div>
+          <div>{{ assessmentStore.currentAssessment.initializationDate }}</div>
+        </div>
+
+        <div class="column">
+          <h3 class="has-text-weight-bold">Représentativité</h3>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "@vue/reactivity"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 definePageMeta({
   middleware: ["assessment"],
