@@ -22,10 +22,8 @@ export const useDefinitionStore = defineStore("definition", {
     },
     async getDefinitions() {
       if (!Object.keys(this.definitionById).length) await this.loadDefinitions()
-      else console.log("tralala")
     },
     definitionsByIdArray(ids: number[]) {
-      console.log({ defs: this.definitionById, ids })
       return pick(this.definitionById, ids)
     },
   },
