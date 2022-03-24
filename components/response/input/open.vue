@@ -1,7 +1,7 @@
 <template>
   <div class="open">
     <label
-      class="is-size-6bis mb-3 is-block has-text-grey"
+      class="is-size-6bis mb-0_75 is-block has-text-grey"
       :for="`$question-${props.questionId}-open`"
     >
       Réponse ouverte
