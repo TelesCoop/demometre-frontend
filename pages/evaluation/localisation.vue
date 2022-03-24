@@ -100,12 +100,13 @@ const disabled = computed(() =>
 const assessmentStore = useAssessmentStore()
 
 async function onSubmit() {
-  await assessmentStore.getOrCreateAssessment({
+  const isSuccess = await assessmentStore.getOrCreateAssessment({
     zipCode: zipCode.value,
     localityType: localityTypeSelected.value,
   })
-  // const router = useRouter()
-  // router.push("/evaluation/assessment")
+  if (isSuccess) {
+    useRouter().push("/evaluation/assessment")
+  }
 }
 </script>
 

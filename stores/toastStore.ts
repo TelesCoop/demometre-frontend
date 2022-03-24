@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 
-export const useErrorStore = defineStore("error", {
+export const useToastStore = defineStore("toast", {
   state: () => ({
     type: <string>"",
     message: <string>"",

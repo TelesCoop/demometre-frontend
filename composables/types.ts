@@ -113,11 +113,12 @@ type Locality = {
 export type Assessment = {
   id: number
   type: string
-  initiated_by: string
-  is_initiated_by_locality: Boolean
-  carried_by; is_carried_by_locality: Boolean
-  initialization_date: string
-  end_date: string
+  initiatedBy: string
+  isInitiatedByLocality: boolean
+  carriedBy: string
+  isCarriedByLocality: boolean
+  initializationDate: string
+  endDate: string
   municipality: Locality | null
   epci: Locality | null
   participationNb: number

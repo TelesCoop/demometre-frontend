@@ -6,16 +6,16 @@
       <slot></slot>
       <Footer />
     </div>
-    <Toast :message="errorStore.message" />
+    <Toast :message="toastStore.message" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
-import { useErrorStore } from "~~/stores/errorStore"
+import { useToastStore } from "~~/stores/toastStore"
 
 const userStore = useUserStore()
-const errorStore = useErrorStore()
+const toastStore = useToastStore()
 
 if (!userStore.email) {
   // if profile is already got from SSR, do not fetch again
