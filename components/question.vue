@@ -37,6 +37,14 @@
             <Icon size="16" name="arrow-right-line" />
           </i>
         </a>
+        <a
+          href="#menu"
+          class="button is-dark is-outlined is-rounded round absolute-centered"
+        >
+          <i class="icon">
+            <Icon size="16" name="arrow-down-line" />
+          </i>
+        </a>
         <div class="is-flex buttons rounds">
           <a href="" class="button is-dark is-outlined is-rounded">
             <i class="icon">
@@ -56,7 +64,7 @@
         </div>
       </div>
     </section>
-    <section class="pt-2" :class="`menu is-${color}`">
+    <section id="menu" class="pt-2" :class="`menu is-${color}`">
       <div class="tabs">
         <ul>
           <li v-for="tab of tabs" :key="tab.id">
@@ -152,9 +160,15 @@ function setTab(tabId) {
 .button-bar
   display: flex
   justify-content: space-between
-  .buttons.rounds .button
-    height: 40px
-    width: 40px
+  position: relative
+  .absolute-centered
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+.buttons.rounds .button, .button.round
+  height: 40px
+  width: 40px
 
 .tabs .tab
   color: var(--color)
