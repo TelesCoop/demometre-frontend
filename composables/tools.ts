@@ -1,4 +1,4 @@
-export const pick = (obj, ...keys) =>
+export const pick = (obj, keysToFind) =>
   Object.fromEntries(
-    keys.filter((key) => key in obj).map((key) => [key, obj[key]])
+    keysToFind.filter((key) => key in obj).map((key) => [key, obj[key]])
   )

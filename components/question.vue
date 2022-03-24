@@ -94,9 +94,12 @@
         </ul>
       </div>
       <div v-show="currentTabId === 'definitions'">
-        <p v-for="definition of definitions" :key="definition.id" class="mt-1">
+        <p v-for="definition of definitions" :key="definition.id" class="mt-2">
           <span class="has-text-weight-bold">{{ definition.word }}</span>
-          <RichText class="mt-1 is-block" :rich-text="definition.explanation" />
+          <RichText
+            class="mt-1 is-block is-family-secondary"
+            :rich-text="definition.explanation"
+          />
         </p>
       </div>
       <div v-show="currentTabId === 'legal-frame'">
@@ -143,7 +146,7 @@ if (!error.value) {
   question.value = data.value
 }
 
-const definitions = ref<{ [key: number]: Definition }>(
+const definitions = computed<{ [key: number]: Definition }>(() =>
   definitionStore.definitionsByIdArray(question.value.definitionIds)
 )
 
