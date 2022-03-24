@@ -18,6 +18,7 @@ Start the development server on http://localhost:3000
 yarn dev
 ```
 
+
 ## Production
 
 Build the application for production:
@@ -27,3 +28,5 @@ yarn build
 ```
 
 Checkout the [deployment documentation](https://v3.nuxtjs.org/docs/deployment).
+
+

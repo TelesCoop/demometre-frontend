@@ -40,6 +40,10 @@ export const PillarParams = {
     picto: "picto-participation.png",
   },
 }
+export const LocalityType = {
+  MUNICIPALITY: { key: "municipality", value: "Commune" },
+  INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" },
+}
 
 export type User = { id: number; email: string; username: string }
 export type PillarType = {
@@ -100,7 +104,25 @@ export type Question = {
   sources: string
   toGoFurther: string
 }
-export type Assessment = { id: number; zipCode: string[]; type: string }
+type Locality = {
+  id: number
+  name: string
+  population: number
+  zip_codes: number[]
+}
+export type Assessment = {
+  id: number
+  type: string
+  initiated_by: string
+  is_initiated_by_locality: Boolean
+  carried_by; is_carried_by_locality: Boolean
+  initialization_date: string
+  end_date: string
+  municipality: Locality | null
+  epci: Locality | null
+  participationNb: number
+}
+
 export type HomePage = { title: string; introduction: string }
 export type ReferentialPage = { title: string; introduction: string }
 export type EvaluationIntroPage = {
