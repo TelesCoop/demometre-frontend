@@ -32,6 +32,13 @@
           :color="props.color"
           :question-id="questionId"
         />
+      <ResponseInputRanking
+        v-else-if="question.type === QuestionType.CLOSED_WITH_RANKING"
+        v-model="answer"
+        :response-choices="question.responseChoices"
+        :color="props.color"
+        :question-id="questionId"
+      />
       </div>
 
       <!-- end inputs -->
