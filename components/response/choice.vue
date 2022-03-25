@@ -19,7 +19,7 @@
           : `has-border-${props.color} has-background-white`)
       "
     >
-      {{ letter }}
+      <slot name="left-symbol">{{ letter }}</slot>
     </div>
     <div class="response-choice-content">
       <p class="response-choice-title has-text-black">
