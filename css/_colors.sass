@@ -16,6 +16,7 @@
       border: 1px solid $color-dark !important
 
 @each $name, $pair in $custom-colors
+  @if length($pair) >= 4
     $color-active: nth($pair, 2)
     $color-light: nth($pair, 3)
     $color-dark: nth($pair, 4)

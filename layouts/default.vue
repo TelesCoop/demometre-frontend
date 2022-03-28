@@ -2,7 +2,7 @@
   <div>
     <div>
       <Navbar />
-      <!-- TODO insert breadcrumbs -->
+      <Breadcrumb />
       <slot></slot>
       <Footer />
     </div>
