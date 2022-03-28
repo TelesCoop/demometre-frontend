@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import { Assessment } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
+import { useToastStore } from "./toastStore"
 
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
@@ -30,10 +31,15 @@ export const useAssessmentStore = defineStore("assessment", {
       const { data, error } = await useApiGet<Assessment>(
         `assessments/by-locality/?zip_code=${zipCode}&locality_type=${localityType}`
       )
-      if (!error.value) {
-        this.assessmentById[data.value.id] = data.value
-        this.currentAssessmentId = data.value.id
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data)
+        return false
       }
+
+      this.assessmentById[data.value.id] = data.value
+      this.currentAssessmentId = data.value.id
+      return true
     },
   },
 })
