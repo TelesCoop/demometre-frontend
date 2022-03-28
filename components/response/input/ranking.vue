@@ -10,10 +10,11 @@
       group="choices"
       item-key="id"
       class="mb-1"
+      :animation="100"
       tag="ol"
       role="listbox"
+      :move="(event) => (dragging = event.draggedContext.element.id)"
       @change="computeRankings($event.moved.element)"
-      @start="dragging = $event.item.id"
       @end="dragging = undefined"
     >
       <template #item="{ element }">
@@ -22,13 +23,14 @@
           role="option"
           draggable="true"
           aria-describedby="operation"
-          @click="computeRankings(element)"
         >
           <ResponseChoice
             :response-choice="responseChoices[element.index]"
             :response-choice-index="element.index"
             :selected="isResponseChoiceSelected(element.id)"
+            :dragging="dragging === element.id"
             :color="props.color"
+            @click="computeRankings(element)"
           >
             <template #left-symbol>{{ element.rank || "..." }}</template>
           </ResponseChoice>
@@ -70,7 +72,7 @@ const miniChoices = ref<MiniChoice[]>(
 )
 const selectedItems = ref<number[]>([])
 const isResponseChoiceSelected = computed(
-  () => (responseChoiceId) => props.modelValue.includes(responseChoiceId)
+  () => (responseChoiceId) => selectedItems.value.includes(responseChoiceId)
 )
 
 function computeRankings(miniChoice: MiniChoice) {
@@ -79,7 +81,7 @@ function computeRankings(miniChoice: MiniChoice) {
   }
   answer.value = miniChoices.value.reduce(
     (accumulator: MiniChoice[], mChoice: MiniChoice) => {
-      if (selectedItems.value.includes(mChoice.id)) {
+      if (isResponseChoiceSelected.value(mChoice.id)) {
         mChoice.rank = accumulator.length + 1
         accumulator.push(mChoice)
       }

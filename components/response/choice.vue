@@ -5,7 +5,8 @@
       `is-${color} ` +
       (props.selected
         ? `has-border-${props.color}-dark has-background-${props.color}-light-active`
-        : `has-border-transparent has-background-${props.color}-light`)
+        : `has-border-transparent has-background-${props.color}-light`) +
+      (props.dragging ? ` dragging` : '')
     "
   >
     <div
@@ -29,6 +30,9 @@
         {{ props.responseChoice.description }}
       </p>
     </div>
+    <div v-if="props.dragging" class="mb-auto mt-auto ml-auto">
+      <icon name="drag-drop-line" size="24" class="icon mt-0_5 mr-0_5" />
+    </div>
     <div v-if="props.selected" class="mb-auto mt-auto ml-auto check">
       <icon name="check" size="24" class="icon mt-0_5 mr-0_5" />
     </div>
@@ -43,6 +47,7 @@ const props = defineProps({
   responseChoice: { required: true, type: Object as PropType<ResponseChoice> },
   responseChoiceIndex: { type: Number, default: 0 },
   selected: { type: Boolean, default: false },
+  dragging: { type: Boolean, default: false },
   color: { type: String, required: true },
 })
 const letters = "ABCDEFGHIJKLMOPQRSTUVWXYZ"
@@ -51,12 +56,18 @@ const letter = computed(() => letters[props.responseChoiceIndex])
 </script>
 
 <style lang="sass" scoped>
-input:focus-visible,input:not(:checked):hover
-+ label .response-choice
+@mixin choice-hover
   background-color: var(--color-light-hover) !important
   .letter
     border-color: var(--color-hover) !important
     background-color: var(--color-light) !important
+
+input:focus-visible,input:not(:checked):hover + label .response-choice
+  @include choice-hover
+
+.response-choice.dragging
+  @include choice-hover
+  border: var(--color-dark) dashed 1px !important
 
 .response-choice
   display: flex
