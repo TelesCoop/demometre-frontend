@@ -9,6 +9,12 @@ export const useDefinitionStore = defineStore("definition", {
   state: () => ({
     definitionById: <{ [key: number]: Definition }>{},
   }),
+  getters: {
+    definitionsByIdArray: () =>
+      function (ids: number[]): { [key: number]: Definition } {
+        return pick(this.definitionById, ids)
+      },
+  },
   actions: {
     async loadDefinitions() {
       const { data = ref<DefinitionResponse>(), error = ref() } =
@@ -22,9 +28,6 @@ export const useDefinitionStore = defineStore("definition", {
     },
     async getDefinitions() {
       if (!Object.keys(this.definitionById).length) await this.loadDefinitions()
-    },
-    definitionsByIdArray(ids: number[]) {
-      return pick(this.definitionById, ids)
     },
   },
 })
