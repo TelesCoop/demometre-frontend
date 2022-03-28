@@ -94,13 +94,17 @@
         </ul>
       </div>
       <div v-show="currentTabId === 'definitions'">
-        <p v-for="definition of definitions" :key="definition.id" class="mt-2">
+        <div
+          v-for="definition of definitions"
+          :key="definition.id"
+          class="mt-2"
+        >
           <span class="has-text-weight-bold">{{ definition.word }}</span>
           <RichText
             class="mt-1 is-block is-family-secondary"
             :rich-text="definition.explanation"
           />
-        </p>
+        </div>
       </div>
       <div v-show="currentTabId === 'legal-frame'">
         <RichText :rich-text="question.legalFrame" />
