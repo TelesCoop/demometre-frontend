@@ -48,6 +48,8 @@
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
 definePageMeta({
+  title: "Localisation",
+  breadcrumb: "Localisation",
   middleware: ["assessment"],
 })
 

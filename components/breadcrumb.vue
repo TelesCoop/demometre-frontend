@@ -3,9 +3,7 @@
     <nav
       role="navigation"
       class="breadcrumb is-small"
-      :aria-label="`Vous êtes ici : ${
-        items[items.length - 1].meta?.breadcrumb
-      }`"
+      :aria-label="`Vous êtes ici : ${route.meta.breadcrumb}`"
     >
       <ul>
         <li
@@ -28,6 +26,10 @@ const router = useRouter()
 const ROOT_PATH = router.resolve("/")
 
 const items = computed(() => {
+  // Do not show if no breadcrumb on this page
+  if (!route.meta.breadcrumb) {
+    return []
+  }
   const routeSplit = route.path.split("/").filter((value) => value)
   const paths = [ROOT_PATH]
   let path = ""
