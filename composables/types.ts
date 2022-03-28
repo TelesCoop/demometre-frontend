@@ -103,6 +103,7 @@ export type Question = {
   useCase: string
   sources: string
   toGoFurther: string
+  definitionIds: number[]
 }
 export type Role = {
   id: number
@@ -135,4 +136,10 @@ export type EvaluationIntroPage = {
   title: string
   introduction: string
   dataConsent: string
+}
+
+export type Definition = {
+  id: number
+  word: string
+  explanation: string
 }
