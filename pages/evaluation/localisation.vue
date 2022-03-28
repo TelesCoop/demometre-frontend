@@ -86,11 +86,15 @@
 </template>
 
 <script setup lang="ts">
-// import CountrySelect from "~/components/country-select"
 import { ref } from "@vue/reactivity"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { LocalityType } from "~/composables/types"
 import { useParticipationStore } from "~/stores/participationStore"
+
+definePageMeta({
+  title: "Localisation",
+  breadcrumb: "Localisation",
+})
 
 const zipCode = ref("")
 const localityTypeSelected = ref<string>()

@@ -43,6 +43,11 @@
 import { usePageStore } from "~/stores/pageStore"
 import { useParticipationStore } from "~/stores/participationStore"
 
+definePageMeta({
+  title: "Évaluation",
+  breadcrumb: "Évaluation",
+})
+
 const pageStore = usePageStore()
 const participationStore = useParticipationStore()
 
