@@ -36,7 +36,7 @@ const items = computed(() => {
   routeSplit.forEach((value) => {
     path = `${path}/${value}`
     const result = router.resolve(path)
-    if (result) {
+    if (result?.meta.breadcrumb) {
       paths.push(result)
     }
   })
