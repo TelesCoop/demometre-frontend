@@ -47,7 +47,7 @@
                 v-if="userStore.isLoggedIn"
                 to="/profil"
                 class="button is-dark is-outlined is-rounded"
-                >{{ userStore.email }}</NuxtLink
+                >{{ userStore.user.email }}</NuxtLink
               >
               <NuxtLink
                 v-else

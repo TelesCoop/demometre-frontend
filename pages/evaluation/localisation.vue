@@ -90,6 +90,7 @@
 import { ref } from "@vue/reactivity"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { LocalityType } from "~/composables/types"
+import { useParticipationStore } from "~/stores/participationStore"
 
 const zipCode = ref("")
 const localityTypeSelected = ref<string>()
@@ -98,6 +99,7 @@ const disabled = computed(() =>
 )
 
 const assessmentStore = useAssessmentStore()
+const participationStore = useParticipationStore()
 
 async function onSubmit() {
   const isSuccess = await assessmentStore.getOrCreateAssessment({
@@ -105,6 +107,7 @@ async function onSubmit() {
     localityType: localityTypeSelected.value,
   })
   if (isSuccess) {
+    participationStore.chooseAssessment(assessmentStore.currentAssessmentId)
     useRouter().push("/evaluation/assessment")
   }
 }

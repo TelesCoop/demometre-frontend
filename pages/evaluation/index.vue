@@ -3,7 +3,7 @@
     <form
       class="column is-one-third is-offset-one-third"
       action="/evaluation/localisation"
-      @submit="onSubmit"
+      @submit.prevent="onSubmit"
     >
       <h1 class="title is-3 has-text-black-ter has-text-centered">
         {{ pageStore.evaluationIntroPage.title }}
@@ -41,15 +41,18 @@
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
+import { useParticipationStore } from "~/stores/participationStore"
 
 const pageStore = usePageStore()
+const participationStore = useParticipationStore()
 
 if (!pageStore.evaluationIntroPage.title) {
   pageStore.loadEvaluationIntroPage()
 }
 
 function onSubmit() {
-  this.$route.push("/evaluation/localisation")
+  participationStore.setConsent()
+  useRouter().push("/evaluation/localisation")
 }
 </script>
 
