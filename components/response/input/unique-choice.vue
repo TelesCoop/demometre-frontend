@@ -1,7 +1,7 @@
 <template>
   <fieldset>
     <legend class="is-size-6bis mb-0_75 is-block has-text-grey">
-      Choisissez une réponse.
+      <slot name="legend">Choisissez une réponse.</slot>
     </legend>
     <div
       v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
