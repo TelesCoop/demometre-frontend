@@ -1,3 +1,4 @@
+// Questionnaire and profiling
 export enum Objectivity {
   OBJECTIVE = "objective",
   SUBJECTIVE = "subjective",
@@ -40,12 +41,6 @@ export const PillarParams = {
     picto: "picto-participation.png",
   },
 }
-export const LocalityType = {
-  MUNICIPALITY: { key: "municipality", value: "Commune" },
-  INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" },
-}
-
-export type User = { id: number; email: string; username: string }
 export type PillarType = {
   id: number
   code: string
@@ -86,7 +81,7 @@ export type ResponseChoice = {
 }
 export type Question = {
   id: number
-  criteriaId: number
+  criteriaId: number | null
   concatenatedCode: string
   name: string
   questionStatement: string
@@ -104,6 +99,24 @@ export type Question = {
   sources: string
   toGoFurther: string
   definitionIds: number[]
+}
+export type Role = {
+  id: number
+  name: string
+  description: string
+}
+
+// Definition
+export type Definition = {
+  id: number
+  word: string
+  explanation: string
+}
+
+// Assessment
+export const LocalityType = {
+  MUNICIPALITY: { key: "municipality", value: "Commune" },
+  INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" },
 }
 type Locality = {
   id: number
@@ -125,16 +138,21 @@ export type Assessment = {
   participationNb: number
 }
 
+// User participation
+export type User = { id: number | null; email: string; username: string }
+export type Participation = {
+  id: number | null
+  userId: number
+  assessmentId: number
+  roleId: number
+  consent: boolean
+}
+
+// Pages
 export type HomePage = { title: string; introduction: string }
 export type ReferentialPage = { title: string; introduction: string }
 export type EvaluationIntroPage = {
   title: string
   introduction: string
   dataConsent: string
-}
-
-export type Definition = {
-  id: number
-  word: string
-  explanation: string
 }
