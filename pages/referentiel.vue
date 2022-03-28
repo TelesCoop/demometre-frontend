@@ -59,6 +59,11 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
 import { Marker, PillarType } from "~/composables/types"
 
+definePageMeta({
+  title: "Référentiel",
+  breadcrumb: "Référentiel",
+})
+
 const questionnaireStore = useQuestionnaireStore()
 const pageStore = usePageStore()
 
