@@ -11,7 +11,9 @@
     <div
       class="letter mr-4"
       :class="
-        `has-text-${props.color}-dark ` +
+        (props.color == 'no-pillar' && props.selected
+          ? 'has-text-white '
+          : `has-text-${props.color}-dark `) +
         (props.selected
           ? `has-border-${props.color}-dark has-background-${props.color}`
           : `has-border-${props.color} has-background-white`)
@@ -50,11 +52,11 @@ const letter = computed(() => letters[props.responseChoiceIndex])
 
 <style lang="sass" scoped>
 input:focus-visible,input:not(:checked):hover
-  + label .response-choice
-    background-color: var(--color-light-hover) !important
-    .letter
-      border-color: var(--color-hover) !important
-      background-color: var(--color-light) !important
++ label .response-choice
+  background-color: var(--color-light-hover) !important
+  .letter
+    border-color: var(--color-hover) !important
+    background-color: var(--color-light) !important
 
 .response-choice
   display: flex
