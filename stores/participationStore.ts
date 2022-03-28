@@ -1,42 +1,53 @@
 import { defineStore } from "pinia"
+import { useApiPatch, useApiPost } from "~/composables/api"
 import { Participation } from "~/composables/types"
-import { useApiPost } from "~~/composables/api"
+import { useAssessmentStore } from "./assessmentStore"
+import { useUserStore } from "./userStore"
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
-    participation: <Participation>{},
+    id: <number | null>null,
+    roleId: <number | null>null,
+    consent: <boolean>false,
   }),
+  getters: {
+    participation() {
+      return {
+        id: this.id,
+        roleId: this.roleId,
+        consent: this.consent,
+        userId: useUserStore().user.id,
+        assessmentId: useAssessmentStore().currentAssessmentId,
+      }
+    },
+  },
   actions: {
     async createParticipation() {
       const { data, error } = await useApiPost<Participation>(
         "participation/",
-        {
-          ...this.participation,
-        }
+        this.participation
       )
       if (!error.value) {
-        this.participation = data.value
+        this.id = data.value.id
       }
     },
-    // async updateParticipation() {
-    //   const { data, error } = await useApiPost<Participation>(
-    //     `participation/${this.participation.id}`, {
-    //     ...this.participation
-    //   }
-    //   )
-    //   if (!error.value) {
-
-    //   }
-    // },
-    async consent() {
-      console.log("JE CONSENT")
-      this.participation.consent = true
+    async updateParticipation() {
+      const { data, error } = await useApiPatch<Participation>(
+        "participation/",
+        this.participation
+      )
+      if (!error.value) {
+        this.id = data.value.id
+      }
     },
-    async chooseRole(roleId) {
-      this.participation.roleId = roleId
+    setConsent() {
+      this.consent = true
     },
-    async chooseAssessment(assessmentId) {
-      this.participation.assessmentId = assessmentId
+    chooseRole(roleId) {
+      this.roleId = roleId
+    },
+    chooseAssessment(assessmentId) {
+      this.assessmentId = assessmentId
     },
   },
 })

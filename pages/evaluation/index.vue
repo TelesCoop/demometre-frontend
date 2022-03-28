@@ -51,7 +51,7 @@ if (!pageStore.evaluationIntroPage.title) {
 }
 
 function onSubmit() {
-  participationStore.consent()
+  participationStore.setConsent()
   useRouter().push("/evaluation/localisation")
 }
 </script>

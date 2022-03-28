@@ -8,7 +8,7 @@ export const useUserStore = defineStore("user", {
   }),
   getters: {
     isLoggedIn() {
-      return !!this.email
+      return !!this.user.email
     },
   },
   actions: {

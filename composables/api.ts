@@ -105,3 +105,24 @@ export async function useApiPost<Type>(path: string, payload: any = {}) {
   }
   return { data, error }
 }
+
+export async function useApiPatch<Type>(path: string, payload: any = {}) {
+  const loadingStore = useLoadingStore()
+
+  const key = makeLoadingKey(path)
+  loadingStore.markLoading(key)
+  const { data, error } = await useAsyncData<Type>(key, (ctx) =>
+    $fetch(BASE_API_URL + path, {
+      method: "PATCH",
+      body: payload,
+      credentials: "include",
+      headers: getHeaders(ctx, true),
+    })
+  )
+  if (error.value) {
+    loadingStore.markError(key)
+  } else {
+    loadingStore.markDone(key)
+  }
+  return { data, error }
+}

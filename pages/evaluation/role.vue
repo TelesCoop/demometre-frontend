@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { ref } from "@vue/reactivity"
 import { useProfilingStore } from "~/stores/profilingStore"
-import { useParticipationStore } from "~~/stores/participationStore"
+import { useParticipationStore } from "~/stores/participationStore"
 
 const color = ref("no-pillar")
 const answer = ref()
@@ -41,17 +41,15 @@ if (!profilingStore.roles.length) {
 
 const participationStore = useParticipationStore()
 
-const responseChoices = computed(() => {
-  let responseChoices = []
-  for (const role of profilingStore.roles) {
-    responseChoices.push({
+const responseChoices = computed(() =>
+  profilingStore.roles.map((role) => {
+    return {
       id: role.id,
       responseChoice: role.name,
       description: role.description,
-    })
-  }
-  return responseChoices
-})
+    }
+  })
+)
 
 const disabled = computed(() => {
   return !answer.value
