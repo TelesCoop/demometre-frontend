@@ -1,21 +1,35 @@
 <template>
   <div class="container is-tight">
     <h1 class="title is-3 mt-2">Etes-vous actuellement...</h1>
-    <div class="my-1_5">
-      <ResponseInputUniqueChoice
-        v-model="answer"
-        :response-choices="responseChoices"
-        :color="color"
-        question-id="role"
-        white-letter-when-select="true"
-      />
-    </div>
+    <form @submit.prevent="onSubmit">
+      <div class="my-1_5">
+        <ResponseInputUniqueChoice
+          v-model="answer"
+          :response-choices="responseChoices"
+          :color="color"
+          question-id="role"
+          :white-letter-when-select="true"
+        />
+      </div>
+      <div class="buttons mt-1_5">
+        <button class="button is-normal is-rounded" :disabled="disabled">
+          <span>Valider</span>
+          <span class="icon">
+            <icon size="24" name="check" />
+          </span>
+        </button>
+
+        <!-- Permet d'appuyer sur entrer -->
+        <input type="submit" hidden />
+      </div>
+    </form>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "@vue/reactivity"
 import { useProfilingStore } from "~/stores/profilingStore"
+import { useParticipationStore } from "~~/stores/participationStore"
 
 const color = ref("no-pillar")
 const answer = ref()
@@ -24,6 +38,8 @@ const profilingStore = useProfilingStore()
 if (!profilingStore.roles.length) {
   profilingStore.loadRoles()
 }
+
+const participationStore = useParticipationStore()
 
 const responseChoices = computed(() => {
   let responseChoices = []
@@ -36,6 +52,16 @@ const responseChoices = computed(() => {
   }
   return responseChoices
 })
+
+const disabled = computed(() => {
+  return !answer.value
+})
+
+async function onSubmit() {
+  participationStore.chooseRole(answer.value)
+  // TODO : if participaton exist, update it
+  participationStore.createParticipation()
+}
 </script>
 
 <style scoped lang="sass">
