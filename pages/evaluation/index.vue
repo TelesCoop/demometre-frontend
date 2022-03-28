@@ -45,6 +45,7 @@ import { useParticipationStore } from "~/stores/participationStore"
 
 definePageMeta({
   title: "Évaluation",
+  breadcrumb: "Évaluation",
 })
 
 const pageStore = usePageStore()
