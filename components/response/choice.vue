@@ -11,7 +11,9 @@
     <div
       class="letter mr-4"
       :class="
-        `has-text-${props.color}-dark ` +
+        (whiteLetterWhenSelect && props.selected
+          ? 'has-text-white '
+          : `has-text-${props.color}-dark `) +
         (props.selected
           ? `has-border-${props.color}-dark has-background-${props.color}`
           : `has-border-${props.color} has-background-white`)
@@ -42,6 +44,7 @@ const props = defineProps({
   responseChoiceIndex: { type: Number, default: 0 },
   selected: { type: Boolean, default: false },
   color: { type: String, required: true },
+  whiteLetterWhenSelect: { type: Boolean, default: false },
 })
 const letters = "ABCDEFGHIJKLMOPQRSTUVWXYZ"
 

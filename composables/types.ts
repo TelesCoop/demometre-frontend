@@ -86,7 +86,7 @@ export type ResponseChoice = {
 }
 export type Question = {
   id: number
-  criteriaId: number
+  criteriaId: number | null
   concatenatedCode: string
   name: string
   questionStatement: string
@@ -103,6 +103,11 @@ export type Question = {
   useCase: string
   sources: string
   toGoFurther: string
+}
+export type Role = {
+  id: number
+  name: string
+  description: string
 }
 type Locality = {
   id: number

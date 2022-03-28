@@ -23,6 +23,7 @@
           :response-choice-index="responseChoiceIndex"
           :selected="isResponseChoiceSelected(responseChoice.id)"
           :color="props.color"
+          :white-letter-when-select="props.whiteLetterWhenSelect"
         />
       </label>
     </div>
@@ -41,6 +42,7 @@ const props = defineProps({
   modelValue: { type: Number, required: false, default: 0 },
   color: { type: String, required: true },
   questionId: { type: Number, required: true },
+  whiteLetterWhenSelect: { type: Boolean, default: false },
 })
 
 const answer = useModel(props, "modelValue")
