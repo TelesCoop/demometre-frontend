@@ -13,7 +13,7 @@
       {{ assessmentStore.currentAssessment.municipality.name }}
     </h2>
     <!-- TODO changer le background -->
-    <div class="has-background-white-ter p-1_5">
+    <div class="has-background-shade-100 p-1_5">
       <div class="columns">
         <div class="column is-one-third">
           <h3 class="has-text-weight-bold">Évaluation</h3>
