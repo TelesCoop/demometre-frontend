@@ -25,6 +25,7 @@
     "@pinia/nuxt": "^0.1.8",
     "pinia": "^2.0.11",
     "prettier": "^2.5.1",
-    "typescript": "^4.6.2"
+    "typescript": "^4.6.2",
+    "vuedraggable": "^4.1.0"
   }
 }
