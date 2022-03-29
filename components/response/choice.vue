@@ -65,7 +65,7 @@ const letter = computed(() => letters[props.responseChoiceIndex])
 input:focus-visible,input:not(:checked):hover + label .response-choice
   @include choice-hover
 
-.response-choice.dragging
+.response-choice.dragging, *:focus .response-choice
   @include choice-hover
   border: var(--color-dark) dashed 1px !important
 

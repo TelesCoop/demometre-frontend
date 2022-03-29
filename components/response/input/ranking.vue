@@ -5,6 +5,12 @@
         Indiquer l'ordre d'importance de chaque proposition.
       </slot>
     </legend>
+    <span aria-live="assertive" class="assistive-text">
+      {{ assistiveText }}
+    </span>
+    <span id="operation" class="assistive-text">
+      Appuyer sur espace pour réordonner
+    </span>
     <draggable
       v-model="miniChoices"
       group="choices"
@@ -13,22 +19,32 @@
       :animation="100"
       tag="ol"
       role="listbox"
-      :move="(event) => (dragging = event.draggedContext.element.id)"
+      aria-describedby="operation"
+      :move="(event) => (draggingByMouse = event.draggedContext.element.id)"
       @change="computeRankings($event.moved.element)"
-      @end="dragging = undefined"
+      @end="draggingByMouse = undefined"
+      @keydown.up.prevent="moveItem(Direction.UP)"
+      @keydown.down.prevent="moveItem(Direction.DOWN)"
+      @keydown.space.prevent="toggleGrabbed()"
     >
-      <template #item="{ element }">
+      <template #item="{ element, index: displayIndex }">
         <li
-          class="mb-1"
+          class="mb-1 choice-element"
           role="option"
           draggable="true"
+          :tabindex="focusedKeyboardDisplayIndex === displayIndex ? '0' : '-1'"
           aria-describedby="operation"
+          :aria-selected="focusedKeyboardDisplayIndex === displayIndex"
+          @blur="isGrabbed = false"
         >
           <ResponseChoice
             :response-choice="responseChoices[element.index]"
             :response-choice-index="element.index"
             :selected="isResponseChoiceSelected(element.id)"
-            :dragging="dragging === element.id"
+            :dragging="
+              draggingByMouse === element.id ||
+              (focusedKeyboardDisplayIndex === displayIndex && isGrabbed)
+            "
             :color="props.color"
             @click="computeRankings(element)"
           >
@@ -62,7 +78,7 @@ const props = defineProps({
   questionId: { type: Number, required: true },
 })
 
-const dragging = ref<number>()
+const draggingByMouse = ref<number>()
 const answer = useModel("modelValue")
 answer.value = []
 const miniChoices = ref<MiniChoice[]>(
@@ -89,6 +105,107 @@ function computeRankings(miniChoice: MiniChoice) {
     },
     []
   )
+}
+
+// ACCESSIBILITY LOGIC
+
+const focusedKeyboardDisplayIndex = ref<number>(0)
+const isGrabbed = ref<boolean>(false)
+const assistiveText = ref<string>("")
+
+const focusedKeyboardMiniChoice = computed<MiniChoice>(
+  () => miniChoices.value[focusedKeyboardDisplayIndex.value]
+)
+const draggingByKeyboardChoice = computed<ResponseChoiceType>(() => {
+  if (!isGrabbed.value) return null
+  return props.responseChoices[
+    miniChoices.value[focusedKeyboardDisplayIndex.value].index
+  ]
+})
+
+enum AccessibleHint {
+  GRAB = "grab",
+  DROP = "drop",
+  SELECT = "select",
+}
+
+enum Direction {
+  UP = "up",
+  DOWN = "down",
+}
+
+function setAccessibilityText(
+  msg: AccessibleHint,
+  elementTitle: string,
+  index: number
+) {
+  switch (msg) {
+    case AccessibleHint.GRAB:
+      assistiveText.value = `${elementTitle}, grabbed. Current position in list: ${index}. Press up and down arrows to change position, spacebar to drop.`
+      break
+    case AccessibleHint.DROP:
+      assistiveText.value = `${elementTitle}, dropped. Final position in list: ${index}.`
+      break
+    case AccessibleHint.SELECT:
+      assistiveText.value = `${elementTitle}. New position in list: ${index}`
+  }
+}
+
+function toggleGrabbed() {
+  computeRankings(focusedKeyboardMiniChoice.value)
+  if (isGrabbed.value) {
+    setAccessibilityText(
+      AccessibleHint.DROP,
+      draggingByKeyboardChoice.value.responseChoice,
+      focusedKeyboardDisplayIndex.value
+    )
+    isGrabbed.value = false
+  } else {
+    isGrabbed.value = true
+    setAccessibilityText(
+      AccessibleHint.GRAB,
+      draggingByKeyboardChoice.value.responseChoice,
+      focusedKeyboardDisplayIndex.value
+    )
+  }
+}
+
+function moveItem(direction: Direction) {
+  const hoverIndex =
+    direction === Direction.DOWN
+      ? focusedKeyboardDisplayIndex.value + 1
+      : focusedKeyboardDisplayIndex.value - 1
+  if (hoverIndex < 0 || hoverIndex >= miniChoices.value.length) {
+    return
+  }
+
+  if (!isGrabbed.value) {
+    focusedKeyboardDisplayIndex.value = hoverIndex
+  } else {
+    // Make a copy of the existing list & find the item that's being moved
+    const arrayCopy = [...miniChoices.value]
+    const draggedItem = arrayCopy[focusedKeyboardDisplayIndex.value]
+
+    // Move the item that's being moved
+    arrayCopy.splice(focusedKeyboardDisplayIndex.value, 1)
+    arrayCopy.splice(hoverIndex, 0, draggedItem)
+
+    // Update the list of todos to reflect the new order
+    miniChoices.value = arrayCopy
+
+    focusedKeyboardDisplayIndex.value = hoverIndex
+  }
+  // Wait for the DOM to update, then find all list items & focus the one that was just moved
+  nextTick(() => {
+    const items = [...document.getElementsByClassName("choice-element")]
+    items[hoverIndex].focus()
+  })
+  if (isGrabbed.value)
+    setAccessibilityText(
+      AccessibleHint.SELECT,
+      draggingByKeyboardChoice.value.responseChoice,
+      hoverIndex
+    )
 }
 </script>
 
