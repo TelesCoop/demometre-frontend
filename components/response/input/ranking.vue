@@ -126,7 +126,7 @@ const draggingByKeyboardChoice = computed<ResponseChoiceType>(() => {
 enum AccessibleHint {
   GRAB = "grab",
   DROP = "drop",
-  SELECT = "select",
+  MOVE = "move",
 }
 
 enum Direction {
@@ -141,13 +141,13 @@ function setAccessibilityText(
 ) {
   switch (msg) {
     case AccessibleHint.GRAB:
-      assistiveText.value = `${elementTitle}, grabbed. Current position in list: ${index}. Press up and down arrows to change position, spacebar to drop.`
+      assistiveText.value = `Proposition ${elementTitle} attrapée. Position courante dans la liste : ${index}. Utilisez les flèches haut et bas pour changer de position, la touche espace pour lâcher la proposition.`
       break
     case AccessibleHint.DROP:
-      assistiveText.value = `${elementTitle}, dropped. Final position in list: ${index}.`
+      assistiveText.value = `Proposition ${elementTitle} lâchée. Position dans la liste : ${index}.`
       break
-    case AccessibleHint.SELECT:
-      assistiveText.value = `${elementTitle}. New position in list: ${index}`
+    case AccessibleHint.MOVE:
+      assistiveText.value = `Proposition ${elementTitle}. Nouvelle position dans la liste : ${index}`
   }
 }
 
@@ -202,7 +202,7 @@ function moveItem(direction: Direction) {
   })
   if (isGrabbed.value)
     setAccessibilityText(
-      AccessibleHint.SELECT,
+      AccessibleHint.MOVE,
       draggingByKeyboardChoice.value.responseChoice,
       hoverIndex
     )
