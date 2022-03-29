@@ -16,9 +16,7 @@
             @change="onEmailUpdate"
           />
           <span class="icon is-small is-left">
-            <i>
-              <Icon size="24" color="$shade-600" name="mail-line" />
-            </i>
+            <icon size="24" color="$shade-600" name="mail-line" />
           </span>
           <span v-if="!isMailValid" class="icon is-small is-right">
             <i class="fas fa-exclamation-triangle"></i>
@@ -42,9 +40,7 @@
             @change="onPasswordUpdate"
           />
           <span class="icon is-small is-left">
-            <i>
-              <Icon size="24" color="$shade-600" name="lock-line" />
-            </i>
+            <icon size="24" color="$shade-600" name="lock-line" />
           </span>
           <span v-if="!isPasswordValid" class="icon is-small is-right">
             <i class="fas fa-exclamation-triangle"></i>
@@ -62,15 +58,18 @@
           type="button"
           @click="submit"
         >
-          Connexion
+          <span>Connexion</span>
           <span class="icon">
-            <icon size="24" name="check" />
+            <icon size="16" name="check" />
           </span>
         </button>
       </div>
-      <div>
-        <NuxtLink to="/signup"
-          >Vous n'avez pas encore de compte ? Créez-en un</NuxtLink
+      <div class="mt-1">
+        <span class="is-size-7"
+          >Vous n'avez pas encore de compte ?
+          <NuxtLink to="/signup" style="text-decoration-line: revert">
+            Créez-en un</NuxtLink
+          ></span
         >
       </div>
     </div>

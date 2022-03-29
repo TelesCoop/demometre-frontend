@@ -11,8 +11,8 @@
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    :width="props.size"
-    :height="props.size"
+    :width="size"
+    :height="size"
   >
     <path fill="none" d="M0 0h24v24H0z" />
     <template v-if="props.name === 'mail-line'">
@@ -77,5 +77,6 @@ const size = computed(() => {
   if (props.size == "1x") {
     return 24
   }
+  return props.size
 })
 </script>

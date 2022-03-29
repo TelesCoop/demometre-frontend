@@ -46,9 +46,7 @@
             @change="onEmailUpdate"
           />
           <span class="icon is-small is-left">
-            <i>
-              <Icon size="24" color="$shade-600" name="mail-line" />
-            </i>
+            <icon size="24" color="$shade-600" name="mail-line" />
           </span>
           <span v-if="!isMailValid" class="icon is-small is-right">
             <i class="fas fa-exclamation-triangle"></i>
@@ -73,9 +71,7 @@
             @change="onPasswordUpdate"
           />
           <span class="icon is-small is-left">
-            <i>
-              <Icon size="24" color="$shade-600" name="lock-line" />
-            </i>
+            <icon size="24" color="$shade-600" name="lock-line" />
           </span>
           <span v-if="!isPasswordValid" class="icon is-small is-right">
             <i class="fas fa-exclamation-triangle"></i>
@@ -100,16 +96,14 @@
             @change="onPasswordUpdate"
           />
           <span class="icon is-small is-left">
-            <i>
-              <Icon size="24" color="$shade-600" name="lock-line" />
-            </i>
+            <icon size="24" color="$shade-600" name="lock-line" />
           </span>
           <span v-if="!isSamePassword" class="icon is-small is-right">
             <i class="fas fa-exclamation-triangle"></i>
           </span>
         </div>
         <p v-if="!isSamePassword" class="help is-danger">
-          {{ confirmaPasswordErrorMessage }}
+          {{ confirmPasswordErrorMessage }}
         </p>
       </div>
 
@@ -119,17 +113,20 @@
           class="button is-success is-small"
           type="button"
           :disabled="disabled"
-          @click="submit"
+          @click="onSubmit"
         >
-          S'inscrire
+          <span>S'inscrire</span>
           <span class="icon">
-            <icon size="24" name="check" />
+            <icon size="16" name="check" />
           </span>
         </button>
       </div>
-      <div>
-        <NuxtLink to="/login"
-          >Vous avez déjà un compte ? Connectez-vous</NuxtLink
+      <div class="mt-1">
+        <span class="is-size-7"
+          >Vous avez déjà un compte ?
+          <NuxtLink to="/login" style="text-decoration-line: revert">
+            Connectez-vous</NuxtLink
+          ></span
         >
       </div>
     </div>
@@ -137,6 +134,7 @@
 </template>
 
 <script setup lang="ts">
+// import { ref } from "@vue/reactivity"
 import { useUserStore } from "~/stores/userStore"
 // import { useLoadingStore } from "~/stores/loadingStore"
 
@@ -146,33 +144,28 @@ const email = ref("")
 const isEmailUntouched = ref(true)
 const isPasswordUntouched = ref(true)
 const passwordErrorMessage = ref("")
-const confirmaPasswordErrorMessage = ref("")
+const confirmPasswordErrorMessage = ref("")
 const password = ref("")
 const confirmPassword = ref("")
+const confirmSignupErrorMessage = reactive({ field: "", message: "" })
 const userStore = useUserStore()
 // const loadingStore = useLoadingStore()
 
 const onEmailUpdate = () => {
   isEmailUntouched.value = false
-  console.log("### onEmailUpdate", email.value)
 }
 const onPasswordUpdate = () => {
   isPasswordUntouched.value = false
-  console.log("### onPasswordUpdate")
 }
 const emailErrorMessage = computed(() => {
   if (isEmailUntouched.value) {
     return ""
   }
-
-  console.log("### emailErrorMessage?", email.value)
-
   if (!email.value.includes("@")) {
     return "Le courriel doit contenir @"
   }
-
-  console.log("### is valid")
-  return ""
+  if (confirmSignupErrorMessage.field == "email")
+    return confirmSignupErrorMessage.message
 })
 const isMailValid = computed(
   () => isEmailUntouched.value || !emailErrorMessage.value
@@ -181,17 +174,11 @@ const isPasswordValid = computed(() => {
   if (isPasswordUntouched.value) {
     return true
   }
-
-  console.log("### isPasswordValid?", password.value)
-
   if (!password.value.length) {
     passwordErrorMessage.value = "Le mot de passe ne peut pas être vide"
     return false
   }
-
   passwordErrorMessage.value = ""
-  console.log("### is valid")
-
   return true
 })
 const isSamePassword = computed(() => {
@@ -199,10 +186,10 @@ const isSamePassword = computed(() => {
     return true
   }
   if (password.value === confirmPassword.value) {
-    confirmaPasswordErrorMessage.value = ""
+    confirmPasswordErrorMessage.value = ""
     return true
   }
-  confirmaPasswordErrorMessage.value = "Les deux mots de passe sont différents"
+  confirmPasswordErrorMessage.value = "Les deux mots de passe sont différents"
   return false
 })
 const disabled = computed(
@@ -215,7 +202,16 @@ const disabled = computed(
       email.value
     )
 )
-const submit = () => {
-  userStore.signup(firstName.value, lastName.value, email.value, password.value)
+async function onSubmit() {
+  const response = await userStore.signup(
+    firstName.value,
+    lastName.value,
+    email.value,
+    password.value
+  )
+  if (response && response.error) {
+    confirmSignupErrorMessage.field = response.error.field
+    confirmSignupErrorMessage.message = response.error.message
+  }
 }
 </script>
