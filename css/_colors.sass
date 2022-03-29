@@ -1,6 +1,7 @@
 // CUSTOM
 // add borders for each color
-@import "../node_modules/bulma/sass/utilities/derived-variables"
+@import colors-tools
+@import "bulma/sass/utilities/derived-variables"
 @each $name, $pair in $colors
   $color: nth($pair, 1)
   .has-border-#{$name}
@@ -102,3 +103,12 @@
   --color-light-active: #{$participation-light-active}
   --color-light-hover: #{$participation-light-hover}
   --color-dark: #{$participation-dark}
+
+.is-no-pillar
+  --color-active: #{$no-pillar-active}
+  --color-hover: #{$no-pillar-hover}
+  --color: #{$no-pillar}
+  --color-light: #{$no-pillar-light}
+  --color-light-active: #{$no-pillar-light-active}
+  --color-light-hover: #{$no-pillar-light-hover}
+  --color-dark: #{$no-pillar-dark}

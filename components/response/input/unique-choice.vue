@@ -43,7 +43,7 @@ const props = defineProps({
   questionId: { type: Number, required: true },
 })
 
-const answer = useModel(props, "modelValue")
+const answer = useModel("modelValue")
 
 const isResponseChoiceSelected = computed(
   () => (responseChoiceId) => responseChoiceId === props.modelValue
