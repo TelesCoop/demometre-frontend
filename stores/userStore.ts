@@ -56,6 +56,29 @@ export const useUserStore = defineStore("user", {
         this.user = data.value
       }
     },
+    async sendResetLink(email: string) {
+      const { error } = await useApiPost<User>(
+        "auth/user/reset-password-link",
+        {
+          email,
+        }
+      )
+      if (!error.value) {
+        const router = useRouter()
+        router.push("/nouveau-mdp-confirmation")
+      }
+    },
+    async resetPassword(resetKey: string, password: string) {
+      const { error } = await useApiPost<User>("auth/user/reset-password", {
+        password,
+        resetKey,
+      })
+      if (!error.value) {
+        const router = useRouter()
+        router.replace({ query: { reset_key: null } })
+        router.push("/login")
+      }
+    },
     updateState(data: User) {
       this.user.username = data.username
       this.user.email = data.email

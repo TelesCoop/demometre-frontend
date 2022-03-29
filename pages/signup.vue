@@ -1,133 +1,135 @@
 <template>
   <div class="is-flex flex-center">
     <div class="sm-container">
-      <h1 class="title is-1">Création de compte</h1>
+      <div class="mt-2">
+        <h1 class="title is-1">Création de compte</h1>
 
-      <!-- first name -->
-      <div class="field">
-        <label class="label">Prénom</label>
-        <div class="control has-icons-left has-icons-right">
-          <input
-            v-model="firstName"
-            class="input"
-            type="text"
-            placeholder="Caroline"
-          />
-          <span v-if="!isMailValid" class="icon is-small is-right">
-            <i class="fas fa-exclamation-triangle"></i>
-          </span>
+        <!-- first name -->
+        <div class="field">
+          <label class="label">Prénom</label>
+          <div class="control has-icons-left has-icons-right">
+            <input
+              v-model="firstName"
+              class="input"
+              type="text"
+              placeholder="Caroline"
+            />
+            <span v-if="!isMailValid" class="icon is-small is-right">
+              <i class="fas fa-exclamation-triangle"></i>
+            </span>
+          </div>
         </div>
-      </div>
 
-      <!-- last name -->
-      <div class="field">
-        <label class="label">Nom de famille</label>
-        <div class="control has-icons-left has-icons-right">
-          <input
-            v-model="lastName"
-            class="input"
-            type="text"
-            placeholder="Dupond"
-          />
+        <!-- last name -->
+        <div class="field">
+          <label class="label">Nom de famille</label>
+          <div class="control has-icons-left has-icons-right">
+            <input
+              v-model="lastName"
+              class="input"
+              type="text"
+              placeholder="Dupond"
+            />
+          </div>
         </div>
-      </div>
 
-      <!-- email -->
-      <div class="field">
-        <label class="label">Courriel</label>
-        <div class="control has-icons-left has-icons-right">
-          <input
-            v-model="email"
-            class="input"
-            type="email"
-            placeholder="caroline.dupond@laposte.fr"
-            :class="isMailValid ? '' : 'is-danger'"
-            required
-            @change="onEmailUpdate"
-          />
-          <span class="icon is-small is-left">
-            <icon size="24" color="$shade-600" name="mail-line" />
-          </span>
-          <span v-if="!isMailValid" class="icon is-small is-right">
-            <i class="fas fa-exclamation-triangle"></i>
-          </span>
+        <!-- email -->
+        <div class="field">
+          <label class="label">Courriel</label>
+          <div class="control has-icons-left has-icons-right">
+            <input
+              v-model="email"
+              class="input"
+              type="email"
+              placeholder="caroline.dupond@laposte.fr"
+              :class="isMailValid ? '' : 'is-danger'"
+              required
+              @change="onEmailUpdate"
+            />
+            <span class="icon is-small is-left">
+              <icon size="24" color="$shade-600" name="mail-line" />
+            </span>
+            <span v-if="!isMailValid" class="icon is-small is-right">
+              <i class="fas fa-exclamation-triangle"></i>
+            </span>
+          </div>
+          <p v-if="!isMailValid" class="help is-danger">
+            {{ emailErrorMessage }}
+          </p>
         </div>
-        <p v-if="!isMailValid" class="help is-danger">
-          {{ emailErrorMessage }}
-        </p>
-      </div>
 
-      <!-- password -->
-      <div class="field">
-        <label class="label">Mot de passe</label>
-        <div class="control has-icons-left has-icons-right">
-          <input
-            v-model="password"
-            class="input"
-            type="password"
-            placeholder="mot de passe"
-            :class="isPasswordValid ? '' : 'is-danger'"
-            required
-            @change="onPasswordUpdate"
-          />
-          <span class="icon is-small is-left">
-            <icon size="24" color="$shade-600" name="lock-line" />
-          </span>
-          <span v-if="!isPasswordValid" class="icon is-small is-right">
-            <i class="fas fa-exclamation-triangle"></i>
-          </span>
+        <!-- password -->
+        <div class="field">
+          <label class="label">Mot de passe</label>
+          <div class="control has-icons-left has-icons-right">
+            <input
+              v-model="password"
+              class="input"
+              type="password"
+              placeholder="mot de passe"
+              :class="isPasswordValid ? '' : 'is-danger'"
+              required
+              @change="onPasswordUpdate"
+            />
+            <span class="icon is-small is-left">
+              <icon size="24" color="$shade-600" name="lock-line" />
+            </span>
+            <span v-if="!isPasswordValid" class="icon is-small is-right">
+              <i class="fas fa-exclamation-triangle"></i>
+            </span>
+          </div>
+          <p v-if="!isPasswordValid" class="help is-danger">
+            {{ passwordErrorMessage }}
+          </p>
         </div>
-        <p v-if="!isPasswordValid" class="help is-danger">
-          {{ passwordErrorMessage }}
-        </p>
-      </div>
 
-      <!-- password confirmation-->
-      <div class="field">
-        <label class="label">Confirmer le mot de passe</label>
-        <div class="control has-icons-left has-icons-right">
-          <input
-            v-model="confirmPassword"
-            class="input"
-            type="password"
-            placeholder="mot de passe"
-            :class="isSamePassword ? '' : 'is-danger'"
-            required
-            @change="onPasswordUpdate"
-          />
-          <span class="icon is-small is-left">
-            <icon size="24" color="$shade-600" name="lock-line" />
-          </span>
-          <span v-if="!isSamePassword" class="icon is-small is-right">
-            <i class="fas fa-exclamation-triangle"></i>
-          </span>
+        <!-- password confirmation-->
+        <div class="field">
+          <label class="label">Confirmer le mot de passe</label>
+          <div class="control has-icons-left has-icons-right">
+            <input
+              v-model="confirmPassword"
+              class="input"
+              type="password"
+              placeholder="mot de passe"
+              :class="isSamePassword ? '' : 'is-danger'"
+              required
+              @change="onPasswordUpdate"
+            />
+            <span class="icon is-small is-left">
+              <icon size="24" color="$shade-600" name="lock-line" />
+            </span>
+            <span v-if="!isSamePassword" class="icon is-small is-right">
+              <i class="fas fa-exclamation-triangle"></i>
+            </span>
+          </div>
+          <p v-if="!isSamePassword" class="help is-danger">
+            {{ confirmPasswordErrorMessage }}
+          </p>
         </div>
-        <p v-if="!isSamePassword" class="help is-danger">
-          {{ confirmPasswordErrorMessage }}
-        </p>
-      </div>
 
-      <!-- submit -->
-      <div class="mt-1" style="text-align: end">
-        <button
-          class="button is-success is-small"
-          type="button"
-          :disabled="disabled"
-          @click="onSubmit"
-        >
-          <span>S'inscrire</span>
-          <span class="icon">
-            <icon size="16" name="check" />
-          </span>
-        </button>
-      </div>
-      <div class="mt-1">
-        <span class="is-size-7"
-          >Vous avez déjà un compte ?
-          <NuxtLink to="/login" style="text-decoration-line: revert">
-            Connectez-vous</NuxtLink
-          ></span
-        >
+        <!-- submit -->
+        <div class="mt-1" style="text-align: end">
+          <button
+            class="button is-black is-small"
+            type="button"
+            :disabled="disabled"
+            @click="onSubmit"
+          >
+            <span>S'inscrire</span>
+            <span class="icon">
+              <icon size="16" name="check" />
+            </span>
+          </button>
+        </div>
+        <div class="mt-1">
+          <span class="is-size-7"
+            >Vous avez déjà un compte ?
+            <NuxtLink to="/login" style="text-decoration-line: revert">
+              Connectez-vous</NuxtLink
+            ></span
+          >
+        </div>
       </div>
     </div>
   </div>
