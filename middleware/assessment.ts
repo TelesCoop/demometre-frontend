@@ -1,6 +1,6 @@
 import { useAssessmentStore } from "~~/stores/assessmentStore"
 
-export default defineNuxtRouteMiddleware(async (to) => {
+async function verifyAssessment(to) {
   const assessmentStore = useAssessmentStore()
 
   // Load data if f5
@@ -10,4 +10,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
   if (!assessmentStore.currentAssessment?.initializationDate) {
     useRouter().push("/evaluation/initier")
   }
-})
+}
+
+export default defineNuxtRouteMiddleware(verifyAssessment)
