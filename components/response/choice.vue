@@ -3,7 +3,7 @@
     class="response-choice"
     :class="
       `is-${color} ` +
-      (props.selected
+      (props.selected || props.dragging
         ? `has-border-${props.color}-dark has-background-${props.color}-light-active`
         : `has-border-transparent has-background-${props.color}-light`) +
       (props.dragging ? ` dragging` : '')
@@ -12,10 +12,10 @@
     <div
       class="letter mr-4"
       :class="
-        (props.color == 'no-pillar' && props.selected
+        (props.color === 'no-pillar' && (props.selected || props.dragging)
           ? 'has-text-white '
           : `has-text-${props.color}-dark `) +
-        (props.selected
+        (props.selected || props.dragging
           ? `has-border-${props.color}-dark has-background-${props.color}`
           : `has-border-${props.color} has-background-white`)
       "
@@ -65,7 +65,7 @@ const letter = computed(() => letters[props.responseChoiceIndex])
 input:focus-visible,input:not(:checked):hover + label .response-choice
   @include choice-hover
 
-.response-choice.dragging, *:focus .response-choice
+.response-choice:hover, .response-choice.dragging, *:focus .response-choice
   @include choice-hover
   border: var(--color-dark) dashed 1px !important
 
