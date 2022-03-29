@@ -32,13 +32,13 @@
           :color="props.color"
           :question-id="questionId"
         />
-      <ResponseInputRanking
-        v-else-if="question.type === QuestionType.CLOSED_WITH_RANKING"
-        v-model="answer"
-        :response-choices="question.responseChoices"
-        :color="props.color"
-        :question-id="questionId"
-      />
+        <ResponseInputRanking
+          v-else-if="question.type === QuestionType.CLOSED_WITH_RANKING"
+          v-model="answer"
+          :response-choices="question.responseChoices"
+          :color="props.color"
+          :question-id="questionId"
+        />
       </div>
 
       <!-- end inputs -->
@@ -50,7 +50,7 @@
             <a href="" class="button is-dark is-outlined is-rounded mr-0_75">
               <span>Valider</span>
               <i class="icon">
-                <Icon size="16" name="check-line" />
+                <Icon size="16" name="check" />
               </i>
             </a>
             <span class="is-size-7">

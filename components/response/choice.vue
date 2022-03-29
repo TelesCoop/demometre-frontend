@@ -33,7 +33,7 @@
     <div v-if="props.dragging" class="mb-auto mt-auto ml-auto">
       <icon name="drag-drop-line" size="24" class="icon mt-0_5 mr-0_5" />
     </div>
-    <div v-if="props.selected" class="mb-auto mt-auto ml-auto check">
+    <div v-else-if="props.selected" class="mb-auto mt-auto ml-auto check">
       <icon name="check" size="24" class="icon mt-0_5 mr-0_5" />
     </div>
   </div>
