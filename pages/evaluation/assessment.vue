@@ -12,30 +12,9 @@
     <h2 class="is-size-3 mb-2">
       {{ assessmentStore.currentAssessment.municipality.name }}
     </h2>
-    <!-- TODO changer le background -->
-    <div class="has-background-shade-100 p-1_5">
-      <div class="columns">
-        <div class="column is-one-third">
-          <h3 class="has-text-weight-bold">Évaluation</h3>
-
-          <div>Participation</div>
-          <div>{{ assessmentStore.currentAssessment.participationNb }}</div>
-
-          <!-- TODO Récupérer le porteur -->
-          <template v-if="assessmentStore.initiatedBy">
-            <div>Portée par</div>
-            <div>{{ assessmentStore.currentAssessment.initiatedBy }}</div>
-          </template>
-
-          <div>Lancée le</div>
-          <div>{{ assessmentStore.currentAssessment.initializationDate }}</div>
-        </div>
-
-        <div class="column">
-          <h3 class="has-text-weight-bold">Représentativité</h3>
-        </div>
-      </div>
-    </div>
+    <ParticipationBoard
+      :assessment="assessmentStore.currentAssessment"
+    ></ParticipationBoard>
     <div class="buttons mt-4">
       <NuxtLink to="/evaluation/role" class="button is-normal is-rounded"
         ><span>Poursuivre l'évaluation</span>
@@ -47,6 +26,7 @@
 
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
+
 definePageMeta({
   title: "Localisation",
   breadcrumb: "Localisation",
