@@ -25,8 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import { displayDate } from "assets/utils/date"
-
 const props = defineProps({
   assessment: { type: Object, required: true },
 })
