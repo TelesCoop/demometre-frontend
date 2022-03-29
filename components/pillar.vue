@@ -6,7 +6,12 @@
     @mouseleave="isHovered = false"
   >
     <div :class="circleClass" class="pillar-circle">
-      <img :src="picto" width height="40" />
+      <img
+        :src="picto"
+        width
+        height="40"
+        style="max-width: 60px; max-height: 45px"
+      />
     </div>
     <p :class="`has-text-${colorClass} is-size-4 mt-0_75`">{{ textTitle }}</p>
   </div>
