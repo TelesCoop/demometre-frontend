@@ -14,7 +14,7 @@
         </template>
 
         <div class="mb-0_5">Lancée le</div>
-        <div class="mb-2">{{ displayDate(assessment.initializationDate) }}</div>
+        <div class="mb-2">{{ assessment.initializationDate }}</div>
       </div>
 
       <div class="column">
