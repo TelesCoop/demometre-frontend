@@ -61,6 +61,10 @@ const letter = computed(() => letters[props.responseChoiceIndex])
   .letter
     border-color: var(--color-hover) !important
     background-color: var(--color-light) !important
+  &.is-no-pillar .letter
+    background-color: var(--color) !important
+    border-color: var(--color) !important
+    color: white !important
 
 input:focus-visible,input:not(:checked):hover + label .response-choice
   @include choice-hover
