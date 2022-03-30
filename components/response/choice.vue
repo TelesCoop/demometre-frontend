@@ -3,23 +3,24 @@
     class="response-choice"
     :class="
       `is-${color} ` +
-      (props.selected
+      (props.selected || props.dragging
         ? `has-border-${props.color}-dark has-background-${props.color}-light-active`
-        : `has-border-transparent has-background-${props.color}-light`)
+        : `has-border-transparent has-background-${props.color}-light`) +
+      (props.dragging ? ` dragging` : '')
     "
   >
     <div
       class="letter mr-4"
       :class="
-        (props.color == 'no-pillar' && props.selected
+        (props.color === 'no-pillar' && (props.selected || props.dragging)
           ? 'has-text-white '
           : `has-text-${props.color}-dark `) +
-        (props.selected
+        (props.selected || props.dragging
           ? `has-border-${props.color}-dark has-background-${props.color}`
           : `has-border-${props.color} has-background-white`)
       "
     >
-      {{ letter }}
+      <slot name="left-symbol">{{ letter }}</slot>
     </div>
     <div class="response-choice-content">
       <p class="response-choice-title has-text-black">
@@ -29,7 +30,10 @@
         {{ props.responseChoice.description }}
       </p>
     </div>
-    <div v-if="props.selected" class="mb-auto mt-auto ml-auto check">
+    <div v-if="props.dragging" class="mb-auto mt-auto ml-auto">
+      <icon name="drag-drop-line" size="24" class="icon mt-0_5 mr-0_5" />
+    </div>
+    <div v-else-if="props.selected" class="mb-auto mt-auto ml-auto check">
       <icon name="check" size="24" class="icon mt-0_5 mr-0_5" />
     </div>
   </div>
@@ -43,6 +47,7 @@ const props = defineProps({
   responseChoice: { required: true, type: Object as PropType<ResponseChoice> },
   responseChoiceIndex: { type: Number, default: 0 },
   selected: { type: Boolean, default: false },
+  dragging: { type: Boolean, default: false },
   color: { type: String, required: true },
 })
 const letters = "ABCDEFGHIJKLMOPQRSTUVWXYZ"
@@ -51,11 +56,22 @@ const letter = computed(() => letters[props.responseChoiceIndex])
 </script>
 
 <style lang="sass" scoped>
-input:focus-visible,input:not(:checked):hover + label .response-choice
+@mixin choice-hover
   background-color: var(--color-light-hover) !important
   .letter
     border-color: var(--color-hover) !important
     background-color: var(--color-light) !important
+  &.is-no-pillar .letter
+    background-color: var(--color) !important
+    border-color: var(--color) !important
+    color: white !important
+
+input:focus-visible,input:not(:checked):hover + label .response-choice
+  @include choice-hover
+
+.response-choice:hover, .response-choice.dragging, *:focus .response-choice
+  @include choice-hover
+  border: var(--color-dark) dashed 1px !important
 
 .response-choice
   display: flex

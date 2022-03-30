@@ -31,16 +31,16 @@
                   ? `has-text-white is-size-7`
                   : `has-text-${color} is-size-7`
               "
-              >{{ marker.concatenatedCode }}</span
+              >{{ marker.concatenatedCode.substring(1) }}</span
             >
             {{ wordTitleCase(marker.name) }}</a
           >
-          <div v-if="activeMarker">
+          <div v-if="marker.name === activeMarker?.name">
             <ul>
               <li v-for="criteria of criterias" :key="criteria.id">
                 <a style="pointer-events: none"
                   ><span :class="`has-text-${color} is-size-7`">{{
-                    criteria.concatenatedCode
+                    criteria.concatenatedCode.substring(1)
                   }}</span>
                   {{ criteria.name }}</a
                 >
