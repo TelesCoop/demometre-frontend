@@ -62,7 +62,7 @@ function onMouseLeave() {
     height: 100%
 
     &:not(:last-child)
-      border-right: 1px solid black
+      border-right: 1px solid $shade-600
 
     &:hover
       background-color: $shade-400
