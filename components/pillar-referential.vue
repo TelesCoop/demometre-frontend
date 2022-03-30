@@ -35,7 +35,7 @@
             >
             {{ wordTitleCase(marker.name) }}</a
           >
-          <div v-if="activeMarker">
+          <div v-if="marker.name === activeMarker?.name">
             <ul>
               <li v-for="criteria of criterias" :key="criteria.id">
                 <a style="pointer-events: none"
