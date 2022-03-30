@@ -8,7 +8,6 @@
           : "mon inter-communalité"
       }}
     </h1>
-    {{ assessmentStore.currentAssessment }}
     <h2 class="is-size-3 mb-2">
       {{ assessmentStore.currentAssessment.municipality.name }}
     </h2>
