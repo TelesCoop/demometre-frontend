@@ -1,5 +1,9 @@
 import { defineStore } from "pinia"
-import { EvaluationIntroPage, HomePage, ReferentialPage } from "~/composables/types"
+import {
+  EvaluationIntroPage,
+  HomePage,
+  ReferentialPage,
+} from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 
 export const usePageStore = defineStore("page", {
@@ -10,9 +14,7 @@ export const usePageStore = defineStore("page", {
   }),
   actions: {
     async loadHomePage() {
-      const { data, error } = await useApiGet<HomePage[]>(
-        "home-pages/"
-      )
+      const { data, error } = await useApiGet<HomePage[]>("home-pages/")
       if (!error.value) {
         if (data.value.length) {
           this.homePage = data.value[0]
@@ -44,6 +46,6 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve evaluation intro page")
         }
       }
-    }
+    },
   },
 })
