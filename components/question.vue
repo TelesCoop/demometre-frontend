@@ -37,7 +37,6 @@
           v-model="answer"
           :response-choices="question.responseChoices"
           :color="props.color"
-          :question-id="questionId"
         />
       </div>
 
