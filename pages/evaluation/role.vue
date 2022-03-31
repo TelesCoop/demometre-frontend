@@ -58,7 +58,10 @@ const disabled = computed(() => {
 async function onSubmit() {
   participationStore.chooseRole(answer.value)
   // TODO : if participaton exist, update it
-  participationStore.createParticipation()
+  const isSuccess = participationStore.createParticipation()
+  if (isSuccess) {
+    useRouter().push("/evaluation/questions")
+  }
 }
 </script>
 

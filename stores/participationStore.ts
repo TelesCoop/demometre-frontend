@@ -29,7 +29,9 @@ export const useParticipationStore = defineStore("participation", {
       )
       if (!error.value) {
         this.id = data.value.id
+        return true
       }
+      return false
     },
     async updateParticipation() {
       const { data, error } = await useApiPatch<Participation>(
@@ -39,6 +41,9 @@ export const useParticipationStore = defineStore("participation", {
       if (!error.value) {
         this.id = data.value.id
       }
+    },
+    async getParticipation(participationId: number) {
+      // TODO
     },
     setConsent() {
       this.consent = true

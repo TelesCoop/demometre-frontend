@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import { Question, Role } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
+import { useParticipationStore } from "./participationStore"
 
 export const useProfilingStore = defineStore("profiling", {
   state: () => ({
