@@ -31,7 +31,7 @@ const responseChoices = ref<ResponseChoiceType[]>([
   },
 ])
 
-const answer = useModel(props, "modelValue")
+const answer = useModel("modelValue")
 </script>
 
 <style scoped lang="sass"></style>

@@ -26,7 +26,7 @@ const props = defineProps({
   questionId: { required: true, type: Number },
 })
 
-const answer = useModel(props, "modelValue")
+const answer = useModel("modelValue")
 </script>
 
 <style scoped lang="sass">
