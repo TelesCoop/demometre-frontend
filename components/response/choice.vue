@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="choiceElement"
     class="response-choice"
     :class="
       `is-${color} ` +
@@ -41,7 +42,6 @@
 
 <script setup lang="ts">
 import { ResponseChoice } from "~/composables/types"
-import { PropType } from "vue"
 
 const props = defineProps({
   responseChoice: { required: true, type: Object as PropType<ResponseChoice> },
@@ -50,9 +50,19 @@ const props = defineProps({
   dragging: { type: Boolean, default: false },
   color: { type: String, required: true },
 })
+const choiceElement = ref<HTMLElement>()
 const letters = "ABCDEFGHIJKLMOPQRSTUVWXYZ"
 
+onMounted(() => {
+  window.addEventListener("keydown", (event) => compareKey(event.key))
+})
+
 const letter = computed(() => letters[props.responseChoiceIndex])
+
+function compareKey(key: string) {
+  if ((key as string).toUpperCase() === letter.value)
+    choiceElement.value.click()
+}
 </script>
 
 <style lang="sass" scoped>
