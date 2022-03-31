@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  richText: { type: String, required: true },
+  richText: { type: String, default: "" },
 })
 </script>
 
