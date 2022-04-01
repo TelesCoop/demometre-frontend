@@ -14,16 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-} from "chart.js"
 import { COLORS } from "assets/utils/colors"
-import { ref } from "@vue/reactivity"
 
 const categories = {
   habitants: {
