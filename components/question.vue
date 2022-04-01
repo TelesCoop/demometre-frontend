@@ -38,6 +38,13 @@
           :response-choices="question.responseChoices"
           :color="props.color"
         />
+        <ResponseInputScale
+          v-else-if="question.type === QuestionType.CLOSED_WITH_SCALE"
+          v-model="answer"
+          :categories="question.categories"
+          :color="props.color"
+          :bounds="bounds"
+        />
       </div>
 
       <!-- end inputs -->
