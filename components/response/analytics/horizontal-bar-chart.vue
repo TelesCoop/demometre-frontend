@@ -1,7 +1,12 @@
 <template>
   <div>
-    <circle-check v-model="val" :items="items"></circle-check>
-    <div style="width: 600px">
+    <div class="is-flex is-justify-content-center">
+      <circle-check
+        v-model="selectedCategory"
+        :items="categories"
+      ></circle-check>
+    </div>
+    <div>
       <Bar
         :chart-options="chartOptions"
         :chart-data="chartData"
@@ -31,7 +36,7 @@ import { ref } from "@vue/reactivity"
 import CircleCheck from "~/components/circle-checkbox.vue"
 import { computed } from "vue"
 
-const categories = {
+const CATEGORIES = {
   habitants: {
     label: "Habitants",
     value: "habitants",
@@ -57,54 +62,41 @@ const categories = {
     class: "is-success-dark",
   },
 }
-const items = Object.values(categories)
-const categoryKeys = Object.keys(categories)
-const val = ref([...categoryKeys])
+
+const props = defineProps({
+  chartId: { type: String, require: true },
+  datasetIdKey: { type: String, default: "label" },
+  height: { type: Number, require: true },
+  width: { type: Number, require: true },
+  data: { type: Array, require: true },
+  label: { type: Array, require: true },
+  introduction: { type: String, required: true },
+})
+
 ChartJS.register(Title, Tooltip, BarElement, CategoryScale, LinearScale)
 
-const colors = Object.values(COLORS.success)
-
-const data = [
-  {
-    data: [40, 20, 12, 4, 5],
-    category: "habitants",
-  },
-  {
-    data: [23, 24, 13, 38, 22],
-    category: "services",
-  },
-  {
-    data: [40, 20, 12, 4, 5],
-    category: "elus",
-  },
-  {
-    data: [40, 20, 12, 4, 5],
-    category: "journalistes",
-  },
-]
-
-const labels = ["Je ne sais pas", "Non", "Insuffisamment", "Plutôt", "Oui"]
+const categories = computed(() => {
+  return props.data.map((item) => item.category)
+})
+const selectedCategory = ref([...categories.value])
+watch(categories, (categories) => {
+  selectedCategory.value = categories
+})
 
 const buildDataset = (data) => {
   return {
     ...data,
     barThickness: 10,
-    backgroundColor: categories[data.category].color,
   }
 }
 const chartData = computed(() => {
   return {
-    labels: labels,
-    datasets: data
-      .filter((item) => val.value.includes(item.category))
+    labels: props.labels,
+    datasets: props.data
+      .filter((item) => selectedCategory.value.includes(item.category))
       .map(buildDataset),
   }
 })
-
-const chartId = "bar-chart"
-const datasetIdKey = "label"
-const width = 400
-const height = 200
 
 const chartOptions = {
   responsive: true,
