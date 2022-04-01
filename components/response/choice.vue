@@ -11,6 +11,7 @@
     "
   >
     <div
+      v-if="!props.hideLeftSymbol"
       class="letter mr-4"
       :class="
         (props.color === 'no-pillar' && (props.selected || props.dragging)
@@ -31,16 +32,27 @@
         {{ props.responseChoice.description }}
       </p>
     </div>
-    <div v-if="props.dragging" class="mb-auto mt-auto ml-auto">
-      <icon name="drag-drop-line" size="24" class="icon mt-0_5 mr-0_5" />
-    </div>
-    <div v-else-if="props.selected" class="mb-auto mt-auto ml-auto check">
-      <icon name="check" size="24" class="icon mt-0_5 mr-0_5" />
+    <div class="mb-auto mt-auto ml-auto">
+      <slot name="right-symbol">
+        <icon
+          v-if="props.dragging"
+          name="drag-drop-line"
+          size="24"
+          class="icon mt-0_5 mr-0_5"
+        />
+        <icon
+          v-else-if="props.selected"
+          name="check"
+          size="24"
+          class="icon mt-0_5 mr-0_5"
+        />
+      </slot>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { PropType } from "vue"
 import { ResponseChoice } from "~/composables/types"
 
 const props = defineProps({
@@ -49,6 +61,7 @@ const props = defineProps({
   selected: { type: Boolean, default: false },
   dragging: { type: Boolean, default: false },
   color: { type: String, required: true },
+  hideLeftSymbol: { type: Boolean, default: false },
 })
 const choiceElement = ref<HTMLElement>()
 const letters = "ABCDEFGHIJKLMOPQRSTUVWXYZ"
@@ -89,6 +102,7 @@ input:focus-visible,input:not(:checked):hover + label .response-choice
   border-radius: 6px
   cursor: pointer
   line-height: 1.3
+  height: 72px
   .letter
     text-align: center
     padding-top: 8px
