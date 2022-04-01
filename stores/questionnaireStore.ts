@@ -18,7 +18,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     },
     pillars: (state) => {
       return Object.values(state.pillarByName)
-    }
+    },
   },
   actions: {
     async loadQuestionnaireStructure() {
