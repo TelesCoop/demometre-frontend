@@ -36,10 +36,19 @@ export const useAssessmentStore = defineStore("assessment", {
         errorStore.setError(error.value.data)
         return false
       }
-
       this.assessmentById[data.value.id] = data.value
       this.currentAssessmentId = data.value.id
       return true
+    },
+
+    async getAssessment(id) {
+      const { data, error } = await useApiGet<Assessment>(`assessments/${id}`)
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data)
+      }
+      this.assessmentById[data.value.id] = data.value
+      this.currentAssessmentId = data.value.id
     },
   },
 })
