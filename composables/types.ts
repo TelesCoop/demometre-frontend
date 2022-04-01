@@ -99,7 +99,14 @@ export type Question = {
   sources: string
   toGoFurther: string
   definitionIds: number[]
+  categories: Category[]
 }
+
+type Bound = { value: number; label: string }
+export type QuestionBounds = { min: Bound; max: Bound }
+
+export type Category = { id: number; category: string }
+
 export type Role = {
   id: number
   name: string

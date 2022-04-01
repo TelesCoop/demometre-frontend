@@ -136,7 +136,12 @@
 </template>
 
 <script setup lang="ts">
-import { QuestionType, Question, Definition } from "~/composables/types"
+import {
+  QuestionType,
+  Question,
+  Definition,
+  QuestionBounds,
+} from "~/composables/types"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import RichText from "~/components/rich-text.vue"
 
@@ -166,6 +171,13 @@ if (!error.value) {
 const definitions = computed<{ [key: number]: Definition }>(() =>
   definitionStore.definitionsByIdArray(question.value.definitionIds)
 )
+
+const bounds = computed<QuestionBounds>(() => {
+  return {
+    min: { label: question.value.minLabel, value: question.value.min },
+    max: { label: question.value.maxLabel, value: question.value.max },
+  }
+})
 
 const currentTabId = ref<string>("definitions")
 const tabs = ref<tabDef[]>([
