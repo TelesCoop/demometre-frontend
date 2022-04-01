@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="is-flex is-justify-content-center">
-      <circle-check
+    <div class="is-flex is-justify-content-center mb-2">
+      <CircleCheckbox
         v-model="selectedCategory"
         :items="categories"
-      ></circle-check>
+      ></CircleCheckbox>
     </div>
     <div>
       <Bar
@@ -33,54 +33,24 @@ import {
 import { Bar } from "vue-chartjs"
 import { COLORS } from "assets/utils/colors"
 import { ref } from "@vue/reactivity"
-import CircleCheck from "~/components/circle-checkbox.vue"
 import { computed } from "vue"
+import CircleCheckbox from "~/components/circle-checkbox.vue"
 
-const CATEGORIES = {
-  habitants: {
-    label: "Habitants",
-    value: "habitants",
-    color: COLORS.success.main,
-    class: "is-success-main",
-  },
-  services: {
-    label: "Services",
-    value: "services",
-    color: COLORS.success.hover,
-    class: "is-success-hover",
-  },
-  elus: {
-    label: "Élus",
-    value: "elus",
-    color: COLORS.success.active,
-    class: "is-success-active",
-  },
-  journalistes: {
-    label: "Journalistes",
-    value: "journalistes",
-    color: COLORS.success.dark,
-    class: "is-success-dark",
-  },
-}
+ChartJS.register(Title, Tooltip, BarElement, CategoryScale, LinearScale)
 
 const props = defineProps({
   chartId: { type: String, require: true },
   datasetIdKey: { type: String, default: "label" },
   height: { type: Number, require: true },
   width: { type: Number, require: true },
+  categories: { type: Array, require: true },
   data: { type: Array, require: true },
-  label: { type: Array, require: true },
-  introduction: { type: String, required: true },
+  labels: { type: Array, require: true },
 })
 
-ChartJS.register(Title, Tooltip, BarElement, CategoryScale, LinearScale)
-
-const categories = computed(() => {
-  return props.data.map((item) => item.category)
-})
-const selectedCategory = ref([...categories.value])
-watch(categories, (categories) => {
-  selectedCategory.value = categories
+const selectedCategory = ref([...props.categories.map((item) => item.value)])
+watch(props.categories, (categories) => {
+  selectedCategory.value = categories.map((item) => item.value)
 })
 
 const buildDataset = (data) => {
@@ -124,7 +94,7 @@ const chartOptions = {
         beginAtZero: true,
         stepSize: 10,
         color: COLORS.success.main,
-        callback(value, index, ticks) {
+        callback(value) {
           if (value % 50 === 0) {
             return `${value}%`
           } else {
