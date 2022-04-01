@@ -64,7 +64,11 @@
         <div class="score">
           <div v-for="i in 4" :key="i" class="level">
             <div class="level-left">
-              <Score :score="i" :color="color" class="level-item mr-1_5" />
+              <AnalyticsScore
+                :score="i"
+                :color="color"
+                class="level-item mr-1_5"
+              />
               <p class="level-item">
                 {{ wordTitleCase(activeMarker["score" + i]) }}
               </p>

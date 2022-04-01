@@ -111,8 +111,9 @@ async function onSubmit() {
     localityType: localityTypeSelected.value,
   })
   if (isSuccess) {
-    participationStore.chooseAssessment(assessmentStore.currentAssessmentId)
-    useRouter().push("/evaluation/assessment")
+    useRouter().push(
+      `/evaluation/assessment/${assessmentStore.currentAssessmentId}`
+    )
   }
 }
 </script>
