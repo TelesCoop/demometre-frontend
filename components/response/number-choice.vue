@@ -57,6 +57,7 @@ const responseChoice = computed<ResponseChoiceType>(() => {
 <style src="@vueform/slider/themes/default.css"></style>
 
 <style lang="sass">
+// do not add scoped, it would break slider customizations
 .number-choice .input-container
   width: 168px
   justify-content: space-between
