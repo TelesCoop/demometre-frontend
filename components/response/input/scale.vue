@@ -13,6 +13,7 @@
         :category="category"
         :color="color"
         :bounds="bounds"
+        :selected="answer[category.id] !== null"
         @update:model-value="(val) => updateOne(val, category.id)"
       />
     </div>

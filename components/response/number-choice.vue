@@ -4,6 +4,7 @@
       :response-choice="responseChoice"
       :response-choice-index="responseChoice.id"
       :color="props.color"
+      :selected="props.selected"
       hide-left-symbol
     >
       <template #right-symbol>
@@ -40,6 +41,7 @@ const props = defineProps({
   modelValue: { type: Number, default: null },
   color: { type: String, required: true },
   bounds: { type: Object as PropType<QuestionBounds>, required: true },
+  selected: { type: Boolean, default: false },
 })
 
 const answer = useModel("modelValue")
