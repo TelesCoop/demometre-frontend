@@ -1,5 +1,5 @@
 <template>
-  <label>
+  <label class="number-choice">
     <ResponseChoice
       :response-choice="responseChoice"
       :response-choice-index="responseChoice.id"
@@ -56,33 +56,32 @@ const responseChoice = computed<ResponseChoiceType>(() => {
 
 <style src="@vueform/slider/themes/default.css"></style>
 
-<style lang="sass" scoped>
-.choice-slider
-  --slider-bg: #FFF
-  --slider-connect-bg: var(--color)
-  --slider-handle-shadow: 0
-  --slider-handle-shadow-active: 0
-  --slider-handle-border: 1px solid var(--color-dark)
-  --slider-handle-width: 18px
-  --slider-handle-height: 18px
-  --slider-handle-bg: var(--color)
-  --slider-height: 12px
-  width: 138px
-
-  // customization not planned by the module
-  .slider-base, .slider-connects
-    border: 1px solid var(--color)
-    box-sizing: content-box
-
-  &.slider-horizontal .slider-handle
-    top: calc(var(--slider-handle-height, 16px)/2*-1 - var(--slider-height, 6px)/2*-1)
-  // end of customization not planned by the module
-
-.input-container
+<style lang="sass">
+.number-choice .input-container
   width: 168px
   justify-content: space-between
   align-items: center
+  .choice-slider
+    --slider-bg: #FFF
+    --slider-connect-bg: var(--color)
+    --slider-handle-shadow: 0
+    --slider-handle-shadow-active: 0
+    --slider-handle-border: 1px solid var(--color-dark)
+    --slider-handle-width: 18px
+    --slider-handle-height: 18px
+    --slider-handle-bg: var(--color)
+    --slider-height: 12px
+    width: 138px
 
-  .value-display
-    margin-top: -2px
+    // customization not planned by the module
+    .slider-base, .slider-connects
+      border: 1px solid var(--color)
+      box-sizing: content-box
+
+    &.slider-horizontal .slider-handle
+      top: calc(var(--slider-handle-height, 16px)/2*-1 - var(--slider-height, 6px)/2*-1)
+    // end of customization not planned by the module
+
+    .value-display
+      margin-top: -2px
 </style>
