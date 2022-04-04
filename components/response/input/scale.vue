@@ -9,7 +9,7 @@
       class="mb-1"
     >
       <ResponseNumberChoice
-        :model-value="answer[category.id]"
+        :model-value="answer[category.id] || props.bounds.min.value"
         :category="category"
         :color="color"
         :bounds="bounds"

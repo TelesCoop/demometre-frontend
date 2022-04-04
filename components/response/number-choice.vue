@@ -33,7 +33,7 @@ const props = defineProps({
     type: Object as PropType<Category>,
     required: true,
   },
-  modelValue: { type: Number, default: -1 },
+  modelValue: { type: Number, default: null },
   color: { type: String, required: true },
   bounds: { type: Object as PropType<QuestionBounds> },
 })
