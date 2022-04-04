@@ -44,7 +44,7 @@ const props = defineProps({
   bounds: { type: Object as PropType<QuestionBounds> },
 })
 
-const answer = useModel("modelValue", { type: "object" })
+const answer = useModel<object>("modelValue", { type: "object" })
 
 function updateOne(value, id) {
   answer.value = { ...answer.value, [id]: value }

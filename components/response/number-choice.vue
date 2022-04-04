@@ -44,7 +44,7 @@ const props = defineProps({
   selected: { type: Boolean, default: false },
 })
 
-const answer = useModel("modelValue")
+const answer = useModel<number>("modelValue")
 const responseChoice = computed<ResponseChoiceType>(() => {
   return {
     id: props.category.id,

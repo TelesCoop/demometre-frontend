@@ -1,9 +1,9 @@
 import { computed, getCurrentInstance } from "vue"
 
-export const useModel = (
+export function useModel<Type>(
   propName,
   options: { type?: "object" | "array" } = {}
-) => {
+) {
   const vm = getCurrentInstance().proxy
 
   let valueToSet
@@ -15,7 +15,7 @@ export const useModel = (
     valueToSet = (value: any[]) => [...value]
   } else valueToSet = (value) => value
 
-  return computed({
+  return computed<Type>({
     get() {
       return vm.$props[propName]
     },
