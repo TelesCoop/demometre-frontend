@@ -56,7 +56,7 @@ const responseChoice = computed<ResponseChoiceType>(() => {
 
 <style src="@vueform/slider/themes/default.css"></style>
 
-<style lang="sass">
+<style lang="sass" scoped>
 .choice-slider
   --slider-bg: #FFF
   --slider-connect-bg: var(--color)
