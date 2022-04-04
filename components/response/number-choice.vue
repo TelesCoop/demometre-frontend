@@ -16,7 +16,7 @@
             :max="props.bounds.max.value"
             :tooltips="false"
           />
-          <div>{{ props.selected ? answer : "?" }}</div>
+          <div class="value-display">{{ props.selected ? answer : "?" }}</div>
         </div>
       </template>
     </ResponseChoice>
@@ -82,4 +82,7 @@ const responseChoice = computed<ResponseChoiceType>(() => {
   width: 168px
   justify-content: space-between
   align-items: center
+
+  .value-display
+    margin-top: -2px
 </style>
