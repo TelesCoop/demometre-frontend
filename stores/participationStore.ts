@@ -14,7 +14,6 @@ export const useParticipationStore = defineStore("participation", {
       { [key: string]: { [key: number]: QuestionResponse } }
     >{},
     responseByProfilingQuestionId: <{ [key: number]: QuestionResponse }>{},
-    profilingJourney: <number[]>[],
     profilingCurrent: <number[]>[],
   }),
   getters: {

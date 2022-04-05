@@ -79,6 +79,20 @@ export type ResponseChoice = {
   responseChoice: string
   description: string
 }
+
+export type Rule = {
+  id: number
+  type: string
+  // Id de la question définissant la règle
+  conditionalQuestionId: number
+
+  // Type de réponse possible pour la rules
+  responseChoiceIds: number
+  numericalOperator: string
+  numericalValue: number
+  booleanResponse: boolean
+}
+
 export type Question = {
   id: number
   criteriaId: number | null
@@ -100,6 +114,8 @@ export type Question = {
   toGoFurther: string
   definitionIds: number[]
   categories: Category[]
+  rulesIntersectionOperator: string
+  rules: Rule[]
 }
 
 type Bound = { value: number; label: string }

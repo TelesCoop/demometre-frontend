@@ -9,6 +9,9 @@ export const useProfilingStore = defineStore("profiling", {
     questionById: <{ [key: number]: Question }>{},
   }),
   getters: {
+    questions: (state) => {
+      return Object.values(state.questionById)
+    },
     roles: (state) => {
       return Object.values(state.roleById)
     },
