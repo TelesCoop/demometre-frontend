@@ -28,8 +28,10 @@ export const useParticipationStore = defineStore("participation", {
       }
     },
     nextProfilingQuestionId() {
-      // return this.profilingJourney[0]
-      return parseInt(Object.keys(useProfilingStore().profilingQuestionById)[0])
+      return parseInt(this.profilingJourney[0])
+    },
+    currentProfilingQuestion() {
+      return useProfilingStore().questionById[this.nextProfilingQuestionId]
     },
   },
   actions: {
@@ -55,11 +57,7 @@ export const useParticipationStore = defineStore("participation", {
         `participation/${participationId}/`
       )
       if (!error.value) {
-        this.id = data.value.id
-        this.roleId = data.value.roleId
-        this.consent = data.value.consent
-        useAssessmentStore().getAssessment(data.value.assessmentId)
-        useProfilingStore().loadProfilingQuestions()
+        this.updateState(data.value)
       }
     },
     async getCurrentParticipation() {
@@ -68,13 +66,16 @@ export const useParticipationStore = defineStore("participation", {
       )
       if (!error.value) {
         // TODO : manage when several participations retrieve
-        const participation = data.value[0]
-        this.id = participation.id
-        this.roleId = participation.roleId
-        this.consent = participation.consent
-        useAssessmentStore().getAssessment(participation.assessmentId)
-        useProfilingStore().loadProfilingQuestions()
+        this.updateState(data.value[0])
       }
+    },
+    async updateState(participation) {
+      this.id = participation.id
+      this.roleId = participation.roleId
+      this.consent = participation.consent
+      useAssessmentStore().getAssessment(participation.assessmentId)
+      await useProfilingStore().loadProfilingQuestions()
+      this.setProfilingJourney()
     },
     setConsent() {
       this.consent = true
@@ -84,7 +85,7 @@ export const useParticipationStore = defineStore("participation", {
     },
     setProfilingJourney() {
       // TODO : include drawer question logic
-      this.profilingJourney = Object.keys(useProfilingStore())
+      this.profilingJourney = Object.keys(useProfilingStore().questionById)
     },
   },
 })

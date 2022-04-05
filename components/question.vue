@@ -1,8 +1,8 @@
 <template>
-  <div class="section">
+  <div v-if="question" class="section">
     <section class="pb-2">
-      <h1 class="title is-3">{{ question?.questionStatement }}</h1>
-      <RichText :rich-text="question?.description"></RichText>
+      <h1 class="title is-3">{{ question.questionStatement }}</h1>
+      <RichText :rich-text="question.description"></RichText>
 
       <!-- all possible inputs -->
       <div class="my-1_5">
@@ -74,6 +74,7 @@
           </a>
         </template>
         <a
+          v-if="tabs.length"
           href="#menu"
           class="button is-dark is-outlined is-rounded round absolute-centered"
         >
@@ -100,7 +101,12 @@
         </div>
       </div>
     </section>
-    <section id="menu" class="pt-2" :class="`menu is-${color}`">
+    <section
+      v-if="tabs.length"
+      id="menu"
+      class="pt-2"
+      :class="`menu is-${color}`"
+    >
       <div class="tabs">
         <ul>
           <li v-for="tab of tabs" :key="tab.id">
@@ -140,6 +146,9 @@
       </div>
     </section>
   </div>
+  <div>
+    <Loader :is-active="true" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -150,18 +159,20 @@ import {
   QuestionBounds,
 } from "~/composables/types"
 import { useDefinitionStore } from "~/stores/definitionStore"
-import { useProfilingStore } from "~~/stores/profilingStore"
-import { useQuestionnaireStore } from "~~/stores/questionnaireStore"
+import { useProfilingStore } from "~/stores/profilingStore"
+import { useQuestionnaireStore } from "~/stores/questionnaireStore"
+import { useParticipationStore } from "~/stores/participationStore"
 
 const definitionStore = useDefinitionStore()
 const questionnaireStore = useQuestionnaireStore()
 const profilingStore = useProfilingStore()
+const participationStore = useParticipationStore()
 
 type tabDef = { label: string; id: string }
 
 const props = defineProps({
   questionId: { type: Number, required: true },
-  questionType: { type: String, default: "questionnaire" },
+  context: { type: String, default: "questionnaire" },
   color: { type: String, required: true },
 })
 
@@ -171,14 +182,16 @@ const isAnswered = computed(() => {
   return !!answer.value
 })
 
-const question = ref<Question>(null)
-if (props.questionType === "questionnaire") {
-  question.value = questionnaireStore.questionById[props.questionId]
-} else if (props.questionType === "profiling") {
-  question.value = profilingStore.profilingQuestionById[props.questionId]
-} else {
-  console.error("Unkown question type")
-}
+const question = computed(() => {
+  if (props.context === "questionnaire") {
+    return questionnaireStore.questionById[props.questionId]
+  } else if (props.context === "profiling") {
+    return profilingStore.questionById[props.questionId]
+  } else {
+    console.error("Unkown question type")
+    return null
+  }
+})
 
 const definitions = computed<{ [key: number]: Definition }>(() =>
   definitionStore.definitionsByIdArray(question.value.definitionIds)
@@ -192,28 +205,37 @@ const bounds = computed<QuestionBounds>(() => {
 })
 
 const currentTabId = ref<string>("definitions")
-const tabs = ref<tabDef[]>([
-  {
+const tabs = ref<tabDef[]>([])
+if (question.value?.definitionIds) {
+  tabs.value.push({
     label: "Définitions",
     id: "definitions",
-  },
-  {
+  })
+}
+if (question.value?.legalFrame) {
+  tabs.value.push({
     label: "Cadre légal",
     id: "legal-frame",
-  },
-  {
+  })
+}
+if (question.value?.useCase) {
+  tabs.value.push({
     label: "Exemples inspirants",
     id: "use-case",
-  },
-  {
+  })
+}
+if (question.value?.sources) {
+  tabs.value.push({
     label: "Sources",
     id: "sources",
-  },
-  {
+  })
+}
+if (question.value?.toGoFurther) {
+  tabs.value.push({
     label: "Pour aller plus loin",
     id: "to-go-further",
-  },
-])
+  })
+}
 
 function setTab(tabId) {
   currentTabId.value = tabId

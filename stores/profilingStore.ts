@@ -6,7 +6,7 @@ import { useParticipationStore } from "./participationStore"
 export const useProfilingStore = defineStore("profiling", {
   state: () => ({
     roleById: <{ [key: string]: Role }>{},
-    profilingQuestionById: <{ [key: number]: Question }>{},
+    questionById: <{ [key: number]: Question }>{},
   }),
   getters: {
     roles: (state) => {
@@ -28,7 +28,7 @@ export const useProfilingStore = defineStore("profiling", {
       )
       if (!error.value) {
         for (const question of data.value) {
-          this.profilingQuestionById[question.id] = question
+          this.questionById[question.id] = question
         }
       }
     },

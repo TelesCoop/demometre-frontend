@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
-import { useParticipationStore } from "~~/stores/participationStore"
+import { useParticipationStore } from "~/stores/participationStore"
 
 const userStore = useUserStore()
 const participationStore = useParticipationStore()

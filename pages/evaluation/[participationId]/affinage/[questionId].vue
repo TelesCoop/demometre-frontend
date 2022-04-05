@@ -1,10 +1,6 @@
 <template>
   <div class="container is-tight pillar-try">
-    <Question
-      :question-id="questionId"
-      :color="color"
-      question-type="profiling"
-    />
+    <Question :question-id="questionId" :color="color" context="profiling" />
   </div>
 </template>
 
@@ -12,7 +8,7 @@
 definePageMeta({
   title: "Affinage",
   breadcrumb: "affinage",
-  middleware: ["participation"],
+  // middleware: ["participation"],
 })
 
 const route = useRoute()

@@ -13,8 +13,8 @@
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
 import { useDefinitionStore } from "~/stores/definitionStore"
-import { useToastStore } from "~~/stores/toastStore"
-import { useParticipationStore } from "~~/stores/participationStore"
+import { useToastStore } from "~/stores/toastStore"
+import { useParticipationStore } from "~/stores/participationStore"
 
 const userStore = useUserStore()
 const participationStore = useParticipationStore()
