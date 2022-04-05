@@ -5,6 +5,7 @@ async function verifyParticipation(to) {
   // Load data if f5
   if (process.server) {
     await participationStore.getParticipation(to.params.participationId)
+    // TODO : if no participation load all participationStore data
   }
 }
 

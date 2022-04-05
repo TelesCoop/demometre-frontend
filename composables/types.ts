@@ -147,6 +147,20 @@ export type Participation = {
   roleId: number
   consent: boolean
 }
+export type QuestionResponse = {
+  id: number
+  participationId: number
+  questionId: number
+  uniqueChoiceResponseId: number | null
+  multipleChoiceResponseIds: number[]
+  booleanResponse: boolean | null
+  numericalResponse: number | null
+  closedWithRankingResponseIds: number[]
+  closedWithScaleCategoryResponses: {
+    category: string
+    responseValue: number
+  }[]
+}
 
 // Pages
 export type HomePage = { title: string; introduction: string }

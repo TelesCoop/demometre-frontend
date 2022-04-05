@@ -24,7 +24,7 @@ export const useProfilingStore = defineStore("profiling", {
     },
     async loadProfilingQuestions() {
       const { data, error } = await useApiGet<Question[]>(
-        "profiling-questions/"
+        `profiling-questions/participation/${useParticipationStore().id}/`
       )
       if (!error.value) {
         for (const question of data.value) {

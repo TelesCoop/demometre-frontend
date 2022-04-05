@@ -40,9 +40,20 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <NuxtLink to="/evaluation" class="button is-dark is-rounded"
-                >Lancer l'évaluation</NuxtLink
-              >
+              <div v-if="!isInsideAssessment">
+                <NuxtLink
+                  v-if="userStore.isLoggedIn && participationStore.id"
+                  :to="assessmentStepPath"
+                  class="button is-dark is-rounded"
+                  >Reprendre l'évaluation</NuxtLink
+                >
+                <NuxtLink
+                  v-else
+                  to="/evaluation"
+                  class="button is-dark is-rounded"
+                  >Lancer l'évaluation</NuxtLink
+                >
+              </div>
               <NuxtLink
                 v-if="userStore.isLoggedIn"
                 to="/profil"
@@ -65,14 +76,25 @@
 
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
+import { useParticipationStore } from "~~/stores/participationStore"
 
 const userStore = useUserStore()
+const participationStore = useParticipationStore()
 // TODO : use router to highlight active route
 const route = useRoute()
 const isBurgerOpen = ref(false)
 
 const isRouteActive = computed(() => (path) => {
   return route.path === path
+})
+
+const isInsideAssessment = computed(() => {
+  return route.path.includes("/evaluation")
+})
+
+const assessmentStepPath = computed(() => {
+  // TODO : detect if go to profiling or to questionnaire
+  return `/evaluation/${participationStore.id}/affinage/${participationStore.nextProfilingQuestionId}`
 })
 
 const navItems = [

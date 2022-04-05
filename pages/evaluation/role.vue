@@ -58,9 +58,17 @@ const disabled = computed(() => {
 async function onSubmit() {
   participationStore.chooseRole(answer.value)
   // TODO : if participaton exist, update it
-  const isSuccess = participationStore.createParticipation()
+  const isSuccess = await participationStore.createParticipation()
   if (isSuccess) {
-    useRouter().push("/evaluation/questions")
+    await profilingStore.loadProfilingQuestions()
+    participationStore.setProfilingJourney()
+    if (participationStore.nextProfilingQuestionId) {
+      useRouter().push(
+        `/evaluation/${this.id}/affinage/${participationStore.nextProfilingQuestionId}`
+      )
+    } else {
+      // TODO : manage case when there is not next profiling Question
+    }
   }
 }
 </script>

@@ -139,14 +139,18 @@
 <script setup lang="ts">
 import { QuestionType, Question, Definition } from "~/composables/types"
 import { useDefinitionStore } from "~/stores/definitionStore"
-import RichText from "~/components/rich-text.vue"
+import { useProfilingStore } from "~~/stores/profilingStore"
+import { useQuestionnaireStore } from "~~/stores/questionnaireStore"
 
 const definitionStore = useDefinitionStore()
+const questionnaireStore = useQuestionnaireStore()
+const profilingStore = useProfilingStore()
 
 type tabDef = { label: string; id: string }
 
 const props = defineProps({
   questionId: { type: Number, required: true },
+  questionType: { type: String, default: "questionnaire" },
   color: { type: String, required: true },
 })
 
@@ -157,11 +161,12 @@ const isAnswered = computed(() => {
 })
 
 const question = ref<Question>(null)
-const { data, error } = await useApiGet<Question>(
-  `questionnaire-questions/${props.questionId}/`
-)
-if (!error.value) {
-  question.value = data.value
+if (props.questionType === "questionnaire") {
+  question.value = questionnaireStore.questionById[props.questionId]
+} else if (props.questionType === "profiling") {
+  question.value = profilingStore.profilingQuestionById[props.questionId]
+} else {
+  console.error("Unkown question type")
 }
 
 const definitions = computed<{ [key: number]: Definition }>(() =>
