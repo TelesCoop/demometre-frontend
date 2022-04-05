@@ -75,7 +75,6 @@ const props = defineProps({
   },
   modelValue: { type: Array, required: false, default: () => [] },
   color: { type: String, required: true },
-  questionId: { type: Number, required: true },
 })
 
 const draggingByMouse = ref<number>()

@@ -37,7 +37,13 @@
           v-model="answer"
           :response-choices="question.responseChoices"
           :color="props.color"
-          :question-id="questionId"
+        />
+        <ResponseInputScale
+          v-else-if="question.type === QuestionType.CLOSED_WITH_SCALE"
+          v-model="answer"
+          :categories="question.categories"
+          :color="props.color"
+          :bounds="bounds"
         />
       </div>
 
@@ -137,7 +143,12 @@
 </template>
 
 <script setup lang="ts">
-import { QuestionType, Question, Definition } from "~/composables/types"
+import {
+  QuestionType,
+  Question,
+  Definition,
+  QuestionBounds,
+} from "~/composables/types"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import { useProfilingStore } from "~~/stores/profilingStore"
 import { useQuestionnaireStore } from "~~/stores/questionnaireStore"
@@ -172,6 +183,13 @@ if (props.questionType === "questionnaire") {
 const definitions = computed<{ [key: number]: Definition }>(() =>
   definitionStore.definitionsByIdArray(question.value.definitionIds)
 )
+
+const bounds = computed<QuestionBounds>(() => {
+  return {
+    min: { label: question.value.minLabel, value: question.value.min },
+    max: { label: question.value.maxLabel, value: question.value.max },
+  }
+})
 
 const currentTabId = ref<string>("definitions")
 const tabs = ref<tabDef[]>([
