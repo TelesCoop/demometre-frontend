@@ -2,11 +2,31 @@ import { computed, getCurrentInstance } from "vue"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { Question, QuestionResponse } from "~/composables/types"
 import { useParticipationStore } from "~/stores/participationStore"
-import { rule } from "postcss"
 
 const OPERATORS_STRATEGY = {
   or: "some",
   and: "every",
+}
+
+const NUMERICAL_OPERATOR_STRATEGY = {
+  "<": (x, y) => {
+    return x < y
+  },
+  ">": (x, y) => {
+    return x > y
+  },
+  "<=": (x, y) => {
+    return x <= y
+  },
+  ">=": (x, y) => {
+    return x >= y
+  },
+  "!=": (x, y) => {
+    return x !== y
+  },
+  "=": (x, y) => {
+    return x === y
+  },
 }
 
 const RULES_STRATEGY = {
@@ -22,40 +42,41 @@ const RULES_STRATEGY = {
       )
     )
   },
-  closed_with_scale: ({ question }): boolean => {
-    return Boolean(question)
+  // closed_with_scale: ({ rule, response }): boolean => {
+  //   return Boolean(question)
+  // },
+  boolean: ({ rule, response }): boolean => {
+    return Boolean(rule.booleanResponse === response.booleanResponse)
   },
-  boolean: ({ question }): boolean => {
-    return Boolean(question)
-  },
-  numerical: ({ question }): boolean => {
-    return Boolean(question)
+  numerical: ({ rule, response }): boolean => {
+    return Boolean(
+      NUMERICAL_OPERATOR_STRATEGY[rule.numericalOperator](
+        response.numericalResponse,
+        rule.numericalValue
+      )
+    )
   },
 }
 
-function isRelevant(
-  question: Question,
-  //{ questionResponse: QuestionResponse }
-  data
-) {
+function isRelevant(question: Question, data) {
   const operator: string =
     OPERATORS_STRATEGY[question.rulesIntersectionOperator]
   return question.rules[operator]((rule) => {
     const response = data.responseByQuestionId[rule.conditionalQuestionId]
-    return RULES_STRATEGY[rule.type]({ rule, question, response, ...data })
+    return RULES_STRATEGY[rule.type]({ rule, response })
   })
 }
 
-export function useJourney<Type>() {
+export function useProfilingJourney<Type>() {
   const vm = getCurrentInstance()
   const journey = computed(() => {
     const profilingStore = useProfilingStore()
     const responseByQuestionId =
       useParticipationStore().responseByProfilingQuestionId
-    profilingStore.questions.filter((question) =>
+    const questions = profilingStore.questions.filter((question) =>
       isRelevant.bind(vm)(question, { responseByQuestionId })
     )
-    return []
+    return questions.map((question) => question.id)
   })
   const nextQuestionId = (currentQuestionId) => {
     const myJourney = journey.value
@@ -66,4 +87,8 @@ export function useJourney<Type>() {
     journey,
     nextQuestionId,
   }
+}
+
+export function useQuestionnaireJourney<Type>() {
+  return {}
 }
