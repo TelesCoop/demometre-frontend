@@ -146,8 +146,8 @@
       </div>
     </section>
   </div>
-  <div>
-    <Loader :is-active="true" />
+  <div v-else style="text-align: center">
+    <Loader :color="props.color" />
   </div>
 </template>
 
