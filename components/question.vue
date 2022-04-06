@@ -53,12 +53,15 @@
       <div class="button-bar my-1_5">
         <template v-if="isAnswered">
           <div class="is-flex is-align-items-center">
-            <a href="" class="button is-dark is-outlined is-rounded mr-0_75">
+            <button
+              class="button is-dark is-outlined is-rounded mr-0_75"
+              @click="submit"
+            >
               <span>Valider</span>
               <i class="icon">
                 <Icon size="16" name="check" />
               </i>
-            </a>
+            </button>
             <span class="is-size-7">
               appuyez sur
               <span class="has-text-weight-bold">Entrer ⮐</span></span
@@ -66,12 +69,12 @@
           </div>
         </template>
         <template v-else>
-          <a href="" class="button is-dark is-outlined is-rounded">
+          <button class="button is-dark is-outlined is-rounded" @click="pass">
             <span>Passer</span>
             <i class="icon">
               <Icon size="16" name="arrow-right-line" />
             </i>
-          </a>
+          </button>
         </template>
         <a
           v-if="tabs.length"
@@ -174,6 +177,7 @@ const props = defineProps({
   questionId: { type: Number, required: true },
   context: { type: String, default: "questionnaire" },
   color: { type: String, required: true },
+  useJourney: { type: String, required: true },
 })
 
 const answer = ref()
@@ -239,6 +243,19 @@ if (question.value?.toGoFurther) {
 
 function setTab(tabId) {
   currentTabId.value = tabId
+}
+
+const submit = () => {
+  // TODO
+  useRouter().push(``)
+}
+
+const pass = () => {
+  useRouter().push(
+    `/evaluation/${participationStore.id}/affinage/${useJourney.nextQuestionId(
+      props.questionId
+    )}`
+  )
 }
 </script>
 

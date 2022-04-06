@@ -86,5 +86,16 @@ export const useParticipationStore = defineStore("participation", {
       // TODO : include drawer question logic
       this.profilingJourney = Object.keys(useProfilingStore().questionById)
     },
+    async saveResponse() {
+      const { data, error } = await useApiPost<Participation>(
+        "participation/",
+        this.participation
+      )
+      if (!error.value) {
+        this.id = data.value.id
+        return true
+      }
+      return false
+    },
   },
 })

@@ -14,7 +14,7 @@ export enum QuestionType {
   CLOSED_WITH_RANKING = "closed_with_ranking",
   CLOSED_WITH_SCALE = "closed_with_scale",
   BOOLEAN = "boolean",
-  NUMERICAL = "numerical",
+  PERCENTAGE = "percentage",
 }
 export enum PillarName {
   REPRESENTATION = "représentation",
@@ -177,7 +177,7 @@ export type QuestionResponse = {
   uniqueChoiceResponseId: number | null
   multipleChoiceResponseIds: number[]
   booleanResponse: boolean | null
-  numericalResponse: number | null
+  percentageResponse: number | null
   closedWithRankingResponseIds: number[]
   closedWithScaleCategoryResponses: {
     category: string

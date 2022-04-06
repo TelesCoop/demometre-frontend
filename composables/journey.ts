@@ -1,6 +1,6 @@
 import { computed, getCurrentInstance } from "vue"
 import { useProfilingStore } from "~/stores/profilingStore"
-import { Question, QuestionResponse } from "~/composables/types"
+import { Question } from "~/composables/types"
 import { useParticipationStore } from "~/stores/participationStore"
 
 const OPERATORS_STRATEGY = {
@@ -42,16 +42,13 @@ const RULES_STRATEGY = {
       )
     )
   },
-  // closed_with_scale: ({ rule, response }): boolean => {
-  //   return Boolean(question)
-  // },
   boolean: ({ rule, response }): boolean => {
     return Boolean(rule.booleanResponse === response.booleanResponse)
   },
-  numerical: ({ rule, response }): boolean => {
+  percentage: ({ rule, response }): boolean => {
     return Boolean(
       NUMERICAL_OPERATOR_STRATEGY[rule.numericalOperator](
-        response.numericalResponse,
+        response.percentageResponse,
         rule.numericalValue
       )
     )
@@ -90,5 +87,15 @@ export function useProfilingJourney<Type>() {
 }
 
 export function useQuestionnaireJourney<Type>() {
-  return {}
+  const vm = getCurrentInstance()
+  const journey = computed(() => {
+    return []
+  })
+  const nextQuestionId = (currentQuestionId) => {
+    return currentQuestionId
+  }
+  return {
+    journey,
+    nextQuestionId,
+  }
 }
