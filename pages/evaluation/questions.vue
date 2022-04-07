@@ -1,6 +1,6 @@
 <template>
   <div class="container is-tight pillar-try">
-    <Question :question-id="2" :color="color" />
+    <Question :question-id="14" :color="color" />
   </div>
 </template>
 
