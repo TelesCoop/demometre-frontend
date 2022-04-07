@@ -1,7 +1,22 @@
 <template>
   <fieldset>
-    <legend class="is-size-6bis mb-0_75 is-block has-text-grey">
+    <legend class="is-size-7 mb-0_75 is-block has-text-grey level">
       <!--  TODO set scale  -->
+      <div class="level-left">
+        <div
+          v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
+          :key="responseChoiceIndex"
+          class="level-item has-text-centered mr-1_5"
+        >
+          <div
+            class="number mr-0_5"
+            :class="`has-border-${props.color} has-background-white has-text-${props.color}-dark `"
+          >
+            <slot name="left-symbol">{{ responseChoiceIndex }}</slot>
+          </div>
+          <span>{{ responseChoice.responseChoice }}</span>
+        </div>
+      </div>
     </legend>
     <div
       v-for="(category, categoryIndex) of props.categories"
@@ -9,9 +24,9 @@
       class="mb-1"
     >
       <ResponseNumberChoice
-        :model-value="answer[category.id] || props.bounds.min.value"
+        :model-value="answer[category.id] || 1"
         :category="category"
-        :color="color"
+        :color="props.color"
         :bounds="bounds"
         :selected="answer[category.id] !== null"
         @update:model-value="(val) => updateOne(val, category.id)"
@@ -22,7 +37,11 @@
 
 <script setup lang="ts">
 import { PropType } from "vue"
-import { Category, QuestionBounds } from "~/composables/types"
+import {
+  Category,
+  QuestionBounds,
+  ResponseChoice as ResponseChoiceType,
+} from "~/composables/types"
 import { useModel } from "~/composables/modelWrapper"
 
 const props = defineProps({
@@ -41,7 +60,21 @@ const props = defineProps({
     },
   },
   color: { type: String, required: true },
-  bounds: { type: Object as PropType<QuestionBounds> },
+  responseChoices: {
+    type: Array as PropType<ResponseChoiceType[]>,
+    required: true,
+  },
+})
+
+const bounds = computed<QuestionBounds>(() => {
+  const length = props.responseChoices.length
+  return {
+    min: { label: props.responseChoices[0].responseChoice, value: 1 },
+    max: {
+      label: props.responseChoices[length - 1].responseChoice,
+      value: length,
+    },
+  }
 })
 
 const answer = useModel<object>("modelValue", { type: "object" })
@@ -50,3 +83,10 @@ function updateOne(value, id) {
   answer.value = { ...answer.value, [id]: value }
 }
 </script>
+
+<style lang="sass" scoped>
+.number
+  min-width: 18px
+  height: 18px
+  border-radius: 3px
+</style>
