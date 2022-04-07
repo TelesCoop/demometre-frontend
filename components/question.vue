@@ -43,7 +43,7 @@
           v-model="answer"
           :categories="question.categories"
           :color="props.color"
-          :bounds="bounds"
+          :response-choices="question.responseChoices"
         />
       </div>
 
@@ -178,13 +178,6 @@ if (!error.value) {
 const definitions = computed<{ [key: number]: Definition }>(() =>
   definitionStore.definitionsByIdArray(question.value.definitionIds)
 )
-
-const bounds = computed<QuestionBounds>(() => {
-  return {
-    min: { label: question.value.minLabel, value: question.value.min },
-    max: { label: question.value.maxLabel, value: question.value.max },
-  }
-})
 
 const currentTabId = ref<string>("definitions")
 const tabs = ref<tabDef[]>([

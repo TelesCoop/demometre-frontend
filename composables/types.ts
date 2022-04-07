@@ -90,10 +90,6 @@ export type Question = {
   description: string
   type: QuestionType
   responseChoices: ResponseChoice[]
-  min: number
-  max: number
-  minLabel: string
-  maxLabel: string
   legalFrame: string
   useCase: string
   sources: string
