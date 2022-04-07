@@ -1,7 +1,6 @@
 <template>
   <fieldset>
     <legend class="is-size-7 mb-0_75 is-block has-text-grey level">
-      <!--  TODO set scale  -->
       <div class="level-left">
         <div
           v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
