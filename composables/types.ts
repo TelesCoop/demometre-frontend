@@ -104,10 +104,6 @@ export type Question = {
   description: string
   type: QuestionType
   responseChoices: ResponseChoice[]
-  min: number
-  max: number
-  minLabel: string
-  maxLabel: string
   legalFrame: string
   useCase: string
   sources: string
@@ -181,7 +177,7 @@ export type QuestionResponse = {
   closedWithRankingResponseIds: number[]
   closedWithScaleCategoryResponses: {
     category: string
-    responseValue: number
+    responseId: number
   }[]
 }
 
