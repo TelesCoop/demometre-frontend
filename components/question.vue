@@ -171,23 +171,23 @@ const definitions = computed<{ [key: number]: Definition }>(() =>
 const currentTabId = ref<string>("definitions")
 const tabs = ref<tabDef[]>([
   {
-    labels: "Définitions",
+    label: "Définitions",
     id: "definitions",
   },
   {
-    labels: "Cadre légal",
+    label: "Cadre légal",
     id: "legal-frame",
   },
   {
-    labels: "Exemples inspirants",
+    label: "Exemples inspirants",
     id: "use-case",
   },
   {
-    labels: "Sources",
+    label: "Sources",
     id: "sources",
   },
   {
-    labels: "Pour aller plus loin",
+    label: "Pour aller plus loin",
     id: "to-go-further",
   },
 ])
