@@ -1,14 +1,14 @@
 <template>
   <div>
     <div style="width: 600px">
-      <ResponseAnalyticsHorizontalBarChart
+      <AnalyticsHorizontalBarChart
         chart="chart1"
         :height="200"
         :widht="400"
         :categories="categoriesValue"
         :data="data"
         :labels="labels"
-      ></ResponseAnalyticsHorizontalBarChart>
+      ></AnalyticsHorizontalBarChart>
     </div>
   </div>
 </template>
