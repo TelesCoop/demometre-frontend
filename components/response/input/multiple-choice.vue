@@ -1,7 +1,7 @@
 <template>
   <fieldset>
     <legend class="is-size-6bis mb-0_75 is-block has-text-grey">
-      Choisissez une ou plusieurs réponses.
+      Choisissez entre 1 et {{ maxMultipleChoices }} réponses.
     </legend>
     <div
       v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
@@ -15,6 +15,10 @@
         :name="genInputId()"
         :value="responseChoice.id"
         class="custom-hidden"
+        :disabled="
+          answer.length >= maxMultipleChoices &&
+          answer.indexOf(responseChoice.id) === -1
+        "
       />
       <label :for="genInputId(responseChoiceIndex)">
         <ResponseChoice
@@ -38,6 +42,7 @@ const props = defineProps({
     type: Array as PropType<ResponseChoiceType[]>,
     required: true,
   },
+  maxMultipleChoices: { type: Number, required: true },
   modelValue: {
     type: Array as PropType<number[]>,
     required: false,

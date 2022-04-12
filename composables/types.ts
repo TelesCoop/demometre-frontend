@@ -96,6 +96,7 @@ export type Question = {
   toGoFurther: string
   definitionIds: number[]
   categories: Category[]
+  maxMultipleChoices: number | null
 }
 
 type Bound = { value: number; label: string }

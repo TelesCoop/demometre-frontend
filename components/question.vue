@@ -29,6 +29,9 @@
           v-else-if="question.type === QuestionType.MULTIPLE_CHOICE"
           v-model="answer"
           :response-choices="question.responseChoices"
+          :max-multiple-choices="
+            question.maxMultipleChoices || question.responseChoices.length
+          "
           :color="props.color"
           :question-id="questionId"
         />
@@ -149,12 +152,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  QuestionType,
-  Question,
-  Definition,
-  QuestionBounds,
-} from "~/composables/types"
+import { QuestionType, Question, Definition } from "~/composables/types"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import RichText from "~/components/rich-text.vue"
 
