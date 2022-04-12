@@ -12,6 +12,12 @@
           :color="props.color"
           :question-id="questionId"
         />
+        <ResponseInputPercentage
+          v-if="question.type === QuestionType.PERCENTAGE"
+          v-model="answer"
+          :color="props.color"
+          :question-id="questionId"
+        />
         <ResponseInputUniqueChoice
           v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
           v-model="answer"
