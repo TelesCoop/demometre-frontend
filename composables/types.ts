@@ -158,4 +158,6 @@ export type EvaluationIntroPage = {
   title: string
   introduction: string
   dataConsent: string
+  accountIncentive: string
+  accountIncentiveTitle: string
 }
