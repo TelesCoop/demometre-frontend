@@ -2,30 +2,33 @@
   <div>
     <div class="mb-0_75">
       <AnalyticsThreeBubbleRate
-        :score="item.score"
+        :score="score"
         class="mr-1_5"
       ></AnalyticsThreeBubbleRate>
-      <span class="has-text-shade-500">{{ item.title }}</span>
+      <span class="has-text-shade-500">{{
+        representativityCriteria.name
+      }}</span>
     </div>
     <div class="mb-0_75">
       <AnalyticsDistributionBar
-        :data="item.data"
-        @mouseenter-item="hoverItem = $event"
-        @mouseleave-item="hoverItem = null"
+        :data="distributionBarData()"
+        @mouseenter-item="hoverRepresentativityCriteria = $event"
+        @mouseleave-item="hoverRepresentativityCriteria = null"
       ></AnalyticsDistributionBar>
     </div>
     <div
       class="has-text-shade-500"
       :class="{
-        'is-invisible': !hoverItem,
+        'is-invisible': !hoverRepresentativityCriteria,
       }"
     >
-      <div>{{ hoverItem?.metadata.title || "\u00a0" }}</div>
+      <div>{{ hoverRepresentativityCriteria?.name || "\u00a0" }}</div>
       <div class="is-size-7">
-        <div>Représentativité actuelle : {{ hoverItem?.displayValue }}%</div>
         <div>
-          Objectif de représentativité : {{ round(100 / item.data.length, 2) }}%
+          Représentativité actuelle :
+          {{ hoverRepresentativityCriteria?.displayValue }}%
         </div>
+        <div>Objectif de représentativité : {{ representativityGoal }}%</div>
       </div>
     </div>
   </div>
@@ -36,7 +39,20 @@ import { round } from "~/assets/utils/round"
 import { ref } from "@vue/reactivity"
 
 const props = defineProps({
-  item: { type: Object, required: true },
+  representativityCriteria: { type: Object, required: true },
 })
-const hoverItem = ref(null)
+const hoverRepresentativityCriteria = ref(null)
+
+const distributionBarData = () => {
+  return props.representativityCriteria.countByResponseChoice.map((item) => {
+    return { name: item.responseChoiceName, value: item.total }
+  })
+}
+
+const representativityGoal = round(
+  100 / props.representativityCriteria.countByResponseChoice.length,
+  2
+)
+// TODO : CALCULATE SCORE ! use data that the initiator filled in
+const score = Math.floor(Math.random() * 3) + 1
 </script>
