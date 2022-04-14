@@ -64,7 +64,7 @@ async function onSubmit() {
     participationStore.setProfilingJourney()
     if (participationStore.nextProfilingQuestionId) {
       useRouter().push(
-        `/evaluation/${this.id}/affinage/${participationStore.nextProfilingQuestionId}`
+        `/evaluation/${participationStore.id}/affinage/${participationStore.nextProfilingQuestionId}`
       )
     } else {
       // TODO : manage case when there is not next profiling Question

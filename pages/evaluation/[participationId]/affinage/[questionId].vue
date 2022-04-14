@@ -1,17 +1,10 @@
 <template>
   <div class="container is-tight pillar-try">
-    <Question
-      :question-id="questionId"
-      :color="color"
-      context="profiling"
-      :use-journey="useProfilingJourney"
-    />
+    <Question :question-id="questionId" :color="color" context="profiling" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useProfilingJourney } from "~/composables/journey"
-
 definePageMeta({
   title: "Affinage",
   breadcrumb: "affinage",

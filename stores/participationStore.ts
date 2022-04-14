@@ -36,7 +36,7 @@ export const useParticipationStore = defineStore("participation", {
   actions: {
     async createParticipation() {
       const { data, error } = await useApiPost<Participation>(
-        "participation/",
+        "participations/",
         this.participation
       )
       if (!error.value) {
@@ -47,13 +47,13 @@ export const useParticipationStore = defineStore("participation", {
     },
     async updateParticipation() {
       const { data, error } = await useApiPatch<Participation>(
-        `participation/${this.id}/`,
+        `participations/${this.id}/`,
         this.participation
       )
     },
     async getParticipation(participationId: number) {
       const { data, error } = await useApiGet<Participation>(
-        `participation/${participationId}/`
+        `participations/${participationId}/`
       )
       if (!error.value) {
         this.updateState(data.value)
@@ -86,13 +86,37 @@ export const useParticipationStore = defineStore("participation", {
       // TODO : include drawer question logic
       this.profilingJourney = Object.keys(useProfilingStore().questionById)
     },
-    async saveResponse() {
+    async saveResponse(questionId: number, response: any) {
+      const question = useProfilingStore().questionById[questionId]
+      const questionResponse = {
+        questionId: questionId,
+        participationId: this.id,
+      } as QuestionResponse
+
+      switch (question.type) {
+        case "unique_choice":
+          questionResponse.uniqueChoiceResponseId = response.value
+          break
+        case "multiple_choice":
+          questionResponse.multipleChoiceResponseIds = response
+          break
+        case "boolean":
+          questionResponse.booleanResponse = response
+          break
+        case "percentage":
+          questionResponse.percentageResponse = response
+          break
+        default:
+          console.warn(`Response without question type`)
+      }
+
+      this.responseByProfilingQuestionId[questionId] = questionResponse
       const { data, error } = await useApiPost<Participation>(
-        "participation/",
-        this.participation
+        "responses/",
+        questionResponse
       )
       if (!error.value) {
-        this.id = data.value.id
+        this.responseByProfilingQuestionId[questionId] = data.value
         return true
       }
       return false

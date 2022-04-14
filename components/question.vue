@@ -1,5 +1,5 @@
 <template>
-  <div v-if="question" class="section">
+  <form v-if="question" class="section" @submit="submit">
     <section class="pb-2">
       <h1 class="title is-3">{{ question.questionStatement }}</h1>
       <RichText :rich-text="question.description"></RichText>
@@ -69,7 +69,10 @@
           </div>
         </template>
         <template v-else>
-          <button class="button is-dark is-outlined is-rounded" @click="pass">
+          <button
+            class="button is-dark is-outlined is-rounded"
+            @click="goToNextQuestion"
+          >
             <span>Passer</span>
             <i class="icon">
               <Icon size="16" name="arrow-right-line" />
@@ -148,7 +151,7 @@
         <RichText :rich-text="question.toGoFurther" />
       </div>
     </section>
-  </div>
+  </form>
   <div v-else style="text-align: center">
     <Loader :color="props.color" />
   </div>
@@ -165,6 +168,11 @@ import { useDefinitionStore } from "~/stores/definitionStore"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useParticipationStore } from "~/stores/participationStore"
+import { computed } from "vue"
+import {
+  useProfilingJourney,
+  useQuestionnaireJourney,
+} from "~/composables/journey"
 
 const definitionStore = useDefinitionStore()
 const questionnaireStore = useQuestionnaireStore()
@@ -177,7 +185,12 @@ const props = defineProps({
   questionId: { type: Number, required: true },
   context: { type: String, default: "questionnaire" },
   color: { type: String, required: true },
-  useJourney: { type: String, required: true },
+})
+
+const journey = computed(() => {
+  return props.context === "questionnaire"
+    ? useQuestionnaireJourney()
+    : useProfilingJourney()
 })
 
 const answer = ref()
@@ -201,6 +214,7 @@ const definitions = computed<{ [key: number]: Definition }>(() =>
   definitionStore.definitionsByIdArray(question.value.definitionIds)
 )
 
+// Attention ce n'est pas reload si on change de question
 const currentTabId = ref<string>("definitions")
 const tabs = ref<tabDef[]>([])
 if (question.value?.definitionIds) {
@@ -238,17 +252,20 @@ function setTab(tabId) {
   currentTabId.value = tabId
 }
 
-const submit = () => {
-  // TODO
-  useRouter().push(``)
+const goToNextQuestion = () => {
+  useRouter().push(
+    `/evaluation/${
+      participationStore.id
+    }/affinage/${journey.value.nextQuestionId(props.questionId)}`
+  )
 }
 
-const pass = () => {
-  useRouter().push(
-    `/evaluation/${participationStore.id}/affinage/${useJourney.nextQuestionId(
-      props.questionId
-    )}`
-  )
+const submit = () => {
+  participationStore.saveResponse(props.questionId, answer).then((result) => {
+    if (result) {
+      goToNextQuestion()
+    }
+  })
 }
 </script>
 
