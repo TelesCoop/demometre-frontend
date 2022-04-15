@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue"
 import { round } from "assets/utils/round"
 
 const props = defineProps({
@@ -28,16 +27,28 @@ const emit = defineEmits<{
   (e: "mouseleave-item"): void
 }>()
 
-const items = computed(() => {
-  const total = props.data.reduce((value, item) => value + item.value, 0)
+const total = ref<number>(getTotal(props.data))
+const items = ref(getItemValues(props.data))
 
+watch(
+  () => props.data,
+  (newData) => {
+    total.value = getTotal(newData)
+    items.value = getItemValues(newData)
+  }
+)
+
+function getTotal(data) {
+  return data.reduce((value, item) => value + item.value, 0)
+}
+function getItemValues(data) {
   return props.data.map((item) => {
     return {
       ...item,
-      displayValue: round((item.value / total) * 100, 2),
+      displayValue: round((item.value / total.value) * 100, 2),
     }
   })
-})
+}
 
 function onMouseEnter(item) {
   emit("mouseenter-item", item)

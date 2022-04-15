@@ -8,7 +8,7 @@ async function verifyAssessment(to) {
     await useAssessmentStore().getAssessment(to.params.assessmentId)
   }
   if (!assessmentStore.currentAssessment?.initializationDate) {
-    useRouter().push("/evaluation/initier")
+    useRouter().push("/evaluation/initialisation")
   }
 }
 

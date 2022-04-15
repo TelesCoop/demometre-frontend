@@ -2,7 +2,7 @@
   <div class="container">
     <section class="columns is-centered">
       <div class="column is-8">
-        <h1 class="is-size-1">Localisation</h1>
+        <h1 class="title is-3">Localisation</h1>
         <!--  TODO changer texte p-->
         <p class="mb-3 is-family-secondary">
           Texte précisant la question (définition, exemple, reformulation) et
@@ -112,7 +112,7 @@ async function onSubmit() {
   })
   if (isSuccess) {
     useRouter().push(
-      `/evaluation/assessment/${assessmentStore.currentAssessmentId}`
+      `/evaluation/localisation/${assessmentStore.currentAssessmentId}`
     )
   }
 }
