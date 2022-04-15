@@ -128,6 +128,17 @@ type Locality = {
   population: number
   zip_codes: number[]
 }
+type CountByResponseChoice = {
+  responseChoiceName: string
+  responseChoiceId: number
+  total: number
+}
+export type RepresentativityCriteria = {
+  id: number
+  name: string
+  profilingQuestionId: number
+  countByResponseChoice: CountByResponseChoice[]
+}
 export type Assessment = {
   id: number
   type: string
@@ -140,6 +151,7 @@ export type Assessment = {
   municipality: Locality | null
   epci: Locality | null
   participationNb: number
+  representativities: RepresentativityCriteria[]
 }
 
 // User participation
