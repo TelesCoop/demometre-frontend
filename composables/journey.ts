@@ -47,11 +47,17 @@ const RULES_STRATEGY = {
   },
   percentage: ({ rule, response }): boolean => {
     return Boolean(
-      NUMERICAL_OPERATOR_STRATEGY[rule.numericalOperator](
+      NUMERICAL_OPERATOR_STRATEGY[rule.numericalOperator]?.(
         response.percentageResponse,
         rule.numericalValue
       )
     )
+  },
+  closed_with_scale: ({ rule, response }): boolean => {
+    return true
+  },
+  closed_with_ranking: (): boolean => {
+    return true
   },
 }
 
@@ -70,10 +76,13 @@ export function useProfilingJourney<Type>() {
     const profilingStore = useProfilingStore()
     const responseByQuestionId =
       useParticipationStore().responseByProfilingQuestionId
-    const questions = profilingStore.questions.filter((question) =>
-      isRelevant.bind(vm)(question, { responseByQuestionId })
+    const questionIds = profilingStore.orderedQuestionId.filter(
+      (questionId) => {
+        const question = profilingStore.questionById[questionId]
+        return isRelevant.bind(vm)(question, { responseByQuestionId })
+      }
     )
-    return questions.map((question) => question.id)
+    return questionIds
   })
   const nextQuestionId = (currentQuestionId) => {
     const myJourney = journey.value

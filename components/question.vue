@@ -1,5 +1,5 @@
 <template>
-  <form v-if="question" class="section" @submit="submit">
+  <form v-if="question" class="section" @submit.prevent="submit">
     <section class="pb-2">
       <h1 class="title is-3">{{ question.questionStatement }}</h1>
       <RichText :rich-text="question.description"></RichText>
@@ -261,11 +261,8 @@ const goToNextQuestion = () => {
 }
 
 const submit = () => {
-  participationStore.saveResponse(props.questionId, answer).then((result) => {
-    if (result) {
-      goToNextQuestion()
-    }
-  })
+  participationStore.saveResponse(props.questionId, answer.value)
+  goToNextQuestion()
 }
 </script>
 

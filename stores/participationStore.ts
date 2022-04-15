@@ -4,6 +4,7 @@ import { Participation, QuestionResponse } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
 import { useProfilingStore } from "./profilingStore"
 import { useUserStore } from "./userStore"
+import { QUESTION_RESPONSE_VALUE_BY_TYPE } from "~/composables/const"
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
@@ -93,22 +94,9 @@ export const useParticipationStore = defineStore("participation", {
         participationId: this.id,
       } as QuestionResponse
 
-      switch (question.type) {
-        case "unique_choice":
-          questionResponse.uniqueChoiceResponseId = response.value
-          break
-        case "multiple_choice":
-          questionResponse.multipleChoiceResponseIds = response
-          break
-        case "boolean":
-          questionResponse.booleanResponse = response
-          break
-        case "percentage":
-          questionResponse.percentageResponse = response
-          break
-        default:
-          console.warn(`Response without question type`)
-      }
+      debugger
+      const questionValue = QUESTION_RESPONSE_VALUE_BY_TYPE[question.type]
+      questionResponse[questionValue] = response
 
       this.responseByProfilingQuestionId[questionId] = questionResponse
       const { data, error } = await useApiPost<Participation>(

@@ -7,7 +7,7 @@
 <script setup lang="ts">
 definePageMeta({
   title: "Affinage",
-  breadcrumb: "affinage",
+  breadcrumb: "Affinage",
   // middleware: ["participation"],
 })
 

@@ -7,11 +7,9 @@ export const useProfilingStore = defineStore("profiling", {
   state: () => ({
     roleById: <{ [key: string]: Role }>{},
     questionById: <{ [key: number]: Question }>{},
+    orderedQuestionId: <number[]>[],
   }),
   getters: {
-    questions: (state) => {
-      return Object.values(state.questionById)
-    },
     roles: (state) => {
       return Object.values(state.roleById)
     },
@@ -32,6 +30,7 @@ export const useProfilingStore = defineStore("profiling", {
       if (!error.value) {
         for (const question of data.value) {
           this.questionById[question.id] = question
+          this.orderedQuestionId.push(question.id)
         }
       }
     },
