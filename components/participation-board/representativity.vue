@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="mb-0_75">
-      <AnalyticsThreeBubbleRate
+      <AnalyticsSemaphoreRate
         :score="score"
         class="mr-1_5"
-      ></AnalyticsThreeBubbleRate>
+      ></AnalyticsSemaphoreRate>
       <span class="has-text-shade-500">{{
         representativityCriteria.name
       }}</span>
@@ -54,5 +54,5 @@ const representativityGoal = round(
   2
 )
 // TODO : CALCULATE SCORE ! use data that the initiator filled in
-const score = Math.floor(Math.random() * 3) + 1
+const score = Math.floor(Math.random() * 2) + 1
 </script>

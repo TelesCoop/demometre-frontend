@@ -45,7 +45,7 @@ function getItemValues(data) {
   return props.data.map((item) => {
     return {
       ...item,
-      displayValue: round((item.value / total) * 100, 2),
+      displayValue: round((item.value / total.value) * 100, 2),
     }
   })
 }

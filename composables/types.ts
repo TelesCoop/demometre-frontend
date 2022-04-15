@@ -151,7 +151,7 @@ export type Assessment = {
   municipality: Locality | null
   epci: Locality | null
   participationNb: number
-  representativity: RepresentativityCriteria[]
+  representativities: RepresentativityCriteria[]
 }
 export const InitiatorType = {
   COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
