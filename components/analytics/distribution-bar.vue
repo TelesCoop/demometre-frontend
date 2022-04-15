@@ -27,13 +27,28 @@ const emit = defineEmits<{
   (e: "mouseleave-item"): void
 }>()
 
-const total = props.data.reduce((value, item) => value + item.value, 0)
-const items = props.data.map((item) => {
-  return {
-    ...item,
-    displayValue: round((item.value / total) * 100, 2),
+const total = ref<number>(getTotal(props.data))
+const items = ref(getItemValues(props.data))
+
+watch(
+  () => props.data,
+  (newData) => {
+    total.value = getTotal(newData)
+    items.value = getItemValues(newData)
   }
-})
+)
+
+function getTotal(data) {
+  return data.reduce((value, item) => value + item.value, 0)
+}
+function getItemValues(data) {
+  return props.data.map((item) => {
+    return {
+      ...item,
+      displayValue: round((item.value / total) * 100, 2),
+    }
+  })
+}
 
 function onMouseEnter(item) {
   emit("mouseenter-item", item)
