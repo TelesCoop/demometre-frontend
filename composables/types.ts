@@ -153,6 +153,10 @@ export type Assessment = {
   participationNb: number
   representativity: RepresentativityCriteria[]
 }
+export const InitiatorType = {
+  COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
+  ASSOCIATION: { key: "association", value: "Une association" },
+}
 
 // User participation
 export type User = { id: number | null; email: string; username: string }
@@ -173,4 +177,9 @@ export type EvaluationIntroPage = {
   dataConsent: string
   accountIncentive: string
   accountIncentiveTitle: string
+}
+export type EvaluationInitPage = {
+  title: string
+  introduction: string
+  publicNameQuestion: string
 }
