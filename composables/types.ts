@@ -146,10 +146,10 @@ export type RepresentativityCriteria = {
 export type Assessment = {
   id: number
   type: string
-  initiatedBy: string
-  isInitiatedByLocality: boolean
-  carriedBy: string
-  isCarriedByLocality: boolean
+  initiatedByUser: string
+  initiatorType: string
+  initializedToTheNameOf: string
+  publicInitiator: boolean
   initializationDate: string
   endDate: string
   municipality: Locality | null
@@ -189,4 +189,5 @@ export type EvaluationInitPage = {
   publicNameQuestionDescription: string
   representativityQuestion: string
   representativityDescription: string
+  initializationValidation: string
 }

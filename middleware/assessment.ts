@@ -5,7 +5,6 @@ async function verifyAssessment(to) {
 
   // Load data if f5
   if (process.server) {
-    console.log(to.params.assessmentId || to.query.assessment)
     await useAssessmentStore().getAssessment(
       to.params.assessmentId || to.query.assessment
     )
@@ -15,7 +14,7 @@ async function verifyAssessment(to) {
     to.path !== "/evaluation/initialization"
   ) {
     useRouter().push(
-      `/evaluation/initialization?assessment=${assessmentStore.currentAssessment}`
+      `/evaluation/initialization?assessment=${assessmentStore.currentAssessmentId}`
     )
   }
 }
