@@ -30,12 +30,12 @@
         <p class="mb-2">Survoler les barres pour afficher les statistiques.</p>
         <div class="columns is-multiline">
           <div
-            v-for="representativityCriteria of assessment.representativities"
-            :key="representativityCriteria.id"
+            v-for="representativity of assessment.representativities"
+            :key="representativity.name"
             class="column is-half"
           >
             <ParticipationBoardRepresentativity
-              :representativity-criteria="representativityCriteria"
+              :representativity-criteria="representativity"
             ></ParticipationBoardRepresentativity>
           </div>
         </div>

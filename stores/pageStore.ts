@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
 import {
+  EvaluationInitPage,
   EvaluationIntroPage,
   HomePage,
   ReferentialPage,
@@ -11,6 +12,7 @@ export const usePageStore = defineStore("page", {
     homePage: <HomePage>{},
     referentialPage: <ReferentialPage>{},
     evaluationIntroPage: <EvaluationIntroPage>{},
+    evaluationInitPage: <EvaluationInitPage>{},
   }),
   actions: {
     async loadHomePage() {
@@ -44,6 +46,18 @@ export const usePageStore = defineStore("page", {
           this.evaluationIntroPage = data.value[0]
         } else {
           console.error("Impossible to retrieve evaluation intro page")
+        }
+      }
+    },
+    async loadEvaluationInitPage() {
+      const { data, error } = await useApiGet<EvaluationInitPage[]>(
+        "evaluation-init-pages/"
+      )
+      if (!error.value) {
+        if (data.value.length) {
+          this.evaluationInitPage = data.value[0]
+        } else {
+          console.error("Impossible to retrieve evaluation init page")
         }
       }
     },
