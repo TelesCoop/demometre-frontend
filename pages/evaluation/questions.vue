@@ -1,11 +1,5 @@
 <template>
-  <div class="container is-tight pillar-try">
-    <Question
-      :question-id="2"
-      :color="color"
-      :use-journey="useQuestionnaireJourney"
-    />
-  </div>
+  <div class="container is-tight pillar-try"></div>
 </template>
 
 <script setup lang="ts">

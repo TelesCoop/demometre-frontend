@@ -93,8 +93,9 @@ const isInsideAssessment = computed(() => {
 })
 
 const assessmentStepPath = computed(() => {
+  return ""
   // TODO : detect if go to profiling or to questionnaire
-  return `/evaluation/${participationStore.id}/affinage/${participationStore.nextProfilingQuestionId}`
+  // return `/evaluation/${participationStore.id}/affinage/${participationStore.nextProfilingQuestionId}`
 })
 
 const navItems = [

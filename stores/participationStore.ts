@@ -1,19 +1,20 @@
 import { defineStore } from "pinia"
 import { useApiPatch, useApiPost } from "~/composables/api"
-import { Participation, QuestionResponse } from "~/composables/types"
+import { Participation, Question, QuestionResponse } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
 import { useProfilingStore } from "./profilingStore"
 import { useUserStore } from "./userStore"
-import { QUESTION_RESPONSE_VALUE_BY_TYPE } from "~/composables/const"
+import {
+  QUESTION_RESPONSE_VALUE_BY_TYPE,
+  QUESTION_RESPONSES_BY_TYPE,
+} from "~/assets/utils/question-response"
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
     id: <number | null>null,
     roleId: <number | null>null,
     consent: <boolean>false,
-    responseByQuestionIdByPillarName: <
-      { [key: string]: { [key: number]: QuestionResponse } }
-    >{},
+    responseByQuestionnaireQuestionId: <{ [key: number]: QuestionResponse }>{},
     responseByProfilingQuestionId: <{ [key: number]: QuestionResponse }>{},
     profilingCurrent: <number[]>[],
   }),
@@ -26,12 +27,6 @@ export const useParticipationStore = defineStore("participation", {
         userId: useUserStore().user.id,
         assessmentId: useAssessmentStore().currentAssessmentId,
       }
-    },
-    nextProfilingQuestionId() {
-      return parseInt(this.profilingJourney[0])
-    },
-    currentProfilingQuestion() {
-      return useProfilingStore().questionById[this.nextProfilingQuestionId]
     },
   },
   actions: {
@@ -62,9 +57,11 @@ export const useParticipationStore = defineStore("participation", {
     },
     async getCurrentParticipation() {
       const { data, error } = await useApiGet<Participation[]>(
-        `participation/user/${useUserStore().user.id}/`
+        `participations/`
       )
-      if (!error.value) {
+      console.log("get participation", data.value)
+
+      if (!error.value && data.value) {
         // TODO : manage when several participations retrieve
         this.updateState(data.value[0])
       }
@@ -73,9 +70,6 @@ export const useParticipationStore = defineStore("participation", {
       this.id = participation.id
       this.roleId = participation.roleId
       this.consent = participation.consent
-      useAssessmentStore().getAssessment(participation.assessmentId)
-      await useProfilingStore().loadProfilingQuestions()
-      this.setProfilingJourney()
     },
     setConsent() {
       this.consent = true
@@ -87,24 +81,37 @@ export const useParticipationStore = defineStore("participation", {
       // TODO : include drawer question logic
       this.profilingJourney = Object.keys(useProfilingStore().questionById)
     },
-    async saveResponse(questionId: number, response: any) {
-      const question = useProfilingStore().questionById[questionId]
+
+    async getProfilingQuestionResponses(participationId: number) {
+      const { data, error } = await useApiGet<QuestionResponse[]>(
+        `responses/?context=profiling&participation_id=${participationId}`
+      )
+      if (!error.value) {
+        data.value.forEach((response) => {
+          this.responseByProfilingQuestionId[response.questionId] = response
+        })
+        return true
+      }
+      return false
+    },
+
+    async saveResponse(question: Question, response: any) {
       const questionResponse = {
-        questionId: questionId,
+        questionId: question.id,
         participationId: this.id,
       } as QuestionResponse
 
-      debugger
       const questionValue = QUESTION_RESPONSE_VALUE_BY_TYPE[question.type]
       questionResponse[questionValue] = response
 
-      this.responseByProfilingQuestionId[questionId] = questionResponse
-      const { data, error } = await useApiPost<Participation>(
+      const { data, error } = await useApiPost<QuestionResponse>(
         "responses/",
         questionResponse
       )
-      if (!error.value) {
-        this.responseByProfilingQuestionId[questionId] = data.value
+      if (!error.value && data.value) {
+        const questionResponses =
+          this[QUESTION_RESPONSES_BY_TYPE[question.surveyType]]
+        questionResponses[question.id] = data.value
         return true
       }
       return false

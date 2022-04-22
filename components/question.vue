@@ -53,10 +53,7 @@
       <div class="button-bar my-1_5">
         <template v-if="isAnswered">
           <div class="is-flex is-align-items-center">
-            <button
-              class="button is-dark is-outlined is-rounded mr-0_75"
-              @click="submit"
-            >
+            <button class="button is-dark is-outlined is-rounded mr-0_75">
               <span>Valider</span>
               <i class="icon">
                 <Icon size="16" name="check" />
@@ -160,54 +157,47 @@
 <script setup lang="ts">
 import {
   QuestionType,
-  Question,
   Definition,
-  QuestionBounds,
+  QuestionContextProps,
 } from "~/composables/types"
+import { computed, PropType, watch } from "vue"
+import { ref } from "@vue/reactivity"
 import { useDefinitionStore } from "~/stores/definitionStore"
-import { useProfilingStore } from "~/stores/profilingStore"
-import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useParticipationStore } from "~/stores/participationStore"
-import { computed } from "vue"
-import {
-  useProfilingJourney,
-  useQuestionnaireJourney,
-} from "~/composables/journey"
-
-const definitionStore = useDefinitionStore()
-const questionnaireStore = useQuestionnaireStore()
-const profilingStore = useProfilingStore()
-const participationStore = useParticipationStore()
+import { getQuestionResponseValue } from "assets/utils/question-response"
 
 type tabDef = { label: string; id: string }
-
 const props = defineProps({
+  participationId: { type: Number, required: true },
   questionId: { type: Number, required: true },
-  context: { type: String, default: "questionnaire" },
+  context: { type: Object as PropType<QuestionContextProps>, required: true },
   color: { type: String, required: true },
 })
 
-const journey = computed(() => {
-  return props.context === "questionnaire"
-    ? useQuestionnaireJourney()
-    : useProfilingJourney()
-})
+const participationStore = useParticipationStore()
+const definitionStore = useDefinitionStore()
 
-const answer = ref()
 const isAnswered = computed(() => {
   if (Array.isArray(answer.value)) return !!answer.value.length
   return !!answer.value
 })
 
 const question = computed(() => {
-  if (props.context === "questionnaire") {
-    return questionnaireStore.questionById[props.questionId]
-  } else if (props.context === "profiling") {
-    return profilingStore.questionById[props.questionId]
-  } else {
-    console.error("Unkown question type")
-    return null
-  }
+  return props.context.questionById[props.questionId]
+})
+
+const initialValue = getQuestionResponseValue(
+  props.context.responseByQuestionId[props.questionId],
+  question.value.type
+)
+
+const answer = ref(initialValue)
+
+watch(question, () => {
+  answer.value = getQuestionResponseValue(
+    props.context.responseByQuestionId[props.questionId],
+    question.value.type
+  )
 })
 
 const definitions = computed<{ [key: number]: Definition }>(() =>
@@ -256,13 +246,18 @@ const goToNextQuestion = () => {
   useRouter().push(
     `/evaluation/${
       participationStore.id
-    }/affinage/${journey.value.nextQuestionId(props.questionId)}`
+    }/affinage/${props.context.journey.nextQuestionId(props.questionId)}`
   )
 }
 
 const submit = () => {
-  participationStore.saveResponse(props.questionId, answer.value)
-  goToNextQuestion()
+  participationStore
+    .saveResponse(question.value, answer.value)
+    .then((result) => {
+      if (result) {
+        goToNextQuestion()
+      }
+    })
 }
 </script>
 

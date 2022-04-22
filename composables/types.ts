@@ -1,4 +1,6 @@
 // Questionnaire and profiling
+import { useProfilingJourney } from "~/composables/journey"
+
 export enum Objectivity {
   OBJECTIVE = "objective",
   SUBJECTIVE = "subjective",
@@ -15,6 +17,10 @@ export enum QuestionType {
   CLOSED_WITH_SCALE = "closed_with_scale",
   BOOLEAN = "boolean",
   PERCENTAGE = "percentage",
+}
+export enum SurveyType {
+  PROFILING = "profiling",
+  SURVEY = "survey",
 }
 export enum PillarName {
   REPRESENTATION = "représentation",
@@ -112,6 +118,7 @@ export type Question = {
   categories: Category[]
   rulesIntersectionOperator: string
   rules: Rule[]
+  surveyType: SurveyType
 }
 
 type Bound = { value: number; label: string }
@@ -188,4 +195,11 @@ export type EvaluationIntroPage = {
   title: string
   introduction: string
   dataConsent: string
+}
+
+// Props
+export type QuestionContextProps = {
+  journey: any
+  questionById: { [key: number]: Question }
+  responseByQuestionId: { [key: number]: QuestionResponse }
 }

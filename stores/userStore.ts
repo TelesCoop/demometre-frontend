@@ -5,6 +5,7 @@ import { useApiGet, useApiPost } from "~/composables/api"
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: <User>{},
+    refreshed: <boolean>false,
   }),
   getters: {
     isLoggedIn() {
@@ -51,6 +52,7 @@ export const useUserStore = defineStore("user", {
       }
     },
     async refreshProfile() {
+      this.refreshed = true
       const { data, error } = await useApiGet<User>("auth/profile")
       if (!error.value) {
         this.user = data.value

@@ -56,20 +56,20 @@ const disabled = computed(() => {
 })
 
 async function onSubmit() {
-  participationStore.chooseRole(answer.value)
-  // TODO : if participaton exist, update it
-  const isSuccess = await participationStore.createParticipation()
-  if (isSuccess) {
-    await profilingStore.loadProfilingQuestions()
-    participationStore.setProfilingJourney()
-    if (participationStore.nextProfilingQuestionId) {
-      useRouter().push(
-        `/evaluation/${participationStore.id}/affinage/${participationStore.nextProfilingQuestionId}`
-      )
-    } else {
-      // TODO : manage case when there is not next profiling Question
-    }
-  }
+  // participationStore.chooseRole(answer.value)
+  // // TODO : if participaton exist, update it
+  // const isSuccess = await participationStore.createParticipation()
+  // if (isSuccess) {
+  //   await profilingStore.getProfilingQuestions()
+  //   participationStore.setProfilingJourney()
+  // if (participationStore.nextProfilingQuestionId) {
+  //   useRouter().push(
+  //     `/evaluation/${participationStore.id}/affinage/${participationStore.nextProfilingQuestionId}`
+  //   )
+  // } else {
+  //   // TODO : manage case when there is not next profiling Question
+  // }
+  // }
 }
 </script>
 

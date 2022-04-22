@@ -23,11 +23,12 @@ export const useProfilingStore = defineStore("profiling", {
         }
       }
     },
-    async loadProfilingQuestions() {
+    async getProfilingQuestions(participationId) {
       const { data, error } = await useApiGet<Question[]>(
-        `profiling-questions/participation/${useParticipationStore().id}/`
+        `profiling-questions/participation/${participationId}/`
       )
       if (!error.value) {
+        this.orderedQuestionId = []
         for (const question of data.value) {
           this.questionById[question.id] = question
           this.orderedQuestionId.push(question.id)
