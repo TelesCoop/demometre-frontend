@@ -157,8 +157,8 @@
               %
             </span>
             <ResponseInputPercentage
-              class="mt-1"
               v-model="representativityCriteria.acceptabilityThreshold"
+              class="mt-1"
               :color="color"
               :question-id="representativityCriteria.id"
             />

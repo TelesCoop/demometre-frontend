@@ -52,8 +52,9 @@ export const useAssessmentStore = defineStore("assessment", {
       this.currentAssessmentId = data.value.id
     },
     async getRepresentativityCriterias() {
-      const { data, error } =
-        await useApiGet<RepresentativityCriteria>("representativity-criterias/")
+      const { data, error } = await useApiGet<RepresentativityCriteria>(
+        "representativity-criterias/"
+      )
 
       if (!error.value) {
         this.representativityCriterias = data.value
@@ -64,7 +65,10 @@ export const useAssessmentStore = defineStore("assessment", {
         `assessments/${this.currentAssessmentId}/initialization/`,
         {
           representativityThresholds: this.representativityCriterias.map(
-            (item) => { return { id: item.id, value: item.acceptabilityThreshold } }),
+            (item) => {
+              return { id: item.id, value: item.acceptabilityThreshold }
+            }
+          ),
           ...payload,
         }
       )
