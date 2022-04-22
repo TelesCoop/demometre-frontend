@@ -133,11 +133,15 @@ type CountByResponseChoice = {
   responseChoiceId: number
   total: number
 }
+
 export type RepresentativityCriteria = {
   id: number
   name: string
   profilingQuestionId: number
   countByResponseChoice: CountByResponseChoice[]
+  acceptabilityThreshold: number
+  responseChoiceStatements: string[]
+  minRate: number
 }
 export type Assessment = {
   id: number
@@ -182,4 +186,7 @@ export type EvaluationInitPage = {
   title: string
   introduction: string
   publicNameQuestion: string
+  publicNameQuestionDescription: string
+  representativityQuestion: string
+  representativityDescription: string
 }

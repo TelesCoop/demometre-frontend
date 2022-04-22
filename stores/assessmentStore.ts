@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { Assessment } from "~/composables/types"
+import { Assessment, RepresentativityCriteria } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 import { useToastStore } from "./toastStore"
 
@@ -7,6 +7,7 @@ export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
     assessmentById: <{ [key: number]: Assessment }>{},
     currentAssessmentId: <number>{},
+    representativityCriterias: <RepresentativityCriteria[]>[],
   }),
   getters: {
     assessments() {
@@ -49,6 +50,27 @@ export const useAssessmentStore = defineStore("assessment", {
       }
       this.assessmentById[data.value.id] = data.value
       this.currentAssessmentId = data.value.id
+    },
+    async getRepresentativityCriterias() {
+      const { data, error } =
+        await useApiGet<RepresentativityCriteria>("representativity-criterias/")
+
+      if (!error.value) {
+        this.representativityCriterias = data.value
+      }
+    },
+    async initializeAssessment(payload) {
+      const { data, error } = await useApiPatch<Assessment>(
+        `assessments/${this.currentAssessmentId}/initialization/`,
+        {
+          representativityThresholds: this.representativityCriterias.map(
+            (item) => { return { id: item.id, value: item.acceptabilityThreshold } }),
+          ...payload,
+        }
+      )
+      if (!error.value) {
+        // TODO
+      }
     },
   },
 })
