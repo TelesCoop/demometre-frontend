@@ -130,6 +130,7 @@ $pillars: ("representation": (translateX(-170px), 5, translateX(-90px), 29px), "
       width: 120px
       height: 120px
       border-radius: 50%
+      cursor: pointer
     &-icon-#{$name}
       position: absolute
       bottom: 50%
@@ -145,6 +146,7 @@ $pillars: ("representation": (translateX(-170px), 5, translateX(-90px), 29px), "
     width: 30px
     height: 30px
     border-radius: 50%
+    cursor: pointer
     @for $i from 1 through 8
       &:nth-child(#{$i})
         transform: translate(-50%, -50%) rotate((($i - 2) * 30deg) - (($nb-markers - 1)*30/2)) $marker-translate
