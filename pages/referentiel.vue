@@ -26,6 +26,8 @@
       </div>
       <div class="column is-6 is-offset-1">
         <Rosasse
+          center-button-name="Découvrir"
+          @center-button-click="onDiscoverButtonClick()"
           @pillar-click="onRosassePillarClicked($event)"
           @marker-click="onRosasseMarkerClicked($event)"
         />
@@ -98,11 +100,13 @@ const onSelectPillar = (pillar) => {
   )
 }
 
+const onDiscoverButtonClick = () => {
+  // TODO : New section of referential page
+}
 const onRosassePillarClicked = (pillarName) => {
   onSelectPillar(questionnaireStore.getPillarByName(pillarName))
   pillarsRef.value.scrollIntoView({ behavior: "smooth" })
 }
-
 const onRosasseMarkerClicked = (markerId) => {
   onRosassePillarClicked(questionnaireStore.markerById[markerId].pillarName)
 }

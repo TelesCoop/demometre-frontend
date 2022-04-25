@@ -3,7 +3,12 @@
     <section class="columns is-centered">
       <div class="rosasse">
         <div class="center-button">
-          <button class="button is-normal is-rounded">Commencer</button>
+          <button
+            class="button is-normal is-rounded"
+            @click="onCenterButtonClick()"
+          >
+            {{ props.centerButtonName }}
+          </button>
         </div>
         <div
           v-for="pillar in questionnaireStore.pillars"
@@ -22,7 +27,7 @@
             "
             @mouseenter="hoverPillarId = pillar.id"
             @mouseleave="hoverPillarId = null"
-            @click="onPillarClicked(pillar.name)"
+            @click="onPillarClick(pillar.name)"
           >
             <div
               v-if="pillar.markerIds.includes(hoverMarkerId)"
@@ -52,7 +57,7 @@
             has-border-${PillarParams[pillar.name].color}`"
             @mouseenter="hoverMarkerId = markerId"
             @mouseleave="hoverMarkerId = null"
-            @click="onMarkerClicked(markerId)"
+            @click="onMarkerClick(markerId)"
           ></div>
         </div>
       </div>
@@ -64,7 +69,12 @@
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { PillarParams } from "~/composables/types"
 
+const props = defineProps({
+  centerButtonName: { type: String, required: true },
+})
+
 const emit = defineEmits<{
+  (e: "center-button-click"): void
   (e: "pillar-click", value: any): void
   (e: "marker-click", value: any): void
 }>()
@@ -74,11 +84,13 @@ const questionnaireStore = useQuestionnaireStore()
 const hoverMarkerId = ref<number>()
 const hoverPillarId = ref<number>()
 
-function onPillarClicked(pillarId) {
+function onCenterButtonClick() {
+  emit("center-button-click")
+}
+function onPillarClick(pillarId) {
   emit("pillar-click", pillarId)
 }
-
-function onMarkerClicked(markerId) {
+function onMarkerClick(markerId) {
   emit("marker-click", markerId)
 }
 </script>
