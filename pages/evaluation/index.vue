@@ -24,7 +24,7 @@
             id="withoutAccount"
             v-model="withoutAccount"
             type="checkbox"
-            class="custom-hidden"
+            class="custom-hidden white-on-black-input-checked"
           />
           <label class="button is-normal" for="withoutAccount"
             >Non, faire sans</label
@@ -99,8 +99,4 @@ function onSubmit() {
     margin-left: -40px
     margin-bottom: -40px
     position: absolute
-
-.account-incentive input:checked + label
-  background-color: $black
-  color: $white
 </style>

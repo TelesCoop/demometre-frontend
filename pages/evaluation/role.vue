@@ -61,11 +61,3 @@ async function onSubmit() {
   participationStore.createParticipation()
 }
 </script>
-
-<style scoped lang="sass">
-input:checked + label
-  background-color: $black
-  color: $white
-.buttons .locality-container:not(:last-child):not(.is-fullwidth)
-  margin-right: 0.5rem
-</style>
