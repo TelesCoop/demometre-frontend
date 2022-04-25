@@ -133,25 +133,33 @@ type CountByResponseChoice = {
   responseChoiceId: number
   total: number
 }
+
 export type RepresentativityCriteria = {
   id: number
   name: string
   profilingQuestionId: number
   countByResponseChoice: CountByResponseChoice[]
+  acceptabilityThreshold: number
+  responseChoiceStatements: string[]
+  minRate: number
 }
 export type Assessment = {
   id: number
   type: string
-  initiatedBy: string
-  isInitiatedByLocality: boolean
-  carriedBy: string
-  isCarriedByLocality: boolean
+  initiatedByUser: string
+  initiatorType: string
+  initializedToTheNameOf: string
+  publicInitiator: boolean
   initializationDate: string
   endDate: string
   municipality: Locality | null
   epci: Locality | null
   participationNb: number
   representativities: RepresentativityCriteria[]
+}
+export const InitiatorType = {
+  COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
+  ASSOCIATION: { key: "association", value: "Une association" },
 }
 
 // User participation
@@ -173,4 +181,13 @@ export type EvaluationIntroPage = {
   dataConsent: string
   accountIncentive: string
   accountIncentiveTitle: string
+}
+export type EvaluationInitPage = {
+  title: string
+  introduction: string
+  publicNameQuestion: string
+  publicNameQuestionDescription: string
+  representativityQuestion: string
+  representativityDescription: string
+  initializationValidation: string
 }

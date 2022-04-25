@@ -47,14 +47,14 @@
               <div
                 v-for="localityType of LocalityType"
                 :key="localityType.key"
-                class="locality-container"
+                class="margin-between"
               >
                 <input
                   :id="localityType.key"
                   v-model="localityTypeSelected"
                   type="radio"
                   :value="localityType.key"
-                  class="custom-hidden"
+                  class="custom-hidden white-on-black-input-checked"
                   name="localityType"
                   required
                 />
@@ -117,11 +117,3 @@ async function onSubmit() {
   }
 }
 </script>
-
-<style scoped lang="sass">
-input:checked + label
-  background-color: $black
-  color: $white
-.buttons .locality-container:not(:last-child):not(.is-fullwidth)
-  margin-right: 0.5rem
-</style>
