@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <section class="columns is-centered">
-      <div class="rose-window">
+      <div class="rosette">
         <div class="center-button">
           <button
             class="button is-normal is-rounded"
@@ -101,7 +101,7 @@ function onMarkerClick(markerId) {
 </script>
 
 <style scoped lang="sass">
-.rose-window
+.rosette
   position: relative
   width: 600px
   height: 600px
@@ -154,7 +154,7 @@ $pillars: ("representation": (translateX(-170px), 5, translateX(-90px), 29px), "
     cursor: pointer
     @for $i from 1 through 8
       &:nth-child(#{$i})
-        transform: translate(-50%, -50%) rotate((($i - 2) * 30deg) - (($nb-markers - 1)*30/2)) $marker-translate
+        transform: translate(-50%, -50%) rotate((($i - 2) * 30deg) - calc(($nb-markers - 1) * 30 / 2)) $marker-translate
 
 .pillar
   &-title
