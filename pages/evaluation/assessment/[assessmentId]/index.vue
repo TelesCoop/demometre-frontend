@@ -15,7 +15,9 @@
       :assessment="assessmentStore.currentAssessment"
     ></ParticipationBoard>
     <div class="buttons mt-4">
-      <NuxtLink to="/evaluation/role" class="button is-normal is-rounded"
+      <NuxtLink
+        :to="`/evaluation/assessment/${assessmentStore.currentAssessmentId}/participation`"
+        class="button is-normal is-rounded"
         ><span>Poursuivre l'évaluation</span>
         <span class="icon"> <icon size="16" name="arrow-right-line" /> </span
       ></NuxtLink>

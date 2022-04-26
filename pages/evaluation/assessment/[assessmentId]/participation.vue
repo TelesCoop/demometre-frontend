@@ -33,6 +33,11 @@ import { useParticipationStore } from "~/stores/participationStore"
 import { getDataOfParticipation } from "~/composables/actions"
 import { useProfilingJourney } from "~/composables/journey"
 
+definePageMeta({
+  title: "Question sur le role",
+  middleware: ["assessment"],
+})
+
 const color = ref("no-pillar")
 const answer = ref()
 

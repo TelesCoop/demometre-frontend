@@ -5,7 +5,7 @@ async function verifyAssessment(to) {
 
   // Load data if f5
   if (process.server) {
-    assessmentStore.getAssessment(to.params.assessmentId)
+    await assessmentStore.getAssessment(to.params.assessmentId)
   }
   if (!assessmentStore.currentAssessment?.initializationDate) {
     useRouter().push("/evaluation/initier")
