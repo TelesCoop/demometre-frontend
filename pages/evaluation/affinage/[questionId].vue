@@ -3,7 +3,6 @@
     <Question
       v-if="context"
       :context="context"
-      :participation-id="participationId"
       :question-id="questionId"
       color="no-pillar"
     />
@@ -25,11 +24,9 @@ definePageMeta({
 const route = useRoute()
 const router = useRouter()
 
-const participationId = ref(+route.params.participationId)
 const questionId = ref(+route.params.questionId)
 
 router.beforeEach((to) => {
-  participationId.value = +to.params.participationId
   questionId.value = +to.params.questionId
 })
 

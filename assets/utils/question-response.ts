@@ -18,5 +18,5 @@ export const getQuestionResponseValue = (
   type: string
 ) => {
   const valueName = QUESTION_RESPONSE_VALUE_BY_TYPE[type]
-  return questionResponse[valueName]
+  return questionResponse?.[valueName]
 }

@@ -1,39 +1,37 @@
 import { defineStore } from "pinia"
-import { useApiPatch, useApiPost } from "~/composables/api"
+import { useApiPatch, useApiPost, useGet } from "~/composables/api"
 import { Participation, Question, QuestionResponse } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
-import { useProfilingStore } from "./profilingStore"
-import { useUserStore } from "./userStore"
 import {
   QUESTION_RESPONSE_VALUE_BY_TYPE,
   QUESTION_RESPONSES_BY_TYPE,
 } from "~/assets/utils/question-response"
+import participation from "~/middleware/participation"
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
-    id: <number | null>null,
     roleId: <number | null>null,
     consent: <boolean>false,
     responseByQuestionnaireQuestionId: <{ [key: number]: QuestionResponse }>{},
     responseByProfilingQuestionId: <{ [key: number]: QuestionResponse }>{},
     profilingCurrent: <number[]>[],
+    participation: <Participation>{},
   }),
   getters: {
-    participation() {
-      return {
-        id: this.id,
-        roleId: this.roleId,
-        consent: this.consent,
-        userId: useUserStore().user.id,
-        assessmentId: useAssessmentStore().currentAssessmentId,
-      }
+    id() {
+      return this.participation?.id
     },
   },
   actions: {
+    // Create participation only one time
     async createParticipation() {
       const { data, error } = await useApiPost<Participation>(
         "participations/",
-        this.participation
+        {
+          assessmentId: useAssessmentStore().currentAssessmentId,
+          roleId: this.roleId,
+          consent: this.consent,
+        }
       )
       if (!error.value) {
         this.id = data.value.id
@@ -41,29 +39,15 @@ export const useParticipationStore = defineStore("participation", {
       }
       return false
     },
-    async updateParticipation() {
-      const { data, error } = await useApiPatch<Participation>(
-        `participations/${this.id}/`,
-        this.participation
-      )
-    },
-    async getParticipation(participationId: number) {
-      const { data, error } = await useApiGet<Participation>(
-        `participations/${participationId}/`
-      )
-      if (!error.value) {
-        this.updateState(data.value)
-      }
-    },
-    async getCurrentParticipation() {
-      const { data, error } = await useApiGet<Participation[]>(
-        `participations/`
-      )
-      console.log("get participation", data.value)
-
-      if (!error.value && data.value) {
-        // TODO : manage when several participations retrieve
-        this.updateState(data.value[0])
+    async getCurrentParticipation(headers = undefined) {
+      try {
+        const response = await useGet<Participation[]>(`participations/`, {
+          headers,
+        })
+        this.participation = response[0]
+        return true
+      } catch (e) {
+        return false
       }
     },
     async updateState(participation) {
@@ -77,22 +61,24 @@ export const useParticipationStore = defineStore("participation", {
     chooseRole(roleId) {
       this.roleId = roleId
     },
-    setProfilingJourney() {
-      // TODO : include drawer question logic
-      this.profilingJourney = Object.keys(useProfilingStore().questionById)
-    },
 
-    async getProfilingQuestionResponses(participationId: number) {
-      const { data, error } = await useApiGet<QuestionResponse[]>(
-        `responses/?context=profiling&participation_id=${participationId}`
-      )
-      if (!error.value) {
-        data.value.forEach((response) => {
-          this.responseByProfilingQuestionId[response.questionId] = response
+    async getProfilingQuestionResponses(
+      participationId: number,
+      headers = undefined
+    ) {
+      try {
+        const response = await useGet<QuestionResponse[]>(
+          `responses/?context=profiling&participation_id=${participationId}`,
+          {
+            headers,
+          }
+        )
+        response.forEach((item) => {
+          this.responseByProfilingQuestionId[item.questionId] = item
         })
-        return true
+      } catch {
+        return false
       }
-      return false
     },
 
     async saveResponse(question: Question, response: any) {

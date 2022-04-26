@@ -11,13 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from "~/stores/userStore"
-import { useDefinitionStore } from "~/stores/definitionStore"
-import { useToastStore } from "~/stores/toastStore"
-import { useParticipationStore } from "~/stores/participationStore"
+import { useToastStore } from "../stores/toastStore"
 
-const definitionStore = useDefinitionStore()
 const toastStore = useToastStore()
-
-definitionStore.getDefinitions()
 </script>

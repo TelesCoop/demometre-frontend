@@ -168,7 +168,6 @@ import { getQuestionResponseValue } from "assets/utils/question-response"
 
 type tabDef = { label: string; id: string }
 const props = defineProps({
-  participationId: { type: Number, required: true },
   questionId: { type: Number, required: true },
   context: { type: Object as PropType<QuestionContextProps>, required: true },
   color: { type: String, required: true },
@@ -194,6 +193,7 @@ const initialValue = getQuestionResponseValue(
 const answer = ref(initialValue)
 
 watch(question, () => {
+  debugger
   answer.value = getQuestionResponseValue(
     props.context.responseByQuestionId[props.questionId],
     question.value.type
@@ -244,9 +244,9 @@ function setTab(tabId) {
 
 const goToNextQuestion = () => {
   useRouter().push(
-    `/evaluation/${
-      participationStore.id
-    }/affinage/${props.context.journey.nextQuestionId(props.questionId)}`
+    `/evaluation/affinage/${props.context.journey.nextQuestionId(
+      props.questionId
+    )}`
   )
 }
 

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { Question, Role } from "~/composables/types"
-import { useApiGet } from "~~/composables/api"
+import { useApiGet, useGet } from "~~/composables/api"
 import { useParticipationStore } from "./participationStore"
 
 export const useProfilingStore = defineStore("profiling", {
@@ -23,16 +23,21 @@ export const useProfilingStore = defineStore("profiling", {
         }
       }
     },
-    async getProfilingQuestions(participationId) {
-      const { data, error } = await useApiGet<Question[]>(
-        `profiling-questions/participation/${participationId}/`
-      )
-      if (!error.value) {
+    async getProfilingQuestions(participationId, headers) {
+      try {
+        const response = await useGet<Question[]>(
+          `profiling-questions/participation/${participationId}/`,
+          { headers }
+        )
         this.orderedQuestionId = []
-        for (const question of data.value) {
+        for (const question of response) {
           this.questionById[question.id] = question
           this.orderedQuestionId.push(question.id)
         }
+
+        return true
+      } catch {
+        return false
       }
     },
   },
