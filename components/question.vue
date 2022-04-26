@@ -68,7 +68,7 @@
         <template v-else>
           <button
             class="button is-dark is-outlined is-rounded"
-            @click="goToNextQuestion"
+            @click="props.context.goToNextQuestion()"
           >
             <span>Passer</span>
             <i class="icon">
@@ -245,7 +245,7 @@ const submit = () => {
     .saveResponse(question.value, answer.value)
     .then((result) => {
       if (result) {
-        props.context.journey.goToNextQuestion()
+        props.context.journey.goToNextQuestion(question.value.id)
       }
     })
 }

@@ -1,12 +1,11 @@
 import { defineStore } from "pinia"
-import { useApiPatch, useApiPost, useGet } from "~/composables/api"
+import { useApiPost, useGet } from "~/composables/api"
 import { Participation, Question, QuestionResponse } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
 import {
   QUESTION_RESPONSE_VALUE_BY_TYPE,
   QUESTION_RESPONSES_BY_TYPE,
 } from "~/assets/utils/question-response"
-import participation from "~/middleware/participation"
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
@@ -45,6 +44,7 @@ export const useParticipationStore = defineStore("participation", {
           headers,
         })
         this.participation = response[0] || {}
+        return true
       } catch (e) {
         return false
       }

@@ -18,7 +18,6 @@ import { ref } from "@vue/reactivity"
 
 definePageMeta({
   title: "Affinage",
-  breadcrumb: "Affinage",
 })
 
 const route = useRoute()

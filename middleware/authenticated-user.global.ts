@@ -2,7 +2,6 @@ import { useUserStore } from "~/stores/userStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useRequestHeaders } from "#app"
 import { getDataOfParticipation } from "~/composables/actions"
-import { useProfilingJourney } from "~/composables/journey"
 
 const loadUserState = async () => {
   if (!process.server) return
@@ -21,7 +20,6 @@ const loadUserState = async () => {
     if (!participationStore.id) {
       if (await participationStore.getCurrentParticipation(headers)) {
         await getDataOfParticipation(headers)
-        useProfilingJourney().goToNextQuestion(undefined)
       }
     }
   }
