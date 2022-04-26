@@ -67,8 +67,8 @@ import { usePageStore } from "~/stores/pageStore"
 import { Marker, PillarType } from "~/composables/types"
 
 definePageMeta({
-  title: "Référentiel",
-  breadcrumb: "Référentiel",
+  title: "DemoMètre",
+  breadcrumb: "DemoMètre",
 })
 
 const router = useRouter()

@@ -1,36 +1,49 @@
 <template>
-  <div class="container">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div>
+    <nav
+      class="navbar has-background-shade-600"
+      role="navigation"
+      aria-label="main navigation"
+    >
       <div class="navbar-brand">
         <NuxtLink class="navbar-item" to="/">
           <HeaderLogo :active-pillar-name="activePillar" />
         </NuxtLink>
         <a
           role="button"
-          class="navbar-burger"
+          class="navbar-burger has-background-shade-600"
           aria-label="menu"
           aria-expanded="false"
-          data-target="navbarBasicExample"
+          data-target="navbarMenu"
           :class="isBurgerOpen ? 'is-active' : ''"
           @click="isBurgerOpen = !isBurgerOpen"
         >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
+          <span aria-hidden="true" class="has-text-white"></span>
+          <span aria-hidden="true" class="has-text-white"></span>
+          <span aria-hidden="true" class="has-text-white"></span>
         </a>
       </div>
 
       <div
-        id="navbarBasicExample"
+        id="navbarMenu"
         class="navbar-menu"
-        :class="isBurgerOpen ? 'is-active' : ''"
+        :class="isBurgerOpen ? 'is-active has-background-shade-600' : ''"
       >
-        <div class="navbar-start">
+        <div
+          class="navbar-start px-1"
+          :class="
+            isBurgerOpen ? '' : 'has-background-white inline-navbar-start'
+          "
+        >
           <NuxtLink
             v-for="(item, index) of navItems"
             :key="index"
             :to="item.to"
-            :class="isRouteActive(item.to) ? 'is-active' : ''"
+            :class="
+              isRouteActive(item.to)
+                ? 'is-active has-text-shade-600'
+                : 'has-text-shade-400'
+            "
             class="navbar-item"
             >{{ item.name }}</NuxtLink
           >
@@ -39,19 +52,21 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <NuxtLink to="/evaluation" class="button is-dark is-rounded"
+              <NuxtLink
+                to="/evaluation"
+                class="button is-rounded has-border-cooperation has-text-cooperation-dark"
                 >Lancer l'évaluation</NuxtLink
               >
               <NuxtLink
                 v-if="userStore.isLoggedIn"
                 to="/profil"
-                class="button is-dark is-outlined is-rounded"
+                class="button is-white is-outlined is-rounded"
                 >{{ userStore.user.email }}</NuxtLink
               >
               <NuxtLink
                 v-else
                 to="/login"
-                class="button is-dark is-outlined is-rounded"
+                class="button is-white is-outlined is-rounded"
                 >Se connecter</NuxtLink
               >
             </div>
@@ -65,10 +80,8 @@
 
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
-import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 
 const userStore = useUserStore()
-const questionnaireStore = useQuestionnaireStore()
 // TODO : use router to highlight active route
 const route = useRoute()
 const isBurgerOpen = ref(false)
@@ -83,12 +96,16 @@ const activePillar = computed(() => {
 
 const navItems = [
   {
-    name: "Le référentiel",
-    to: "/referentiel",
+    name: "Accueil",
+    to: "/",
   },
   {
-    name: "Options d'évaluation",
-    to: "/options-evaluation",
+    name: "DémoMètre",
+    to: "/demometre",
+  },
+  {
+    name: "Utilisations possible",
+    to: "/utilisation-possible",
   },
   {
     name: "Résultats",
@@ -100,3 +117,12 @@ const navItems = [
   },
 ]
 </script>
+
+<style scoped lang="sass">
+.inline-navbar-start
+  border-radius: 1000px
+  margin: 14px 24px
+@include widescreen
+  .navbar
+    padding: 0 35px
+</style>
