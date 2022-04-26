@@ -67,7 +67,7 @@ async function onSubmit() {
   // TODO : if participaton exist, update it
   const isSuccess = await participationStore.createParticipation()
   if (isSuccess) {
-    await getDataOfParticipation(participationStore.id)
+    await getDataOfParticipation()
     useProfilingJourney().goToNextQuestion(undefined)
   } else {
     // TODO : manage case when there is not next profiling Question

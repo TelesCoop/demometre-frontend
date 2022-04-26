@@ -36,7 +36,7 @@ export const useProfilingStore = defineStore("profiling", {
         }
 
         return true
-      } catch {
+      } catch (e) {
         return false
       }
     },

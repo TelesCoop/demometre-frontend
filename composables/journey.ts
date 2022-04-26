@@ -2,7 +2,7 @@ import { computed, getCurrentInstance } from "vue"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { Question } from "~/composables/types"
 import { useParticipationStore } from "~/stores/participationStore"
-import { useRouter } from "vue-router"
+import { useRouter } from "#app"
 
 const OPERATORS_STRATEGY = {
   or: "some",
@@ -74,7 +74,6 @@ function isRelevant(question: Question, data) {
 export function useProfilingJourney<Type>() {
   const vm = getCurrentInstance()
   const journey = computed(() => {
-    debugger
     const profilingStore = useProfilingStore()
     const responseByQuestionId =
       useParticipationStore().responseByProfilingQuestionId
@@ -94,7 +93,6 @@ export function useProfilingJourney<Type>() {
 
   const goToNextQuestion = (currentQuestionId) => {
     const questionId = nextQuestionId(currentQuestionId)
-    debugger
     useRouter().push(`/evaluation/affinage/${questionId}`)
   }
 

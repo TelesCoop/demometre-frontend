@@ -46,7 +46,6 @@ export const useAssessmentStore = defineStore("assessment", {
         const response = await useGet<Assessment>(`assessments/${id}`, {
           headers,
         })
-        console.log(response)
         this.assessmentById[response.id] = response
         this.currentAssessmentId = response.id
       } catch (error) {
