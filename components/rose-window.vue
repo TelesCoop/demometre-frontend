@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <section class="columns is-centered">
-      <div class="rosasse">
+      <div class="rose-window">
         <div class="center-button">
           <button
             class="button is-normal is-rounded"
@@ -52,9 +52,14 @@
           <div
             v-for="markerId in pillar.markerIds"
             :key="markerId"
-            :class="`
+            :class="
+              `
             marker-circle-${PillarParams[pillar.name].key}
-            has-border-${PillarParams[pillar.name].color}`"
+            has-border-${PillarParams[pillar.name].color} ` +
+              (markerId === hoverMarkerId
+                ? `has-background-${PillarParams[pillar.name].color}`
+                : ``)
+            "
             @mouseenter="hoverMarkerId = markerId"
             @mouseleave="hoverMarkerId = null"
             @click="onMarkerClick(markerId)"
@@ -96,7 +101,7 @@ function onMarkerClick(markerId) {
 </script>
 
 <style scoped lang="sass">
-.rosasse
+.rose-window
   position: relative
   width: 600px
   height: 600px

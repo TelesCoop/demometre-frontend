@@ -25,11 +25,11 @@
         </p>
       </div>
       <div class="column is-6 is-offset-1">
-        <Rosasse
+        <RoseWindow
           center-button-name="Découvrir"
           @center-button-click="onDiscoverButtonClick()"
-          @pillar-click="onRosassePillarClicked($event)"
-          @marker-click="onRosasseMarkerClicked($event)"
+          @pillar-click="onRoseWindowPillarClicked($event)"
+          @marker-click="onRoseWindowMarkerClicked($event)"
         />
       </div>
     </section>
@@ -103,12 +103,12 @@ const onSelectPillar = (pillar) => {
 const onDiscoverButtonClick = () => {
   // TODO : New section of referential page
 }
-const onRosassePillarClicked = (pillarName) => {
+const onRoseWindowPillarClicked = (pillarName) => {
   onSelectPillar(questionnaireStore.getPillarByName(pillarName))
   pillarsRef.value.scrollIntoView({ behavior: "smooth" })
 }
-const onRosasseMarkerClicked = (markerId) => {
-  onRosassePillarClicked(questionnaireStore.markerById[markerId].pillarName)
+const onRoseWindowMarkerClicked = (markerId) => {
+  onRoseWindowPillarClicked(questionnaireStore.markerById[markerId].pillarName)
 }
 </script>
 
