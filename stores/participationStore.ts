@@ -34,7 +34,7 @@ export const useParticipationStore = defineStore("participation", {
         }
       )
       if (!error.value) {
-        this.id = data.value.id
+        this.participation = data.value
         return true
       }
       return false
@@ -44,8 +44,7 @@ export const useParticipationStore = defineStore("participation", {
         const response = await useGet<Participation[]>(`participations/`, {
           headers,
         })
-        this.participation = response[0]
-        return true
+        this.participation = response[0] || {}
       } catch (e) {
         return false
       }

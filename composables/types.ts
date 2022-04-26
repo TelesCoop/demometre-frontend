@@ -168,7 +168,6 @@ export type Assessment = {
 export type User = { id: number | null; email: string; username: string }
 export type Participation = {
   id: number | null
-  userId: number
   assessmentId: number
   roleId: number
   consent: boolean

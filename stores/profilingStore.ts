@@ -23,7 +23,7 @@ export const useProfilingStore = defineStore("profiling", {
         }
       }
     },
-    async getProfilingQuestions(participationId, headers) {
+    async getProfilingQuestions(participationId, headers = undefined) {
       try {
         const response = await useGet<Question[]>(
           `profiling-questions/participation/${participationId}/`,

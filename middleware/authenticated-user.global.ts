@@ -1,10 +1,11 @@
-import { useProfilingStore } from "~/stores/profilingStore"
 import { useUserStore } from "~/stores/userStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useRequestHeaders } from "#app"
+import { getDataOfParticipation } from "~/composables/actions"
+import { useProfilingJourney } from "~/composables/journey"
 
 const loadUserState = async () => {
-  console.log("loadUserState")
+  if (!process.server) return
 
   // Conserve header because of crash
   const headers = useRequestHeaders(["cookie"])
@@ -17,17 +18,10 @@ const loadUserState = async () => {
 
   if (userStore.isLoggedIn) {
     const participationStore = useParticipationStore()
-    const profilingStore = useProfilingStore()
-    if (!participationStore.participation.id) {
-      console.log("reload participation and questions / responses")
+    if (!participationStore.id) {
       if (await participationStore.getCurrentParticipation(headers)) {
-        await Promise.all([
-          participationStore.getProfilingQuestionResponses(
-            participationStore.participation.id,
-            headers
-          ),
-          profilingStore.getProfilingQuestions(participationStore.id, headers),
-        ])
+        await getDataOfParticipation(headers)
+        useProfilingJourney().goToNextQuestion(undefined)
       }
     }
   }

@@ -193,7 +193,6 @@ const initialValue = getQuestionResponseValue(
 const answer = ref(initialValue)
 
 watch(question, () => {
-  debugger
   answer.value = getQuestionResponseValue(
     props.context.responseByQuestionId[props.questionId],
     question.value.type
@@ -241,21 +240,12 @@ if (question.value?.toGoFurther) {
 function setTab(tabId) {
   currentTabId.value = tabId
 }
-
-const goToNextQuestion = () => {
-  useRouter().push(
-    `/evaluation/affinage/${props.context.journey.nextQuestionId(
-      props.questionId
-    )}`
-  )
-}
-
 const submit = () => {
   participationStore
     .saveResponse(question.value, answer.value)
     .then((result) => {
       if (result) {
-        goToNextQuestion()
+        props.context.journey.goToNextQuestion()
       }
     })
 }
