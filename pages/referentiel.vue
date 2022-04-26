@@ -24,12 +24,17 @@
           les critères qui le composent.
         </p>
       </div>
-      <div class="column is-6 is-offset-1" style="background-color: pink">
-        ICI SCHEMA PILIERS
+      <div class="column is-6 is-offset-1">
+        <RoseWindow
+          center-button-name="Découvrir"
+          @center-button-click="onDiscoverButtonClick()"
+          @pillar-click="onRoseWindowPillarClicked($event)"
+          @marker-click="onRoseWindowMarkerClicked($event)"
+        />
       </div>
     </section>
     <hr />
-    <section class="columns is-multiline mt-4">
+    <section ref="pillarsRef" class="columns is-multiline mt-4">
       <div
         v-for="pillar of questionnaireStore.pillars"
         :key="pillar.name"
@@ -55,6 +60,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from "vue"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
 import { Marker, PillarType } from "~/composables/types"
@@ -82,11 +88,27 @@ const colorClass = computed(() =>
   activePillar.value ? PillarParams[activePillar.value.name].color : ""
 )
 
+const pillarsRef = ref(null)
+onMounted(() => {
+  pillarsRef.value.focus()
+})
+
 const onSelectPillar = (pillar) => {
   activePillar.value = pillar
   markers.value = activePillar.value?.markerIds.map(
     (markerId) => questionnaireStore.markerById[markerId]
   )
+}
+
+const onDiscoverButtonClick = () => {
+  // TODO : New section of referential page
+}
+const onRoseWindowPillarClicked = (pillarName) => {
+  onSelectPillar(questionnaireStore.getPillarByName(pillarName))
+  pillarsRef.value.scrollIntoView({ behavior: "smooth" })
+}
+const onRoseWindowMarkerClicked = (markerId) => {
+  onRoseWindowPillarClicked(questionnaireStore.markerById[markerId].pillarName)
 }
 </script>
 

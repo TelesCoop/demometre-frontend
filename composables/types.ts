@@ -25,18 +25,22 @@ export enum PillarName {
 
 export const PillarParams = {
   [PillarName.REPRESENTATION]: {
+    key: "representation",
     color: "representation",
     picto: "picto-representation.png",
   },
   [PillarName.COOPERATION]: {
+    key: "cooperation",
     color: "cooperation",
     picto: "picto-cooperation.png",
   },
   [PillarName.TRANSPARENCY]: {
+    key: "transparency",
     color: "transparency",
     picto: "picto-transparency.png",
   },
   [PillarName.PARTICIPATION]: {
+    key: "participation",
     color: "participation",
     picto: "picto-participation.png",
   },
