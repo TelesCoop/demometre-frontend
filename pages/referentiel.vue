@@ -60,6 +60,7 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from "vue-router"
 import { ref, onMounted } from "vue"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
@@ -69,6 +70,8 @@ definePageMeta({
   title: "Référentiel",
   breadcrumb: "Référentiel",
 })
+
+const router = useRouter()
 
 const questionnaireStore = useQuestionnaireStore()
 const pageStore = usePageStore()
@@ -98,6 +101,7 @@ const onSelectPillar = (pillar) => {
   markers.value = activePillar.value?.markerIds.map(
     (markerId) => questionnaireStore.markerById[markerId]
   )
+  router.push({ query: { pillar: pillar.name } })
 }
 
 const onDiscoverButtonClick = () => {

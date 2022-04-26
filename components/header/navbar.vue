@@ -3,8 +3,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <NuxtLink class="navbar-item" to="/">
-          <img src="~/assets/img/logo.svg" width="40" height="40" />
-          <p class="has-text-weight-bold">Titre du projet</p>
+          <HeaderLogo :active-pillar-name="activePillar" />
         </NuxtLink>
         <a
           role="button"
@@ -60,19 +59,26 @@
         </div>
       </div>
     </nav>
+    <HeaderLine :active-pillar-name="activePillar" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
+import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 
 const userStore = useUserStore()
+const questionnaireStore = useQuestionnaireStore()
 // TODO : use router to highlight active route
 const route = useRoute()
 const isBurgerOpen = ref(false)
 
 const isRouteActive = computed(() => (path) => {
   return route.path === path
+})
+
+const activePillar = computed(() => {
+  return route.query.pillar || ""
 })
 
 const navItems = [
