@@ -125,4 +125,7 @@ const navItems = [
 @include widescreen
   .navbar
     padding: 0 35px
+@include fullhd
+  .navbar
+    padding: 0 70px
 </style>
