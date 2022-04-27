@@ -15,7 +15,7 @@
         </nuxt-link>
         <nuxt-link
           class="button is-dark is-rounded is-responsive is-outlined"
-          to="/referentiel"
+          to="/demometre"
         >
           <span>Découvrir le référentiel</span>
 
