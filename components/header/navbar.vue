@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <header class="header-fixed" fixed="top">
     <nav
       class="navbar has-background-shade-600"
       role="navigation"
@@ -75,7 +75,7 @@
       </div>
     </nav>
     <HeaderLine :active-pillar-name="activePillar" />
-  </div>
+  </header>
 </template>
 
 <script setup lang="ts">
@@ -119,6 +119,12 @@ const navItems = [
 </script>
 
 <style scoped lang="sass">
+.header-fixed
+  left: 0
+  position: fixed
+  right: 0
+  top: 0
+  z-index: 30
 .inline-navbar-start
   border-radius: 1000px
   margin: 14px 24px
