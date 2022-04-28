@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="has-navbar-fixed-top">
     <div>
-      <Navbar />
+      <HeaderNavbar />
       <Breadcrumb />
       <slot></slot>
       <Footer />
@@ -25,3 +25,8 @@ if (!userStore.email) {
 }
 definitionStore.getDefinitions()
 </script>
+
+<style scoped lang="sass">
+.has-navbar-fixed-top
+  padding-top: 75px
+</style>

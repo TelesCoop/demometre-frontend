@@ -10,7 +10,6 @@ $grey: #777777
 $primary: $cyan
 $orange: #EDA15E
 
-
 // Maquette
 $primary-main: #B9ED5E
 $secondary-main: #EDA15E
@@ -21,18 +20,23 @@ $secondary-main-invert: findColorInvert($secondary-main)
 $warning-main-invert: findColorInvert($warning-main)
 
 // Shades
-$shade-100: hsl(0, 0%, 98%)
-$shade-200: hsl(0, 0%, 96%)
-$shade-300: hsl(0, 0%, 86%)
-$shade-350: hsl(0, 0%, 77%)
-$shade-400: hsl(0, 0%, 71%)
-$shade-500: hsl(0, 0%, 29%)
-$shade-600: hsl(0, 0%, 21%)
-$shade-700: hsl(0, 0%, 14%)
-$shade-800: hsl(0, 0%, 7%)
+$shade-100: #FAFAFA
+$shade-150: #F7F7F7
+$shade-200: #F5F5F5
+$shade-250: #E8E8E8
+$shade-300: #DBDBDB
+$shade-350: #C4C4C4
+$shade-400: #777777
+$shade-500: #4A4A4A
+$shade-600: #363636
+$shade-700: #242424
+$shade-800: #121212
+$shade-900: #0A0A0A
 
 $shade-100-invert: findColorInvert($shade-100)
+$shade-150-invert: findColorInvert($shade-150)
 $shade-200-invert: findColorInvert($shade-200)
+$shade-250-invert: findColorInvert($shade-250)
 $shade-300-invert: findColorInvert($shade-300)
 $shade-350-invert: findColorInvert($shade-350)
 $shade-400-invert: findColorInvert($shade-400)
@@ -40,6 +44,7 @@ $shade-500-invert: findColorInvert($shade-500)
 $shade-600-invert: findColorInvert($shade-600)
 $shade-700-invert: findColorInvert($shade-700)
 $shade-800-invert: findColorInvert($shade-800)
+$shade-900-invert: findColorInvert($shade-900)
 
 $link: $grey
 
@@ -49,17 +54,11 @@ $transparency: $cyan
 $participation: $yellow
 $no-pillar: $shade-600
 
-$representation-dark: findDarkColor($representation)
-$cooperation-dark: findDarkColor($cooperation)
-$transparency-dark: findDarkColor($transparency)
-$participation-dark: findDarkColor($participation)
+$representation-dark: #2A3E56
+$cooperation-dark: #503535
+$transparency-dark: #303F3F
+$participation-dark: #463A25
 $no-pillar-dark: $shade-600
-
-$representation-light: findLightColor($representation)
-$cooperation-light: findLightColor($cooperation)
-$transparency-light: findLightColor($transparency)
-$participation-light: findLightColor($participation)
-$no-pillar-light: $shade-100
 
 $representation-active: #355A89
 $cooperation-active: #7C4C4D
@@ -73,16 +72,22 @@ $transparency-hover: #507675
 $participation-hover: #856C39
 $no-pillar-hover: $shade-200
 
-$representation-light-active: #EFF4FA
-$cooperation-light-active: #FBF1F1
+$representation-light-active: #E6EFF8
+$cooperation-light-active: #FAEBEB
 $transparency-light-active: #E5F1F2
-$participation-light-active: #F8F3E4
+$participation-light-active: #F7EED7
 $no-pillar-light-active: $shade-200
 
-$representation-light-hover: #95BFFA
-$cooperation-light-hover: #FAEBEB
-$transparency-light-hover: #E5F1F2
-$participation-light-hover: #FFF3D1
+$representation-light-hover: #EFF4FA
+$cooperation-light-hover: #FBF1F1
+$transparency-light-hover: #EDF5F6
+$participation-light-hover: #F8F3E4
 $no-pillar-light-hover: $shade-200
 
-$custom-colors: ("representation": ($representation, $representation-active, $representation-light, $representation-dark, $representation-hover, $representation-light-active, $representation-light-hover), "cooperation": ($cooperation, $cooperation-active, $cooperation-light, $cooperation-dark, $cooperation-hover, $cooperation-light-active, $cooperation-light-hover), "transparency": ($transparency, $transparency-active, $transparency-light, $transparency-dark, $transparency-hover, $transparency-light-active, $transparency-light-hover), "participation": ($participation, $participation-active, $participation-light, $participation-dark, $participation-hover, $participation-light-active, $participation-light-hover), "shade-100": ($shade-100, $shade-100-invert), "shade-200": ($shade-200, $shade-200-invert), "shade-300": ($shade-300, $shade-300-invert), "shade-350": ($shade-350, $shade-350-invert), "shade-400": ($shade-400, $shade-400-invert), "shade-500": ($shade-500, $shade-500-invert), "shade-600": ($shade-600, $shade-600-invert), "shade-700": ($shade-700, $shade-700-invert), "shade-800": ($shade-800, $shade-800-invert), "no-pillar": ($no-pillar, $no-pillar-active, $no-pillar-light, $no-pillar-dark, $no-pillar-hover, $no-pillar-light-active, $no-pillar-light-hover), "primary-main": ($primary-main, $primary-main-invert), "secondary-main": ($secondary-main, $secondary-main-invert), "warning-main": ($warning-main, $warning-main-invert))
+$representation-light: #F2F9FE
+$cooperation-light: #FBF6F4
+$transparency-light: #F5F9F9
+$participation-light: #F9F7F0
+$no-pillar-light: $shade-100
+
+$custom-colors: ("representation": ($representation, $representation-active, $representation-light, $representation-dark, $representation-hover, $representation-light-active, $representation-light-hover), "cooperation": ($cooperation, $cooperation-active, $cooperation-light, $cooperation-dark, $cooperation-hover, $cooperation-light-active, $cooperation-light-hover), "transparency": ($transparency, $transparency-active, $transparency-light, $transparency-dark, $transparency-hover, $transparency-light-active, $transparency-light-hover), "participation": ($participation, $participation-active, $participation-light, $participation-dark, $participation-hover, $participation-light-active, $participation-light-hover), "shade-100": ($shade-100, $shade-100-invert), "shade-150": ($shade-150, $shade-150-invert), "shade-200": ($shade-200, $shade-200-invert), "shade-250": ($shade-150, $shade-250-invert), "shade-300": ($shade-300, $shade-300-invert), "shade-350": ($shade-350, $shade-350-invert), "shade-400": ($shade-400, $shade-400-invert), "shade-500": ($shade-500, $shade-500-invert), "shade-600": ($shade-600, $shade-600-invert), "shade-700": ($shade-700, $shade-700-invert), "shade-800": ($shade-800, $shade-800-invert), "shade-900": ($shade-900, $shade-900-invert), "no-pillar": ($no-pillar, $no-pillar-active, $no-pillar-light, $no-pillar-dark, $no-pillar-hover, $no-pillar-light-active, $no-pillar-light-hover), "primary-main": ($primary-main, $primary-main-invert), "secondary-main": ($secondary-main, $secondary-main-invert), "warning-main": ($warning-main, $warning-main-invert))
