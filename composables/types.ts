@@ -1,4 +1,6 @@
 // Questionnaire and profiling
+import { useProfilingJourney } from "~/composables/journey"
+
 export enum Objectivity {
   OBJECTIVE = "objective",
   SUBJECTIVE = "subjective",
@@ -15,6 +17,10 @@ export enum QuestionType {
   CLOSED_WITH_SCALE = "closed_with_scale",
   BOOLEAN = "boolean",
   PERCENTAGE = "percentage",
+}
+export enum SurveyType {
+  PROFILING = "profiling",
+  QUESTIONNAIRE = "questionnaire",
 }
 export enum PillarName {
   REPRESENTATION = "représentation",
@@ -83,6 +89,20 @@ export type ResponseChoice = {
   responseChoice: string
   description: string
 }
+
+export type Rule = {
+  id: number
+  type: string
+  // Id de la question définissant la règle
+  conditionalQuestionId: number
+
+  // Type de réponse possible pour la rules
+  responseChoiceIds: number
+  numericalOperator: string
+  numericalValue: number
+  booleanResponse: boolean
+}
+
 export type Question = {
   id: number
   criteriaId: number | null
@@ -100,6 +120,9 @@ export type Question = {
   toGoFurther: string
   definitionIds: number[]
   categories: Category[]
+  rulesIntersectionOperator: string
+  rules: Rule[]
+  surveyType: SurveyType
   maxMultipleChoices: number | null
 }
 
@@ -170,10 +193,23 @@ export const InitiatorType = {
 export type User = { id: number | null; email: string; username: string }
 export type Participation = {
   id: number | null
-  userId: number
   assessmentId: number
   roleId: number
   consent: boolean
+}
+export type QuestionResponse = {
+  id: number
+  participationId: number
+  questionId: number
+  uniqueChoiceResponseId: number | null
+  multipleChoiceResponseIds: number[]
+  booleanResponse: boolean | null
+  percentageResponse: number | null
+  closedWithRankingResponseIds: number[]
+  closedWithScaleCategoryResponses: {
+    category: string
+    responseId: number
+  }[]
 }
 
 // Pages
@@ -194,4 +230,11 @@ export type EvaluationInitPage = {
   representativityQuestion: string
   representativityDescription: string
   initializationValidation: string
+}
+
+// Props
+export type QuestionContextProps = {
+  journey: any
+  questionById: { [key: number]: Question }
+  responseByQuestionId: { [key: number]: QuestionResponse }
 }

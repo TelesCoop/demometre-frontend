@@ -30,6 +30,13 @@
 import { ref } from "@vue/reactivity"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
+import { getDataOfParticipation } from "~/composables/actions"
+import { useProfilingJourney } from "~/composables/journey"
+
+definePageMeta({
+  title: "Question sur le role",
+  middleware: ["assessment"],
+})
 
 const color = ref("no-pillar")
 const answer = ref()
@@ -58,6 +65,12 @@ const disabled = computed(() => {
 async function onSubmit() {
   participationStore.chooseRole(answer.value)
   // TODO : if participaton exist, update it
-  participationStore.createParticipation()
+  const isSuccess = await participationStore.createParticipation()
+  if (isSuccess) {
+    await getDataOfParticipation()
+    useProfilingJourney().goToNextQuestion(undefined)
+  } else {
+    // TODO : manage case when there is not next profiling Question
+  }
 }
 </script>

@@ -1,44 +1,58 @@
 import { defineStore } from "pinia"
-import { useApiPatch, useApiPost } from "~/composables/api"
-import { Participation } from "~/composables/types"
+import { useApiPost, useGet } from "~/composables/api"
+import { Participation, Question, QuestionResponse } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
-import { useUserStore } from "./userStore"
+import {
+  QUESTION_RESPONSE_VALUE_BY_TYPE,
+  QUESTION_RESPONSES_BY_TYPE,
+} from "~/assets/utils/question-response"
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
-    id: <number | null>null,
     roleId: <number | null>null,
     consent: <boolean>false,
+    responseByQuestionnaireQuestionId: <{ [key: number]: QuestionResponse }>{},
+    responseByProfilingQuestionId: <{ [key: number]: QuestionResponse }>{},
+    profilingCurrent: <number[]>[],
+    participation: <Participation>{},
   }),
   getters: {
-    participation() {
-      return {
-        id: this.id,
-        roleId: this.roleId,
-        consent: this.consent,
-        userId: useUserStore().user.id,
-        assessmentId: useAssessmentStore().currentAssessmentId,
-      }
+    id() {
+      return this.participation?.id
     },
   },
   actions: {
+    // Create participation only one time
     async createParticipation() {
       const { data, error } = await useApiPost<Participation>(
-        "participation/",
-        this.participation
+        "participations/",
+        {
+          assessmentId: useAssessmentStore().currentAssessmentId,
+          roleId: this.roleId,
+          consent: this.consent,
+        }
       )
       if (!error.value) {
-        this.id = data.value.id
+        this.participation = data.value
+        return true
+      }
+      return false
+    },
+    async getCurrentParticipation(headers = undefined) {
+      try {
+        const response = await useGet<Participation[]>(`participations/`, {
+          headers,
+        })
+        this.participation = response[0] || {}
+        return true
+      } catch (e) {
+        return false
       }
     },
-    async updateParticipation() {
-      const { data, error } = await useApiPatch<Participation>(
-        "participation/",
-        this.participation
-      )
-      if (!error.value) {
-        this.id = data.value.id
-      }
+    async updateState(participation) {
+      this.id = participation.id
+      this.roleId = participation.roleId
+      this.consent = participation.consent
     },
     setConsent() {
       this.consent = true
@@ -46,8 +60,46 @@ export const useParticipationStore = defineStore("participation", {
     chooseRole(roleId) {
       this.roleId = roleId
     },
-    chooseAssessment(assessmentId) {
-      this.assessmentId = assessmentId
+
+    async getProfilingQuestionResponses(
+      participationId: number,
+      headers = undefined
+    ) {
+      try {
+        const response = await useGet<QuestionResponse[]>(
+          `responses/?context=profiling&participation_id=${participationId}`,
+          {
+            headers,
+          }
+        )
+        response.forEach((item) => {
+          this.responseByProfilingQuestionId[item.questionId] = item
+        })
+      } catch {
+        return false
+      }
+    },
+
+    async saveResponse(question: Question, response: any) {
+      const questionResponse = {
+        questionId: question.id,
+        participationId: this.id,
+      } as QuestionResponse
+
+      const questionValue = QUESTION_RESPONSE_VALUE_BY_TYPE[question.type]
+      questionResponse[questionValue] = response
+
+      const { data, error } = await useApiPost<QuestionResponse>(
+        "responses/",
+        questionResponse
+      )
+      if (!error.value && data.value) {
+        const questionResponses =
+          this[QUESTION_RESPONSES_BY_TYPE[question.surveyType]]
+        questionResponses[question.id] = data.value
+        return true
+      }
+      return false
     },
   },
 })
