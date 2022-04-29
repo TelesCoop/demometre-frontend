@@ -31,7 +31,9 @@
                   ? `has-text-white is-size-7`
                   : `has-text-${color} is-size-7`
               "
-              >{{ marker.concatenatedCode.substring(1) }}</span
+              >{{
+                marker.concatenatedCode.substring(1).replace(/^\./, "")
+              }}</span
             >
             {{ wordTitleCase(marker.name) }}</a
           >
@@ -40,7 +42,7 @@
               <li v-for="criteria of criterias" :key="criteria.id">
                 <a style="pointer-events: none"
                   ><span :class="`has-text-${color} is-size-7`">{{
-                    criteria.concatenatedCode.substring(1)
+                    criteria.concatenatedCode.substring(1).replace(/^\./, "")
                   }}</span>
                   {{ criteria.name }}</a
                 >
@@ -118,7 +120,7 @@ import { Marker, Criteria } from "~/composables/types"
 const questionnaireStore = useQuestionnaireStore()
 
 const props = defineProps({
-  pillar: { type: Object, require: true },
+  pillar: { type: Object, required: true },
   color: { type: String, required: true },
   markers: { type: Array, required: false },
 })

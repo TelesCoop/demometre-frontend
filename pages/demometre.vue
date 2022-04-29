@@ -24,12 +24,17 @@
           les critères qui le composent.
         </p>
       </div>
-      <div class="column is-6 is-offset-1" style="background-color: pink">
-        ICI SCHEMA PILIERS
+      <div class="column is-6 is-offset-1">
+        <Rosette
+          center-button-name="Découvrir"
+          @center-button-click="onDiscoverButtonClick()"
+          @pillar-click="onRosettePillarClicked($event)"
+          @marker-click="onRosetteMarkerClicked($event)"
+        />
       </div>
     </section>
     <hr />
-    <section class="columns is-multiline mt-4">
+    <section ref="pillarsRef" class="columns is-multiline mt-4">
       <div
         v-for="pillar of questionnaireStore.pillars"
         :key="pillar.name"
@@ -55,14 +60,18 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from "vue-router"
+import { ref, onMounted } from "vue"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
 import { Marker, PillarType } from "~/composables/types"
 
 definePageMeta({
-  title: "Référentiel",
-  breadcrumb: "Référentiel",
+  title: "DemoMètre",
+  breadcrumb: "DemoMètre",
 })
+
+const router = useRouter()
 
 const questionnaireStore = useQuestionnaireStore()
 const pageStore = usePageStore()
@@ -82,11 +91,28 @@ const colorClass = computed(() =>
   activePillar.value ? PillarParams[activePillar.value.name].color : ""
 )
 
+const pillarsRef = ref(null)
+onMounted(() => {
+  pillarsRef.value.focus()
+})
+
 const onSelectPillar = (pillar) => {
   activePillar.value = pillar
   markers.value = activePillar.value?.markerIds.map(
     (markerId) => questionnaireStore.markerById[markerId]
   )
+  router.push({ query: { pillar: pillar.name } })
+}
+
+const onDiscoverButtonClick = () => {
+  // TODO : New section of referential page
+}
+const onRosettePillarClicked = (pillarName) => {
+  onSelectPillar(questionnaireStore.getPillarByName(pillarName))
+  pillarsRef.value.scrollIntoView({ behavior: "smooth" })
+}
+const onRosetteMarkerClicked = (markerId) => {
+  onRosettePillarClicked(questionnaireStore.markerById[markerId].pillarName)
 }
 </script>
 

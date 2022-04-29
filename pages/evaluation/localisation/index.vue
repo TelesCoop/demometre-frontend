@@ -2,7 +2,7 @@
   <div class="container">
     <section class="columns is-centered">
       <div class="column is-8">
-        <h1 class="is-size-1">Localisation</h1>
+        <h1 class="title is-3">Localisation</h1>
         <!--  TODO changer texte p-->
         <p class="mb-3 is-family-secondary">
           Texte précisant la question (définition, exemple, reformulation) et
@@ -47,14 +47,14 @@
               <div
                 v-for="localityType of LocalityType"
                 :key="localityType.key"
-                class="locality-container"
+                class="margin-between"
               >
                 <input
                   :id="localityType.key"
                   v-model="localityTypeSelected"
                   type="radio"
                   :value="localityType.key"
-                  class="custom-hidden"
+                  class="custom-hidden white-on-black-input-checked"
                   name="localityType"
                   required
                 />
@@ -112,16 +112,8 @@ async function onSubmit() {
   })
   if (isSuccess) {
     useRouter().push(
-      `/evaluation/assessment/${assessmentStore.currentAssessmentId}`
+      `/evaluation/localisation/${assessmentStore.currentAssessmentId}`
     )
   }
 }
 </script>
-
-<style scoped lang="sass">
-input:checked + label
-  background-color: $black
-  color: $white
-.buttons .locality-container:not(:last-child):not(.is-fullwidth)
-  margin-right: 0.5rem
-</style>

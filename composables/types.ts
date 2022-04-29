@@ -31,18 +31,22 @@ export enum PillarName {
 
 export const PillarParams = {
   [PillarName.REPRESENTATION]: {
+    key: "representation",
     color: "representation",
     picto: "picto-representation.png",
   },
   [PillarName.COOPERATION]: {
+    key: "cooperation",
     color: "cooperation",
     picto: "picto-cooperation.png",
   },
   [PillarName.TRANSPARENCY]: {
+    key: "transparency",
     color: "transparency",
     picto: "picto-transparency.png",
   },
   [PillarName.PARTICIPATION]: {
+    key: "participation",
     color: "participation",
     picto: "picto-participation.png",
   },
@@ -119,6 +123,7 @@ export type Question = {
   rulesIntersectionOperator: string
   rules: Rule[]
   surveyType: SurveyType
+  maxMultipleChoices: number | null
 }
 
 type Bound = { value: number; label: string }
@@ -150,18 +155,38 @@ type Locality = {
   population: number
   zip_codes: number[]
 }
+type CountByResponseChoice = {
+  responseChoiceName: string
+  responseChoiceId: number
+  total: number
+}
+
+export type RepresentativityCriteria = {
+  id: number
+  name: string
+  profilingQuestionId: number
+  countByResponseChoice: CountByResponseChoice[]
+  acceptabilityThreshold: number
+  responseChoiceStatements: string[]
+  minRate: number
+}
 export type Assessment = {
   id: number
   type: string
-  initiatedBy: string
-  isInitiatedByLocality: boolean
-  carriedBy: string
-  isCarriedByLocality: boolean
+  initiatedByUser: string
+  initiatorType: string
+  initializedToTheNameOf: string
+  publicInitiator: boolean
   initializationDate: string
   endDate: string
   municipality: Locality | null
   epci: Locality | null
   participationNb: number
+  representativities: RepresentativityCriteria[]
+}
+export const InitiatorType = {
+  COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
+  ASSOCIATION: { key: "association", value: "Une association" },
 }
 
 // User participation
@@ -194,6 +219,17 @@ export type EvaluationIntroPage = {
   title: string
   introduction: string
   dataConsent: string
+  accountIncentive: string
+  accountIncentiveTitle: string
+}
+export type EvaluationInitPage = {
+  title: string
+  introduction: string
+  publicNameQuestion: string
+  publicNameQuestionDescription: string
+  representativityQuestion: string
+  representativityDescription: string
+  initializationValidation: string
 }
 
 // Props

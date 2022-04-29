@@ -106,6 +106,7 @@ input:focus-visible,input:not(:checked):hover + label .response-choice
   cursor: pointer
   line-height: 1.3
   height: 72px
+  align-items: center
   .letter
     text-align: center
     padding-top: 8px

@@ -1,29 +1,40 @@
 <template>
-  <div style="padding: 64px; margin-top: 64px; background: #fafafa">
+  <footer
+    class="footer has-background-shade-600"
+    style="padding: 64px; margin-top: 64px"
+  >
     <div class="container">
       <div class="columns">
         <div class="column footer-column is-3">
-          <NuxtLink to="/" class="has-text-weight-bold">
-            Titre du projet
+          <NuxtLink to="/" class="has-text-weight-bold has-text-shade-200">
+            DémoMètre
           </NuxtLink>
-          <NuxtLink to="/">2022 - licence contenu</NuxtLink>
-          <NuxtLink to="/">Mentions légales</NuxtLink>
-          <NuxtLink to="/">Politique de confidentialité</NuxtLink>
+          <NuxtLink to="/" class="has-text-shade-350"
+            >2022 - licence contenu</NuxtLink
+          >
+          <NuxtLink to="/" class="has-text-shade-350"
+            >Mentions légales</NuxtLink
+          >
+          <NuxtLink to="/" class="has-text-shade-350"
+            >Politique de confidentialité</NuxtLink
+          >
         </div>
         <div class="column footer-column is-3">
-          <NuxtLink to="/">Le référentiel</NuxtLink>
-          <NuxtLink to="/">Options d'évaluation</NuxtLink>
-          <NuxtLink to="/">Résultats</NuxtLink>
-          <NuxtLink to="/">Le projet</NuxtLink>
+          <NuxtLink to="/demometre" class="has-text-white">DémoMètre</NuxtLink>
+          <NuxtLink to="/" class="has-text-white"
+            >Utilisation possibles</NuxtLink
+          >
+          <NuxtLink to="/" class="has-text-white">Résultats</NuxtLink>
+          <NuxtLink to="/" class="has-text-white">Le projet</NuxtLink>
         </div>
         <div class="column footer-column is-3">
-          <NuxtLink to="/">Blog</NuxtLink>
-          <NuxtLink to="/">Ressources</NuxtLink>
-          <NuxtLink to="/">FAQ</NuxtLink>
-          <NuxtLink to="/">Contact</NuxtLink>
+          <NuxtLink to="/" class="has-text-white">Blog</NuxtLink>
+          <NuxtLink to="/" class="has-text-white">Ressources</NuxtLink>
+          <NuxtLink to="/" class="has-text-white">FAQ</NuxtLink>
+          <NuxtLink to="/" class="has-text-white">Contact</NuxtLink>
         </div>
         <div class="column footer-column is-3">
-          <label class="label is-size-7" for="email"
+          <!-- <label class="label is-size-7" for="email"
             >Lettre d'information</label
           >
           <div class="field has-addons">
@@ -41,15 +52,15 @@
                 Je m'abonne
               </button>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
-  </div>
+  </footer>
 </template>
 
 <script setup lang="ts">
-const email = ref("")
+// const email = ref("")
 </script>
 
 <style>

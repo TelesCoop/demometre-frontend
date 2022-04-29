@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="has-navbar-fixed-top">
     <div>
-      <Navbar />
+      <HeaderNavbar />
       <Breadcrumb />
       <slot></slot>
       <Footer />
@@ -15,3 +15,8 @@ import { useToastStore } from "../stores/toastStore"
 
 const toastStore = useToastStore()
 </script>
+
+<style scoped lang="sass">
+.has-navbar-fixed-top
+  padding-top: 75px
+</style>

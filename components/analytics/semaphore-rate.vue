@@ -1,17 +1,17 @@
 <template>
-  <div class="three-bubble-rate">
+  <div class="semaphore-rate">
     <span
       v-for="(color, index) in COLORS"
       :key="color"
       :class="[index + 1 === score && `has-background-${color}`]"
       :title="index + 1 === score"
-      class="has-border-shade-600 three-bubble-rate-circle"
+      class="has-border-shade-600 semaphore-rate-circle"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-const COLORS = ["warning-main", "secondary-main", "primary-main"]
+const COLORS = ["warning-main", "primary-main"]
 
 const props = defineProps({
   score: { type: Number, required: true },
@@ -19,7 +19,7 @@ const props = defineProps({
 </script>
 
 <style scoped lang="sass">
-.three-bubble-rate
+.semaphore-rate
   display: inline-block
 
   &-circle

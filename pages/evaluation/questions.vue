@@ -1,10 +1,11 @@
 <template>
-  <div class="container is-tight pillar-try"></div>
+  <div class="container is-tight pillar-try">
+    <Question :question-id="5" :color="color" />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { PillarName, PillarParams } from "~/composables/types"
-import { useQuestionnaireJourney } from "~/composables/journey"
 
 const pillarName = ref<string>(PillarName.PARTICIPATION)
 const color = computed<string>(() =>
