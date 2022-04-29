@@ -20,7 +20,7 @@ export enum QuestionType {
 }
 export enum SurveyType {
   PROFILING = "profiling",
-  SURVEY = "survey",
+  QUESTIONNAIRE = "questionnaire",
 }
 export enum PillarName {
   REPRESENTATION = "représentation",
