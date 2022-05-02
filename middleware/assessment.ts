@@ -5,7 +5,7 @@ async function verifyAssessment(to) {
 
   // Load data if f5
   if (process.server) {
-    await useAssessmentStore().getAssessment(
+    await assessmentStore.getAssessment(
       to.params.assessmentId || to.query.assessment
     )
   }

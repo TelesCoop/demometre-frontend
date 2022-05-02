@@ -1,10 +1,11 @@
 import { defineStore } from "pinia"
 import { User } from "~/composables/types"
-import { useApiGet, useApiPost } from "~/composables/api"
+import { useApiPost, useGet } from "~/composables/api"
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: <User>{},
+    refreshed: <boolean>false,
   }),
   getters: {
     isLoggedIn() {
@@ -50,10 +51,14 @@ export const useUserStore = defineStore("user", {
         router.push("/login")
       }
     },
-    async refreshProfile() {
-      const { data, error } = await useApiGet<User>("auth/profile")
-      if (!error.value) {
-        this.user = data.value
+    async refreshProfile(headers = undefined) {
+      this.refreshed = true
+      try {
+        const response = await useGet<User>("auth/profile", { headers })
+        this.user = response
+        return true
+      } catch (e) {
+        return false
       }
     },
     async sendResetLink(email: string) {
