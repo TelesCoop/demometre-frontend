@@ -1,8 +1,8 @@
 <template>
-  <div class="section">
+  <form v-if="question" class="section" @submit.prevent="submit">
     <section class="pb-2">
-      <h1 class="title is-3">{{ question?.questionStatement }}</h1>
-      <RichText :rich-text="question?.description"></RichText>
+      <h1 class="title is-3">{{ question.questionStatement }}</h1>
+      <RichText :rich-text="question.description"></RichText>
 
       <!-- all possible inputs -->
       <div class="my-1_5">
@@ -62,12 +62,12 @@
       <div class="button-bar my-1_5">
         <template v-if="isAnswered">
           <div class="is-flex is-align-items-center">
-            <a href="" class="button is-dark is-outlined is-rounded mr-0_75">
+            <button class="button is-dark is-outlined is-rounded mr-0_75">
               <span>Valider</span>
               <i class="icon">
                 <Icon size="16" name="check" />
               </i>
-            </a>
+            </button>
             <span class="is-size-7">
               appuyez sur
               <span class="has-text-weight-bold">Entrer ⮐</span></span
@@ -75,14 +75,18 @@
           </div>
         </template>
         <template v-else>
-          <a href="" class="button is-dark is-outlined is-rounded">
+          <button
+            class="button is-dark is-outlined is-rounded"
+            @click="props.context.goToNextQuestion()"
+          >
             <span>Passer</span>
             <i class="icon">
               <Icon size="16" name="arrow-right-line" />
             </i>
-          </a>
+          </button>
         </template>
         <a
+          v-if="tabs.length"
           href="#menu"
           class="button is-dark is-outlined is-rounded round absolute-centered"
         >
@@ -109,7 +113,12 @@
         </div>
       </div>
     </section>
-    <section id="menu" class="pt-2" :class="`menu is-${color}`">
+    <section
+      v-if="tabs.length"
+      id="menu"
+      class="pt-2"
+      :class="`menu is-${color}`"
+    >
       <div class="tabs">
         <ul>
           <li v-for="tab of tabs" :key="tab.id">
@@ -148,67 +157,106 @@
         <RichText :rich-text="question.toGoFurther" />
       </div>
     </section>
+  </form>
+  <div v-else style="text-align: center">
+    <Loader :color="props.color" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { QuestionType, Question, Definition } from "~/composables/types"
+import {
+  QuestionType,
+  Definition,
+  QuestionContextProps,
+} from "~/composables/types"
+import { computed, PropType, watch } from "vue"
+import { ref } from "@vue/reactivity"
 import { useDefinitionStore } from "~/stores/definitionStore"
-import RichText from "~/components/rich-text.vue"
-
-const definitionStore = useDefinitionStore()
+import { useParticipationStore } from "~/stores/participationStore"
+import { getQuestionResponseValue } from "assets/utils/question-response"
 
 type tabDef = { label: string; id: string }
-
 const props = defineProps({
   questionId: { type: Number, required: true },
+  context: { type: Object as PropType<QuestionContextProps>, required: true },
   color: { type: String, required: true },
 })
 
-const answer = ref()
+const participationStore = useParticipationStore()
+const definitionStore = useDefinitionStore()
+
 const isAnswered = computed(() => {
   if (Array.isArray(answer.value)) return !!answer.value.length
   return !!answer.value
 })
 
-const question = ref<Question>(null)
-const { data, error } = await useApiGet<Question>(
-  `questionnaire-questions/${props.questionId}/`
+const question = computed(() => {
+  return props.context.questionById[props.questionId]
+})
+
+const initialValue = getQuestionResponseValue(
+  props.context.responseByQuestionId[props.questionId],
+  question.value.type
 )
-if (!error.value) {
-  question.value = data.value
-}
+
+const answer = ref(initialValue)
+
+watch(question, () => {
+  answer.value = getQuestionResponseValue(
+    props.context.responseByQuestionId[props.questionId],
+    question.value.type
+  )
+})
 
 const definitions = computed<{ [key: number]: Definition }>(() =>
   definitionStore.definitionsByIdArray(question.value.definitionIds)
 )
 
+// Attention ce n'est pas reload si on change de question
 const currentTabId = ref<string>("definitions")
-const tabs = ref<tabDef[]>([
-  {
+const tabs = ref<tabDef[]>([])
+if (question.value?.definitionIds) {
+  tabs.value.push({
     label: "Définitions",
     id: "definitions",
-  },
-  {
+  })
+}
+if (question.value?.legalFrame) {
+  tabs.value.push({
     label: "Cadre légal",
     id: "legal-frame",
-  },
-  {
+  })
+}
+if (question.value?.useCase) {
+  tabs.value.push({
     label: "Exemples inspirants",
     id: "use-case",
-  },
-  {
+  })
+}
+if (question.value?.sources) {
+  tabs.value.push({
     label: "Sources",
     id: "sources",
-  },
-  {
+  })
+}
+if (question.value?.toGoFurther) {
+  tabs.value.push({
     label: "Pour aller plus loin",
     id: "to-go-further",
-  },
-])
+  })
+}
 
 function setTab(tabId) {
   currentTabId.value = tabId
+}
+const submit = () => {
+  participationStore
+    .saveResponse(question.value, answer.value)
+    .then((result) => {
+      if (result) {
+        props.context.journey.goToNextQuestion(question.value.id)
+      }
+    })
 }
 </script>
 
