@@ -1,9 +1,9 @@
 <template>
-  <client-only>
-    <div id="carousel" class="carousel">
-      <slot></slot>
-    </div>
-  </client-only>
+  <!-- <client-only> -->
+  <div id="carousel" class="carousel">
+    <slot></slot>
+  </div>
+  <!-- </client-only> -->
 </template>
 
 <script setup lang="ts">
@@ -18,12 +18,6 @@ if (process.browser) {
     slidesToShow: 3,
   })
 }
-
-// // To access to bulmaCarousel instance of an element
-// const element = document.querySelector('#my-element');
-// if (element && element.bulmaCarousel) {
-//     // bulmaCarousel instance is available as element.bulmaCarousel
-// }
 </script>
 
 <style scoped lang="sass">
