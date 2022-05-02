@@ -8,6 +8,7 @@
 
 <script setup lang="ts">
 import requirejs from "requirejs"
+// Import and use external package only on client side --> use require
 let bulmaCarousel
 // import bulmaCarousel from "bulma-carousel"
 if (process.browser) {
