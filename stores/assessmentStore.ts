@@ -6,7 +6,7 @@ import { useToastStore } from "./toastStore"
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
     assessmentById: <{ [key: number]: Assessment }>{},
-    currentAssessmentId: <number | null>null,
+    currentAssessmentId: <number>undefined,
     representativityCriterias: <RepresentativityCriteria[]>[],
   }),
   getters: {
@@ -42,14 +42,17 @@ export const useAssessmentStore = defineStore("assessment", {
       return true
     },
 
-    async getAssessment(id) {
-      const { data, error } = await useApiGet<Assessment>(`assessments/${id}`)
-      if (error.value) {
+    async getAssessment(id, headers = undefined) {
+      try {
+        const response = await useGet<Assessment>(`assessments/${id}`, {
+          headers,
+        })
+        this.assessmentById[response.id] = response
+        this.currentAssessmentId = response.id
+      } catch (error) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data)
+        errorStore.setError(error.data)
       }
-      this.assessmentById[data.value.id] = data.value
-      this.currentAssessmentId = data.value.id
     },
     async getRepresentativityCriterias() {
       const { data, error } = await useApiGet<RepresentativityCriteria>(

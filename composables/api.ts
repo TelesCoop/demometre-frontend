@@ -1,5 +1,6 @@
 import { NuxtApp } from "nuxt3/dist/app/nuxt"
 import { useLoadingStore } from "~/stores/loadingStore"
+import { useFetch, useRequestHeaders } from "#app"
 
 let base_url = "/"
 type MyHeaders = { [key: string]: string }
@@ -65,18 +66,27 @@ const getHeaders = (ctx: NuxtApp, includeCsrf = false): MyHeaders => {
 export const BASE_URL = base_url
 export const BASE_API_URL = BASE_URL + "/api/"
 
+export async function useGet<Type>(path: string, opts: any = {}) {
+  const options = {
+    method: "GET",
+    credentials: "include",
+    ...opts,
+    // avoid crash
+    header: opts.headers || useRequestHeaders(["cookie"]),
+  }
+  return await $fetch<Type>(`${BASE_API_URL}${path}`, options)
+}
+
 export async function useApiGet<Type>(path: string) {
   const loadingStore = useLoadingStore()
 
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
-  const { data, error } = await useAsyncData<Type>(key, (ctx) =>
-    $fetch(BASE_API_URL + path, {
-      method: "GET",
-      credentials: "include",
-      headers: getHeaders(ctx),
-    })
-  )
+  const { data, error } = await useFetch<Type>(BASE_API_URL + path, {
+    method: "GET",
+    credentials: "include",
+    headers: useRequestHeaders(["cookie"]),
+  })
   if (error.value) {
     loadingStore.markError(key)
   } else {

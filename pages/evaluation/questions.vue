@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-// todo logic when to show which question
 import { PillarName, PillarParams } from "~/composables/types"
 
 const pillarName = ref<string>(PillarName.PARTICIPATION)
