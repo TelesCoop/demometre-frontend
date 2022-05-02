@@ -34,4 +34,10 @@ const props = defineProps({
 })
 </script>
 
-<style scoped lang="sass"></style>
+<style scoped lang="sass">
+.image
+  max-height: 48px
+  max-width: 48px
+  img
+    border-radius: 50%
+</style>

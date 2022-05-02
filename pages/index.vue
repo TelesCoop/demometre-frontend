@@ -6,15 +6,16 @@
         :title="pageStore.homePage.feedbackBlockTitle"
         :intro="pageStore.homePage.feedbackBlockIntro"
       >
-        <div id="carousel" class="carousel columns is-4 mb-2">
+        <Carousel class="columns is-4 mb-2">
           <HomepageFeedbackCard
-            v-for="feedback of pageStore.homePage.feedbacks"
+            v-for="(feedback, index) in pageStore.homePage.feedbacks"
             :key="feedback.id"
             :feedback="feedback"
             background-color="white"
             class="column is-one-third"
+            :class="`item-${index}`"
           />
-        </div>
+        </Carousel>
       </HomepageSection>
     </div>
 
@@ -22,29 +23,40 @@
       :title="pageStore.homePage.blogBlockTitle"
       :intro="pageStore.homePage.blogBlockIntro"
     >
-      <div id="carousel" class="carousel columns is-4 mb-2">
-        <HomepageArticleCard
-          v-for="blogPost of pageStore.homePage.blogPosts"
+      <div class="columns is-4 mb-2">
+        <div
+          v-for="(blogPost, index) of pageStore.homePage.blogPosts"
           :key="blogPost.id"
-          :article="blogPost"
-          background-color="shade-100"
-          image-height="260"
           class="column is-half"
-        />
+        >
+          <HomepageArticleCard
+            v-if="index < 2"
+            :article="blogPost"
+            background-color="shade-100"
+            :image-height="260"
+          />
+        </div>
       </div>
     </HomepageSection>
     <div class="has-background-shade-250">
       <HomepageSection
         :title="pageStore.homePage.resourcesBlockTitle"
         :intro="pageStore.homePage.resourcesBlockTitle"
-        ><HomepageArticleCard
-          v-for="resource of pageStore.homePage.resources"
-          :key="resource.id"
-          :article="resource"
-          background-color="white"
-          image-height="300"
-          class="column is-one-third"
-        />
+      >
+        <div class="columns is-4 mb-2">
+          <div
+            v-for="(resource, index) of pageStore.homePage.resources"
+            :key="resource.id"
+            class="column is-one-third"
+          >
+            <HomepageArticleCard
+              v-if="index < 3"
+              :article="resource"
+              background-color="white"
+              :image-height="300"
+            />
+          </div>
+        </div>
       </HomepageSection>
     </div>
     <HomepageSection
@@ -71,7 +83,6 @@
   </div>
 </template>
 
-<script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script>
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
 import { BASE_URL } from "~/composables/api"
@@ -86,16 +97,4 @@ const pageStore = usePageStore()
 if (!pageStore.homePage.title) {
   pageStore.loadHomePage()
 }
-
-// Initialize all elements with carousel class.
-// const carousels = bulmaCarousel.attach(".carousel", {
-//   slidesToScroll: 1,
-//   slidesToShow: 4,
-// })
-
-// // To access to bulmaCarousel instance of an element
-// const element = document.querySelector('#my-element');
-// if (element && element.bulmaCarousel) {
-//     // bulmaCarousel instance is available as element.bulmaCarousel
-// }
 </script>

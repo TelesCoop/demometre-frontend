@@ -1,4 +1,5 @@
 import { defineStore } from "pinia"
+import { ErrorMessages } from "~/composables/errors"
 
 export const useToastStore = defineStore("toast", {
   state: () => ({
@@ -6,9 +7,9 @@ export const useToastStore = defineStore("toast", {
     message: <string>"",
   }),
   actions: {
-    setError(message: string) {
+    setError(messageCode: string) {
       this.type = "error"
-      this.message = message
+      this.message = ErrorMessages[messageCode] || ErrorMessages.default
       setTimeout(() => {
         this.message = ""
       }, 4000)
@@ -16,6 +17,9 @@ export const useToastStore = defineStore("toast", {
     setWarning(message: string) {
       this.type = "warning"
       this.message = message
+      setTimeout(() => {
+        this.message = ""
+      }, 4000)
     },
   },
 })

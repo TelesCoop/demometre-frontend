@@ -44,6 +44,9 @@ export const useParticipationStore = defineStore("participation", {
           headers,
         })
         this.participation = response[0] || {}
+        if (Object.keys(this.participation).length === 0) {
+          return false
+        }
         return true
       } catch (e) {
         return false
