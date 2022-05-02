@@ -19,7 +19,6 @@ const loadUserState = async () => {
     const participationStore = useParticipationStore()
     if (!participationStore.id) {
       if (await participationStore.getCurrentParticipation(headers)) {
-        console.log("JE ne suis pas sensé arrivé ici")
         await getDataOfParticipation(headers)
       }
     }
