@@ -7,18 +7,26 @@
 </template>
 
 <script setup lang="ts">
-import requirejs from "requirejs"
-// Import and use external package only on client side --> use require
-let bulmaCarousel
-// import bulmaCarousel from "bulma-carousel"
-if (process.browser) {
-  bulmaCarousel = requirejs("bulma-carousel")
-  // Initialize all elements with carousel class.
-  bulmaCarousel.attach(".carousel", {
-    slidesToScroll: 1,
-    slidesToShow: 3,
-  })
-}
+// import requirejs from "requirejs"
+// // Import and use third-party plugin only on client side (not SSR)--> use require
+// let bulmaCarousel
+// // import bulmaCarousel from "bulma-carousel"
+// if (process.browser) {
+//   bulmaCarousel = requirejs("bulma-carousel")
+//   // Initialize all elements with carousel class.
+//   bulmaCarousel.attach(".carousel", {
+//     slidesToScroll: 1,
+//     slidesToShow: 3,
+//   })
+// }
+
+// onMounted(() => {
+//   console.log("ccc")
+//   bulmaCarousel.attach(".carousel", {
+//     slidesToScroll: 1,
+//     slidesToShow: 3,
+//   })
+// })
 </script>
 
 <style scoped lang="sass">

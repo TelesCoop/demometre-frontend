@@ -3,7 +3,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts --ignore-path .eslintignore .",
     "lint:fix": "eslint --ext .js,.ts --ignore-path .eslintignore . --fix",
-    "dev": "nuxi dev",
+    "dev": "nuxi dev --mode=development",
     "build": "nuxi build",
     "start": "node .output/server/index.mjs"
   },
@@ -24,10 +24,8 @@
   "dependencies": {
     "@pinia/nuxt": "^0.1.8",
     "@vueform/slider": "^2.0.9",
-    "bulma-carousel": "^4.0.24",
     "pinia": "^2.0.11",
     "prettier": "^2.5.1",
-    "requirejs": "^2.3.6",
     "typescript": "^4.6.2",
     "vuedraggable": "^4.1.0"
   }

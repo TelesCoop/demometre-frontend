@@ -86,6 +86,7 @@
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
 import { BASE_URL } from "~/composables/api"
+import { useParticipationStore } from "~~/stores/participationStore"
 
 definePageMeta({
   title: "Accueil",
@@ -93,6 +94,9 @@ definePageMeta({
 })
 
 const pageStore = usePageStore()
+
+const participationStore = useParticipationStore()
+participationStore.getCurrentParticipation()
 
 if (!pageStore.homePage.title) {
   pageStore.loadHomePage()
