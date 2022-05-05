@@ -99,6 +99,6 @@ const participationStore = useParticipationStore()
 participationStore.getCurrentParticipation()
 
 if (!pageStore.homePage.title) {
-  pageStore.loadHomePage()
+  pageStore.getHomePage()
 }
 </script>
