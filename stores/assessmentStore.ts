@@ -34,7 +34,7 @@ export const useAssessmentStore = defineStore("assessment", {
       )
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data)
+        errorStore.setError(error.value.data.messageCode)
         return false
       }
       this.assessmentById[data.value.id] = data.value
@@ -51,7 +51,7 @@ export const useAssessmentStore = defineStore("assessment", {
         this.currentAssessmentId = response.id
       } catch (error) {
         const errorStore = useToastStore()
-        errorStore.setError(error.data)
+        errorStore.setError(error.data.messageCode)
       }
     },
     async getRepresentativityCriterias() {
@@ -77,7 +77,7 @@ export const useAssessmentStore = defineStore("assessment", {
       )
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data)
+        errorStore.setError(error.value.data.messageCode)
         return false
       }
       this.assessmentById[data.value.id] = data.value
