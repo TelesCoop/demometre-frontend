@@ -22,6 +22,9 @@
 @import "../node_modules/bulma/sass/components/menu.sass"
 @import "../node_modules/bulma/sass/components/tabs.sass"
 @import "../node_modules/bulma/sass/components/level.sass"
+@import "../node_modules/bulma/sass/components/card.sass"
+
+// @import "../node_modules/bulma-carousel/src/sass/index.sass"
 
 .is-flex
   display: flex
@@ -42,6 +45,9 @@
 hr
   background-color: hsl(0, 0%, 77%)
   height: 1px
+
+.is-fullheight
+  height: 100%
 
 // we use directly svg as icons, so we need to add spacing
 .control
@@ -72,7 +78,6 @@ hr
   height: 1px
   overflow: hidden
   clip: rect(0 0 0 0)
-
 
 .white-on-black-input-checked:checked + label
   background-color: $black

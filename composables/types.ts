@@ -213,7 +213,45 @@ export type QuestionResponse = {
 }
 
 // Pages
-export type HomePage = { title: string; introduction: string }
+type Feedback = {
+  id: number
+  personName: string
+  pictureUrl: string
+  personContext: string
+  quote: string
+  publish: boolean
+}
+type Article = {
+  id: number
+  title: string
+  shortDescription: string
+  publicationDate: string
+  imageUrl: string
+  externalLink: string
+}
+type Partner = {
+  id: number
+  name: string
+  logoImageUrl: string
+}
+export type HomePage = {
+  title: string
+  introduction: string
+  tagLine: string
+  introImageUrl: string
+  feedbackBlockTitle: string
+  feedbackBlockIntro: string
+  feedbacks: Feedback[]
+  blogBlockTitle: string
+  blogBlockIntro: string
+  blogPosts: Article[]
+  resourcesBlockTitle: string
+  resourcesBlockIntro: string
+  resources: Article[]
+  partnerBlockTitle: string
+  partnerBlockIntro: string
+  partners: Partner[]
+}
 export type ReferentialPage = { title: string; introduction: string }
 export type EvaluationIntroPage = {
   title: string

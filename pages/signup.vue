@@ -136,9 +136,8 @@
 </template>
 
 <script setup lang="ts">
-// import { ref } from "@vue/reactivity"
 import { useUserStore } from "~/stores/userStore"
-// import { useLoadingStore } from "~/stores/loadingStore"
+import { ErrorMessages } from "~/composables/errors"
 
 const firstName = ref("")
 const lastName = ref("")
@@ -151,7 +150,6 @@ const password = ref("")
 const confirmPassword = ref("")
 const confirmSignupErrorMessage = reactive({ field: "", message: "" })
 const userStore = useUserStore()
-// const loadingStore = useLoadingStore()
 
 const onEmailUpdate = () => {
   isEmailUntouched.value = false
@@ -213,7 +211,8 @@ async function onSubmit() {
   )
   if (response && response.error) {
     confirmSignupErrorMessage.field = response.error.field
-    confirmSignupErrorMessage.message = response.error.message
+    confirmSignupErrorMessage.message =
+      ErrorMessages[response.error.messageCode] || ErrorMessages.default
   }
 }
 </script>
