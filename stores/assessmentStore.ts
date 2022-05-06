@@ -58,9 +58,11 @@ export const useAssessmentStore = defineStore("assessment", {
       const { data, error } = await useApiGet<RepresentativityCriteria>(
         "representativity-criterias/"
       )
-
       if (!error.value) {
         this.representativityCriterias = data.value
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
     async initializeAssessment(payload) {

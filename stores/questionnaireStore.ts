@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import { Criteria, Marker, PillarType, Question } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
+import { useToastStore } from "./toastStore"
 
 type FullMarkers = Marker & { criterias: Criteria[] }
 type FullPillar = PillarType & { markers: FullMarkers[] }
@@ -35,6 +36,9 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
             }
           }
         }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
     async getQuestions() {
@@ -45,6 +49,9 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         for (const question of data.value) {
           this.questionById[question.id] = question
         }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
   },

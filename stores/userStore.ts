@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import { User } from "~/composables/types"
 import { useApiPost, useGet } from "~/composables/api"
+import { useToastStore } from "./toastStore"
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -49,6 +50,9 @@ export const useUserStore = defineStore("user", {
         this.updateState({ id: null, username: "", email: "" })
         const router = useRouter()
         router.push("/login")
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
     async refreshProfile(headers = undefined) {
@@ -71,6 +75,9 @@ export const useUserStore = defineStore("user", {
       if (!error.value) {
         const router = useRouter()
         router.push("/nouveau-mdp-confirmation")
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
     async resetPassword(resetKey: string, password: string) {
@@ -82,6 +89,9 @@ export const useUserStore = defineStore("user", {
         const router = useRouter()
         router.replace({ query: { reset_key: null } })
         router.push("/login")
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
     updateState(data: User) {

@@ -2,6 +2,7 @@ import { defineStore } from "pinia"
 import { Question, Role } from "~/composables/types"
 import { useApiGet, useGet } from "~~/composables/api"
 import { useParticipationStore } from "./participationStore"
+import { useToastStore } from "./toastStore"
 
 export const useProfilingStore = defineStore("profiling", {
   state: () => ({
@@ -21,6 +22,9 @@ export const useProfilingStore = defineStore("profiling", {
         for (const role of data.value) {
           this.roleById[role.id] = role
         }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
     async getProfilingQuestions(participationId, headers = undefined) {

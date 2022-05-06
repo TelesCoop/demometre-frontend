@@ -6,6 +6,7 @@ import {
   QUESTION_RESPONSE_VALUE_BY_TYPE,
   QUESTION_RESPONSES_BY_TYPE,
 } from "~/assets/utils/question-response"
+import { useToastStore } from "./toastStore"
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
@@ -36,6 +37,8 @@ export const useParticipationStore = defineStore("participation", {
         this.participation = data.value
         return true
       }
+      const errorStore = useToastStore()
+      errorStore.setError(error.value.data.messageCode)
       return false
     },
     async getCurrentParticipation(headers = undefined) {
@@ -97,6 +100,10 @@ export const useParticipationStore = defineStore("participation", {
         "responses/",
         questionResponse
       )
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
       if (!error.value && data.value) {
         const questionResponses =
           this[QUESTION_RESPONSES_BY_TYPE[question.surveyType]]
