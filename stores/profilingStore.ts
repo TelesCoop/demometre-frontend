@@ -15,7 +15,7 @@ export const useProfilingStore = defineStore("profiling", {
     },
   },
   actions: {
-    async loadRoles() {
+    async getRoles() {
       const { data, error } = await useApiGet<Role[]>("roles/")
       if (!error.value) {
         for (const role of data.value) {

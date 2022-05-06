@@ -30,6 +30,6 @@ definePageMeta({
 
 const pageStore = usePageStore()
 if (!pageStore.evaluationInitPage.title) {
-  pageStore.loadEvaluationInitPage()
+  pageStore.getEvaluationInitPage()
 }
 </script>
