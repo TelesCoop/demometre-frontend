@@ -60,31 +60,28 @@
 
       <!-- TODO add links -->
       <div class="button-bar my-1_5">
-        <template v-if="isAnswered">
-          <div class="is-flex is-align-items-center">
-            <button class="button is-dark is-outlined is-rounded mr-0_75">
-              <span>Valider</span>
-              <i class="icon">
-                <Icon size="16" name="check" />
-              </i>
-            </button>
-            <span class="is-size-7">
-              appuyez sur
-              <span class="has-text-weight-bold">Entrer ⮐</span></span
-            >
-          </div>
-        </template>
-        <template v-else>
+        <div class="is-flex is-align-items-center">
           <button
-            class="button is-dark is-outlined is-rounded"
-            @click="props.context.goToNextQuestion()"
+            v-if="isAnswered || question.mandatory"
+            class="button is-dark is-outlined is-rounded mr-0_75"
+            :disabled="validationDisabled"
           >
-            <span>Passer</span>
+            <span>Valider</span>
+            <i class="icon">
+              <Icon size="16" name="check" />
+            </i>
+          </button>
+          <button v-else class="button is-dark is-outlined is-rounded mr-0_75">
+            <span>Je ne sais pas / Je passer</span>
             <i class="icon">
               <Icon size="16" name="arrow-right-line" />
             </i>
           </button>
-        </template>
+          <span class="is-size-7">
+            appuyez sur
+            <span class="has-text-weight-bold">Entrer ⮐</span></span
+          >
+        </div>
         <a
           v-if="tabs.length"
           href="#menu"
@@ -208,6 +205,8 @@ watch(question, () => {
   )
 })
 
+const validationDisabled = computed(() => (isAnswered.value ? false : true))
+
 const definitions = computed<{ [key: number]: Definition }>(() =>
   definitionStore.definitionsByIdArray(question.value.definitionIds)
 )
@@ -251,7 +250,7 @@ function setTab(tabId) {
 }
 const submit = () => {
   participationStore
-    .saveResponse(question.value, answer.value)
+    .saveResponse(question.value, answer.value, isAnswered)
     .then((result) => {
       if (result) {
         props.context.journey.goToNextQuestion(question.value.id)

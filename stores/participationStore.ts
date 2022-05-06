@@ -83,10 +83,11 @@ export const useParticipationStore = defineStore("participation", {
       }
     },
 
-    async saveResponse(question: Question, response: any) {
+    async saveResponse(question: Question, response: any, isAnswered: boolean) {
       const questionResponse = {
         questionId: question.id,
         participationId: this.id,
+        hasPassed: !isAnswered,
       } as QuestionResponse
 
       const questionValue = QUESTION_RESPONSE_VALUE_BY_TYPE[question.type]
