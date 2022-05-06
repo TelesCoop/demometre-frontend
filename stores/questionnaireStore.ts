@@ -21,7 +21,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     },
   },
   actions: {
-    async loadQuestionnaireStructure() {
+    async getQuestionnaireStructure() {
       const { data, error } = await useApiGet<FullPillar[]>(
         "questionnaire-structure/"
       )
@@ -37,7 +37,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         }
       }
     },
-    async loadQuestions() {
+    async getQuestions() {
       const { data, error } = await useApiGet<Question[]>(
         "questionnaire-questions/"
       )

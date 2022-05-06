@@ -43,7 +43,7 @@ const answer = ref()
 
 const profilingStore = useProfilingStore()
 if (!profilingStore.roles.length) {
-  profilingStore.loadRoles()
+  profilingStore.getRoles()
 }
 
 const participationStore = useParticipationStore()

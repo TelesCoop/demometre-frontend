@@ -16,7 +16,7 @@ export const useDefinitionStore = defineStore("definition", {
       },
   },
   actions: {
-    async loadDefinitions(): Promise<void> {
+    async getDefinitions(): Promise<void> {
       const { data = ref<DefinitionResponse>(), error = ref() } =
         await useApiGet<DefinitionResponse>("definitions/")
 
@@ -26,9 +26,9 @@ export const useDefinitionStore = defineStore("definition", {
         }
       }
     },
-    async getDefinitions(): Promise<{ [key: number]: Definition }> {
-      if (!Object.keys(this.definitionById).length)
-        return this.loadDefinitions()
-    },
+    // async getDefinitions(): Promise<{ [key: number]: Definition }> {
+    //   if (!Object.keys(this.definitionById).length)
+    //     return this.loadDefinitions()
+    // },
   },
 })

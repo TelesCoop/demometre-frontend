@@ -76,7 +76,7 @@ const consent = ref<boolean>(false)
 const withoutAccount = ref<boolean>(false)
 
 if (!pageStore.evaluationIntroPage.title) {
-  pageStore.loadEvaluationIntroPage()
+  pageStore.getEvaluationIntroPage()
 }
 
 const disabled = computed(() =>
