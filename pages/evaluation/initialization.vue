@@ -212,7 +212,7 @@ const userStore = useUserStore()
 
 const pageStore = usePageStore()
 if (!pageStore.evaluationInitPage.title) {
-  pageStore.loadEvaluationInitPage()
+  pageStore.getEvaluationInitPage()
 }
 
 const assessmentStore = useAssessmentStore()

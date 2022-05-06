@@ -15,7 +15,7 @@ export const usePageStore = defineStore("page", {
     evaluationInitPage: <EvaluationInitPage>{},
   }),
   actions: {
-    async loadHomePage() {
+    async getHomePage() {
       const { data, error } = await useApiGet<HomePage[]>("home-pages/")
       if (!error.value) {
         if (data.value.length) {
@@ -25,7 +25,7 @@ export const usePageStore = defineStore("page", {
         }
       }
     },
-    async loadReferentialPage() {
+    async getReferentialPage() {
       const { data, error } = await useApiGet<ReferentialPage[]>(
         "referential-pages/"
       )
@@ -37,7 +37,7 @@ export const usePageStore = defineStore("page", {
         }
       }
     },
-    async loadEvaluationIntroPage() {
+    async getEvaluationIntroPage() {
       const { data, error } = await useApiGet<EvaluationIntroPage[]>(
         "evaluation-intro-pages/"
       )
@@ -49,7 +49,7 @@ export const usePageStore = defineStore("page", {
         }
       }
     },
-    async loadEvaluationInitPage() {
+    async getEvaluationInitPage() {
       const { data, error } = await useApiGet<EvaluationInitPage[]>(
         "evaluation-init-pages/"
       )

@@ -9,4 +9,6 @@ export const ErrorMessages = {
   email_already_exists: "Le mail est déjà utilisé",
   no_email: "Cet email ne correspond à aucun utilisateur",
   wrong_password_for_email: "Email et mot de passe ne correspondent pas",
+  password_reset_key_outdate:
+    "La clé de réinitialisation du mot de passe est périmée (24h max), veuillez redemander un changement de mot de passe.",
 }

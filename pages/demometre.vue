@@ -77,11 +77,11 @@ const questionnaireStore = useQuestionnaireStore()
 const pageStore = usePageStore()
 
 if (!questionnaireStore.pillars.length) {
-  questionnaireStore.loadQuestionnaireStructure()
+  questionnaireStore.getQuestionnaireStructure()
 }
 
 if (!pageStore.referentialPage.title) {
-  pageStore.loadReferentialPage()
+  pageStore.getReferentialPage()
 }
 
 const activePillar = ref<PillarType>()
