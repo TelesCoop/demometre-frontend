@@ -8,9 +8,9 @@
       <div class="intro__buttons buttons are-medium-desktop">
         <nuxt-link
           class="button is-dark is-rounded is-responsive"
-          to="/evaluation"
+          :to="userStep.url"
         >
-          Lancer l'évaluation
+          {{ userStep.text }}
           <!-- TODO change label and link when connected -->
         </nuxt-link>
         <nuxt-link
@@ -31,9 +31,10 @@
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
+import { useUserStep } from "~/composables/userStep"
 
+const userStep = useUserStep()
 const pageStore = usePageStore()
-
 if (!pageStore.homePage.title) {
   pageStore.loadHomePage()
 }

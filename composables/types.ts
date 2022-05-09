@@ -191,11 +191,19 @@ export const InitiatorType = {
 
 // User participation
 export type User = { id: number | null; email: string; username: string }
+export type ParticipationPillarCompleted = {
+  id: number | null
+  completed: boolean
+  pillar_id: number
+  participation_id: number
+}
 export type Participation = {
   id: number | null
   assessmentId: number
   roleId: number
   consent: boolean
+  is_profiling_questions_completed: boolean
+  is_pillar_questions_completed: ParticipationPillarCompleted[]
 }
 export type QuestionResponse = {
   id: number
