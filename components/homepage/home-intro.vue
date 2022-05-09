@@ -1,38 +1,32 @@
 <template>
-  <section class="intro columns section">
-    <div class="column">
-      <PageIntro
-        :title="pageStore.homePage.title"
-        :introduction="pageStore.homePage.introduction"
-      />
-      <div class="intro__buttons buttons are-medium-desktop">
-        <nuxt-link
-          class="button is-dark is-rounded is-responsive"
-          :to="userStep.url"
-        >
-          {{ userStep.text }}
-          <!-- TODO change label and link when connected -->
-        </nuxt-link>
-        <nuxt-link
-          class="button is-dark is-rounded is-responsive is-outlined"
-          to="/demometre"
-        >
-          <span>Découvrir le référentiel</span>
-
-          <span class="icon">
-            <icon name="arrow-right-line" />
-          </span>
-        </nuxt-link>
+  <div class="container">
+    <section class="intro columns section">
+      <div class="column">
+        <PageIntro
+          :title="pageStore.homePage.title"
+          :introduction="pageStore.homePage.tagLine"
+        />
+        <RichText
+          :rich-text="pageStore.homePage.introduction"
+          class="is-family-secondary"
+        />
       </div>
-    </div>
-    <div class="intro__visual column bg-warning"></div>
-  </section>
+      <div class="column" style="text-align: end">
+        <figure
+          v-if="pageStore.homePage.introImageUrl"
+          class="image is-128x128"
+        >
+          <img :src="BASE_URL + pageStore.homePage.introImageUrl" alt="" />
+        </figure>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
+import { BASE_URL } from "~/composables/api"
 
-const userStep = useUserStep()
 const pageStore = usePageStore()
 </script>
 
