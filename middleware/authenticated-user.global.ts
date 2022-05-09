@@ -10,6 +10,8 @@ const loadUserState = async () => {
   const headers = useRequestHeaders(["cookie"])
   const userStore = useUserStore()
 
+  console.log(headers)
+
   if (!userStore.refreshed) {
     // if profile is already got from SSR, do not fetch again
     await userStore.refreshProfile(headers)

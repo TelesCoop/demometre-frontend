@@ -6,6 +6,7 @@ import {
   QUESTION_RESPONSE_VALUE_BY_TYPE,
   QUESTION_RESPONSES_BY_TYPE,
 } from "~/assets/utils/question-response"
+import { useUserStore } from "./userStore"
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
@@ -24,6 +25,11 @@ export const useParticipationStore = defineStore("participation", {
   actions: {
     // Create participation only one time
     async createParticipation() {
+      const userStore = useUserStore()
+      // If user not authenticated, create anonymous user
+      if (!userStore.isLoggedIn) {
+        userStore.createAnonymousUser()
+      }
       const { data, error } = await useApiPost<Participation>(
         "participations/",
         {

@@ -1,10 +1,12 @@
 import { defineStore } from "pinia"
 import { User } from "~/composables/types"
 import { useApiPost, useGet } from "~/composables/api"
+import { useToastStore } from "./toastStore"
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: <User>{},
+    anonymous: <User>{},
     refreshed: <boolean>false,
   }),
   getters: {
@@ -13,40 +15,55 @@ export const useUserStore = defineStore("user", {
     },
   },
   actions: {
-    async login(email: string, password: string) {
+    async createAnonymousUser() {
+      const { data, error } = await useApiPost<User>("anonymous")
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+        return false
+      }
+      this.user = {}
+      this.anonymous = data.value
+    },
+    async login(email: string, password: string, callbackUrl = "/") {
       const { data, error } = await useApiPost<User>("auth/login", {
         email,
         password,
       })
       if (!error.value) {
         this.user = data.value
+        this.anonymous = {}
         const router = useRouter()
-        router.push("/")
+        router.push(callbackUrl)
       }
     },
     async signup(
       firstName: string,
       lastName: string,
       email: string,
-      password: string
+      password: string,
+      anonymous = null,
+      callbackUrl = "/"
     ) {
       const { data, error } = await useApiPost<User>("auth/signup", {
         firstName,
         lastName,
         email,
         password,
+        anonymous,
       })
       if (error.value) {
         return { error: error.value.data }
       }
       this.user = data.value
+      this.anonymous = {}
       const router = useRouter()
-      router.push("/")
+      router.push(callbackUrl)
     },
     async logout() {
       const { error } = await useApiPost<User>("auth/logout")
       if (!error.value) {
-        this.updateState({ id: null, username: "", email: "" })
+        this.user = { id: null, username: "", email: "" }
         const router = useRouter()
         router.push("/login")
       }
@@ -83,11 +100,6 @@ export const useUserStore = defineStore("user", {
         router.replace({ query: { reset_key: null } })
         router.push("/login")
       }
-    },
-    updateState(data: User) {
-      this.user.username = data.username
-      this.user.email = data.email
-      this.user.id = 0
     },
   },
 })
