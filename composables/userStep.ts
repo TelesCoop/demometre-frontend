@@ -14,7 +14,7 @@ export function useUserStep<Type>() {
   const state = computed(() => {
     if (!assessmentStore.currentAssessmentId) {
       return {
-        step: "assessment",
+        step: "localisation",
         url: `/evaluation`,
         text: START_EVALUATION_TEXT,
       }
