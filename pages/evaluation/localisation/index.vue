@@ -94,6 +94,8 @@ import { useParticipationStore } from "~/stores/participationStore"
 definePageMeta({
   title: "Localisation",
   breadcrumb: "Localisation",
+  step: "localisation",
+  middleware: ["user-step"],
 })
 
 const zipCode = ref("")
