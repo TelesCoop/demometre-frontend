@@ -33,8 +33,8 @@ import { useAssessmentStore } from "~/stores/assessmentStore"
 definePageMeta({
   title: "Localisation",
   breadcrumb: "Localisation",
-  middleware: ["assessment", "user-step"],
   step: "localisation",
+  middleware: ["assessment", "user-step"],
 })
 
 const assessmentStore = useAssessmentStore()
