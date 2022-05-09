@@ -18,6 +18,8 @@ import { ref } from "@vue/reactivity"
 
 definePageMeta({
   title: "Affinage",
+  step: "profiling",
+  middleware: ["user-step"],
 })
 
 const route = useRoute()

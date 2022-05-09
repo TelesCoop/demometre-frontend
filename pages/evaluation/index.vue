@@ -67,6 +67,8 @@ import { useUserStore } from "~/stores/userStore"
 definePageMeta({
   title: "Évaluation",
   breadcrumb: "Évaluation",
+  step: "localisation",
+  middleware: ["user-step"],
 })
 
 const pageStore = usePageStore()
@@ -78,7 +80,6 @@ const withoutAccount = ref<boolean>(false)
 if (!pageStore.evaluationIntroPage.title) {
   pageStore.getEvaluationIntroPage()
 }
-
 const disabled = computed(() =>
   consent.value && (userStore.isLoggedIn || withoutAccount.value) ? false : true
 )

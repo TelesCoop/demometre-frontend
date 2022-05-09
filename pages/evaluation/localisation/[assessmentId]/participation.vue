@@ -35,7 +35,8 @@ import { useProfilingJourney } from "~/composables/journey"
 
 definePageMeta({
   title: "Question sur le role",
-  middleware: ["assessment"],
+  step: "role",
+  middleware: ["assessment", "user-step"],
 })
 
 const color = ref("no-pillar")
