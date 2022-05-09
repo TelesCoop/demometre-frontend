@@ -53,9 +53,9 @@
           <div class="navbar-item">
             <div class="buttons">
               <NuxtLink
-                to="/evaluation"
+                :to="userStep.url"
                 class="button is-rounded has-border-cooperation has-text-cooperation-dark"
-                >Lancer l'évaluation</NuxtLink
+                >{{ userStep.text }}</NuxtLink
               >
               <NuxtLink
                 v-if="userStore.isLoggedIn"
@@ -82,6 +82,7 @@
 import { useUserStore } from "~/stores/userStore"
 
 const userStore = useUserStore()
+const userStep = useUserStep()
 // TODO : use router to highlight active route
 const route = useRoute()
 const isBurgerOpen = ref(false)
