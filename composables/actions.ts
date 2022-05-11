@@ -11,6 +11,10 @@ export async function getDataOfParticipation(headers = undefined) {
       participationStore.id,
       headers
     ),
+    participationStore.getQuestionnaireQuestionResponses(
+      participationStore.id,
+      headers
+    ),
     profilingStore.getProfilingQuestions(participationStore.id, headers),
     assessmentStore.getAssessment(
       participationStore.participation.assessmentId,
