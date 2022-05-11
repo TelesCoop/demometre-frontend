@@ -109,11 +109,13 @@ export const useParticipationStore = defineStore("participation", {
       const questionResponse = {
         questionId: question.id,
         participationId: this.id,
-        hasPassed: !isAnswered,
+        hasPassed: !isAnswered && isAnswered !== false,
       } as QuestionResponse
 
-      const questionValue = QUESTION_RESPONSE_VALUE_BY_TYPE[question.type]
-      questionResponse[questionValue] = response
+      if (isAnswered) {
+        const questionValue = QUESTION_RESPONSE_VALUE_BY_TYPE[question.type]
+        questionResponse[questionValue] = response
+      }
 
       const { data, error } = await useApiPost<QuestionResponse>(
         "responses/",

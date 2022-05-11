@@ -72,7 +72,7 @@
             </i>
           </button>
           <button v-else class="button is-dark is-outlined is-rounded mr-0_75">
-            <span>Je ne sais pas / Je passer</span>
+            <span>Je ne sais pas / Je passe</span>
             <i class="icon">
               <Icon size="16" name="arrow-right-line" />
             </i>
