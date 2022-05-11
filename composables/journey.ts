@@ -126,6 +126,14 @@ const QUESTIONNAIRE_QUESTION_FILTERS = {
         question.populationUpperBound >= population)
     )
   },
+  profile({ question, participation }: QuestionDataFilter): boolean {
+    return (
+      !question.profileIds?.length ||
+      participation.profileIds.some((profileId) =>
+        question.profileIds.includes(profileId)
+      )
+    )
+  },
 }
 
 const QUESTIONNAIRE_QUESTION_FILTERS_VALUES = Object.values(

@@ -124,9 +124,10 @@ export type Question = {
   rules: Rule[]
   surveyType: SurveyType
   maxMultipleChoices: number | null
-  roleIds?: number[]
-  populationLowerBound?: number | null
-  populationUpperBound?: number | null
+  roleIds: number[]
+  populationLowerBound: number | null
+  populationUpperBound: number | null
+  profileIds: number[]
 }
 
 type Bound = { value: number; label: string }
@@ -207,6 +208,7 @@ export type Participation = {
   consent: boolean
   is_profiling_questions_completed: boolean
   is_pillar_questions_completed: ParticipationPillarCompleted[]
+  profileIds: number[]
 }
 export type QuestionResponse = {
   id: number
