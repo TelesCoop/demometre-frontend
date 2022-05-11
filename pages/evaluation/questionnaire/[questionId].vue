@@ -20,8 +20,8 @@ import { Ref, ref } from "@vue/reactivity"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 
 definePageMeta({
-  title: "Affinage",
-  step: "profiling",
+  title: "Questionnaire",
+  step: "questionnaire",
   middleware: ["user-step"],
 })
 

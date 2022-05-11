@@ -38,7 +38,7 @@ export function useUserStep<Type>() {
 
     return {
       step: "questionnaire",
-      url: "/",
+      url: "/questionnaire",
       text: RESUME_EVALUATION_TEXT,
     }
   })

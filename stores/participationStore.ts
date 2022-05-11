@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { useApiPost, useGet } from "~/composables/api"
+import { useApiPatch, useApiPost, useGet } from "~/composables/api"
 import { Participation, Question, QuestionResponse } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
 import {
@@ -132,6 +132,26 @@ export const useParticipationStore = defineStore("participation", {
         return true
       }
       return false
+    },
+
+    async saveEndQuestionnaire(
+      isProfilingQuestion: boolean,
+      pillarId?: number
+    ) {
+      const payload = {
+        profilingQuestion: isProfilingQuestion,
+        pillarId: pillarId,
+      }
+      const { error } = await useApiPatch<QuestionResponse>(
+        `participations/${this.id}/questions/completed`,
+        payload
+      )
+      if (error.value) {
+        return false
+      }
+      await this.getCurrentParticipation()
+
+      return true
     },
   },
 })
