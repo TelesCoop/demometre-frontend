@@ -250,7 +250,7 @@ function setTab(tabId) {
 }
 const submit = () => {
   participationStore
-    .saveResponse(question.value, answer.value, isAnswered)
+    .saveResponse(question.value, answer.value, isAnswered.value)
     .then((result) => {
       if (result) {
         props.context.journey.goToNextQuestion(question.value.id)
