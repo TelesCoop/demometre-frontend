@@ -12,8 +12,8 @@ export const useParticipationStore = defineStore("participation", {
   state: () => ({
     roleId: <number | null>null,
     consent: <boolean>false,
-    responseByQuestionnaireQuestionId: <{ [key: number]: QuestionResponse }>{},
     responseByProfilingQuestionId: <{ [key: number]: QuestionResponse }>{},
+    responseByQuestionnaireQuestionId: <{ [key: number]: QuestionResponse }>{},
     profilingCurrent: <number[]>[],
     participation: <Participation>{},
   }),
@@ -80,6 +80,25 @@ export const useParticipationStore = defineStore("participation", {
         )
         response.forEach((item) => {
           this.responseByProfilingQuestionId[item.questionId] = item
+        })
+      } catch {
+        return false
+      }
+    },
+
+    async getQuestionnaireQuestionResponses(
+      participationId: number,
+      headers = undefined
+    ) {
+      try {
+        const response = await useGet<QuestionResponse[]>(
+          `responses/?context=questionnaire&participation_id=${participationId}`,
+          {
+            headers,
+          }
+        )
+        response.forEach((item) => {
+          this.responseByQuestionnaireQuestionId[item.questionId] = item
         })
       } catch {
         return false
