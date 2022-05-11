@@ -1,5 +1,4 @@
 // Questionnaire and profiling
-import { useProfilingJourney } from "~/composables/journey"
 
 export enum Objectivity {
   OBJECTIVE = "objective",
@@ -109,6 +108,7 @@ export type Question = {
   concatenatedCode: string
   name: string
   questionStatement: string
+  mandatory: boolean
   objectivity: Objectivity
   method: Method
   description: string
@@ -214,6 +214,7 @@ export type QuestionResponse = {
   id: number
   participationId: number
   questionId: number
+  hasPassed: boolean
   uniqueChoiceResponseId: number | null
   multipleChoiceResponseIds: number[]
   booleanResponse: boolean | null

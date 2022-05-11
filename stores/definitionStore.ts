@@ -2,6 +2,7 @@ import { defineStore } from "pinia"
 import { useApiGet } from "~~/composables/api"
 import { Definition } from "~/composables/types"
 import { pick } from "~/composables/tools"
+import { useToastStore } from "./toastStore"
 
 type DefinitionResponse = Definition[]
 
@@ -24,6 +25,9 @@ export const useDefinitionStore = defineStore("definition", {
         for (const definition of data.value) {
           this.definitionById[definition.id] = definition
         }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
     // async getDefinitions(): Promise<{ [key: number]: Definition }> {
