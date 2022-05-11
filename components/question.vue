@@ -77,7 +77,7 @@
         <template v-else>
           <button
             class="button is-dark is-outlined is-rounded"
-            @click="props.context.goToNextQuestion()"
+            @click.prevent="props.context.journey.goToNextQuestion(question.id)"
           >
             <span>Passer</span>
             <i class="icon">

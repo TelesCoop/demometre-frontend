@@ -1,10 +1,14 @@
 import { defineStore } from "pinia"
 import { Criteria, Marker, PillarType, Question } from "~/composables/types"
-import { useApiGet } from "~~/composables/api"
+import { useApiGet, useGet } from "~~/composables/api"
 
 type FullMarkers = Marker & { criterias: Criteria[] }
 type FullPillar = PillarType & { markers: FullMarkers[] }
-
+type HierarchicalQuestionStructure = {
+  criteriaId: number
+  markerId: number
+  pillarId: number
+}
 export const useQuestionnaireStore = defineStore("questionnaire", {
   state: () => ({
     pillarByName: <{ [key: string]: PillarType }>{},
@@ -19,6 +23,9 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     pillars: (state) => {
       return Object.values(state.pillarByName)
     },
+    questions: (state) => {
+      return Object.values(state.questionById)
+    },
   },
   actions: {
     async getQuestionnaireStructure() {
@@ -26,6 +33,9 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         "questionnaire-structure/"
       )
       if (!error.value) {
+        this.pillarByName = {}
+        this.markerById = {}
+        this.criteriaById = {}
         for (const pillar of data.value) {
           this.pillarByName[pillar.name] = pillar
           for (const marker of pillar.markers) {
@@ -37,15 +47,48 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         }
       }
     },
-    async getQuestions() {
+    async getQuestionnaireQuestions() {
       const { data, error } = await useApiGet<Question[]>(
-        "questionnaire-questions/"
+        `questionnaire-questions/`
       )
-      if (!error.value) {
-        for (const question of data.value) {
-          this.questionById[question.id] = question
-        }
+      if (error.value) {
+        return false
       }
+      for (const question of data.value) {
+        this.questionById[question.id] = question
+      }
+      return true
+    },
+    getHierarchicalQuestionStructure({
+      question,
+      questionId,
+    }: {
+      question?: Question
+      questionId?: number
+    }): HierarchicalQuestionStructure | undefined {
+      const currentQuestion = question || this.questionById[questionId]
+
+      if (!currentQuestion.criteriaId) {
+        return
+      }
+
+      const criteria = this.criteriaById[currentQuestion.criteriaId]
+      const marker = this.markerById[criteria.markerId]
+      const hierarchicalQuestionStructure: HierarchicalQuestionStructure = {
+        criteriaId: criteria.id,
+        markerId: marker.id,
+        pillarId: marker.pillarId,
+      }
+      return hierarchicalQuestionStructure
+    },
+    getQuestionnaireQuestionByPillarId(pillarId): Question[] {
+      return Object.values(this.questionById).filter((question: Question) => {
+        const questionPillarId = this.getHierarchicalQuestionStructure({
+          question,
+        })?.pillarId
+
+        return pillarId === questionPillarId
+      }) as Question[]
     },
   },
 })
