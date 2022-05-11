@@ -1,8 +1,10 @@
 import { computed, getCurrentInstance } from "vue"
 import { useProfilingStore } from "~/stores/profilingStore"
-import { Question } from "~/composables/types"
+import { Assessment, Participation, Question } from "~/composables/types"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useRouter } from "#app"
+import { useQuestionnaireStore } from "~/stores/questionnaireStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 const OPERATORS_STRATEGY = {
   or: "some",
@@ -102,17 +104,64 @@ export function useProfilingJourney<Type>() {
     goToNextQuestion,
   }
 }
+type QuestionDataFilter = {
+  question: Question
+  participation: Participation
+  assessment: Assessment
+}
+const QUESTIONNAIRE_QUESTION_FILTERS = {
+  role({ question, participation }: QuestionDataFilter): boolean {
+    return (
+      !question.role_ids || question.role_ids.includes(participation.roleId)
+    )
+  },
+  population({ question, assessment }: QuestionDataFilter) {
+    const population =
+      assessment.municipality?.population || assessment.epci?.population || 0
+    return (
+      (!question.population_lower_bound ||
+        question.population_lower_bound <= population) &&
+      (!question.population_upper_bound ||
+        question.population_upper_bound >= population)
+    )
+  },
+}
 
-export function useQuestionnaireJourney<Type>() {
-  const vm = getCurrentInstance()
+const QUESTIONNAIRE_QUESTION_FILTERS_VALUES = Object.values(
+  QUESTIONNAIRE_QUESTION_FILTERS
+)
+
+export function useQuestionnaireJourney<Type>(pillarId: number) {
   const journey = computed(() => {
-    return []
+    const questionnaireStore = useQuestionnaireStore()
+    const participationStore = useParticipationStore()
+    const assessmentStore = useAssessmentStore()
+    const questionIds = questionnaireStore
+      .getQuestionnaireQuestionByPillarId(pillarId)
+      .filter((question: Question) => {
+        const participation = participationStore.participation
+        const assessment = assessmentStore.currentAssessment
+        return QUESTIONNAIRE_QUESTION_FILTERS_VALUES.every((test) =>
+          test({ question, participation, assessment })
+        )
+      })
+      .map((question: Question) => question.id)
+    return questionIds
   })
   const nextQuestionId = (currentQuestionId) => {
-    return currentQuestionId
+    const myJourney = journey.value
+    const index = myJourney.indexOf(currentQuestionId)
+    return myJourney[index + 1]
   }
+
+  const goToNextQuestion = (currentQuestionId) => {
+    const questionId = nextQuestionId(currentQuestionId)
+    useRouter().push(`/evaluation/questionnaire/${questionId}`)
+  }
+
   return {
     journey,
     nextQuestionId,
+    goToNextQuestion,
   }
 }

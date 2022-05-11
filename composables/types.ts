@@ -124,6 +124,9 @@ export type Question = {
   rules: Rule[]
   surveyType: SurveyType
   maxMultipleChoices: number | null
+  role_ids?: number[]
+  population_lower_bound?: number | null
+  population_upper_bound?: number | null
 }
 
 type Bound = { value: number; label: string }
