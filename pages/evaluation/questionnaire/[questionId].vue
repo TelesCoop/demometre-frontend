@@ -30,13 +30,10 @@ const router = useRouter()
 const questionnaireStore = useQuestionnaireStore()
 
 const questionId: Ref<number> = ref(+route.params.questionId)
-
 let pillarId = questionnaireStore.getHierarchicalQuestionStructure({
   questionId: questionId.value,
 }).pillarId
 let journey = useQuestionnaireJourney(pillarId)
-let questionById =
-  questionnaireStore.getQuestionnaireQuestionByPillarId(pillarId)
 
 router.beforeEach((to) => {
   questionId.value = +to.params.questionId
@@ -44,13 +41,12 @@ router.beforeEach((to) => {
     questionId: questionId.value,
   }).pillarId
   journey = useQuestionnaireJourney(pillarId)
-  questionById = questionnaireStore.getQuestionnaireQuestionByPillarId(pillarId)
 })
 
 const participationStore = useParticipationStore()
 const context: QuestionContextProps = {
   journey,
-  questionById,
+  questionById: questionnaireStore.questionById,
   responseByQuestionId: participationStore.responseByQuestionnaireQuestionId,
 }
 </script>
