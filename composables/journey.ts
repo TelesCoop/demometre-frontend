@@ -6,6 +6,40 @@ import { useRouter } from "#app"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 
+type QuestionDataFilter = {
+  question: Question
+  participation: Participation
+  assessment: Assessment
+}
+const QUESTION_FILTERS = {
+  role({ question, participation }: QuestionDataFilter): boolean {
+    return (
+      !question.roleIds?.length ||
+      question.roleIds.includes(participation.roleId)
+    )
+  },
+  population({ question, assessment }: QuestionDataFilter) {
+    const population =
+      assessment.municipality?.population || assessment.epci?.population || 0
+    return (
+      (!question.populationLowerBound ||
+        question.populationLowerBound <= population) &&
+      (!question.populationUpperBound ||
+        question.populationUpperBound >= population)
+    )
+  },
+  profile({ question, participation }: QuestionDataFilter): boolean {
+    return (
+      !question.profileIds?.length ||
+      question.profileIds.some((profileId) =>
+        participation.profileIds.includes(profileId)
+      )
+    )
+  },
+}
+
+const QUESTION_FILTERS_VALUES = Object.values(QUESTION_FILTERS)
+
 const OPERATORS_STRATEGY = {
   or: "some",
   and: "every",
@@ -77,14 +111,23 @@ export function useProfilingJourney<Type>() {
   const vm = getCurrentInstance()
   const journey = computed(() => {
     const profilingStore = useProfilingStore()
+    const participationStore = useParticipationStore()
+    const assessmentStore = useAssessmentStore()
     const responseByQuestionId =
-      useParticipationStore().responseByProfilingQuestionId
-    const questionIds = profilingStore.orderedQuestionId.filter(
-      (questionId) => {
+      participationStore.responseByProfilingQuestionId
+    const questionIds = profilingStore.orderedQuestionId
+      .filter((questionId) => {
+        const question = profilingStore.questionById[questionId]
+        const participation = participationStore.participation
+        const assessment = assessmentStore.currentAssessment
+        return QUESTION_FILTERS_VALUES.every((test) =>
+          test({ question, participation, assessment })
+        )
+      })
+      .filter((questionId) => {
         const question = profilingStore.questionById[questionId]
         return isRelevant.bind(vm)(question, { responseByQuestionId })
-      }
-    )
+      })
     return questionIds
   })
   const nextQuestionId = (currentQuestionId) => {
@@ -104,41 +147,6 @@ export function useProfilingJourney<Type>() {
     goToNextQuestion,
   }
 }
-type QuestionDataFilter = {
-  question: Question
-  participation: Participation
-  assessment: Assessment
-}
-const QUESTIONNAIRE_QUESTION_FILTERS = {
-  role({ question, participation }: QuestionDataFilter): boolean {
-    return (
-      !question.roleIds.length ||
-      question.roleIds.includes(participation.roleId)
-    )
-  },
-  population({ question, assessment }: QuestionDataFilter) {
-    const population =
-      assessment.municipality?.population || assessment.epci?.population || 0
-    return (
-      (!question.populationLowerBound ||
-        question.populationLowerBound <= population) &&
-      (!question.populationUpperBound ||
-        question.populationUpperBound >= population)
-    )
-  },
-  profile({ question, participation }: QuestionDataFilter): boolean {
-    return (
-      !question.profileIds?.length ||
-      participation.profileIds.some((profileId) =>
-        question.profileIds.includes(profileId)
-      )
-    )
-  },
-}
-
-const QUESTIONNAIRE_QUESTION_FILTERS_VALUES = Object.values(
-  QUESTIONNAIRE_QUESTION_FILTERS
-)
 
 export function useQuestionnaireJourney<Type>(pillarId: number) {
   const journey = computed(() => {
@@ -150,7 +158,7 @@ export function useQuestionnaireJourney<Type>(pillarId: number) {
       .filter((question: Question) => {
         const participation = participationStore.participation
         const assessment = assessmentStore.currentAssessment
-        return QUESTIONNAIRE_QUESTION_FILTERS_VALUES.every((test) =>
+        return QUESTION_FILTERS_VALUES.every((test) =>
           test({ question, participation, assessment })
         )
       })
