@@ -112,17 +112,18 @@ type QuestionDataFilter = {
 const QUESTIONNAIRE_QUESTION_FILTERS = {
   role({ question, participation }: QuestionDataFilter): boolean {
     return (
-      !question.role_ids || question.role_ids.includes(participation.roleId)
+      !question.roleIds.length ||
+      question.roleIds.includes(participation.roleId)
     )
   },
   population({ question, assessment }: QuestionDataFilter) {
     const population =
       assessment.municipality?.population || assessment.epci?.population || 0
     return (
-      (!question.population_lower_bound ||
-        question.population_lower_bound <= population) &&
-      (!question.population_upper_bound ||
-        question.population_upper_bound >= population)
+      (!question.populationLowerBound ||
+        question.populationLowerBound <= population) &&
+      (!question.populationUpperBound ||
+        question.populationUpperBound >= population)
     )
   },
 }
