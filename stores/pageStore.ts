@@ -6,6 +6,7 @@ import {
   ReferentialPage,
 } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
+import { useToastStore } from "./toastStore"
 
 export const usePageStore = defineStore("page", {
   state: () => ({
@@ -23,6 +24,9 @@ export const usePageStore = defineStore("page", {
         } else {
           console.error("Impossible to retrieve home page")
         }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
     async getReferentialPage() {
@@ -35,6 +39,9 @@ export const usePageStore = defineStore("page", {
         } else {
           console.error("Impossible to retrieve referential page")
         }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
     async getEvaluationIntroPage() {
@@ -47,6 +54,9 @@ export const usePageStore = defineStore("page", {
         } else {
           console.error("Impossible to retrieve evaluation intro page")
         }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
     async getEvaluationInitPage() {
@@ -59,6 +69,9 @@ export const usePageStore = defineStore("page", {
         } else {
           console.error("Impossible to retrieve evaluation init page")
         }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
   },

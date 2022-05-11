@@ -1,5 +1,4 @@
 // Questionnaire and profiling
-import { useProfilingJourney } from "~/composables/journey"
 
 export enum Objectivity {
   OBJECTIVE = "objective",
@@ -109,6 +108,7 @@ export type Question = {
   concatenatedCode: string
   name: string
   questionStatement: string
+  mandatory: boolean
   objectivity: Objectivity
   method: Method
   description: string
@@ -124,6 +124,10 @@ export type Question = {
   rules: Rule[]
   surveyType: SurveyType
   maxMultipleChoices: number | null
+  roleIds: number[]
+  populationLowerBound: number | null
+  populationUpperBound: number | null
+  profileIds: number[]
 }
 
 type Bound = { value: number; label: string }
@@ -204,11 +208,13 @@ export type Participation = {
   consent: boolean
   is_profiling_questions_completed: boolean
   is_pillar_questions_completed: ParticipationPillarCompleted[]
+  profileIds: number[]
 }
 export type QuestionResponse = {
   id: number
   participationId: number
   questionId: number
+  hasPassed: boolean
   uniqueChoiceResponseId: number | null
   multipleChoiceResponseIds: number[]
   booleanResponse: boolean | null

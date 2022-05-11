@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { Question, Role } from "~/composables/types"
-import { useApiGet, useGet } from "~~/composables/api"
-import { useParticipationStore } from "./participationStore"
+import { useToastStore } from "./toastStore"
+import { useApiGet } from "~~/composables/api"
 
 export const useProfilingStore = defineStore("profiling", {
   state: () => ({
@@ -21,24 +21,24 @@ export const useProfilingStore = defineStore("profiling", {
         for (const role of data.value) {
           this.roleById[role.id] = role
         }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
       }
     },
-    async getProfilingQuestions(participationId, headers = undefined) {
-      try {
-        const response = await useGet<Question[]>(
-          `profiling-questions/participation/${participationId}/`,
-          { headers }
-        )
-        this.orderedQuestionId = []
-        for (const question of response) {
-          this.questionById[question.id] = question
-          this.orderedQuestionId.push(question.id)
-        }
-
-        return true
-      } catch (e) {
+    async getProfilingQuestions() {
+      const { data, error } = await useApiGet<Question[]>(
+        `profiling-questions/`
+      )
+      if (error.value) {
         return false
       }
+      this.orderedQuestionId = []
+      for (const question of data.value) {
+        this.questionById[question.id] = question
+        this.orderedQuestionId.push(question.id)
+      }
+      return true
     },
   },
 })

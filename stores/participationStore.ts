@@ -7,13 +7,14 @@ import {
   QUESTION_RESPONSES_BY_TYPE,
 } from "~/assets/utils/question-response"
 import { useUserStore } from "./userStore"
+import { useToastStore } from "./toastStore"
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
     roleId: <number | null>null,
     consent: <boolean>false,
-    responseByQuestionnaireQuestionId: <{ [key: number]: QuestionResponse }>{},
     responseByProfilingQuestionId: <{ [key: number]: QuestionResponse }>{},
+    responseByQuestionnaireQuestionId: <{ [key: number]: QuestionResponse }>{},
     profilingCurrent: <number[]>[],
     participation: <Participation>{},
   }),
@@ -42,6 +43,8 @@ export const useParticipationStore = defineStore("participation", {
         this.participation = data.value
         return true
       }
+      const errorStore = useToastStore()
+      errorStore.setError(error.value.data.messageCode)
       return false
     },
     async getCurrentParticipation(headers = undefined) {
@@ -89,19 +92,45 @@ export const useParticipationStore = defineStore("participation", {
       }
     },
 
-    async saveResponse(question: Question, response: any) {
+    async getQuestionnaireQuestionResponses(
+      participationId: number,
+      headers = undefined
+    ) {
+      try {
+        const response = await useGet<QuestionResponse[]>(
+          `responses/?context=questionnaire&participation_id=${participationId}`,
+          {
+            headers,
+          }
+        )
+        response.forEach((item) => {
+          this.responseByQuestionnaireQuestionId[item.questionId] = item
+        })
+      } catch {
+        return false
+      }
+    },
+
+    async saveResponse(question: Question, response: any, isAnswered: boolean) {
       const questionResponse = {
         questionId: question.id,
         participationId: this.id,
+        hasPassed: !isAnswered && isAnswered !== false,
       } as QuestionResponse
 
-      const questionValue = QUESTION_RESPONSE_VALUE_BY_TYPE[question.type]
-      questionResponse[questionValue] = response
+      if (isAnswered) {
+        const questionValue = QUESTION_RESPONSE_VALUE_BY_TYPE[question.type]
+        questionResponse[questionValue] = response
+      }
 
       const { data, error } = await useApiPost<QuestionResponse>(
         "responses/",
         questionResponse
       )
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
       if (!error.value && data.value) {
         const questionResponses =
           this[QUESTION_RESPONSES_BY_TYPE[question.surveyType]]

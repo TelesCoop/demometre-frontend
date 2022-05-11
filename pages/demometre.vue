@@ -76,10 +76,6 @@ const router = useRouter()
 const questionnaireStore = useQuestionnaireStore()
 const pageStore = usePageStore()
 
-if (!questionnaireStore.pillars.length) {
-  questionnaireStore.getQuestionnaireStructure()
-}
-
 if (!pageStore.referentialPage.title) {
   pageStore.getReferentialPage()
 }
