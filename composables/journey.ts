@@ -130,21 +130,28 @@ export function useProfilingJourney<Type>() {
       })
     return questionIds
   })
-  const nextQuestionId = (currentQuestionId) => {
+  const nextQuestionId = (currentQuestionId: number): number => {
     const myJourney = journey.value
     const index = myJourney.indexOf(currentQuestionId)
     return myJourney[index + 1]
   }
 
-  const goToNextQuestion = (currentQuestionId) => {
+  const goToNextQuestion = (currentQuestionId: number) => {
     const questionId = nextQuestionId(currentQuestionId)
     useRouter().push(`/evaluation/affinage/${questionId}`)
+  }
+
+  const isLastQuestion = (currentQuestionId: number): boolean => {
+    const myJourney = journey.value
+    const index = myJourney.indexOf(currentQuestionId)
+    return index + 1 === myJourney.length
   }
 
   return {
     journey,
     nextQuestionId,
     goToNextQuestion,
+    isLastQuestion,
   }
 }
 
@@ -165,20 +172,27 @@ export function useQuestionnaireJourney<Type>(pillarId: number) {
       .map((question: Question) => question.id)
     return questionIds
   })
-  const nextQuestionId = (currentQuestionId) => {
+  const nextQuestionId = (currentQuestionId: number): number => {
     const myJourney = journey.value
     const index = myJourney.indexOf(currentQuestionId)
     return myJourney[index + 1]
   }
 
-  const goToNextQuestion = (currentQuestionId) => {
+  const goToNextQuestion = (currentQuestionId: number) => {
     const questionId = nextQuestionId(currentQuestionId)
     useRouter().push(`/evaluation/questionnaire/${questionId}`)
+  }
+
+  const isLastQuestion = (currentQuestionId: number): boolean => {
+    const myJourney = journey.value
+    const index = myJourney.indexOf(currentQuestionId)
+    return index + 1 === myJourney.length
   }
 
   return {
     journey,
     nextQuestionId,
     goToNextQuestion,
+    isLastQuestion,
   }
 }

@@ -5,7 +5,7 @@
         <div class="center-button">
           <button
             class="button is-normal is-rounded"
-            @click="onCenterButtonClick()"
+            @click.prevent="onCenterButtonClick()"
           >
             {{ props.centerButtonName }}
           </button>
