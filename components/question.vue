@@ -165,12 +165,14 @@ import {
   QuestionType,
   Definition,
   QuestionContextProps,
+  SurveyType,
 } from "~/composables/types"
 import { computed, PropType, watch } from "vue"
 import { ref } from "@vue/reactivity"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getQuestionResponseValue } from "assets/utils/question-response"
+import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 
 type tabDef = { label: string; id: string }
 const props = defineProps({
@@ -248,14 +250,28 @@ if (question.value?.toGoFurther) {
 function setTab(tabId) {
   currentTabId.value = tabId
 }
-const submit = () => {
-  participationStore
-    .saveResponse(question.value, answer.value, isAnswered.value)
-    .then((result) => {
-      if (result) {
-        props.context.journey.goToNextQuestion(question.value.id)
+const submit = async () => {
+  const result = await participationStore.saveResponse(
+    question.value,
+    answer.value,
+    isAnswered.value
+  )
+  if (result) {
+    if (props.context.journey.isLastQuestion(question.value.id)) {
+      if (question.value.surveyType === SurveyType.PROFILING) {
+        await participationStore.saveEndQuestionnaire(true)
+      } else {
+        const pillarId: number =
+          useQuestionnaireStore().getHierarchicalQuestionStructure({
+            question: question.value,
+          }).pillarId
+        await participationStore.saveEndQuestionnaire(false, pillarId)
       }
-    })
+      useRouter().push("/evaluation/questionnaire")
+    } else {
+      props.context.journey.goToNextQuestion(question.value.id)
+    }
+  }
 }
 </script>
 
