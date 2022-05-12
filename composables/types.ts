@@ -198,16 +198,16 @@ export type User = { id: number | null; email: string; username: string }
 export type ParticipationPillarCompleted = {
   id: number | null
   completed: boolean
-  pillar_id: number
-  participation_id: number
+  pillarId: number
+  participationId: number
 }
 export type Participation = {
   id: number | null
   assessmentId: number
   roleId: number
   consent: boolean
-  is_profiling_questions_completed: boolean
-  is_pillar_questions_completed: ParticipationPillarCompleted[]
+  isProfilingQuestionsCompleted: boolean
+  isPillarQuestionsCompleted: ParticipationPillarCompleted[]
   profileIds: number[]
 }
 export type QuestionResponse = {

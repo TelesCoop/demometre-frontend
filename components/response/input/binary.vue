@@ -25,7 +25,7 @@ const responseChoices = ref<ResponseChoiceType[]>([
     description: "",
   },
   {
-    id: 2,
+    id: 0,
     responseChoice: "Non",
     description: "",
   },

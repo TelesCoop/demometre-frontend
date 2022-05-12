@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { Criteria, Marker, PillarType, Question } from "~/composables/types"
 import { useToastStore } from "./toastStore"
-import { useApiGet, useGet } from "~/composables/api"
+import { useApiGet } from "~/composables/api"
 
 type FullMarkers = Marker & { criterias: Criteria[] }
 type FullPillar = PillarType & { markers: FullMarkers[] }
@@ -9,6 +9,7 @@ type HierarchicalQuestionStructure = {
   criteriaId: number
   markerId: number
   pillarId: number
+  pillarName: string
 }
 export const useQuestionnaireStore = defineStore("questionnaire", {
   state: () => ({
@@ -84,6 +85,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         criteriaId: criteria.id,
         markerId: marker.id,
         pillarId: marker.pillarId,
+        pillarName: marker.pillarName,
       }
       return hierarchicalQuestionStructure
     },
