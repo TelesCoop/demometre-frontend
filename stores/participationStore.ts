@@ -109,7 +109,7 @@ export const useParticipationStore = defineStore("participation", {
       const questionResponse = {
         questionId: question.id,
         participationId: this.id,
-        hasPassed: !isAnswered && isAnswered !== false,
+        hasPassed: !isAnswered,
       } as QuestionResponse
 
       if (isAnswered) {
@@ -142,15 +142,14 @@ export const useParticipationStore = defineStore("participation", {
         profilingQuestion: isProfilingQuestion,
         pillarId: pillarId,
       }
-      const { error } = await useApiPatch<QuestionResponse>(
-        `participations/${this.id}/questions/completed`,
+      const { data, error } = await useApiPatch<QuestionResponse>(
+        `participations/${this.id}/questions/completed/`,
         payload
       )
       if (error.value) {
         return false
       }
-      await this.getCurrentParticipation()
-
+      this.participation = data.value
       return true
     },
   },

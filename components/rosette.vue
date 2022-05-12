@@ -40,7 +40,7 @@
             <div v-else>
               <img
                 :class="`pillar-icon-${PillarParams[pillar.name].key}`"
-                :src="`assets/img/${PillarParams[pillar.name].picto}`"
+                :src="`/assets/img/${PillarParams[pillar.name].picto}`"
               />
               <span
                 class="pillar-title is-size-7 has-text-weight-bold is-capitalized"

@@ -4,18 +4,15 @@
       v-if="context"
       :context="context"
       :question-id="questionId"
-      color="no-pillar"
+      :color="color"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  useProfilingJourney,
-  useQuestionnaireJourney,
-} from "~/composables/journey"
+import { useQuestionnaireJourney } from "~/composables/journey"
 import { useParticipationStore } from "~/stores/participationStore"
-import { QuestionContextProps } from "~/composables/types"
+import { QuestionContextProps, PillarParams } from "~/composables/types"
 import { Ref, ref } from "@vue/reactivity"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 
@@ -30,10 +27,14 @@ const router = useRouter()
 const questionnaireStore = useQuestionnaireStore()
 
 const questionId: Ref<number> = ref(+route.params.questionId)
-let pillarId = questionnaireStore.getHierarchicalQuestionStructure({
-  questionId: questionId.value,
-}).pillarId
+let { pillarId, pillarName } =
+  questionnaireStore.getHierarchicalQuestionStructure({
+    questionId: questionId.value,
+  })
 let journey = useQuestionnaireJourney(pillarId)
+const color = computed<string>(() =>
+  pillarName ? PillarParams[pillarName].color : "no-pillar"
+)
 
 router.beforeEach((to) => {
   questionId.value = +to.params.questionId

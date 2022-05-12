@@ -18,5 +18,12 @@ export const getQuestionResponseValue = (
   type: string
 ) => {
   const valueName = QUESTION_RESPONSE_VALUE_BY_TYPE[type]
+  const responseValue = questionResponse?.[valueName]
+  if (responseValue === true) {
+    return 1
+  }
+  if (responseValue === false) {
+    return 0
+  }
   return questionResponse?.[valueName]
 }

@@ -82,21 +82,7 @@
             <span class="has-text-weight-bold">Entrer ⮐</span></span
           >
         </div>
-        <a
-          v-if="tabs.length"
-          href="#menu"
-          class="button is-dark is-outlined is-rounded round absolute-centered"
-        >
-          <i class="icon">
-            <Icon size="16" name="arrow-down-line" />
-          </i>
-        </a>
         <div class="is-flex buttons rounds">
-          <a href="" class="button is-dark is-outlined is-rounded">
-            <i class="icon">
-              <Icon size="16" name="chat-4" />
-            </i>
-          </a>
           <a href="" class="button is-dark is-outlined is-rounded">
             <i class="icon">
               <Icon size="16" name="bar-chart-box" />
@@ -186,7 +172,7 @@ const definitionStore = useDefinitionStore()
 
 const isAnswered = computed(() => {
   if (Array.isArray(answer.value)) return !!answer.value.length
-  return !!answer.value
+  return !!answer.value || answer.value === 0 || answer.value === false
 })
 
 const question = computed(() => {

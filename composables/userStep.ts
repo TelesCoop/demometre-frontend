@@ -1,7 +1,6 @@
 import { computed } from "vue"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
-import profiling from "~/middleware/profiling"
 import { useProfilingJourney } from "~/composables/journey"
 
 const START_EVALUATION_TEXT = " Lancer l'évaluation"
@@ -27,7 +26,7 @@ export function useUserStep<Type>() {
       }
     }
 
-    if (!participationStore.participation.is_profiling_questions_completed) {
+    if (!participationStore.participation.isProfilingQuestionsCompleted) {
       const questionId = profilingJourney.nextQuestionId(undefined)
       return {
         step: "profiling",
@@ -38,7 +37,7 @@ export function useUserStep<Type>() {
 
     return {
       step: "questionnaire",
-      url: "/questionnaire",
+      url: "/evaluation/questionnaire",
       text: RESUME_EVALUATION_TEXT,
     }
   })
