@@ -1,5 +1,5 @@
 <template>
-  <div class="container is-tight pillar-try">
+  <div class="container is-tight">
     <Question
       v-if="context"
       :context="context"

@@ -130,14 +130,22 @@ export function useProfilingJourney<Type>() {
       })
     return questionIds
   })
-  const nextQuestionId = (currentQuestionId: number): number => {
+  const nextQuestionId = (
+    currentQuestionId: number,
+    nextQuestion: boolean
+  ): number => {
     const myJourney = journey.value
     const index = myJourney.indexOf(currentQuestionId)
-    return myJourney[index + 1]
+    return nextQuestion ? myJourney[index + 1] : myJourney[index - 1]
   }
 
   const goToNextQuestion = (currentQuestionId: number) => {
-    const questionId = nextQuestionId(currentQuestionId)
+    const questionId = nextQuestionId(currentQuestionId, true)
+    useRouter().push(`/evaluation/affinage/${questionId}`)
+  }
+
+  const goToPreviousQuestion = (currentQuestionId: number) => {
+    const questionId = nextQuestionId(currentQuestionId, false)
     useRouter().push(`/evaluation/affinage/${questionId}`)
   }
 
@@ -151,6 +159,7 @@ export function useProfilingJourney<Type>() {
     journey,
     nextQuestionId,
     goToNextQuestion,
+    goToPreviousQuestion,
     isLastQuestion,
   }
 }
@@ -172,14 +181,22 @@ export function useQuestionnaireJourney<Type>(pillarId: number) {
       .map((question: Question) => question.id)
     return questionIds
   })
-  const nextQuestionId = (currentQuestionId: number): number => {
+  const nextQuestionId = (
+    currentQuestionId: number,
+    nextQuestion: boolean
+  ): number => {
     const myJourney = journey.value
     const index = myJourney.indexOf(currentQuestionId)
-    return myJourney[index + 1]
+    return nextQuestion ? myJourney[index + 1] : myJourney[index - 1]
   }
 
   const goToNextQuestion = (currentQuestionId: number) => {
-    const questionId = nextQuestionId(currentQuestionId)
+    const questionId = nextQuestionId(currentQuestionId, true)
+    useRouter().push(`/evaluation/questionnaire/${questionId}`)
+  }
+
+  const goToPreviousQuestion = (currentQuestionId: number) => {
+    const questionId = nextQuestionId(currentQuestionId, false)
     useRouter().push(`/evaluation/questionnaire/${questionId}`)
   }
 
@@ -193,6 +210,7 @@ export function useQuestionnaireJourney<Type>(pillarId: number) {
     journey,
     nextQuestionId,
     goToNextQuestion,
+    goToPreviousQuestion,
     isLastQuestion,
   }
 }
