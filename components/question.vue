@@ -66,7 +66,7 @@
           "
         >
           <i class="icon">
-            <Icon size="16" name="check" />
+            <Icon size="16" name="arrow-left-line" />
           </i>
         </button>
         <button
