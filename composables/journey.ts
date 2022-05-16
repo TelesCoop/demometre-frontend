@@ -155,12 +155,18 @@ export function useProfilingJourney<Type>() {
     return index + 1 === myJourney.length
   }
 
+  const isFirstQuestion = (currentQuestionId: number): boolean => {
+    const myJourney = journey.value
+    return myJourney.indexOf(currentQuestionId) === 0
+  }
+
   return {
     journey,
     nextQuestionId,
     goToNextQuestion,
     goToPreviousQuestion,
     isLastQuestion,
+    isFirstQuestion,
   }
 }
 
@@ -206,11 +212,17 @@ export function useQuestionnaireJourney<Type>(pillarId: number) {
     return index + 1 === myJourney.length
   }
 
+  const isFirstQuestion = (currentQuestionId: number): boolean => {
+    const myJourney = journey.value
+    return myJourney.indexOf(currentQuestionId) === 0
+  }
+
   return {
     journey,
     nextQuestionId,
     goToNextQuestion,
     goToPreviousQuestion,
     isLastQuestion,
+    isFirstQuestion,
   }
 }

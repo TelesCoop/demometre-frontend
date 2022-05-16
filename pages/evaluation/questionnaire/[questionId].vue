@@ -37,11 +37,13 @@ const color = computed<string>(() =>
 )
 
 router.beforeEach((to) => {
-  questionId.value = +to.params.questionId
-  pillarId = questionnaireStore.getHierarchicalQuestionStructure({
-    questionId: questionId.value,
-  }).pillarId
-  journey = useQuestionnaireJourney(pillarId)
+  if (to.params.questionId) {
+    questionId.value = +to.params.questionId
+    pillarId = questionnaireStore.getHierarchicalQuestionStructure({
+      questionId: questionId.value,
+    }).pillarId
+    journey = useQuestionnaireJourney(pillarId)
+  }
 })
 
 const participationStore = useParticipationStore()

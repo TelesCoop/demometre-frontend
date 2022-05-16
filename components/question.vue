@@ -61,21 +61,23 @@
         <!-- button previous next -->
         <button
           class="button is-dark is-outlined is-rounded change-question-button previous"
-          @click.prevent="
-            props.context.journey.goToPreviousQuestion(question.id)
-          "
+          @click.prevent="goToPreviousQuestion"
         >
-          <i class="icon">
-            <Icon size="16" name="arrow-left-line" />
-          </i>
+          <div>
+            <i class="icon">
+              <Icon size="16" name="arrow-left-line" class="mt-0_5" />
+            </i>
+          </div>
         </button>
         <button
           class="button is-dark is-outlined is-rounded change-question-button next"
-          @click.prevent="props.context.journey.goToNextQuestion(question.id)"
+          @click.prevent="goToNextQuestion"
         >
-          <i class="icon">
-            <Icon size="16" name="arrow-right-line" />
-          </i>
+          <div>
+            <i class="icon">
+              <Icon size="16" name="arrow-right-line" class="mt-0_5" />
+            </i>
+          </div>
         </button>
       </div>
 
@@ -102,7 +104,7 @@
           </button>
           <span class="is-size-7">
             appuyez sur
-            <span class="has-text-weight-bold">Entrer ⮐</span></span
+            <span class="has-text-weight-bold"> Entrer ⏎</span></span
           >
         </div>
         <div class="is-flex buttons rounds">
@@ -259,6 +261,21 @@ if (question.value?.toGoFurther) {
 function setTab(tabId) {
   currentTabId.value = tabId
 }
+
+const goToPreviousQuestion = () => {
+  if (props.context.journey.isFirstQuestion(question.value.id)) {
+    useRouter().push("/evaluation/questionnaire")
+  }
+  props.context.journey.goToPreviousQuestion(question.value.id)
+}
+
+const goToNextQuestion = () => {
+  if (props.context.journey.isLastQuestion(question.value.id)) {
+    useRouter().push("/evaluation/questionnaire")
+  }
+  props.context.journey.goToNextQuestion(question.value.id)
+}
+
 const submit = async () => {
   const result = await participationStore.saveResponse(
     question.value,
@@ -312,8 +329,19 @@ const submit = async () => {
   &-button
     position: absolute
     top: 50%
-    &.next
-      right: -10rem
-    &.previous
-      left: -10rem
+    @include widescreen
+      &.next
+        right: -10rem
+      &.previous
+        left: -10rem
+    @include desktop-only
+      &.next
+        right: -5rem
+      &.previous
+        left: -5rem
+    @include touch
+      &.next
+        right: -0.5rem
+      &.previous
+        left: -0.5rem
 </style>

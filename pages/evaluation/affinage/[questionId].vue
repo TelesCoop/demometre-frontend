@@ -28,7 +28,9 @@ const router = useRouter()
 const questionId = ref(+route.params.questionId)
 
 router.beforeEach((to) => {
-  questionId.value = +to.params.questionId
+  if (to.params.questionId) {
+    questionId.value = +to.params.questionId
+  }
 })
 
 const profilingStore = useProfilingStore()
