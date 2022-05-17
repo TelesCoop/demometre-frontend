@@ -289,4 +289,5 @@ export type QuestionContextProps = {
   journey: any
   questionById: { [key: number]: Question }
   responseByQuestionId: { [key: number]: QuestionResponse }
+  hasPreviousStep: boolean
 }

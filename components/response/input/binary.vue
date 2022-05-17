@@ -13,7 +13,7 @@
 import { ResponseChoice as ResponseChoiceType } from "~/composables/types"
 
 const props = defineProps({
-  modelValue: { type: Number, required: false, default: 0 },
+  modelValue: { type: Number, required: false, default: null },
   color: { type: String, required: true },
   questionId: { type: Number, required: true },
 })

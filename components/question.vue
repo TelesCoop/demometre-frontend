@@ -4,56 +4,86 @@
       <h1 class="title is-3">{{ question.questionStatement }}</h1>
       <RichText :rich-text="question.description"></RichText>
 
-      <!-- all possible inputs -->
-      <div class="my-1_5">
-        <ResponseInputOpen
-          v-if="question.type === QuestionType.OPEN"
-          v-model="answer"
-          :color="props.color"
-          :question-id="questionId"
-        />
-        <ResponseInputPercentage
-          v-if="question.type === QuestionType.PERCENTAGE"
-          v-model="answer"
-          :color="props.color"
-          :question-id="questionId"
-        />
-        <ResponseInputUniqueChoice
-          v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
-          v-model="answer"
-          :response-choices="question.responseChoices"
-          :color="props.color"
-          :question-id="questionId"
-        />
-        <ResponseInputMultipleChoice
-          v-else-if="question.type === QuestionType.MULTIPLE_CHOICE"
-          v-model="answer"
-          :response-choices="question.responseChoices"
-          :max-multiple-choices="
-            question.maxMultipleChoices || question.responseChoices.length
+      <!-- Center bloc : question inputs + button previous and next -->
+      <div class="change-question-container" style="position: relative">
+        <!-- all possible inputs -->
+        <div class="my-1_5">
+          <ResponseInputOpen
+            v-if="question.type === QuestionType.OPEN"
+            v-model="answer"
+            :color="props.color"
+            :question-id="questionId"
+          />
+          <ResponseInputPercentage
+            v-if="question.type === QuestionType.PERCENTAGE"
+            v-model="answer"
+            :color="props.color"
+            :question-id="questionId"
+          />
+          <ResponseInputUniqueChoice
+            v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
+            v-model="answer"
+            :response-choices="question.responseChoices"
+            :color="props.color"
+            :question-id="questionId"
+          />
+          <ResponseInputMultipleChoice
+            v-else-if="question.type === QuestionType.MULTIPLE_CHOICE"
+            v-model="answer"
+            :response-choices="question.responseChoices"
+            :max-multiple-choices="
+              question.maxMultipleChoices || question.responseChoices.length
+            "
+            :color="props.color"
+            :question-id="questionId"
+          />
+          <ResponseInputBinary
+            v-else-if="question.type === QuestionType.BOOLEAN"
+            v-model="answer"
+            :color="props.color"
+            :question-id="questionId"
+          />
+          <ResponseInputRanking
+            v-else-if="question.type === QuestionType.CLOSED_WITH_RANKING"
+            v-model="answer"
+            :response-choices="question.responseChoices"
+            :color="props.color"
+          />
+          <ResponseInputScale
+            v-else-if="question.type === QuestionType.CLOSED_WITH_SCALE"
+            v-model="answer"
+            :categories="question.categories"
+            :color="props.color"
+            :response-choices="question.responseChoices"
+          />
+        </div>
+
+        <!-- button previous next -->
+        <button
+          v-if="
+            !props.context.journey.isFirstQuestion(question.id) ||
+            props.context.hasPreviousStep
           "
-          :color="props.color"
-          :question-id="questionId"
-        />
-        <ResponseInputBinary
-          v-else-if="question.type === QuestionType.BOOLEAN"
-          v-model="answer"
-          :color="props.color"
-          :question-id="questionId"
-        />
-        <ResponseInputRanking
-          v-else-if="question.type === QuestionType.CLOSED_WITH_RANKING"
-          v-model="answer"
-          :response-choices="question.responseChoices"
-          :color="props.color"
-        />
-        <ResponseInputScale
-          v-else-if="question.type === QuestionType.CLOSED_WITH_SCALE"
-          v-model="answer"
-          :categories="question.categories"
-          :color="props.color"
-          :response-choices="question.responseChoices"
-        />
+          class="button is-dark is-outlined is-rounded change-question-button previous"
+          @click.prevent="goToPreviousQuestion"
+        >
+          <div>
+            <i class="icon">
+              <Icon size="16" name="arrow-left-line" class="mt-0_5" />
+            </i>
+          </div>
+        </button>
+        <button
+          class="button is-dark is-outlined is-rounded change-question-button next"
+          :disabled="nextQuestionDisabled"
+          @click.prevent="goToNextQuestion"
+        >
+          <div>
+            <i class="icon">
+              <Icon size="16" name="arrow-right-line" class="mt-0_5" />
+            </i>
+          </div>
+        </button>
       </div>
 
       <!-- end inputs -->
@@ -79,7 +109,7 @@
           </button>
           <span class="is-size-7">
             appuyez sur
-            <span class="has-text-weight-bold">Entrer ⮐</span></span
+            <span class="has-text-weight-bold">Entrer ⏎</span></span
           >
         </div>
         <div class="is-flex buttons rounds">
@@ -195,6 +225,13 @@ watch(question, () => {
 
 const validationDisabled = computed(() => (isAnswered.value ? false : true))
 
+const nextQuestionDisabled = computed(() =>
+  initialValue ||
+  props.context.responseByQuestionId[props.questionId]?.hasPassed
+    ? false
+    : true
+)
+
 const definitions = computed<{ [key: number]: Definition }>(() =>
   definitionStore.definitionsByIdArray(question.value.definitionIds)
 )
@@ -236,6 +273,15 @@ if (question.value?.toGoFurther) {
 function setTab(tabId) {
   currentTabId.value = tabId
 }
+
+const goToPreviousQuestion = () => {
+  props.context.journey.goToPreviousQuestion(question.value.id)
+}
+
+const goToNextQuestion = () => {
+  props.context.journey.goToNextQuestion(question.value.id)
+}
+
 const submit = async () => {
   const result = await participationStore.saveResponse(
     question.value,
@@ -282,4 +328,26 @@ const submit = async () => {
     color: var(--color-dark)
   &:hover
     color: var(--color-active)
+
+.change-question
+  &-container
+    position: relative
+  &-button
+    position: absolute
+    top: 50%
+    @include widescreen
+      &.next
+        right: -10rem
+      &.previous
+        left: -10rem
+    @include desktop-only
+      &.next
+        right: -5rem
+      &.previous
+        left: -5rem
+    @include touch
+      &.next
+        right: -0.5rem
+      &.previous
+        left: -0.5rem
 </style>

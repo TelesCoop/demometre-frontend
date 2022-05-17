@@ -51,7 +51,7 @@ export const useAssessmentStore = defineStore("assessment", {
         this.currentAssessmentId = response.id
       } catch (error) {
         const errorStore = useToastStore()
-        errorStore.setError(error.data.messageCode)
+        errorStore.setError(error.messageCode)
       }
     },
     async getRepresentativityCriterias() {
