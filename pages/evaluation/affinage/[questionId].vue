@@ -39,6 +39,7 @@ const context: QuestionContextProps = {
   journey: useProfilingJourney(),
   questionById: profilingStore.questionById,
   responseByQuestionId: participationStore.responseByProfilingQuestionId,
+  hasPreviousStep: false,
 }
 </script>
 

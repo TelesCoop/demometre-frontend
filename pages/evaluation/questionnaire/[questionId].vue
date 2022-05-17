@@ -50,6 +50,7 @@ const context: QuestionContextProps = {
   journey,
   questionById: questionnaireStore.questionById,
   responseByQuestionId: participationStore.responseByQuestionnaireQuestionId,
+  hasPreviousStep: true,
 }
 </script>
 

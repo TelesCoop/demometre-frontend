@@ -60,6 +60,10 @@
 
         <!-- button previous next -->
         <button
+          v-if="
+            !props.context.journey.isFirstQuestion(question.id) ||
+            props.context.hasPreviousStep
+          "
           class="button is-dark is-outlined is-rounded change-question-button previous"
           @click.prevent="goToPreviousQuestion"
         >
@@ -71,6 +75,7 @@
         </button>
         <button
           class="button is-dark is-outlined is-rounded change-question-button next"
+          :disabled="nextQuestionDisabled"
           @click.prevent="goToNextQuestion"
         >
           <div>
@@ -220,6 +225,13 @@ watch(question, () => {
 
 const validationDisabled = computed(() => (isAnswered.value ? false : true))
 
+const nextQuestionDisabled = computed(() =>
+  initialValue ||
+  props.context.responseByQuestionId[props.questionId]?.hasPassed
+    ? false
+    : true
+)
+
 const definitions = computed<{ [key: number]: Definition }>(() =>
   definitionStore.definitionsByIdArray(question.value.definitionIds)
 )
@@ -263,19 +275,11 @@ function setTab(tabId) {
 }
 
 const goToPreviousQuestion = () => {
-  if (props.context.journey.isFirstQuestion(question.value.id)) {
-    useRouter().push("/evaluation/questionnaire")
-  } else {
-    props.context.journey.goToPreviousQuestion(question.value.id)
-  }
+  props.context.journey.goToPreviousQuestion(question.value.id)
 }
 
 const goToNextQuestion = () => {
-  if (props.context.journey.isLastQuestion(question.value.id)) {
-    useRouter().push("/evaluation/questionnaire")
-  } else {
-    props.context.journey.goToNextQuestion(question.value.id)
-  }
+  props.context.journey.goToNextQuestion(question.value.id)
 }
 
 const submit = async () => {
