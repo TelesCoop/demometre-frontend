@@ -89,13 +89,13 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
       }
       return hierarchicalQuestionStructure
     },
-    getQuestionnaireQuestionByPillarId(pillarId): Question[] {
+    getQuestionnaireQuestionByPillarName(pillarName): Question[] {
       return Object.values(this.questionById).filter((question: Question) => {
-        const questionPillarId = this.getHierarchicalQuestionStructure({
+        const questionPillarName = this.getHierarchicalQuestionStructure({
           question,
-        })?.pillarId
+        })?.pillarName
 
-        return pillarId === questionPillarId
+        return pillarName === questionPillarName
       }) as Question[]
     },
   },
