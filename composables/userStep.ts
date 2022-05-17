@@ -21,7 +21,7 @@ export function useUserStep<Type>() {
     if (!participationStore.id) {
       return {
         step: "role",
-        url: `/evaluation/localisation/${assessmentStore.currentAssessmentId}/participation`,
+        url: `/evaluation/localisation/${assessmentStore.currentAssessmentId}`,
         text: RESUME_EVALUATION_TEXT,
       }
     }
