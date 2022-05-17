@@ -38,7 +38,7 @@ const props = defineProps({
     type: Array as PropType<ResponseChoiceType[]>,
     required: true,
   },
-  modelValue: { type: Number, required: false, default: 0 },
+  modelValue: { type: Number, required: false, default: null },
   color: { type: String, required: true },
   questionId: { type: Number, required: true },
 })
