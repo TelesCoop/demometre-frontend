@@ -21,13 +21,13 @@ export function useUserStep<Type>() {
     if (!participationStore.id) {
       return {
         step: "role",
-        url: `/evaluation/localisation/${assessmentStore.currentAssessmentId}/participation`,
+        url: `/evaluation/localisation/${assessmentStore.currentAssessmentId}`,
         text: RESUME_EVALUATION_TEXT,
       }
     }
 
     if (!participationStore.participation.isProfilingQuestionsCompleted) {
-      const questionId = profilingJourney.nextQuestionId(undefined)
+      const questionId = profilingJourney.nextQuestionId(undefined, true)
       return {
         step: "profiling",
         url: `/evaluation/affinage/${questionId}`,
