@@ -27,22 +27,21 @@ const router = useRouter()
 const questionnaireStore = useQuestionnaireStore()
 
 const questionId: Ref<number> = ref(+route.params.questionId)
-let { pillarId, pillarName } =
-  questionnaireStore.getHierarchicalQuestionStructure({
-    questionId: questionId.value,
-  })
-let journey = useQuestionnaireJourney(pillarId)
+let { pillarName } = questionnaireStore.getHierarchicalQuestionStructure({
+  questionId: questionId.value,
+})
+let journey = useQuestionnaireJourney(pillarName)
 const color = computed<string>(() =>
   pillarName ? PillarParams[pillarName].color : "no-pillar"
 )
 
 router.beforeEach((to) => {
-  if (to.params.questionId) {
+  if (+to.params.questionId) {
     questionId.value = +to.params.questionId
-    pillarId = questionnaireStore.getHierarchicalQuestionStructure({
+    pillarName = questionnaireStore.getHierarchicalQuestionStructure({
       questionId: questionId.value,
-    }).pillarId
-    journey = useQuestionnaireJourney(pillarId)
+    }).pillarName
+    journey = useQuestionnaireJourney(pillarName)
   }
 })
 

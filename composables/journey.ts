@@ -170,13 +170,13 @@ export function useProfilingJourney<Type>() {
   }
 }
 
-export function useQuestionnaireJourney<Type>(pillarId: number) {
+export function useQuestionnaireJourney<Type>(pillarName: string) {
   const journey = computed(() => {
     const questionnaireStore = useQuestionnaireStore()
     const participationStore = useParticipationStore()
     const assessmentStore = useAssessmentStore()
     const questionIds = questionnaireStore
-      .getQuestionnaireQuestionByPillarId(pillarId)
+      .getQuestionnaireQuestionByPillarName(pillarName)
       .filter((question: Question) => {
         const participation = participationStore.participation
         const assessment = assessmentStore.currentAssessment
@@ -198,12 +198,18 @@ export function useQuestionnaireJourney<Type>(pillarId: number) {
 
   const goToNextQuestion = (currentQuestionId: number) => {
     const questionId = nextQuestionId(currentQuestionId, true)
-    useRouter().push(`/evaluation/questionnaire/${questionId}`)
+    useRouter().push({
+      path: `/evaluation/questionnaire/${questionId}`,
+      query: { pillar: pillarName },
+    })
   }
 
   const goToPreviousQuestion = (currentQuestionId: number) => {
     const questionId = nextQuestionId(currentQuestionId, false)
-    useRouter().push(`/evaluation/questionnaire/${questionId}`)
+    useRouter().push({
+      path: `/evaluation/questionnaire/${questionId}`,
+      query: { pillar: pillarName },
+    })
   }
 
   const isLastQuestion = (currentQuestionId: number): boolean => {

@@ -265,15 +265,17 @@ function setTab(tabId) {
 const goToPreviousQuestion = () => {
   if (props.context.journey.isFirstQuestion(question.value.id)) {
     useRouter().push("/evaluation/questionnaire")
+  } else {
+    props.context.journey.goToPreviousQuestion(question.value.id)
   }
-  props.context.journey.goToPreviousQuestion(question.value.id)
 }
 
 const goToNextQuestion = () => {
   if (props.context.journey.isLastQuestion(question.value.id)) {
     useRouter().push("/evaluation/questionnaire")
+  } else {
+    props.context.journey.goToNextQuestion(question.value.id)
   }
-  props.context.journey.goToNextQuestion(question.value.id)
 }
 
 const submit = async () => {

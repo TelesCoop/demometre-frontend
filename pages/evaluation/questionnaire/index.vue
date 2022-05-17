@@ -20,10 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
-import { Marker, PillarType } from "~/composables/types"
 import { useRouter } from "vue-router"
 
 definePageMeta({
@@ -41,32 +39,21 @@ if (!pageStore.referentialPage.title) {
   pageStore.getReferentialPage()
 }
 
-const activePillar = ref<PillarType>()
-const markers = ref<Marker[]>()
-
-const colorClass = computed(() =>
-  activePillar.value ? PillarParams[activePillar.value.name].color : ""
-)
-
-const pillarsRef = ref(null)
-
-const onSelectPillar = (pillar) => {
-  activePillar.value = pillar
-  markers.value = activePillar.value?.markerIds.map(
-    (markerId) => questionnaireStore.markerById[markerId]
-  )
-  router.push({ query: { pillar: pillar.name } })
+const startPillar = (pillarName) => {
+  const firstQuestion =
+    questionnaireStore.getQuestionnaireQuestionByPillarName(pillarName)[0]
+  return router.push({
+    path: `/evaluation/questionnaire/${firstQuestion.id}`,
+    query: { pillar: pillarName },
+  })
 }
 
 const onStartQuestionnaire = () => {
-  const pillarId = questionnaireStore.pillars[0].id
-  const firstQuestion =
-    questionnaireStore.getQuestionnaireQuestionByPillarId(pillarId)[0]
-  return router.push(`/evaluation/questionnaire/${firstQuestion.id}`)
+  const pillarName = questionnaireStore.pillars[0].name
+  startPillar(pillarName)
 }
 const onRosettePillarClicked = (pillarName) => {
-  onSelectPillar(questionnaireStore.getPillarByName(pillarName))
-  pillarsRef.value.scrollIntoView({ behavior: "smooth" })
+  startPillar(pillarName)
 }
 const onRosetteMarkerClicked = (markerId) => {
   onRosettePillarClicked(questionnaireStore.markerById[markerId].pillarName)

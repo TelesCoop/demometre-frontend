@@ -27,7 +27,7 @@ export function useUserStep<Type>() {
     }
 
     if (!participationStore.participation.isProfilingQuestionsCompleted) {
-      const questionId = profilingJourney.nextQuestionId(undefined)
+      const questionId = profilingJourney.nextQuestionId(undefined, true)
       return {
         step: "profiling",
         url: `/evaluation/affinage/${questionId}`,

@@ -28,7 +28,7 @@ const router = useRouter()
 const questionId = ref(+route.params.questionId)
 
 router.beforeEach((to) => {
-  if (to.params.questionId) {
+  if (+to.params.questionId) {
     questionId.value = +to.params.questionId
   }
 })
