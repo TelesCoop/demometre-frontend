@@ -109,7 +109,7 @@
           </button>
           <span class="is-size-7">
             appuyez sur
-            <span class="has-text-weight-bold"> Entrer ⏎</span></span
+            <span class="has-text-weight-bold">Entrer ⏎</span></span
           >
         </div>
         <div class="is-flex buttons rounds">
