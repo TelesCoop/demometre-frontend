@@ -1,5 +1,5 @@
 <template>
-  <div class="container is-tight pillar-try">
+  <div class="container is-tight">
     <Question
       v-if="context"
       :context="context"
@@ -27,21 +27,22 @@ const router = useRouter()
 const questionnaireStore = useQuestionnaireStore()
 
 const questionId: Ref<number> = ref(+route.params.questionId)
-let { pillarId, pillarName } =
-  questionnaireStore.getHierarchicalQuestionStructure({
-    questionId: questionId.value,
-  })
-let journey = useQuestionnaireJourney(pillarId)
+let { pillarName } = questionnaireStore.getHierarchicalQuestionStructure({
+  questionId: questionId.value,
+})
+let journey = useQuestionnaireJourney(pillarName)
 const color = computed<string>(() =>
   pillarName ? PillarParams[pillarName].color : "no-pillar"
 )
 
 router.beforeEach((to) => {
-  questionId.value = +to.params.questionId
-  pillarId = questionnaireStore.getHierarchicalQuestionStructure({
-    questionId: questionId.value,
-  }).pillarId
-  journey = useQuestionnaireJourney(pillarId)
+  if (+to.params.questionId) {
+    questionId.value = +to.params.questionId
+    pillarName = questionnaireStore.getHierarchicalQuestionStructure({
+      questionId: questionId.value,
+    }).pillarName
+    journey = useQuestionnaireJourney(pillarName)
+  }
 })
 
 const participationStore = useParticipationStore()
@@ -49,6 +50,7 @@ const context: QuestionContextProps = {
   journey,
   questionById: questionnaireStore.questionById,
   responseByQuestionId: participationStore.responseByQuestionnaireQuestionId,
+  hasPreviousStep: true,
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="container is-tight pillar-try">
+  <div class="container is-tight">
     <Question
       v-if="context"
       :context="context"
@@ -28,7 +28,9 @@ const router = useRouter()
 const questionId = ref(+route.params.questionId)
 
 router.beforeEach((to) => {
-  questionId.value = +to.params.questionId
+  if (+to.params.questionId) {
+    questionId.value = +to.params.questionId
+  }
 })
 
 const profilingStore = useProfilingStore()
@@ -37,6 +39,7 @@ const context: QuestionContextProps = {
   journey: useProfilingJourney(),
   questionById: profilingStore.questionById,
   responseByQuestionId: participationStore.responseByProfilingQuestionId,
+  hasPreviousStep: false,
 }
 </script>
 

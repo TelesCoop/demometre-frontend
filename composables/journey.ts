@@ -113,13 +113,13 @@ export function useProfilingJourney<Type>() {
     const profilingStore = useProfilingStore()
     const participationStore = useParticipationStore()
     const assessmentStore = useAssessmentStore()
+    const participation = participationStore.participation
+    const assessment = assessmentStore.currentAssessment
     const responseByQuestionId =
       participationStore.responseByProfilingQuestionId
     const questionIds = profilingStore.orderedQuestionId
       .filter((questionId) => {
         const question = profilingStore.questionById[questionId]
-        const participation = participationStore.participation
-        const assessment = assessmentStore.currentAssessment
         return QUESTION_FILTERS_VALUES.every((test) =>
           test({ question, participation, assessment })
         )
@@ -130,15 +130,29 @@ export function useProfilingJourney<Type>() {
       })
     return questionIds
   })
-  const nextQuestionId = (currentQuestionId: number): number => {
+  const nextQuestionId = (
+    currentQuestionId: number,
+    nextQuestion: boolean
+  ): number => {
     const myJourney = journey.value
     const index = myJourney.indexOf(currentQuestionId)
-    return myJourney[index + 1]
+    return nextQuestion ? myJourney[index + 1] : myJourney[index - 1]
   }
 
   const goToNextQuestion = (currentQuestionId: number) => {
-    const questionId = nextQuestionId(currentQuestionId)
-    useRouter().push(`/evaluation/affinage/${questionId}`)
+    if (isLastQuestion(currentQuestionId)) {
+      useRouter().push("/evaluation/questionnaire")
+    } else {
+      const questionId = nextQuestionId(currentQuestionId, true)
+      useRouter().push(`/evaluation/affinage/${questionId}`)
+    }
+  }
+
+  const goToPreviousQuestion = (currentQuestionId: number) => {
+    if (!isFirstQuestion(currentQuestionId)) {
+      const questionId = nextQuestionId(currentQuestionId, false)
+      useRouter().push(`/evaluation/affinage/${questionId}`)
+    }
   }
 
   const isLastQuestion = (currentQuestionId: number): boolean => {
@@ -147,21 +161,28 @@ export function useProfilingJourney<Type>() {
     return index + 1 === myJourney.length
   }
 
+  const isFirstQuestion = (currentQuestionId: number): boolean => {
+    const myJourney = journey.value
+    return myJourney.indexOf(currentQuestionId) === 0
+  }
+
   return {
     journey,
     nextQuestionId,
     goToNextQuestion,
+    goToPreviousQuestion,
     isLastQuestion,
+    isFirstQuestion,
   }
 }
 
-export function useQuestionnaireJourney<Type>(pillarId: number) {
+export function useQuestionnaireJourney<Type>(pillarName: string) {
   const journey = computed(() => {
     const questionnaireStore = useQuestionnaireStore()
     const participationStore = useParticipationStore()
     const assessmentStore = useAssessmentStore()
     const questionIds = questionnaireStore
-      .getQuestionnaireQuestionByPillarId(pillarId)
+      .getQuestionnaireQuestionByPillarName(pillarName)
       .filter((question: Question) => {
         const participation = participationStore.participation
         const assessment = assessmentStore.currentAssessment
@@ -172,15 +193,37 @@ export function useQuestionnaireJourney<Type>(pillarId: number) {
       .map((question: Question) => question.id)
     return questionIds
   })
-  const nextQuestionId = (currentQuestionId: number): number => {
+  const nextQuestionId = (
+    currentQuestionId: number,
+    nextQuestion: boolean
+  ): number => {
     const myJourney = journey.value
     const index = myJourney.indexOf(currentQuestionId)
-    return myJourney[index + 1]
+    return nextQuestion ? myJourney[index + 1] : myJourney[index - 1]
   }
 
   const goToNextQuestion = (currentQuestionId: number) => {
-    const questionId = nextQuestionId(currentQuestionId)
-    useRouter().push(`/evaluation/questionnaire/${questionId}`)
+    if (isLastQuestion(currentQuestionId)) {
+      useRouter().push("/evaluation/questionnaire")
+    } else {
+      const questionId = nextQuestionId(currentQuestionId, true)
+      useRouter().push({
+        path: `/evaluation/questionnaire/${questionId}`,
+        query: { pillar: pillarName },
+      })
+    }
+  }
+
+  const goToPreviousQuestion = (currentQuestionId: number) => {
+    if (isFirstQuestion(currentQuestionId)) {
+      useRouter().push("/evaluation/questionnaire")
+    } else {
+      const questionId = nextQuestionId(currentQuestionId, false)
+      useRouter().push({
+        path: `/evaluation/questionnaire/${questionId}`,
+        query: { pillar: pillarName },
+      })
+    }
   }
 
   const isLastQuestion = (currentQuestionId: number): boolean => {
@@ -189,10 +232,17 @@ export function useQuestionnaireJourney<Type>(pillarId: number) {
     return index + 1 === myJourney.length
   }
 
+  const isFirstQuestion = (currentQuestionId: number): boolean => {
+    const myJourney = journey.value
+    return myJourney.indexOf(currentQuestionId) === 0
+  }
+
   return {
     journey,
     nextQuestionId,
     goToNextQuestion,
+    goToPreviousQuestion,
     isLastQuestion,
+    isFirstQuestion,
   }
 }
