@@ -1,6 +1,6 @@
 import { useUserStore } from "~/stores/userStore"
 import { useRequestHeaders } from "#app"
-import { getParticipationUserData } from "~~/utils/user-data"
+import { getParticipationUserData } from "~/composables/actions"
 
 const loadUserState = async () => {
   if (!process.server) return
@@ -8,8 +8,6 @@ const loadUserState = async () => {
   // Conserve header because of crash
   const headers = useRequestHeaders(["cookie"])
   const userStore = useUserStore()
-
-  console.log(headers)
 
   if (!userStore.refreshed) {
     // if profile is already got from SSR, do not fetch again

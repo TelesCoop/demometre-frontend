@@ -2,7 +2,7 @@ import { defineStore } from "pinia"
 import { User } from "~/composables/types"
 import { useApiPost, useGet } from "~/composables/api"
 import { useToastStore } from "./toastStore"
-import { getParticipationUserData } from "~~/utils/user-data"
+import { getParticipationUserData } from "~/composables/actions"
 
 export const useUserStore = defineStore("user", {
   state: () => ({

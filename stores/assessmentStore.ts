@@ -44,7 +44,7 @@ export const useAssessmentStore = defineStore("assessment", {
 
     async getAssessment(id, headers = undefined) {
       try {
-        const response = await useGet<Assessment>(`assessments/${id}`, {
+        const response = await useGet<Assessment>(`assessments/${id}/`, {
           headers,
         })
         this.assessmentById[response.id] = response
