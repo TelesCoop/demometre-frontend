@@ -11,8 +11,6 @@ import { useToastStore } from "./toastStore"
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
-    roleId: <number | null>null,
-    consent: <boolean>false,
     responseByProfilingQuestionId: <{ [key: number]: QuestionResponse }>{},
     responseByQuestionnaireQuestionId: <{ [key: number]: QuestionResponse }>{},
     profilingCurrent: <number[]>[],
@@ -35,8 +33,8 @@ export const useParticipationStore = defineStore("participation", {
         "participations/",
         {
           assessmentId: useAssessmentStore().currentAssessmentId,
-          roleId: this.roleId,
-          consent: this.consent,
+          roleId: this.participation.roleId,
+          consent: this.participation.consent,
         }
       )
       if (!error.value) {
@@ -61,16 +59,11 @@ export const useParticipationStore = defineStore("participation", {
         return false
       }
     },
-    async updateState(participation) {
-      this.id = participation.id
-      this.roleId = participation.roleId
-      this.consent = participation.consent
-    },
     setConsent() {
-      this.consent = true
+      this.participation.consent = true
     },
     chooseRole(roleId) {
-      this.roleId = roleId
+      this.participation.roleId = roleId
     },
 
     async getProfilingQuestionResponses(
@@ -157,6 +150,12 @@ export const useParticipationStore = defineStore("participation", {
       }
       this.participation = data.value
       return true
+    },
+    logoutUser() {
+      this.responseByProfilingQuestionId = {}
+      this.responseByQuestionnaireQuestionId = {}
+      this.profilingCurrent = []
+      this.participation = {}
     },
   },
 })

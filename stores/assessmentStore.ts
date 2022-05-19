@@ -85,5 +85,8 @@ export const useAssessmentStore = defineStore("assessment", {
       this.assessmentById[data.value.id] = data.value
       return true
     },
+    logoutUser() {
+      this.currentAssessmentId = undefined
+    },
   },
 })

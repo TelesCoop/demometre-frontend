@@ -3,6 +3,8 @@ import { User } from "~/composables/types"
 import { useApiPost, useGet } from "~/composables/api"
 import { useToastStore } from "./toastStore"
 import { getParticipationUserData } from "~/composables/actions"
+import { useParticipationStore } from "./participationStore"
+import { useAssessmentStore } from "./assessmentStore"
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -70,6 +72,8 @@ export const useUserStore = defineStore("user", {
       const { error } = await useApiPost<User>("auth/logout")
       if (!error.value) {
         this.user = { id: null, username: "", email: "" }
+        useParticipationStore().logoutUser()
+        useAssessmentStore().logoutUser()
         const router = useRouter()
         router.push("/login")
       } else {
