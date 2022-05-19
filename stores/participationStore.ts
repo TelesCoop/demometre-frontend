@@ -5,7 +5,7 @@ import { useAssessmentStore } from "./assessmentStore"
 import {
   QUESTION_RESPONSE_VALUE_BY_TYPE,
   QUESTION_RESPONSES_BY_TYPE,
-} from "~/assets/utils/question-response"
+} from "~/utils/question-response"
 import { useUserStore } from "./userStore"
 import { useToastStore } from "./toastStore"
 

@@ -2,6 +2,7 @@ import { defineStore } from "pinia"
 import { User } from "~/composables/types"
 import { useApiPost, useGet } from "~/composables/api"
 import { useToastStore } from "./toastStore"
+import { getParticipationUserData } from "~~/utils/user-data"
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -12,6 +13,9 @@ export const useUserStore = defineStore("user", {
   getters: {
     isLoggedIn() {
       return !!this.user.email
+    },
+    isAnonymous() {
+      return !!this.anonymous.email
     },
   },
   actions: {
@@ -33,6 +37,7 @@ export const useUserStore = defineStore("user", {
       if (!error.value) {
         this.user = data.value
         this.anonymous = {}
+        await getParticipationUserData()
         const router = useRouter()
         router.push(callbackUrl)
       }
@@ -57,6 +62,7 @@ export const useUserStore = defineStore("user", {
       }
       this.user = data.value
       this.anonymous = {}
+      await getParticipationUserData()
       const router = useRouter()
       router.push(callbackUrl)
     },

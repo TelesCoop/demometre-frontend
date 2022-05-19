@@ -113,7 +113,7 @@
 <script setup lang="ts">
 import { computed } from "vue"
 
-import { wordTitleCase } from "~/utils"
+import { wordTitleCase } from "~/utils/title-case"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, Criteria } from "~/composables/types"
 

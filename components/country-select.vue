@@ -12,5 +12,5 @@
 </template>
 
 <script setup lang="ts">
-import { COUNTRIES } from "assets/utils/countries"
+import { COUNTRIES } from "utils/countries"
 </script>
