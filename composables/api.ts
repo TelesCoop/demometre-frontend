@@ -95,17 +95,13 @@ export async function useApiGet<Type>(path: string) {
   return { data, error }
 }
 
-export async function useApiPost<Type>(
-  path: string,
-  payload: any = {},
-  anonymous: string = undefined
-) {
+export async function useApiPost<Type>(path: string, payload: any = {}) {
   const loadingStore = useLoadingStore()
-  const anonymousQuery = anonymous ? `?anonymous=${anonymous}` : ""
+
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
   const { data, error } = await useAsyncData<Type>(key, (ctx) =>
-    $fetch(BASE_API_URL + path + anonymousQuery, {
+    $fetch(BASE_API_URL + path, {
       method: "POST",
       body: payload,
       credentials: "include",
