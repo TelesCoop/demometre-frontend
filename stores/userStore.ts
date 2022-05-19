@@ -22,7 +22,7 @@ export const useUserStore = defineStore("user", {
   },
   actions: {
     async createAnonymousUser() {
-      const { data, error } = await useApiPost<User>("anonymous")
+      const { data, error } = await useApiPost<User>("auth/anonymous")
       if (error.value) {
         const errorStore = useToastStore()
         errorStore.setError(error.value.data.messageCode)

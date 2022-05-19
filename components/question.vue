@@ -187,7 +187,7 @@ import { computed, PropType, watch } from "vue"
 import { ref } from "@vue/reactivity"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
-import { getQuestionResponseValue } from "assets/utils/question-response"
+import { getQuestionResponseValue } from "~/utils/question-response"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 
 type tabDef = { label: string; id: string }
