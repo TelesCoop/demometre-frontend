@@ -11,6 +11,7 @@ export const useUserStore = defineStore("user", {
     user: <User>{},
     anonymous: <User>{},
     refreshed: <boolean>false,
+    anonymousRefreshed: <boolean>false,
   }),
   getters: {
     isLoggedIn() {
@@ -18,6 +19,9 @@ export const useUserStore = defineStore("user", {
     },
     isAnonymous() {
       return !!this.anonymous.email
+    },
+    anonymousName: (state) => {
+      return state.anonymous.username || ""
     },
   },
   actions: {
@@ -84,8 +88,23 @@ export const useUserStore = defineStore("user", {
     async refreshProfile(headers = undefined) {
       this.refreshed = true
       try {
-        const response = await useGet<User>("auth/profile", { headers })
+        const response = await useGet<User>(`auth/profile`, { headers })
         this.user = response
+        return true
+      } catch (e) {
+        return false
+      }
+    },
+    async refreshAnonymous(anonymous_name, headers = undefined) {
+      this.anonymousRefreshed = true
+      const response = await useGet<User>(
+        `auth/profile?anonymous=${anonymous_name}`,
+        { headers }
+      )
+      try {
+        if (response.username.includes("anonymous-")) {
+          this.anonymous = response
+        }
         return true
       } catch (e) {
         return false

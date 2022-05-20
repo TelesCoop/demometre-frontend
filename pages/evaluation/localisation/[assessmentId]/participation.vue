@@ -70,8 +70,6 @@ async function onSubmit() {
   if (isSuccess) {
     await getDataOfParticipation()
     useProfilingJourney().goToNextQuestion(undefined)
-  } else {
-    // TODO : manage case when there is not next profiling Question
   }
 }
 </script>
