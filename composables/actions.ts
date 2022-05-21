@@ -1,4 +1,3 @@
-import { useProfilingStore } from "~/stores/profilingStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useParticipationStore } from "~/stores/participationStore"
 
@@ -19,4 +18,13 @@ export async function getDataOfParticipation(headers = undefined) {
       headers
     ),
   ])
+}
+
+export async function getParticipationUserData(headers = undefined) {
+  const participationStore = useParticipationStore()
+  if (!participationStore.id) {
+    if (await participationStore.getCurrentParticipation(headers)) {
+      await getDataOfParticipation(headers)
+    }
+  }
 }

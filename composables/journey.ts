@@ -5,6 +5,7 @@ import { useParticipationStore } from "~/stores/participationStore"
 import { useRouter } from "#app"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { useUserStore } from "~/stores/userStore"
 
 type QuestionDataFilter = {
   question: Question
@@ -140,18 +141,29 @@ export function useProfilingJourney<Type>() {
   }
 
   const goToNextQuestion = (currentQuestionId: number) => {
+    const userStore = useUserStore()
     if (isLastQuestion(currentQuestionId)) {
-      useRouter().push("/evaluation/questionnaire")
+      useRouter().push({
+        path: "/evaluation/questionnaire",
+        query: { anonymous: userStore.anonymous.username },
+      })
     } else {
       const questionId = nextQuestionId(currentQuestionId, true)
-      useRouter().push(`/evaluation/affinage/${questionId}`)
+      useRouter().push({
+        path: `/evaluation/affinage/${questionId}`,
+        query: { anonymous: userStore.anonymous.username },
+      })
     }
   }
 
   const goToPreviousQuestion = (currentQuestionId: number) => {
+    const userStore = useUserStore()
     if (!isFirstQuestion(currentQuestionId)) {
       const questionId = nextQuestionId(currentQuestionId, false)
-      useRouter().push(`/evaluation/affinage/${questionId}`)
+      useRouter().push({
+        path: `/evaluation/affinage/${questionId}`,
+        query: { anonymous: userStore.anonymous.username },
+      })
     }
   }
 
@@ -203,25 +215,33 @@ export function useQuestionnaireJourney<Type>(pillarName: string) {
   }
 
   const goToNextQuestion = (currentQuestionId: number) => {
+    const userStore = useUserStore()
     if (isLastQuestion(currentQuestionId)) {
-      useRouter().push("/evaluation/questionnaire")
+      useRouter().push({
+        path: "/evaluation/questionnaire",
+        query: { anonymous: userStore.anonymous.username },
+      })
     } else {
       const questionId = nextQuestionId(currentQuestionId, true)
       useRouter().push({
         path: `/evaluation/questionnaire/${questionId}`,
-        query: { pillar: pillarName },
+        query: { pillar: pillarName, anonymous: userStore.anonymous.username },
       })
     }
   }
 
   const goToPreviousQuestion = (currentQuestionId: number) => {
+    const userStore = useUserStore()
     if (isFirstQuestion(currentQuestionId)) {
-      useRouter().push("/evaluation/questionnaire")
+      useRouter().push({
+        path: "/evaluation/questionnaire",
+        query: { anonymous: userStore.anonymous.username },
+      })
     } else {
       const questionId = nextQuestionId(currentQuestionId, false)
       useRouter().push({
         path: `/evaluation/questionnaire/${questionId}`,
-        query: { pillar: pillarName },
+        query: { pillar: pillarName, anonymous: userStore.anonymous.username },
       })
     }
   }

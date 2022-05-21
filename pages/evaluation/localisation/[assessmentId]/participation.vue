@@ -39,15 +39,15 @@ definePageMeta({
   middleware: ["assessment", "user-step"],
 })
 
+const participationStore = useParticipationStore()
+
 const color = ref("no-pillar")
-const answer = ref()
+const answer = ref(participationStore.participation.roleId)
 
 const profilingStore = useProfilingStore()
 if (!profilingStore.roles.length) {
   profilingStore.getRoles()
 }
-
-const participationStore = useParticipationStore()
 
 const responseChoices = computed(() =>
   profilingStore.roles.map((role) => {
@@ -70,8 +70,6 @@ async function onSubmit() {
   if (isSuccess) {
     await getDataOfParticipation()
     useProfilingJourney().goToNextQuestion(undefined)
-  } else {
-    // TODO : manage case when there is not next profiling Question
   }
 }
 </script>
