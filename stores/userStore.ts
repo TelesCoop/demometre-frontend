@@ -2,52 +2,82 @@ import { defineStore } from "pinia"
 import { User } from "~/composables/types"
 import { useApiPost, useGet } from "~/composables/api"
 import { useToastStore } from "./toastStore"
+import { getParticipationUserData } from "~/composables/actions"
+import { useParticipationStore } from "./participationStore"
+import { useAssessmentStore } from "./assessmentStore"
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: <User>{},
+    anonymous: <User>{},
     refreshed: <boolean>false,
+    anonymousRefreshed: <boolean>false,
   }),
   getters: {
     isLoggedIn() {
       return !!this.user.email
     },
+    isAnonymous() {
+      return !!this.anonymous.email
+    },
+    anonymousName: (state) => {
+      return state.anonymous.username || ""
+    },
   },
   actions: {
-    async login(email: string, password: string) {
+    async createAnonymousUser() {
+      const { data, error } = await useApiPost<User>("auth/anonymous")
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+        return false
+      }
+      this.user = {}
+      this.anonymous = data.value
+    },
+    async login(email: string, password: string, callbackUrl = "/") {
       const { data, error } = await useApiPost<User>("auth/login", {
         email,
         password,
       })
       if (!error.value) {
         this.user = data.value
+        this.anonymous = {}
+        await getParticipationUserData()
         const router = useRouter()
-        router.push("/")
+        router.push(callbackUrl)
       }
     },
     async signup(
       firstName: string,
       lastName: string,
       email: string,
-      password: string
+      password: string,
+      anonymous = null,
+      callbackUrl = "/"
     ) {
       const { data, error } = await useApiPost<User>("auth/signup", {
         firstName,
         lastName,
         email,
         password,
+        anonymous,
       })
       if (error.value) {
         return { error: error.value.data }
       }
       this.user = data.value
+      this.anonymous = {}
+      await getParticipationUserData()
       const router = useRouter()
-      router.push("/")
+      router.push(callbackUrl)
     },
     async logout() {
       const { error } = await useApiPost<User>("auth/logout")
       if (!error.value) {
-        this.updateState({ id: null, username: "", email: "" })
+        this.user = { id: null, username: "", email: "" }
+        useParticipationStore().logoutUser()
+        useAssessmentStore().logoutUser()
         const router = useRouter()
         router.push("/login")
       } else {
@@ -58,8 +88,23 @@ export const useUserStore = defineStore("user", {
     async refreshProfile(headers = undefined) {
       this.refreshed = true
       try {
-        const response = await useGet<User>("auth/profile", { headers })
+        const response = await useGet<User>(`auth/profile`, { headers })
         this.user = response
+        return true
+      } catch (e) {
+        return false
+      }
+    },
+    async refreshAnonymous(anonymous_name, headers = undefined) {
+      this.anonymousRefreshed = true
+      const response = await useGet<User>(
+        `auth/profile?anonymous=${anonymous_name}`,
+        { headers }
+      )
+      try {
+        if (response.username.includes("anonymous-")) {
+          this.anonymous = response
+        }
         return true
       } catch (e) {
         return false
@@ -93,11 +138,6 @@ export const useUserStore = defineStore("user", {
         const errorStore = useToastStore()
         errorStore.setError(error.value.data.messageCode)
       }
-    },
-    updateState(data: User) {
-      this.user.username = data.username
-      this.user.email = data.email
-      this.user.id = 0
     },
   },
 })

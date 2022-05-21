@@ -40,7 +40,7 @@ const props = defineProps({
   },
   modelValue: { type: Number, required: false, default: null },
   color: { type: String, required: true },
-  questionId: { type: Number, required: true },
+  questionId: { type: [Number, String], required: true },
 })
 
 const answer = useModel("modelValue")

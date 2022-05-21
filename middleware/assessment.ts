@@ -1,4 +1,4 @@
-import { useAssessmentStore } from "~~/stores/assessmentStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 async function verifyAssessment(to) {
   const assessmentStore = useAssessmentStore()
@@ -13,7 +13,7 @@ async function verifyAssessment(to) {
     !assessmentStore.currentAssessment?.initializationDate &&
     to.path !== "/evaluation/initialization"
   ) {
-    useRouter().push(
+    navigateTo(
       `/evaluation/initialization?assessment=${assessmentStore.currentAssessmentId}`
     )
   }
