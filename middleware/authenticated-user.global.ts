@@ -1,7 +1,6 @@
 import { useUserStore } from "~/stores/userStore"
-import { useParticipationStore } from "~/stores/participationStore"
 import { useRequestHeaders } from "#app"
-import { getDataOfParticipation } from "~/composables/actions"
+import { getParticipationUserData } from "~/composables/actions"
 
 const loadUserState = async () => {
   if (!process.server) return
@@ -15,13 +14,8 @@ const loadUserState = async () => {
     await userStore.refreshProfile(headers)
   }
 
-  if (userStore.isLoggedIn) {
-    const participationStore = useParticipationStore()
-    if (!participationStore.id) {
-      if (await participationStore.getCurrentParticipation(headers)) {
-        await getDataOfParticipation(headers)
-      }
-    }
+  if (userStore.isLoggedIn || userStore.isAnonymous) {
+    await getParticipationUserData(headers)
   }
 }
 

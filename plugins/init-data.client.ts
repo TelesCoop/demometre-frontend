@@ -1,5 +1,6 @@
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useProfilingStore } from "~/stores/profilingStore"
+import { useAssessmentStore } from "~~/stores/assessmentStore"
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook("app:mounted", () => {
@@ -8,6 +9,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     const profilingStore = useProfilingStore()
     const questionnaireStore = useQuestionnaireStore()
+    const assessmentStore = useAssessmentStore()
 
     if (!profilingStore.orderedQuestionId.length) {
       profilingStore.getProfilingQuestions()
@@ -18,6 +20,9 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
     if (!questionnaireStore.questions.length) {
       questionnaireStore.getQuestionnaireQuestions()
+    }
+    if (!assessmentStore.representativityCriterias.length) {
+      assessmentStore.getRepresentativityCriterias()
     }
   })
 })

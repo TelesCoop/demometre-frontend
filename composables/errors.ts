@@ -7,6 +7,7 @@ export const ErrorMessages = {
   no_zip_code_municipality: "Aucune commune ne correspond à ce code postal",
   no_zip_code_epci: "Aucune intercommunalité ne correspond à ce code postal",
   email_already_exists: "Le mail est déjà utilisé",
+  email_not_valid: "Le mail n'est pas valide",
   no_email: "Cet email ne correspond à aucun utilisateur",
   wrong_password_for_email: "Email et mot de passe ne correspondent pas",
   password_reset_key_outdate:
