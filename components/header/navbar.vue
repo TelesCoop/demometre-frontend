@@ -74,12 +74,20 @@
         </div>
       </div>
     </nav>
-    <HeaderLine :active-pillar-name="activePillar" />
+    <HeaderProgressBars
+      v-if="isQuestionnaireRoute"
+      :active-pillar-name="activePillar"
+    />
+    <HeaderLine v-else :active-pillar-name="activePillar" />
   </header>
 </template>
 
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
+
+const emit = defineEmits<{
+  (e: "change-header-height", value: number): void
+}>()
 
 const userStore = useUserStore()
 const userStep = useUserStep()
@@ -89,6 +97,12 @@ const isBurgerOpen = ref(false)
 
 const isRouteActive = computed(() => (path) => {
   return route.path === path
+})
+
+const isQuestionnaireRoute = computed(() => {
+  const isQuestionnaireRoute = route.path.includes("evaluation/questionnaire/")
+  emit("change-header-height", isQuestionnaireRoute ? 125 : 75)
+  return isQuestionnaireRoute
 })
 
 const activePillar = computed(() => {

@@ -25,27 +25,21 @@ definePageMeta({
 const route = useRoute()
 const router = useRouter()
 const questionnaireStore = useQuestionnaireStore()
+const participationStore = useParticipationStore()
 
 const questionId: Ref<number> = ref(+route.params.questionId)
-let { pillarName } = questionnaireStore.getHierarchicalQuestionStructure({
-  questionId: questionId.value,
-})
+let pillarName = questionnaireStore.questionById[questionId.value].pillarName
 let journey = useQuestionnaireJourney(pillarName)
-const color = computed<string>(() =>
-  pillarName ? PillarParams[pillarName].color : "no-pillar"
-)
+const color = computed<string>(() => PillarParams[pillarName].color)
 
 router.beforeEach((to) => {
   if (+to.params.questionId) {
     questionId.value = +to.params.questionId
-    pillarName = questionnaireStore.getHierarchicalQuestionStructure({
-      questionId: questionId.value,
-    }).pillarName
+    pillarName = questionnaireStore.questionById[questionId.value].pillarName
     journey = useQuestionnaireJourney(pillarName)
   }
 })
 
-const participationStore = useParticipationStore()
 const context: QuestionContextProps = {
   journey,
   questionById: questionnaireStore.questionById,
@@ -53,5 +47,3 @@ const context: QuestionContextProps = {
   hasPreviousStep: true,
 }
 </script>
-
-<style scoped lang="sass"></style>

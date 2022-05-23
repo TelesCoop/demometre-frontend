@@ -188,7 +188,6 @@ import { ref } from "@vue/reactivity"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getQuestionResponseValue } from "~/utils/question-response"
-import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 
 type tabDef = { label: string; id: string }
 const props = defineProps({
@@ -293,11 +292,10 @@ const submit = async () => {
       if (question.value.surveyType === SurveyType.PROFILING) {
         await participationStore.saveEndQuestionnaire(true)
       } else {
-        const pillarId: number =
-          useQuestionnaireStore().getHierarchicalQuestionStructure({
-            question: question.value,
-          }).pillarId
-        await participationStore.saveEndQuestionnaire(false, pillarId)
+        await participationStore.saveEndQuestionnaire(
+          false,
+          question.value.pillarId
+        )
       }
       useRouter().push("/evaluation/questionnaire")
     } else {

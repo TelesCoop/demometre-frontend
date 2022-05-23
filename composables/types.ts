@@ -105,6 +105,8 @@ export type Rule = {
 export type Question = {
   id: number
   criteriaId: number | null
+  pillarId: number | null
+  pillarName: PillarName | null
   concatenatedCode: string
   name: string
   questionStatement: string

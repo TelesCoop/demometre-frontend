@@ -1,7 +1,7 @@
 <template>
-  <div class="has-navbar-fixed-top">
+  <div class="has-navbar-fixed-top" :style="`padding-top: ${height}px;`">
     <div>
-      <HeaderNavbar />
+      <HeaderNavbar @change-header-height="onChangeHeaderHight($event)" />
       <Breadcrumb />
       <slot></slot>
       <Footer />
@@ -14,9 +14,10 @@
 import { useToastStore } from "~/stores/toastStore"
 
 const toastStore = useToastStore()
-</script>
 
-<style scoped lang="sass">
-.has-navbar-fixed-top
-  padding-top: 75px
-</style>
+const height = ref<number>(75)
+
+const onChangeHeaderHight = (newHeight) => {
+  height.value = newHeight
+}
+</script>

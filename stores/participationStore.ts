@@ -1,6 +1,11 @@
 import { defineStore } from "pinia"
 import { useApiPatch, useApiPost, useGet } from "~/composables/api"
-import { Participation, Question, QuestionResponse } from "~/composables/types"
+import {
+  Participation,
+  PillarName,
+  Question,
+  QuestionResponse,
+} from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
 import {
   QUESTION_RESPONSE_VALUE_BY_TYPE,
@@ -8,6 +13,7 @@ import {
 } from "~/utils/question-response"
 import { useUserStore } from "./userStore"
 import { useToastStore } from "./toastStore"
+import { useQuestionnaireStore } from "./questionnaireStore"
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
@@ -15,10 +21,17 @@ export const useParticipationStore = defineStore("participation", {
     responseByQuestionnaireQuestionId: <{ [key: number]: QuestionResponse }>{},
     profilingCurrent: <number[]>[],
     participation: <Participation>{},
+    totalAndAnsweredQuestionsByPillarName: <
+      { [key: string]: { total: number; answered: number } }
+    >{},
   }),
   getters: {
     id() {
       return this.participation?.id
+    },
+    hasAnsweredQuestionnaireQuestion: (state) => {
+      return (questionId: number) =>
+        state.responseByQuestionnaireQuestionId[questionId] ? true : false
     },
   },
   actions: {
@@ -135,6 +148,7 @@ export const useParticipationStore = defineStore("participation", {
         const questionResponses =
           this[QUESTION_RESPONSES_BY_TYPE[question.surveyType]]
         questionResponses[question.id] = data.value
+        this.setTotalAndAnsweredQuestionsInPillar(question.pillarName)
         return true
       }
       return false
@@ -165,6 +179,24 @@ export const useParticipationStore = defineStore("participation", {
       this.responseByQuestionnaireQuestionId = {}
       this.profilingCurrent = []
       this.participation = {}
+      this.setTotalAndAnsweredQuestionsByPillarName = {}
+    },
+    setTotalAndAnsweredQuestionsInPillar(pillarName) {
+      const questions =
+        useQuestionnaireStore().getQuestionnaireQuestionByPillarName(pillarName)
+      this.totalAndAnsweredQuestionsByPillarName[pillarName] = {
+        total: questions.length,
+        answered: questions.reduce(
+          (totalAnswered, question: Question) =>
+            totalAnswered + this.hasAnsweredQuestionnaireQuestion(question.id),
+          0
+        ),
+      }
+    },
+    setTotalAndAnsweredQuestionsByPillarName() {
+      for (const pillarName in PillarName) {
+        this.setTotalAndAnsweredQuestionsInPillar(PillarName[pillarName])
+      }
     },
   },
 })
