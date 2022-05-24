@@ -1,7 +1,7 @@
 <template>
   <div class="is-flex flex-center">
     <div class="sm-container">
-      <div class="mt-2">
+      <form class="mt-2" @submit.prevent="onSubmit">
         <h1 class="title is-1">Création de compte</h1>
 
         <!-- first name -->
@@ -110,17 +110,15 @@
 
         <!-- submit -->
         <div class="mt-1" style="text-align: end">
-          <button
-            class="button is-black is-small"
-            type="button"
-            :disabled="disabled"
-            @click="onSubmit"
-          >
+          <button class="button is-black is-small" :disabled="disabled">
             <span>S'inscrire</span>
             <span class="icon">
               <icon size="16" name="check" />
             </span>
           </button>
+
+          <!-- Permet d'appuyer sur entrer -->
+          <input type="submit" hidden />
         </div>
         <div class="mt-1">
           <span class="is-size-7"
@@ -130,7 +128,7 @@
             ></span
           >
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
