@@ -64,7 +64,8 @@ const questionnaireStore = useQuestionnaireStore()
 const participationStore = useParticipationStore()
 
 if (
-  !Object.keys(participationStore.totalAndAnsweredQuestionsByPillarName).length
+  Object.keys(participationStore.totalAndAnsweredQuestionsByPillarName)
+    .length !== 4
 ) {
   participationStore.setTotalAndAnsweredQuestionsByPillarName()
 }
@@ -118,34 +119,34 @@ function getWidth(pillarName) {
 
 <style scoped lang="sass">
 .progress
-    &-header
-        display: flex
-        width: 100%
-    &-bar-container
-        display: flex
-        align-items: center
-    &-bar-hover
-        display: flex
-        justify-content: space-between
-        width: 100%
-    &-bar
-        display: flex
-        height: 12px
-        max-height: 12px
-        width: 100%
-        border: 1px solid $shade-600
-        border-radius: 20px
-        cursor: pointer
+  &-header
+    display: flex
+    width: 100%
+  &-bar-container
+    display: flex
+    align-items: center
+  &-bar-hover
+    display: flex
+    justify-content: space-between
+    width: 100%
+  &-bar
+    display: flex
+    height: 12px
+    max-height: 12px
+    width: 100%
+    border: 1px solid $shade-600
+    border-radius: 20px
+    cursor: pointer
 
-        &-link
-            height: 100%
+    &-link
+      height: 100%
 
-        .last-complete
-            border-right: 1px solid $shade-600
-        .one-completed
-            border-top-left-radius: 20px
-            border-bottom-left-radius: 20px
-        .all-completed
-            border-top-right-radius: 20px
-            border-bottom-right-radius: 20px
+      .last-complete
+        border-right: 1px solid $shade-600
+      .one-completed
+        border-top-left-radius: 20px
+        border-bottom-left-radius: 20px
+      .all-completed
+        border-top-right-radius: 20px
+        border-bottom-right-radius: 20px
 </style>

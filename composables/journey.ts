@@ -1,6 +1,11 @@
 import { computed, getCurrentInstance } from "vue"
 import { useProfilingStore } from "~/stores/profilingStore"
-import { Assessment, Participation, Question } from "~/composables/types"
+import {
+  Assessment,
+  Objectivity,
+  Participation,
+  Question,
+} from "~/composables/types"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useRouter } from "#app"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
@@ -188,7 +193,10 @@ export function useProfilingJourney<Type>() {
   }
 }
 
-export function useQuestionnaireJourney<Type>(pillarName: string) {
+export function useQuestionnaireJourney<Type>(
+  pillarName: string,
+  withObjectiveQuestions: boolean
+) {
   const journey = computed(() => {
     const questionnaireStore = useQuestionnaireStore()
     const participationStore = useParticipationStore()
@@ -198,8 +206,13 @@ export function useQuestionnaireJourney<Type>(pillarName: string) {
       .filter((question: Question) => {
         const participation = participationStore.participation
         const assessment = assessmentStore.currentAssessment
-        return QUESTION_FILTERS_VALUES.every((test) =>
-          test({ question, participation, assessment })
+        return (
+          QUESTION_FILTERS_VALUES.every((test) =>
+            test({ question, participation, assessment })
+          ) &&
+          (withObjectiveQuestions
+            ? true
+            : question.objectivity === Objectivity.SUBJECTIVE)
         )
       })
       .map((question: Question) => question.id)

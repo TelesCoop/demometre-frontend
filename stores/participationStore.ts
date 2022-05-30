@@ -88,7 +88,7 @@ export const useParticipationStore = defineStore("participation", {
     ) {
       try {
         const response = await useGet<QuestionResponse[]>(
-          `responses/?context=profiling&participation_id=${participationId}&anonymous=${
+          `participation-responses/?context=profiling&participation_id=${participationId}&anonymous=${
             useUserStore().anonymousName
           }`,
           {
@@ -109,7 +109,7 @@ export const useParticipationStore = defineStore("participation", {
     ) {
       try {
         const response = await useGet<QuestionResponse[]>(
-          `responses/?context=questionnaire&participation_id=${participationId}&anonymous=${
+          `participation-responses/?context=questionnaire&participation_id=${participationId}&anonymous=${
             useUserStore().anonymousName
           }`,
           {
@@ -137,7 +137,9 @@ export const useParticipationStore = defineStore("participation", {
       }
 
       const { data, error } = await useApiPost<QuestionResponse>(
-        `responses/?anonymous=${useUserStore().anonymous.username}`,
+        `participation-responses/?anonymous=${
+          useUserStore().anonymous.username
+        }`,
         questionResponse
       )
       if (error.value) {
