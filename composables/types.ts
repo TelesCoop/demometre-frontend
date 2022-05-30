@@ -82,6 +82,11 @@ export type Criteria = {
   score2: string
   score3: string
   score4: string
+  legalFrame: string
+  useCase: string
+  sources: string
+  toGoFurther: string
+  definitionIds: number[]
 }
 export type ResponseChoice = {
   id: number
@@ -116,11 +121,6 @@ export type Question = {
   description: string
   type: QuestionType
   responseChoices: ResponseChoice[]
-  legalFrame: string
-  useCase: string
-  sources: string
-  toGoFurther: string
-  definitionIds: number[]
   categories: Category[]
   rulesIntersectionOperator: string
   rules: Rule[]

@@ -158,16 +158,16 @@
         </div>
       </div>
       <div v-show="currentTabId === 'legal-frame'">
-        <RichText :rich-text="question.legalFrame" />
+        <RichText :rich-text="criteria.legalFrame" />
       </div>
       <div v-show="currentTabId === 'use-case'">
-        <RichText :rich-text="question.useCase" />
+        <RichText :rich-text="criteria.useCase" />
       </div>
       <div v-show="currentTabId === 'sources'">
-        <RichText :rich-text="question.sources" />
+        <RichText :rich-text="criteria.sources" />
       </div>
       <div v-show="currentTabId === 'to-go-further'">
-        <RichText :rich-text="question.toGoFurther" />
+        <RichText :rich-text="criteria.toGoFurther" />
       </div>
     </section>
   </form>
@@ -188,6 +188,7 @@ import { ref } from "@vue/reactivity"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getQuestionResponseValue } from "~/utils/question-response"
+import { useQuestionnaireStore } from "~~/stores/questionnaireStore"
 
 type tabDef = { label: string; id: string }
 const props = defineProps({
@@ -197,6 +198,7 @@ const props = defineProps({
 })
 
 const participationStore = useParticipationStore()
+const questionnaireStore = useQuestionnaireStore()
 const definitionStore = useDefinitionStore()
 
 const isAnswered = computed(() => {
@@ -206,6 +208,10 @@ const isAnswered = computed(() => {
 
 const question = computed(() => {
   return props.context.questionById[props.questionId]
+})
+
+const criteria = computed(() => {
+  return questionnaireStore.criteriaById[question.value.criteriaId]
 })
 
 const initialValue = getQuestionResponseValue(
@@ -232,37 +238,37 @@ const nextQuestionDisabled = computed(() =>
 )
 
 const definitions = computed<{ [key: number]: Definition }>(() =>
-  definitionStore.definitionsByIdArray(question.value.definitionIds)
+  definitionStore.definitionsByIdArray(criteria.value.definitionIds)
 )
 
 // Attention ce n'est pas reload si on change de question
 const currentTabId = ref<string>("definitions")
 const tabs = ref<tabDef[]>([])
-if (question.value?.definitionIds) {
+if (criteria.value?.definitionIds.length > 0) {
   tabs.value.push({
     label: "Définitions",
     id: "definitions",
   })
 }
-if (question.value?.legalFrame) {
+if (criteria.value?.legalFrame) {
   tabs.value.push({
     label: "Cadre légal",
     id: "legal-frame",
   })
 }
-if (question.value?.useCase) {
+if (criteria.value?.useCase) {
   tabs.value.push({
     label: "Exemples inspirants",
     id: "use-case",
   })
 }
-if (question.value?.sources) {
+if (criteria.value?.sources) {
   tabs.value.push({
     label: "Sources",
     id: "sources",
   })
 }
-if (question.value?.toGoFurther) {
+if (criteria.value?.toGoFurther) {
   tabs.value.push({
     label: "Pour aller plus loin",
     id: "to-go-further",
