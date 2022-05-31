@@ -141,12 +141,12 @@ function getWidth(pillarName) {
     &-link
       height: 100%
 
-      .last-complete
-        border-right: 1px solid $shade-600
-      .one-completed
-        border-top-left-radius: 20px
-        border-bottom-left-radius: 20px
-      .all-completed
-        border-top-right-radius: 20px
-        border-bottom-right-radius: 20px
+    .last-complete
+      border-right: 1px solid $shade-600
+    .one-completed
+      border-top-left-radius: 20px
+      border-bottom-left-radius: 20px
+    .all-completed
+      border-top-right-radius: 20px
+      border-bottom-right-radius: 20px
 </style>
