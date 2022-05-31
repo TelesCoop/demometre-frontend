@@ -29,14 +29,14 @@ const participationStore = useParticipationStore()
 
 const questionId: Ref<number> = ref(+route.params.questionId)
 let pillarName = questionnaireStore.questionById[questionId.value].pillarName
-let journey = useQuestionnaireJourney(pillarName, false)
+let journey = useQuestionnaireJourney(pillarName)
 const color = computed<string>(() => PillarParams[pillarName].color)
 
 router.beforeEach((to) => {
   if (+to.params.questionId) {
     questionId.value = +to.params.questionId
     pillarName = questionnaireStore.questionById[questionId.value].pillarName
-    journey = useQuestionnaireJourney(pillarName, false)
+    journey = useQuestionnaireJourney(pillarName)
   }
 })
 

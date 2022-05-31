@@ -193,10 +193,7 @@ export function useProfilingJourney<Type>() {
   }
 }
 
-export function useQuestionnaireJourney<Type>(
-  pillarName: string,
-  withObjectiveQuestions: boolean
-) {
+export function useQuestionnaireJourney<Type>(pillarName: string) {
   const journey = computed(() => {
     const questionnaireStore = useQuestionnaireStore()
     const participationStore = useParticipationStore()
@@ -210,7 +207,8 @@ export function useQuestionnaireJourney<Type>(
           QUESTION_FILTERS_VALUES.every((test) =>
             test({ question, participation, assessment })
           ) &&
-          (withObjectiveQuestions
+          // the objective questions are shown only to assessment admin users
+          (assessmentStore.userIsAssessmentAdmin
             ? true
             : question.objectivity === Objectivity.SUBJECTIVE)
         )
