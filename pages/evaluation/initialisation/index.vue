@@ -274,7 +274,7 @@ async function onSubmit() {
   })
   if (isSuccess) {
     useRouter().push(
-      `/evaluation/initialization-validation?assessment=${assessmentStore.currentAssessmentId}`
+      `/evaluation/initialisation/validation?assessment=${assessmentStore.currentAssessmentId}`
     )
   }
 }

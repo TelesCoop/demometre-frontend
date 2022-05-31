@@ -1,5 +1,6 @@
-// Questionnaire and profiling
+export type User = { id: number | null; email: string; username: string }
 
+// Questionnaire and profiling
 export enum Objectivity {
   OBJECTIVE = "objective",
   SUBJECTIVE = "subjective",
@@ -179,7 +180,7 @@ export type RepresentativityCriteria = {
 export type Assessment = {
   id: number
   type: string
-  initiatedByUser: string
+  initiatedByUser: User
   initiatorType: string
   initializedToTheNameOf: string
   publicInitiator: boolean
@@ -196,7 +197,6 @@ export const InitiatorType = {
 }
 
 // User participation
-export type User = { id: number | null; email: string; username: string }
 export type ParticipationPillarCompleted = {
   id: number | null
   completed: boolean
@@ -214,7 +214,8 @@ export type Participation = {
 }
 export type QuestionResponse = {
   id: number
-  participationId: number
+  participationId: number | null
+  assessmentId: number | null
   questionId: number
   hasPassed: boolean
   uniqueChoiceResponseId: number | null

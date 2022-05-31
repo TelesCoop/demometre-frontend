@@ -11,10 +11,10 @@ async function verifyAssessment(to) {
   }
   if (
     !assessmentStore.currentAssessment?.initializationDate &&
-    to.path !== "/evaluation/initialization"
+    to.path !== "/evaluation/initialisation"
   ) {
     navigateTo(
-      `/evaluation/initialization?assessment=${assessmentStore.currentAssessmentId}`
+      `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`
     )
   }
 }

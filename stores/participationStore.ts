@@ -1,10 +1,12 @@
 import { defineStore } from "pinia"
 import { useApiPatch, useApiPost, useGet } from "~/composables/api"
 import {
+  Objectivity,
   Participation,
   PillarName,
   Question,
   QuestionResponse,
+  SurveyType,
 } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
 import {
@@ -105,10 +107,11 @@ export const useParticipationStore = defineStore("participation", {
 
     async getQuestionnaireQuestionResponses(
       participationId: number,
+      assessmentId: number,
       headers = undefined
     ) {
       try {
-        const response = await useGet<QuestionResponse[]>(
+        const participationResponses = await useGet<QuestionResponse[]>(
           `participation-responses/?context=questionnaire&participation_id=${participationId}&anonymous=${
             useUserStore().anonymousName
           }`,
@@ -116,9 +119,22 @@ export const useParticipationStore = defineStore("participation", {
             headers,
           }
         )
-        response.forEach((item) => {
+        participationResponses.forEach((item) => {
           this.responseByQuestionnaireQuestionId[item.questionId] = item
         })
+
+        if (useAssessmentStore().userIsAssessmentAdmin) {
+          const assessmentResponses = await useGet<QuestionResponse[]>(
+            `assessment-responses/?assessment_id=${assessmentId}
+            }`,
+            {
+              headers,
+            }
+          )
+          assessmentResponses.forEach((item) => {
+            this.responseByQuestionnaireQuestionId[item.questionId] = item
+          })
+        }
       } catch {
         return false
       }
@@ -128,6 +144,7 @@ export const useParticipationStore = defineStore("participation", {
       const questionResponse = {
         questionId: question.id,
         participationId: this.id,
+        assessmentId: this.participation.assessmentId,
         hasPassed: !isAnswered,
       } as QuestionResponse
 
@@ -136,12 +153,26 @@ export const useParticipationStore = defineStore("participation", {
         questionResponse[questionValue] = response
       }
 
-      const { data, error } = await useApiPost<QuestionResponse>(
-        `participation-responses/?anonymous=${
-          useUserStore().anonymous.username
-        }`,
-        questionResponse
-      )
+      let apiResponse
+      if (
+        question.objectivity === Objectivity.OBJECTIVE &&
+        question.surveyType === SurveyType.QUESTIONNAIRE
+      ) {
+        apiResponse = await useApiPost<QuestionResponse>(
+          `participation-responses/?anonymous=${
+            useUserStore().anonymous.username
+          }`,
+          questionResponse
+        )
+      } else {
+        apiResponse = await useApiPost<QuestionResponse>(
+          `assessment-responses/
+          }`,
+          questionResponse
+        )
+      }
+      const { data, error } = apiResponse
+
       if (error.value) {
         const errorStore = useToastStore()
         errorStore.setError(error.value.data.messageCode)
