@@ -13,7 +13,9 @@
         <div
           v-for="pillar in questionnaireStore.pillars"
           :key="pillar.name"
-          :class="`pillar-container-${PillarParams[pillar.name].key}`"
+          :class="`pillar-container-${PillarParams[pillar.name].key} has-text-${
+            PillarParams[pillar.name].color
+          }-dark`"
         >
           <div
             :class="
@@ -50,7 +52,7 @@
           </div>
 
           <div
-            v-for="markerId in pillar.markerIds"
+            v-for="(markerId, index) in pillar.markerIds"
             :key="markerId"
             :class="
               `
@@ -63,7 +65,11 @@
             @mouseenter="hoverMarkerId = markerId"
             @mouseleave="hoverMarkerId = null"
             @click="onMarkerClick(markerId)"
-          ></div>
+          >
+            <span class="marker-index is-size-7 has-text-weight-bold">{{
+              index + 1
+            }}</span>
+          </div>
         </div>
       </div>
     </section>
@@ -154,7 +160,10 @@ $pillars: ("representation": (translateX(-170px), 5, translateX(-90px), 29px), "
     cursor: pointer
     @for $i from 1 through 8
       &:nth-child(#{$i})
-        transform: translate(-50%, -50%) rotate((($i - 2) * 30deg) - calc(($nb-markers - 1) * 30 / 2)) $marker-translate
+        transform: translate(-50%, -50%) rotate((($i - 2) * 45deg) - calc(($nb-markers - 1) * 45 / 2)) $marker-translate rotate(calc(($nb-markers - 1) * 45 / 2) - (($i - 2) * 45deg))
+  .marker-index
+    vertical-align: middle
+    padding-left: 9px
 
 .pillar
   &-title
