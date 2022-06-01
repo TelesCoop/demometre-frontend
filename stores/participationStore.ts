@@ -1,10 +1,12 @@
 import { defineStore } from "pinia"
 import { useApiPatch, useApiPost, useGet } from "~/composables/api"
 import {
+  Objectivity,
   Participation,
   PillarName,
   Question,
   QuestionResponse,
+  SurveyType,
 } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
 import {
@@ -88,7 +90,7 @@ export const useParticipationStore = defineStore("participation", {
     ) {
       try {
         const response = await useGet<QuestionResponse[]>(
-          `responses/?context=profiling&participation_id=${participationId}&anonymous=${
+          `participation-responses/?context=profiling&participation_id=${participationId}&anonymous=${
             useUserStore().anonymousName
           }`,
           {
@@ -105,18 +107,29 @@ export const useParticipationStore = defineStore("participation", {
 
     async getQuestionnaireQuestionResponses(
       participationId: number,
+      assessmentId: number,
       headers = undefined
     ) {
       try {
-        const response = await useGet<QuestionResponse[]>(
-          `responses/?context=questionnaire&participation_id=${participationId}&anonymous=${
+        const participationResponses = await useGet<QuestionResponse[]>(
+          `participation-responses/?context=questionnaire&participation_id=${participationId}&anonymous=${
             useUserStore().anonymousName
           }`,
           {
             headers,
           }
         )
-        response.forEach((item) => {
+        participationResponses.forEach((item) => {
+          this.responseByQuestionnaireQuestionId[item.questionId] = item
+        })
+
+        const assessmentResponses = await useGet<QuestionResponse[]>(
+          `assessment-responses/?assessment_id=${assessmentId}`,
+          {
+            headers,
+          }
+        )
+        assessmentResponses.forEach((item) => {
           this.responseByQuestionnaireQuestionId[item.questionId] = item
         })
       } catch {
@@ -128,6 +141,7 @@ export const useParticipationStore = defineStore("participation", {
       const questionResponse = {
         questionId: question.id,
         participationId: this.id,
+        assessmentId: useAssessmentStore().currentAssessmentId,
         hasPassed: !isAnswered,
       } as QuestionResponse
 
@@ -136,10 +150,25 @@ export const useParticipationStore = defineStore("participation", {
         questionResponse[questionValue] = response
       }
 
-      const { data, error } = await useApiPost<QuestionResponse>(
-        `responses/?anonymous=${useUserStore().anonymous.username}`,
-        questionResponse
-      )
+      let apiResponse
+      if (
+        question.objectivity === Objectivity.OBJECTIVE &&
+        question.surveyType === SurveyType.QUESTIONNAIRE
+      ) {
+        apiResponse = await useApiPost<QuestionResponse>(
+          `assessment-responses/`,
+          questionResponse
+        )
+      } else {
+        apiResponse = await useApiPost<QuestionResponse>(
+          `participation-responses/?anonymous=${
+            useUserStore().anonymous.username
+          }`,
+          questionResponse
+        )
+      }
+      const { data, error } = apiResponse
+
       if (error.value) {
         const errorStore = useToastStore()
         errorStore.setError(error.value.data.messageCode)
@@ -162,7 +191,7 @@ export const useParticipationStore = defineStore("participation", {
         profilingQuestion: isProfilingQuestion,
         pillarId: pillarId,
       }
-      const { data, error } = await useApiPatch<QuestionResponse>(
+      const { data, error } = await useApiPatch<Participation>(
         `participations/${this.id}/questions/completed/?anonymous=${
           useUserStore().anonymous.username
         }`,
@@ -179,11 +208,13 @@ export const useParticipationStore = defineStore("participation", {
       this.responseByQuestionnaireQuestionId = {}
       this.profilingCurrent = []
       this.participation = {}
-      this.setTotalAndAnsweredQuestionsByPillarName = {}
+      this.totalAndAnsweredQuestionsByPillarName = {}
     },
     setTotalAndAnsweredQuestionsInPillar(pillarName) {
-      const questions =
-        useQuestionnaireStore().getQuestionnaireQuestionByPillarName(pillarName)
+      const questions = useQuestionnaireStore().getQuestionsFromIdList(
+        useQuestionnaireJourney(pillarName).journey.value
+      )
+
       this.totalAndAnsweredQuestionsByPillarName[pillarName] = {
         total: questions.length,
         answered: questions.reduce(

@@ -89,7 +89,6 @@
 import { ref } from "@vue/reactivity"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { LocalityType } from "~/composables/types"
-import { useParticipationStore } from "~/stores/participationStore"
 
 definePageMeta({
   title: "Localisation",
@@ -105,7 +104,6 @@ const disabled = computed(() =>
 )
 
 const assessmentStore = useAssessmentStore()
-const participationStore = useParticipationStore()
 
 async function onSubmit() {
   const isSuccess = await assessmentStore.getOrCreateAssessment({
@@ -113,9 +111,15 @@ async function onSubmit() {
     localityType: localityTypeSelected.value,
   })
   if (isSuccess) {
-    useRouter().push(
-      `/evaluation/localisation/${assessmentStore.currentAssessmentId}`
-    )
+    if (!assessmentStore.currentAssessment?.initializationDate) {
+      useRouter().push(
+        `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`
+      )
+    } else {
+      useRouter().push(
+        `/evaluation/localisation/${assessmentStore.currentAssessmentId}`
+      )
+    }
   }
 }
 </script>

@@ -28,6 +28,12 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     questions: (state) => {
       return Object.values(state.questionById)
     },
+    getQuestionsFromIdList: (state) => {
+      return (questionIds: number[]) =>
+        Object.values(state.questionById).filter((question: Question) => {
+          return questionIds.includes(question.id)
+        }) as Question[]
+    },
   },
   actions: {
     async getQuestionnaireStructure() {

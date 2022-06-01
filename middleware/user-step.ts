@@ -15,7 +15,6 @@ async function verifyRouting(to) {
     }
 
     const userStep = useUserStep().value
-
     if (userStep.step !== to.meta.step) {
       return navigateTo(userStep.url)
     }

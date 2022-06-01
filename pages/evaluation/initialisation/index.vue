@@ -197,6 +197,7 @@
 </template>
 
 <script setup lang="ts">
+import { useInitializationJourney } from "~/composables/journey"
 import { usePageStore } from "~/stores/pageStore"
 import { InitiatorType } from "~/composables/types"
 import { useAssessmentStore } from "~/stores/assessmentStore"
@@ -205,6 +206,7 @@ import { useUserStore } from "~/stores/userStore"
 definePageMeta({
   title: "Initialisation",
   breadcrumb: "Initialisation",
+  step: "initialization",
   middleware: ["assessment"],
 })
 
@@ -273,9 +275,7 @@ async function onSubmit() {
     initiatorName: associationName.value,
   })
   if (isSuccess) {
-    useRouter().push(
-      `/evaluation/initialization-validation?assessment=${assessmentStore.currentAssessmentId}`
-    )
+    useInitializationJourney().goToNextQuestion(undefined)
   }
 }
 </script>
