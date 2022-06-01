@@ -189,6 +189,7 @@ import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getQuestionResponseValue } from "~/utils/question-response"
 import { useQuestionnaireStore } from "~~/stores/questionnaireStore"
+import { useAssessmentStore } from "~~/stores/assessmentStore"
 
 type tabDef = { label: string; id: string }
 const props = defineProps({
@@ -198,6 +199,7 @@ const props = defineProps({
 })
 
 const participationStore = useParticipationStore()
+const assessmentStore = useAssessmentStore()
 const questionnaireStore = useQuestionnaireStore()
 const definitionStore = useDefinitionStore()
 
@@ -295,18 +297,20 @@ const submit = async () => {
   )
   if (result) {
     if (props.context.journey.isLastQuestion(question.value.id)) {
-      if (question.value.surveyType === SurveyType.PROFILING) {
+      if (props.context.journey.surveyType() === SurveyType.INITILIZATION) {
+        await assessmentStore.saveEndInitializationQuestions()
+      } else if (props.context.journey.surveyType() === SurveyType.PROFILING) {
         await participationStore.saveEndQuestionnaire(true)
-      } else {
+      } else if (
+        props.context.journey.surveyType() === SurveyType.QUESTIONNAIRE
+      ) {
         await participationStore.saveEndQuestionnaire(
           false,
           question.value.pillarId
         )
       }
-      useRouter().push("/evaluation/questionnaire")
-    } else {
-      props.context.journey.goToNextQuestion(question.value.id)
     }
+    goToNextQuestion()
   }
 }
 </script>
