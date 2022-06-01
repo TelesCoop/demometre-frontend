@@ -20,10 +20,10 @@
 </template>
 
 <script setup lang="ts">
+import { useQuestionnaireJourney } from "~/composables/journey"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useRouter } from "vue-router"
-import { useUserStore } from "~/stores/userStore"
 
 definePageMeta({
   title: "Questionnaire",
@@ -34,7 +34,6 @@ definePageMeta({
 const router = useRouter()
 
 const questionnaireStore = useQuestionnaireStore()
-const userStore = useUserStore()
 const pageStore = usePageStore()
 
 if (!pageStore.referentialPage.title) {
@@ -42,12 +41,7 @@ if (!pageStore.referentialPage.title) {
 }
 
 const startPillar = (pillarName) => {
-  const firstQuestion =
-    questionnaireStore.getQuestionnaireQuestionByPillarName(pillarName)[0]
-  return router.push({
-    path: `/evaluation/questionnaire/${firstQuestion.id}`,
-    query: { pillar: pillarName, anonymous: userStore.anonymous.username },
-  })
+  useQuestionnaireJourney(pillarName).goToNextQuestion(undefined)
 }
 
 const onStartQuestionnaire = () => {

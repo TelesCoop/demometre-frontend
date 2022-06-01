@@ -53,14 +53,11 @@
 </template>
 
 <script setup lang="ts">
+import { useQuestionnaireJourney } from "~/composables/journey"
 import { useParticipationStore } from "~/stores/participationStore"
 import { PillarName, PillarParams } from "~/composables/types"
 import { wordTitleCase } from "~/utils/title-case"
-import { useQuestionnaireStore } from "~/stores/questionnaireStore"
-import { useUserStore } from "~/stores/userStore"
 
-const userStore = useUserStore()
-const questionnaireStore = useQuestionnaireStore()
 const participationStore = useParticipationStore()
 
 if (
@@ -73,12 +70,7 @@ if (
 const hoverPillarName = ref<string>()
 
 const firstQuestionPillarLink = (pillarName) => {
-  const firstQuestion =
-    questionnaireStore.getQuestionnaireQuestionByPillarName(pillarName)[0]
-  return {
-    path: `/evaluation/questionnaire/${firstQuestion?.id}`,
-    query: { pillar: pillarName, anonymous: userStore.anonymous.username },
-  }
+  useQuestionnaireJourney(pillarName).goToNextQuestion(undefined)
 }
 
 function getTotalQuestions(pillarName) {

@@ -10,16 +10,17 @@
 </template>
 
 <script setup lang="ts">
-import { useQuestionnaireJourney } from "~/composables/journey"
+import { useInitializationJourney } from "~/composables/journey"
 import { useParticipationStore } from "~/stores/participationStore"
 import { QuestionContextProps, PillarParams } from "~/composables/types"
 import { Ref, ref } from "@vue/reactivity"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 
 definePageMeta({
-  title: "Initialisation",
-  breadcrumb: "Initialisation",
-  middleware: ["assessment"],
+  title: "Questions objectives",
+  breadcrumb: "Questions objectives",
+  step: "initialization-objectives-questions",
+  middleware: ["assessment", "user-step"],
 })
 
 const route = useRoute()
@@ -29,19 +30,17 @@ const participationStore = useParticipationStore()
 
 const questionId: Ref<number> = ref(+route.params.questionId)
 let pillarName = questionnaireStore.questionById[questionId.value].pillarName
-let journey = useQuestionnaireJourney(pillarName)
 const color = computed<string>(() => PillarParams[pillarName].color)
 
 router.beforeEach((to) => {
   if (+to.params.questionId) {
     questionId.value = +to.params.questionId
     pillarName = questionnaireStore.questionById[questionId.value].pillarName
-    journey = useQuestionnaireJourney(pillarName)
   }
 })
 
 const context: QuestionContextProps = {
-  journey,
+  journey: useInitializationJourney(),
   questionById: questionnaireStore.questionById,
   responseByQuestionId: participationStore.responseByQuestionnaireQuestionId,
   hasPreviousStep: true,

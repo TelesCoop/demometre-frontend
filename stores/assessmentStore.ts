@@ -92,6 +92,16 @@ export const useAssessmentStore = defineStore("assessment", {
       this.assessmentById[data.value.id] = data.value
       return true
     },
+    async saveEndInitializationQuestions() {
+      const { data, error } = await useApiPatch<Assessment>(
+        `assessments/${this.currentAssessmentId}/questions/completed/`
+      )
+      if (error.value) {
+        return false
+      }
+      this.assessmentById[this.currentAssessmentId] = data.value
+      return true
+    },
     logoutUser() {
       this.currentAssessmentId = undefined
     },

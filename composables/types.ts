@@ -21,6 +21,7 @@ export enum QuestionType {
 export enum SurveyType {
   PROFILING = "profiling",
   QUESTIONNAIRE = "questionnaire",
+  INITILIZATION = "initilization",
 }
 export enum PillarName {
   REPRESENTATION = "représentation",
@@ -185,6 +186,7 @@ export type Assessment = {
   initializedToTheNameOf: string
   publicInitiator: boolean
   initializationDate: string
+  isInitializationQuestionsCompleted: boolean
   endDate: string
   municipality: Locality | null
   epci: Locality | null
