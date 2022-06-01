@@ -1,11 +1,11 @@
 <template>
   <div class="progress-header">
-    <router-link
+    <div
       v-for="pillarName in PillarName"
       :key="pillarName"
-      :class="`has-background-${PillarParams[pillarName].color}-light px-0_75 py-0_5`"
+      :class="`has-background-${PillarParams[pillarName].color}-light px-0_75 py-0_5 is-clickable`"
       style="flex: 1"
-      :to="firstQuestionPillarLink(pillarName)"
+      @click.prevent="goToFirstQuestionPillar(pillarName)"
       @mouseenter="hoverPillarName = pillarName"
       @mouseleave="hoverPillarName = null"
     >
@@ -48,7 +48,7 @@
           ></div>
         </div>
       </div>
-    </router-link>
+    </div>
   </div>
 </template>
 
@@ -69,7 +69,7 @@ if (
 
 const hoverPillarName = ref<string>()
 
-const firstQuestionPillarLink = (pillarName) => {
+const goToFirstQuestionPillar = (pillarName) => {
   useQuestionnaireJourney(pillarName).goToNextQuestion(undefined)
 }
 

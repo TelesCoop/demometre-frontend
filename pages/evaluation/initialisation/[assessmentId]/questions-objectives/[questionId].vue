@@ -35,7 +35,7 @@ const color = computed<string>(() => PillarParams[pillarName].color)
 router.beforeEach((to) => {
   if (+to.params.questionId) {
     questionId.value = +to.params.questionId
-    pillarName = questionnaireStore.questionById[questionId.value].pillarName
+    pillarName = questionnaireStore.questionById[questionId.value]?.pillarName
   }
 })
 

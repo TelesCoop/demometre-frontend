@@ -34,7 +34,6 @@ export function useUserStep<Type>() {
       assessmentStore.userIsAssessmentAdmin
     ) {
       const questionId = initilizationJourney.nextQuestionId(undefined, true)
-
       return {
         step: "initialization-objectives-questions",
         url: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives/${questionId}`,
