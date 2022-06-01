@@ -1,11 +1,11 @@
 <template>
   <div class="progress-header">
-    <router-link
+    <div
       v-for="pillarName in PillarName"
       :key="pillarName"
-      :class="`has-background-${PillarParams[pillarName].color}-light px-0_75 py-0_5`"
+      :class="`has-background-${PillarParams[pillarName].color}-light px-0_75 py-0_5 is-clickable`"
       style="flex: 1"
-      :to="firstQuestionPillarLink(pillarName)"
+      @click.prevent="goToFirstQuestionPillar(pillarName)"
       @mouseenter="hoverPillarName = pillarName"
       @mouseleave="hoverPillarName = null"
     >
@@ -48,36 +48,29 @@
           ></div>
         </div>
       </div>
-    </router-link>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useQuestionnaireJourney } from "~/composables/journey"
 import { useParticipationStore } from "~/stores/participationStore"
 import { PillarName, PillarParams } from "~/composables/types"
 import { wordTitleCase } from "~/utils/title-case"
-import { useQuestionnaireStore } from "~/stores/questionnaireStore"
-import { useUserStore } from "~/stores/userStore"
 
-const userStore = useUserStore()
-const questionnaireStore = useQuestionnaireStore()
 const participationStore = useParticipationStore()
 
 if (
-  !Object.keys(participationStore.totalAndAnsweredQuestionsByPillarName).length
+  Object.keys(participationStore.totalAndAnsweredQuestionsByPillarName)
+    .length !== 4
 ) {
   participationStore.setTotalAndAnsweredQuestionsByPillarName()
 }
 
 const hoverPillarName = ref<string>()
 
-const firstQuestionPillarLink = (pillarName) => {
-  const firstQuestion =
-    questionnaireStore.getQuestionnaireQuestionByPillarName(pillarName)[0]
-  return {
-    path: `/evaluation/questionnaire/${firstQuestion?.id}`,
-    query: { pillar: pillarName, anonymous: userStore.anonymous.username },
-  }
+const goToFirstQuestionPillar = (pillarName) => {
+  useQuestionnaireJourney(pillarName).goToNextQuestion(undefined)
 }
 
 function getTotalQuestions(pillarName) {
@@ -118,34 +111,34 @@ function getWidth(pillarName) {
 
 <style scoped lang="sass">
 .progress
-    &-header
-        display: flex
-        width: 100%
-    &-bar-container
-        display: flex
-        align-items: center
-    &-bar-hover
-        display: flex
-        justify-content: space-between
-        width: 100%
-    &-bar
-        display: flex
-        height: 12px
-        max-height: 12px
-        width: 100%
-        border: 1px solid $shade-600
-        border-radius: 20px
-        cursor: pointer
+  &-header
+    display: flex
+    width: 100%
+  &-bar-container
+    display: flex
+    align-items: center
+  &-bar-hover
+    display: flex
+    justify-content: space-between
+    width: 100%
+  &-bar
+    display: flex
+    height: 12px
+    max-height: 12px
+    width: 100%
+    border: 1px solid $shade-600
+    border-radius: 20px
+    cursor: pointer
 
-        &-link
-            height: 100%
+    &-link
+      height: 100%
 
-        .last-complete
-            border-right: 1px solid $shade-600
-        .one-completed
-            border-top-left-radius: 20px
-            border-bottom-left-radius: 20px
-        .all-completed
-            border-top-right-radius: 20px
-            border-bottom-right-radius: 20px
+    .last-complete
+      border-right: 1px solid $shade-600
+    .one-completed
+      border-top-left-radius: 20px
+      border-bottom-left-radius: 20px
+    .all-completed
+      border-top-right-radius: 20px
+      border-bottom-right-radius: 20px
 </style>

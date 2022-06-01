@@ -2,6 +2,7 @@ import { defineStore } from "pinia"
 import { Assessment, RepresentativityCriteria } from "~/composables/types"
 import { useApiGet, useApiPost } from "~/composables/api"
 import { useToastStore } from "./toastStore"
+import { useUserStore } from "./userStore"
 
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
@@ -25,6 +26,12 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     currentAssessment() {
       return this.assessmentById[this.currentAssessmentId]
+    },
+    userIsAssessmentAdmin() {
+      return (
+        this.currentAssessment.initiatedByUser.id === useUserStore().user.id
+      )
+      // TODO : check if current user is assessment expert
     },
   },
   actions: {
@@ -83,6 +90,16 @@ export const useAssessmentStore = defineStore("assessment", {
         return false
       }
       this.assessmentById[data.value.id] = data.value
+      return true
+    },
+    async saveEndInitializationQuestions() {
+      const { data, error } = await useApiPatch<Assessment>(
+        `assessments/${this.currentAssessmentId}/questions/completed/`
+      )
+      if (error.value) {
+        return false
+      }
+      this.assessmentById[this.currentAssessmentId] = data.value
       return true
     },
     logoutUser() {

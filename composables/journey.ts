@@ -1,6 +1,12 @@
 import { computed, getCurrentInstance } from "vue"
 import { useProfilingStore } from "~/stores/profilingStore"
-import { Assessment, Participation, Question } from "~/composables/types"
+import {
+  Assessment,
+  Objectivity,
+  Participation,
+  Question,
+  SurveyType,
+} from "~/composables/types"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useRouter } from "#app"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
@@ -178,6 +184,10 @@ export function useProfilingJourney<Type>() {
     return myJourney.indexOf(currentQuestionId) === 0
   }
 
+  const surveyType = (): SurveyType => {
+    return SurveyType.PROFILING
+  }
+
   return {
     journey,
     nextQuestionId,
@@ -185,6 +195,7 @@ export function useProfilingJourney<Type>() {
     goToPreviousQuestion,
     isLastQuestion,
     isFirstQuestion,
+    surveyType,
   }
 }
 
@@ -198,8 +209,14 @@ export function useQuestionnaireJourney<Type>(pillarName: string) {
       .filter((question: Question) => {
         const participation = participationStore.participation
         const assessment = assessmentStore.currentAssessment
-        return QUESTION_FILTERS_VALUES.every((test) =>
-          test({ question, participation, assessment })
+        return (
+          QUESTION_FILTERS_VALUES.every((test) =>
+            test({ question, participation, assessment })
+          ) &&
+          // the objective questions are shown only to assessment admin users
+          (assessmentStore.userIsAssessmentAdmin
+            ? true
+            : question.objectivity === Objectivity.SUBJECTIVE)
         )
       })
       .map((question: Question) => question.id)
@@ -257,6 +274,10 @@ export function useQuestionnaireJourney<Type>(pillarName: string) {
     return myJourney.indexOf(currentQuestionId) === 0
   }
 
+  const surveyType = (): SurveyType => {
+    return SurveyType.QUESTIONNAIRE
+  }
+
   return {
     journey,
     nextQuestionId,
@@ -264,5 +285,76 @@ export function useQuestionnaireJourney<Type>(pillarName: string) {
     goToPreviousQuestion,
     isLastQuestion,
     isFirstQuestion,
+    surveyType,
+  }
+}
+
+export function useInitializationJourney<Type>() {
+  const vm = getCurrentInstance()
+  const journey = computed(() => {
+    const questionnaireStore = useQuestionnaireStore()
+    const questionIds = questionnaireStore.questions
+      .filter(
+        (question: Question) => question.objectivity === Objectivity.OBJECTIVE
+      )
+      .map((question: Question) => question.id)
+    return questionIds
+  })
+  const nextQuestionId = (
+    currentQuestionId: number,
+    nextQuestion: boolean
+  ): number => {
+    const myJourney = journey.value
+    const index = myJourney.indexOf(currentQuestionId)
+    return nextQuestion ? myJourney[index + 1] : myJourney[index - 1]
+  }
+
+  const goToNextQuestion = (currentQuestionId: number) => {
+    const assessmentStore = useAssessmentStore()
+    if (isLastQuestion(currentQuestionId)) {
+      useRouter().push({
+        path: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/validation`,
+      })
+    } else {
+      const questionId = nextQuestionId(currentQuestionId, true)
+      useRouter().push({
+        path: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives/${questionId}`,
+      })
+    }
+  }
+
+  const goToPreviousQuestion = (currentQuestionId: number) => {
+    const assessmentStore = useAssessmentStore()
+    if (!isFirstQuestion(currentQuestionId)) {
+      const questionId = nextQuestionId(currentQuestionId, false)
+      useRouter().push({
+        path: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives/${questionId}`,
+      })
+    }
+  }
+
+  const isLastQuestion = (currentQuestionId: number): boolean => {
+    const myJourney = journey.value
+    const index = myJourney.indexOf(currentQuestionId)
+    return index + 1 === myJourney.length
+  }
+
+  const isFirstQuestion = (currentQuestionId: number): boolean => {
+    const myJourney = journey.value
+    return myJourney.indexOf(currentQuestionId) === 0
+  }
+
+  const surveyType = (): SurveyType => {
+    return SurveyType.INITILIZATION
+  }
+
+  return {
+    journey,
+    nextQuestionId,
+    goToNextQuestion,
+    goToPreviousQuestion,
+    isLastQuestion,
+    isFirstQuestion,
+    surveyType,
   }
 }
