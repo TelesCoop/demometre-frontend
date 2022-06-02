@@ -2,7 +2,7 @@
   <div>
     <div
       :class="`card has-background-${backgroundColor} is-fullheight`"
-      @click="openArticle"
+      @click.prevent="openArticle"
     >
       <div class="card-image">
         <figure class="image is-4by3">
@@ -38,7 +38,9 @@ const props = defineProps({
 })
 
 const openArticle = () => {
-  window.open(props.article.externalLink, "_blank")
+  if (props.article.externalLink) {
+    window.open(props.article.externalLink, "_blank")
+  }
 }
 </script>
 
