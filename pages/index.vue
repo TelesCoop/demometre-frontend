@@ -30,6 +30,8 @@
     <HomepageSection
       :title="pageStore.homePage.blogBlockTitle"
       :intro="pageStore.homePage.blogBlockIntro"
+      button-text="Explorer les articles"
+      button-link="/blog"
     >
       <div class="columns mb-2">
         <Carousel :settings="settings" :breakpoints="breakpointsLargeElements">
@@ -52,6 +54,8 @@
       <HomepageSection
         :title="pageStore.homePage.resourcesBlockTitle"
         :intro="pageStore.homePage.resourcesBlockTitle"
+        button-text="Explorer les ressources"
+        button-link="/ressources"
       >
         <div class="columns mb-2" style="display: block">
           <Carousel
