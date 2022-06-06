@@ -1,64 +1,90 @@
 <template>
   <div class="homepage">
     <HomepageHomeIntro />
+
+    <!-- Feedbacks -->
     <div class="has-background-shade-250">
       <HomepageSection
         :title="pageStore.homePage.feedbackBlockTitle"
         :intro="pageStore.homePage.feedbackBlockIntro"
       >
-        <Carousel class="columns is-4 mb-2">
-          <HomepageFeedbackCard
-            v-for="(feedback, index) in pageStore.homePage.feedbacks"
-            :key="feedback.id"
-            :feedback="feedback"
-            background-color="white"
-            class="column is-one-third"
-            :class="`item-${index}`"
-          />
-        </Carousel>
+        <div class="columns mb-2">
+          <Carousel
+            :settings="settings"
+            :breakpoints="breakpointsSmallElements"
+          >
+            <Slide
+              v-for="feedback in pageStore.homePage.feedbacks"
+              :key="feedback.id"
+              class="column is-one-third"
+            >
+              <HomepageFeedbackCard
+                :feedback="feedback"
+                background-color="white"
+                class="carousel-item"
+              />
+            </Slide>
+          </Carousel>
+        </div>
       </HomepageSection>
     </div>
 
+    <!-- Blog -->
     <HomepageSection
       :title="pageStore.homePage.blogBlockTitle"
       :intro="pageStore.homePage.blogBlockIntro"
+      button-text="Explorer les articles"
+      button-link="/blog"
     >
-      <div class="columns is-4 mb-2">
-        <div
-          v-for="(blogPost, index) of pageStore.homePage.blogPosts"
-          :key="blogPost.id"
-          class="column is-half"
-        >
-          <HomepageArticleCard
-            v-if="index < 2"
-            :article="blogPost"
-            background-color="shade-100"
-            :image-height="260"
-          />
-        </div>
+      <div class="columns mb-2">
+        <Carousel :settings="settings" :breakpoints="breakpointsLargeElements">
+          <Slide
+            v-for="blogPost of pageStore.homePage.blogPosts"
+            :key="blogPost.id"
+            class="column is-half"
+          >
+            <HomepageArticleCard
+              :article="blogPost"
+              background-color="shade-100"
+              :image-height="260"
+              class="carousel-item"
+            />
+          </Slide>
+        </Carousel>
       </div>
     </HomepageSection>
+
+    <!-- Resources -->
     <div class="has-background-shade-250">
       <HomepageSection
         :title="pageStore.homePage.resourcesBlockTitle"
         :intro="pageStore.homePage.resourcesBlockTitle"
+        button-text="Explorer les ressources"
+        button-link="/ressources"
       >
-        <div class="columns is-4 mb-2">
-          <div
-            v-for="(resource, index) of pageStore.homePage.resources"
-            :key="resource.id"
-            class="column is-one-third"
+        <div class="columns mb-2" style="display: block">
+          <Carousel
+            :settings="settings"
+            :breakpoints="breakpointsSmallElements"
           >
-            <HomepageArticleCard
-              v-if="index < 3"
-              :article="resource"
-              background-color="white"
-              :image-height="300"
-            />
-          </div>
+            <Slide
+              v-for="resource of pageStore.homePage.resources"
+              :key="resource.id"
+              class="column is-one-third"
+            >
+              <HomepageArticleCard
+                :article="resource"
+                background-color="white"
+                :image-height="300"
+                class="carousel-item"
+              />
+            </Slide>
+          </Carousel>
         </div>
       </HomepageSection>
     </div>
+
+    <!-- Parteners -->
     <HomepageSection
       :title="pageStore.homePage.partnerBlockTitle"
       :intro="pageStore.homePage.partnerBlockIntro"
@@ -84,9 +110,12 @@
 </template>
 
 <script setup lang="ts">
+import { Carousel, Slide } from "vue3-carousel"
+
+import "vue3-carousel/dist/carousel.css"
 import { usePageStore } from "~/stores/pageStore"
 import { BASE_URL } from "~/composables/api"
-import { useParticipationStore } from "~~/stores/participationStore"
+import { useParticipationStore } from "~/stores/participationStore"
 
 definePageMeta({
   title: "Accueil",
@@ -101,4 +130,27 @@ participationStore.getCurrentParticipation()
 if (!pageStore.homePage.title) {
   pageStore.getHomePage()
 }
+
+const settings = {
+  itemsToShow: 1.05,
+  snapAlign: "start",
+}
+const breakpointsLargeElements = {
+  1024: {
+    itemsToShow: 2.1,
+    snapAlign: "start",
+  },
+}
+const breakpointsSmallElements = {
+  1024: {
+    itemsToShow: 3.1,
+    snapAlign: "start",
+  },
+}
 </script>
+
+<style scoped lang="sass">
+.carousel-item
+  width: 100%
+  text-align: start
+</style>

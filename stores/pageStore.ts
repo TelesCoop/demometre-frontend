@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
 import {
+  Article,
   EvaluationInitPage,
   EvaluationIntroPage,
   HomePage,
@@ -11,6 +12,10 @@ import { useToastStore } from "./toastStore"
 export const usePageStore = defineStore("page", {
   state: () => ({
     homePage: <HomePage>{},
+    blogPosts: <Article[]>[],
+    resources: <Article[]>[],
+    blogLoaded: <boolean>false,
+    resourcesLoaded: <boolean>false,
     referentialPage: <ReferentialPage>{},
     evaluationIntroPage: <EvaluationIntroPage>{},
     evaluationInitPage: <EvaluationInitPage>{},
@@ -20,10 +25,33 @@ export const usePageStore = defineStore("page", {
       const { data, error } = await useApiGet<HomePage[]>("home-pages/")
       if (!error.value) {
         if (data.value.length) {
-          this.homePage = data.value[0]
+          const homePageData = data.value[0]
+          this.blogPosts = homePageData.blogPosts
+          this.resources = homePageData.resources
+          this.homePage = homePageData
         } else {
           console.error("Impossible to retrieve home page")
         }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
+    },
+    async getBlogPosts() {
+      const { data, error } = await useApiGet<Article[]>("blog-posts/")
+      if (!error.value) {
+        this.blogPosts = data.value
+        this.blogLoaded = true
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
+    },
+    async getResources() {
+      const { data, error } = await useApiGet<Article[]>("resources/")
+      if (!error.value) {
+        this.resources = data.value
+        this.resourcesLoaded = true
       } else {
         const errorStore = useToastStore()
         errorStore.setError(error.value.data.messageCode)
