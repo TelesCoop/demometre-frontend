@@ -240,13 +240,14 @@ type Feedback = {
   quote: string
   publish: boolean
 }
-type Article = {
+export type Article = {
   id: number
   title: string
   shortDescription: string
   publicationDate: string
   imageUrl: string
   externalLink: string
+  pillars: number[]
 }
 type Partner = {
   id: number
@@ -258,6 +259,7 @@ export type HomePage = {
   introduction: string
   tagLine: string
   introImageUrl: string
+  introYoutubeVideoId: string
   feedbackBlockTitle: string
   feedbackBlockIntro: string
   feedbacks: Feedback[]

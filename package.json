@@ -27,6 +27,7 @@
     "pinia": "^2.0.11",
     "prettier": "^2.5.1",
     "typescript": "^4.6.2",
+    "vue3-carousel": "^0.1.40",
     "vuedraggable": "^4.1.0"
   }
 }
