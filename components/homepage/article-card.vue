@@ -1,7 +1,9 @@
 <template>
-  <div
+  <a
     :class="`card has-background-${backgroundColor} is-fullheight is-clickable`"
-    @click.prevent="openArticle"
+    :href="props.article.externalLink"
+    target="_blank"
+    rel="external noopener noreferrer"
   >
     <div class="card-image">
       <figure class="image is-4by3">
@@ -38,7 +40,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </a>
 </template>
 
 <script setup lang="ts">
@@ -55,12 +57,6 @@ const props = defineProps({
 })
 
 const questionnaireStore = useQuestionnaireStore()
-
-const openArticle = () => {
-  if (props.article.externalLink) {
-    window.open(props.article.externalLink, "_blank")
-  }
-}
 </script>
 
 <style scoped lang="sass">

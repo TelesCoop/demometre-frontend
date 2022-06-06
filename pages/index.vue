@@ -1,6 +1,8 @@
 <template>
   <div class="homepage">
     <HomepageHomeIntro />
+
+    <!-- Feedbacks -->
     <div class="has-background-shade-250">
       <HomepageSection
         :title="pageStore.homePage.feedbackBlockTitle"
@@ -27,6 +29,7 @@
       </HomepageSection>
     </div>
 
+    <!-- Blog -->
     <HomepageSection
       :title="pageStore.homePage.blogBlockTitle"
       :intro="pageStore.homePage.blogBlockIntro"
@@ -50,6 +53,8 @@
         </Carousel>
       </div>
     </HomepageSection>
+
+    <!-- Resources -->
     <div class="has-background-shade-250">
       <HomepageSection
         :title="pageStore.homePage.resourcesBlockTitle"
@@ -78,6 +83,8 @@
         </div>
       </HomepageSection>
     </div>
+
+    <!-- Parteners -->
     <HomepageSection
       :title="pageStore.homePage.partnerBlockTitle"
       :intro="pageStore.homePage.partnerBlockIntro"
