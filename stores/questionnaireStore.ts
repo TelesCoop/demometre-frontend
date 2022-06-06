@@ -22,6 +22,12 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     getPillarByName: (state) => {
       return (pillarName) => state.pillarByName[pillarName]
     },
+    getPillarNameById: (state) => {
+      return (pillarId) =>
+        Object.keys(state.pillarByName).find(
+          (key) => state.pillarByName[key].id === pillarId
+        )
+    },
     pillars: (state) => {
       return Object.values(state.pillarByName)
     },
