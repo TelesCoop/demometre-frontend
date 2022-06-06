@@ -8,6 +8,28 @@
         />
       </div>
     </section>
+    <section>
+      <Pagination
+        v-slot="paginationProps"
+        :list="pageStore.resources"
+        :number-per-page="9"
+      >
+        <div class="columns is-multiline mb-2">
+          <div
+            v-for="resource of paginationProps.pageList"
+            :key="resource.id"
+            class="column is-one-third"
+          >
+            <HomepageArticleCard
+              :article="resource"
+              background-color="white"
+              :image-height="300"
+              :show-linked-pillars="true"
+            />
+          </div>
+        </div>
+      </Pagination>
+    </section>
   </div>
 </template>
 

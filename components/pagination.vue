@@ -2,7 +2,6 @@
   <div class="container">
     <section class="section">
       <slot :page-list="pageList"></slot>
-
       <nav
         v-if="numberOfPages > 1"
         class="pagination is-centered"
@@ -10,14 +9,14 @@
         aria-label="pagination"
       >
         <button
-          class="pagination-previous button is-no-pillar"
+          class="pagination-previous button is-outlined has-border-shade-300 has-text-no-pillar-dark"
           :disabled="previousDisabled"
           @click.prevent="previousPage"
         >
           <span class="icon"> <icon size="20" name="arrow-left-line" /> </span>
         </button>
         <button
-          class="pagination-next button is-no-pillar"
+          class="pagination-next button is-outlined has-border-shade-300 has-text-no-pillar-dark"
           :disabled="nextDisabled"
           @click.prevent="nextPage"
         >
@@ -26,7 +25,7 @@
         <ul class="pagination-list">
           <li v-if="numberOfPages > 1 && currentPage > 2">
             <button
-              class="pagination-link button is-no-pillar"
+              class="pagination-link button is-outlined has-border-shade-300 has-text-no-pillar-dark"
               :disabled="previousDisabled"
               @click.prevent="firstPage"
             >
@@ -38,7 +37,7 @@
           </li>
           <li v-if="currentPage > 1">
             <button
-              class="pagination-link button is-no-pillar"
+              class="pagination-link button is-outlined has-border-shade-300 has-text-no-pillar-dark"
               :disabled="previousDisabled"
               @click.prevent="previousPage"
             >
@@ -47,7 +46,7 @@
           </li>
           <li>
             <button
-              class="pagination-link button is-no-pillar"
+              class="pagination-link button has-background-no-pillar-dark has-text-white"
               aria-current="page"
             >
               {{ currentPage }}
@@ -55,7 +54,7 @@
           </li>
           <li v-if="currentPage < numberOfPages">
             <button
-              class="pagination-link button is-no-pillar"
+              class="pagination-link button is-outlined has-border-shade-300 has-text-no-pillar-dark"
               :disabled="nextDisabled"
               @click.prevent="nextPage"
             >
@@ -67,7 +66,7 @@
           </li>
           <li v-if="numberOfPages > 2 && currentPage < numberOfPages - 1">
             <button
-              class="pagination-link button is-no-pillar"
+              class="pagination-link button is-outlined has-border-shade-300 has-text-no-pillar-dark"
               :disabled="nextDisabled"
               @click.prevent="lastPage"
             >
@@ -89,8 +88,8 @@ const props = defineProps({
 const currentPage = ref<number>(1)
 const pagination = reactive({ begin: 0, end: props.numberPerPage })
 
-const numberOfPages = computed<number>(
-  () => ~~(props.list.length / props.numberPerPage) + 1 // whole division
+const numberOfPages = computed<number>(() =>
+  Math.ceil(props.list.length / props.numberPerPage)
 )
 const pageList = computed(() =>
   props.list.slice(pagination.begin, pagination.end)

@@ -9,7 +9,7 @@
       <Pagination
         v-slot="paginationProps"
         :list="pageStore.blogPosts"
-        :number-per-page="1"
+        :number-per-page="6"
       >
         <div class="columns is-multiline mb-2">
           <div
