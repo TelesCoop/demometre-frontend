@@ -12,10 +12,17 @@
         />
       </div>
       <div class="column" style="text-align: end">
-        <figure
-          v-if="pageStore.homePage.introImageUrl"
-          class="image is-128x128"
-        >
+        <iframe
+          v-if="pageStore.homePage.introYoutubeVideoId"
+          width="450"
+          height="253"
+          :src="`https://www.youtube-nocookie.com/embed/${pageStore.homePage.introYoutubeVideoId}`"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        <figure v-else class="image is-128x128">
           <img :src="BASE_URL + pageStore.homePage.introImageUrl" alt="" />
         </figure>
       </div>

@@ -259,6 +259,7 @@ export type HomePage = {
   introduction: string
   tagLine: string
   introImageUrl: string
+  introYoutubeVideoId: string
   feedbackBlockTitle: string
   feedbackBlockIntro: string
   feedbacks: Feedback[]
