@@ -33,6 +33,14 @@
         />
       </div>
     </section>
+    <!-- c'est ici que je vais travailler -->
+    <hr />
+    <div>
+      <h2>4 piliers</h2>
+      <p>texte long</p>
+      <img src="none" alt="image futur">
+    </div>
+
     <hr />
     <section ref="pillarsRef" class="columns is-multiline mt-4">
       <div
