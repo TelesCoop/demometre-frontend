@@ -180,7 +180,7 @@ export type RepresentativityCriteria = {
 }
 export type Assessment = {
   id: number
-  type: string
+  localityType: string
   initiatedByUser: User
   initiatorType: string
   initializedToTheNameOf: string
@@ -274,6 +274,47 @@ export type HomePage = {
   partners: Partner[]
 }
 export type ReferentialPage = { title: string; introduction: string }
+
+type ImageUrl = { id: number; url: string }
+type AssessmentTypeDetails = {
+  id: number
+  name: string
+  assessmentType: string
+  forWho: string
+  what: string
+  forWhat: string
+  results: string
+  price: string
+  pdfUrl: string
+}
+type StepOfUse = {
+  image: number
+  title: string
+  description: string
+}
+type AssessmentProcesses = {
+  title: string
+  type: string
+  pdf_button: string
+}
+export type UsagePage = {
+  title: string
+  introduction: string
+  tagLine: string
+  introImageUrl: string
+  stepOfUseTitle: string
+  stepOfUseIntro: string
+  stepsOfUse: string | StepOfUse[]
+  stepsImagesUrl: ImageUrl[]
+  participateBlockTitle: string
+  participateBlockIntro: string
+  participateLeftParagraph: string
+  participateRightParagraph: string
+  startAssessmentBlockTitle: string
+  startAssessmentBlockIntro: string
+  startProcesses: string | AssessmentProcesses[]
+  assessmentTypesDetails: AssessmentTypeDetails[]
+}
 export type EvaluationIntroPage = {
   title: string
   introduction: string

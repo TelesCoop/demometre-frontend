@@ -5,6 +5,7 @@ import {
   EvaluationIntroPage,
   HomePage,
   ReferentialPage,
+  UsagePage,
 } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 import { useToastStore } from "./toastStore"
@@ -17,6 +18,7 @@ export const usePageStore = defineStore("page", {
     blogLoaded: <boolean>false,
     resourcesLoaded: <boolean>false,
     referentialPage: <ReferentialPage>{},
+    usagePage: <UsagePage>{},
     evaluationIntroPage: <EvaluationIntroPage>{},
     evaluationInitPage: <EvaluationInitPage>{},
   }),
@@ -66,6 +68,19 @@ export const usePageStore = defineStore("page", {
           this.referentialPage = data.value[0]
         } else {
           console.error("Impossible to retrieve referential page")
+        }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
+    },
+    async getUsagePage() {
+      const { data, error } = await useApiGet<UsagePage[]>("usage-pages/")
+      if (!error.value) {
+        if (data.value.length) {
+          this.usagePage = data.value[0]
+        } else {
+          console.error("Impossible to retrieve usage page")
         }
       } else {
         const errorStore = useToastStore()
