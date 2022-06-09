@@ -99,7 +99,7 @@
           class="image"
         >
           <img
-            :src="BASE_URL + partner.logoImageUrl"
+            :src="MADIA_BASE_URL + partner.logoImageUrl"
             alt=""
             style="max-height: 40px"
           />
@@ -114,7 +114,7 @@ import { Carousel, Slide } from "vue3-carousel"
 
 import "vue3-carousel/dist/carousel.css"
 import { usePageStore } from "~/stores/pageStore"
-import { BASE_URL } from "~/composables/api"
+import { MADIA_BASE_URL } from "~/composables/api"
 import { useParticipationStore } from "~/stores/participationStore"
 
 definePageMeta({

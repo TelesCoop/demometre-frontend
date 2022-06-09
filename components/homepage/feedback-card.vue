@@ -6,7 +6,7 @@
       <div class="media is-flex is-flex-direction-row mb-1_5">
         <div v-if="props.feedback.pictureUrl" class="media-left mr-1">
           <figure class="image is-48x48 is-rounded">
-            <img :src="BASE_URL + props.feedback.pictureUrl" alt="" />
+            <img :src="MADIA_BASE_URL + props.feedback.pictureUrl" alt="" />
           </figure>
         </div>
         <div class="media-content">
@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { BASE_URL } from "~/composables/api"
+import { MADIA_BASE_URL } from "~/composables/api"
 
 const props = defineProps({
   feedback: { type: Object, required: true },

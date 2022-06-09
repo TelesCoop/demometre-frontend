@@ -23,7 +23,10 @@
           allowfullscreen
         ></iframe>
         <figure v-else class="image is-128x128">
-          <img :src="BASE_URL + pageStore.homePage.introImageUrl" alt="" />
+          <img
+            :src="MADIA_BASE_URL + pageStore.homePage.introImageUrl"
+            alt=""
+          />
         </figure>
       </div>
     </section>
@@ -32,7 +35,7 @@
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
-import { BASE_URL } from "~/composables/api"
+import { MADIA_BASE_URL } from "~/composables/api"
 
 const pageStore = usePageStore()
 </script>
