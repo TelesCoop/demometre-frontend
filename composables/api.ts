@@ -12,12 +12,12 @@ if (process.env.NODE_ENV !== "production") {
   media_base_url = "http://localhost:8000"
 } else {
   // production server
+  media_base_url = "http://democratieouverte.tlscp.fr"
   if (process.server) {
     // server-side rendering
     base_url = "http://localhost:8064"
   } else {
     base_url = "http://democratieouverte.tlscp.fr"
-    media_base_url = "http://democratieouverte.tlscp.fr"
   }
 }
 
