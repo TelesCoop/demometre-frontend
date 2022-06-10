@@ -4,12 +4,12 @@
       <div
         v-for="pillarName in PillarName"
         :key="pillarName"
+        class="is-clickable column p-0"
         :class="
           (!props.header && pillarName === hoverPillarName
             ? `has-background-${PillarParams[pillarName].color}-light-hover`
             : `has-background-${PillarParams[pillarName].color}-light`) +
-          (props.header ? '' : ' m-0_75 box-rounded') +
-          ' is-clickable column p-0'
+          (props.header ? '' : ' m-0_75 box-rounded')
         "
         style="flex: 1"
         @click.prevent="goToFirstQuestionPillar(pillarName)"
