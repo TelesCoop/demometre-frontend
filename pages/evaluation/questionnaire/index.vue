@@ -2,9 +2,9 @@
   <div class="container">
     <section class="columns section">
       <div class="column is-5">
-        <PageIntro
+        <PageTitle
           title="Par quel pilier ou marqueur voulez-vous commencer&nbsp;?"
-          introduction="Vous pouvez choisir un marqueur ou l’un des 4 piliers ci-contre. Sinon, vous pouvez aussi vous laisser guider."
+          subtitle="Vous pouvez choisir un marqueur ou l’un des 4 piliers ci-contre. Sinon, vous pouvez aussi vous laisser guider."
         />
       </div>
       <div class="column is-6 is-offset-1">
@@ -23,15 +23,12 @@
 import { useQuestionnaireJourney } from "~/composables/journey"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
-import { useRouter } from "vue-router"
 
 definePageMeta({
   title: "Questionnaire",
   step: "questionnaire",
   middleware: ["user-step"],
 })
-
-const router = useRouter()
 
 const questionnaireStore = useQuestionnaireStore()
 const pageStore = usePageStore()

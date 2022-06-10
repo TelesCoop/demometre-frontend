@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <section class="columns section">
-      <div class="column is-5">
-        <PageIntro
+      <div class="column is-6">
+        <PageTitle
           :title="pageStore.referentialPage.title"
-          :introduction="pageStore.referentialPage.introduction"
+          :subtitle="pageStore.referentialPage.introduction"
         />
         <div class="buttons are-normal">
           <!-- TODO : change link to the right page -->
@@ -24,7 +24,7 @@
           les critères qui le composent.
         </p>
       </div>
-      <div class="column is-6 is-offset-1">
+      <div class="column is-5 is-offset-1">
         <Rosette
           center-button-name="Découvrir"
           @center-button-click="onDiscoverButtonClick()"

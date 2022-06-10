@@ -280,22 +280,20 @@ type AssessmentTypeDetails = {
   id: number
   name: string
   assessmentType: string
+  title: string
   forWho: string
   what: string
   forWhat: string
   results: string
   price: string
   pdfUrl: string
+  pdfButton: string
 }
 type StepOfUse = {
   image: number
+  imageUrl: string
   title: string
   description: string
-}
-type AssessmentProcesses = {
-  title: string
-  type: string
-  pdf_button: string
 }
 export type UsagePage = {
   title: string
@@ -312,7 +310,7 @@ export type UsagePage = {
   participateRightParagraph: string
   startAssessmentBlockTitle: string
   startAssessmentBlockIntro: string
-  startProcesses: string | AssessmentProcesses[]
+  startAssessmentBlockData: string | AssessmentTypeDetails[]
   assessmentTypesDetails: AssessmentTypeDetails[]
 }
 export type EvaluationIntroPage = {

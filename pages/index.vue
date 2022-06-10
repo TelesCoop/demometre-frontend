@@ -1,10 +1,16 @@
 <template>
   <div class="homepage">
-    <HomepageHomeIntro />
+    <PageIntro
+      :title="pageStore.homePage.title"
+      :subtitle="pageStore.homePage.tagLine"
+      :introduction="pageStore.homePage.introduction"
+      :youtube-video-id="pageStore.homePage.introYoutubeVideoId"
+      :image-url="pageStore.homePage.introImageUrl"
+    />
 
     <!-- Feedbacks -->
     <div class="has-background-shade-250">
-      <HomepageSection
+      <PageSection
         :title="pageStore.homePage.feedbackBlockTitle"
         :intro="pageStore.homePage.feedbackBlockIntro"
       >
@@ -18,7 +24,7 @@
               :key="feedback.id"
               class="column is-one-third"
             >
-              <HomepageFeedbackCard
+              <PageFeedbackCard
                 :feedback="feedback"
                 background-color="white"
                 class="carousel-item"
@@ -26,11 +32,11 @@
             </Slide>
           </Carousel>
         </div>
-      </HomepageSection>
+      </PageSection>
     </div>
 
     <!-- Blog -->
-    <HomepageSection
+    <PageSection
       :title="pageStore.homePage.blogBlockTitle"
       :intro="pageStore.homePage.blogBlockIntro"
       button-text="Explorer les articles"
@@ -43,7 +49,7 @@
             :key="blogPost.id"
             class="column is-half"
           >
-            <HomepageArticleCard
+            <PageArticleCard
               :article="blogPost"
               background-color="shade-100"
               :image-height="260"
@@ -52,11 +58,11 @@
           </Slide>
         </Carousel>
       </div>
-    </HomepageSection>
+    </PageSection>
 
     <!-- Resources -->
     <div class="has-background-shade-250">
-      <HomepageSection
+      <PageSection
         :title="pageStore.homePage.resourcesBlockTitle"
         :intro="pageStore.homePage.resourcesBlockTitle"
         button-text="Explorer les ressources"
@@ -72,7 +78,7 @@
               :key="resource.id"
               class="column is-one-third"
             >
-              <HomepageArticleCard
+              <PageArticleCard
                 :article="resource"
                 background-color="white"
                 :image-height="300"
@@ -81,11 +87,11 @@
             </Slide>
           </Carousel>
         </div>
-      </HomepageSection>
+      </PageSection>
     </div>
 
     <!-- Parteners -->
-    <HomepageSection
+    <PageSection
       :title="pageStore.homePage.partnerBlockTitle"
       :intro="pageStore.homePage.partnerBlockIntro"
     >
@@ -105,7 +111,7 @@
           />
         </figure>
       </div>
-    </HomepageSection>
+    </PageSection>
   </div>
 </template>
 
