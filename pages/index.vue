@@ -2,6 +2,23 @@
   <div class="homepage">
     <HomepageHomeIntro />
 
+    <!-- Connected section -->
+
+    <QuestionnaireProgressBars
+      v-if="assessmentStore.currentAssessment"
+      class="mb-4"
+    />
+
+    <HomepageSection
+      v-if="assessmentStore.currentAssessment"
+      :title="participationBoardTitle"
+      :intro="assessmentStore.currentAssessment.municipality.name"
+    >
+      <ParticipationBoard
+        :assessment="assessmentStore.currentAssessment"
+      ></ParticipationBoard>
+    </HomepageSection>
+
     <!-- Feedbacks -->
     <div class="has-background-shade-250">
       <HomepageSection
@@ -116,6 +133,7 @@ import "vue3-carousel/dist/carousel.css"
 import { usePageStore } from "~/stores/pageStore"
 import { MADIA_BASE_URL } from "~/composables/api"
 import { useParticipationStore } from "~/stores/participationStore"
+import { useAssessmentStore } from "~~/stores/assessmentStore"
 
 definePageMeta({
   title: "Accueil",
@@ -123,6 +141,7 @@ definePageMeta({
 })
 
 const pageStore = usePageStore()
+const assessmentStore = useAssessmentStore()
 
 const participationStore = useParticipationStore()
 participationStore.getCurrentParticipation()
@@ -147,6 +166,12 @@ const breakpointsSmallElements = {
     snapAlign: "start",
   },
 }
+
+const participationBoardTitle =
+  "Tableau de bord de " +
+  (assessmentStore.currentAssessment?.municipality
+    ? "ma ville"
+    : "mon inter-communalité")
 </script>
 
 <style scoped lang="sass">

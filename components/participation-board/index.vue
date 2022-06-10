@@ -1,5 +1,8 @@
 <template>
   <div class="has-background-shade-100 p-1_5">
+    <p class="title has-text-shade-900 is-4">
+      Tableau de bord de la participation citoyenne
+    </p>
     <div class="columns">
       <div class="column is-one-third">
         <h3 class="has-text-weight-bold mb-2">Évaluation</h3>
