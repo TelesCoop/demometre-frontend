@@ -1,6 +1,6 @@
 <template>
   <div :class="{ container: !props.header }">
-    <div :class="(props.header ? ' m-0' : '') + ' columns'">
+    <div :class="props.header ? ' m-0' : ''" class="columns">
       <div
         v-for="pillarName in PillarName"
         :key="pillarName"
