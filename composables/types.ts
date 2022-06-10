@@ -25,9 +25,9 @@ export enum SurveyType {
 }
 export enum PillarName {
   REPRESENTATION = "représentation",
-  COOPERATION = "coopération",
   TRANSPARENCY = "transparence",
   PARTICIPATION = "participation",
+  COOPERATION = "coopération",
 }
 
 export const PillarParams = {
@@ -35,11 +35,6 @@ export const PillarParams = {
     key: "representation",
     color: "representation",
     picto: "picto-representation.png",
-  },
-  [PillarName.COOPERATION]: {
-    key: "cooperation",
-    color: "cooperation",
-    picto: "picto-cooperation.png",
   },
   [PillarName.TRANSPARENCY]: {
     key: "transparency",
@@ -50,6 +45,11 @@ export const PillarParams = {
     key: "participation",
     color: "participation",
     picto: "picto-participation.png",
+  },
+  [PillarName.COOPERATION]: {
+    key: "cooperation",
+    color: "cooperation",
+    picto: "picto-cooperation.png",
   },
 }
 export type PillarType = {
