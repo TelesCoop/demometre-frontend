@@ -74,10 +74,7 @@
         </div>
       </div>
     </nav>
-    <HeaderProgressBars
-      v-if="isQuestionnaireRoute"
-      :active-pillar-name="activePillar"
-    />
+    <QuestionnaireProgressBars v-if="isQuestionnaireRoute" :header="true" />
     <HeaderLine v-else :active-pillar-name="activePillar" />
   </header>
 </template>

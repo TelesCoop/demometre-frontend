@@ -2,7 +2,7 @@
   <div class="container">
     <section v-if="props.title" class="section">
       <div />
-      <h2 class="title is-3">{{ props.title }}</h2>
+      <h2 class="title is-3 has-text-shade-900 mb-1">{{ props.title }}</h2>
       <div
         class="is-flex is-flex-direction-row is-justify-content-space-between"
       >
@@ -12,7 +12,7 @@
         <nuxt-link
           v-if="props.buttonLink && props.buttonText"
           :class="`button is-shade-600 has-text-white is-normal is-rounded is-responsive`"
-          :to="buttonLink"
+          :to="props.buttonLink"
         >
           <span>{{ props.buttonText }}</span>
           <span class="icon">
