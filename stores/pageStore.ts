@@ -5,6 +5,7 @@ import {
   EvaluationIntroPage,
   HomePage,
   ReferentialPage,
+  UsagePage,
 } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 import { useToastStore } from "./toastStore"
@@ -17,6 +18,7 @@ export const usePageStore = defineStore("page", {
     blogLoaded: <boolean>false,
     resourcesLoaded: <boolean>false,
     referentialPage: <ReferentialPage>{},
+    usagePage: <UsagePage>{},
     evaluationIntroPage: <EvaluationIntroPage>{},
     evaluationInitPage: <EvaluationInitPage>{},
   }),
@@ -66,6 +68,49 @@ export const usePageStore = defineStore("page", {
           this.referentialPage = data.value[0]
         } else {
           console.error("Impossible to retrieve referential page")
+        }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
+    },
+    async getUsagePage() {
+      const { data, error } = await useApiGet<UsagePage[]>("usage-pages/")
+      if (!error.value) {
+        if (data.value.length) {
+          this.usagePage = data.value[0]
+          // Treat json data sent in string
+          const stepsOfUseString = this.usagePage.stepsOfUse
+          this.usagePage.stepsOfUse = []
+          for (const step of eval(stepsOfUseString)) {
+            // step.value as shape {image, title, description} where image is the id of the image
+            const stepImageUrl = this.usagePage.stepsImagesUrl.filter(
+              (stepImage) => stepImage.id === step.value.image
+            )[0].url
+            this.usagePage.stepsOfUse.push({
+              ...step.value,
+              imageUrl: stepImageUrl,
+            })
+          }
+          const startAssessmentBlockDataString =
+            this.usagePage.startAssessmentBlockData
+          this.usagePage.startAssessmentBlockData = []
+          for (const assessmentData of eval(startAssessmentBlockDataString)) {
+            // assessmentData.value as shape {title, type, pdfButton} where type is assessmentType
+            const assessmentTypeDetails =
+              this.usagePage.assessmentTypesDetails.filter(
+                (assessmentTypeDetails) =>
+                  assessmentTypeDetails.assessmentType ===
+                  assessmentData.value.type
+              )[0]
+            this.usagePage.startAssessmentBlockData.push({
+              ...assessmentData.value,
+              ...assessmentTypeDetails,
+            })
+          }
+          // NB : to improve, fine enough for now : eval function do not transform to camelCase, so we have pdf_button instead of pdfButton
+        } else {
+          console.error("Impossible to retrieve usage page")
         }
       } else {
         const errorStore = useToastStore()

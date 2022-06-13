@@ -2,31 +2,22 @@
   <div class="container">
     <section class="intro columns section">
       <div class="column">
-        <PageIntro
-          :title="pageStore.homePage.title"
-          :introduction="pageStore.homePage.tagLine"
-        />
-        <RichText
-          :rich-text="pageStore.homePage.introduction"
-          class="is-family-secondary"
-        />
+        <PageTitle :title="props.title" :subtitle="props.subtitle" />
+        <RichText :rich-text="props.introduction" class="is-family-secondary" />
       </div>
       <div class="column" style="text-align: end">
         <iframe
-          v-if="pageStore.homePage.introYoutubeVideoId"
+          v-if="props.youtubeVideoId"
           width="450"
           height="253"
-          :src="`https://www.youtube-nocookie.com/embed/${pageStore.homePage.introYoutubeVideoId}`"
+          :src="`https://www.youtube-nocookie.com/embed/${props.youtubeVideoId}`"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         ></iframe>
         <figure v-else class="image is-128x128">
-          <img
-            :src="MADIA_BASE_URL + pageStore.homePage.introImageUrl"
-            alt=""
-          />
+          <img :src="MADIA_BASE_URL + props.imageUrl" alt="" />
         </figure>
       </div>
     </section>
@@ -37,7 +28,13 @@
 import { usePageStore } from "~/stores/pageStore"
 import { MADIA_BASE_URL } from "~/composables/api"
 
-const pageStore = usePageStore()
+const props = defineProps({
+  title: { type: String, require: true },
+  subtitle: { type: String, required: true },
+  introduction: { type: String, required: true },
+  youtubeVideoId: { type: String, required: false },
+  imageUrl: { type: String, required: false },
+})
 </script>
 
 <style scoped lang="sass">

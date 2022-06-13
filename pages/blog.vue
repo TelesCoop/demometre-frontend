@@ -2,7 +2,7 @@
   <div class="container">
     <section class="columns section">
       <div class="column is-5">
-        <PageIntro title="Blog" introduction="Paragraphe d'intro du blog" />
+        <PageTitle title="Blog" subtitle="Paragraphe d'intro du blog" />
       </div>
     </section>
     <section>
@@ -17,7 +17,7 @@
             :key="blogPost.id"
             class="column is-half"
           >
-            <HomepageArticleCard
+            <PageArticleCard
               :article="blogPost"
               background-color="white"
               :image-height="300"

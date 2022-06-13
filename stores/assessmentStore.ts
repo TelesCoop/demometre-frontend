@@ -16,12 +16,13 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     municipalityAssessments() {
       return this.assessments.find(
-        (assessment: Assessment) => assessment.type === "municipality"
+        (assessment: Assessment) => assessment.localityType === "municipality"
       )
     },
     intercommunalityAssessments() {
       return this.assessments.find(
-        (assessment: Assessment) => assessment.type === "intercommunality"
+        (assessment: Assessment) =>
+          assessment.localityType === "intercommunality"
       )
     },
     currentAssessment() {
