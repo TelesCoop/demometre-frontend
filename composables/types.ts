@@ -273,7 +273,12 @@ export type HomePage = {
   partnerBlockIntro: string
   partners: Partner[]
 }
-export type ReferentialPage = { title: string; introduction: string }
+export type ReferentialPage = { 
+  title: string; 
+  introduction: string;
+  markerBlockTitle: string;
+  markerBlockContent: string;
+}
 
 type ImageUrl = { id: number; url: string }
 type AssessmentTypeDetails = {
