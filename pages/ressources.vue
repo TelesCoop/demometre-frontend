@@ -2,9 +2,9 @@
   <div class="container">
     <section class="columns section">
       <div class="column is-5">
-        <PageIntro
+        <PageTitle
           title="Ressources"
-          introduction="Paragraphe d'intro des ressources"
+          subtitle="Paragraphe d'intro des ressources"
         />
       </div>
     </section>
@@ -20,7 +20,7 @@
             :key="resource.id"
             class="column is-one-third"
           >
-            <HomepageArticleCard
+            <PageArticleCard
               :article="resource"
               background-color="white"
               :image-height="300"

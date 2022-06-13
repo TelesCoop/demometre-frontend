@@ -1,10 +1,33 @@
 <template>
   <div class="homepage">
-    <HomepageHomeIntro />
+    <PageIntro
+      :title="pageStore.homePage.title"
+      :subtitle="pageStore.homePage.tagLine"
+      :introduction="pageStore.homePage.introduction"
+      :youtube-video-id="pageStore.homePage.introYoutubeVideoId"
+      :image-url="pageStore.homePage.introImageUrl"
+    />
+
+    <!-- Connected section -->
+
+    <QuestionnaireProgressBars
+      v-if="assessmentStore.currentAssessment"
+      class="mb-4"
+    />
+
+    <PageSection
+      v-if="assessmentStore.currentAssessment"
+      :title="participationBoardTitle"
+      :intro="assessmentStore.currentAssessment.municipality.name"
+    >
+      <ParticipationBoard
+        :assessment="assessmentStore.currentAssessment"
+      ></ParticipationBoard>
+    </PageSection>
 
     <!-- Feedbacks -->
     <div class="has-background-shade-250">
-      <HomepageSection
+      <PageSection
         :title="pageStore.homePage.feedbackBlockTitle"
         :intro="pageStore.homePage.feedbackBlockIntro"
       >
@@ -18,7 +41,7 @@
               :key="feedback.id"
               class="column is-one-third"
             >
-              <HomepageFeedbackCard
+              <PageFeedbackCard
                 :feedback="feedback"
                 background-color="white"
                 class="carousel-item"
@@ -26,11 +49,11 @@
             </Slide>
           </Carousel>
         </div>
-      </HomepageSection>
+      </PageSection>
     </div>
 
     <!-- Blog -->
-    <HomepageSection
+    <PageSection
       :title="pageStore.homePage.blogBlockTitle"
       :intro="pageStore.homePage.blogBlockIntro"
       button-text="Explorer les articles"
@@ -43,7 +66,7 @@
             :key="blogPost.id"
             class="column is-half"
           >
-            <HomepageArticleCard
+            <PageArticleCard
               :article="blogPost"
               background-color="shade-100"
               :image-height="260"
@@ -52,11 +75,11 @@
           </Slide>
         </Carousel>
       </div>
-    </HomepageSection>
+    </PageSection>
 
     <!-- Resources -->
     <div class="has-background-shade-250">
-      <HomepageSection
+      <PageSection
         :title="pageStore.homePage.resourcesBlockTitle"
         :intro="pageStore.homePage.resourcesBlockTitle"
         button-text="Explorer les ressources"
@@ -72,7 +95,7 @@
               :key="resource.id"
               class="column is-one-third"
             >
-              <HomepageArticleCard
+              <PageArticleCard
                 :article="resource"
                 background-color="white"
                 :image-height="300"
@@ -81,11 +104,11 @@
             </Slide>
           </Carousel>
         </div>
-      </HomepageSection>
+      </PageSection>
     </div>
 
     <!-- Parteners -->
-    <HomepageSection
+    <PageSection
       :title="pageStore.homePage.partnerBlockTitle"
       :intro="pageStore.homePage.partnerBlockIntro"
     >
@@ -99,13 +122,13 @@
           class="image"
         >
           <img
-            :src="BASE_URL + partner.logoImageUrl"
+            :src="MADIA_BASE_URL + partner.logoImageUrl"
             alt=""
             style="max-height: 40px"
           />
         </figure>
       </div>
-    </HomepageSection>
+    </PageSection>
   </div>
 </template>
 
@@ -114,8 +137,9 @@ import { Carousel, Slide } from "vue3-carousel"
 
 import "vue3-carousel/dist/carousel.css"
 import { usePageStore } from "~/stores/pageStore"
-import { BASE_URL } from "~/composables/api"
+import { MADIA_BASE_URL } from "~/composables/api"
 import { useParticipationStore } from "~/stores/participationStore"
+import { useAssessmentStore } from "~~/stores/assessmentStore"
 
 definePageMeta({
   title: "Accueil",
@@ -123,6 +147,7 @@ definePageMeta({
 })
 
 const pageStore = usePageStore()
+const assessmentStore = useAssessmentStore()
 
 const participationStore = useParticipationStore()
 participationStore.getCurrentParticipation()
@@ -147,6 +172,12 @@ const breakpointsSmallElements = {
     snapAlign: "start",
   },
 }
+
+const participationBoardTitle =
+  "Tableau de bord de " +
+  (assessmentStore.currentAssessment?.municipality
+    ? "ma ville"
+    : "mon inter-communalité")
 </script>
 
 <style scoped lang="sass">

@@ -3,13 +3,16 @@ import { useLoadingStore } from "~/stores/loadingStore"
 import { useFetch, useRequestHeaders } from "#app"
 
 let base_url = "/"
+let media_base_url
 type MyHeaders = { [key: string]: string }
 
 // local
 if (process.env.NODE_ENV !== "production") {
   base_url = "http://localhost:8000"
+  media_base_url = "http://localhost:8000"
 } else {
   // production server
+  media_base_url = "http://democratieouverte.tlscp.fr"
   if (process.server) {
     // server-side rendering
     base_url = "http://localhost:8064"
@@ -63,6 +66,7 @@ const getHeaders = (ctx: NuxtApp, includeCsrf = false): MyHeaders => {
   return headers
 }
 
+export const MADIA_BASE_URL = media_base_url
 export const BASE_URL = base_url
 export const BASE_API_URL = BASE_URL + "/api/"
 
