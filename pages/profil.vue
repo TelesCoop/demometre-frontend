@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <PageIntro title="Mon compte" introduction="" />
+    <PageTitle title="Mon compte" subtitle="" />
     <div class="mt-1">
       <button class="button is-normal" type="button" @click="logout">
         Se déconnecter

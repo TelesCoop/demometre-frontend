@@ -117,7 +117,7 @@ const navItems = [
   },
   {
     name: "Utilisations possible",
-    to: "/utilisation-possible",
+    to: "/utilisations-possibles",
   },
   {
     name: "Résultats",
