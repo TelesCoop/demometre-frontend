@@ -21,15 +21,17 @@
         </div>
         <div class="column footer-column is-3">
           <NuxtLink to="/demometre" class="has-text-white">DémoMètre</NuxtLink>
-          <NuxtLink to="/" class="has-text-white"
-            >Utilisation possibles</NuxtLink
+          <NuxtLink to="/utilisations-possibles" class="has-text-white"
+            >Utilisations possibles</NuxtLink
           >
           <NuxtLink to="/" class="has-text-white">Résultats</NuxtLink>
           <NuxtLink to="/" class="has-text-white">Le projet</NuxtLink>
         </div>
         <div class="column footer-column is-3">
-          <NuxtLink to="/" class="has-text-white">Blog</NuxtLink>
-          <NuxtLink to="/" class="has-text-white">Ressources</NuxtLink>
+          <NuxtLink to="/blog" class="has-text-white">Blog</NuxtLink>
+          <NuxtLink to="/ressources" class="has-text-white"
+            >Ressources</NuxtLink
+          >
           <NuxtLink to="/" class="has-text-white">FAQ</NuxtLink>
           <NuxtLink to="/" class="has-text-white">Contact</NuxtLink>
         </div>
