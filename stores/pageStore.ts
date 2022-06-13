@@ -108,6 +108,7 @@ export const usePageStore = defineStore("page", {
               ...assessmentTypeDetails,
             })
           }
+          // NB : to improve, fine enough for now : eval function do not transform to camelCase, so we have pdf_button instead of pdfButton
         } else {
           console.error("Impossible to retrieve usage page")
         }

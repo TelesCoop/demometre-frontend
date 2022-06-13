@@ -7,50 +7,84 @@
         </p>
       </div>
       <div class="content">
-        <div class="is-flex">
-          <span class="icon"> <icon size="20" name="user" /> </span>
-          <p class="is-family-secondary is-size-6 has-text-shade-600">
-            {{ props.assessmentType.forWho }}
-          </p>
+        <div
+          v-for="caracteristic in caracteristics"
+          :key="caracteristic.textKey"
+          class="mb-1_5"
+        >
+          <div
+            v-if="props.assessmentType[caracteristic.textKey]"
+            class="is-flex mb-0_5"
+          >
+            <span class="icon mr-1">
+              <icon size="20" :name="caracteristic.icon" />
+            </span>
+            <p class="is-family-secondary is-size-6 has-text-shade-600">
+              {{ props.assessmentType[caracteristic.textKey] }}
+            </p>
+          </div>
         </div>
-        <div class="is-flex">
-          <span class="icon"> <icon size="20" name="file-text-line" /> </span>
-          <p class="is-family-secondary is-size-6 has-text-shade-600">
-            {{ props.assessmentType.what }}
-          </p>
-        </div>
-        <div class="is-flex">
-          <span class="icon"> <icon size="20" name="checkbox-line" /> </span>
-          <p class="is-family-secondary is-size-6 has-text-shade-600">
-            {{ props.assessmentType.forWhat }}
-          </p>
-        </div>
-        <div class="is-flex">
+        <a
+          v-if="props.assessmentType.pdfUrl"
+          class="button is-shade-600 is-outlined is-rounded is-responsive mb-0_5"
+          :href="MADIA_BASE_URL + props.assessmentType.pdfUrl"
+          target="_blank"
+        >
           <span class="icon">
-            <icon size="20" name="bar-chart-box-line" />
+            <icon size="16" name="file-download-line" />
           </span>
-          <p class="is-family-secondary is-size-6 has-text-shade-600">
-            {{ props.assessmentType.results }}
-          </p>
-        </div>
-        <div class="is-flex">
+          <span>{{ props.assessmentType.pdf_button }}</span>
+        </a>
+        <br />
+        <nuxt-link
+          class="button is-shade-600 has-text-white is-rounded is-responsive"
+          :to="userStep.url"
+        >
           <span class="icon">
-            <icon size="20" name="money-euro-circle-line" />
+            <icon size="16" name="arrow-right-line" />
           </span>
-          <p class="is-family-secondary is-size-6 has-text-shade-600">
-            {{ props.assessmentType.price }}
-          </p>
-        </div>
+          <span>C'est parti !</span>
+        </nuxt-link>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { MADIA_BASE_URL } from "~/composables/api"
 const props = defineProps({
   assessmentType: { type: Object, required: true },
   backgroundColor: { type: String, required: true },
 })
+
+const userStep = useUserStep()
+
+const caracteristics = [
+  {
+    textKey: "forWho",
+    icon: "user",
+  },
+  {
+    textKey: "what",
+    icon: "file-text-line",
+  },
+  {
+    textKey: "forWhat",
+    icon: "checkbox-line",
+  },
+  {
+    textKey: "results",
+    icon: "bar-chart-box-line",
+  },
+  {
+    textKey: "price",
+    icon: "money-euro-circle-line",
+  },
+]
 </script>
 
-<style scoped lang="sass"></style>
+<style scoped lang="sass">
+// Bulma bugfix
+.button.is-shade-600.is-outlined:hover
+  color: white
+</style>

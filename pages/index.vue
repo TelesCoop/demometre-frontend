@@ -15,7 +15,7 @@
       class="mb-4"
     />
 
-    <HomepageSection
+    <PageSection
       v-if="assessmentStore.currentAssessment"
       :title="participationBoardTitle"
       :intro="assessmentStore.currentAssessment.municipality.name"
@@ -23,7 +23,7 @@
       <ParticipationBoard
         :assessment="assessmentStore.currentAssessment"
       ></ParticipationBoard>
-    </HomepageSection>
+    </PageSection>
 
     <!-- Feedbacks -->
     <div class="has-background-shade-250">

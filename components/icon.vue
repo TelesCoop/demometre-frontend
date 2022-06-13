@@ -106,6 +106,12 @@
         d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1.95-9H15v2h-4.95a2.5 2.5 0 0 0 4.064 1.41l1.7 1.133A4.5 4.5 0 0 1 8.028 13H7v-2h1.027a4.5 4.5 0 0 1 7.788-2.543L14.114 9.59A2.5 2.5 0 0 0 10.05 11z"
       />
     </template>
+    <template v-else-if="props.name === 'file-download-line'">
+      <path
+        :fill="props.color"
+        d="M13 12h3l-4 4-4-4h3V8h2v4zm2-8H5v16h14V8h-4V4zM3 2.992C3 2.444 3.447 2 3.999 2H16l5 5v13.993A1 1 0 0 1 20.007 22H3.993A1 1 0 0 1 3 21.008V2.992z"
+      />
+    </template>
 
     <template v-else-if="props.name === PillarName.REPRESENTATION">
       <circle cx="15" cy="7.5" r="2.5" :stroke="props.color" stroke-width="2" />

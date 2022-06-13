@@ -287,7 +287,7 @@ type AssessmentTypeDetails = {
   results: string
   price: string
   pdfUrl: string
-  pdfButton: string
+  pdf_button: string
 }
 type StepOfUse = {
   image: number
