@@ -33,6 +33,9 @@
       :intro="pageStore.usagePage.participateBlockIntro"
       button-text="Lancer l'évaluation"
       :button-link="userStep.url"
+      button-color="cooperation"
+      :button-outlined="true"
+      :button-text-dark="true"
     >
       <div class="columns mb-2">
         <RichText
