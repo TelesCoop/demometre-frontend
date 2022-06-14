@@ -6,6 +6,8 @@
       :introduction="pageStore.homePage.introduction"
       :youtube-video-id="pageStore.homePage.introYoutubeVideoId"
       :image-url="pageStore.homePage.introImageUrl"
+      :column-gap="16"
+      class="pt-2"
     />
 
     <!-- Connected section -->
@@ -17,7 +19,7 @@
 
     <PageSection
       v-if="assessmentStore.currentAssessment"
-      :title="participationBoardTitle"
+      :title="assessmentStore.participationBoardTitle"
       :intro="assessmentStore.currentAssessment.municipality.name"
     >
       <ParticipationBoard
@@ -172,12 +174,6 @@ const breakpointsSmallElements = {
     snapAlign: "start",
   },
 }
-
-const participationBoardTitle =
-  "Tableau de bord de " +
-  (assessmentStore.currentAssessment?.municipality
-    ? "ma ville"
-    : "mon inter-communalité")
 </script>
 
 <style scoped lang="sass">

@@ -1,4 +1,4 @@
-import { QuestionResponse } from "~/composables/types"
+import { Question, QuestionResponse } from "~/composables/types"
 
 export const QUESTION_RESPONSE_VALUE_BY_TYPE = {
   unique_choice: "uniqueChoiceResponseId",
@@ -26,4 +26,35 @@ export const getQuestionResponseValue = (
     return 0
   }
   return questionResponse?.[valueName]
+}
+
+export const getQuestionResponseString = (
+  question: Question,
+  questionResponse: QuestionResponse
+) => {
+  const responseValue = getQuestionResponseValue(
+    questionResponse,
+    question.type
+  )
+  let responseString = responseValue
+  if (
+    question.type === "unique_choice" ||
+    question.type === "multiple_choice" ||
+    question.type === "closed_with_scale"
+  ) {
+    responseString = question.responseChoices
+      .filter((responseChoice) => responseChoice.id === responseValue)
+      .map((responseChoice) => responseChoice.responseChoice)
+      .join(", ")
+  } else if (question.type === "percentage") {
+    responseString = responseValue + "%"
+  } else if (question.type === "boolean") {
+    if (responseValue === 1) {
+      return "Oui"
+    }
+    if (responseValue === 0) {
+      return "Non"
+    }
+  }
+  return responseString
 }

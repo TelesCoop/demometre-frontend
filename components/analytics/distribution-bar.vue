@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { round } from "~/utils/round"
+import { round } from "~/utils/util"
 
 const props = defineProps({
   data: { type: Array, required: true },

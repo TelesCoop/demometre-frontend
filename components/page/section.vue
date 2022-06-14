@@ -11,7 +11,12 @@
         </p>
         <nuxt-link
           v-if="props.buttonLink && props.buttonText"
-          :class="`button is-shade-600 has-text-white is-normal is-rounded is-responsive`"
+          class="button is-normal is-rounded is-responsive"
+          :class="[
+            props.buttonOutlined && `is-outlined`,
+            props.buttonTextDark && ` has-text-${buttonColor}-dark`,
+            ` is-${props.buttonColor}`,
+          ]"
           :to="props.buttonLink"
         >
           <span>{{ props.buttonText }}</span>
@@ -31,6 +36,9 @@ const props = defineProps({
   intro: { type: String, required: true },
   buttonText: { type: String, required: false },
   buttonLink: { type: String, required: false },
+  buttonColor: { type: String, default: "shade-600" },
+  buttonOutlined: { type: Boolean, default: false },
+  buttonTextDark: { type: Boolean, default: false },
 })
 </script>
 

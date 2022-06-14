@@ -54,7 +54,7 @@
             <div class="buttons">
               <NuxtLink
                 :to="userStep.url"
-                class="button is-rounded has-border-cooperation has-text-cooperation-dark"
+                class="button evaluation is-rounded has-border-cooperation has-text-cooperation-dark"
                 >{{ userStep.text }}</NuxtLink
               >
               <NuxtLink
@@ -140,6 +140,8 @@ const navItems = [
 .inline-navbar-start
   border-radius: 1000px
   margin: 14px 24px
+.button.evaluation:hover
+  background: $cooperation
 @include widescreen
   .navbar
     padding: 0 35px
