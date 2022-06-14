@@ -1,21 +1,25 @@
 <template>
   <div class="container">
-    <section class="intro columns section">
+    <section
+      class="intro columns section is-variable"
+      :class="`is-${props.columnGap}`"
+    >
       <div class="column">
         <PageTitle :title="props.title" :subtitle="props.subtitle" />
         <RichText :rich-text="props.introduction" class="is-family-secondary" />
       </div>
       <div class="column" style="text-align: end">
-        <iframe
-          v-if="props.youtubeVideoId"
-          width="450"
-          height="253"
-          :src="`https://www.youtube-nocookie.com/embed/${props.youtubeVideoId}`"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
+        <div v-if="props.youtubeVideoId" class="video-container">
+          <iframe
+            width="100%"
+            height="100%"
+            :src="`https://www.youtube-nocookie.com/embed/${props.youtubeVideoId}`"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
         <figure v-else class="image is-128x128">
           <img :src="MADIA_BASE_URL + props.imageUrl" alt="" />
         </figure>
@@ -25,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { usePageStore } from "~/stores/pageStore"
 import { MADIA_BASE_URL } from "~/composables/api"
 
 const props = defineProps({
@@ -34,6 +37,7 @@ const props = defineProps({
   introduction: { type: String, required: true },
   youtubeVideoId: { type: String, required: false },
   imageUrl: { type: String, required: false },
+  columnGap: { type: Number, default: 8 },
 })
 </script>
 
@@ -55,4 +59,12 @@ const props = defineProps({
 
   .button
     margin-bottom: 1rem
+
+.columns.is-variable.is-16
+  --columnGap: 4rem
+.video-container
+  width: 100%
+  height: 100%
+  max-width: 600px
+  max-height: 337px
 </style>
