@@ -1,11 +1,11 @@
 <template>
   <div class="is-flex flex-center">
     <div class="sm-container">
-      <form class="mt-2" @submit.prevent="onSubmit">
-        <h1 class="title is-1">Création de compte</h1>
+      <form class="my-8" @submit.prevent="onSubmit">
+        <h1 class="title is-1 has-text-shade-800">Création de compte</h1>
 
         <!-- first name -->
-        <div class="field">
+        <div class="field has-text-shade-800">
           <label class="label">Prénom</label>
           <div class="control has-icons-left has-icons-right">
             <input
@@ -46,8 +46,8 @@
               required
               @change="onEmailUpdate"
             />
-            <span class="icon is-small is-left">
-              <icon size="24" color="$shade-600" name="mail-line" />
+            <span class="icon is-small is-left has-text-shade-600">
+              <icon size="24" name="mail-line" />
             </span>
             <span v-if="!isMailValid" class="icon is-small is-right">
               <i class="fas fa-exclamation-triangle"></i>
@@ -71,8 +71,8 @@
               required
               @change="onPasswordUpdate"
             />
-            <span class="icon is-small is-left">
-              <icon size="24" color="$shade-600" name="lock-line" />
+            <span class="icon is-small is-left has-text-shade-600">
+              <icon size="24" name="lock-line" />
             </span>
             <span v-if="!isPasswordValid" class="icon is-small is-right">
               <i class="fas fa-exclamation-triangle"></i>
@@ -96,8 +96,8 @@
               required
               @change="onPasswordUpdate"
             />
-            <span class="icon is-small is-left">
-              <icon size="24" color="$shade-600" name="lock-line" />
+            <span class="icon is-small is-left has-text-shade-600">
+              <icon size="24" name="lock-line" />
             </span>
             <span v-if="!isSamePassword" class="icon is-small is-right">
               <i class="fas fa-exclamation-triangle"></i>
@@ -110,7 +110,7 @@
 
         <!-- submit -->
         <div class="mt-1" style="text-align: end">
-          <button class="button is-black is-small" :disabled="disabled">
+          <button class="button is-shade-600 is-small" :disabled="disabled">
             <span>S'inscrire</span>
             <span class="icon">
               <icon size="16" name="check" />
@@ -121,9 +121,13 @@
           <input type="submit" hidden />
         </div>
         <div class="mt-1">
-          <span class="is-size-7"
+          <span class="is-size-7 has-text-shade-800"
             >Vous avez déjà un compte ?
-            <NuxtLink to="/login" style="text-decoration-line: revert">
+            <NuxtLink
+              to="/login"
+              class="has-text-shade-500"
+              style="text-decoration-line: revert"
+            >
               Connectez-vous</NuxtLink
             ></span
           >
