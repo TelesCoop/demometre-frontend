@@ -37,9 +37,16 @@
     <hr />
     <div>
       <div>
-        <PageSection
-          :title="pageStore.referentialPage.markerBlockTitle"
-        >
+        <PageSection :title="pageStore.referentialPage.pillarBlockTitle">
+          <div>
+            <RichText
+              :rich-text="pageStore.referentialPage.pillarBlockContent"
+            />
+          </div>
+        </PageSection>
+      </div>
+      <div>
+        <PageSection :title="pageStore.referentialPage.markerBlockTitle">
           <div>
             <RichText
               :rich-text="pageStore.referentialPage.markerBlockContent"
@@ -47,9 +54,15 @@
           </div>
         </PageSection>
       </div>
-      <h2>4 piliers</h2>
-      <p>texte long</p>
-      <img src="none" alt="image futur" />
+      <div>
+        <PageSection :title="pageStore.referentialPage.criteriaBlockTitle">
+          <div>
+            <RichText
+              :rich-text="pageStore.referentialPage.criteriaBlockContent"
+            />
+          </div>
+        </PageSection>
+      </div>
     </div>
 
     <hr />
