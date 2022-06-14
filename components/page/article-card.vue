@@ -19,7 +19,9 @@
         <p class="is-size-4 has-text-shade-600 has-text-weight-bold">
           {{ props.article.title }}
         </p>
-        <p class="has-text-shade-500">{{ props.article.publicationDate }}</p>
+        <p class="has-text-shade-500">
+          {{ publicationDate }}
+        </p>
       </div>
       <div class="content">
         <p class="is-family-secondary is-size-6">
@@ -47,7 +49,7 @@
 import { MADIA_BASE_URL } from "~/composables/api"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { PillarParams } from "~/composables/types"
-import { wordTitleCase } from "~/utils/title-case"
+import { wordTitleCase } from "~/utils/util"
 
 const props = defineProps({
   article: { type: Object, required: true },
@@ -57,6 +59,14 @@ const props = defineProps({
 })
 
 const questionnaireStore = useQuestionnaireStore()
+
+const publicationDate = computed(() =>
+  new Date(props.article.publicationDate).toLocaleString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+)
 </script>
 
 <style scoped lang="sass">

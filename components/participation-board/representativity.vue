@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { round } from "~/utils/round"
+import { round } from "~/utils/util"
 import { ref } from "@vue/reactivity"
 
 const props = defineProps({
