@@ -34,6 +34,14 @@ export const useAssessmentStore = defineStore("assessment", {
       )
       // TODO : check if current user is assessment expert
     },
+    participationBoardTitle() {
+      return (
+        "Tableau de bord de " +
+        (this.currentAssessment?.municipality
+          ? "ma ville"
+          : "mon inter-communalité")
+      )
+    },
   },
   actions: {
     async getOrCreateAssessment({ zipCode, localityType }) {
