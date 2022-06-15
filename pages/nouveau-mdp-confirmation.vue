@@ -1,11 +1,11 @@
 <template>
   <div class="is-flex flex-center">
     <div class="sm-container">
-      <div class="mt-2">
+      <div class="my-8 has-text-shade-800">
         <h1 class="title is-3">Nous avons bien pris en compte votre demande</h1>
         <p>Veuillez vérifier votre boîte mail et suivre les instructions.</p>
 
-        <NuxtLink to="/login" class="button">
+        <NuxtLink to="/login" class="button is-shade-600">
           Retourner à la connexion</NuxtLink
         >
       </div>
