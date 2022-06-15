@@ -97,7 +97,7 @@ const isRouteActive = computed(() => (path) => {
 })
 
 const isQuestionnaireRoute = computed(() => {
-  const isQuestionnaireRoute = route.path.includes("evaluation/questionnaire/")
+  const isQuestionnaireRoute = route.path.includes("evaluation/questionnaire")
   emit("change-header-height", isQuestionnaireRoute ? 125 : 75)
   return isQuestionnaireRoute
 })
