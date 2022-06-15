@@ -1,0 +1,189 @@
+<template>
+  <div class="container">
+    <section class="columns is-centered">
+      <div class="rosette">
+        <div
+          :key="props.questionnaireStore.pillarName"
+          :class="`pillar-container-${
+            PillarParams[props.questionnaireStore.pillarName].key
+          } has-text-${
+            PillarParams[props.questionnaireStore.pillarName].color
+          }-dark`"
+        >
+          <div
+            :class="
+              `pillar-circle-${
+                PillarParams[props.questionnaireStore.pillarName].key
+              }
+                    has-border-${
+                      PillarParams[props.questionnaireStore.pillarName].color
+                    }
+              ` +
+              (pillar.id === hoverPillarId ||
+              pillar.markerIds.includes(hoverMarkerId)
+                ? `has-background-${
+                    PillarParams[props.questionnaireStore.pillarName].color
+                  }`
+                : `has-background-${
+                    PillarParams[props.questionnaireStore.pillarName].color
+                  }-light`)
+            "
+            @mouseenter="hoverPillarId = pillar.id"
+            @mouseleave="hoverPillarId = null"
+            @click="onPillarClick(props.questionnaireStore.pillarName)"
+          >
+            <div
+              v-if="pillar.markerIds.includes(hoverMarkerId)"
+              class="pillar-marker-title"
+            >
+              <span class="is-size-7 has-text-weight-bold">{{
+                markerById[hoverMarkerId].name
+              }}</span>
+            </div>
+            <div v-else>
+              <img
+                :class="`pillar-icon-${
+                  PillarParams[props.questionnaireStore.pillarName].key
+                }`"
+                :src="`/assets/img/${
+                  PillarParams[props.questionnaireStore.pillarName].picto
+                }`"
+              />
+              <span
+                class="pillar-title is-size-7 has-text-weight-bold is-capitalized"
+                >{{ props.questionnaireStore.pillarName }}</span
+              >
+            </div>
+          </div>
+
+          <div
+            v-for="(markerId, index) in pillar.markerIds"
+            :key="markerId"
+            :class="
+              `
+            marker-circle-${
+              PillarParams[props.questionnaireStore.pillarName].key
+            }
+            has-border-${
+              PillarParams[props.questionnaireStore.pillarName].color
+            } ` +
+              (markerId === hoverMarkerId
+                ? `has-background-${
+                    PillarParams[props.questionnaireStore.pillarName].color
+                  }`
+                : ``)
+            "
+            @mouseenter="hoverMarkerId = markerId"
+            @mouseleave="hoverMarkerId = null"
+            @click="onMarkerClick(markerId)"
+          >
+            <span class="marker-index is-size-7 has-text-weight-bold">{{
+              index + 1
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useQuestionnaireStore } from "~/stores/questionnaireStore"
+import { PillarParams } from "~/composables/types"
+
+const props = defineProps({
+  pillarName: { type: String, required: true },
+})
+
+const emit = defineEmits<{
+  (e: "pillar-click", value: any): void
+  (e: "marker-click", value: any): void
+}>()
+
+const questionnaireStore = useQuestionnaireStore()
+
+const hoverMarkerId = ref<number>()
+const hoverPillarId = ref<number>()
+
+function onPillarClick(pillarId) {
+  emit("pillar-click", pillarId)
+}
+function onMarkerClick(markerId) {
+  emit("marker-click", markerId)
+}
+</script>
+
+<style scoped lang="sass">
+.rosette
+  position: relative
+  width: 600px
+  height: 600px
+.center-button
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+$pillars: ("representation": (translateX(-170px), 5, translateX(-90px), 29px), "transparency": (translateY(-125px), 4, translateY(-90px), 29px), "participation": (translateX(170px), 5, translateX(90px), 39px), "cooperation": (translateY(125px), 4,translateY(90px), 29px))
+@each $name, $pair in $pillars
+  $translate: nth($pair, 1)
+  $nb-markers: nth($pair, 2)
+  $marker-translate: nth($pair, 3)
+  $pillar-icon-height: nth($pair, 4)
+
+  .pillar
+    &-container-#{$name}
+      position: absolute
+      width: 210px
+      height: 210px
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%) $translate
+    &-circle-#{$name}
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      border: 1px solid
+      width: 120px
+      height: 120px
+      border-radius: 50%
+      cursor: pointer
+    &-icon-#{$name}
+      position: absolute
+      bottom: 50%
+      left: 50%
+      transform: translate(-50%, 9px)
+      height: $pillar-icon-height
+
+  .marker-circle-#{$name}
+    position: absolute
+    top: 50%
+    left: 50%
+    border: 1px solid
+    width: 30px
+    height: 30px
+    border-radius: 50%
+    cursor: pointer
+    @for $i from 1 through 8
+      &:nth-child(#{$i})
+        transform: translate(-50%, -50%) rotate((($i - 2) * 45deg) - calc(($nb-markers - 1) * 45 / 2)) $marker-translate rotate(calc(($nb-markers - 1) * 45 / 2) - (($i - 2) * 45deg))
+  .marker-index
+    vertical-align: middle
+    padding-left: 9px
+
+.pillar
+  &-title
+    position: absolute
+    top: 50%
+    transform: translateY(9px)
+    width: 100%
+    text-align: center
+  &-marker-title
+    justify-content: center
+    align-items: center
+    border-radius: 100%
+    text-align: center
+    display: flex
+    height: 100%
+</style>
