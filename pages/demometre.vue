@@ -3,10 +3,13 @@
     <div class="container">
       <section class="columns section">
         <div class="column is-6">
-          <PageTitle
-            :title="pageStore.referentialPage.title"
-            :subtitle="pageStore.referentialPage.introduction"
-          />
+          <div class="pb-2">
+            <PageTitle
+              :title="pageStore.referentialPage.title"
+              :subtitle="pageStore.referentialPage.introduction"
+            />
+            <RichText :rich-text="pageStore.referentialPage.description" />
+          </div>
           <div class="buttons are-normal">
             <!-- TODO : change link to the right page -->
             <nuxt-link
@@ -20,10 +23,6 @@
               </span>
             </nuxt-link>
           </div>
-          <p class="is-size-6 has-text-grey">
-            Sélectionnez l’un des piliers pour en savoir plus sur les marqueurs
-            et les critères qui le composent.
-          </p>
         </div>
         <div class="column is-5 is-offset-1">
           <Rosette
@@ -83,28 +82,32 @@
       </div>
     </div>
 
-    <section ref="pillarsRef" class="columns is-multiline mt-4">
-      <div
-        v-for="pillar of questionnaireStore.pillars"
-        :key="pillar.name"
-        class="column"
-      >
-        <Pillar
-          :name="pillar.name"
-          :active="pillar.name === activePillar?.name"
-          style="cursor: pointer"
-          @click="onSelectPillar(pillar)"
-        />
-      </div>
-    </section>
+    <div class="container">
+      <section ref="pillarsRef" class="columns is-multiline mt-4">
+        <div
+          v-for="pillar of questionnaireStore.pillars"
+          :key="pillar.name"
+          class="column"
+        >
+          <Pillar
+            :name="pillar.name"
+            :active="pillar.name === activePillar?.name"
+            style="cursor: pointer"
+            @click="onSelectPillar(pillar)"
+          />
+        </div>
+      </section>
+    </div>
 
-    <section v-if="activePillar">
-      <PillarReferential
-        :pillar="activePillar"
-        :color="colorClass"
-        :markers="markers"
-      />
-    </section>
+    <div class="container">
+      <section v-if="activePillar">
+        <PillarReferential
+          :pillar="activePillar"
+          :color="colorClass"
+          :markers="markers"
+        />
+      </section>
+    </div>
   </div>
 </template>
 
