@@ -10,10 +10,10 @@
             />
             <RichText :rich-text="pageStore.referentialPage.description" />
           </div>
-          <div class="buttons are-normal">
+          <div class="buttons are-normal is-shade-600">
             <!-- TODO : change link to the right page -->
             <nuxt-link
-              class="button is-dark is-rounded is-responsive is-outlined"
+              class="button is-dark is-rounded is-responsive is-outlined is-shade-600"
               to="/"
             >
               <span>Comment on a construit le référentiel</span>

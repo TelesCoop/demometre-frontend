@@ -2,9 +2,9 @@
   <div class="container">
     <section class="columns is-centered">
       <div class="rosette">
-        <div class="center-button are-normal">
+        <div class="center-button are-normal is-shade-600">
           <nuxt-link
-            class="button is-dark is-rounded is-responsive is-outlined"
+            class="button is-dark is-rounded is-responsive is-outlined is-shade-600"
             @click.prevent="onCenterButtonClick()"
           >
             {{ props.centerButtonName }}
