@@ -3,6 +3,7 @@ import {
   Article,
   EvaluationInitPage,
   EvaluationIntroPage,
+  EvaluationQuestionnairePage,
   HomePage,
   ReferentialPage,
   UsagePage,
@@ -21,6 +22,7 @@ export const usePageStore = defineStore("page", {
     usagePage: <UsagePage>{},
     evaluationIntroPage: <EvaluationIntroPage>{},
     evaluationInitPage: <EvaluationInitPage>{},
+    evaluationQuestionnairePage: <EvaluationQuestionnairePage>{},
   }),
   actions: {
     async getHomePage() {
@@ -141,6 +143,21 @@ export const usePageStore = defineStore("page", {
           this.evaluationInitPage = data.value[0]
         } else {
           console.error("Impossible to retrieve evaluation init page")
+        }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
+    },
+    async getEvaluationQuestionnairePage() {
+      const { data, error } = await useApiGet<EvaluationQuestionnairePage[]>(
+        "evaluation-questionnaire-pages/"
+      )
+      if (!error.value) {
+        if (data.value.length) {
+          this.evaluationQuestionnairePage = data.value[0]
+        } else {
+          console.error("Impossible to retrieve evaluation questionnaire page")
         }
       } else {
         const errorStore = useToastStore()

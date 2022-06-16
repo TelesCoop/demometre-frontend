@@ -23,7 +23,8 @@
                     has-border-${PillarParams[pillar.name].color}
               ` +
               (pillar.id === hoverPillarId ||
-              pillar.markerIds.includes(hoverMarkerId)
+              pillar.markerIds.includes(hoverMarkerId) ||
+              props.pillarsCompleted.includes(pillar.name)
                 ? `has-background-${PillarParams[pillar.name].color}`
                 : `has-background-${PillarParams[pillar.name].color}-light`)
             "
@@ -82,6 +83,12 @@ import { PillarParams } from "~/composables/types"
 
 const props = defineProps({
   centerButtonName: { type: String, required: true },
+  pillarsCompleted: {
+    type: Array,
+    default() {
+      return []
+    },
+  },
 })
 
 const emit = defineEmits<{
@@ -98,8 +105,8 @@ const hoverPillarId = ref<number>()
 function onCenterButtonClick() {
   emit("center-button-click")
 }
-function onPillarClick(pillarId) {
-  emit("pillar-click", pillarId)
+function onPillarClick(pillarName) {
+  emit("pillar-click", pillarName)
 }
 function onMarkerClick(markerId) {
   emit("marker-click", markerId)

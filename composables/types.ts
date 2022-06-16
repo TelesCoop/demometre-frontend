@@ -339,6 +339,17 @@ export type EvaluationInitPage = {
   representativityDescription: string
   initializationValidation: string
 }
+export type EvaluationQuestionnairePage = {
+  startTitle: string
+  startText: string
+  intermediateStepTitle: string
+  intermediateStepTextLoggedIn: string
+  intermediateStepTextLoggedOut: string
+  isIntermediateStepTitleWithPillarNames: string
+  finishedTitle: string
+  finishedTextLoggedIn: string
+  finishedTextLoggedOut: string
+}
 
 // Props
 export type QuestionContextProps = {
