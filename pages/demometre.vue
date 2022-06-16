@@ -1,150 +1,87 @@
 <template>
-  <div class="container">
-    <section class="columns section">
-      <div class="column is-6">
-        <PageTitle
-          :title="pageStore.referentialPage.title"
-          :subtitle="pageStore.referentialPage.introduction"
-        />
-        <div class="buttons are-normal">
-          <!-- TODO : change link to the right page -->
-          <nuxt-link
-            class="button is-dark is-rounded is-responsive is-outlined"
-            to="/"
-          >
-            <span>Comment on a construit le référentiel</span>
-
-            <span class="icon">
-              <icon name="arrow-right-line" size="20" />
-            </span>
-          </nuxt-link>
-        </div>
-        <p class="is-size-6 has-text-grey">
-          Sélectionnez l’un des piliers pour en savoir plus sur les marqueurs et
-          les critères qui le composent.
-        </p>
-      </div>
-      <div class="column is-5 is-offset-1">
-        <Rosette
-          center-button-name="Découvrir"
-          @center-button-click="onDiscoverButtonClick()"
-          @pillar-click="onRosettePillarClicked($event)"
-          @marker-click="onRosetteMarkerClicked($event)"
-        />
-      </div>
-    </section>
-
-    <section class="container has-background-shade-100 m-0">
-      <div v-if="pageStore.referentialPage.pillarBlockTitle">
-        <PageSection :title="pageStore.referentialPage.pillarBlockTitle">
-          <div>
-            <RichText
-              :rich-text="pageStore.referentialPage.pillarBlockContent"
-            />
-            <img
-              v-if="pageStore.referentialPage.pillarBlockImageUrl"
-              :src="
-                MADIA_BASE_URL + pageStore.referentialPage.pillarBlockImageUrl
-              "
-              alt="image des piliers"
-              :style="`max-height: 250px`"
-            />
-          </div>
-        </PageSection>
-      </div>
-      <div v-if="pageStore.referentialPage.markerBlockTitle">
-        <PageSection :title="pageStore.referentialPage.markerBlockTitle">
-          <div class="columns">
-            <RichText
-              :rich-text="pageStore.referentialPage.markerBlockContent"
-            />
-
-            <!-- L'emplacement de la partie de la rosette -->
-
-            <RosettePart
-              pillar-name="cooperation"
-              @pillar-click="onRosettePillarClicked($event)"
-              @marker-click="onRosetteMarkerClicked($event)"
-            />
-
-            <!-- <div
-              :key="questionnaireStore.pillarByName.cooperation"
-              :class="`pillar-container-${
-                PillarParams[questionnaireStore.pillarByName.cooperation].key
-              } has-text-${PillarParams[questionnaireStore.pillarByName.cooperation].color}-dark`"
+  <div>
+    <div class="container">
+      <section class="columns section">
+        <div class="column is-6">
+          <PageTitle
+            :title="pageStore.referentialPage.title"
+            :subtitle="pageStore.referentialPage.introduction"
+          />
+          <div class="buttons are-normal">
+            <!-- TODO : change link to the right page -->
+            <nuxt-link
+              class="button is-dark is-rounded is-responsive is-outlined"
+              to="/"
             >
-              <div
-                :class="
-                  `pillar-circle-${PillarParams[questionnaireStore.pillarByName.cooperation].key}
-                    has-border-${PillarParams[questionnaireStore.pillarByName.cooperation].color}
-              ` +
-                  (pillar.id === hoverPillarId ||
-                  pillar.markerIds.includes(hoverMarkerId)
-                    ? `has-background-${PillarParams[questionnaireStore.pillarByName.cooperation].color}`
-                    : `has-background-${PillarParams[questionnaireStore.pillarByName.cooperation].color}-light`)
-                "
-                @mouseenter="hoverPillarId = pillar.id"
-                @mouseleave="hoverPillarId = null"
-                @click="onRosettePillarClicked(questionnaireStore.pillarByName.cooperation)"
-              >
-                <div
-                  v-if="pillar.markerIds.includes(hoverMarkerId)"
-                  class="pillar-marker-title"
-                >
-                  <span class="is-size-7 has-text-weight-bold">{{
-                    questionnaireStore.markerById[hoverMarkerId].name
-                  }}</span>
-                </div>
-                <div v-else>
-                  <img
-                    :class="`pillar-icon-${PillarParams[questionnaireStore.pillarByName.cooperation].key}`"
-                    :src="`/assets/img/${PillarParams[questionnaireStore.pillarByName.cooperation].picto}`"
-                  />
-                  <span
-                    class="
-                      pillar-title
-                      is-size-7
-                      has-text-weight-bold
-                      is-capitalized
-                    "
-                    >{{ questionnaireStore.pillarByName.cooperation }}</span
-                  >
-                </div>
-              </div>
+              <span>Comment on a construit le référentiel</span>
 
-              <div
-                v-for="(markerId, index) in pillar.markerIds"
-                :key="markerId"
-                :class="
-                  `
-            marker-circle-${PillarParams[pillar.name].key}
-            has-border-${PillarParams[pillar.name].color} ` +
-                  (markerId === hoverMarkerId
-                    ? `has-background-${PillarParams[pillar.name].color}`
-                    : ``)
+              <span class="icon">
+                <icon name="arrow-right-line" size="20" />
+              </span>
+            </nuxt-link>
+          </div>
+          <p class="is-size-6 has-text-grey">
+            Sélectionnez l’un des piliers pour en savoir plus sur les marqueurs
+            et les critères qui le composent.
+          </p>
+        </div>
+        <div class="column is-5 is-offset-1">
+          <Rosette
+            center-button-name="Découvrir"
+            @center-button-click="onDiscoverButtonClick()"
+            @pillar-click="onRosettePillarClicked($event)"
+            @marker-click="onRosetteMarkerClicked($event)"
+          />
+        </div>
+      </section>
+    </div>
+
+    <div ref="explicationRef" class="has-background-shade-100">
+      <div class="container">
+        <section>
+          <PageSection
+            v-if="pageStore.referentialPage.pillarBlockTitle"
+            :title="pageStore.referentialPage.pillarBlockTitle"
+          >
+            <div class="column-2">
+              <RichText
+                :rich-text="pageStore.referentialPage.pillarBlockContent"
+              />
+              <img
+                v-if="pageStore.referentialPage.pillarBlockImageUrl"
+                :src="
+                  MADIA_BASE_URL + pageStore.referentialPage.pillarBlockImageUrl
                 "
-                @mouseenter="hoverMarkerId = markerId"
-                @mouseleave="hoverMarkerId = null"
-                @click="onRosetteMarkerClicked(markerId)"
-              >
-                <span class="marker-index is-size-7 has-text-weight-bold">{{
-                  index + 1
-                }}</span>
-              </div>
-            </div> -->
-          </div>
-        </PageSection>
+                alt="image des piliers"
+                :style="`max-height: 250px`"
+              />
+            </div>
+          </PageSection>
+          <PageSection
+            v-if="pageStore.referentialPage.markerBlockTitle"
+            :title="pageStore.referentialPage.markerBlockTitle"
+          >
+            <div class="column-2">
+              <RichText
+                :rich-text="pageStore.referentialPage.markerBlockContent"
+              />
+              <RosetteCooperation />
+            </div>
+          </PageSection>
+
+          <PageSection
+            v-if="pageStore.referentialPage.criteriaBlockTitle"
+            :title="pageStore.referentialPage.criteriaBlockTitle"
+          >
+            <div class="column-2">
+              <RichText
+                :rich-text="pageStore.referentialPage.criteriaBlockContent"
+              />
+            </div>
+          </PageSection>
+        </section>
       </div>
-      <div v-if="pageStore.referentialPage.criteriaBlockTitle">
-        <PageSection :title="pageStore.referentialPage.criteriaBlockTitle">
-          <div>
-            <RichText
-              :rich-text="pageStore.referentialPage.criteriaBlockContent"
-            />
-          </div>
-        </PageSection>
-      </div>
-    </section>
+    </div>
 
     <section ref="pillarsRef" class="columns is-multiline mt-4">
       <div
@@ -178,8 +115,6 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
 import { Marker, PillarType } from "~/composables/types"
 import { MADIA_BASE_URL } from "~/composables/api"
-// rosette part import
-//import { PillarParams } from "~/composables/types"
 
 definePageMeta({
   title: "DemoMètre",
@@ -198,17 +133,15 @@ if (!pageStore.referentialPage.title) {
 const activePillar = ref<PillarType>()
 const markers = ref<Marker[]>()
 
-// Rosette part const
-// const hoverMarkerId = ref<number>()
-// const hoverPillarId = ref<number>()
-
 const colorClass = computed(() =>
   activePillar.value ? PillarParams[activePillar.value.name].color : ""
 )
 
 const pillarsRef = ref(null)
+const explicationRef = ref(null)
 onMounted(() => {
   pillarsRef.value.focus()
+  explicationRef.value.focus()
 })
 
 const onSelectPillar = (pillar) => {
@@ -220,7 +153,7 @@ const onSelectPillar = (pillar) => {
 }
 
 const onDiscoverButtonClick = () => {
-  // TODO : New section of referential page
+  explicationRef.value.scrollIntoView({ behavior: "smooth" })
 }
 const onRosettePillarClicked = (pillarName) => {
   onSelectPillar(questionnaireStore.getPillarByName(pillarName))
@@ -235,6 +168,12 @@ const onRosetteMarkerClicked = (markerId) => {
 .buttons .button
   height: fit-content
 img
-  width: 50%
+  width: 100%
   object-fit: cover
+.column-2
+  column-count: 2
+  column-gap: 4rem
+@include touch
+  .column-2
+    column-count: 1
 </style>

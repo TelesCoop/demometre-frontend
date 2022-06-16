@@ -2,13 +2,13 @@
   <div class="container">
     <section class="columns is-centered">
       <div class="rosette">
-        <div class="center-button">
-          <button
-            class="button is-normal is-rounded"
+        <div class="center-button are-normal">
+          <nuxt-link
+            class="button is-dark is-rounded is-responsive is-outlined"
             @click.prevent="onCenterButtonClick()"
           >
             {{ props.centerButtonName }}
-          </button>
+          </nuxt-link>
         </div>
         <div
           v-for="pillar in questionnaireStore.pillars"
