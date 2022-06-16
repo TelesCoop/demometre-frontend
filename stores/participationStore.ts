@@ -24,7 +24,7 @@ export const useParticipationStore = defineStore("participation", {
     profilingCurrent: <number[]>[],
     participation: <Participation>{},
     totalAndAnsweredQuestionsByPillarName: <
-      { [key: string]: { total: number; answered: number } }
+      { [key: string]: { total: number; answered: number; completed: boolean } }
     >{},
   }),
   getters: {
@@ -214,14 +214,17 @@ export const useParticipationStore = defineStore("participation", {
       const questions = useQuestionnaireStore().getQuestionsFromIdList(
         useQuestionnaireJourney(pillarName).journey.value
       )
+      const answered = questions.reduce(
+        (totalAnswered, question: Question) =>
+          totalAnswered + this.hasAnsweredQuestionnaireQuestion(question.id),
+        0
+      )
 
       this.totalAndAnsweredQuestionsByPillarName[pillarName] = {
         total: questions.length,
-        answered: questions.reduce(
-          (totalAnswered, question: Question) =>
-            totalAnswered + this.hasAnsweredQuestionnaireQuestion(question.id),
-          0
-        ),
+        answered: answered,
+        completed:
+          questions.length === 0 ? true : answered / questions.length === 1,
       }
     },
     setTotalAndAnsweredQuestionsByPillarName() {

@@ -66,7 +66,7 @@
           <Slide
             v-for="blogPost of pageStore.homePage.blogPosts"
             :key="blogPost.id"
-            class="column is-half"
+            class="column is-one-third"
           >
             <PageArticleCard
               :article="blogPost"
@@ -126,7 +126,7 @@
           <img
             :src="MADIA_BASE_URL + partner.logoImageUrl"
             alt=""
-            style="max-height: 40px"
+            style="height: 80px"
           />
         </figure>
       </div>
@@ -164,7 +164,7 @@ const settings = {
 }
 const breakpointsLargeElements = {
   1024: {
-    itemsToShow: 2.1,
+    itemsToShow: 3.1,
     snapAlign: "start",
   },
 }
