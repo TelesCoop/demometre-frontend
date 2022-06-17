@@ -6,7 +6,7 @@
       <div
         class="is-flex is-flex-direction-row is-justify-content-space-between"
       >
-        <p class="is-family-secondary is-size-5 mb-3">
+        <p v-if="props.intro" class="is-family-secondary is-size-5 mb-3">
           {{ props.intro }}
         </p>
         <nuxt-link
@@ -33,7 +33,7 @@
 <script setup lang="ts">
 const props = defineProps({
   title: { type: String, required: true },
-  intro: { type: String, required: true },
+  intro: { type: String, required: false },
   buttonText: { type: String, required: false },
   buttonLink: { type: String, required: false },
   buttonColor: { type: String, default: "shade-600" },
