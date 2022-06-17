@@ -25,7 +25,7 @@
             >Utilisations possibles</NuxtLink
           >
           <NuxtLink to="/" class="has-text-white">Résultats</NuxtLink>
-          <NuxtLink to="/" class="has-text-white">Le projet</NuxtLink>
+          <NuxtLink to="/projet" class="has-text-white">Le projet</NuxtLink>
         </div>
         <div class="column footer-column is-3">
           <NuxtLink to="/blog" class="has-text-white">Blog</NuxtLink>

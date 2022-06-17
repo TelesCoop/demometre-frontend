@@ -8,6 +8,8 @@
 const props = defineProps({
   richText: { type: String, default: "" },
 })
+console.log("---------")
+console.log(props.richText)
 </script>
 
 <style scoped lang="sass">

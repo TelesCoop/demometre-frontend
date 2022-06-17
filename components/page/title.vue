@@ -1,6 +1,6 @@
 <template>
   <section class="intro-text mb-3">
-    <h1 class="title is-1-desktop is-2 has-text-black-bis">{{ title }}</h1>
+    <h1 class="title is-size-1-desktop is-2 has-text-black">{{ title }}</h1>
     <div class="is-family-secondary is-size-5 is-size-4-desktop">
       {{ subtitle }}
     </div>

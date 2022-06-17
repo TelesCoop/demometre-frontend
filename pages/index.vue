@@ -125,7 +125,7 @@
         >
           <img
             :src="MADIA_BASE_URL + partner.logoImageUrl"
-            alt=""
+            :alt="partner.name"
             style="height: 80px"
           />
         </figure>

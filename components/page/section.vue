@@ -1,8 +1,12 @@
 <template>
   <div class="container">
     <section v-if="props.title" class="section">
-      <div />
-      <h2 class="title is-3 has-text-shade-900 mb-1">{{ props.title }}</h2>
+      <h3 v-if="props.isInsideBigSection" :class="titleClasses">
+        {{ props.title }}
+      </h3>
+      <h2 v-else :class="titleClasses">
+        {{ props.title }}
+      </h2>
       <div
         class="is-flex is-flex-direction-row is-justify-content-space-between"
       >
@@ -39,7 +43,10 @@ const props = defineProps({
   buttonColor: { type: String, default: "shade-600" },
   buttonOutlined: { type: Boolean, default: false },
   buttonTextDark: { type: Boolean, default: false },
+  isInsideBigSection: { type: Boolean, default: false },
 })
+
+const titleClasses = ["title", "is-3", "has-text-shade-900", "mb-1"]
 </script>
 
 <style scoped lang="sass"></style>
