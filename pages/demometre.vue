@@ -35,50 +35,48 @@
       </section>
     </div>
 
-    <div ref="explicationRef" class="has-background-shade-100">
+    <div ref="explicationRef" class="has-background-shade-100 scroll">
       <div class="container">
-        <section>
-          <PageSection
-            v-if="pageStore.referentialPage.pillarBlockTitle"
-            :title="pageStore.referentialPage.pillarBlockTitle"
-          >
-            <div class="column-2">
-              <RichText
-                :rich-text="pageStore.referentialPage.pillarBlockContent"
-              />
-              <img
-                v-if="pageStore.referentialPage.pillarBlockImageUrl"
-                :src="
-                  MADIA_BASE_URL + pageStore.referentialPage.pillarBlockImageUrl
-                "
-                alt="image des piliers"
-                :style="`max-height: 250px`"
-              />
-            </div>
-          </PageSection>
-          <PageSection
-            v-if="pageStore.referentialPage.markerBlockTitle"
-            :title="pageStore.referentialPage.markerBlockTitle"
-          >
-            <div class="column-2">
-              <RichText
-                :rich-text="pageStore.referentialPage.markerBlockContent"
-              />
-              <RosetteCooperation />
-            </div>
-          </PageSection>
+        <PageSection
+          v-if="pageStore.referentialPage.pillarBlockTitle"
+          :title="pageStore.referentialPage.pillarBlockTitle"
+        >
+          <div class="column-2">
+            <RichText
+              :rich-text="pageStore.referentialPage.pillarBlockContent"
+            />
+            <img
+              v-if="pageStore.referentialPage.pillarBlockImageUrl"
+              :src="
+                MADIA_BASE_URL + pageStore.referentialPage.pillarBlockImageUrl
+              "
+              alt="image des piliers"
+              :style="`max-height: 250px`"
+            />
+          </div>
+        </PageSection>
+        <PageSection
+          v-if="pageStore.referentialPage.markerBlockTitle"
+          :title="pageStore.referentialPage.markerBlockTitle"
+        >
+          <div class="column-2">
+            <RichText
+              :rich-text="pageStore.referentialPage.markerBlockContent"
+            />
+            <RosetteCooperation />
+          </div>
+        </PageSection>
 
-          <PageSection
-            v-if="pageStore.referentialPage.criteriaBlockTitle"
-            :title="pageStore.referentialPage.criteriaBlockTitle"
-          >
-            <div class="column-2">
-              <RichText
-                :rich-text="pageStore.referentialPage.criteriaBlockContent"
-              />
-            </div>
-          </PageSection>
-        </section>
+        <PageSection
+          v-if="pageStore.referentialPage.criteriaBlockTitle"
+          :title="pageStore.referentialPage.criteriaBlockTitle"
+        >
+          <div class="column-2">
+            <RichText
+              :rich-text="pageStore.referentialPage.criteriaBlockContent"
+            />
+          </div>
+        </PageSection>
       </div>
     </div>
 
@@ -179,4 +177,6 @@ img
 @include touch
   .column-2
     column-count: 1
+.scroll
+  scroll-margin-top: 5rem
 </style>
