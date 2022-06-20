@@ -51,6 +51,14 @@
 
     <!-- How block -->
     <PageBigSection :title="pageStore.projectPage.howBlockTitle">
+      <div class="container">
+        <div class="column-2">
+          <PageFreeBody
+            :free-body="pageStore.projectPage.howBlockData"
+            h-title="h3"
+          />
+        </div>
+      </div>
     </PageBigSection>
   </div>
 </template>

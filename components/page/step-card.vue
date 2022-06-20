@@ -3,7 +3,7 @@
     <div class="card-image">
       <figure class="image is-4by3">
         <img
-          :src="MADIA_BASE_URL + props.step.imageUrl"
+          :src="imageUrl"
           alt=""
           :style="`max-height: ${props.imageHeight}px`"
         />
@@ -39,6 +39,12 @@ const props = defineProps({
   imageHeight: { type: Number, required: true },
   index: { type: Number, required: true },
 })
+
+const imageUrl = computed(
+  () =>
+    MADIA_BASE_URL +
+    (props.step.imageUrl ? props.step.imageUrl : props.step.svgUrl)
+)
 </script>
 
 <style scoped lang="sass">
