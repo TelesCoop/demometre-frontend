@@ -6,7 +6,6 @@ export const QUESTION_RESPONSE_VALUE_BY_TYPE = {
   boolean: "booleanResponse",
   percentage: "percentageResponse",
   closed_with_scale: "percentageResponse",
-  closed_with_ranking: "closedWithRankingResponseIds",
 }
 export const QUESTION_RESPONSES_BY_TYPE = {
   questionnaire: "responseByQuestionnaireQuestionId",
