@@ -17,7 +17,9 @@
     </div>
     <div class="card-content p-2">
       <div class="mb-1_5">
-        <p class="is-size-4 has-text-shade-600 has-text-weight-bold">
+        <p
+          class="is-size-4 has-text-shade-600 has-text-weight-bold has-text-centered"
+        >
           {{ props.step.title }}
         </p>
       </div>

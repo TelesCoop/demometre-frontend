@@ -25,6 +25,12 @@
           "
         >
           <icon
+            v-if="isLoadingPillarName === pillarName"
+            size="30"
+            name="loader-2-line"
+          />
+          <icon
+            v-else
             size="30"
             :name="pillarName"
             class="mr-1 column is-narrow p-0"
@@ -93,9 +99,12 @@ if (
 }
 
 const hoverPillarName = ref<string>()
+const isLoadingPillarName = ref<string>("")
 
 const goToFirstQuestionPillar = (pillarName) => {
+  isLoadingPillarName.value = pillarName
   useQuestionnaireJourney(pillarName).goToNextQuestion(undefined)
+  isLoadingPillarName.value = ""
 }
 
 function getTotalQuestions(pillarName) {

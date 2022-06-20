@@ -11,8 +11,14 @@
           @click.prevent="goToFirstObjectiveQuestion"
         >
           <span>Commencer les questions objectives</span>
-          <span class="icon"> <icon size="16" name="arrow-right-line" /> </span>
+          <span class="icon">
+            <icon v-if="isLoading" size="24" name="loader-2-line" />
+            <icon v-else size="16" name="arrow-right-line" />
+          </span>
         </button>
+        <span v-if="isLoading" class="is-size-7 has-text-shade-600">
+          en cours de chargement
+        </span>
       </div>
     </section>
   </div>
@@ -28,7 +34,10 @@ definePageMeta({
   middleware: ["assessment", "user-step"],
 })
 
+const isLoading = ref(false)
+
 const goToFirstObjectiveQuestion = () => {
+  isLoading.value = true
   useInitializationJourney().goToNextQuestion(undefined)
 }
 </script>

@@ -6,6 +6,7 @@
       :introduction="pageStore.usagePage.introduction"
       youtube-video-id=""
       :image-url="pageStore.usagePage.introImageUrl"
+      :column-distribution="[7, 5]"
     />
     <div class="has-background-shade-250">
       <PageSection

@@ -4,7 +4,7 @@
       <HeaderNavbar @change-header-height="onChangeHeaderHight($event)" />
       <Breadcrumb />
       <slot></slot>
-      <Footer />
+      <Footer v-if="showFooter" />
     </div>
     <Toast :message="toastStore.message" />
   </div>
@@ -14,8 +14,10 @@
 import { useToastStore } from "~/stores/toastStore"
 
 const toastStore = useToastStore()
+const route = useRoute()
 
 const height = ref<number>(75)
+const showFooter = computed(() => !route.path.includes("/evaluation"))
 
 const onChangeHeaderHight = (newHeight) => {
   height.value = newHeight
