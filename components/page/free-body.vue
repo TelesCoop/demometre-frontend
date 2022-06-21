@@ -3,12 +3,14 @@
     <RichText
       v-if="item.type === 'richtext'"
       :rich-text="item.value"
-      class="is-family-secondary mb-3"
+      class="is-family-secondary mb-2 has-text-shade-600"
+      :class="!props.inside2Columns && 'column-2'"
     />
     <img
       v-else-if="item.type === 'image'"
       :src="MADIA_BASE_URL + item.imageUrl"
       alt="img"
+      class="mb-1"
     />
     <h3
       v-else-if="item.type === 'title' && props.hTitle === 'h3'"
@@ -30,7 +32,7 @@
       >
         <PageStepCard
           :step="step"
-          :image-height="250"
+          :svg-mode="true"
           :index="index"
           background-color="white"
         />
@@ -45,6 +47,7 @@ import { MADIA_BASE_URL } from "~/composables/api"
 const props = defineProps({
   freeBody: { type: Array, required: true },
   hTitle: { type: String, default: "h2" },
+  inside2Columns: { type: Array, required: true },
 })
 
 const titleClasses = ["title", "is-3", "has-text-shade-900", "mb-1", "mt-4"]

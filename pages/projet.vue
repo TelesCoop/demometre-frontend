@@ -8,7 +8,7 @@
       <div class="is-flex buttons is-outlined is-shade-600">
         <button
           class="button is-rounded is-outlined is-shade-600 is-responsive"
-          @click.prevent=""
+          @click.prevent="scrollIntoWhyBlock"
         >
           <span>Pourquoi</span>
           <span class="icon">
@@ -17,7 +17,7 @@
         </button>
         <button
           class="button is-rounded is-outlined is-shade-600 is-responsive"
-          @click.prevent=""
+          @click.prevent="scrollIntoWhoBlock"
         >
           <span>Avec qui</span>
           <span class="icon">
@@ -26,7 +26,7 @@
         </button>
         <button
           class="button is-rounded is-outlined is-shade-600 is-responsive"
-          @click.prevent=""
+          @click.prevent="scrollIntoHowBlock"
         >
           <span>Méthode</span>
           <span class="icon">
@@ -37,29 +37,37 @@
     </PageIntro>
 
     <!-- Why block -->
-    <PageBigSection :title="pageStore.projectPage.whyBlockTitle">
-      <div class="container">
-        <div class="column-2">
-          <PageFreeBody :free-body="pageStore.projectPage.whyBlockData" />
+    <div ref="whyBlockRef" class="scroll-margin-top_5">
+      <PageBigSection :title="pageStore.projectPage.whyBlockTitle">
+        <div class="container">
+          <div class="column-2">
+            <PageFreeBody
+              :free-body="pageStore.projectPage.whyBlockData"
+              :inside-2-columns="true"
+            />
+          </div>
         </div>
-      </div>
-    </PageBigSection>
+      </PageBigSection>
+    </div>
 
     <!-- Who block -->
-    <PageBigSection :title="pageStore.projectPage.whoBlockTitle">
-    </PageBigSection>
+    <div ref="whoBlockRef" class="scroll-margin-top_5">
+      <PageBigSection :title="pageStore.projectPage.whoBlockTitle">
+      </PageBigSection>
+    </div>
 
     <!-- How block -->
-    <PageBigSection :title="pageStore.projectPage.howBlockTitle">
-      <div class="container">
-        <div class="column-2">
+    <div ref="howBlockRef" class="scroll-margin-top_5">
+      <PageBigSection :title="pageStore.projectPage.howBlockTitle">
+        <div class="container">
           <PageFreeBody
             :free-body="pageStore.projectPage.howBlockData"
+            :inside-2-columns="false"
             h-title="h3"
           />
         </div>
-      </div>
-    </PageBigSection>
+      </PageBigSection>
+    </div>
   </div>
 </template>
 
@@ -72,9 +80,34 @@ definePageMeta({
 })
 
 const pageStore = usePageStore()
+const route = useRoute()
 
 if (!pageStore.projectPage.title) {
   pageStore.getProjectPage()
+}
+
+const howBlockRef = ref(null)
+const whoBlockRef = ref(null)
+const whyBlockRef = ref(null)
+onMounted(() => {
+  console.log("onMounted")
+  howBlockRef.value.focus()
+  whoBlockRef.value.focus()
+  whyBlockRef.value.focus()
+  if (route.query.hash === "howBlockRef") {
+    scrollIntoHowBlock()
+  }
+})
+
+const scrollIntoHowBlock = () => {
+  console.log("COUCOU")
+  howBlockRef.value.scrollIntoView({ behavior: "smooth" })
+}
+const scrollIntoWhoBlock = () => {
+  whoBlockRef.value.scrollIntoView({ behavior: "smooth" })
+}
+const scrollIntoWhyBlock = () => {
+  whyBlockRef.value.scrollIntoView({ behavior: "smooth" })
 }
 </script>
 
