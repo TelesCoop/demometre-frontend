@@ -13,7 +13,7 @@
     <!-- Connected section -->
 
     <QuestionnaireProgressBars
-      v-if="assessmentStore.currentAssessment"
+      v-if="participationStore.participation.id"
       class="mb-4"
     />
 
@@ -141,7 +141,7 @@ import "vue3-carousel/dist/carousel.css"
 import { usePageStore } from "~/stores/pageStore"
 import { MADIA_BASE_URL } from "~/composables/api"
 import { useParticipationStore } from "~/stores/participationStore"
-import { useAssessmentStore } from "~~/stores/assessmentStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 definePageMeta({
   title: "Accueil",
