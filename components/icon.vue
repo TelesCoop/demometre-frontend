@@ -70,6 +70,12 @@
         d="M13 16.172l5.364-5.364 1.414 1.414L12 20l-7.778-7.778 1.414-1.414L11 16.172V4h2v12.172z"
       />
     </template>
+    <template v-else-if="props.name === 'arrow-up-line'">
+      <path
+        :fill="props.color"
+        d="M13 7.828V20h-2V7.828l-5.364 5.364-1.414-1.414L12 4l7.778 7.778-1.414 1.414L13 7.828z"
+      />
+    </template>
     <template v-else-if="props.name === 'drag-drop-line'">
       <path
         :fill="props.color"
@@ -110,6 +116,12 @@
       <path
         :fill="props.color"
         d="M13 12h3l-4 4-4-4h3V8h2v4zm2-8H5v16h14V8h-4V4zM3 2.992C3 2.444 3.447 2 3.999 2H16l5 5v13.993A1 1 0 0 1 20.007 22H3.993A1 1 0 0 1 3 21.008V2.992z"
+      />
+    </template>
+    <template v-else-if="props.name === 'loader-2-line'">
+      <path
+        :fill="props.color"
+        d="M12 2a1 1 0 0 1 1 1v3a1 1 0 0 1-2 0V3a1 1 0 0 1 1-1zm0 15a1 1 0 0 1 1 1v3a1 1 0 0 1-2 0v-3a1 1 0 0 1 1-1zm10-5a1 1 0 0 1-1 1h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 1 1zM7 12a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3a1 1 0 0 1 1 1zm12.071 7.071a1 1 0 0 1-1.414 0l-2.121-2.121a1 1 0 0 1 1.414-1.414l2.121 2.12a1 1 0 0 1 0 1.415zM8.464 8.464a1 1 0 0 1-1.414 0L4.93 6.344a1 1 0 0 1 1.414-1.415L8.464 7.05a1 1 0 0 1 0 1.414zM4.93 19.071a1 1 0 0 1 0-1.414l2.121-2.121a1 1 0 1 1 1.414 1.414l-2.12 2.121a1 1 0 0 1-1.415 0zM15.536 8.464a1 1 0 0 1 0-1.414l2.12-2.121a1 1 0 0 1 1.415 1.414L16.95 8.464a1 1 0 0 1-1.414 0z"
       />
     </template>
 
@@ -220,7 +232,7 @@ import { PillarName } from "~/composables/types"
 const props = defineProps({
   name: { type: String, required: true },
   size: { default: "1x" },
-  color: { default: "currentColor" },
+  color: { type: String, default: "currentColor" },
   style: { default: "" },
 })
 

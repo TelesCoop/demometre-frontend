@@ -15,9 +15,13 @@
         <button class="button is-normal is-rounded" :disabled="disabled">
           <span>Valider</span>
           <span class="icon">
-            <icon size="24" name="check" />
+            <icon v-if="isLoading" size="24" name="loader-2-line" />
+            <icon v-else size="24" name="check" />
           </span>
         </button>
+        <span v-if="isLoading" class="is-size-7 has-text-shade-600">
+          en cours de chargement
+        </span>
 
         <!-- Permet d'appuyer sur entrer -->
         <input type="submit" hidden />
@@ -43,6 +47,7 @@ const participationStore = useParticipationStore()
 
 const color = ref("no-pillar")
 const answer = ref(participationStore.participation.roleId)
+const isLoading = ref(false)
 
 const profilingStore = useProfilingStore()
 if (!profilingStore.roles.length) {
@@ -60,10 +65,11 @@ const responseChoices = computed(() =>
 )
 
 const disabled = computed(() => {
-  return !answer.value
+  return !answer.value || isLoading.value
 })
 
 async function onSubmit() {
+  isLoading.value = true
   participationStore.chooseRole(answer.value)
   // TODO : if participaton exist, update it
   const isSuccess = await participationStore.createParticipation()

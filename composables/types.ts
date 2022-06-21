@@ -13,7 +13,6 @@ export enum QuestionType {
   OPEN = "open",
   UNIQUE_CHOICE = "unique_choice",
   MULTIPLE_CHOICE = "multiple_choice",
-  CLOSED_WITH_RANKING = "closed_with_ranking",
   CLOSED_WITH_SCALE = "closed_with_scale",
   BOOLEAN = "boolean",
   PERCENTAGE = "percentage",
@@ -224,7 +223,6 @@ export type QuestionResponse = {
   multipleChoiceResponseIds: number[]
   booleanResponse: boolean | null
   percentageResponse: number | null
-  closedWithRankingResponseIds: number[]
   closedWithScaleCategoryResponses: {
     category: string
     responseId: number
@@ -273,7 +271,17 @@ export type HomePage = {
   partnerBlockIntro: string
   partners: Partner[]
 }
-export type ReferentialPage = { title: string; introduction: string }
+export type ReferentialPage = {
+  title: string
+  introduction: string
+  pillarBlockTitle: string
+  pillarBlockContent: string
+  pillarBlockImageUrl: string
+  markerBlockTitle: string
+  markerBlockContent: string
+  criteriaBlockTitle: string
+  criteriaBlockContent: string
+}
 
 type ImageUrl = { id: number; url: string }
 type AssessmentTypeDetails = {

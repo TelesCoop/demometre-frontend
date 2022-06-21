@@ -4,7 +4,7 @@
       class="intro columns section is-variable"
       :class="`is-${props.columnGap}`"
     >
-      <div class="column">
+      <div class="column" :class="`is-${props.columnDistribution[0]}`">
         <PageTitle :title="props.title" :subtitle="props.subtitle" />
         <RichText
           v-if="props.introduction"
@@ -13,7 +13,11 @@
         />
         <slot></slot>
       </div>
-      <div class="column" style="text-align: end">
+      <div
+        class="column"
+        :class="`is-${props.columnDistribution[1]}`"
+        style="text-align: end"
+      >
         <div v-if="props.youtubeVideoId" class="video-container">
           <iframe
             width="100%"
@@ -42,6 +46,12 @@ const props = defineProps({
   introduction: { type: String, required: false },
   youtubeVideoId: { type: String, required: false },
   imageUrl: { type: String, required: false },
+  columnDistribution: {
+    type: Array,
+    default() {
+      return [6, 6]
+    },
+  },
   columnGap: { type: Number, default: 8 },
 })
 </script>
