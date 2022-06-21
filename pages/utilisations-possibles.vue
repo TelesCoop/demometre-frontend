@@ -21,7 +21,6 @@
           >
             <PageStepCard
               :step="step"
-              :image-height="250"
               :index="index"
               background-color="white"
             />
