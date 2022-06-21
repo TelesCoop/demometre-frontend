@@ -1,21 +1,29 @@
 <template>
-  <div :class="`card has-background-${backgroundColor} is-fullheight`">
+  <div
+    class="card is-fullheight"
+    :class="
+      `has-background-${backgroundColor} ` + props.svgMode
+        ? `svg-mode`
+        : `image-mode`
+    "
+  >
     <div class="card-image">
       <figure class="image is-4by3">
         <img
-          :src="MADIA_BASE_URL + props.step.imageUrl"
+          :src="imageUrl"
           alt=""
-          :style="`max-height: ${props.imageHeight}px`"
+          :style="`max-height: ${props.imageHeight}`"
         />
       </figure>
       <div class="step-number-container is-flex flex-center">
         <span
-          class="is-size-5 has-background-shade-800 has-text-white is-flex flex-center step-number"
+          class="has-background-shade-800 has-text-white is-flex flex-center step-number"
+          :class="props.svgMode ? 'is-size-6' : 'is-size-5'"
           >{{ props.index + 1 }}</span
         >
       </div>
     </div>
-    <div class="card-content p-2">
+    <div class="card-content px-2 pb-2">
       <div class="mb-1_5">
         <p
           class="is-size-4 has-text-shade-600 has-text-weight-bold has-text-centered"
@@ -24,9 +32,30 @@
         </p>
       </div>
       <div class="content">
-        <p class="is-family-secondary is-size-6 has-text-shade-600">
+        <p
+          v-if="props.step.description"
+          class="is-family-secondary is-size-6 has-text-shade-600"
+        >
           {{ props.step.description }}
         </p>
+        <RichText
+          v-if="props.step.richtext"
+          :rich-text="props.step.richtext"
+          class="is-family-secondary mb-2 has-text-shade-500"
+        />
+        <div class="has-text-centered">
+          <a
+            v-if="props.step.link"
+            :href="props.step.link"
+            target="_blank"
+            class="button is-shade-600 is-rounded is-small"
+          >
+            <span>En savoir plus</span>
+            <span class="icon">
+              <icon size="12" name="arrow-right-line" />
+            </span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -38,19 +67,40 @@ import { MADIA_BASE_URL } from "~/composables/api"
 const props = defineProps({
   step: { type: Object, required: true },
   backgroundColor: { type: String, required: true },
-  imageHeight: { type: Number, required: true },
+  imageHeight: { type: String, default: "250px" },
   index: { type: Number, required: true },
+  svgMode: { type: Boolean, default: false },
 })
+
+const imageUrl = computed(
+  () =>
+    MADIA_BASE_URL +
+    (props.step.imageUrl ? props.step.imageUrl : props.step.svgUrl)
+)
 </script>
 
 <style scoped lang="sass">
-img
-  width: 100%
-  object-fit: cover
-.step-number
-  border-radius: 6px
-  height: 40px
-  width: 40px
-  &-container
-    margin-top: -25px
+.image-mode
+  img
+    width: 100%
+    object-fit: cover
+  .step-number
+    border-radius: 6px
+    height: 40px
+    width: 40px
+    &-container
+      margin-top: -25px
+.svg-mode
+  figure
+    text-align: center
+  img
+    width: 100px
+    object-fit: cover
+    margin-top: 2rem
+  .step-number
+    border-radius: 6px
+    height: 24px
+    width: 24px
+    &-container
+      margin-top: -18px
 </style>
