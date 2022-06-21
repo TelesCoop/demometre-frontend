@@ -297,7 +297,7 @@ type AssessmentTypeDetails = {
   pdfUrl: string
   pdf_button: string
 }
-type StepOfUse = {
+type SimpleBlockWithImage = {
   image: number
   imageUrl: string
   title: string
@@ -310,7 +310,7 @@ export type UsagePage = {
   introImageUrl: string
   stepOfUseTitle: string
   stepOfUseIntro: string
-  stepsOfUse: string | StepOfUse[]
+  stepsOfUse: string | SimpleBlockWithImage[]
   stepsImagesUrl: ImageUrl[]
   participateBlockTitle: string
   participateBlockIntro: string
@@ -320,6 +320,31 @@ export type UsagePage = {
   startAssessmentBlockIntro: string
   startAssessmentBlockData: string | AssessmentTypeDetails[]
   assessmentTypesDetails: AssessmentTypeDetails[]
+}
+type ObjectiveBlock = {
+  svg: number
+  svgUrl: string
+  title: string
+}
+export type ProjectPage = {
+  title: string
+  introduction: string
+  tagLine: string
+  introImageUrl: string | null
+  whyBlockTitle: string
+  whyBlockData: string
+  objectiveBlockTitle: string
+  objectiveBlockData: string | ObjectiveBlock[]
+  impactBlockTitle: string
+  impactBlockData: string | SimpleBlockWithImage[]
+  whoBlockTitle: string
+  whoPartnerSubBlockTitle: string
+  whoPartnerSubBlockData: string
+  howBlockTitle: string
+  howBlockData: string
+  imagesUrl: ImageUrl[]
+  svgsUrl: ImageUrl[]
+  partners: Partner[]
 }
 export type EvaluationIntroPage = {
   title: string

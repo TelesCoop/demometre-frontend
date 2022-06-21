@@ -5,10 +5,18 @@ import {
   EvaluationIntroPage,
   EvaluationQuestionnairePage,
   HomePage,
+  ProjectPage,
   ReferentialPage,
   UsagePage,
 } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
+import {
+  getStreamFieldListStructMediaWithUrl,
+  getStreamFieldMediaWithUrl,
+  getStreamFieldStructMediaWithUrl,
+  getStreamFieldStructWithLinkedObject,
+  getStreamFieldStructWithListLinkedObjects,
+} from "~/utils/streamFields"
 import { useToastStore } from "./toastStore"
 
 export const usePageStore = defineStore("page", {
@@ -20,6 +28,7 @@ export const usePageStore = defineStore("page", {
     resourcesLoaded: <boolean>false,
     referentialPage: <ReferentialPage>{},
     usagePage: <UsagePage>{},
+    projectPage: <ProjectPage>{},
     evaluationIntroPage: <EvaluationIntroPage>{},
     evaluationInitPage: <EvaluationInitPage>{},
     evaluationQuestionnairePage: <EvaluationQuestionnairePage>{},
@@ -82,35 +91,61 @@ export const usePageStore = defineStore("page", {
         if (data.value.length) {
           this.usagePage = data.value[0]
           // Treat json data sent in string
-          const stepsOfUseString = this.usagePage.stepsOfUse
-          this.usagePage.stepsOfUse = []
-          for (const step of eval(stepsOfUseString)) {
-            // step.value as shape {image, title, description} where image is the id of the image
-            const stepImageUrl = this.usagePage.stepsImagesUrl.filter(
-              (stepImage) => stepImage.id === step.value.image
-            )[0].url
-            this.usagePage.stepsOfUse.push({
-              ...step.value,
-              imageUrl: stepImageUrl,
-            })
-          }
-          const startAssessmentBlockDataString =
-            this.usagePage.startAssessmentBlockData
-          this.usagePage.startAssessmentBlockData = []
-          for (const assessmentData of eval(startAssessmentBlockDataString)) {
-            // assessmentData.value as shape {title, type, pdfButton} where type is assessmentType
-            const assessmentTypeDetails =
-              this.usagePage.assessmentTypesDetails.filter(
-                (assessmentTypeDetails) =>
-                  assessmentTypeDetails.assessmentType ===
-                  assessmentData.value.type
-              )[0]
-            this.usagePage.startAssessmentBlockData.push({
-              ...assessmentData.value,
-              ...assessmentTypeDetails,
-            })
-          }
-          // NB : to improve, fine enough for now : eval function do not transform to camelCase, so we have pdf_button instead of pdfButton
+          this.usagePage.stepsOfUse = getStreamFieldStructMediaWithUrl(
+            this.usagePage.stepsOfUse,
+            "image",
+            this.usagePage.stepsImagesUrl
+          )
+          this.usagePage.startAssessmentBlockData =
+            getStreamFieldStructWithLinkedObject(
+              this.usagePage.startAssessmentBlockData,
+              "type",
+              this.usagePage.assessmentTypesDetails,
+              "assessmentType"
+            )
+          // NB : to improve (fine enough for now) : eval function do not transform to camelCase, so we have pdf_button instead of pdfButton
+        } else {
+          console.error("Impossible to retrieve usage page")
+        }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
+    },
+    async getProjectPage() {
+      const { data, error } = await useApiGet<ProjectPage[]>("project-pages/")
+      if (!error.value) {
+        if (data.value.length) {
+          this.projectPage = data.value[0]
+          this.projectPage.whyBlockData = getStreamFieldMediaWithUrl(
+            this.projectPage.whyBlockData,
+            "image",
+            this.projectPage.imagesUrl
+          )
+          this.projectPage.objectiveBlockData =
+            getStreamFieldStructMediaWithUrl(
+              this.projectPage.objectiveBlockData,
+              "svg",
+              this.projectPage.svgsUrl
+            )
+          this.projectPage.impactBlockData = getStreamFieldStructMediaWithUrl(
+            this.projectPage.impactBlockData,
+            "image",
+            this.projectPage.imagesUrl
+          )
+          this.projectPage.whoPartnerSubBlockData =
+            getStreamFieldStructWithListLinkedObjects(
+              this.projectPage.whoPartnerSubBlockData,
+              "partners",
+              this.projectPage.partners,
+              "id"
+            )
+          this.projectPage.howBlockData = getStreamFieldListStructMediaWithUrl(
+            this.projectPage.howBlockData,
+            "step",
+            "svg",
+            this.projectPage.svgsUrl
+          )
         } else {
           console.error("Impossible to retrieve usage page")
         }
