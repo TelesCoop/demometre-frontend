@@ -142,7 +142,7 @@ export const usePageStore = defineStore("page", {
             )
           this.projectPage.howBlockData = getStreamFieldListStructMediaWithUrl(
             this.projectPage.howBlockData,
-            "cards",
+            "step",
             "svg",
             this.projectPage.svgsUrl
           )

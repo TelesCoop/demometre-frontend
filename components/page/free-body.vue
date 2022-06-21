@@ -21,10 +21,7 @@
     <h2 v-else-if="item.type === 'title'" :class="titleClasses">
       {{ item.value }}
     </h2>
-    <div
-      v-else-if="item.type === 'cards'"
-      class="columns mb-2 is-variable is-6"
-    >
+    <div v-else-if="item.type === 'step'" class="columns mb-2 is-variable is-6">
       <div
         v-for="(step, index) in item.value"
         :key="index"

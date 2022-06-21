@@ -114,22 +114,10 @@
       :title="pageStore.homePage.partnerBlockTitle"
       :intro="pageStore.homePage.partnerBlockIntro"
     >
-      <div
-        class="is-flex is-flex-direction-row is-flex-wrap-wrap"
-        style="column-gap: 4rem"
-      >
-        <figure
-          v-for="partner of pageStore.homePage.partners"
-          :key="partner.id"
-          class="image"
-        >
-          <img
-            :src="MADIA_BASE_URL + partner.logoImageUrl"
-            :alt="partner.name"
-            style="height: 80px"
-          />
-        </figure>
-      </div>
+      <PagePartnerList
+        :partners="pageStore.homePage.partners"
+        :logo-height="80"
+      />
     </PageSection>
   </div>
 </template>
@@ -139,7 +127,6 @@ import { Carousel, Slide } from "vue3-carousel"
 
 import "vue3-carousel/dist/carousel.css"
 import { usePageStore } from "~/stores/pageStore"
-import { MADIA_BASE_URL } from "~/composables/api"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 

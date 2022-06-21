@@ -40,12 +40,76 @@
     <div ref="whyBlockRef" class="scroll-margin-top_5">
       <PageBigSection :title="pageStore.projectPage.whyBlockTitle">
         <div class="container">
-          <div class="column-2">
+          <section class="column-2 section">
             <PageFreeBody
               :free-body="pageStore.projectPage.whyBlockData"
               :inside-2-columns="true"
             />
-          </div>
+          </section>
+        </div>
+        <div class="has-background-shade-250">
+          <PageSection
+            v-if="pageStore.projectPage.objectiveBlockTitle"
+            :title="pageStore.projectPage.objectiveBlockTitle"
+          >
+            <div class="columns my-2">
+              <div
+                v-for="(objective, index) in pageStore.projectPage
+                  .objectiveBlockData"
+                :key="index"
+                class="column is-one-quarter"
+              >
+                <div class="card is-fullheight has-background-white">
+                  <div class="card-image">
+                    <figure class="image is-4by3 has-text-centered">
+                      <img
+                        :src="MADIA_BASE_URL + objective.svgUrl"
+                        alt=""
+                        :style="`height: 100px; width: 100px`"
+                        class="mt-2"
+                      />
+                    </figure>
+                  </div>
+                  <div class="card-content px-2 pb-2">
+                    <p
+                      class="is-size-5 has-text-shade-700 has-text-weight-bold has-text-centered"
+                    >
+                      {{ objective.title }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </PageSection>
+          <PageSection
+            v-if="pageStore.projectPage.impactBlockTitle"
+            :title="pageStore.projectPage.impactBlockTitle"
+          >
+            <div class="columns my-2">
+              <div
+                v-for="(impact, index) in pageStore.projectPage.impactBlockData"
+                :key="index"
+                class="column is-one-third"
+              >
+                <div class="card is-fullheight has-background-white">
+                  <div class="card-image">
+                    <figure class="image is-4by3 has-text-centered">
+                      <img
+                        :src="MADIA_BASE_URL + impact.imageUrl"
+                        alt=""
+                        :style="`height: 240px; width: 100%`"
+                      />
+                    </figure>
+                  </div>
+                  <div class="card-content px-2 pb-2">
+                    <p class="is-size-4 has-text-shade-500 has-text-centered">
+                      {{ impact.title }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </PageSection>
         </div>
       </PageBigSection>
     </div>
@@ -53,6 +117,35 @@
     <!-- Who block -->
     <div ref="whoBlockRef" class="scroll-margin-top_5">
       <PageBigSection :title="pageStore.projectPage.whoBlockTitle">
+        <PageSection
+          v-if="pageStore.projectPage.whoPartnerSubBlockTitle"
+          :title="pageStore.projectPage.whoPartnerSubBlockTitle"
+        >
+          <div class="my-2">
+            <div
+              v-for="(partner_group, index) in pageStore.projectPage
+                .whoPartnerSubBlockData"
+              :key="index"
+              class="columns mb-3"
+            >
+              <div class="column is-5 pr-4">
+                <p class="is-size-4 has-text-black has-text-weight-bold pb-1">
+                  {{ partner_group.title }}
+                </p>
+                <p class="is-size-5 is-family-secondary has-text-shade-600">
+                  {{ partner_group.description }}
+                </p>
+              </div>
+              <div class="column is-7">
+                <PagePartnerList
+                  :partners="partner_group.partners"
+                  :logo-height="60"
+                  column-gap="3rem"
+                />
+              </div>
+            </div>
+          </div>
+        </PageSection>
       </PageBigSection>
     </div>
 
@@ -72,6 +165,7 @@
 </template>
 
 <script setup lang="ts">
+import { MADIA_BASE_URL } from "~/composables/api"
 import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({

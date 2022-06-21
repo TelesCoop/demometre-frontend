@@ -46,7 +46,7 @@
         <div class="has-text-centered">
           <a
             v-if="props.step.link"
-            href="props.step.link"
+            :href="props.step.link"
             target="_blank"
             class="button is-shade-600 is-rounded is-small"
           >
