@@ -35,7 +35,7 @@
       >
         <div class="columns mb-2">
           <Carousel
-            v-if="pageStore.homePage.feedbacks.lenght"
+            v-if="pageStore.homePage.feedbacks.length"
             :settings="settings"
             :breakpoints="breakpointsSmallElements"
           >
@@ -64,7 +64,7 @@
     >
       <div class="columns mb-2">
         <Carousel
-          v-if="pageStore.homePage.blogPosts.lenght"
+          v-if="pageStore.homePage.blogPosts.length"
           :settings="settings"
           :breakpoints="breakpointsLargeElements"
         >
@@ -94,7 +94,7 @@
       >
         <div class="columns mb-2" style="display: block">
           <Carousel
-            v-if="pageStore.homePage.resources.lenght"
+            v-if="pageStore.homePage.resources.length"
             :settings="settings"
             :breakpoints="breakpointsSmallElements"
           >
