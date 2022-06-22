@@ -2,9 +2,8 @@
   <div
     class="card is-fullheight"
     :class="
-      `has-background-${backgroundColor} ` + props.svgMode
-        ? `svg-mode`
-        : `image-mode`
+      `has-background-${backgroundColor} ` +
+      (props.svgMode ? `svg-mode` : `image-mode`)
     "
   >
     <div class="card-image">

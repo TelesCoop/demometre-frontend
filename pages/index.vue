@@ -35,6 +35,7 @@
       >
         <div class="columns mb-2">
           <Carousel
+            v-if="pageStore.homePage.feedbacks.lenght"
             :settings="settings"
             :breakpoints="breakpointsSmallElements"
           >
@@ -62,7 +63,11 @@
       button-link="/blog"
     >
       <div class="columns mb-2">
-        <Carousel :settings="settings" :breakpoints="breakpointsLargeElements">
+        <Carousel
+          v-if="pageStore.homePage.blogPosts.lenght"
+          :settings="settings"
+          :breakpoints="breakpointsLargeElements"
+        >
           <Slide
             v-for="blogPost of pageStore.homePage.blogPosts"
             :key="blogPost.id"
@@ -89,6 +94,7 @@
       >
         <div class="columns mb-2" style="display: block">
           <Carousel
+            v-if="pageStore.homePage.resources.lenght"
             :settings="settings"
             :breakpoints="breakpointsSmallElements"
           >
