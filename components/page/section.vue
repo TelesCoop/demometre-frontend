@@ -8,9 +8,9 @@
         {{ props.title }}
       </h2>
       <div
-        class="is-flex is-flex-direction-row is-justify-content-space-between"
+        class="is-flex is-flex-direction-row is-justify-content-space-between is-flex-wrap-wrap mb-3"
       >
-        <p v-if="props.intro" class="is-family-secondary is-size-5 mb-3">
+        <p v-if="props.intro" class="is-family-secondary is-size-5 mb-1">
           {{ props.intro }}
         </p>
         <nuxt-link

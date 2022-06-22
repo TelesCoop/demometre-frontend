@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <section class="columns section">
-      <div class="column is-5">
+    <section class="columns is-desktop section">
+      <div class="column is-5-desktop">
         <PageTitle
           v-if="pillarsCompleted.length === 0"
           :title="pageStore.evaluationQuestionnairePage.startTitle"
@@ -38,14 +38,28 @@
           </span>
         </nuxt-link>
       </div>
-      <div class="column is-6 is-offset-1">
+      <div class="column is-6-desktop is-offset-1">
         <Rosette
+          class="rosette-menu"
           center-button-name="Commencer"
           :pillars-completed="pillarsCompleted"
           @center-button-click="onStartQuestionnaire"
           @pillar-click="onRosettePillarClicked($event)"
           @marker-click="onRosetteMarkerClicked($event)"
         />
+        <section ref="pillarsRef" class="columns is-multiline mt-4 list-menu">
+          <div
+            v-for="pillar of questionnaireStore.pillars"
+            :key="pillar.name"
+            class="column"
+          >
+            <QuestionnairePillar
+              :name="pillar.name"
+              style="cursor: pointer"
+              @click="onRosettePillarClicked(pillar.name)"
+            />
+          </div>
+        </section>
       </div>
     </section>
   </div>
@@ -117,4 +131,11 @@ const onRosetteMarkerClicked = (markerId) => {
 <style scoped lang="sass">
 .buttons .button
   height: fit-content
+.list-menu
+  display: none
+@include mobile
+  .rosette-menu
+    display: none
+  .list-menu
+    display: block
 </style>

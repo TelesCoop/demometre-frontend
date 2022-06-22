@@ -1,10 +1,13 @@
 <template>
   <div :class="{ container: !props.header }">
-    <div :class="props.header ? ' m-0' : ''" class="columns">
+    <div
+      :class="props.header ? ' m-0' : ''"
+      class="columns is-mobile is-multiline"
+    >
       <div
         v-for="pillarName in PillarName"
         :key="pillarName"
-        class="is-clickable column p-0"
+        class="is-clickable column p-0 prograss-bar-container"
         :class="
           (!props.header && pillarName === hoverPillarName
             ? `has-background-${PillarParams[pillarName].color}-light-hover`
@@ -154,4 +157,8 @@ function getWidth(pillarName) {
       border-bottom-right-radius: 20px
 .box-rounded
   border-radius: 6px
+
+@include mobile
+  .prograss-bar-container
+    margin: 1rem 0
 </style>
