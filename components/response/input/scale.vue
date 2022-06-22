@@ -11,7 +11,7 @@
             class="number mr-0_5"
             :class="`has-border-${props.color} has-background-white has-text-${props.color}-dark `"
           >
-            <slot name="left-symbol">{{ responseChoiceIndex }}</slot>
+            <slot name="left-symbol">{{ responseChoiceIndex + 1 }}</slot>
           </div>
           <span>{{ responseChoice.responseChoice }}</span>
         </div>
@@ -23,11 +23,11 @@
       class="mb-1"
     >
       <ResponseNumberChoice
-        :model-value="answer[category.id] || 1"
+        :model-value="getAnswerSliderValue(category.id)"
         :category="category"
         :color="props.color"
         :bounds="bounds"
-        :selected="answer[category.id] !== null"
+        :selected="hasAnsweredCategory(category.id)"
         @update:model-value="(val) => updateOne(val, category.id)"
       />
     </div>
@@ -38,6 +38,7 @@
 import { PropType } from "vue"
 import {
   Category,
+  ClosedWithScaleResponse,
   QuestionBounds,
   ResponseChoice as ResponseChoiceType,
 } from "~/composables/types"
@@ -49,13 +50,12 @@ const props = defineProps({
     required: true,
   },
   modelValue: {
-    type: Object as PropType<{ [key: number]: number }>,
+    type: Array as PropType<ClosedWithScaleResponse[]>,
     required: false,
     default: (props) => {
-      return props.categories.reduce((acc, category) => {
-        acc[category.id] = null
-        return acc
-      }, {})
+      return props.categories.map((category) => {
+        return { categoryId: category.id, responseChoiceId: null }
+      })
     },
   },
   color: { type: String, required: true },
@@ -76,10 +76,40 @@ const bounds = computed<QuestionBounds>(() => {
   }
 })
 
-const answer = useModel<object>("modelValue", { type: "object" })
+const answer = useModel<ClosedWithScaleResponse[]>("modelValue", {
+  type: "array",
+})
 
-function updateOne(value, id) {
-  answer.value = { ...answer.value, [id]: value }
+function updateOne(value, categoryId) {
+  const newAnswer = answer.value.map((categoryResponse) => {
+    if (categoryResponse.categoryId === categoryId) {
+      return {
+        ...categoryResponse,
+        responseChoiceId: props.responseChoices[value - 1].id,
+      }
+    } else {
+      return categoryResponse
+    }
+  })
+  answer.value = newAnswer
+}
+
+function getResponseChoiceIdByCategoryId(categoryId) {
+  return answer.value.filter(
+    (categoryResponse) => categoryResponse.categoryId === categoryId
+  )[0].responseChoiceId
+}
+
+function getAnswerSliderValue(categoryId) {
+  return (
+    props.responseChoices
+      .map((responseChoice) => responseChoice.id)
+      .indexOf(getResponseChoiceIdByCategoryId(categoryId)) + 1 || 1
+  )
+}
+
+function hasAnsweredCategory(categoryId) {
+  return getResponseChoiceIdByCategoryId(categoryId) !== null
 }
 </script>
 

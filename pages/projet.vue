@@ -43,7 +43,7 @@
           <section class="column-2 section">
             <PageFreeBody
               :free-body="pageStore.projectPage.whyBlockData"
-              :inside-2-columns="true"
+              :inside-two-columns="true"
             />
           </section>
         </div>
@@ -155,7 +155,7 @@
         <div class="container">
           <PageFreeBody
             :free-body="pageStore.projectPage.howBlockData"
-            :inside-2-columns="false"
+            :inside-two-columns="false"
             h-title="h3"
           />
         </div>
@@ -184,7 +184,6 @@ const howBlockRef = ref(null)
 const whoBlockRef = ref(null)
 const whyBlockRef = ref(null)
 onMounted(() => {
-  console.log("onMounted")
   howBlockRef.value.focus()
   whoBlockRef.value.focus()
   whyBlockRef.value.focus()
@@ -194,7 +193,6 @@ onMounted(() => {
 })
 
 const scrollIntoHowBlock = () => {
-  console.log("COUCOU")
   howBlockRef.value.scrollIntoView({ behavior: "smooth" })
 }
 const scrollIntoWhoBlock = () => {

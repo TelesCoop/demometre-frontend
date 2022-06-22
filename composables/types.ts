@@ -213,6 +213,13 @@ export type Participation = {
   isPillarQuestionsCompleted: ParticipationPillarCompleted[]
   profileIds: number[]
 }
+export type ClosedWithScaleResponse = {
+  id: number | null
+  categoryId: number
+  responseChoiceId: number | null
+  participationResponseId: number | null
+  assessmentResponseId: number | null
+}
 export type QuestionResponse = {
   id: number
   participationId: number | null
@@ -223,10 +230,7 @@ export type QuestionResponse = {
   multipleChoiceResponseIds: number[]
   booleanResponse: boolean | null
   percentageResponse: number | null
-  closedWithScaleCategoryResponses: {
-    category: string
-    responseId: number
-  }[]
+  closedWithScaleResponseCategories: ClosedWithScaleResponse[]
 }
 
 // Pages

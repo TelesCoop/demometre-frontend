@@ -5,7 +5,7 @@ export const QUESTION_RESPONSE_VALUE_BY_TYPE = {
   multiple_choice: "multipleChoiceResponseIds",
   boolean: "booleanResponse",
   percentage: "percentageResponse",
-  closed_with_scale: "percentageResponse",
+  closed_with_scale: "closedWithScaleResponseCategories",
 }
 export const QUESTION_RESPONSES_BY_TYPE = {
   questionnaire: "responseByQuestionnaireQuestionId",

@@ -4,7 +4,7 @@
       v-if="item.type === 'richtext'"
       :rich-text="item.value"
       class="is-family-secondary mb-2 has-text-shade-600"
-      :class="!props.inside2Columns && 'column-2'"
+      :class="!props.insideTwoColumns && 'column-2'"
     />
     <img
       v-else-if="item.type === 'image'"
@@ -44,7 +44,7 @@ import { MADIA_BASE_URL } from "~/composables/api"
 const props = defineProps({
   freeBody: { type: Array, required: true },
   hTitle: { type: String, default: "h2" },
-  inside2Columns: { type: Array, required: true },
+  insideTwoColumns: { type: Array, required: true },
 })
 
 const titleClasses = ["title", "is-3", "has-text-shade-900", "mb-1", "mt-4"]
