@@ -9,7 +9,8 @@
     @mouseleave="isHovered = false"
   >
     <div :class="circleClass" class="pillar-circle">
-      <Picto :name="`${props.name}-big`" class="picto" />
+      <Picto :name="`${props.name}-big`" class="picto big" />
+      <Picto :name="`${props.name}-mini`" class="picto little" />
     </div>
     <p :class="`has-text-${colorClass}-dark is-size-4-tablet is-size-5-mobile`">
       {{ textTitle }}
@@ -55,6 +56,7 @@ const circleClass = computed(() => {
   flex-shrink: 0
 
 .pillar-circle
+  position: relative
   width: 100px
   height: 100px
   border-radius: 100%
@@ -68,6 +70,8 @@ const circleClass = computed(() => {
   left: 50%
   transform: translateX(-50%)
   bottom: 23px
+  &.little
+    display: none
 
 .icon
   display: none
@@ -92,14 +96,18 @@ const circleClass = computed(() => {
       vertical-align: middle
 
   .pillar-circle
-    width: 48px
-    height: 48px
+    width: 50px
+    height: 50px
     border-radius: 100%
     font-size: 24px
     text-align: center
     padding-top: 6px
     margin-bottom: 0rem
+    position: relative
   .picto
-    max-width: 30px
-    max-height: 25px
+    bottom: 0
+    &.big
+      display: none
+    &.little
+      display: block
 </style>
