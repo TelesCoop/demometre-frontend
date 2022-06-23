@@ -5,7 +5,7 @@
         <div
           v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
           :key="responseChoiceIndex"
-          class="level-item has-text-centered mr-1_5"
+          class="legend level-item has-text-centered"
         >
           <div
             class="number mr-0_5"
@@ -118,4 +118,9 @@ function hasAnsweredCategory(categoryId) {
   min-width: 18px
   height: 18px
   border-radius: 3px
+.legend
+  margin-right: 1.5rem
+@include mobile
+  .legend
+    margin-right: 0.5rem
 </style>

@@ -86,8 +86,10 @@ const circleClass = computed(() => {
     column-gap: 1rem
     height: fit-content
     width: auto
-    margin: 0 2rem
+    margin: 0 0.5rem
     position: relative
+    p
+      margin-right: 23px
   .icon
     display: block
     position: absolute
@@ -110,4 +112,11 @@ const circleClass = computed(() => {
       display: none
     &.little
       display: block
+@include until(350px)
+  .pillar-card
+    padding: 0.75rem
+    margin: 0
+  .pillar-circle
+    width: 45px
+    height: 45px
 </style>
