@@ -1,22 +1,14 @@
 <template>
   <div
     class="pillar-card"
-    :class="
-      (isHovered ? `has-background-${colorClass}-light` : '') +
-      ` is-${colorClass}`
-    "
+    :class="isHovered ? `has-background-${colorClass}-light` : ''"
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
     <div :class="circleClass" class="pillar-circle">
       <Picto :name="`${props.name}-big`" class="picto" />
     </div>
-    <p :class="`has-text-${colorClass}-dark is-size-4-tablet is-size-5-mobile`">
-      {{ textTitle }}
-    </p>
-    <span :class="`icon has-text-${colorClass}`">
-      <icon size="24" name="arrow-right-line" />
-    </span>
+    <p :class="`has-text-${colorClass} is-size-4 mt-0_75`">{{ textTitle }}</p>
   </div>
 </template>
 
@@ -60,7 +52,7 @@ const circleClass = computed(() => {
   border-radius: 100%
   text-align: center
   padding-top: 16px
-  margin-bottom: 0.75rem
+  position: relative
 
 .picto
   vertical-align: bottom
@@ -68,38 +60,4 @@ const circleClass = computed(() => {
   left: 50%
   transform: translateX(-50%)
   bottom: 23px
-
-.icon
-  display: none
-
-@include mobile
-  .pillar-card
-    display: flex
-    flex-direction: row
-    padding: 1rem
-    background-color: var(--color-light)
-    justify-content: flex-start
-    column-gap: 1rem
-    height: fit-content
-    width: auto
-    margin: 0 2rem
-    position: relative
-  .icon
-    display: block
-    position: absolute
-    right: 1rem
-    svg
-      vertical-align: middle
-
-  .pillar-circle
-    width: 48px
-    height: 48px
-    border-radius: 100%
-    font-size: 24px
-    text-align: center
-    padding-top: 6px
-    margin-bottom: 0rem
-  .picto
-    max-width: 30px
-    max-height: 25px
 </style>

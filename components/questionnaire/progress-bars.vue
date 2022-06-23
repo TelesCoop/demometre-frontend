@@ -32,10 +32,10 @@
             size="30"
             name="loader-2-line"
           />
-          <icon
+          <Picto
             v-else
             size="30"
-            :name="pillarName"
+            :name="`${pillarName}-mini`"
             class="mr-1 column is-narrow p-0"
             style="overflow: overlay"
             :color="`${PillarParams[pillarName].color}-dark`"
