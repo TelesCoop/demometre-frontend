@@ -6,7 +6,7 @@ const loadUserState = async () => {
   if (!process.server) return
 
   // Conserve header because of crash
-  const headers = useRequestHeaders(["cookie"])
+  const headers = useRequestHeaders(["cookie", "csrftoken"])
   const userStore = useUserStore()
 
   if (!userStore.refreshed) {

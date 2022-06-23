@@ -9,19 +9,17 @@ import { useAssessmentStore } from "./assessmentStore"
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: <User>{},
-    anonymous: <User>{},
     refreshed: <boolean>false,
-    anonymousRefreshed: <boolean>false,
   }),
   getters: {
     isLoggedIn() {
       return !!this.user.email
     },
     isAnonymous() {
-      return !!this.anonymous.email
+      return this.user?.isAnonymous
     },
-    anonymousName: (state) => {
-      return state.anonymous.username || ""
+    anonymousName() {
+      return this.user.username || ""
     },
   },
   actions: {
@@ -32,8 +30,7 @@ export const useUserStore = defineStore("user", {
         errorStore.setError(error.value.data.messageCode)
         return false
       }
-      this.user = {}
-      this.anonymous = data.value
+      this.user = data.value
     },
     async login(email: string, password: string, callbackUrl = "/") {
       const { data, error } = await useApiPost<User>("auth/login", {
@@ -42,7 +39,6 @@ export const useUserStore = defineStore("user", {
       })
       if (!error.value) {
         this.user = data.value
-        this.anonymous = {}
         await getParticipationUserData()
         const router = useRouter()
         router.push(callbackUrl)
@@ -53,7 +49,6 @@ export const useUserStore = defineStore("user", {
       lastName: string,
       email: string,
       password: string,
-      anonymous = null,
       callbackUrl = "/"
     ) {
       const { data, error } = await useApiPost<User>("auth/signup", {
@@ -61,13 +56,11 @@ export const useUserStore = defineStore("user", {
         lastName,
         email,
         password,
-        anonymous,
       })
       if (error.value) {
         return { error: error.value.data }
       }
       this.user = data.value
-      this.anonymous = {}
       await getParticipationUserData()
       const router = useRouter()
       router.push(callbackUrl)
@@ -90,21 +83,6 @@ export const useUserStore = defineStore("user", {
       try {
         const response = await useGet<User>(`auth/profile`, { headers })
         this.user = response
-        return true
-      } catch (e) {
-        return false
-      }
-    },
-    async refreshAnonymous(anonymous_name, headers = undefined) {
-      this.anonymousRefreshed = true
-      const response = await useGet<User>(
-        `auth/profile?anonymous=${anonymous_name}`,
-        { headers }
-      )
-      try {
-        if (response.username.includes("anonymous-")) {
-          this.anonymous = response
-        }
         return true
       } catch (e) {
         return false
