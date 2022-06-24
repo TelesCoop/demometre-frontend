@@ -1,7 +1,9 @@
 <template>
   <section class="section">
     <div class="container">
-      <h2 class="title is-2 has-text-black mb-1">{{ props.title }}</h2>
+      <h2 class="title is-size-2-tablet is-size-3-mobile has-text-black mb-1">
+        {{ props.title }}
+      </h2>
       <hr class="has-text-shade-350" />
     </div>
     <slot></slot>

@@ -89,6 +89,9 @@ hr
 .buttons .margin-between:not(:last-child):not(.is-fullwidth)
   margin-right: 0.5rem
 
+.button
+  height: fit-content
+
 .scroll-margin-top_5
   scroll-margin-top: 5rem
 
@@ -98,3 +101,21 @@ hr
 @include touch
   .column-2
     column-count: 1
+
+  .columns.is-variable
+    --columnGap: 0rem
+
+@include mobile
+  .hidden-in-mobile-mode
+    display: none
+
+@include touch
+  .section
+    padding: 3rem 0rem
+  .container
+    padding: 0 1rem
+
+.fit-without-distortion
+  object-fit: cover
+  width: 100%
+  height: 100%

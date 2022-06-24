@@ -1,8 +1,10 @@
 <template>
   <div v-if="question">
     <section class="section">
-      <form v-if="question" @submit.prevent="submit">
-        <h1 class="title is-3">{{ question.questionStatement }}</h1>
+      <form v-if="question" class="question-container" @submit.prevent="submit">
+        <h1 class="title is-size-3-tablet is-size-4-mobile">
+          {{ question.questionStatement }}
+        </h1>
         <RichText :rich-text="question.description"></RichText>
 
         <!-- Center bloc : question inputs + button previous and next -->
@@ -109,7 +111,10 @@
             <span v-if="isLoading" class="is-size-7 has-text-shade-600">
               en cours de chargement
             </span>
-            <span v-else class="is-size-7 has-text-shade-600">
+            <span
+              v-else
+              class="is-size-7 has-text-shade-600 hidden-in-mobile-mode"
+            >
               appuyez sur
               <span class="has-text-weight-bold">Entrer ⏎</span></span
             >
@@ -207,8 +212,8 @@ import { ref } from "@vue/reactivity"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getQuestionResponseValue } from "~/utils/question-response"
-import { useQuestionnaireStore } from "~~/stores/questionnaireStore"
-import { useAssessmentStore } from "~~/stores/assessmentStore"
+import { useQuestionnaireStore } from "~/stores/questionnaireStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 type tabDef = { label: string; id: string }
 const props = defineProps({
@@ -357,6 +362,8 @@ const submit = async () => {
   position: fixed
   bottom: 0
   background-color: white
+  max-height: 50%
+  overflow: overlay
 
 .tabs .tab
   color: var(--color)
@@ -382,9 +389,26 @@ const submit = async () => {
         right: -5rem
       &.previous
         left: -5rem
-    @include touch
-      &.next
-        right: -0.5rem
-      &.previous
-        left: -0.5rem
+
+@include tablet-only
+  .question-container
+    margin-left: 5rem
+    margin-right: 5rem
+  .change-question-button
+    &.next
+      right: -5rem
+    &.previous
+      left: -5rem
+@include mobile
+  .question-container
+    margin-left: 1rem
+    margin-right: 1rem
+  .change-question-button
+    top: -2rem
+    &.next
+      right: -2rem
+      padding: 0 15px
+    &.previous
+      left: -2rem
+      padding: 0 15px
 </style>
