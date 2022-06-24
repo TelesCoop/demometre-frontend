@@ -30,3 +30,7 @@ yarn build
 Checkout the [deployment documentation](https://v3.nuxtjs.org/docs/deployment).
 
 
+
+## Commit de suppression des questions avec classement
+
+https://gitlab.com/telescoop/democratie-ouverte/frontend/-/commit/ea3cc159d104f772467cab574387b10063881ab4

@@ -100,9 +100,6 @@ const RULES_STRATEGY = {
   closed_with_scale: ({ rule, response }): boolean => {
     return true
   },
-  closed_with_ranking: (): boolean => {
-    return true
-  },
 }
 
 function isRelevant(question: Question, data) {

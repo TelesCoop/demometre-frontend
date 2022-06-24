@@ -11,10 +11,10 @@
             <RichText :rich-text="pageStore.referentialPage.description" />
           </div>
           <div class="buttons are-normal is-shade-600">
-            <!-- TODO : change link to the right page -->
+            <!--Hash url does not work with ssr mode -->
             <nuxt-link
               class="button is-dark is-rounded is-responsive is-outlined is-shade-600"
-              to="/"
+              to="/projet?hash=howBlockRef"
             >
               <span>Comment on a construit le référentiel</span>
 
@@ -171,12 +171,4 @@ const onRosetteMarkerClicked = (markerId) => {
 img
   width: 100%
   object-fit: cover
-.column-2
-  column-count: 2
-  column-gap: 4rem
-@include touch
-  .column-2
-    column-count: 1
-.scroll
-  scroll-margin-top: 5rem
 </style>

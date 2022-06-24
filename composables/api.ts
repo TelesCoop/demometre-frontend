@@ -1,4 +1,3 @@
-import { NuxtApp } from "nuxt3/dist/app/nuxt"
 import { useLoadingStore } from "~/stores/loadingStore"
 import { useFetch, useRequestHeaders } from "#app"
 
@@ -38,13 +37,15 @@ const makeLoadingKey = (path: string) => {
   return words.join("")
 }
 
-const getCsrfCookie = (ctx: NuxtApp) => {
-  let cookie = ""
-  if (ctx?.ssrContext?.req.headers.cookie) {
-    cookie = ctx?.ssrContext.req.headers.cookie
-  } else if (process.client) {
+function getCookie() {
+  let cookie = useRequestHeaders(["cookie"])["cookie"] || ""
+  if (!cookie && process.client) {
     cookie = document.cookie
   }
+  return cookie
+}
+
+function getCsrfCookie(cookie) {
   if (!cookie) {
     return null
   }
@@ -55,10 +56,11 @@ const getCsrfCookie = (ctx: NuxtApp) => {
   return csfrRow.split("=")[1]
 }
 
-const getHeaders = (ctx: NuxtApp, includeCsrf = false): MyHeaders => {
-  const headers: MyHeaders = useRequestHeaders(["cookie"])
-  if (includeCsrf) {
-    const csfrToken = getCsrfCookie(ctx)
+function getHeaders(withCsrfCookie = false): MyHeaders {
+  const cookie = getCookie()
+  const headers: MyHeaders = { cookie: cookie }
+  if (withCsrfCookie) {
+    const csfrToken = getCsrfCookie(cookie)
     if (csfrToken) {
       headers["X-CSRFTOKEN"] = csfrToken
     }
@@ -83,13 +85,12 @@ export async function useGet<Type>(path: string, opts: any = {}) {
 
 export async function useApiGet<Type>(path: string) {
   const loadingStore = useLoadingStore()
-
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
-  const { data, error } = await useFetch<Type>(BASE_API_URL + path, {
+  const { data, error } = await useFetch<Type>(`${BASE_API_URL}${path}`, {
     method: "GET",
     credentials: "include",
-    headers: useRequestHeaders(["cookie"]),
+    headers: getHeaders(),
   })
   if (error.value) {
     loadingStore.markError(key)
@@ -99,19 +100,21 @@ export async function useApiGet<Type>(path: string) {
   return { data, error }
 }
 
-export async function useApiPost<Type>(path: string, payload: any = {}) {
+export async function useAPIwithCsrfToken<Type>(
+  path: string,
+  method: string,
+  payload: any = {}
+) {
   const loadingStore = useLoadingStore()
 
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
-  const { data, error } = await useAsyncData<Type>(key, (ctx) =>
-    $fetch(BASE_API_URL + path, {
-      method: "POST",
-      body: payload,
-      credentials: "include",
-      headers: getHeaders(ctx, true),
-    })
-  )
+  const { data, error } = await useFetch<Type>(`${BASE_API_URL}${path}`, {
+    method,
+    body: payload,
+    credentials: "include",
+    headers: getHeaders(true),
+  })
   if (error.value) {
     loadingStore.markError(key)
   } else {
@@ -119,24 +122,10 @@ export async function useApiPost<Type>(path: string, payload: any = {}) {
   }
   return { data, error }
 }
+export async function useApiPost<Type>(path: string, payload: any = {}) {
+  return useAPIwithCsrfToken(path, "POST", payload)
+}
 
 export async function useApiPatch<Type>(path: string, payload: any = {}) {
-  const loadingStore = useLoadingStore()
-
-  const key = makeLoadingKey(path)
-  loadingStore.markLoading(key)
-  const { data, error } = await useAsyncData<Type>(key, (ctx) =>
-    $fetch(BASE_API_URL + path, {
-      method: "PATCH",
-      body: payload,
-      credentials: "include",
-      headers: getHeaders(ctx, true),
-    })
-  )
-  if (error.value) {
-    loadingStore.markError(key)
-  } else {
-    loadingStore.markDone(key)
-  }
-  return { data, error }
+  return useAPIwithCsrfToken(path, "PATCH", payload)
 }

@@ -25,8 +25,14 @@
           "
         >
           <icon
+            v-if="isLoadingPillarName === pillarName"
             size="30"
-            :name="pillarName"
+            name="loader-2-line"
+          />
+          <Picto
+            v-else
+            size="30"
+            :name="`${pillarName}-mini`"
             class="mr-1 column is-narrow p-0"
             style="overflow: overlay"
             :color="`${PillarParams[pillarName].color}-dark`"
@@ -93,9 +99,12 @@ if (
 }
 
 const hoverPillarName = ref<string>()
+const isLoadingPillarName = ref<string>("")
 
 const goToFirstQuestionPillar = (pillarName) => {
+  isLoadingPillarName.value = pillarName
   useQuestionnaireJourney(pillarName).goToNextQuestion(undefined)
+  isLoadingPillarName.value = ""
 }
 
 function getTotalQuestions(pillarName) {

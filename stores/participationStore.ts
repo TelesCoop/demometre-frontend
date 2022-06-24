@@ -217,6 +217,7 @@ export const useParticipationStore = defineStore("participation", {
       }
     },
     setTotalAndAnsweredQuestionsByPillarName() {
+      this.totalAndAnsweredQuestionsByPillarName = {}
       for (const pillarName in PillarName) {
         this.setTotalAndAnsweredQuestionsInPillar(PillarName[pillarName])
       }

@@ -13,7 +13,6 @@ export enum QuestionType {
   OPEN = "open",
   UNIQUE_CHOICE = "unique_choice",
   MULTIPLE_CHOICE = "multiple_choice",
-  CLOSED_WITH_RANKING = "closed_with_ranking",
   CLOSED_WITH_SCALE = "closed_with_scale",
   BOOLEAN = "boolean",
   PERCENTAGE = "percentage",
@@ -34,22 +33,18 @@ export const PillarParams = {
   [PillarName.REPRESENTATION]: {
     key: "representation",
     color: "representation",
-    picto: "picto-representation.png",
   },
   [PillarName.TRANSPARENCY]: {
     key: "transparency",
     color: "transparency",
-    picto: "picto-transparency.png",
   },
   [PillarName.PARTICIPATION]: {
     key: "participation",
     color: "participation",
-    picto: "picto-participation.png",
   },
   [PillarName.COOPERATION]: {
     key: "cooperation",
     color: "cooperation",
-    picto: "picto-cooperation.png",
   },
 }
 export type PillarType = {
@@ -214,6 +209,13 @@ export type Participation = {
   isPillarQuestionsCompleted: ParticipationPillarCompleted[]
   profileIds: number[]
 }
+export type ClosedWithScaleResponse = {
+  id: number | null
+  categoryId: number
+  responseChoiceId: number | null
+  participationResponseId: number | null
+  assessmentResponseId: number | null
+}
 export type QuestionResponse = {
   id: number
   participationId: number | null
@@ -224,11 +226,7 @@ export type QuestionResponse = {
   multipleChoiceResponseIds: number[]
   booleanResponse: boolean | null
   percentageResponse: number | null
-  closedWithRankingResponseIds: number[]
-  closedWithScaleCategoryResponses: {
-    category: string
-    responseId: number
-  }[]
+  closedWithScaleResponseCategories: ClosedWithScaleResponse[]
 }
 
 // Pages
@@ -299,7 +297,7 @@ type AssessmentTypeDetails = {
   pdfUrl: string
   pdf_button: string
 }
-type StepOfUse = {
+type SimpleBlockWithImage = {
   image: number
   imageUrl: string
   title: string
@@ -312,7 +310,7 @@ export type UsagePage = {
   introImageUrl: string
   stepOfUseTitle: string
   stepOfUseIntro: string
-  stepsOfUse: string | StepOfUse[]
+  stepsOfUse: string | SimpleBlockWithImage[]
   stepsImagesUrl: ImageUrl[]
   participateBlockTitle: string
   participateBlockIntro: string
@@ -322,6 +320,31 @@ export type UsagePage = {
   startAssessmentBlockIntro: string
   startAssessmentBlockData: string | AssessmentTypeDetails[]
   assessmentTypesDetails: AssessmentTypeDetails[]
+}
+type ObjectiveBlock = {
+  svg: number
+  svgUrl: string
+  title: string
+}
+export type ProjectPage = {
+  title: string
+  introduction: string
+  tagLine: string
+  introImageUrl: string | null
+  whyBlockTitle: string
+  whyBlockData: string
+  objectiveBlockTitle: string
+  objectiveBlockData: string | ObjectiveBlock[]
+  impactBlockTitle: string
+  impactBlockData: string | SimpleBlockWithImage[]
+  whoBlockTitle: string
+  whoPartnerSubBlockTitle: string
+  whoPartnerSubBlockData: string
+  howBlockTitle: string
+  howBlockData: string
+  imagesUrl: ImageUrl[]
+  svgsUrl: ImageUrl[]
+  partners: Partner[]
 }
 export type EvaluationIntroPage = {
   title: string
