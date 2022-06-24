@@ -90,7 +90,7 @@ export async function useApiGet<Type>(path: string) {
   const { data, error } = await useFetch<Type>(`${BASE_API_URL}${path}`, {
     method: "GET",
     credentials: "include",
-    headers: getHeaders(true),
+    headers: getHeaders(),
   })
   if (error.value) {
     loadingStore.markError(key)
