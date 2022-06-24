@@ -7,7 +7,7 @@
       <img
         :src="MADIA_BASE_URL + partner.logoImageUrl"
         :alt="partner.name"
-        :style="`height: ${props.logoHeight}px`"
+        :style="`height: ${partner.height}px`"
       />
     </figure>
   </div>
@@ -18,7 +18,6 @@ import { MADIA_BASE_URL } from "~/composables/api"
 
 const props = defineProps({
   partners: { type: Array, required: true },
-  logoHeight: { type: Number, required: true },
   columnGap: { type: String, default: "4rem" },
 })
 </script>
