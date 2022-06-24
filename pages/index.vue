@@ -122,7 +122,6 @@
     >
       <PagePartnerList
         :partners="pageStore.homePage.partners"
-        :logo-height="80"
       />
     </PageSection>
   </div>
