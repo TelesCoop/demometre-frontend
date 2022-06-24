@@ -1,4 +1,4 @@
-import { NuxtApp } from "nuxt3/dist/app/nuxt"
+import { NuxtApp } from "nuxt/dist/app/nuxt"
 import { useLoadingStore } from "~/stores/loadingStore"
 import { useFetch, useRequestHeaders } from "#app"
 
