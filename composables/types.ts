@@ -251,6 +251,7 @@ type Partner = {
   id: number
   name: string
   logoImageUrl: string
+  height: number
 }
 export type HomePage = {
   title: string
@@ -275,12 +276,14 @@ export type ReferentialPage = {
   title: string
   introduction: string
   pillarBlockTitle: string
-  pillarBlockContent: string
+  pillarBlockLeftContent: string
+  pillarBlockRightContent: string
   pillarBlockImageUrl: string
   markerBlockTitle: string
   markerBlockContent: string
   criteriaBlockTitle: string
-  criteriaBlockContent: string
+  criteriaBlockLeftContent: string
+  criteriaBlockRightContent: string
 }
 
 type ImageUrl = { id: number; url: string }
