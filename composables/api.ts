@@ -1,7 +1,5 @@
-import { NuxtApp } from "nuxt/dist/app/nuxt"
 import { useLoadingStore } from "~/stores/loadingStore"
 import { useFetch, useRequestHeaders } from "#app"
-import exp from "constants"
 
 let base_url = "/"
 let media_base_url
@@ -51,7 +49,7 @@ const getCsrfCookie = () => {
   return csfrRow.split("=")[1]
 }
 
-const getHeaders = (): MyHeaders => {
+const getHeadersWithCsrfToken = (): MyHeaders => {
   const headers: MyHeaders = useRequestHeaders(["cookie"])
   const csfrToken = getCsrfCookie()
   if (csfrToken) {
@@ -108,7 +106,7 @@ async function useApiOnBrowser<Type>(
       method,
       body: payload,
       credentials: "include",
-      headers: getHeaders(),
+      headers: getHeadersWithCsrfToken(),
     })
     loadingStore.markDone(key)
   } catch (e) {
