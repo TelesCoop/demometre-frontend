@@ -8,7 +8,10 @@
               :title="pageStore.referentialPage.title"
               :subtitle="pageStore.referentialPage.introduction"
             />
-            <RichText :rich-text="pageStore.referentialPage.description" />
+            <RichText
+              :rich-text="pageStore.referentialPage.description"
+              class="is-family-secondary"
+            />
           </div>
           <div class="buttons are-normal is-shade-600">
             <!--Hash url does not work with ssr mode -->
@@ -44,6 +47,7 @@
           <div class="column-2">
             <RichText
               :rich-text="pageStore.referentialPage.pillarBlockContent"
+              class="is-family-secondary"
             />
             <img
               v-if="pageStore.referentialPage.pillarBlockImageUrl"
@@ -62,6 +66,7 @@
           <div class="column-2">
             <RichText
               :rich-text="pageStore.referentialPage.markerBlockContent"
+              class="is-family-secondary"
             />
             <RosetteCooperation />
           </div>
@@ -74,6 +79,7 @@
           <div class="column-2">
             <RichText
               :rich-text="pageStore.referentialPage.criteriaBlockContent"
+              class="is-family-secondary"
             />
           </div>
         </PageSection>
