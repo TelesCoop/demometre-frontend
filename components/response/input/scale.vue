@@ -1,20 +1,18 @@
 <template>
   <fieldset>
-    <legend class="is-size-7 mb-0_75 is-block has-text-grey level">
-      <div class="level-left">
+    <legend class="is-size-7 mb-0_75 has-text-grey legend-container">
+      <div
+        v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
+        :key="responseChoiceIndex"
+        class="legend has-text-centered"
+      >
         <div
-          v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
-          :key="responseChoiceIndex"
-          class="level-item has-text-centered mr-1_5"
+          class="number mr-0_5"
+          :class="`has-border-${props.color} has-background-white has-text-${props.color}-dark `"
         >
-          <div
-            class="number mr-0_5"
-            :class="`has-border-${props.color} has-background-white has-text-${props.color}-dark `"
-          >
-            <slot name="left-symbol">{{ responseChoiceIndex + 1 }}</slot>
-          </div>
-          <span>{{ responseChoice.responseChoice }}</span>
+          <slot name="left-symbol">{{ responseChoiceIndex + 1 }}</slot>
         </div>
+        <span>{{ responseChoice.responseChoice }}</span>
       </div>
     </legend>
     <div
@@ -118,4 +116,21 @@ function hasAnsweredCategory(categoryId) {
   min-width: 18px
   height: 18px
   border-radius: 3px
+.legend-container
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  flex-wrap: wrap
+.legend
+  align-items: center
+  display: flex
+  flex-basis: auto
+  flex-shrink: 0
+  justify-content: center
+  margin-right: 1.5rem
+@include mobile
+  .legend-container
+    margin-right: 1rem
+  .legend
+    margin-right: 0.5rem
 </style>

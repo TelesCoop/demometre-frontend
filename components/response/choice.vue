@@ -12,7 +12,7 @@
   >
     <div
       v-if="!props.hideLeftSymbol"
-      class="letter mr-4"
+      class="letter"
       :class="
         props.selected || props.dragging
           ? props.color === 'no-pillar'
@@ -104,14 +104,22 @@ input:focus-visible,input:not(:checked):hover + label .response-choice
   border-radius: 6px
   cursor: pointer
   line-height: 1.3
-  height: 72px
+  min-height: 72px
   align-items: center
+  @include mobile
+    padding: 8px 10px
   .letter
     text-align: center
     padding-top: 8px
     min-width: 40px
     height: 40px
     border-radius: 6px
+    margin-right: 4rem
+    @include mobile
+      margin-right: 1rem
+      padding-top: 4px
+      min-width: 30px
+      height: 30px
   .check
     color: var(--color-dark)
 </style>

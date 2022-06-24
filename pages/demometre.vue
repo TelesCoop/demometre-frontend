@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="container">
-      <section class="columns section">
-        <div class="column is-6">
+      <section class="columns section is-desktop">
+        <div class="column is-6-desktop">
           <div class="pb-2">
             <PageTitle
               :title="pageStore.referentialPage.title"
@@ -24,8 +24,9 @@
             </nuxt-link>
           </div>
         </div>
-        <div class="column is-5 is-offset-1">
+        <div class="column is-5-desktop is-offset-1">
           <Rosette
+            class="rosette-menu"
             center-button-name="Découvrir"
             @center-button-click="onDiscoverButtonClick()"
             @pillar-click="onRosettePillarClicked($event)"
@@ -80,14 +81,14 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container mobile-mode">
       <section ref="pillarsRef" class="columns is-multiline mt-4">
         <div
           v-for="pillar of questionnaireStore.pillars"
           :key="pillar.name"
           class="column"
         >
-          <Pillar
+          <QuestionnairePillar
             :name="pillar.name"
             :active="pillar.name === activePillar?.name"
             style="cursor: pointer"
@@ -95,11 +96,8 @@
           />
         </div>
       </section>
-    </div>
-
-    <div class="container">
       <section v-if="activePillar">
-        <PillarReferential
+        <QuestionnairePillarReferential
           :pillar="activePillar"
           :color="colorClass"
           :markers="markers"
@@ -171,4 +169,7 @@ const onRosetteMarkerClicked = (markerId) => {
 img
   width: 100%
   object-fit: cover
+@include touch
+  .rosette-menu
+    display: none
 </style>
