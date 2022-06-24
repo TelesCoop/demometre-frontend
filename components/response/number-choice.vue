@@ -73,6 +73,7 @@ const responseChoice = computed<ResponseChoiceType>(() => {
     --slider-handle-bg: var(--color)
     --slider-height: 12px
     width: 138px
+    margin-left: 10px
 
     // customization not planned by the module
     .slider-base, .slider-connects
@@ -85,4 +86,8 @@ const responseChoice = computed<ResponseChoiceType>(() => {
 
     .value-display
       margin-top: -2px
+@include mobile
+  .number-choice .input-container
+    .choice-slider
+      width: 120px
 </style>

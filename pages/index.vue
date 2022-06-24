@@ -42,7 +42,7 @@
             <Slide
               v-for="feedback in pageStore.homePage.feedbacks"
               :key="feedback.id"
-              class="column is-one-third"
+              class="column is-one-third-tablet is-11-mobile"
             >
               <PageFeedbackCard
                 :feedback="feedback"
@@ -71,7 +71,7 @@
           <Slide
             v-for="blogPost of pageStore.homePage.blogPosts"
             :key="blogPost.id"
-            class="column is-one-third"
+            class="column is-one-third-tablet is-11-mobile"
           >
             <PageArticleCard
               :article="blogPost"
@@ -101,7 +101,7 @@
             <Slide
               v-for="resource of pageStore.homePage.resources"
               :key="resource.id"
-              class="column is-one-third"
+              class="column is-one-third-tablet is-11-mobile"
             >
               <PageArticleCard
                 :article="resource"
@@ -160,10 +160,18 @@ const breakpointsLargeElements = {
     itemsToShow: 3.1,
     snapAlign: "start",
   },
+  768: {
+    itemsToShow: 1.1,
+    snapAlign: "start",
+  },
 }
 const breakpointsSmallElements = {
   1024: {
     itemsToShow: 3.1,
+    snapAlign: "start",
+  },
+  768: {
+    itemsToShow: 1.1,
     snapAlign: "start",
   },
 }

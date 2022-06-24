@@ -7,12 +7,8 @@
     "
   >
     <div class="card-image">
-      <figure class="image is-4by3">
-        <img
-          :src="imageUrl"
-          alt=""
-          :style="`max-height: ${props.imageHeight}`"
-        />
+      <figure class="image" :style="`height: ${props.imageHeight}`">
+        <img :src="imageUrl" alt="" class="fit-without-distortion" />
       </figure>
       <div class="step-number-container is-flex flex-center">
         <span
