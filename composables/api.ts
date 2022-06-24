@@ -1,6 +1,7 @@
 import { NuxtApp } from "nuxt/dist/app/nuxt"
 import { useLoadingStore } from "~/stores/loadingStore"
 import { useFetch, useRequestHeaders } from "#app"
+import exp from "constants"
 
 let base_url = "/"
 let media_base_url
@@ -38,13 +39,8 @@ const makeLoadingKey = (path: string) => {
   return words.join("")
 }
 
-const getCsrfCookie = (ctx: NuxtApp) => {
-  let cookie = ""
-  if (ctx?.ssrContext?.req.headers.cookie) {
-    cookie = ctx?.ssrContext.req.headers.cookie
-  } else if (process.client) {
-    cookie = document.cookie
-  }
+const getCsrfCookie = () => {
+  const cookie = document.cookie
   if (!cookie) {
     return null
   }
@@ -55,13 +51,11 @@ const getCsrfCookie = (ctx: NuxtApp) => {
   return csfrRow.split("=")[1]
 }
 
-const getHeaders = (ctx: NuxtApp, includeCsrf = false): MyHeaders => {
+const getHeaders = (): MyHeaders => {
   const headers: MyHeaders = useRequestHeaders(["cookie"])
-  if (includeCsrf) {
-    const csfrToken = getCsrfCookie(ctx)
-    if (csfrToken) {
-      headers["X-CSRFTOKEN"] = csfrToken
-    }
+  const csfrToken = getCsrfCookie()
+  if (csfrToken) {
+    headers["X-CSRFTOKEN"] = csfrToken
   }
   return headers
 }
@@ -99,44 +93,36 @@ export async function useApiGet<Type>(path: string) {
   return { data, error }
 }
 
-export async function useApiPost<Type>(path: string, payload: any = {}) {
+async function useApiOnBrowser<Type>(
+  path: string,
+  method: string,
+  payload: any = {}
+) {
   const loadingStore = useLoadingStore()
 
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
-  const { data, error } = await useAsyncData<Type>(key, (ctx) =>
-    $fetch(BASE_API_URL + path, {
-      method: "POST",
+  const result = { data: { value: undefined }, error: { value: undefined } }
+  try {
+    result.data.value = await $fetch(BASE_API_URL + path, {
+      method,
       body: payload,
       credentials: "include",
-      headers: getHeaders(ctx, true),
+      headers: getHeaders(),
     })
-  )
-  if (error.value) {
-    loadingStore.markError(key)
-  } else {
     loadingStore.markDone(key)
+  } catch (e) {
+    result.error.value = e
+    loadingStore.markError(key)
   }
-  return { data, error }
+
+  return result
+}
+
+export async function useApiPost<Type>(path: string, payload: any = {}) {
+  return useApiOnBrowser<Type>(path, "POST", payload)
 }
 
 export async function useApiPatch<Type>(path: string, payload: any = {}) {
-  const loadingStore = useLoadingStore()
-
-  const key = makeLoadingKey(path)
-  loadingStore.markLoading(key)
-  const { data, error } = await useAsyncData<Type>(key, (ctx) =>
-    $fetch(BASE_API_URL + path, {
-      method: "PATCH",
-      body: payload,
-      credentials: "include",
-      headers: getHeaders(ctx, true),
-    })
-  )
-  if (error.value) {
-    loadingStore.markError(key)
-  } else {
-    loadingStore.markDone(key)
-  }
-  return { data, error }
+  return useApiOnBrowser<Type>(path, "PATCH", payload)
 }
