@@ -37,13 +37,15 @@ const makeLoadingKey = (path: string) => {
   return words.join("")
 }
 
-function getCsrfCookie(headers) {
-  let cookie = ""
-  if (headers) {
-    cookie = headers
-  } else if (process.client) {
+function getCookie() {
+  let cookie = useRequestHeaders(["cookie"])["cookie"] || ""
+  if (!cookie && process.client) {
     cookie = document.cookie
   }
+  return cookie
+}
+
+function getCsrfCookie(cookie) {
   if (!cookie) {
     return null
   }
@@ -54,11 +56,14 @@ function getCsrfCookie(headers) {
   return csfrRow.split("=")[1]
 }
 
-function getHeadersWithCsrf(): MyHeaders {
-  const headers: MyHeaders = useRequestHeaders(["cookie"])
-  const csfrToken = getCsrfCookie(headers.cookie)
-  if (csfrToken) {
-    headers["X-CSRFTOKEN"] = csfrToken
+function getHeaders(withCsrfCookie = false): MyHeaders {
+  const cookie = getCookie()
+  const headers: MyHeaders = { cookie: cookie }
+  if (withCsrfCookie) {
+    const csfrToken = getCsrfCookie(cookie)
+    if (csfrToken) {
+      headers["X-CSRFTOKEN"] = csfrToken
+    }
   }
   return headers
 }
@@ -85,7 +90,7 @@ export async function useApiGet<Type>(path: string) {
   const { data, error } = await useFetch<Type>(`${BASE_API_URL}${path}`, {
     method: "GET",
     credentials: "include",
-    headers: useRequestHeaders(["cookie"]),
+    headers: getHeaders(true),
   })
   if (error.value) {
     loadingStore.markError(key)
@@ -108,7 +113,7 @@ export async function useAPIwithCsrfToken<Type>(
     method,
     body: payload,
     credentials: "include",
-    headers: getHeadersWithCsrf(),
+    headers: getHeaders(true),
   })
   if (error.value) {
     loadingStore.markError(key)
