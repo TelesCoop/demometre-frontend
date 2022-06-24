@@ -55,6 +55,7 @@
           >
             <QuestionnairePillar
               :name="pillar.name"
+              :is-completed="pillarsCompleted.includes(pillar.name)"
               style="cursor: pointer"
               @click="onRosettePillarClicked(pillar.name)"
             />

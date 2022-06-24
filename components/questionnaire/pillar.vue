@@ -2,7 +2,8 @@
   <div
     class="pillar-card"
     :class="
-      (isHovered ? `has-background-${colorClass}-light` : '') +
+      (isHovered && `has-background-${colorClass}-light`) +
+      (props.isCompleted && ` has-background-${colorClass}-light-active`) +
       ` is-${colorClass}`
     "
     @mouseenter="isHovered = true"
@@ -26,6 +27,7 @@ import { computed } from "vue"
 
 const props = defineProps({
   name: { type: String, required: true },
+  isCompleted: { type: Boolean, default: false },
   active: { default: true },
 })
 const isHovered = ref(false)

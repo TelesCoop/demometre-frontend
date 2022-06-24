@@ -212,8 +212,8 @@ import { ref } from "@vue/reactivity"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getQuestionResponseValue } from "~/utils/question-response"
-import { useQuestionnaireStore } from "~~/stores/questionnaireStore"
-import { useAssessmentStore } from "~~/stores/assessmentStore"
+import { useQuestionnaireStore } from "~/stores/questionnaireStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 type tabDef = { label: string; id: string }
 const props = defineProps({

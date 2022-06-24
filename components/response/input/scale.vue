@@ -120,6 +120,7 @@ function hasAnsweredCategory(categoryId) {
   display: flex
   align-items: center
   justify-content: flex-start
+  flex-wrap: wrap
 .legend
   align-items: center
   display: flex
@@ -128,6 +129,8 @@ function hasAnsweredCategory(categoryId) {
   justify-content: center
   margin-right: 1.5rem
 @include mobile
+  .legend-container
+    margin-right: 1rem
   .legend
     margin-right: 0.5rem
 </style>
