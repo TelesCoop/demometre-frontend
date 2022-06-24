@@ -30,7 +30,7 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     userIsAssessmentAdmin() {
       return (
-        this.currentAssessment.initiatedByUser.id === useUserStore().user.id
+        this.currentAssessment.initiatedByUser?.id === useUserStore().user.id
       )
       // TODO : check if current user is assessment expert
     },
