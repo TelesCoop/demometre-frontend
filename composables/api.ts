@@ -37,8 +37,13 @@ const makeLoadingKey = (path: string) => {
   return words.join("")
 }
 
-const getCsrfCookie = () => {
-  const cookie = document.cookie
+function getCsrfCookie(headers) {
+  let cookie = ""
+  if (headers) {
+    cookie = headers
+  } else if (process.client) {
+    cookie = document.cookie
+  }
   if (!cookie) {
     return null
   }
@@ -49,9 +54,9 @@ const getCsrfCookie = () => {
   return csfrRow.split("=")[1]
 }
 
-const getHeadersWithCsrfToken = (): MyHeaders => {
+function getHeadersWithCsrf(): MyHeaders {
   const headers: MyHeaders = useRequestHeaders(["cookie"])
-  const csfrToken = getCsrfCookie()
+  const csfrToken = getCsrfCookie(headers.cookie)
   if (csfrToken) {
     headers["X-CSRFTOKEN"] = csfrToken
   }
@@ -75,10 +80,9 @@ export async function useGet<Type>(path: string, opts: any = {}) {
 
 export async function useApiGet<Type>(path: string) {
   const loadingStore = useLoadingStore()
-
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
-  const { data, error } = await useFetch<Type>(BASE_API_URL + path, {
+  const { data, error } = await useFetch<Type>(`${BASE_API_URL}${path}`, {
     method: "GET",
     credentials: "include",
     headers: useRequestHeaders(["cookie"]),
@@ -91,7 +95,7 @@ export async function useApiGet<Type>(path: string) {
   return { data, error }
 }
 
-async function useApiOnBrowser<Type>(
+export async function useAPIwithCsrfToken<Type>(
   path: string,
   method: string,
   payload: any = {}
@@ -100,27 +104,23 @@ async function useApiOnBrowser<Type>(
 
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
-  const result = { data: { value: undefined }, error: { value: undefined } }
-  try {
-    result.data.value = await $fetch(BASE_API_URL + path, {
-      method,
-      body: payload,
-      credentials: "include",
-      headers: getHeadersWithCsrfToken(),
-    })
-    loadingStore.markDone(key)
-  } catch (e) {
-    result.error.value = e
+  const { data, error } = await useFetch<Type>(`${BASE_API_URL}${path}`, {
+    method,
+    body: payload,
+    credentials: "include",
+    headers: getHeadersWithCsrf(),
+  })
+  if (error.value) {
     loadingStore.markError(key)
+  } else {
+    loadingStore.markDone(key)
   }
-
-  return result
+  return { data, error }
 }
-
 export async function useApiPost<Type>(path: string, payload: any = {}) {
-  return useApiOnBrowser<Type>(path, "POST", payload)
+  return useAPIwithCsrfToken(path, "POST", payload)
 }
 
 export async function useApiPatch<Type>(path: string, payload: any = {}) {
-  return useApiOnBrowser<Type>(path, "PATCH", payload)
+  return useAPIwithCsrfToken(path, "PATCH", payload)
 }
