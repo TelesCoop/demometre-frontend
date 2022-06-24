@@ -6,12 +6,7 @@
     @mouseleave="isHovered = false"
   >
     <div :class="circleClass" class="pillar-circle">
-      <img
-        :src="picto"
-        width
-        height="40"
-        style="max-width: 60px; max-height: 45px"
-      />
+      <Picto :name="`${props.name}-big`" class="picto" />
     </div>
     <p :class="`has-text-${colorClass} is-size-4 mt-0_75`">{{ textTitle }}</p>
   </div>
@@ -27,7 +22,6 @@ const props = defineProps({
 const isHovered = ref(false)
 
 const colorClass = computed(() => PillarParams[props.name].color)
-const picto = computed(() => "assets/img/" + PillarParams[props.name].picto)
 const textTitle = computed(
   () => props.name[0].toUpperCase() + props.name.slice(1)
 )
@@ -42,23 +36,28 @@ const circleClass = computed(() => {
 })
 </script>
 
-<style>
-.pillar-card {
-  width: 270px;
-  height: 184px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 24px;
-  flex-grow: 0;
-  flex-shrink: 0;
-}
-.pillar-circle {
-  width: 88px;
-  height: 88px;
-  border-radius: 100%;
-  font-size: 40px;
-  text-align: center;
-  padding-top: 12px;
-}
+<style scoped lang="sass">
+.pillar-card
+  width: 270px
+  display: flex
+  flex-direction: column
+  align-items: center
+  padding: 24px
+  flex-grow: 0
+  flex-shrink: 0
+
+.pillar-circle
+  width: 100px
+  height: 100px
+  border-radius: 100%
+  text-align: center
+  padding-top: 16px
+  position: relative
+
+.picto
+  vertical-align: bottom
+  position: absolute
+  left: 50%
+  transform: translateX(-50%)
+  bottom: 23px
 </style>

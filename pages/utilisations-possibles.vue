@@ -6,6 +6,7 @@
       :introduction="pageStore.usagePage.introduction"
       youtube-video-id=""
       :image-url="pageStore.usagePage.introImageUrl"
+      :column-distribution="[7, 5]"
     />
     <div class="has-background-shade-250">
       <PageSection
@@ -20,7 +21,6 @@
           >
             <PageStepCard
               :step="step"
-              :image-height="250"
               :index="index"
               background-color="white"
             />

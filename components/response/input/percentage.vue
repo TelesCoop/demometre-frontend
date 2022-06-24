@@ -10,7 +10,7 @@
       :class="`has-background-${props.color}-light has-border-${props.color}-dark`"
       placeholder="50"
     />
-    <i class="icon is-small is-right">
+    <i class="icon is-small is-right has-text-grey-dark">
       <span>%</span>
     </i>
   </div>

@@ -13,7 +13,7 @@
     <!-- Connected section -->
 
     <QuestionnaireProgressBars
-      v-if="assessmentStore.currentAssessment"
+      v-if="participationStore.participation.id"
       class="mb-4"
     />
 
@@ -35,6 +35,7 @@
       >
         <div class="columns mb-2">
           <Carousel
+            v-if="pageStore.homePage.feedbacks.length"
             :settings="settings"
             :breakpoints="breakpointsSmallElements"
           >
@@ -62,7 +63,11 @@
       button-link="/blog"
     >
       <div class="columns mb-2">
-        <Carousel :settings="settings" :breakpoints="breakpointsLargeElements">
+        <Carousel
+          v-if="pageStore.homePage.blogPosts.length"
+          :settings="settings"
+          :breakpoints="breakpointsLargeElements"
+        >
           <Slide
             v-for="blogPost of pageStore.homePage.blogPosts"
             :key="blogPost.id"
@@ -89,6 +94,7 @@
       >
         <div class="columns mb-2" style="display: block">
           <Carousel
+            v-if="pageStore.homePage.resources.length"
             :settings="settings"
             :breakpoints="breakpointsSmallElements"
           >
@@ -114,22 +120,10 @@
       :title="pageStore.homePage.partnerBlockTitle"
       :intro="pageStore.homePage.partnerBlockIntro"
     >
-      <div
-        class="is-flex is-flex-direction-row is-flex-wrap-wrap"
-        style="column-gap: 4rem"
-      >
-        <figure
-          v-for="partner of pageStore.homePage.partners"
-          :key="partner.id"
-          class="image"
-        >
-          <img
-            :src="MADIA_BASE_URL + partner.logoImageUrl"
-            alt=""
-            style="height: 80px"
-          />
-        </figure>
-      </div>
+      <PagePartnerList
+        :partners="pageStore.homePage.partners"
+        :logo-height="80"
+      />
     </PageSection>
   </div>
 </template>
@@ -139,9 +133,8 @@ import { Carousel, Slide } from "vue3-carousel"
 
 import "vue3-carousel/dist/carousel.css"
 import { usePageStore } from "~/stores/pageStore"
-import { MADIA_BASE_URL } from "~/composables/api"
 import { useParticipationStore } from "~/stores/participationStore"
-import { useAssessmentStore } from "~~/stores/assessmentStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 definePageMeta({
   title: "Accueil",

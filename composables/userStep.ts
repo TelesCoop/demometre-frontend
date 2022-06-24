@@ -50,10 +50,12 @@ export function useUserStep<Type>() {
 
     if (!participationStore.participation.isProfilingQuestionsCompleted) {
       const questionId = profilingJourney.nextQuestionId(undefined, true)
-      return {
-        step: "profiling",
-        url: `/evaluation/affinage/${questionId}`,
-        text: RESUME_EVALUATION_TEXT,
+      if (questionId) {
+        return {
+          step: "profiling",
+          url: `/evaluation/affinage/${questionId}`,
+          text: RESUME_EVALUATION_TEXT,
+        }
       }
     }
 

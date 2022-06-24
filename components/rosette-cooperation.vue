@@ -23,7 +23,10 @@
             }}</span>
           </div>
           <div v-else>
-            <img :class="`pillar-icon-${key}`" :src="`/assets/img/${picto}`" />
+            <Picto
+              :name="`${pillar.name}-little`"
+              :class="`pillar-icon-${key}`"
+            />
             <span
               class="pillar-title is-size-7 has-text-weight-bold is-capitalized"
               >{{ pillar.name }}</span
@@ -63,14 +66,12 @@ const isHovered = ref<boolean>(false)
 
 const color = PillarParams[PillarName.COOPERATION].color
 const key = PillarParams[PillarName.COOPERATION].key
-const picto = PillarParams[PillarName.COOPERATION].picto
 const pillar = questionnaireStore.getPillarByName(PillarName.COOPERATION)
 </script>
 
 <style scoped lang="sass">
 $nb-markers: 4
 $marker-translate: translateY(90px)
-$pillar-icon-height: 29px
 .pillar
   &-container-cooperation
     width: 210px
@@ -90,8 +91,7 @@ $pillar-icon-height: 29px
     position: absolute
     bottom: 50%
     left: 50%
-    transform: translate(-50%, 9px)
-    height: $pillar-icon-height
+    transform: translate(-50%, 12px)
 
 .marker-circle-cooperation
   position: absolute

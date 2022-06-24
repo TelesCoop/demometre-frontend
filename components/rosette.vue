@@ -41,9 +41,9 @@
               }}</span>
             </div>
             <div v-else>
-              <img
+              <Picto
+                :name="`${pillar.name}-little`"
                 :class="`pillar-icon-${PillarParams[pillar.name].key}`"
-                :src="`/assets/img/${PillarParams[pillar.name].picto}`"
               />
               <span
                 class="pillar-title is-size-7 has-text-weight-bold is-capitalized"
@@ -124,12 +124,11 @@ function onMarkerClick(markerId) {
   left: 50%
   transform: translate(-50%, -50%)
 
-$pillars: ("representation": (translateX(-170px), 5, translateX(-90px), 29px), "transparency": (translateY(-125px), 4, translateY(-90px), 29px), "participation": (translateX(170px), 5, translateX(90px), 39px), "cooperation": (translateY(125px), 4,translateY(90px), 29px))
+$pillars: ("representation": (translateX(-170px), 5, translateX(-90px)), "transparency": (translateY(-125px), 4, translateY(-90px)), "participation": (translateX(170px), 5, translateX(90px)), "cooperation": (translateY(125px), 4,translateY(90px)))
 @each $name, $pair in $pillars
   $translate: nth($pair, 1)
   $nb-markers: nth($pair, 2)
   $marker-translate: nth($pair, 3)
-  $pillar-icon-height: nth($pair, 4)
 
   .pillar
     &-container-#{$name}
@@ -153,8 +152,7 @@ $pillars: ("representation": (translateX(-170px), 5, translateX(-90px), 29px), "
       position: absolute
       bottom: 50%
       left: 50%
-      transform: translate(-50%, 9px)
-      height: $pillar-icon-height
+      transform: translate(-50%, 12px)
 
   .marker-circle-#{$name}
     position: absolute

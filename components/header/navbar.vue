@@ -116,7 +116,7 @@ const navItems = [
     to: "/demometre",
   },
   {
-    name: "Utilisations possible",
+    name: "Utilisations possibles",
     to: "/utilisations-possibles",
   },
   {
