@@ -3,6 +3,8 @@
     <PageIntro
       :title="pageStore.projectPage.title"
       :subtitle="pageStore.projectPage.tagLine"
+      :introduction="pageStore.projectPage.introduction"
+      :image-url="pageStore.projectPage.introImageUrl"
       class="pt-2"
     >
       <div class="is-flex buttons is-outlined is-shade-600">
