@@ -15,7 +15,7 @@
       </div>
       <div
         class="column"
-        :class="`is-${props.columnDistribution[1]}`"
+        :class="`is-offset-${props.columnDistribution[1]} is-${props.columnDistribution[2]}`"
         style="text-align: end"
       >
         <div v-if="props.youtubeVideoId" class="video-container">
@@ -49,7 +49,7 @@ const props = defineProps({
   columnDistribution: {
     type: Array,
     default() {
-      return [6, 6]
+      return [6, 0, 6]
     },
   },
   columnGap: { type: Number, default: 8 },

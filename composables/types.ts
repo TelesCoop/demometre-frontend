@@ -252,6 +252,7 @@ type Partner = {
   name: string
   logoImageUrl: string
   height: number
+  showInHomePage: boolean
 }
 export type HomePage = {
   title: string
