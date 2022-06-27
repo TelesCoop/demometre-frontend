@@ -42,6 +42,7 @@ export const useUserStore = defineStore("user", {
       })
       if (!error.value) {
         this.user = data.value
+        this.user.isExpert = true
         this.anonymous = {}
         await getParticipationUserData()
         const router = useRouter()

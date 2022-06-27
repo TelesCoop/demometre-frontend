@@ -2,9 +2,14 @@
   <div class="container">
     <div class="section">
       <PageTitle title="Mon compte" subtitle="" />
-      <button class="button is-normal" type="button" @click.prevent="logout">
-        Se déconnecter
-      </button>
+      <div class="buttons is-flex-direction-column is-align-items-flex-start">
+        <NuxtLink to="/profil/ateliers" class="button is-rounded">
+          Espace animateur
+        </NuxtLink>
+        <button class="button is-rounded" type="button" @click.prevent="logout">
+          Se déconnecter
+        </button>
+      </div>
     </div>
     <div v-if="assessmentStore.currentAssessment">
       <PageSection title="Mon profil" intro="Vos informations personnelles">

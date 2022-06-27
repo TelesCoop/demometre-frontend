@@ -1,4 +1,9 @@
-export type User = { id: number | null; email: string; username: string }
+export type User = {
+  id: number | null
+  email: string
+  username: string
+  isExpert: boolean
+}
 
 // Questionnaire and profiling
 export enum Objectivity {
