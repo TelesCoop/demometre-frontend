@@ -63,7 +63,6 @@
       </ul>
     </aside>
     <div class="content column is-7">
-      <!-- v-if activ criteria -->
       <div v-if="activeCriteria">
         <header>
           <h2 class="title is-4">{{ criteriaTitle }}</h2>
@@ -95,8 +94,15 @@
             </div>
           </div>
         </header>
+        <div>
+          <button
+            :class="`button is-${color} is-rounded is-responsive`"
+            @click="onReturnToMarkerButtonClick()"
+          >
+            <span>Revenir au marqueur</span>
+          </button>
+        </div>
       </div>
-      <!-- Changer en v-else-if activeMarker -->
       <div v-else-if="activeMarker">
         <header>
           <h2 class="title is-4">{{ markerTitle }}</h2>
@@ -127,6 +133,15 @@
             @click="onReturnToPillarButtonClick()"
           >
             <span>Revenir au pilier</span>
+          </button>
+          <button
+            :class="`button is-${color} is-rounded is-responsive is-outlined`"
+            @click="onFirstCriteriaButtonClick()"
+          >
+            <span>Premier critère</span>
+            <span class="icon">
+              <icon name="arrow-right-line" size="10" class="icon" />
+            </span>
           </button>
         </div>
       </div>
@@ -226,8 +241,15 @@ const onFirstMarkerButtonClick = () => {
   const firstMarker = props.markers[0]
   onSelectMarker(firstMarker)
 }
+const onFirstCriteriaButtonClick = () => {
+  const firstCriteria = criterias.value[0]
+  onSelectCriteria(firstCriteria)
+}
 
 const onReturnToPillarButtonClick = () => {
   activeMarker.value = null
+}
+const onReturnToMarkerButtonClick = () => {
+  activeCriteria.value = null
 }
 </script>
