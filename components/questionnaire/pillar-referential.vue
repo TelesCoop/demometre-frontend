@@ -52,17 +52,20 @@
         </li>
       </ul>
     </aside>
-    <div class="content column is-7 my-1_5">
+    <div class="content column is-7">
+      <!-- v-if activ criteria -->
+
+      <!-- Changer en v-else-if activeMarker -->
       <div v-if="activeMarker">
         <header>
           <h2 class="title is-4">{{ markerTitle }}</h2>
+          <hr />
           <RichText
             v-if="activeMarker.description"
             :rich-text="activeMarker.description"
             class="is-family-secondary"
           />
         </header>
-        <hr />
         <div class="score">
           <div v-for="i in 4" :key="i" class="level">
             <div class="level-left">
@@ -77,6 +80,14 @@
             </div>
           </div>
         </div>
+        <div>
+          <button
+            :class="`button is-${color} is-rounded is-responsive`"
+            @click="onReturnToPillarButtonClick()"
+          >
+            <span>Revenir au pilier</span>
+          </button>
+        </div>
       </div>
       <div v-else>
         <h2 class="title is-3">{{ wordTitleCase(pillar.name) }}</h2>
@@ -85,25 +96,16 @@
           :rich-text="pillar.description"
           class="is-family-secondary"
         />
-        <div class="buttons are-small mt-2">
-          <!-- TODO : change button links -->
-          <nuxt-link
+        <div>
+          <button
             :class="`button is-${color} is-rounded is-responsive`"
-            to="/"
+            @click="onFirstMarkerButtonClick()"
           >
-            <span>Evaluer ce pilier</span>
+            <span>Premier marqueur</span>
             <span class="icon">
               <icon name="arrow-right-line" size="10" class="icon" />
             </span>
-          </nuxt-link>
-          <nuxt-link
-            :class="`button
-                is-${color} is-rounded is-responsive is-outlined`"
-            to="/resultats"
-            style="display: none"
-          >
-            Visualiser les résultats de ce pilier
-          </nuxt-link>
+          </button>
         </div>
       </div>
     </div>
@@ -154,4 +156,13 @@ const activeMarkerClass = computed(() => {
 const hoverMarkerClass = computed(() => {
   return `has-background-${props.color}-light has-text-black`
 })
+
+const onFirstMarkerButtonClick = () => {
+  const firstMarker = props.markers[0]
+  onSelectMarker(firstMarker)
+}
+
+const onReturnToPillarButtonClick = () => {
+  activeMarker.value = null
+}
 </script>
