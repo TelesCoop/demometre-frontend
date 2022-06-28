@@ -1,8 +1,5 @@
 <template>
-  <footer
-    class="footer has-background-shade-600"
-    style="padding: 64px; margin-top: 64px"
-  >
+  <footer class="footer has-background-shade-600">
     <div class="container">
       <div class="columns">
         <div class="column footer-column is-3">
@@ -65,17 +62,20 @@
 // const email = ref("")
 </script>
 
-<style>
-.footer-column {
-  display: flex;
-  flex-direction: column;
-}
-.footer-column a {
-  color: black;
-  font-weight: 400;
-  font-size: 0.75rem !important;
-}
-.footer-column a + a {
-  margin-top: 8px;
-}
+<style scoped lang="sass">
+.footer-column
+  display: flex
+  flex-direction: column
+  & a
+    color: black
+    font-weight: 400
+    font-size: 0.75rem !important
+  & a + a
+    margin-top: 8px
+.footer
+  padding: 4rem
+  margin-top: 4rem
+  @include mobile
+    margin-top: 2rem
+    padding: 1rem
 </style>
