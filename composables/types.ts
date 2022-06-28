@@ -84,6 +84,7 @@ export type Criteria = {
   sources: string
   toGoFurther: string
   definitionIds: number[]
+  explanatory: string | SimpleBlock[]
 }
 export type ResponseChoice = {
   id: number
@@ -304,6 +305,10 @@ type AssessmentTypeDetails = {
 type SimpleBlockWithImage = {
   image: number
   imageUrl: string
+  title: string
+  description: string
+}
+type SimpleBlock = {
   title: string
   description: string
 }
