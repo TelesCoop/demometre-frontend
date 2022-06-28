@@ -40,7 +40,17 @@
           <div v-if="marker.name === activeMarker?.name">
             <ul>
               <li v-for="criteria of criterias" :key="criteria.id">
-                <a style="pointer-events: none"
+                <a
+                  :class="
+                    criteria === activeCriteria
+                      ? activeCriteriaClass
+                      : criteria.id === hoverCriteriaId
+                      ? hoverCriteriaClass
+                      : ''
+                  "
+                  @click="onSelectCriteria(criteria)"
+                  @mouseenter="hoverCriteriaId = criteria.id"
+                  @mouseleave="hoverCriteriaId = null"
                   ><span :class="`has-text-${color} is-size-7`">{{
                     criteria.concatenatedCode.substring(1).replace(/^\./, "")
                   }}</span>
@@ -54,9 +64,40 @@
     </aside>
     <div class="content column is-7">
       <!-- v-if activ criteria -->
-
+      <div v-if="activeCriteria">
+        <header>
+          <h2 class="title is-4">{{ criteriaTitle }}</h2>
+          <hr />
+          <div v-if="activeCriteria.definitionIds">
+            <div
+              v-for="definitionId of activeCriteria.definitionIds"
+              :key="definitionId"
+            >
+              <h3>{{ definitionStore.definitionById[definitionId].word }}</h3>
+              <RichText
+                :rich-text="
+                  definitionStore.definitionById[definitionId].explanation
+                "
+                class="is-family-secondary"
+              />
+            </div>
+          </div>
+          <div v-if="activeCriteria.explanatory">
+            <div
+              v-for="explanatory of criteriaExplinatories"
+              :key="explanatory"
+            >
+              <h3>{{ explanatory.title }}</h3>
+              <RichText
+                :rich-text="explanatory.description"
+                class="is-family-secondary"
+              />
+            </div>
+          </div>
+        </header>
+      </div>
       <!-- Changer en v-else-if activeMarker -->
-      <div v-if="activeMarker">
+      <div v-else-if="activeMarker">
         <header>
           <h2 class="title is-4">{{ markerTitle }}</h2>
           <hr />
@@ -98,7 +139,7 @@
         />
         <div>
           <button
-            :class="`button is-${color} is-rounded is-responsive`"
+            :class="`button is-${color} is-rounded is-responsive is-outlined`"
             @click="onFirstMarkerButtonClick()"
           >
             <span>Premier marqueur</span>
@@ -118,8 +159,10 @@ import { computed } from "vue"
 import { wordTitleCase } from "~/utils/util"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, Criteria } from "~/composables/types"
+import { useDefinitionStore } from "~~/stores/definitionStore"
 
 const questionnaireStore = useQuestionnaireStore()
+const definitionStore = useDefinitionStore()
 
 const props = defineProps({
   pillar: { type: Object, required: true },
@@ -129,16 +172,26 @@ const props = defineProps({
 
 const activeMarker = ref<Marker>()
 const criterias = ref<Criteria[]>()
+const activeCriteria = ref<Criteria>()
 const hoverMarkerId = ref<number>()
+const hoverCriteriaId = ref<number>()
 
 const markerTitle = computed<string>(() =>
   activeMarker.value ? wordTitleCase(activeMarker.value.name) : ""
+)
+const criteriaTitle = computed<string>(() =>
+  activeCriteria.value ? wordTitleCase(activeCriteria.value.name) : ""
+)
+
+const criteriaExplinatories = computed(() =>
+  activeCriteria.value ? activeCriteria.value.explanatory : []
 )
 
 watch(
   () => props.markers,
   () => {
     activeMarker.value = null
+    activeCriteria.value = null
   }
 )
 
@@ -147,13 +200,25 @@ const onSelectMarker = (marker) => {
   criterias.value = activeMarker.value.criteriaIds.map(
     (criteriaId) => questionnaireStore.criteriaById[criteriaId]
   )
+  activeCriteria.value = null
+}
+const onSelectCriteria = (criteria) => {
+  activeCriteria.value = criteria
 }
 
 const activeMarkerClass = computed(() => {
   return `has-background-${props.color} has-text-white`
 })
+const activeCriteriaClass = computed(() => {
+  // Check style maquette
+  return `has-background-${props.color} has-text-white`
+})
 
 const hoverMarkerClass = computed(() => {
+  return `has-background-${props.color}-light has-text-black`
+})
+const hoverCriteriaClass = computed(() => {
+  // Check style maquette
   return `has-background-${props.color}-light has-text-black`
 })
 
