@@ -16,20 +16,20 @@
         <li v-for="marker of markers" :key="marker.id">
           <a
             :class="
-              marker === activeMarker
-                ? activeMarkerClass
+              marker === activeMarker && !activeCriteria
+                ? activeClass
                 : marker.id === hoverMarkerId
                 ? hoverMarkerClass
-                : ''
+                : `has-text-${color}-dark`
             "
             @click="onSelectMarker(marker)"
             @mouseenter="hoverMarkerId = marker.id"
             @mouseleave="hoverMarkerId = null"
             ><span
               :class="
-                marker.name === activeMarker?.name
-                  ? `has-text-white is-size-7`
-                  : `has-text-${color} is-size-7`
+                marker.name === activeMarker?.name && !activeCriteria
+                  ? `has-text-${color}-active is-size-6bis`
+                  : `has-text-${color} is-size-6bis`
               "
               >{{
                 marker.concatenatedCode.substring(1).replace(/^\./, "")
@@ -43,7 +43,7 @@
                 <a
                   :class="
                     criteria === activeCriteria
-                      ? activeCriteriaClass
+                      ? activeClass
                       : criteria.id === hoverCriteriaId
                       ? hoverCriteriaClass
                       : ''
@@ -51,9 +51,16 @@
                   @click="onSelectCriteria(criteria)"
                   @mouseenter="hoverCriteriaId = criteria.id"
                   @mouseleave="hoverCriteriaId = null"
-                  ><span :class="`has-text-${color} is-size-7`">{{
-                    criteria.concatenatedCode.substring(1).replace(/^\./, "")
-                  }}</span>
+                  ><span
+                    :class="
+                      criteria.name === activeCriteria?.name
+                        ? `has-text-${color}-active is-size-6bis`
+                        : `has-text-${color} is-size-6bis`
+                    "
+                    >{{
+                      criteria.concatenatedCode.substring(1).replace(/^\./, "")
+                    }}</span
+                  >
                   {{ criteria.name }}</a
                 >
               </li>
@@ -65,34 +72,47 @@
     <div class="content column is-7">
       <div v-if="activeCriteria">
         <header>
-          <h2 class="title is-4">{{ criteriaTitle }}</h2>
-          <hr />
-          <div v-if="activeCriteria.definitionIds">
-            <div
-              v-for="definitionId of activeCriteria.definitionIds"
-              :key="definitionId"
-            >
-              <h3>{{ definitionStore.definitionById[definitionId].word }}</h3>
-              <RichText
-                :rich-text="
-                  definitionStore.definitionById[definitionId].explanation
-                "
-                class="is-family-secondary"
-              />
-            </div>
-          </div>
-          <div v-if="activeCriteria.explanatory">
-            <div
+          <h2 class="title is-4 mb-0_75">{{ criteriaTitle }}</h2>
+          <hr class="my-0_75" />
+          <Accordion v-if="activeCriteria.definitionIds.length">
+            <template #title>
+              <h3 class="subtitle has-text-weight-bold mb-1">Definitions</h3>
+            </template>
+            <template #content>
+              <div
+                v-for="definitionId of activeCriteria.definitionIds"
+                :key="definitionId"
+              >
+                <p class="has-text-weight-bold">
+                  {{ definitionStore.definitionById[definitionId].word }}
+                </p>
+                <RichText
+                  :rich-text="
+                    definitionStore.definitionById[definitionId].explanation
+                  "
+                  class="is-family-secondary"
+                />
+              </div>
+            </template>
+          </Accordion>
+          <template v-if="activeCriteria.explanatory">
+            <Accordion
               v-for="explanatory of criteriaExplinatories"
               :key="explanatory"
             >
-              <h3>{{ explanatory.title }}</h3>
-              <RichText
-                :rich-text="explanatory.description"
-                class="is-family-secondary"
-              />
-            </div>
-          </div>
+              <template #title>
+                <h3 class="subtitle has-text-weight-bold mb-1">
+                  {{ explanatory.title }}
+                </h3>
+              </template>
+              <template #content>
+                <RichText
+                  :rich-text="explanatory.description"
+                  class="is-family-secondary"
+                />
+              </template>
+            </Accordion>
+          </template>
         </header>
         <div>
           <button
@@ -105,12 +125,12 @@
       </div>
       <div v-else-if="activeMarker">
         <header>
-          <h2 class="title is-4">{{ markerTitle }}</h2>
-          <hr />
+          <h2 class="title is-4 mb-0_75">{{ markerTitle }}</h2>
+          <hr class="my-0_75" />
           <RichText
             v-if="activeMarker.description"
             :rich-text="activeMarker.description"
-            class="is-family-secondary"
+            class="is-family-secondary subtitle mb-2"
           />
         </header>
         <div class="score">
@@ -129,13 +149,13 @@
         </div>
         <div>
           <button
-            :class="`button is-${color} is-rounded is-responsive`"
+            :class="`button is-${color} is-rounded is-responsive mt-2 mr-1`"
             @click="onReturnToPillarButtonClick()"
           >
             <span>Revenir au pilier</span>
           </button>
           <button
-            :class="`button is-${color} is-rounded is-responsive is-outlined`"
+            :class="`button is-${color} is-rounded is-responsive mt-2 mr-1 is-outlined`"
             @click="onFirstCriteriaButtonClick()"
           >
             <span>Premier critère</span>
@@ -146,11 +166,12 @@
         </div>
       </div>
       <div v-else>
-        <h2 class="title is-3">{{ wordTitleCase(pillar.name) }}</h2>
+        <h2 class="title is-4 mb-0_75">{{ wordTitleCase(pillar.name) }}</h2>
+        <hr class="my-0_75" />
         <RichText
           v-if="pillar.description"
           :rich-text="pillar.description"
-          class="is-family-secondary"
+          class="is-family-secondary subtitle mb-2"
         />
         <div>
           <button
@@ -221,19 +242,14 @@ const onSelectCriteria = (criteria) => {
   activeCriteria.value = criteria
 }
 
-const activeMarkerClass = computed(() => {
-  return `has-background-${props.color} has-text-white`
-})
-const activeCriteriaClass = computed(() => {
-  // Check style maquette
-  return `has-background-${props.color} has-text-white`
+const activeClass = computed(() => {
+  return `has-background-${props.color} has-text-${props.color}-dark`
 })
 
 const hoverMarkerClass = computed(() => {
   return `has-background-${props.color}-light has-text-black`
 })
 const hoverCriteriaClass = computed(() => {
-  // Check style maquette
   return `has-background-${props.color}-light has-text-black`
 })
 
