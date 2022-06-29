@@ -74,7 +74,10 @@
         <header>
           <h2 class="title is-4 mb-0_75">{{ criteriaTitle }}</h2>
           <hr class="my-0_75" />
-          <Accordion v-if="activeCriteria.definitionIds.length">
+          <Accordion
+            v-if="activeCriteria.definitionIds.length"
+            id="definitions"
+          >
             <template #title>
               <h3 class="subtitle has-text-weight-bold mb-1">Definitions</h3>
             </template>
@@ -98,7 +101,8 @@
           <template v-if="activeCriteria.explanatory">
             <Accordion
               v-for="explanatory of criteriaExplinatories"
-              :key="explanatory"
+              :id="explanatory.title"
+              :key="explanatory.title"
             >
               <template #title>
                 <h3 class="subtitle has-text-weight-bold mb-1">

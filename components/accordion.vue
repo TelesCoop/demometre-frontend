@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  id: { type: Number, required: true },
+  id: { type: String, required: true },
 })
 
 const isOpen = ref<boolean>(false)

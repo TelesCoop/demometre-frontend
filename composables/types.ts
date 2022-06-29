@@ -308,7 +308,7 @@ type SimpleBlockWithImage = {
   title: string
   description: string
 }
-type SimpleBlock = {
+export type SimpleBlock = {
   title: string
   description: string
 }
