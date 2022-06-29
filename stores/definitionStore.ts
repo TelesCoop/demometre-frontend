@@ -9,6 +9,7 @@ type DefinitionResponse = Definition[]
 export const useDefinitionStore = defineStore("definition", {
   state: () => ({
     definitionById: <{ [key: number]: Definition }>{},
+    definitionLoaded: <boolean>false,
   }),
   getters: {
     definitionsByIdArray: () =>
@@ -25,6 +26,7 @@ export const useDefinitionStore = defineStore("definition", {
         for (const definition of data.value) {
           this.definitionById[definition.id] = definition
         }
+        this.definitionLoaded = true
       } else {
         const errorStore = useToastStore()
         errorStore.setError(error.value.data.messageCode)
