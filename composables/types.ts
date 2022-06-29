@@ -79,10 +79,6 @@ export type Criteria = {
   score2: string
   score3: string
   score4: string
-  legalFrame: string
-  useCase: string
-  sources: string
-  toGoFurther: string
   definitionIds: number[]
   explanatory: string | SimpleBlock[]
 }
