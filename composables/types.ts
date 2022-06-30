@@ -393,4 +393,5 @@ export type RgpdSettings = {
   termsOfUseUrl: string
   termsOfSaleUrl: string
   confidentialityPolicyUrl: string
+  contentLicenseUrl: string
 }

@@ -6,9 +6,14 @@
           <NuxtLink to="/" class="has-text-weight-bold has-text-shade-200">
             DémoMètre
           </NuxtLink>
-          <NuxtLink to="/" class="has-text-shade-350"
-            >2022 - licence contenu</NuxtLink
+          <a
+            class="has-text-shade-350"
+            :href="MADIA_BASE_URL + settingStore.rgpdSettings.contentLicenseUrl"
+            target="_blank"
           >
+            <!-- TODO : Put the right year automaticaly -->
+            2022 - licence contenu
+          </a>
           <a
             class="has-text-shade-350"
             :href="MADIA_BASE_URL + settingStore.rgpdSettings.legalMentionUrl"
