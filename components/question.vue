@@ -180,17 +180,13 @@
             />
           </div>
         </div>
-        <div v-show="currentTabId === 'legal-frame'">
-          <RichText :rich-text="criteria.legalFrame" />
-        </div>
-        <div v-show="currentTabId === 'use-case'">
-          <RichText :rich-text="criteria.useCase" />
-        </div>
-        <div v-show="currentTabId === 'sources'">
-          <RichText :rich-text="criteria.sources" />
-        </div>
-        <div v-show="currentTabId === 'to-go-further'">
-          <RichText :rich-text="criteria.toGoFurther" />
+        <div
+          v-for="element of explanatory"
+          :key="element.title.replace(/\s+/g, '')"
+        >
+          <div v-show="currentTabId === element.title.replace(/\s+/g, '')">
+            <RichText :rich-text="element.description" />
+          </div>
         </div>
       </div>
     </section>
@@ -206,6 +202,7 @@ import {
   Definition,
   QuestionContextProps,
   SurveyType,
+  SimpleBlock,
 } from "~/composables/types"
 import { computed, PropType, watch } from "vue"
 import { ref } from "@vue/reactivity"
@@ -276,28 +273,13 @@ if (criteria.value?.definitionIds.length > 0) {
     id: "definitions",
   })
 }
-if (criteria.value?.legalFrame) {
-  tabs.value.push({
-    label: "Cadre légal",
-    id: "legal-frame",
-  })
-}
-if (criteria.value?.useCase) {
-  tabs.value.push({
-    label: "Exemples inspirants",
-    id: "use-case",
-  })
-}
-if (criteria.value?.sources) {
-  tabs.value.push({
-    label: "Sources",
-    id: "sources",
-  })
-}
-if (criteria.value?.toGoFurther) {
-  tabs.value.push({
-    label: "Pour aller plus loin",
-    id: "to-go-further",
+const explanatory = criteria.value?.explanatory as SimpleBlock[]
+if (explanatory.length) {
+  explanatory.forEach((element) => {
+    tabs.value.push({
+      label: `${element.title}`,
+      id: `${element.title.replace(/\s+/g, "")}`,
+    })
   })
 }
 const currentTabId = ref<string>(tabs.value[0]?.id)
