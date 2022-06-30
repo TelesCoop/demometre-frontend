@@ -41,7 +41,7 @@ export const useParticipationStore = defineStore("participation", {
     async createParticipation() {
       const userStore = useUserStore()
       // If user not authenticated, create anonymous user
-      if (!userStore.isLoggedIn && !userStore.isAnonymous) {
+      if (!userStore.isLoggedIn && !userStore.isUnknownUser) {
         await userStore.createAnonymousUser()
       }
       const { data, error } = await useApiPost<Participation>(

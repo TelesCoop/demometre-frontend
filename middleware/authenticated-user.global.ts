@@ -14,7 +14,7 @@ const loadUserState = async () => {
     await userStore.refreshProfile(headers)
   }
 
-  if (userStore.isLoggedIn || userStore.isAnonymous) {
+  if (userStore.isLoggedIn || userStore.isUnknownUser) {
     await getParticipationUserData(headers)
   }
 }

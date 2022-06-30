@@ -15,11 +15,8 @@ export const useUserStore = defineStore("user", {
     isLoggedIn() {
       return !!this.user.email
     },
-    isAnonymous() {
-      return this.user?.isAnonymous
-    },
-    anonymousName() {
-      return this.user.username || ""
+    isUnknownUser() {
+      return this.user?.isUnknownUser
     },
   },
   actions: {
