@@ -27,11 +27,12 @@
             @click="onSelectQuestion(question)"
             @mouseenter="hoverQuestionId = question.id"
             @mouseleave="hoverQuestionId = null"
-            ><span :class="`has-text-${props.color}-active`">{{
-              question.concatenatedCode.substring(1).replace(/^\./, "")
-            }}</span>
-            {{ question.questionStatement }}</a
           >
+            <span :class="`has-text-${props.color}-active`">
+              {{ question.concatenatedCode }}
+            </span>
+            {{ question.questionStatement }}
+          </a>
         </li>
       </ul>
     </aside>
@@ -40,24 +41,85 @@
         {{ wordTitleCase(props.pillar.name) }}
       </h2>
       <hr class="my-0_75" :class="`has-background-${props.color}`" />
-      <div v-if="activeQuestion" :class="`has-text-${props.color}-dark`">
-        <p :class="`is-uppercase is-size-6 mb-0_5`">Question</p>
-        <p :class="`is-size-4 has-text-weight-bold mb-2`">
-          {{ activeQuestion.questionStatement }}
-        </p>
-        <table style="width: 100%">
-          <tr>
-            <td :class="`is-uppercase is-size-6`">Participant·e·s</td>
-            <td :class="`is-uppercase is-size-6`">Réponses</td>
-          </tr>
-          <tr>
-            <td></td>
-          </tr>
-        </table>
-        <p :class="`is-uppercase is-size-6`">Participant·e·s</p>
+      <div v-if="activeQuestion">
+        <QuestionnaireQuestionStatement
+          :color="props.color"
+          :question="activeQuestion"
+        >
+          <table
+            v-if="activeQuestion.objectivity === Objectivity.SUBJECTIVE"
+            class="is-fullwidth"
+          >
+            <tr :class="`is-uppercase is-size-6bis pb-0_5`">
+              <td class="pb-0_5">Participant·e·s</td>
+              <td class="pb-0_5">Réponses</td>
+            </tr>
+            <tr
+              v-for="participant of animatorStore.workshopById[props.workshopId]
+                .participants"
+              :key="participant.id"
+            >
+              <td class="pb-1 pr-0_75">
+                <p
+                  :class="`has-background-${props.color}-light is-fullheight py-0_5 px-1`"
+                >
+                  {{ participant.userUsername }}
+                </p>
+              </td>
+              <td class="pb-1">
+                <ResponseAnimator
+                  v-model="participant.responseByQuestionId[activeQuestion.id]"
+                  :question="activeQuestion"
+                  :participant="participant"
+                  :assessment-id="participant.assessmentId"
+                  :color="props.color"
+                />
+              </td>
+            </tr>
+          </table>
+          <div v-else>
+            <p class="is-size-7 is-family-secondary mb-1">
+              Réponse unique car question objective
+            </p>
+            <!-- TODO: make it works : v-model empty : not working -->
+            <!-- <ResponseAnimator
+              :question="activeQuestion"
+              :assessment-id="
+                animatorStore.workshopById[props.workshopId].assessmentId
+              "
+              :color="props.color"
+              v-model="animatorStore.assessmentResponseByQuestionIdByWorkshopId[props.workshopId][activeQuestion.id]"
+            />-->
+          </div>
+        </QuestionnaireQuestionStatement>
       </div>
       <div v-else>
         <p>Selectionner une question</p>
+      </div>
+      <div class="buttons mt-2">
+        <button
+          v-if="activeQuestionIndex + 1 < questions.length"
+          :class="`button is-rounded is-${color} is-outlined has-text-${color}-active`"
+          type="button"
+          @click.prevent="nextQuestion()"
+        >
+          <span class="icon">
+            <icon size="16" name="arrow-right-line" />
+          </span>
+          <span>Question suivante</span>
+        </button>
+
+        <button
+          v-if="activeQuestion"
+          :class="`button is-rounded is-${color} ml-auto`"
+          type="button"
+          @click.prevent="onSubmit"
+        >
+          <span>Valider les réponses</span>
+          <span class="icon">
+            <icon size="16" name="check" />
+          </span>
+        </button>
       </div>
     </div>
   </div>
@@ -66,14 +128,17 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
-import { Question } from "~/composables/types"
+import { Question, Objectivity } from "~/composables/types"
 import { wordTitleCase } from "~/utils/util"
+import { useAnimatorStore } from "~/stores/animatorStore"
 
 const questionnaireStore = useQuestionnaireStore()
+const animatorStore = useAnimatorStore()
 
 const props = defineProps({
   pillar: { type: Object, required: true },
   color: { type: String, required: true },
+  workshopId: { type: Number, required: true },
 })
 
 const questions = computed<Question[]>(() =>
@@ -82,8 +147,16 @@ const questions = computed<Question[]>(() =>
 const activeQuestion = ref<Question>()
 const hoverQuestionId = ref<number>()
 
+const activeQuestionIndex = computed(() =>
+  questions.value.indexOf(activeQuestion.value)
+)
+
 const onSelectQuestion = (question) => {
   activeQuestion.value = question
+}
+
+const nextQuestion = () => {
+  activeQuestion.value = questions.value[activeQuestionIndex.value + 1]
 }
 
 watch(
@@ -92,4 +165,10 @@ watch(
     activeQuestion.value = null
   }
 )
+
+async function onSubmit() {
+  // TODO
+}
 </script>
+
+<style scoped lang="sass"></style>

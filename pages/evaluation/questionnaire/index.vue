@@ -39,7 +39,7 @@
         </nuxt-link>
       </div>
       <div class="column is-6-desktop is-offset-1">
-        <Rosette
+        <QuestionnaireRosette
           class="rosette-menu"
           center-button-name="Commencer"
           :pillars-completed="pillarsCompleted"

@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <div class="section">
-      <PageTitle title="Espace animateur" subtitle="" />
+      <PageTitle title="Espace animateur" subtitle />
       <PageSection
         title="Réponses"
         intro="Saisissez les réponses à l’évaluation pour chacun·e des participant·e·s."
         button-text="Revenir aux participant·e·s"
-        button-link="/profil/ateliers/participants"
+        :button-link="`/profil/ateliers/${workshopId}/participants`"
       >
         <div class="container">
           <section ref="pillarsRef" class="columns is-multiline mt-4">
@@ -27,6 +27,7 @@
             <QuestionnairePillarAnimatorResponses
               :pillar="activePillar"
               :color="colorClass"
+              :workshop-id="workshopId"
             />
           </section>
         </div>
@@ -36,8 +37,11 @@
 </template>
 
 <script setup lang="ts">
+import { Ref, ref } from "@vue/reactivity"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
+import { useAnimatorStore } from "~~/stores/animatorStore"
+import { useProfilingStore } from "~~/stores/profilingStore"
 
 definePageMeta({
   title: "Réponses",
@@ -45,7 +49,17 @@ definePageMeta({
 })
 
 const questionnaireStore = useQuestionnaireStore()
+const profilingStore = useProfilingStore()
 const router = useRouter()
+const route = useRoute()
+const workshopId: Ref<number> = ref(+route.params.workshopId)
+const animatorStore = useAnimatorStore()
+if (!animatorStore.workshopById[workshopId.value]) {
+  animatorStore.getWorkshop(workshopId.value)
+}
+if (!profilingStore.roles.length) {
+  profilingStore.getRoles()
+}
 
 const activePillar = ref<PillarType>()
 const markers = ref<Marker[]>()

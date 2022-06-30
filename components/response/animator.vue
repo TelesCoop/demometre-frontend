@@ -1,0 +1,155 @@
+<template>
+  <div v-if="question">
+    <input
+      v-if="question.type === QuestionType.OPEN"
+      v-model="answer"
+      :class="`textarea is-shade-300`"
+      rows="3"
+      placeholder="écrire ici ..."
+    />
+    <ResponseInputPercentage
+      v-else-if="question.type === QuestionType.PERCENTAGE"
+      v-model="answer"
+      :color="props.color"
+      :question-id="question.id"
+    />
+    <div
+      v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
+      class="select"
+    >
+      <select v-model="answer">
+        <option
+          v-for="(
+            responseChoice, responseChoiceIndex
+          ) of question.responseChoices"
+          :key="responseChoiceIndex"
+          :value="responseChoice.id"
+        >
+          {{ responseChoice.responseChoice }}
+        </option>
+      </select>
+    </div>
+    <div
+      v-else-if="question.type === QuestionType.MULTIPLE_CHOICE"
+      class="select is-multiple"
+    >
+      <select v-model="answer" multiple>
+        <option
+          v-for="(
+            responseChoice, responseChoiceIndex
+          ) of question.responseChoices"
+          :key="responseChoiceIndex"
+          :value="responseChoice.id"
+        >
+          {{ responseChoice.responseChoice }}
+        </option>
+      </select>
+    </div>
+    <div v-else-if="question.type === QuestionType.BOOLEAN" class="select">
+      <select v-model="answer">
+        <option
+          v-for="response of [
+            { id: 1, value: 'Oui' },
+            { id: 0, value: 'Non' },
+          ]"
+          :key="response.id"
+          :value="response.id"
+        >
+          {{ response.value }}
+        </option>
+      </select>
+    </div>
+    <div v-else-if="question.type === QuestionType.CLOSED_WITH_SCALE">
+      <div
+        v-for="(category, categoryIndex) of question.categories"
+        :key="categoryIndex"
+      >
+        <div class="is-flex is-align-items-center mb-0_5">
+          <p class="mr-1">{{ category.category }}</p>
+          <div class="select">
+            <select v-model="answer">
+              <option
+                v-for="(
+                  responseChoice, responseChoiceIndex
+                ) of question.responseChoices"
+                :key="responseChoiceIndex"
+                :value="responseChoice.id"
+              >
+                {{ responseChoice.responseChoice }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import {
+  QuestionType,
+  Question,
+  QuestionResponse,
+  Participant,
+} from "~/composables/types"
+import { computed, PropType, watch } from "vue"
+import { ref } from "@vue/reactivity"
+import {
+  getQuestionResponseStructure,
+  getQuestionResponseValue,
+} from "~/utils/question-response"
+
+const props = defineProps({
+  question: {
+    type: Object as PropType<Question>,
+    required: true,
+  },
+  color: { type: String, required: true },
+  participant: {
+    type: Object as PropType<Participant>,
+    required: false,
+    default() {
+      return {}
+    },
+  },
+  assessmentId: { type: Number, required: true },
+  modelValue: {
+    type: Object as PropType<QuestionResponse>,
+    required: false,
+    default: null,
+  },
+})
+
+const questionResponse = useModel<QuestionResponse>("modelValue")
+
+const isAnswered = computed(() => {
+  if (Array.isArray(answer.value)) return !!answer.value.length
+  return !!answer.value || answer.value === 0 || answer.value === false
+})
+
+const initialValue = getQuestionResponseValue(
+  questionResponse.value,
+  props.question.type
+)
+
+const answer = ref(initialValue)
+
+watch(props.question, () => {
+  answer.value = getQuestionResponseValue(
+    questionResponse.value,
+    props.question.type
+  )
+})
+
+watch(answer, () => {
+  questionResponse.value = getQuestionResponseStructure(
+    props.question,
+    answer.value,
+    isAnswered.value,
+    props.participant.id,
+    props.assessmentId
+  )
+})
+</script>
+
+<style scoped lang="sass"></style>

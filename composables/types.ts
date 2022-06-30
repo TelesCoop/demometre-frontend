@@ -234,6 +234,27 @@ export type QuestionResponse = {
   closedWithScaleResponseCategories: ClosedWithScaleResponse[]
 }
 
+// Workshops
+export type Workshop = {
+  id: number
+  assessmentId: number
+  date: string
+  name: string
+  animatorId: number
+  participants: Participant[]
+  changed: boolean
+}
+export type Participant = {
+  id: number
+  userEmail: string
+  userUsername: string
+  assessmentId: number
+  roleId: number
+  responses: QuestionResponse[]
+  responseByQuestionId: { [key: number]: QuestionResponse }
+  changed: boolean
+}
+
 // Pages
 type Feedback = {
   id: number
