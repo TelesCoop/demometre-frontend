@@ -105,7 +105,7 @@
           <QuestionnairePillar
             :name="pillar.name"
             :active="pillar.name === activePillar?.name"
-            style="cursor: pointer"
+            class="is-clickable"
             @click="onSelectPillar(pillar)"
           />
         </div>

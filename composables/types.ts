@@ -79,11 +79,8 @@ export type Criteria = {
   score2: string
   score3: string
   score4: string
-  legalFrame: string
-  useCase: string
-  sources: string
-  toGoFurther: string
   definitionIds: number[]
+  explanatory: string | SimpleBlock[]
 }
 export type ResponseChoice = {
   id: number
@@ -304,6 +301,10 @@ type AssessmentTypeDetails = {
 type SimpleBlockWithImage = {
   image: number
   imageUrl: string
+  title: string
+  description: string
+}
+export type SimpleBlock = {
   title: string
   description: string
 }
