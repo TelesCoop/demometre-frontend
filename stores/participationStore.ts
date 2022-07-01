@@ -41,11 +41,11 @@ export const useParticipationStore = defineStore("participation", {
     async createParticipation() {
       const userStore = useUserStore()
       // If user not authenticated, create anonymous user
-      if (!userStore.isLoggedIn && !userStore.isAnonymous) {
-        await userStore.createAnonymousUser()
+      if (!userStore.isLoggedIn && !userStore.isUnknownUser) {
+        await userStore.createUnknownUser()
       }
       const { data, error } = await useApiPost<Participation>(
-        `participations/?anonymous=${userStore.anonymousName}`,
+        "participations/",
         {
           assessmentId: useAssessmentStore().currentAssessmentId,
           roleId: this.participation.roleId,
@@ -62,12 +62,9 @@ export const useParticipationStore = defineStore("participation", {
     },
     async getCurrentParticipation(headers = undefined) {
       try {
-        const response = await useGet<Participation[]>(
-          `participations/?anonymous=${useUserStore().anonymousName}`,
-          {
-            headers,
-          }
-        )
+        const response = await useGet<Participation[]>("participations/", {
+          headers,
+        })
         this.participation = response[0] || {}
         if (Object.keys(this.participation).length === 0) {
           return false
@@ -90,9 +87,7 @@ export const useParticipationStore = defineStore("participation", {
     ) {
       try {
         const response = await useGet<QuestionResponse[]>(
-          `participation-responses/?context=profiling&participation_id=${participationId}&anonymous=${
-            useUserStore().anonymousName
-          }`,
+          `participation-responses/?context=profiling&participation_id=${participationId}`,
           {
             headers,
           }
@@ -112,9 +107,7 @@ export const useParticipationStore = defineStore("participation", {
     ) {
       try {
         const participationResponses = await useGet<QuestionResponse[]>(
-          `participation-responses/?context=questionnaire&participation_id=${participationId}&anonymous=${
-            useUserStore().anonymousName
-          }`,
+          `participation-responses/?context=questionnaire&participation_id=${participationId}`,
           {
             headers,
           }
@@ -161,9 +154,7 @@ export const useParticipationStore = defineStore("participation", {
         )
       } else {
         apiResponse = await useApiPost<QuestionResponse>(
-          `participation-responses/?anonymous=${
-            useUserStore().anonymous.username
-          }`,
+          "participation-responses/",
           questionResponse
         )
       }
@@ -192,9 +183,7 @@ export const useParticipationStore = defineStore("participation", {
         pillarId: pillarId,
       }
       const { data, error } = await useApiPatch<Participation>(
-        `participations/${this.id}/questions/completed/?anonymous=${
-          useUserStore().anonymous.username
-        }`,
+        `participations/${this.id}/questions/completed/`,
         payload
       )
       if (error.value) {

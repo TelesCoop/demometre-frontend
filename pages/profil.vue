@@ -2,6 +2,13 @@
   <div class="container">
     <div class="section">
       <PageTitle title="Mon compte" subtitle="" />
+      <router-link
+        v-if="userStore.isUnknownUser"
+        class="button is-primary mr-1 mb-1"
+        to="/signup"
+      >
+        S'enregistrer pour conserver vos résultats
+      </router-link>
       <button class="button is-normal" type="button" @click.prevent="logout">
         Se déconnecter
       </button>
