@@ -131,9 +131,12 @@ const initialValue = getAnswerInitialValue()
 
 const answer = ref(initialValue)
 
-watch(props.question, () => {
-  answer.value = getAnswerInitialValue()
-})
+watch(
+  () => props.question,
+  () => {
+    answer.value = getAnswerInitialValue()
+  }
+)
 
 function adaptQuestionResponse() {
   questionResponse.value = getQuestionResponseStructure(
@@ -164,11 +167,20 @@ function getAnswerInitialValue() {
     questionResponse.value,
     props.question.type
   )
-  if (props.question.type === QuestionType.CLOSED_WITH_SCALE && !toReturn) {
-    toReturn = {}
-    props.question.categories.forEach(
-      (category) => (toReturn[category.id] = null)
-    )
+  if (props.question.type === QuestionType.CLOSED_WITH_SCALE) {
+    if (!toReturn) {
+      toReturn = {}
+      props.question.categories.forEach(
+        (category) => (toReturn[category.id] = null)
+      )
+    } else {
+      const initResponses = JSON.parse(JSON.stringify(toReturn))
+      toReturn = {}
+      initResponses.forEach(
+        (initResponse) =>
+          (toReturn[initResponse.categoryId] = initResponse.responseChoiceId)
+      )
+    }
   }
   return toReturn
 }

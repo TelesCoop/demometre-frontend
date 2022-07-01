@@ -28,9 +28,9 @@
             @mouseenter="hoverQuestionId = question.id"
             @mouseleave="hoverQuestionId = null"
           >
-            <span :class="`has-text-${props.color}-active`">
-              {{ question.concatenatedCode }}
-            </span>
+            <span :class="`has-text-${props.color}-active`">{{
+              question.concatenatedCode
+            }}</span>
             {{ question.questionStatement }}
           </a>
         </li>
@@ -55,8 +55,9 @@
               <td class="pb-0_5">Réponses</td>
             </tr>
             <tr
-              v-for="participant of animatorStore.workshopById[props.workshopId]
-                .participants"
+              v-for="participant of animatorStore.workshopParticipants(
+                props.workshopId
+              )"
               :key="participant.id"
             >
               <td class="pb-1 pr-0_75">
@@ -81,7 +82,6 @@
             <p class="is-size-7 is-family-secondary mb-1">
               Réponse unique car question objective
             </p>
-            <!-- TODO: make it works : v-model empty : not working -->
             <ResponseAnimator
               v-model="
                 animatorStore.assessmentResponseByQuestionIdByWorkshopId[
@@ -171,7 +171,10 @@ watch(
 )
 
 async function onSubmit() {
-  // TODO
+  await animatorStore.createOrUpdateQuestionnaireResponses(
+    props.workshopId,
+    activeQuestion.value
+  )
 }
 </script>
 

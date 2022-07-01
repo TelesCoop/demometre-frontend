@@ -21,5 +21,12 @@ export const useToastStore = defineStore("toast", {
         this.message = ""
       }, 4000)
     },
+    setInfo(message: string) {
+      this.type = "info"
+      this.message = message
+      setTimeout(() => {
+        this.message = ""
+      }, 4000)
+    },
   },
 })
