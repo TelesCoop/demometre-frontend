@@ -1,23 +1,36 @@
 <template>
-  <footer
-    class="footer has-background-shade-600"
-    style="padding: 64px; margin-top: 64px"
-  >
+  <footer class="footer has-background-shade-600">
     <div class="container">
       <div class="columns">
         <div class="column footer-column is-3">
           <NuxtLink to="/" class="has-text-weight-bold has-text-shade-200">
             DémoMètre
           </NuxtLink>
-          <NuxtLink to="/" class="has-text-shade-350"
-            >2022 - licence contenu</NuxtLink
+          <a
+            class="has-text-shade-350"
+            :href="MADIA_BASE_URL + settingStore.rgpdSettings.contentLicenseUrl"
+            target="_blank"
           >
-          <NuxtLink to="/" class="has-text-shade-350"
-            >Mentions légales</NuxtLink
+            <!-- TODO : Put the right year automaticaly -->
+            2022 - licence contenu
+          </a>
+          <a
+            class="has-text-shade-350"
+            :href="MADIA_BASE_URL + settingStore.rgpdSettings.legalMentionUrl"
+            target="_blank"
           >
-          <NuxtLink to="/" class="has-text-shade-350"
-            >Politique de confidentialité</NuxtLink
+            Mentions légales
+          </a>
+          <a
+            class="has-text-shade-350"
+            :href="
+              MADIA_BASE_URL +
+              settingStore.rgpdSettings.confidentialityPolicyUrl
+            "
+            target="_blank"
           >
+            Politique de confidentialité
+          </a>
         </div>
         <div class="column footer-column is-3">
           <NuxtLink to="/demometre" class="has-text-white">DémoMètre</NuxtLink>
@@ -62,20 +75,27 @@
 </template>
 
 <script setup lang="ts">
+import { MADIA_BASE_URL } from "~/composables/api"
+import { useSettingStore } from "~~/stores/settingStore"
+
 // const email = ref("")
+const settingStore = useSettingStore()
 </script>
 
-<style>
-.footer-column {
-  display: flex;
-  flex-direction: column;
-}
-.footer-column a {
-  color: black;
-  font-weight: 400;
-  font-size: 0.75rem !important;
-}
-.footer-column a + a {
-  margin-top: 8px;
-}
+<style scoped lang="sass">
+.footer-column
+  display: flex
+  flex-direction: column
+  & a
+    color: black
+    font-weight: 400
+    font-size: 0.75rem !important
+  & a + a
+    margin-top: 8px
+.footer
+  padding: 4rem
+  margin-top: 4rem
+  @include mobile
+    margin-top: 2rem
+    padding: 1rem
 </style>

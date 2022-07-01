@@ -3,6 +3,8 @@
     <PageIntro
       :title="pageStore.projectPage.title"
       :subtitle="pageStore.projectPage.tagLine"
+      :introduction="pageStore.projectPage.introduction"
+      :image-url="pageStore.projectPage.introImageUrl"
       class="pt-2"
     >
       <div class="is-flex buttons is-outlined is-shade-600">
@@ -91,18 +93,20 @@
                 :key="index"
                 class="column is-one-third"
               >
-                <div class="card is-fullheight has-background-white">
+                <div class="card is-fullheight has-background-white impact">
                   <div class="card-image">
-                    <figure class="image is-4by3 has-text-centered">
+                    <figure class="image has-text-centered">
                       <img
                         :src="MADIA_BASE_URL + impact.imageUrl"
                         alt=""
-                        :style="`height: 240px; width: 100%`"
+                        class="fit-without-distortion"
                       />
                     </figure>
                   </div>
                   <div class="card-content px-2 pb-2">
-                    <p class="is-size-4 has-text-shade-500 has-text-centered">
+                    <p
+                      class="is-size-4-tablet is-size-5-mobile has-text-shade-500 has-text-centered"
+                    >
                       {{ impact.title }}
                     </p>
                   </div>
@@ -206,4 +210,12 @@ const scrollIntoWhyBlock = () => {
 <style scoped lang="sass">
 .buttons .button
   height: fit-content
+.impact
+  .image
+    height: 240px
+    width: 100%
+@include mobile
+  .impact
+    .image
+      height: 150px
 </style>

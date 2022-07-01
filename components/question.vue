@@ -1,8 +1,10 @@
 <template>
   <div v-if="question">
     <section class="section">
-      <form v-if="question" @submit.prevent="submit">
-        <h1 class="title is-3">{{ question.questionStatement }}</h1>
+      <form v-if="question" class="question-container" @submit.prevent="submit">
+        <h1 class="title is-size-3-tablet is-size-4-mobile">
+          {{ question.questionStatement }}
+        </h1>
         <RichText :rich-text="question.description"></RichText>
 
         <!-- Center bloc : question inputs + button previous and next -->
@@ -109,7 +111,10 @@
             <span v-if="isLoading" class="is-size-7 has-text-shade-600">
               en cours de chargement
             </span>
-            <span v-else class="is-size-7 has-text-shade-600">
+            <span
+              v-else
+              class="is-size-7 has-text-shade-600 hidden-in-mobile-mode"
+            >
               appuyez sur
               <span class="has-text-weight-bold">Entrer ⏎</span></span
             >
@@ -175,17 +180,13 @@
             />
           </div>
         </div>
-        <div v-show="currentTabId === 'legal-frame'">
-          <RichText :rich-text="criteria.legalFrame" />
-        </div>
-        <div v-show="currentTabId === 'use-case'">
-          <RichText :rich-text="criteria.useCase" />
-        </div>
-        <div v-show="currentTabId === 'sources'">
-          <RichText :rich-text="criteria.sources" />
-        </div>
-        <div v-show="currentTabId === 'to-go-further'">
-          <RichText :rich-text="criteria.toGoFurther" />
+        <div
+          v-for="element of explanatory"
+          :key="element.title.replace(/\s+/g, '')"
+        >
+          <div v-show="currentTabId === element.title.replace(/\s+/g, '')">
+            <RichText :rich-text="element.description" />
+          </div>
         </div>
       </div>
     </section>
@@ -201,14 +202,15 @@ import {
   Definition,
   QuestionContextProps,
   SurveyType,
+  SimpleBlock,
 } from "~/composables/types"
 import { computed, PropType, watch } from "vue"
 import { ref } from "@vue/reactivity"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getQuestionResponseValue } from "~/utils/question-response"
-import { useQuestionnaireStore } from "~~/stores/questionnaireStore"
-import { useAssessmentStore } from "~~/stores/assessmentStore"
+import { useQuestionnaireStore } from "~/stores/questionnaireStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 type tabDef = { label: string; id: string }
 const props = defineProps({
@@ -271,28 +273,13 @@ if (criteria.value?.definitionIds.length > 0) {
     id: "definitions",
   })
 }
-if (criteria.value?.legalFrame) {
-  tabs.value.push({
-    label: "Cadre légal",
-    id: "legal-frame",
-  })
-}
-if (criteria.value?.useCase) {
-  tabs.value.push({
-    label: "Exemples inspirants",
-    id: "use-case",
-  })
-}
-if (criteria.value?.sources) {
-  tabs.value.push({
-    label: "Sources",
-    id: "sources",
-  })
-}
-if (criteria.value?.toGoFurther) {
-  tabs.value.push({
-    label: "Pour aller plus loin",
-    id: "to-go-further",
+const explanatory = criteria.value?.explanatory as SimpleBlock[]
+if (explanatory.length) {
+  explanatory.forEach((element) => {
+    tabs.value.push({
+      label: `${element.title}`,
+      id: `${element.title.replace(/\s+/g, "")}`,
+    })
   })
 }
 const currentTabId = ref<string>(tabs.value[0]?.id)
@@ -357,6 +344,8 @@ const submit = async () => {
   position: fixed
   bottom: 0
   background-color: white
+  max-height: 50%
+  overflow: overlay
 
 .tabs .tab
   color: var(--color)
@@ -382,9 +371,26 @@ const submit = async () => {
         right: -5rem
       &.previous
         left: -5rem
-    @include touch
-      &.next
-        right: -0.5rem
-      &.previous
-        left: -0.5rem
+
+@include tablet-only
+  .question-container
+    margin-left: 5rem
+    margin-right: 5rem
+  .change-question-button
+    &.next
+      right: -5rem
+    &.previous
+      left: -5rem
+@include mobile
+  .question-container
+    margin-left: 1rem
+    margin-right: 1rem
+  .change-question-button
+    top: -2rem
+    &.next
+      right: -2rem
+      padding: 0 15px
+    &.previous
+      left: -2rem
+      padding: 0 15px
 </style>

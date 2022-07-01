@@ -79,11 +79,8 @@ export type Criteria = {
   score2: string
   score3: string
   score4: string
-  legalFrame: string
-  useCase: string
-  sources: string
-  toGoFurther: string
   definitionIds: number[]
+  explanatory: string | SimpleBlock[]
 }
 export type ResponseChoice = {
   id: number
@@ -251,6 +248,8 @@ type Partner = {
   id: number
   name: string
   logoImageUrl: string
+  height: number
+  showInHomePage: boolean
 }
 export type HomePage = {
   title: string
@@ -275,12 +274,14 @@ export type ReferentialPage = {
   title: string
   introduction: string
   pillarBlockTitle: string
-  pillarBlockContent: string
+  pillarBlockLeftContent: string
+  pillarBlockRightContent: string
   pillarBlockImageUrl: string
   markerBlockTitle: string
   markerBlockContent: string
   criteriaBlockTitle: string
-  criteriaBlockContent: string
+  criteriaBlockLeftContent: string
+  criteriaBlockRightContent: string
 }
 
 type ImageUrl = { id: number; url: string }
@@ -300,6 +301,10 @@ type AssessmentTypeDetails = {
 type SimpleBlockWithImage = {
   image: number
   imageUrl: string
+  title: string
+  description: string
+}
+export type SimpleBlock = {
   title: string
   description: string
 }
@@ -380,4 +385,13 @@ export type QuestionContextProps = {
   questionById: { [key: number]: Question }
   responseByQuestionId: { [key: number]: QuestionResponse }
   hasPreviousStep: boolean
+}
+
+// Settings
+export type RgpdSettings = {
+  legalMentionUrl: string
+  termsOfUseUrl: string
+  termsOfSaleUrl: string
+  confidentialityPolicyUrl: string
+  contentLicenseUrl: string
 }

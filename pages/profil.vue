@@ -19,13 +19,13 @@
           class="is-flex is-flex-wrap-wrap"
           style="row-gap: 1.5rem; column-gap: 3rem"
         >
-          <div style="width: 200px">
+          <div style="min-width: 200px">
             <p class="has-text-shade-400 is-uppercase is-size-6">mail</p>
             <p class="has-text-shade-600 is-size-5">
               {{ userStore.user.email }}
             </p>
           </div>
-          <div style="width: 200px">
+          <div style="min-width: 200px">
             <p class="has-text-shade-400 is-uppercase is-size-6">rôle</p>
             <p class="has-text-shade-600 is-size-5">
               {{
@@ -35,9 +35,9 @@
             </p>
           </div>
           <div
-            v-for="questionId in profilingStore.orderedQuestionId"
+            v-for="questionId in profilingJourney.journey.value"
             :key="questionId"
-            style="width: 200px"
+            style="min-width: 200px"
           >
             <p class="has-text-shade-400 is-uppercase is-size-6">
               {{ profilingStore.questionById[questionId].name }}
@@ -87,6 +87,7 @@ import { useUserStore } from "~/stores/userStore"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getQuestionResponseString } from "~/utils/question-response"
+import { useProfilingJourney } from "~/composables/journey"
 
 definePageMeta({
   title: "Mon compte",
@@ -98,6 +99,7 @@ const profilingStore = useProfilingStore()
 const participationStore = useParticipationStore()
 const userStore = useUserStore()
 const userStep = useUserStep()
+const profilingJourney = useProfilingJourney()
 if (!profilingStore.roles.length) {
   profilingStore.getRoles()
 }

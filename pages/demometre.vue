@@ -1,14 +1,17 @@
 <template>
   <div>
     <div class="container">
-      <section class="columns section">
-        <div class="column is-6">
+      <section class="columns section is-desktop">
+        <div class="column is-6-desktop">
           <div class="pb-2">
             <PageTitle
               :title="pageStore.referentialPage.title"
               :subtitle="pageStore.referentialPage.introduction"
             />
-            <RichText :rich-text="pageStore.referentialPage.description" />
+            <RichText
+              :rich-text="pageStore.referentialPage.description"
+              class="is-family-secondary"
+            />
           </div>
           <div class="buttons are-normal is-shade-600">
             <!--Hash url does not work with ssr mode -->
@@ -24,8 +27,9 @@
             </nuxt-link>
           </div>
         </div>
-        <div class="column is-5 is-offset-1">
+        <div class="column is-5-desktop is-offset-1">
           <Rosette
+            class="rosette-menu"
             center-button-name="Découvrir"
             @center-button-click="onDiscoverButtonClick()"
             @pillar-click="onRosettePillarClicked($event)"
@@ -36,14 +40,19 @@
     </div>
 
     <div ref="explicationRef" class="has-background-shade-100 scroll">
-      <div class="container">
-        <PageSection
-          v-if="pageStore.referentialPage.pillarBlockTitle"
-          :title="pageStore.referentialPage.pillarBlockTitle"
-        >
-          <div class="column-2">
+      <PageSection
+        v-if="pageStore.referentialPage.pillarBlockTitle"
+        :title="pageStore.referentialPage.pillarBlockTitle"
+      >
+        <div class="columns is-variable is-8">
+          <RichText
+            :rich-text="pageStore.referentialPage.pillarBlockLeftContent"
+            class="is-family-secondary column"
+          />
+          <div class="column">
             <RichText
-              :rich-text="pageStore.referentialPage.pillarBlockContent"
+              :rich-text="pageStore.referentialPage.pillarBlockRightContent"
+              class="is-family-secondary"
             />
             <img
               v-if="pageStore.referentialPage.pillarBlockImageUrl"
@@ -54,52 +63,55 @@
               :style="`max-height: 250px`"
             />
           </div>
-        </PageSection>
-        <PageSection
-          v-if="pageStore.referentialPage.markerBlockTitle"
-          :title="pageStore.referentialPage.markerBlockTitle"
-        >
-          <div class="column-2">
-            <RichText
-              :rich-text="pageStore.referentialPage.markerBlockContent"
-            />
-            <RosetteCooperation />
-          </div>
-        </PageSection>
+        </div>
+      </PageSection>
+      <PageSection
+        v-if="pageStore.referentialPage.markerBlockTitle"
+        :title="pageStore.referentialPage.markerBlockTitle"
+      >
+        <div class="column-2">
+          <RichText
+            :rich-text="pageStore.referentialPage.markerBlockContent"
+            class="is-family-secondary"
+          />
+          <RosetteCooperation />
+        </div>
+      </PageSection>
 
-        <PageSection
-          v-if="pageStore.referentialPage.criteriaBlockTitle"
-          :title="pageStore.referentialPage.criteriaBlockTitle"
-        >
-          <div class="column-2">
-            <RichText
-              :rich-text="pageStore.referentialPage.criteriaBlockContent"
-            />
-          </div>
-        </PageSection>
-      </div>
+      <PageSection
+        v-if="pageStore.referentialPage.criteriaBlockTitle"
+        :title="pageStore.referentialPage.criteriaBlockTitle"
+      >
+        <div class="columns is-variable is-8">
+          <RichText
+            :rich-text="pageStore.referentialPage.criteriaBlockLeftContent"
+            class="is-family-secondary column"
+          />
+          <RichText
+            :rich-text="pageStore.referentialPage.criteriaBlockRightContent"
+            class="is-family-secondary column"
+          />
+        </div>
+      </PageSection>
     </div>
 
-    <div class="container">
+    <div class="container mobile-mode">
       <section ref="pillarsRef" class="columns is-multiline mt-4">
         <div
           v-for="pillar of questionnaireStore.pillars"
           :key="pillar.name"
           class="column"
         >
-          <Pillar
+          <QuestionnairePillar
             :name="pillar.name"
             :active="pillar.name === activePillar?.name"
-            style="cursor: pointer"
+            class="is-clickable"
             @click="onSelectPillar(pillar)"
           />
         </div>
       </section>
-    </div>
-
-    <div class="container">
       <section v-if="activePillar">
-        <PillarReferential
+        <QuestionnairePillarReferential
           :pillar="activePillar"
           :color="colorClass"
           :markers="markers"
@@ -171,4 +183,7 @@ const onRosetteMarkerClicked = (markerId) => {
 img
   width: 100%
   object-fit: cover
+@include touch
+  .rosette-menu
+    display: none
 </style>

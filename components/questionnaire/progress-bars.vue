@@ -1,6 +1,10 @@
 <template>
   <div :class="{ container: !props.header }">
-    <div :class="props.header ? ' m-0' : ''" class="columns">
+    <!-- Desktop mode -->
+    <div
+      :class="props.header ? ' m-0' : ''"
+      class="columns is-multiline desktop"
+    >
       <div
         v-for="pillarName in PillarName"
         :key="pillarName"
@@ -31,7 +35,6 @@
           />
           <Picto
             v-else
-            size="30"
             :name="`${pillarName}-mini`"
             class="mr-1 column is-narrow p-0"
             style="overflow: overlay"
@@ -72,6 +75,56 @@
                 index === 1 && ' one-completed',
               ]"
             ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile mode -->
+    <div class="mobile">
+      <div
+        :class="props.header ? '' : 'is-flex-wrap-wrap'"
+        class="is-flex is-flex-direction-row"
+      >
+        <div
+          v-for="pillarName in PillarName"
+          :key="pillarName"
+          class="is-clickable p-0"
+          :class="
+            `has-background-${PillarParams[pillarName].color}-light` +
+            (props.header ? '' : ' m-0_75 box-rounded')
+          "
+          style="flex: 1"
+          @click.prevent="goToFirstQuestionPillar(pillarName)"
+          @mouseenter="hoverPillarName = pillarName"
+          @mouseleave="hoverPillarName = null"
+        >
+          <div
+            v-if="!props.header"
+            :class="`has-text-${PillarParams[pillarName].color}-dark has-text-weight-bold has-text-centered my-0_5`"
+          >
+            <span>{{ wordTitleCase(pillarName) }}</span>
+          </div>
+          <div
+            class="is-flex is-flex-direction-row is-justify-content-space-around"
+            :class="props.header ? 'my-0_5' : 'mx-0_75 mb-0_5'"
+          >
+            <icon
+              v-if="isLoadingPillarName === pillarName"
+              size="30"
+              name="loader-2-line"
+            />
+            <Picto
+              v-else
+              :name="`${pillarName}-mini`"
+              style="margin-right: 5px; margin-left: 5px"
+              :color="`${PillarParams[pillarName].color}-dark`"
+            />
+            <span style="margin-right: 5px; margin-top: 3px"
+              >{{ getNbAnsweredQuestions(pillarName) }}/{{
+                getTotalQuestions(pillarName)
+              }}</span
+            >
           </div>
         </div>
       </div>
@@ -154,4 +207,13 @@ function getWidth(pillarName) {
       border-bottom-right-radius: 20px
 .box-rounded
   border-radius: 6px
+
+.mobile
+  display: none
+
+@include mobile
+  .desktop
+    display: none
+  .mobile
+    display: block
 </style>

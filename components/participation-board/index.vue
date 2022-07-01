@@ -1,5 +1,5 @@
 <template>
-  <div class="has-background-shade-100 p-1_5">
+  <div class="has-background-shade-100 board-container">
     <p class="title has-text-shade-900 is-4">
       Tableau de bord de la participation citoyenne
     </p>
@@ -25,7 +25,7 @@
         <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
           Lancée le
         </div>
-        <div class="mb-2">{{ assessment.initializationDate }}</div>
+        <div class="mb-2">{{ initializationDate }}</div>
       </div>
 
       <div class="column">
@@ -51,4 +51,24 @@
 const props = defineProps({
   assessment: { type: Object, required: true },
 })
+
+const initializationDate = computed(() =>
+  new Date(props.assessment.initializationDate).toLocaleString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+)
 </script>
+
+<style scoped lang="sass">
+img
+  width: 100%
+  object-fit: cover
+.board-container
+  padding: 1.5rem
+@include tablet
+  .board-container
+    padding: 2.5rem
+    padding-bottom: 1.5rem
+</style>
