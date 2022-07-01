@@ -1,11 +1,17 @@
 <template>
   <div class="container">
     <div class="section">
-      <PageTitle title="Mon compte" subtitle="" />
+      <PageTitle title="Mon compte" subtitle />
       <div class="buttons is-flex-direction-column is-align-items-flex-start">
-        <NuxtLink to="/profil/ateliers" class="button is-rounded">
-          Espace animateur
-        </NuxtLink>
+        <router-link
+          v-if="userStore.isUnknownUser"
+          class="button is-primary mr-1 mb-1"
+          to="/signup"
+          >S'enregistrer pour conserver vos résultats</router-link
+        >
+        <NuxtLink to="/profil/ateliers" class="button is-rounded"
+          >Espace animateur</NuxtLink
+        >
         <button class="button is-rounded" type="button" @click.prevent="logout">
           Se déconnecter
         </button>
@@ -73,8 +79,7 @@
         intro="Vous n'avez pas d'évaluation en cours"
         button-text="Lancer l'évaluation"
         :button-link="userStep.url"
-      >
-      </PageSection>
+      ></PageSection>
     </div>
   </div>
 </template>

@@ -3,6 +3,7 @@ export type User = {
   email: string
   username: string
   isExpert: boolean
+  isUnknownUser: boolean
 }
 
 // Questionnaire and profiling
