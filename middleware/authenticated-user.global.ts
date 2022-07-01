@@ -6,7 +6,7 @@ const loadUserState = async () => {
   if (!process.server) return
 
   // Conserve header because of crash
-  const headers = useRequestHeaders(["cookie"])
+  const headers = useRequestHeaders(["cookie", "csrftoken"])
   const userStore = useUserStore()
 
   if (!userStore.refreshed) {
@@ -14,7 +14,7 @@ const loadUserState = async () => {
     await userStore.refreshProfile(headers)
   }
 
-  if (userStore.isLoggedIn || userStore.isAnonymous) {
+  if (userStore.isLoggedIn || userStore.isUnknownUser) {
     await getParticipationUserData(headers)
   }
 }
