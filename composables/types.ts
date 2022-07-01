@@ -84,11 +84,8 @@ export type Criteria = {
   score2: string
   score3: string
   score4: string
-  legalFrame: string
-  useCase: string
-  sources: string
-  toGoFurther: string
   definitionIds: number[]
+  explanatory: string | SimpleBlock[]
 }
 export type ResponseChoice = {
   id: number
@@ -333,6 +330,10 @@ type SimpleBlockWithImage = {
   title: string
   description: string
 }
+export type SimpleBlock = {
+  title: string
+  description: string
+}
 export type UsagePage = {
   title: string
   introduction: string
@@ -410,4 +411,13 @@ export type QuestionContextProps = {
   questionById: { [key: number]: Question }
   responseByQuestionId: { [key: number]: QuestionResponse }
   hasPreviousStep: boolean
+}
+
+// Settings
+export type RgpdSettings = {
+  legalMentionUrl: string
+  termsOfUseUrl: string
+  termsOfSaleUrl: string
+  confidentialityPolicyUrl: string
+  contentLicenseUrl: string
 }

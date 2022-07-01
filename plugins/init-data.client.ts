@@ -1,6 +1,8 @@
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { useAssessmentStore } from "~~/stores/assessmentStore"
+import { useDefinitionStore } from "~~/stores/definitionStore"
+import { useSettingStore } from "~~/stores/settingStore"
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook("app:mounted", () => {
@@ -10,11 +12,12 @@ export default defineNuxtPlugin((nuxtApp) => {
     const profilingStore = useProfilingStore()
     const questionnaireStore = useQuestionnaireStore()
     const assessmentStore = useAssessmentStore()
+    const definitionStore = useDefinitionStore()
+    const settingStore = useSettingStore()
 
     if (!profilingStore.orderedQuestionId.length) {
       profilingStore.getProfilingQuestions()
     }
-
     if (!questionnaireStore.pillars.length) {
       questionnaireStore.getQuestionnaireStructure()
     }
@@ -23,6 +26,12 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
     if (!assessmentStore.representativityCriterias.length) {
       assessmentStore.getRepresentativityCriterias()
+    }
+    if (!definitionStore.definitionLoaded) {
+      definitionStore.getDefinitions()
+    }
+    if (!settingStore.rgpdSettingsLoaded) {
+      settingStore.getRgpdSettings()
     }
   })
 })
