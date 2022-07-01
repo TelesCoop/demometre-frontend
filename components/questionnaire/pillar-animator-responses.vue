@@ -82,14 +82,18 @@
               Réponse unique car question objective
             </p>
             <!-- TODO: make it works : v-model empty : not working -->
-            <!-- <ResponseAnimator
+            <ResponseAnimator
+              v-model="
+                animatorStore.assessmentResponseByQuestionIdByWorkshopId[
+                  props.workshopId
+                ][activeQuestion.id]
+              "
               :question="activeQuestion"
               :assessment-id="
                 animatorStore.workshopById[props.workshopId].assessmentId
               "
               :color="props.color"
-              v-model="animatorStore.assessmentResponseByQuestionIdByWorkshopId[props.workshopId][activeQuestion.id]"
-            />-->
+            />
           </div>
         </QuestionnaireQuestionStatement>
       </div>

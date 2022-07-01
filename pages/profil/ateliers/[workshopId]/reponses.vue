@@ -7,6 +7,8 @@
         intro="Saisissez les réponses à l’évaluation pour chacun·e des participant·e·s."
         button-text="Revenir aux participant·e·s"
         :button-link="`/profil/ateliers/${workshopId}/participants`"
+        :left-icon="true"
+        icon="arrow-left-line"
       >
         <div class="container">
           <section ref="pillarsRef" class="columns is-multiline mt-4">

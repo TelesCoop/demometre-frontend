@@ -7,6 +7,8 @@
         intro="Saisissez les personnes ayant participées à votre atelier."
         button-text="Revenir aux ateliers"
         button-link="/profil/ateliers"
+        :left-icon="true"
+        icon="arrow-left-line"
       >
         <div>
           <table class="table is-narrow is-fullwidth">
@@ -23,7 +25,7 @@
             <tbody>
               <AccordionTable
                 v-for="(participant, index) of [
-                  ...animatorStore.workshopById[workshopId].participants,
+                  ...animatorStore.workshopParticipants(workshopId),
                   ...newParticipants,
                 ]"
                 :id="index"
@@ -174,7 +176,11 @@ const workshopId: Ref<number> = ref(+route.params.workshopId)
 if (!profilingStore.roles.length) {
   profilingStore.getRoles()
 }
-if (!animatorStore.workshopById[workshopId.value]) {
+if (
+  !animatorStore.workshopById[workshopId.value] ||
+  animatorStore.workshopById[workshopId.value].participantIds.length !==
+    animatorStore.workshopParticipants(workshopId.value).length
+) {
   animatorStore.getWorkshop(workshopId.value)
 }
 
@@ -183,7 +189,7 @@ const newParticipants = ref<Participant[]>([])
 const validateDisabled = computed(() =>
   [
     ...newParticipants.value,
-    ...animatorStore.workshopById[workshopId.value].participants,
+    ...animatorStore.workshopParticipants(workshopId.value),
   ].some((participant) => !(participant.userUsername && participant.roleId))
 )
 
@@ -209,22 +215,19 @@ async function saveParticipant(participant) {
 }
 
 async function onSubmit() {
-  for (const participant of animatorStore.workshopById[workshopId.value]
-    .participants) {
-    if (participant.changed) {
-      await animatorStore.createOrUpdateParticipant(
-        participant,
-        workshopId.value
-      )
-    }
-  }
-  for (const participant of newParticipants.value) {
-    if (participant.changed) {
-      await animatorStore.createOrUpdateParticipant(
-        participant,
-        workshopId.value
-      )
+  const newParticipantsTmp = newParticipants.value
+  for (const participant of [
+    ...animatorStore.workshopParticipants(workshopId.value),
+    ...newParticipantsTmp,
+  ]) {
+    if (!participant.id) {
       newParticipants.value.shift()
+    }
+    if (participant.changed) {
+      await animatorStore.createOrUpdateParticipant(
+        participant,
+        workshopId.value
+      )
     }
   }
   router.push(`/profil/ateliers/${workshopId.value}/reponses`)

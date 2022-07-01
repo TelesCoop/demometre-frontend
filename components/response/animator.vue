@@ -6,18 +6,20 @@
       :class="`textarea is-shade-300`"
       rows="3"
       placeholder="écrire ici ..."
+      @change="adaptQuestionResponse()"
     />
     <ResponseInputPercentage
       v-else-if="question.type === QuestionType.PERCENTAGE"
       v-model="answer"
       :color="props.color"
       :question-id="question.id"
+      @change="adaptQuestionResponse()"
     />
     <div
       v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
       class="select"
     >
-      <select v-model="answer">
+      <select v-model="answer" @change="adaptQuestionResponse()">
         <option
           v-for="(
             responseChoice, responseChoiceIndex
@@ -33,7 +35,7 @@
       v-else-if="question.type === QuestionType.MULTIPLE_CHOICE"
       class="select is-multiple"
     >
-      <select v-model="answer" multiple>
+      <select v-model="answer" multiple @change="adaptQuestionResponse()">
         <option
           v-for="(
             responseChoice, responseChoiceIndex
@@ -46,7 +48,7 @@
       </select>
     </div>
     <div v-else-if="question.type === QuestionType.BOOLEAN" class="select">
-      <select v-model="answer">
+      <select v-model="answer" @change="adaptQuestionResponse()">
         <option
           v-for="response of [
             { id: 1, value: 'Oui' },
@@ -60,19 +62,17 @@
       </select>
     </div>
     <div v-else-if="question.type === QuestionType.CLOSED_WITH_SCALE">
-      <div
-        v-for="(category, categoryIndex) of question.categories"
-        :key="categoryIndex"
-      >
+      <div v-for="category of question.categories" :key="category.id">
         <div class="is-flex is-align-items-center mb-0_5">
           <p class="mr-1">{{ category.category }}</p>
           <div class="select">
-            <select v-model="answer">
+            <select
+              v-model="answer[category.id]"
+              @change="adaptQuestionResponseForCloseWithScaleType()"
+            >
               <option
-                v-for="(
-                  responseChoice, responseChoiceIndex
-                ) of question.responseChoices"
-                :key="responseChoiceIndex"
+                v-for="responseChoice of question.responseChoices"
+                :key="responseChoice.id"
                 :value="responseChoice.id"
               >
                 {{ responseChoice.responseChoice }}
@@ -127,21 +127,15 @@ const isAnswered = computed(() => {
   return !!answer.value || answer.value === 0 || answer.value === false
 })
 
-const initialValue = getQuestionResponseValue(
-  questionResponse.value,
-  props.question.type
-)
+const initialValue = getAnswerInitialValue()
 
 const answer = ref(initialValue)
 
 watch(props.question, () => {
-  answer.value = getQuestionResponseValue(
-    questionResponse.value,
-    props.question.type
-  )
+  answer.value = getAnswerInitialValue()
 })
 
-watch(answer, () => {
+function adaptQuestionResponse() {
   questionResponse.value = getQuestionResponseStructure(
     props.question,
     answer.value,
@@ -149,7 +143,35 @@ watch(answer, () => {
     props.participant.id,
     props.assessmentId
   )
-})
+}
+function adaptQuestionResponseForCloseWithScaleType() {
+  questionResponse.value = getQuestionResponseStructure(
+    props.question,
+    props.question.categories.map((category) => {
+      return {
+        categoryId: category.id,
+        responseChoiceId: answer.value[category.id],
+      }
+    }),
+    isAnswered.value,
+    props.participant.id,
+    props.assessmentId
+  )
+}
+
+function getAnswerInitialValue() {
+  let toReturn = getQuestionResponseValue(
+    questionResponse.value,
+    props.question.type
+  )
+  if (props.question.type === QuestionType.CLOSED_WITH_SCALE && !toReturn) {
+    toReturn = {}
+    props.question.categories.forEach(
+      (category) => (toReturn[category.id] = null)
+    )
+  }
+  return toReturn
+}
 </script>
 
 <style scoped lang="sass"></style>

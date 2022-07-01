@@ -238,7 +238,7 @@ export type Workshop = {
   date: string
   name: string
   animatorId: number
-  participants: Participant[]
+  participantIds: number[]
   changed: boolean
 }
 export type Participant = {

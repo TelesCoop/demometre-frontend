@@ -63,7 +63,7 @@
                     :disabled="
                       !(workshop.name && workshop.date && workshop.assessmentId)
                     "
-                    @click.prevent="saveAndAddParticipants(workshop)"
+                    @click.prevent="saveAndGoToParticipants(workshop)"
                   >
                     <span>Saisir les participant·e·s</span>
                     <span class="icon">
@@ -161,7 +161,7 @@ function addWorkshop() {
     name: "",
     date: "",
     animatorId: userStore.user.id,
-    participants: [],
+    participantIds: [],
     changed: true,
   })
 }
@@ -170,20 +170,27 @@ function removeWorkshop() {
   newWorkshops.value.pop()
 }
 
-async function saveAndAddParticipants(workshop) {
+async function saveAndGoToParticipants(workshop) {
+  if (!workshop.id) {
+    newWorkshops.value.shift()
+  }
   const workshopResponse = await animatorStore.createOrUpdateWorkshop(workshop)
+
   if (workshopResponse) {
     router.push(`/profil/ateliers/${workshopResponse.id}/participants`)
   }
 }
 
 async function onSubmit() {
-  for (const workshop of animatorStore.workshops) {
-    await animatorStore.createOrUpdateWorkshop(workshop)
-  }
-  for (const workshop of newWorkshops.value) {
-    await animatorStore.createOrUpdateWorkshop(workshop)
-    newWorkshops.value.shift()
+  debugger
+  const newWorkshopsTmp = newWorkshops.value
+  for (const workshop of [...animatorStore.workshops, ...newWorkshopsTmp]) {
+    if (!workshop.id) {
+      newWorkshops.value.shift()
+    }
+    if (workshop.changed) {
+      await animatorStore.createOrUpdateWorkshop(workshop)
+    }
   }
 }
 </script>
