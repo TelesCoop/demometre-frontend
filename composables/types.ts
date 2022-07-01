@@ -386,3 +386,12 @@ export type QuestionContextProps = {
   responseByQuestionId: { [key: number]: QuestionResponse }
   hasPreviousStep: boolean
 }
+
+// Settings
+export type RgpdSettings = {
+  legalMentionUrl: string
+  termsOfUseUrl: string
+  termsOfSaleUrl: string
+  confidentialityPolicyUrl: string
+  contentLicenseUrl: string
+}

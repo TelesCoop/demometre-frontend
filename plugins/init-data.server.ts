@@ -2,6 +2,7 @@ import { useProfilingStore } from "~/stores/profilingStore"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useAssessmentStore } from "~~/stores/assessmentStore"
 import { useDefinitionStore } from "~~/stores/definitionStore"
+import { useSettingStore } from "~~/stores/settingStore"
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook("vue:setup", () => {
@@ -9,10 +10,12 @@ export default defineNuxtPlugin((nuxtApp) => {
     const questionnaireStore = useQuestionnaireStore()
     const assessmentStore = useAssessmentStore()
     const definitionStore = useDefinitionStore()
+    const settingStore = useSettingStore()
     profilingStore.getProfilingQuestions()
     questionnaireStore.getQuestionnaireQuestions()
     questionnaireStore.getQuestionnaireStructure()
     assessmentStore.getRepresentativityCriterias()
     definitionStore.getDefinitions()
+    settingStore.getRgpdSettings()
   })
 })
