@@ -20,11 +20,10 @@
       class="select"
     >
       <select v-model="answer" @change="adaptQuestionResponse()">
+        <option :value="null"></option>
         <option
-          v-for="(
-            responseChoice, responseChoiceIndex
-          ) of question.responseChoices"
-          :key="responseChoiceIndex"
+          v-for="responseChoice of question.responseChoices"
+          :key="responseChoice.id"
           :value="responseChoice.id"
         >
           {{ responseChoice.responseChoice }}
@@ -37,18 +36,20 @@
     >
       <select v-model="answer" multiple @change="adaptQuestionResponse()">
         <option
-          v-for="(
-            responseChoice, responseChoiceIndex
-          ) of question.responseChoices"
-          :key="responseChoiceIndex"
+          v-for="responseChoice of question.responseChoices"
+          :key="responseChoice.id"
           :value="responseChoice.id"
         >
           {{ responseChoice.responseChoice }}
         </option>
       </select>
+      <p class="is-size-7 has-text-shade-400">
+        Ctrl + click pour selectionner plusieurs options
+      </p>
     </div>
     <div v-else-if="question.type === QuestionType.BOOLEAN" class="select">
       <select v-model="answer" @change="adaptQuestionResponse()">
+        <option :value="null"></option>
         <option
           v-for="response of [
             { id: 1, value: 'Oui' },
@@ -70,6 +71,7 @@
               v-model="answer[category.id]"
               @change="adaptQuestionResponseForCloseWithScaleType()"
             >
+              <option :value="null"></option>
               <option
                 v-for="responseChoice of question.responseChoices"
                 :key="responseChoice.id"
@@ -181,6 +183,9 @@ function getAnswerInitialValue() {
           (toReturn[initResponse.categoryId] = initResponse.responseChoiceId)
       )
     }
+  }
+  if (props.question.type === QuestionType.MULTIPLE_CHOICE && !toReturn) {
+    toReturn = []
   }
   return toReturn
 }

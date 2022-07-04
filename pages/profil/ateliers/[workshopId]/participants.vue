@@ -190,7 +190,7 @@ const validateDisabled = computed(() =>
   [
     ...newParticipants.value,
     ...animatorStore.workshopParticipants(workshopId.value),
-  ].some((participant) => !(participant.userUsername && participant.roleId))
+  ].some((participant) => !(participant?.userUsername && participant?.roleId))
 )
 
 function addParticipant() {

@@ -72,9 +72,9 @@ export const getQuestionResponseStructure = (
     hasPassed: !isAnswered,
   } as QuestionResponse
 
-  if (isAnswered) {
-    const questionValue = QUESTION_RESPONSE_VALUE_BY_TYPE[question.type]
-    questionResponse[questionValue] = response
-  }
+  // if (isAnswered) {
+  const questionValue = QUESTION_RESPONSE_VALUE_BY_TYPE[question.type]
+  questionResponse[questionValue] = response
+  // }
   return questionResponse
 }

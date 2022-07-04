@@ -13,7 +13,9 @@
                 <td class="has-text-shade-400 is-uppercase is-size-6">
                   Nom de l’atelier
                 </td>
-                <td class="has-text-shade-400 is-uppercase is-size-6">Date</td>
+                <td class="has-text-shade-400 is-uppercase is-size-6">
+                  Date (MM/JJ/AAAA)
+                </td>
                 <td class="has-text-shade-400 is-uppercase is-size-6">
                   Evaluation
                 </td>
@@ -41,6 +43,8 @@
                     v-model="workshop.date"
                     :class="`input is-shade-300`"
                     type="date"
+                    :timezone="true"
+                    lang="fr-FR"
                   />
                 </td>
                 <td>
@@ -141,7 +145,6 @@ if (!animatorStore.allWorkshopsLoaded) {
 }
 
 const newWorkshops = ref<Workshop[]>([])
-
 const validateDisabled = computed(() =>
   [...newWorkshops.value, ...animatorStore.workshops].some(
     (workshop) => !(workshop.assessmentId && workshop.date && workshop.name)
@@ -177,6 +180,7 @@ async function saveAndGoToParticipants(workshop) {
   const workshopResponse = await animatorStore.createOrUpdateWorkshop(workshop)
 
   if (workshopResponse) {
+    await animatorStore.getWorkshop(workshopResponse.id)
     router.push(`/profil/ateliers/${workshopResponse.id}/participants`)
   }
 }
