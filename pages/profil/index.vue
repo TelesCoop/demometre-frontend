@@ -9,7 +9,10 @@
           to="/signup"
           >S'enregistrer pour conserver vos résultats</router-link
         >
-        <NuxtLink to="/profil/ateliers" class="button is-rounded"
+        <NuxtLink
+          v-if="userStore.isExpertUser"
+          to="/profil/ateliers"
+          class="button is-rounded"
           >Espace animateur</NuxtLink
         >
         <button class="button is-rounded" type="button" @click.prevent="logout">

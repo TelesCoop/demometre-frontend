@@ -1,11 +1,13 @@
 import { defineStore } from "pinia"
 import {
+  Assessment,
   Objectivity,
   Participant,
   Question,
   QuestionResponse,
   Workshop,
 } from "~/composables/types"
+import { useAssessmentStore } from "./assessmentStore"
 import { useToastStore } from "./toastStore"
 
 type FullWorkshop = Workshop & {
@@ -15,6 +17,8 @@ type FullWorkshop = Workshop & {
 
 export const useAnimatorStore = defineStore("animator", {
   state: () => ({
+    assessmentIds: <number[]>[],
+    allAssessmentsLoaded: <boolean>false,
     workshopById: <{ [key: number]: Workshop }>{},
     allWorkshopsLoaded: <boolean>false,
     participantById: <{ [key: number]: Participant }>{},
@@ -23,6 +27,11 @@ export const useAnimatorStore = defineStore("animator", {
     >{},
   }),
   getters: {
+    assessments: (state) => {
+      return state.assessmentIds.map(
+        (assessmentId) => useAssessmentStore().assessmentById[assessmentId]
+      )
+    },
     workshops: (state) => {
       return Object.values(state.workshopById)
     },
@@ -55,6 +64,23 @@ export const useAnimatorStore = defineStore("animator", {
           response.questionId
         ] = response
       })
+    },
+    async getAnimatorAssessments() {
+      const { data, error } = await useApiGet<Assessment[]>(
+        "assessments/by-animator/"
+      )
+      if (!error.value) {
+        for (const assessment of data.value) {
+          if (!this.assessmentIds.includes(assessment.id)) {
+            this.assessmentIds.push(assessment.id)
+          }
+          useAssessmentStore().addAssessment(assessment)
+        }
+        this.allAssessmentsLoaded = true
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data?.messageCode)
+      }
     },
     async getWorkshops() {
       const { data, error } = await useApiGet<Workshop[]>("workshops/")

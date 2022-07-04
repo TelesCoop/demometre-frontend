@@ -212,6 +212,9 @@ function removeParticipant() {
 
 async function saveParticipant(participant) {
   await animatorStore.createOrUpdateParticipant(participant, workshopId.value)
+  if (!participant.id) {
+    newParticipants.value.shift()
+  }
 }
 
 async function onSubmit() {

@@ -51,7 +51,7 @@
                   <div class="select">
                     <select v-model="workshop.assessmentId">
                       <option
-                        v-for="assessment of assessmentStore.assessments"
+                        v-for="assessment of animatorStore.assessments"
                         :key="assessment.id"
                         :value="assessment.id"
                       >
@@ -78,6 +78,10 @@
               </tr>
             </tbody>
           </table>
+          <p class="mb-1 is-size-7 has-text-shade-400">
+            NB: Seulement les ateliers des évaluations dont la redevance à été
+            réglée sont visibles ici
+          </p>
           <div class="buttons is-justify-content-space-between">
             <div>
               <button
@@ -122,7 +126,6 @@
 </template>
 
 <script setup lang="ts">
-import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useAnimatorStore } from "~/stores/animatorStore"
 import { Workshop } from "~/composables/types"
 import { useUserStore } from "~/stores/userStore"
@@ -132,13 +135,12 @@ definePageMeta({
   breadcrumb: "Ateliers",
 })
 
-const assessmentStore = useAssessmentStore()
 const animatorStore = useAnimatorStore()
 const userStore = useUserStore()
 const router = useRouter()
 
-if (!assessmentStore.allInProgressAssessmentsLoaded) {
-  assessmentStore.getInProgressAssessments()
+if (!animatorStore.allAssessmentsLoaded) {
+  animatorStore.getAnimatorAssessments()
 }
 if (!animatorStore.allWorkshopsLoaded) {
   animatorStore.getWorkshops()

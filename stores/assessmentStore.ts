@@ -9,7 +9,6 @@ export const useAssessmentStore = defineStore("assessment", {
     assessmentById: <{ [key: number]: Assessment }>{},
     currentAssessmentId: <number>undefined,
     representativityCriterias: <RepresentativityCriteria[]>[],
-    allInProgressAssessmentsLoaded: <boolean>false,
   }),
   getters: {
     assessments: (state) => {
@@ -71,19 +70,8 @@ export const useAssessmentStore = defineStore("assessment", {
         errorStore.setError(error.messageCode)
       }
     },
-    async getInProgressAssessments() {
-      const { data, error } = await useApiGet<Assessment[]>(
-        "assessments/in-progress/"
-      )
-      if (!error.value) {
-        for (const assessment of data.value) {
-          this.assessmentById[assessment.id] = assessment
-        }
-        this.allInProgressAssessmentsLoaded = true
-      } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data?.messageCode)
-      }
+    addAssessment(assessment) {
+      this.assessmentById[assessment.id] = assessment
     },
     async getRepresentativityCriterias() {
       const { data, error } = await useApiGet<RepresentativityCriteria>(
