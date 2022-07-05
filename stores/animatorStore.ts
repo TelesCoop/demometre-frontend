@@ -152,12 +152,16 @@ export const useAnimatorStore = defineStore("animator", {
       } else {
         for (const participantId of this.workshopById[workshopId]
           .participantIds) {
-          apiResponse = await useApiPost<QuestionResponse>(
-            `workshops/${workshopId}/participant/${participantId}/response`,
+          const response =
             this.participantById[participantId].responseByQuestionId[
               question.id
             ]
-          )
+          if (response && response !== {}) {
+            apiResponse = await useApiPost<QuestionResponse>(
+              `workshops/${workshopId}/participant/${participantId}/response`,
+              response
+            )
+          }
         }
       }
       const { data, error } = apiResponse
