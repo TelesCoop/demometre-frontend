@@ -2,7 +2,9 @@
   <div class="is-flex flex-center">
     <div class="sm-container">
       <form class="my-8" @submit.prevent="onSubmit">
-        <h1 class="title is-1 has-text-shade-800">Création de compte</h1>
+        <h1 class="title is-1 has-text-shade-800">
+          {{ text.title }}
+        </h1>
 
         <!-- first name -->
         <div class="field has-text-shade-800">
@@ -111,7 +113,7 @@
         <!-- submit -->
         <div class="mt-1" style="text-align: end">
           <button class="button is-shade-600 is-small" :disabled="disabled">
-            <span>S'inscrire</span>
+            <span>{{ text.button }}</span>
             <span class="icon">
               <icon size="16" name="check" />
             </span>
@@ -204,6 +206,21 @@ const disabled = computed(
       email.value
     )
 )
+
+const text = computed(() => {
+  if (userStore.isUnknownUser) {
+    return {
+      title: "Enregistrer son compte",
+      button: "S'enregistrer",
+    }
+  }
+
+  return {
+    title: "Création de compte",
+    button: "S'inscrire",
+  }
+})
+
 async function onSubmit() {
   const response = await userStore.signup(
     firstName.value,
