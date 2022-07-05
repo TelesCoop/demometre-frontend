@@ -4,7 +4,7 @@
       <PageTitle title="Espace animateur" subtitle />
       <PageSection
         title="Participant·e·s"
-        intro="Saisissez les personnes ayant participées à votre atelier."
+        :intro="`Saisissez les personnes ayant participées à votre atelier ${animatorStore.workshopById[workshopId].name}.`"
         button-text="Revenir aux ateliers"
         button-link="/profil/ateliers"
         :left-icon="true"

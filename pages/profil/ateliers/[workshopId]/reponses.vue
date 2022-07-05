@@ -4,7 +4,7 @@
       <PageTitle title="Espace animateur" subtitle />
       <PageSection
         title="Réponses"
-        intro="Saisissez les réponses à l’évaluation pour chacun·e des participant·e·s."
+        :intro="`Saisissez les réponses à l’évaluation pour chacun·e des participant·e·s. de votre atelier ${animatorStore.workshopById[workshopId].name}.`"
         button-text="Revenir aux participant·e·s"
         :button-link="`/profil/ateliers/${workshopId}/participants`"
         :left-icon="true"

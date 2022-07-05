@@ -17,7 +17,7 @@
                   Date (MM/JJ/AAAA)
                 </td>
                 <td class="has-text-shade-400 is-uppercase is-size-6">
-                  Evaluation
+                  Evaluation*
                 </td>
                 <td></td>
               </tr>
@@ -79,7 +79,7 @@
             </tbody>
           </table>
           <p class="mb-1 is-size-7 has-text-shade-400">
-            NB: Seulement les ateliers des évaluations dont la redevance à été
+            *Seulement les ateliers des évaluations dont la redevance à été
             réglée sont visibles ici
           </p>
           <div class="buttons is-justify-content-space-between">
