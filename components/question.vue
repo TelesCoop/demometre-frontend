@@ -273,7 +273,7 @@ if (criteria.value?.definitionIds.length > 0) {
     id: "definitions",
   })
 }
-const explanatory = criteria.value?.explanatory as SimpleBlock[]
+const explanatory = (criteria.value?.explanatory || []) as SimpleBlock[]
 if (explanatory.length) {
   explanatory.forEach((element) => {
     tabs.value.push({
