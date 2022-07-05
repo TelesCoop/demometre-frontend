@@ -27,17 +27,30 @@
                   .intermediateStepTextLoggedOut
           "
         />
-        <nuxt-link
-          v-if="pillarsCompleted.length === 4"
-          class="button is-normal is-rounded is-outlined is-responsive is-shade-600"
-          to="/resultats"
-        >
-          <span>Voir les résultats</span>
-          <span class="icon">
-            <icon size="20" name="bar-chart-box-line" />
-          </span>
-        </nuxt-link>
+        <div class="buttons">
+          <nuxt-link
+            v-if="userStore.isUnknownUser"
+            class="button is-normal is-rounded is-outlined is-responsive is-shade-600"
+            to="/signup"
+          >
+            <span>Enregistrer</span>
+            <span class="icon">
+              <icon size="20" name="save" />
+            </span>
+          </nuxt-link>
+          <nuxt-link
+            v-if="pillarsCompleted.length === 4"
+            class="button is-normal is-rounded is-outlined is-responsive is-shade-600"
+            to="/resultats"
+          >
+            <span>Voir les résultats</span>
+            <span class="icon">
+              <icon size="20" name="bar-chart-box-line" />
+            </span>
+          </nuxt-link>
+        </div>
       </div>
+
       <div class="column is-6-desktop is-offset-1">
         <Rosette
           class="rosette-menu"
