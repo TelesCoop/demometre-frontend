@@ -10,7 +10,7 @@
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
+    :viewBox="viewBox"
     :width="size"
     :height="size"
     :style="style"
@@ -136,6 +136,12 @@
         d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"
       />
     </template>
+    <template v-else-if="props.name === 'save'">
+      <path
+        d="M2.5 8.5V5.5H7.5V8.5H8.5V2.914L7.086 1.5H1.5V8.5H2.5ZM1 0.5H7.5L9.5 2.5V9C9.5 9.13261 9.44732 9.25979 9.35355 9.35355C9.25979 9.44732 9.13261 9.5 9 9.5H1C0.867392 9.5 0.740215 9.44732 0.646447 9.35355C0.552678 9.25979 0.5 9.13261 0.5 9V1C0.5 0.867392 0.552678 0.740215 0.646447 0.646447C0.740215 0.552678 0.867392 0.5 1 0.5V0.5ZM3.5 6.5V8.5H6.5V6.5H3.5Z"
+        :fill="props.color"
+      />
+    </template>
   </svg>
 </template>
 
@@ -152,5 +158,12 @@ const size = computed(() => {
     return 24
   }
   return props.size
+})
+
+const CUSTOM_VIEWBOX = {
+  save: "0 0 10 10",
+}
+const viewBox = computed(() => {
+  return CUSTOM_VIEWBOX[props.name] || "0 0 24 24"
 })
 </script>

@@ -74,7 +74,23 @@
         </div>
       </div>
     </nav>
-    <QuestionnaireProgressBars v-if="isQuestionnaireRoute" :header="true" />
+    <div
+      v-if="isQuestionnaireRoute"
+      class="is-flex navbar-progress-bar-wrapper"
+      :class="{ 'is-unknown-user': userStore.isUnknownUser }"
+    >
+      <QuestionnaireProgressBars class="navbar-progress-bar" :header="true" />
+      <nuxt-link
+        v-if="userStore.isUnknownUser"
+        class="column button is-normal is-shade-200 navbar-progress-bar-save"
+        to="/signup"
+      >
+        <span>Enregistrer</span>
+        <span class="icon">
+          <icon size="15" name="save" />
+        </span>
+      </nuxt-link>
+    </div>
     <HeaderLine v-else :active-pillar-name="activePillar" />
   </header>
 </template>
@@ -142,6 +158,19 @@ const navItems = [
   margin: 14px 24px
 .button.evaluation:hover
   background: $cooperation
+
+.navbar-progress-bar-wrapper
+  width: 100%
+
+  &.is-unknown-user
+    .navbar-progress-bar
+      width: calc(100% - 180px)
+
+  .navbar-progress-bar
+    width: 100%
+  .navbar-progress-bar-save
+    width: 180px
+
 @include widescreen
   .navbar
     padding: 0 35px
