@@ -80,16 +80,17 @@
       :class="{ 'is-unknown-user': userStore.isUnknownUser }"
     >
       <QuestionnaireProgressBars class="navbar-progress-bar" :header="true" />
-      <nuxt-link
-        v-if="userStore.isUnknownUser"
-        class="column button is-normal is-shade-200 navbar-progress-bar-save"
-        to="/signup"
-      >
-        <span>Enregistrer</span>
-        <span class="icon">
-          <icon size="15" name="save" />
-        </span>
-      </nuxt-link>
+      <div v-if="userStore.isUnknownUser" class="navbar-progress-bar-save">
+        <nuxt-link
+          class="column button is-normal is-shade-200 navbar-progress-bar-save-button"
+          to="/signup"
+        >
+          <span>Enregistrer</span>
+          <span class="icon">
+            <icon size="15" name="save" />
+          </span>
+        </nuxt-link>
+      </div>
     </div>
     <HeaderLine v-else :active-pillar-name="activePillar" />
   </header>
@@ -160,20 +161,42 @@ const navItems = [
   background: $cooperation
 
 .navbar-progress-bar-wrapper
+  $navbar-progress-bar-save-button-width: 180px
   width: 100%
-
   &.is-unknown-user
     .navbar-progress-bar
-      width: calc(100% - 180px)
+      width: calc(100% - #{$navbar-progress-bar-save-button-width})
 
   .navbar-progress-bar
     width: 100%
   .navbar-progress-bar-save
-    width: 180px
+    display: flex
+    flex-direction: column
+
+  .navbar-progress-bar-save-button
+    flex-grow: 1
+    width: $navbar-progress-bar-save-button-width
+
+@include until-widescreen
+  .navbar-progress-bar-wrapper
+    $navbar-progress-bar-save-button-width: 50px
+    &.is-unknown-user
+      .navbar-progress-bar
+        width: calc(100% - #{$navbar-progress-bar-save-button-width})
+    .navbar-progress-bar-save-button
+      width: $navbar-progress-bar-save-button-width
+      .icon
+        display: flex
+        align-items: center
+        justify-content: center
+        margin-left: 0
+      span:not(.icon)
+        display: none
 
 @include widescreen
   .navbar
     padding: 0 35px
+
 @include fullhd
   .navbar
     padding: 0 70px
