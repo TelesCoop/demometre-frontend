@@ -156,7 +156,7 @@ export const useAnimatorStore = defineStore("animator", {
             this.participantById[participantId].responseByQuestionId[
               question.id
             ]
-          if (response && response !== {}) {
+          if (response && Object.entries(response).length === 0) {
             apiResponse = await useApiPost<QuestionResponse>(
               `workshops/${workshopId}/participant/${participantId}/response`,
               response
