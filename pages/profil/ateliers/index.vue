@@ -133,6 +133,7 @@ import { useUserStore } from "~/stores/userStore"
 definePageMeta({
   title: "Ateliers",
   breadcrumb: "Ateliers",
+  middleware: ["animator-space"],
 })
 
 const animatorStore = useAnimatorStore()

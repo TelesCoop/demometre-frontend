@@ -165,6 +165,7 @@ import { useAnimatorStore } from "~~/stores/animatorStore"
 definePageMeta({
   title: "Participants",
   breadcrumb: "Participants",
+  middleware: ["animator-space"],
 })
 
 const profilingStore = useProfilingStore()

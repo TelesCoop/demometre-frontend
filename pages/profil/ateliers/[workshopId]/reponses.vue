@@ -48,6 +48,7 @@ import { useProfilingStore } from "~~/stores/profilingStore"
 definePageMeta({
   title: "Réponses",
   breadcrumb: "Réponses",
+  middleware: ["animator-space"],
 })
 
 const questionnaireStore = useQuestionnaireStore()
