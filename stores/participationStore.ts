@@ -164,7 +164,9 @@ export const useParticipationStore = defineStore("participation", {
         const questionResponses =
           this[QUESTION_RESPONSES_BY_TYPE[question.surveyType]]
         questionResponses[question.id] = data.value
-        this.setTotalAndAnsweredQuestionsInPillar(question.pillarName)
+        if (question.surveyType === SurveyType.QUESTIONNAIRE) {
+          this.setTotalAndAnsweredQuestionsInPillar(question.pillarName)
+        }
         return true
       }
       return false

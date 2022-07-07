@@ -115,6 +115,7 @@
           :pillar="activePillar"
           :color="colorClass"
           :markers="markers"
+          :initial-question-id="activeQuestionId"
         />
       </section>
     </div>
@@ -146,6 +147,19 @@ if (!pageStore.referentialPage.title) {
 const activePillar = ref<PillarType>()
 const markers = ref<Marker[]>()
 
+const route = useRoute()
+const activeQuestionId = computed<number>(() => {
+  return parseInt(route.query.question as string)
+})
+
+watch(activeQuestionId, () => {
+  const pillar =
+    questionnaireStore.pillarByName[
+      questionnaireStore.questionById[activeQuestionId.value].pillarName
+    ]
+  onSelectPillar(pillar)
+})
+
 const colorClass = computed(() =>
   activePillar.value ? PillarParams[activePillar.value.name].color : ""
 )
@@ -162,7 +176,7 @@ const onSelectPillar = (pillar) => {
   markers.value = activePillar.value?.markerIds.map(
     (markerId) => questionnaireStore.markerById[markerId]
   )
-  router.push({ query: { pillar: pillar.name } })
+  router.push({ query: { ...route.query, pillar: pillar.name } })
 }
 
 const onDiscoverButtonClick = () => {
@@ -174,6 +188,14 @@ const onRosettePillarClicked = (pillarName) => {
 }
 const onRosetteMarkerClicked = (markerId) => {
   onRosettePillarClicked(questionnaireStore.markerById[markerId].pillarName)
+}
+
+if (activeQuestionId.value) {
+  const pillar =
+    questionnaireStore.pillarByName[
+      questionnaireStore.questionById[activeQuestionId.value]?.pillarName
+    ]
+  onSelectPillar(pillar)
 }
 </script>
 
