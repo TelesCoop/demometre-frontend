@@ -28,9 +28,9 @@
             @mouseenter="hoverQuestionId = question.id"
             @mouseleave="hoverQuestionId = null"
           >
-            <span :class="`has-text-${props.color}-active`">{{
-              question.concatenatedCode
-            }}</span>
+            <span :class="`has-text-${props.color}-active`">
+              {{ question.concatenatedCode }}
+            </span>
             {{ question.questionStatement }}
           </a>
         </li>
@@ -119,6 +119,7 @@
           v-if="activeQuestion"
           :class="`button is-rounded is-${color} ml-auto`"
           type="button"
+          :disabled="animatorStore.workshopById[workshopId].closed"
           @click.prevent="onSubmit"
         >
           <span>Valider les réponses</span>

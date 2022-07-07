@@ -103,7 +103,7 @@
                           !(
                             participation.participantName &&
                             participation.roleId
-                          )
+                          ) || animatorStore.workshopById[workshopId].closed
                         "
                         @click.prevent="saveParticipation(participation)"
                       >
@@ -123,6 +123,7 @@
               <button
                 class="button is-rounded is-shade-600 is-outlined"
                 type="button"
+                :disabled="animatorStore.workshopById[workshopId].closed"
                 @click.prevent="addParticipation()"
               >
                 <span class="icon">
@@ -230,21 +231,24 @@ async function saveParticipation(participation) {
 }
 
 async function onSubmit() {
-  const newParticipationsTmp = newParticipations.value
-  for (const participation of [
-    ...animatorStore.workshopParticipations(workshopId.value),
-    ...newParticipationsTmp,
-  ]) {
-    if (!participation.id) {
-      newParticipations.value.shift()
-    }
-    if (participation.changed) {
-      await animatorStore.createOrUpdateParticipation(
-        participation,
-        workshopId.value
-      )
+  if (!animatorStore.workshopById[workshopId.value].closed) {
+    const newParticipationsTmp = newParticipations.value
+    for (const participation of [
+      ...animatorStore.workshopParticipations(workshopId.value),
+      ...newParticipationsTmp,
+    ]) {
+      if (!participation.id) {
+        newParticipations.value.shift()
+      }
+      if (participation.changed) {
+        await animatorStore.createOrUpdateParticipation(
+          participation,
+          workshopId.value
+        )
+      }
     }
   }
+
   router.push(`/profil/ateliers/${workshopId.value}/reponses`)
 }
 </script>
