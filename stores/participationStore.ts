@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { useApiPatch, useApiPost, useGet } from "~/composables/api"
+import { useApiGet, useApiPatch, useApiPost } from "~/composables/api"
 import {
   Objectivity,
   Participation,
@@ -22,12 +22,15 @@ export const useParticipationStore = defineStore("participation", {
     responseByProfilingQuestionId: <{ [key: number]: QuestionResponse }>{},
     responseByQuestionnaireQuestionId: <{ [key: number]: QuestionResponse }>{},
     profilingCurrent: <number[]>[],
-    participation: <Participation>{},
+    currentParticipationId: <number>undefined,
     totalAndAnsweredQuestionsByPillarName: <
       { [key: string]: { total: number; answered: number; completed: boolean } }
     >{},
   }),
   getters: {
+    participation() {
+      return this.participations?.[this.currentParticipation] || {}
+    },
     id() {
       return this.participation?.id
     },
@@ -53,81 +56,89 @@ export const useParticipationStore = defineStore("participation", {
         }
       )
       if (!error.value) {
-        this.participation = data.value
+        this.currentParticipationId = data.value.id
         return true
       }
       const errorStore = useToastStore()
       errorStore.setError(error.value.data.messageCode)
       return false
     },
-    async getCurrentParticipation(headers = undefined) {
-      try {
-        const response = await useGet<Participation[]>("participations/", {
-          headers,
-        })
-        this.participation = response[0] || {}
-        if (Object.keys(this.participation).length === 0) {
-          return false
-        }
-        return true
-      } catch (e) {
+    async getCurrentParticipation(): Promise<boolean> {
+      const response = await useApiGet<Participation[]>(
+        "participations/current"
+      )
+      if (response.error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(response.error.value.data.messageCode)
         return false
       }
+      if (response.data.value?.id) {
+        this.currentParticipationId = response.data.value.id
+        this.participations[response.data.value.id] = response.data.value
+      }
+
+      return true
+    },
+    async getParticipations(): Promise<boolean> {
+      const response = await useApiGet<Participation[]>("participations")
+      if (response.error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(response.error.value.data.messageCode)
+        return false
+      }
+      this.participations = response.data.value
+
+      return true
     },
     setConsent() {
-      this.participation.consent = true
+      this.participations[this.currentParticipationId].consent = true
     },
     chooseRole(roleId) {
-      this.participation.roleId = roleId
+      this.participations[this.currentParticipationId].roleId = roleId
     },
 
-    async getProfilingQuestionResponses(
-      participationId: number,
-      headers = undefined
-    ) {
-      try {
-        const response = await useGet<QuestionResponse[]>(
-          `participation-responses/?context=profiling&participation_id=${participationId}`,
-          {
-            headers,
-          }
-        )
-        response.forEach((item) => {
-          this.responseByProfilingQuestionId[item.questionId] = item
-        })
-      } catch {
+    async getCurrentProfilingQuestionResponses() {
+      const response = await useApiGet<QuestionResponse[]>(
+        `participation-responses/current/?context=profiling`
+      )
+      if (response.error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(response.error.value.data.messageCode)
         return false
       }
+
+      response.data.value.forEach((item) => {
+        this.responseByProfilingQuestionId[item.questionId] = item
+      })
+      return true
     },
 
-    async getQuestionnaireQuestionResponses(
-      participationId: number,
-      assessmentId: number,
-      headers = undefined
-    ) {
-      try {
-        const participationResponses = await useGet<QuestionResponse[]>(
-          `participation-responses/?context=questionnaire&participation_id=${participationId}`,
-          {
-            headers,
-          }
-        )
-        participationResponses.forEach((item) => {
-          this.responseByQuestionnaireQuestionId[item.questionId] = item
-        })
-
-        const assessmentResponses = await useGet<QuestionResponse[]>(
-          `assessment-responses/?assessment_id=${assessmentId}`,
-          {
-            headers,
-          }
-        )
-        assessmentResponses.forEach((item) => {
-          this.responseByQuestionnaireQuestionId[item.questionId] = item
-        })
-      } catch {
+    async getCurrentQuestionnaireQuestionResponses() {
+      const participationResponses = await useApiGet<QuestionResponse[]>(
+        `participation-responses/current/?context=questionnaire`
+      )
+      if (participationResponses.error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(participationResponses.error.value.data.messageCode)
         return false
       }
+      participationResponses.data.value.forEach((item) => {
+        this.responseByQuestionnaireQuestionId[item.questionId] = item
+      })
+
+      const assessmentResponses = await useApiGet<QuestionResponse[]>(
+        `assessment-responses/current/`
+      )
+
+      if (assessmentResponses.error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(assessmentResponses.error.value.data.messageCode)
+        return false
+      }
+      assessmentResponses.data.value.forEach((item) => {
+        this.responseByQuestionnaireQuestionId[item.questionId] = item
+      })
+      return true
     },
 
     async saveResponse(question: Question, response: any, isAnswered: boolean) {
