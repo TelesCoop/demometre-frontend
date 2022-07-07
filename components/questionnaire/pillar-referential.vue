@@ -32,10 +32,9 @@
                   ? `has-text-${color}-active is-size-6bis`
                   : `has-text-${color} is-size-6bis`
               "
-              >{{
-                marker.concatenatedCode.substring(1).replace(/^\./, "")
-              }}</span
             >
+              {{ getConcatenedCodeWithoutPillar(marker.concatenatedCode) }}
+            </span>
             {{ wordTitleCase(marker.name) }}
           </a>
           <div v-if="marker.name === activeMarker?.name">
@@ -61,7 +60,7 @@
                     "
                   >
                     {{
-                      criteria.concatenatedCode.substring(1).replace(/^\./, "")
+                      getConcatenedCodeWithoutPillar(criteria.concatenatedCode)
                     }}
                   </span>
                   {{ criteria.name }}
@@ -220,16 +219,15 @@ const props = defineProps({
     default: undefined,
   },
 })
-
 const getCriteriasOfActiveMarker = () => {
-  return activeMarker.value.criteriaIds.map(
+  return activeMarker.value?.criteriaIds.map(
     (criteriaId) => questionnaireStore.criteriaById[criteriaId]
   )
 }
 
 const initialActiveCriteria =
   questionnaireStore.criteriaById[
-    questionnaireStore.questionById[props.initialQuestionId].criteriaId
+    questionnaireStore.questionById[props.initialQuestionId]?.criteriaId
   ]
 const activeCriteria = ref<Criteria>(initialActiveCriteria)
 const activeMarker = ref<Marker>(
@@ -277,6 +275,10 @@ const hoverMarkerClass = computed(() => {
 const hoverCriteriaClass = computed(() => {
   return `has-background-${props.color}-light has-text-black`
 })
+
+const getConcatenedCodeWithoutPillar = (code) => {
+  return code.substring(1).replace(/^\./, "")
+}
 
 const onFirstMarkerButtonClick = () => {
   const firstMarker = props.markers[0]

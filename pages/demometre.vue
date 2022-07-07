@@ -115,7 +115,7 @@
           :pillar="activePillar"
           :color="colorClass"
           :markers="markers"
-          :active-question-id="activeQuestionId"
+          :initial-question-id="activeQuestionId"
         />
       </section>
     </div>
