@@ -92,7 +92,7 @@ import {
   QuestionType,
   Question,
   QuestionResponse,
-  Participant,
+  WorkshopParticipation,
 } from "~/composables/types"
 import { computed, PropType, watch } from "vue"
 import { ref } from "@vue/reactivity"
@@ -107,8 +107,8 @@ const props = defineProps({
     required: true,
   },
   color: { type: String, required: true },
-  participant: {
-    type: Object as PropType<Participant>,
+  participation: {
+    type: Object as PropType<WorkshopParticipation>,
     required: false,
     default() {
       return {}
@@ -145,7 +145,7 @@ function adaptQuestionResponse() {
     props.question,
     answer.value,
     isAnswered.value,
-    props.participant.id,
+    props.participation.id,
     props.assessmentId
   )
 }
@@ -159,7 +159,7 @@ function adaptQuestionResponseForCloseWithScaleType() {
       }
     }),
     isAnswered.value,
-    props.participant.id,
+    props.participation.id,
     props.assessmentId
   )
 }

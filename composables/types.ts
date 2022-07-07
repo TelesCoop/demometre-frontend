@@ -239,13 +239,14 @@ export type Workshop = {
   date: string
   name: string
   animatorId: number
-  participantIds: number[]
+  participationIds: number[]
   changed: boolean
+  closed: boolean
 }
-export type Participant = {
+export type WorkshopParticipation = {
   id: number
-  userEmail: string
-  userUsername: string
+  participantEmail: string
+  participantName: string
   assessmentId: number
   roleId: number
   responses: QuestionResponse[]

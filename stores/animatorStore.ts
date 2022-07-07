@@ -2,16 +2,16 @@ import { defineStore } from "pinia"
 import {
   Assessment,
   Objectivity,
-  Participant,
   Question,
   QuestionResponse,
   Workshop,
+  WorkshopParticipation,
 } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
 import { useToastStore } from "./toastStore"
 
 type FullWorkshop = Workshop & {
-  participants: Participant[]
+  participations: WorkshopParticipation[]
   assessmentResponses: QuestionResponse[]
 }
 
@@ -21,7 +21,7 @@ export const useAnimatorStore = defineStore("animator", {
     allAssessmentsLoaded: <boolean>false,
     workshopById: <{ [key: number]: Workshop }>{},
     allWorkshopsLoaded: <boolean>false,
-    participantById: <{ [key: number]: Participant }>{},
+    participationById: <{ [key: number]: WorkshopParticipation }>{},
     assessmentResponseByQuestionIdByWorkshopId: <
       { [key: number]: { [key: number]: QuestionResponse } }
     >{},
@@ -35,28 +35,28 @@ export const useAnimatorStore = defineStore("animator", {
     workshops: (state) => {
       return Object.values(state.workshopById)
     },
-    workshopParticipants: (state) => {
+    workshopParticipations: (state) => {
       return (workshopId) => {
-        return state.workshopById[workshopId].participantIds.map(
-          (participantId) => state.participantById[participantId]
+        return state.workshopById[workshopId].participationIds.map(
+          (participationId) => state.participationById[participationId]
         )
       }
     },
   },
   actions: {
-    setParticipantFromApiToStore(participant: Participant) {
-      participant.changed = false
-      participant.responseByQuestionId = {}
-      participant.responses.forEach((response) => {
-        participant.responseByQuestionId[response.questionId] = response
+    setParticipationtFromApiToStore(participation: WorkshopParticipation) {
+      participation.changed = false
+      participation.responseByQuestionId = {}
+      participation.responses.forEach((response) => {
+        participation.responseByQuestionId[response.questionId] = response
       })
-      this.participantById[participant.id] = participant
+      this.participationById[participation.id] = participation
     },
     setFullWorkshopFromApiToStore(workshop: FullWorkshop) {
       this.workshopById[workshop.id] = workshop
       this.workshopById[workshop.id].changed = false
-      workshop.participants.forEach((participant) => {
-        this.setParticipantFromApiToStore(participant)
+      workshop.participations.forEach((participation) => {
+        this.setParticipationtFromApiToStore(participation)
       })
       this.assessmentResponseByQuestionIdByWorkshopId[workshop.id] = {}
       workshop.assessmentResponses.forEach((response) => {
@@ -111,24 +111,26 @@ export const useAnimatorStore = defineStore("animator", {
       errorStore.setError(error.value.data.messageCode)
       return false
     },
-    async createOrUpdateParticipant(
-      participant: Participant,
+    async createOrUpdateParticipation(
+      participation: WorkshopParticipation,
       workshopId: number
     ) {
-      participant.responses = Object.values(
-        JSON.parse(JSON.stringify(participant.responseByQuestionId))
+      participation.responses = Object.values(
+        JSON.parse(JSON.stringify(participation.responseByQuestionId))
       )
       const toastStore = useToastStore()
-      const { data, error } = await useApiPost<Participant>(
-        `workshops/${workshopId}/participant/`,
-        { ...participant, workshopId: workshopId }
+      const { data, error } = await useApiPost<WorkshopParticipation>(
+        `workshops/${workshopId}/participation/`,
+        { ...participation, workshopId: workshopId }
       )
       if (!error.value) {
-        this.setParticipantFromApiToStore(data.value)
+        this.setParticipationtFromApiToStore(data.value)
         if (
-          !this.workshopById[workshopId].participantIds.includes(data.value.id)
+          !this.workshopById[workshopId].participationIds.includes(
+            data.value.id
+          )
         ) {
-          this.workshopById[workshopId].participantIds.push(data.value.id)
+          this.workshopById[workshopId].participationIds.push(data.value.id)
         }
         toastStore.setInfo("Sauvegarde réussie")
         return data.value
@@ -141,40 +143,57 @@ export const useAnimatorStore = defineStore("animator", {
       workshopId: number,
       question: Question
     ) {
-      let apiResponse
+      let errorOccured = false
       if (question.objectivity === Objectivity.OBJECTIVE) {
-        apiResponse = await useApiPost<QuestionResponse>(
+        const apiResponse = await useApiPost<QuestionResponse>(
           `assessment-responses/`,
           this.assessmentResponseByQuestionIdByWorkshopId[workshopId][
             question.id
           ]
         )
+        if (apiResponse.error.value) {
+          errorOccured = true
+        }
       } else {
-        for (const participantId of this.workshopById[workshopId]
-          .participantIds) {
+        for (const participationId of this.workshopById[workshopId]
+          .participationIds) {
           const response =
-            this.participantById[participantId].responseByQuestionId[
+            this.participationById[participationId].responseByQuestionId[
               question.id
             ]
-          if (response && Object.entries(response).length === 0) {
-            apiResponse = await useApiPost<QuestionResponse>(
-              `workshops/${workshopId}/participant/${participantId}/response`,
+
+          console.log(response)
+          if (response && Object.entries(response).length !== 0) {
+            const apiResponse = await useApiPost<QuestionResponse>(
+              `workshops/${workshopId}/participation/${participationId}/response/`,
               response
             )
+            if (apiResponse.error.value) {
+              errorOccured = true
+            }
           }
         }
       }
-      const { data, error } = apiResponse
       const toastStore = useToastStore()
 
+      if (errorOccured) {
+        toastStore.setError("Une erreur s'est produite lors de la sauvegarde")
+        return false
+      }
+      toastStore.setInfo("Sauvegarde réussie")
+      return true
+    },
+    async closeWorkshop(workshopId: number) {
+      const { data, error } = await useApiPatch<Workshop>(
+        `workshops/${workshopId}/closed/`
+      )
       if (error.value) {
-        toastStore.setError(error.value.data.messageCode)
+        return false
       }
-      if (!error.value && data.value) {
-        toastStore.setInfo("Sauvegarde réussie")
-        return true
-      }
-      return false
+      const workshop = data.value
+      this.workshopById[workshop.id] = workshop
+      this.workshopById[workshop.id].changed = false
+      return true
     },
   },
 })

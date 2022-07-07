@@ -163,6 +163,12 @@
         :fill="props.color"
       />
     </template>
+    <template v-else-if="props.name === 'close'">
+      <path
+        d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"
+        :fill="props.color"
+      />
+    </template>
   </svg>
 </template>
 

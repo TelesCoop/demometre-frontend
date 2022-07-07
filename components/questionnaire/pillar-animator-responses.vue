@@ -55,24 +55,26 @@
               <td class="pb-0_5">Réponses</td>
             </tr>
             <tr
-              v-for="participant of animatorStore.workshopParticipants(
+              v-for="participation of animatorStore.workshopParticipations(
                 props.workshopId
               )"
-              :key="participant.id"
+              :key="participation.id"
             >
               <td class="pb-1 pr-0_75">
                 <p
                   :class="`has-background-${props.color}-light is-fullheight py-0_5 px-1`"
                 >
-                  {{ participant.userUsername }}
+                  {{ participation.participantName }}
                 </p>
               </td>
               <td class="pb-1">
                 <ResponseAnimator
-                  v-model="participant.responseByQuestionId[activeQuestion.id]"
+                  v-model="
+                    participation.responseByQuestionId[activeQuestion.id]
+                  "
                   :question="activeQuestion"
-                  :participant="participant"
-                  :assessment-id="participant.assessmentId"
+                  :participation="participation"
+                  :assessment-id="participation.assessmentId"
                   :color="props.color"
                 />
               </td>

@@ -24,9 +24,9 @@
             </thead>
             <tbody>
               <AccordionTable
-                v-for="(participant, index) of [
-                  ...animatorStore.workshopParticipants(workshopId),
-                  ...newParticipants,
+                v-for="(participation, index) of [
+                  ...animatorStore.workshopParticipations(workshopId),
+                  ...newParticipations,
                 ]"
                 :id="index"
                 :key="index"
@@ -34,27 +34,27 @@
                 <template #title>
                   <td>
                     <input
-                      v-model="participant.userUsername"
+                      v-model="participation.participantName"
                       :class="`input is-shade-300`"
                       type="text"
                       placeholder="écrire ici ..."
-                      @change="participant.changed = true"
+                      @change="participation.changed = true"
                     />
                   </td>
                   <td>
                     <input
-                      v-model="participant.userEmail"
+                      v-model="participation.participantEmail"
                       :class="`input is-shade-300`"
                       type="email"
                       placeholder="écrire ici ..."
-                      @change="participant.changed = true"
+                      @change="participation.changed = true"
                     />
                   </td>
                   <td>
                     <div class="select">
                       <select
-                        v-model="participant.roleId"
-                        @change="participant.changed = true"
+                        v-model="participation.roleId"
+                        @change="participation.changed = true"
                       >
                         <option
                           v-for="role in profilingStore.roles"
@@ -82,14 +82,16 @@
                           {{ profilingStore.questionById[questionId].name }}
                         </p>
                         <ResponseAnimator
-                          v-model="participant.responseByQuestionId[questionId]"
+                          v-model="
+                            participation.responseByQuestionId[questionId]
+                          "
                           :question="profilingStore.questionById[questionId]"
-                          :participant="participant"
+                          :participation="participation"
                           :assessment-id="
                             animatorStore.workshopById[workshopId].assessmentId
                           "
                           color="no-pillar"
-                          @change="participant.changed = true"
+                          @change="participation.changed = true"
                         />
                       </div>
                     </div>
@@ -98,9 +100,12 @@
                         class="button is-rounded is-shade-600 is-outlined"
                         type="button"
                         :disabled="
-                          !(participant.userUsername && participant.roleId)
+                          !(
+                            participation.participantName &&
+                            participation.roleId
+                          )
                         "
-                        @click.prevent="saveParticipant(participant)"
+                        @click.prevent="saveParticipation(participation)"
                       >
                         <span>Valider le profil</span>
                         <span class="icon">
@@ -118,7 +123,7 @@
               <button
                 class="button is-rounded is-shade-600 is-outlined"
                 type="button"
-                @click.prevent="addParticipant()"
+                @click.prevent="addParticipation()"
               >
                 <span class="icon">
                   <icon size="16" name="add-line" />
@@ -126,10 +131,10 @@
                 <span>Ajouter un·e participant·e</span>
               </button>
               <button
-                v-if="newParticipants.length"
+                v-if="newParticipations.length"
                 class="button is-rounded is-shade-600 is-outlined"
                 type="button"
-                @click.prevent="removeParticipant()"
+                @click.prevent="removeParticipation()"
               >
                 <span class="icon">
                   <icon size="16" name="delete-bin-line" />
@@ -158,7 +163,7 @@
 
 <script setup lang="ts">
 import { useProfilingStore } from "~/stores/profilingStore"
-import { Participant } from "~/composables/types"
+import { WorkshopParticipation } from "~/composables/types"
 import { Ref, ref } from "@vue/reactivity"
 import { useAnimatorStore } from "~~/stores/animatorStore"
 
@@ -179,57 +184,63 @@ if (!profilingStore.roles.length) {
 }
 if (
   !animatorStore.workshopById[workshopId.value] ||
-  animatorStore.workshopById[workshopId.value].participantIds.length !==
-    animatorStore.workshopParticipants(workshopId.value).length
+  animatorStore.workshopById[workshopId.value].participationIds.length !==
+    animatorStore.workshopParticipations(workshopId.value).length
 ) {
   animatorStore.getWorkshop(workshopId.value)
 }
 
-const newParticipants = ref<Participant[]>([])
+const newParticipations = ref<WorkshopParticipation[]>([])
 
 const validateDisabled = computed(() =>
   [
-    ...newParticipants.value,
-    ...animatorStore.workshopParticipants(workshopId.value),
-  ].some((participant) => !(participant?.userUsername && participant?.roleId))
+    ...newParticipations.value,
+    ...animatorStore.workshopParticipations(workshopId.value),
+  ].some(
+    (participation) =>
+      !(participation?.participantName && participation?.roleId)
+  )
 )
 
-function addParticipant() {
-  newParticipants.value.push({
+function addParticipation() {
+  newParticipations.value.push({
     id: undefined,
     assessmentId: animatorStore.workshopById[workshopId.value].assessmentId,
     roleId: undefined,
-    userEmail: "",
-    userUsername: "",
+    participantName: "",
+    participantEmail: "",
     responses: undefined,
     responseByQuestionId: {},
     changed: true,
   })
 }
 
-function removeParticipant() {
-  newParticipants.value.pop()
+function removeParticipation() {
+  newParticipations.value.pop()
 }
 
-async function saveParticipant(participant) {
-  await animatorStore.createOrUpdateParticipant(participant, workshopId.value)
-  if (!participant.id) {
-    newParticipants.value.shift()
+async function saveParticipation(participation) {
+  await animatorStore.createOrUpdateParticipation(
+    participation,
+    workshopId.value
+  )
+  if (!participation.id) {
+    newParticipations.value.shift()
   }
 }
 
 async function onSubmit() {
-  const newParticipantsTmp = newParticipants.value
-  for (const participant of [
-    ...animatorStore.workshopParticipants(workshopId.value),
-    ...newParticipantsTmp,
+  const newParticipationsTmp = newParticipations.value
+  for (const participation of [
+    ...animatorStore.workshopParticipations(workshopId.value),
+    ...newParticipationsTmp,
   ]) {
-    if (!participant.id) {
-      newParticipants.value.shift()
+    if (!participation.id) {
+      newParticipations.value.shift()
     }
-    if (participant.changed) {
-      await animatorStore.createOrUpdateParticipant(
-        participant,
+    if (participation.changed) {
+      await animatorStore.createOrUpdateParticipation(
+        participation,
         workshopId.value
       )
     }

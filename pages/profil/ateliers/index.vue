@@ -60,20 +60,42 @@
                     </select>
                   </div>
                 </td>
-                <td style="text-align: end">
-                  <button
-                    class="button is-rounded is-shade-600 is-outlined"
-                    type="button"
-                    :disabled="
-                      !(workshop.name && workshop.date && workshop.assessmentId)
-                    "
-                    @click.prevent="saveAndGoToParticipants(workshop)"
+                <td style="text-align: end; vertical-align: middle">
+                  <div
+                    v-if="!workshop.closed"
+                    class="buttons is-justify-content-flex-end"
                   >
-                    <span>Saisir les participant·e·s</span>
-                    <span class="icon">
-                      <icon size="16" name="user-add-line" />
+                    <button
+                      class="button is-rounded is-shade-600 is-outlined"
+                      type="button"
+                      :disabled="
+                        !(
+                          workshop.name &&
+                          workshop.date &&
+                          workshop.assessmentId
+                        )
+                      "
+                      @click.prevent="saveAndGoToParticipants(workshop)"
+                    >
+                      <span>Saisir les participant·e·s</span>
+                      <span class="icon">
+                        <icon size="16" name="user-add-line" />
+                      </span>
+                    </button>
+                    <button
+                      class="button is-rounded is-shade-600 is-outlined js-modal-trigger"
+                      :disabled="!workshop.id"
+                      @click.prevent="closeWorkshopIdModal = workshop.id"
+                    >
+                      <span>Clôturer l'atelier</span>
+                    </button>
+                  </div>
+                  <div v-else>
+                    <span class="tag is-shade-500">
+                      Atelier clôturé
+                      <icon size="16" name="check" />
                     </span>
-                  </button>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -122,6 +144,41 @@
         </div>
       </PageSection>
     </div>
+    <div
+      id="modal-validate-workshop"
+      class="modal"
+      :class="closeWorkshopIdModal && `is-active`"
+    >
+      <div class="modal-background" @click.prevent="closeModal()"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Clôturer l'atelier</p>
+          <button
+            class="button is-ghost is-rounded is-outlined"
+            @click.prevent="closeModal()"
+          >
+            <icon size="20" name="close" />
+          </button>
+        </header>
+        <section class="modal-card-body">
+          <div>
+            Vous vous apprêtez à clôturer l'atelier afin que le calcul des
+            résultats soit mis à jour et que les utilisateurs puissent récupérer
+            les informations de leur participation. Attention: il ne sera plus
+            possible de faire de modification sur cet atelier
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            class="button is-success"
+            @click.prevent="closeWorkshop(workshop)"
+          >
+            Clôturer
+          </button>
+          <button class="button" @click.prevent="closeModal()">Annuler</button>
+        </footer>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -147,6 +204,7 @@ if (!animatorStore.allWorkshopsLoaded) {
   animatorStore.getWorkshops()
 }
 
+const closeWorkshopIdModal = ref<number>(undefined)
 const newWorkshops = ref<Workshop[]>([])
 const validateDisabled = computed(() =>
   [...newWorkshops.value, ...animatorStore.workshops].some(
@@ -167,13 +225,18 @@ function addWorkshop() {
     name: "",
     date: "",
     animatorId: userStore.user.id,
-    participantIds: [],
+    participationIds: [],
     changed: true,
+    closed: false,
   })
 }
 
 function removeWorkshop() {
   newWorkshops.value.pop()
+}
+
+function closeModal() {
+  closeWorkshopIdModal.value = undefined
 }
 
 async function saveAndGoToParticipants(workshop) {
@@ -189,7 +252,6 @@ async function saveAndGoToParticipants(workshop) {
 }
 
 async function onSubmit() {
-  debugger
   const newWorkshopsTmp = newWorkshops.value
   for (const workshop of [...animatorStore.workshops, ...newWorkshopsTmp]) {
     if (!workshop.id) {
@@ -199,6 +261,11 @@ async function onSubmit() {
       await animatorStore.createOrUpdateWorkshop(workshop)
     }
   }
+}
+
+async function closeWorkshop() {
+  await animatorStore.closeWorkshop(closeWorkshopIdModal.value)
+  closeModal()
 }
 </script>
 
