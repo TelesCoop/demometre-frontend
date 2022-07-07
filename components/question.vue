@@ -108,28 +108,31 @@
                 <Icon v-else size="16" name="arrow-right-line" />
               </i>
             </button>
-            <span v-if="isLoading" class="is-size-7 has-text-shade-600">
-              en cours de chargement
-            </span>
+            <span v-if="isLoading" class="is-size-7 has-text-shade-600"
+              >en cours de chargement</span
+            >
             <span
               v-else
               class="is-size-7 has-text-shade-600 hidden-in-mobile-mode"
             >
               appuyez sur
-              <span class="has-text-weight-bold">Entrer ⏎</span></span
-            >
+              <span class="has-text-weight-bold">Entrer ⏎</span>
+            </span>
           </div>
           <div class="is-flex buttons rounds">
-            <a href="" class="button is-dark is-outlined is-rounded">
+            <a href class="button is-dark is-outlined is-rounded">
               <i class="icon">
                 <Icon size="16" name="bar-chart-box" />
               </i>
             </a>
-            <a href="" class="button is-dark is-outlined is-rounded">
+            <NuxtLink
+              :to="`/demometre?question=${question.id}`"
+              class="button is-dark is-outlined is-rounded"
+            >
               <i class="icon">
                 <Icon size="16" name="question-mark" />
               </i>
-            </a>
+            </NuxtLink>
           </div>
         </div>
       </form>
