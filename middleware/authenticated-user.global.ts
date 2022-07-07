@@ -3,20 +3,17 @@ import { useRequestHeaders } from "#app"
 import { getParticipationUserData } from "~/composables/actions"
 
 const loadUserState = async () => {
-  if (!process.server) return
-
-  // Conserve header because of crash
-  const headers = useRequestHeaders(["cookie", "csrftoken"])
-  const userStore = useUserStore()
-
-  if (!userStore.refreshed) {
-    // if profile is already got from SSR, do not fetch again
-    await userStore.refreshProfile(headers)
-  }
-
-  if (userStore.isLoggedIn || userStore.isUnknownUser) {
-    await getParticipationUserData(headers)
-  }
+  // // Conserve header because of crash
+  // const headers = useRequestHeaders(["cookie", "csrftoken"])
+  // const userStore = useUserStore()
+  //
+  // if (!userStore.refreshed) {
+  //   // if profile is already got from SSR, do not fetch again
+  //   await userStore.refreshProfile()
+  // }
+  //
+  // if (userStore.isLoggedIn || userStore.isUnknownUser) {
+  //   await getParticipationUserData()
 }
 
 export default defineNuxtRouteMiddleware(loadUserState)

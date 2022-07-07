@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { User } from "~/composables/types"
-import { useApiPost, useGet } from "~/composables/api"
+import { useApiGet, useApiPost } from "~/composables/api"
 import { useToastStore } from "./toastStore"
 import { getParticipationUserData } from "~/composables/actions"
 import { useParticipationStore } from "./participationStore"
@@ -9,7 +9,6 @@ import { useAssessmentStore } from "./assessmentStore"
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: <User>{},
-    refreshed: <boolean>false,
   }),
   getters: {
     isLoggedIn() {
@@ -75,15 +74,15 @@ export const useUserStore = defineStore("user", {
         errorStore.setError(error.value.data.messageCode)
       }
     },
-    async refreshProfile(headers = undefined) {
-      this.refreshed = true
-      try {
-        const response = await useGet<User>(`auth/profile`, { headers })
-        this.user = response
-        return true
-      } catch (e) {
+    async refreshProfile() {
+      const response = await useApiGet<User>(`auth/profile`)
+      if (response.error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(response.error.value.data.messageCode)
         return false
       }
+      this.user = response.data.value
+      return true
     },
     async sendResetLink(email: string) {
       const { error } = await useApiPost<User>(
