@@ -32,9 +32,10 @@
                   ? `has-text-${color}-active is-size-6bis`
                   : `has-text-${color} is-size-6bis`
               "
+              >{{
+                getConcatenedCodeWithoutPillar(marker.concatenatedCode)
+              }}</span
             >
-              {{ getConcatenedCodeWithoutPillar(marker.concatenatedCode) }}
-            </span>
             {{ wordTitleCase(marker.name) }}
           </a>
           <div v-if="marker.name === activeMarker?.name">
@@ -76,53 +77,8 @@
         <header>
           <h2 class="title is-4 mb-0_75">{{ criteriaTitle }}</h2>
           <hr class="my-0_75" />
-          <RichText
-            v-if="activeCriteria.description"
-            :rich-text="activeCriteria.description"
-            class="is-family-secondary subtitle mb-2"
-          />
         </header>
-        <Accordion v-if="activeCriteria.definitionIds.length" id="definitions">
-          <template #title>
-            <h3 class="subtitle has-text-weight-bold mb-1">Definitions</h3>
-          </template>
-          <template #content>
-            <div
-              v-for="definitionId of activeCriteria.definitionIds"
-              :key="definitionId"
-            >
-              <p class="has-text-weight-bold">
-                {{ definitionStore.definitionById[definitionId].word }}
-              </p>
-              <RichText
-                :rich-text="
-                  definitionStore.definitionById[definitionId].explanation
-                "
-                class="is-family-secondary"
-              />
-            </div>
-          </template>
-        </Accordion>
-        <template v-if="activeCriteria.explanatory">
-          <Accordion
-            v-for="explanatory of criteriaExplinatories"
-            :id="explanatory.title"
-            :key="explanatory.title"
-          >
-            <template #title>
-              <h3 class="subtitle has-text-weight-bold mb-1">
-                {{ explanatory.title }}
-              </h3>
-            </template>
-            <template #content>
-              <RichText
-                :rich-text="explanatory.description"
-                class="is-family-secondary"
-              />
-            </template>
-          </Accordion>
-        </template>
-
+        <slot name="criteria" :criteria="activeCriteria"></slot>
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive`"
@@ -136,26 +92,8 @@
         <header>
           <h2 class="title is-4 mb-0_75">{{ markerTitle }}</h2>
           <hr class="my-0_75" />
-          <RichText
-            v-if="activeMarker.description"
-            :rich-text="activeMarker.description"
-            class="is-family-secondary subtitle mb-2"
-          />
         </header>
-        <div class="score">
-          <div v-for="i in 4" :key="i" class="level">
-            <div class="level-left">
-              <AnalyticsScore
-                :score="i"
-                :color="color"
-                class="level-item mr-1_5"
-              />
-              <p class="level-item">
-                {{ wordTitleCase(activeMarker["score" + i]) }}
-              </p>
-            </div>
-          </div>
-        </div>
+        <slot name="marker" :marker="activeMarker"></slot>
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive mt-2 mr-1`"
@@ -204,10 +142,8 @@ import { computed } from "vue"
 import { wordTitleCase } from "~/utils/util"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, Criteria } from "~/composables/types"
-import { useDefinitionStore } from "~~/stores/definitionStore"
 
 const questionnaireStore = useQuestionnaireStore()
-const definitionStore = useDefinitionStore()
 
 const props = defineProps({
   pillar: { type: Object, required: true },
@@ -242,10 +178,6 @@ const markerTitle = computed<string>(() =>
 )
 const criteriaTitle = computed<string>(() =>
   activeCriteria.value ? wordTitleCase(activeCriteria.value.name) : ""
-)
-
-const criteriaExplinatories = computed(() =>
-  activeCriteria.value ? activeCriteria.value.explanatory : []
 )
 
 watch(

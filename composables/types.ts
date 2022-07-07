@@ -288,6 +288,12 @@ export type ReferentialPage = {
   criteriaBlockLeftContent: string
   criteriaBlockRightContent: string
 }
+export type ResultsPage = {
+  title: string
+  tagLine: string
+  introduction: string
+  introImageUrl: string
+}
 
 type ImageUrl = { id: number; url: string }
 type AssessmentTypeDetails = {
