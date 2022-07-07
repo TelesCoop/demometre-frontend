@@ -25,18 +25,18 @@
             @click="onSelectMarker(marker)"
             @mouseenter="hoverMarkerId = marker.id"
             @mouseleave="hoverMarkerId = null"
-            ><span
+          >
+            <span
               :class="
                 marker.name === activeMarker?.name && !activeCriteria
                   ? `has-text-${color}-active is-size-6bis`
                   : `has-text-${color} is-size-6bis`
               "
-              >{{
-                marker.concatenatedCode.substring(1).replace(/^\./, "")
-              }}</span
             >
-            {{ wordTitleCase(marker.name) }}</a
-          >
+              {{ getConcatenedCodeWithoutPillar(marker.concatenatedCode) }}
+            </span>
+            {{ wordTitleCase(marker.name) }}
+          </a>
           <div v-if="marker.name === activeMarker?.name">
             <ul>
               <li v-for="criteria of criterias" :key="criteria.id">
@@ -51,18 +51,20 @@
                   @click="onSelectCriteria(criteria)"
                   @mouseenter="hoverCriteriaId = criteria.id"
                   @mouseleave="hoverCriteriaId = null"
-                  ><span
+                >
+                  <span
                     :class="
                       criteria.name === activeCriteria?.name
                         ? `has-text-${color}-active is-size-6bis`
                         : `has-text-${color} is-size-6bis`
                     "
-                    >{{
-                      criteria.concatenatedCode.substring(1).replace(/^\./, "")
-                    }}</span
                   >
-                  {{ criteria.name }}</a
-                >
+                    {{
+                      getConcatenedCodeWithoutPillar(criteria.concatenatedCode)
+                    }}
+                  </span>
+                  {{ criteria.name }}
+                </a>
               </li>
             </ul>
           </div>
@@ -74,50 +76,53 @@
         <header>
           <h2 class="title is-4 mb-0_75">{{ criteriaTitle }}</h2>
           <hr class="my-0_75" />
+          <RichText
+            v-if="activeCriteria.description"
+            :rich-text="activeCriteria.description"
+            class="is-family-secondary subtitle mb-2"
+          />
+        </header>
+        <Accordion v-if="activeCriteria.definitionIds.length" id="definitions">
+          <template #title>
+            <h3 class="subtitle has-text-weight-bold mb-1">Definitions</h3>
+          </template>
+          <template #content>
+            <div
+              v-for="definitionId of activeCriteria.definitionIds"
+              :key="definitionId"
+            >
+              <p class="has-text-weight-bold">
+                {{ definitionStore.definitionById[definitionId].word }}
+              </p>
+              <RichText
+                :rich-text="
+                  definitionStore.definitionById[definitionId].explanation
+                "
+                class="is-family-secondary"
+              />
+            </div>
+          </template>
+        </Accordion>
+        <template v-if="activeCriteria.explanatory">
           <Accordion
-            v-if="activeCriteria.definitionIds.length"
-            id="definitions"
+            v-for="explanatory of criteriaExplinatories"
+            :id="explanatory.title"
+            :key="explanatory.title"
           >
             <template #title>
-              <h3 class="subtitle has-text-weight-bold mb-1">Definitions</h3>
+              <h3 class="subtitle has-text-weight-bold mb-1">
+                {{ explanatory.title }}
+              </h3>
             </template>
             <template #content>
-              <div
-                v-for="definitionId of activeCriteria.definitionIds"
-                :key="definitionId"
-              >
-                <p class="has-text-weight-bold">
-                  {{ definitionStore.definitionById[definitionId].word }}
-                </p>
-                <RichText
-                  :rich-text="
-                    definitionStore.definitionById[definitionId].explanation
-                  "
-                  class="is-family-secondary"
-                />
-              </div>
+              <RichText
+                :rich-text="explanatory.description"
+                class="is-family-secondary"
+              />
             </template>
           </Accordion>
-          <template v-if="activeCriteria.explanatory">
-            <Accordion
-              v-for="explanatory of criteriaExplinatories"
-              :id="explanatory.title"
-              :key="explanatory.title"
-            >
-              <template #title>
-                <h3 class="subtitle has-text-weight-bold mb-1">
-                  {{ explanatory.title }}
-                </h3>
-              </template>
-              <template #content>
-                <RichText
-                  :rich-text="explanatory.description"
-                  class="is-family-secondary"
-                />
-              </template>
-            </Accordion>
-          </template>
-        </header>
+        </template>
+
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive`"
@@ -208,11 +213,27 @@ const props = defineProps({
   pillar: { type: Object, required: true },
   color: { type: String, required: true },
   markers: { type: Array, required: false },
+  initialQuestionId: {
+    type: Number,
+    required: false,
+    default: undefined,
+  },
 })
+const getCriteriasOfActiveMarker = () => {
+  return activeMarker.value?.criteriaIds.map(
+    (criteriaId) => questionnaireStore.criteriaById[criteriaId]
+  )
+}
 
-const activeMarker = ref<Marker>()
-const criterias = ref<Criteria[]>()
-const activeCriteria = ref<Criteria>()
+const initialActiveCriteria =
+  questionnaireStore.criteriaById[
+    questionnaireStore.questionById[props.initialQuestionId]?.criteriaId
+  ]
+const activeCriteria = ref<Criteria>(initialActiveCriteria)
+const activeMarker = ref<Marker>(
+  questionnaireStore.markerById[activeCriteria.value?.markerId]
+)
+const criterias = ref<Criteria[]>(getCriteriasOfActiveMarker())
 const hoverMarkerId = ref<number>()
 const hoverCriteriaId = ref<number>()
 
@@ -237,9 +258,7 @@ watch(
 
 const onSelectMarker = (marker) => {
   activeMarker.value = marker
-  criterias.value = activeMarker.value.criteriaIds.map(
-    (criteriaId) => questionnaireStore.criteriaById[criteriaId]
-  )
+  criterias.value = getCriteriasOfActiveMarker()
   activeCriteria.value = null
 }
 const onSelectCriteria = (criteria) => {
@@ -256,6 +275,10 @@ const hoverMarkerClass = computed(() => {
 const hoverCriteriaClass = computed(() => {
   return `has-background-${props.color}-light has-text-black`
 })
+
+const getConcatenedCodeWithoutPillar = (code) => {
+  return code.substring(1).replace(/^\./, "")
+}
 
 const onFirstMarkerButtonClick = () => {
   const firstMarker = props.markers[0]
