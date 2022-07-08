@@ -4,9 +4,7 @@
       <h3 v-if="props.isInsideBigSection" :class="titleClasses">
         {{ props.title }}
       </h3>
-      <h2 v-else :class="titleClasses">
-        {{ props.title }}
-      </h2>
+      <h2 v-else :class="titleClasses">{{ props.title }}</h2>
       <div
         class="is-flex is-flex-direction-row is-justify-content-space-between is-flex-wrap-wrap mb-3"
       >
@@ -23,10 +21,11 @@
           ]"
           :to="props.buttonLink"
         >
-          <span>{{ props.buttonText }}</span>
+          <span v-if="!props.leftIcon">{{ props.buttonText }}</span>
           <span class="icon">
-            <icon size="20" name="arrow-right-line" />
+            <icon size="20" :name="props.icon" />
           </span>
+          <span v-if="props.leftIcon">{{ props.buttonText }}</span>
         </nuxt-link>
       </div>
       <slot></slot>
@@ -43,6 +42,8 @@ const props = defineProps({
   buttonColor: { type: String, default: "shade-600" },
   buttonOutlined: { type: Boolean, default: false },
   buttonTextDark: { type: Boolean, default: false },
+  leftIcon: { type: Boolean, default: false },
+  icon: { type: String, default: "arrow-right-line" },
   isInsideBigSection: { type: Boolean, default: false },
 })
 

@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="column is-5-desktop is-offset-1">
-          <Rosette
+          <QuestionnaireRosette
             class="rosette-menu"
             center-button-name="Découvrir"
             @center-button-click="onDiscoverButtonClick()"
@@ -74,7 +74,7 @@
             :rich-text="pageStore.referentialPage.markerBlockContent"
             class="is-family-secondary"
           />
-          <RosetteCooperation />
+          <QuestionnaireRosetteCooperation />
         </div>
       </PageSection>
 
