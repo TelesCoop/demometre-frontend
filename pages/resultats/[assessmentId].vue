@@ -1,26 +1,11 @@
 <template>
   <div>
     <div class="container">
-      <section class="columns section">
-        <div class="column is-7">
-          <PageTitle
-            :title="pageStore.resultsPage.title"
-            :subtitle="pageStore.resultsPage.tagLine"
-          />
-          <RichText
-            :rich-text="pageStore.referentialPage.description"
-            class="is-family-secondary"
-          />
-        </div>
-        <div class="column is-5 is-hidden-mobile" style="text-align: end">
-          <figure class="image">
-            <img
-              :src="MADIA_BASE_URL + pageStore.resultsPage.introImageUrl"
-              alt
-            />
-          </figure>
-        </div>
-      </section>
+      <PageSection :title="assessmentStore.assessmentById[assessmentId]?.name">
+        <ParticipationBoard
+          :assessment="assessmentStore.assessmentById[assessmentId]"
+        ></ParticipationBoard>
+      </PageSection>
     </div>
 
     <div class="container mobile-mode">
@@ -51,14 +36,13 @@
               :rich-text="criteriaProps.criteria.description"
               class="is-family-secondary subtitle mb-2"
             />
-            <!-- TODO : pour toutes les questions du critère -->
             <QuestionnaireQuestionStatement
               v-for="questionId of criteriaProps.criteria.questionIds"
               :key="questionId"
               :color="colorClass"
               :question="questionnaireStore.questionById[questionId]"
             >
-              <!-- TODO : Ici mettre les graphes -->
+              <!-- TODO : Results graphs -->
             </QuestionnaireQuestionStatement>
           </template>
           <template #marker="markerProps">
@@ -67,11 +51,13 @@
               :rich-text="markerProps.marker.description"
               class="is-family-secondary subtitle mb-2"
             />
-            <!-- TODO: points forts & points faibles -->
+            <!-- TODO: plus and minus points -->
+            <ResultPlusAndMinus />
           </template>
           <template #pillar="pillarProps">
-            <!-- TODO: points forts & points faibles -->
-            <p>{{ pillarProps.pillar }}</p>
+            <!-- TODO: plus and minus points -->
+            <p>{{ pillarProps.pillar.name }}</p>
+            <ResultPlusAndMinus />
           </template>
         </QuestionnairePillarReferential>
       </section>
@@ -83,9 +69,8 @@
 import { useRouter } from "vue-router"
 import { Ref, ref } from "@vue/reactivity"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
-import { usePageStore } from "~/stores/pageStore"
 import { Marker, PillarType } from "~/composables/types"
-import { MADIA_BASE_URL } from "~/composables/api"
+import { useAssessmentStore } from "~~/stores/assessmentStore"
 
 definePageMeta({
   title: "Résultats",
@@ -95,11 +80,7 @@ definePageMeta({
 const router = useRouter()
 
 const questionnaireStore = useQuestionnaireStore()
-const pageStore = usePageStore()
-
-if (!pageStore.resultsPage.title) {
-  pageStore.getResultsPage()
-}
+const assessmentStore = useAssessmentStore()
 
 const activePillar = ref<PillarType>()
 const markers = ref<Marker[]>()
@@ -109,6 +90,10 @@ const assessmentId: Ref<number> = ref(+route.params.assessmentId)
 const activeQuestionId = computed<number>(() => {
   return parseInt(route.query.question as string)
 })
+
+if (!assessmentStore.assessmentById[assessmentId.value]?.name) {
+  assessmentStore.getAssessment(assessmentId.value)
+}
 
 watch(activeQuestionId, () => {
   const pillar =

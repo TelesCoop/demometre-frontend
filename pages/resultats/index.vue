@@ -32,6 +32,7 @@
       </section>
     </div>
     <div
+      v-if="pageStore.resultsPage.introImageUrl"
       class="result-image is-hidden-mobile"
       :style="`background-image: url(${
         MADIA_BASE_URL + pageStore.resultsPage.introImageUrl
