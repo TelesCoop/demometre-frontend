@@ -167,10 +167,10 @@
               </Accordion>
             </template>
           </template>
-          <template #marker="activeMarker">
+          <template #marker="markerProps">
             <RichText
-              v-if="activeMarker.description"
-              :rich-text="activeMarker.description"
+              v-if="markerProps.marker.description"
+              :rich-text="markerProps.marker.description"
               class="is-family-secondary subtitle mb-2"
             />
             <div class="score">
@@ -181,7 +181,9 @@
                     :color="colorClass"
                     class="level-item mr-1_5"
                   />
-                  <p class="level-item">{{ activeMarker["score" + i] }}</p>
+                  <p class="level-item">
+                    {{ markerProps.marker["score" + i] }}
+                  </p>
                 </div>
               </div>
             </div>

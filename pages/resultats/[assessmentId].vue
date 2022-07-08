@@ -44,7 +44,36 @@
           :color="colorClass"
           :markers="markers"
           :initial-question-id="activeQuestionId"
-        />
+        >
+          <template #criteria="criteriaProps">
+            <RichText
+              v-if="criteriaProps.criteria.description"
+              :rich-text="criteriaProps.criteria.description"
+              class="is-family-secondary subtitle mb-2"
+            />
+            <!-- TODO : pour toutes les questions du critère -->
+            <QuestionnaireQuestionStatement
+              v-for="questionId of criteriaProps.criteria.questionIds"
+              :key="questionId"
+              :color="colorClass"
+              :question="questionnaireStore.questionById[questionId]"
+            >
+              <!-- TODO : Ici mettre les graphes -->
+            </QuestionnaireQuestionStatement>
+          </template>
+          <template #marker="markerProps">
+            <RichText
+              v-if="markerProps.marker.description"
+              :rich-text="markerProps.marker.description"
+              class="is-family-secondary subtitle mb-2"
+            />
+            <!-- TODO: points forts & points faibles -->
+          </template>
+          <template #pillar="pillarProps">
+            <!-- TODO: points forts & points faibles -->
+            <p>{{ pillarProps.pillar }}</p>
+          </template>
+        </QuestionnairePillarReferential>
       </section>
     </div>
   </div>
@@ -52,7 +81,7 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router"
-import { ref } from "vue"
+import { Ref, ref } from "@vue/reactivity"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
 import { Marker, PillarType } from "~/composables/types"
@@ -76,6 +105,7 @@ const activePillar = ref<PillarType>()
 const markers = ref<Marker[]>()
 
 const route = useRoute()
+const assessmentId: Ref<number> = ref(+route.params.assessmentId)
 const activeQuestionId = computed<number>(() => {
   return parseInt(route.query.question as string)
 })
@@ -109,13 +139,4 @@ if (activeQuestionId.value) {
 }
 </script>
 
-<style scoped lang="sass">
-.buttons .button
-  height: fit-content
-img
-  width: 100%
-  object-fit: cover
-@include touch
-  .rosette-menu
-    display: none
-</style>
+<style scoped lang="sass"></style>

@@ -20,7 +20,7 @@
     <PageSection
       v-if="assessmentStore.currentAssessment"
       :title="assessmentStore.participationBoardTitle"
-      :intro="assessmentStore.currentAssessment.municipality.name"
+      :intro="assessmentStore.currentAssessment.name"
     >
       <ParticipationBoard
         :assessment="assessmentStore.currentAssessment"
@@ -120,9 +120,7 @@
       :title="pageStore.homePage.partnerBlockTitle"
       :intro="pageStore.homePage.partnerBlockIntro"
     >
-      <PagePartnerList
-        :partners="pageStore.homePage.partners"
-      />
+      <PagePartnerList :partners="pageStore.homePage.partners" />
     </PageSection>
   </div>
 </template>

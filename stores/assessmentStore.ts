@@ -9,6 +9,7 @@ export const useAssessmentStore = defineStore("assessment", {
     assessmentById: <{ [key: number]: Assessment }>{},
     currentAssessmentId: <number>undefined,
     representativityCriterias: <RepresentativityCriteria[]>[],
+    assessmentsWithResultsLoaded: <boolean>false,
   }),
   getters: {
     assessments: (state) => {
@@ -34,6 +35,13 @@ export const useAssessmentStore = defineStore("assessment", {
       )
       // TODO : check if current user is assessment expert
     },
+    assessmentName: () => {
+      return (assessment): string => {
+        return assessment.municipality
+          ? assessment.municipality.name
+          : assessment.epci.name
+      }
+    },
     participationBoardTitle() {
       return (
         "Tableau de bord de " +
@@ -54,6 +62,7 @@ export const useAssessmentStore = defineStore("assessment", {
         return false
       }
       this.assessmentById[data.value.id] = data.value
+      this.assessmentById[data.value.id].name = this.assessmentName(data.value)
       this.currentAssessmentId = data.value.id
       return true
     },
@@ -64,6 +73,7 @@ export const useAssessmentStore = defineStore("assessment", {
           headers,
         })
         this.assessmentById[response.id] = response
+        this.assessmentById[response.id].name = this.assessmentName(response)
         this.currentAssessmentId = response.id
       } catch (error) {
         const errorStore = useToastStore()
@@ -72,6 +82,22 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     addAssessment(assessment) {
       this.assessmentById[assessment.id] = assessment
+    },
+    async getAssesmentsWithPublicatedResults() {
+      // TODO : Retrieve here ONLY assessments with publicated results
+      const { data, error } = await useApiGet<Assessment[]>(`assessments/`)
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+        return false
+      }
+      for (const assessment of data.value) {
+        this.assessmentById[assessment.id] = assessment
+        this.assessmentById[assessment.id].name =
+          this.assessmentName(assessment)
+      }
+      this.assessmentsWithResultsLoaded = true
+      return true
     },
     async getRepresentativityCriterias() {
       const { data, error } = await useApiGet<RepresentativityCriteria>(

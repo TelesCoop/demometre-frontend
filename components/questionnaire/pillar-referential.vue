@@ -32,10 +32,9 @@
                   ? `has-text-${color}-active is-size-6bis`
                   : `has-text-${color} is-size-6bis`
               "
-              >{{
-                getConcatenedCodeWithoutPillar(marker.concatenatedCode)
-              }}</span
             >
+              {{ getConcatenedCodeWithoutPillar(marker.concatenatedCode) }}
+            </span>
             {{ wordTitleCase(marker.name) }}
           </a>
           <div v-if="marker.name === activeMarker?.name">
@@ -120,6 +119,7 @@
           :rich-text="pillar.description"
           class="is-family-secondary subtitle mb-2"
         />
+        <slot name="pillar" :pillar="pillar"></slot>
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive is-outlined`"
