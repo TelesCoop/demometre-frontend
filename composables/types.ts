@@ -59,6 +59,14 @@ export type PillarType = {
   name: PillarName
   description: string
   markerIds: number[]
+  score1: string
+  score2: string
+  score3: string
+  score4: string
+  weakness1: string
+  weakness2: string
+  strength3: string
+  strength4: string
 }
 export type Marker = {
   id: number
@@ -72,6 +80,10 @@ export type Marker = {
   score2: string
   score3: string
   score4: string
+  weakness1: string
+  weakness2: string
+  strength3: string
+  strength4: string
 }
 export type Criteria = {
   id: number
@@ -81,10 +93,6 @@ export type Criteria = {
   questionIds: number[]
   thematicTags: number[]
   description: string
-  score1: string
-  score2: string
-  score3: string
-  score4: string
   definitionIds: number[]
   explanatory: string | SimpleBlock[]
 }
