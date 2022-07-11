@@ -16,7 +16,10 @@ const QUESTIONNAIRE_STORE_SUB_LEVEL = {
   marker: "criteriaById",
 }
 
-const getScoreToDisplay = (score) => {
+export const getScoreToDisplay = (score) => {
+  if (!score) {
+    return null
+  }
   if (score < 0.25) {
     return 1
   }

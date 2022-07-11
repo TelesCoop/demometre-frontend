@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="section">
-      <PageTitle title="Espace animateur" subtitle />
+      <PageTitle title="Espace animateur" />
       <PageSection
         title="Réponses"
         :intro="`Saisissez les réponses à l’évaluation pour chacun·e des participant·e·s. de votre atelier ${animatorStore.workshopById[workshopId].name}.`"

@@ -1,13 +1,21 @@
 <template>
   <div class="score">
-    <b class="score-number">{{ score }}</b>
+    <b
+      v-if="props.showNumber"
+      class="score-number mr-0_5"
+      :class="props.sizeNumberClass"
+      >{{ score }}</b
+    >
     <span
       v-for="i in maxScore"
       :key="i"
       :class="
-        i <= score ? `has-background-${color}` : `has-background-${color}-light`
+        i <= score
+          ? `has-background-${color}`
+          : `has-background-transparent has-border-${color}`
       "
       class="score-circle"
+      :style="`width: ${props.sizeCircles}px; height: ${props.sizeCircles}px`"
     />
   </div>
 </template>
@@ -16,6 +24,9 @@
 const props = defineProps({
   color: { type: String, required: true },
   score: { type: Number, required: true },
+  sizeCircles: { type: Number, default: 12 },
+  sizeNumberClass: { type: String, default: "is-size-5" },
+  showNumber: { type: Boolean, default: true },
   maxScore: { type: Number, default: 4 },
 })
 </script>
@@ -23,12 +34,11 @@ const props = defineProps({
 <style scoped lang="sass">
 .score
   display: block
+  min-width: fit-content
   &-number
     vertical-align: middle
 
   &-circle
-    width: 15px
-    height: 15px
     border-radius: 100%
     margin: 2px
     display: inline-block

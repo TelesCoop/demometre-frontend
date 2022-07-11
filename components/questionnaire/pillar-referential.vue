@@ -26,16 +26,31 @@
             @mouseenter="hoverMarkerId = marker.id"
             @mouseleave="hoverMarkerId = null"
           >
-            <span
-              :class="
-                marker.name === activeMarker?.name && !activeCriteria
-                  ? `has-text-${color}-active is-size-6bis`
-                  : `has-text-${color} is-size-6bis`
-              "
-            >
-              {{ getConcatenedCodeWithoutPillar(marker.concatenatedCode) }}
-            </span>
-            {{ wordTitleCase(marker.name) }}
+            <div class="is-flex is-justify-content-space-between">
+              <p>
+                <span
+                  :class="
+                    marker.name === activeMarker?.name && !activeCriteria
+                      ? `has-text-${color}-active is-size-6bis`
+                      : `has-text-${color} is-size-6bis`
+                  "
+                >
+                  {{ getConcatenedCodeWithoutPillar(marker.concatenatedCode) }}
+                </span>
+                {{ wordTitleCase(marker.name) }}
+              </p>
+              <AnalyticsScore
+                v-if="props.showScores && props.scores?.byMarkerId[marker.id]"
+                :score="getScoreToDisplay(props.scores?.byMarkerId[marker.id])"
+                :color="
+                  marker.name === activeMarker?.name && !activeCriteria
+                    ? `${props.color}-active`
+                    : props.color
+                "
+                :size-circles="9"
+                :show-number="false"
+              />
+            </div>
           </a>
           <div v-if="marker.name === activeMarker?.name">
             <ul>
@@ -52,18 +67,43 @@
                   @mouseenter="hoverCriteriaId = criteria.id"
                   @mouseleave="hoverCriteriaId = null"
                 >
-                  <span
-                    :class="
-                      criteria.name === activeCriteria?.name
-                        ? `has-text-${color}-active is-size-6bis`
-                        : `has-text-${color} is-size-6bis`
-                    "
-                  >
-                    {{
-                      getConcatenedCodeWithoutPillar(criteria.concatenatedCode)
-                    }}
-                  </span>
-                  {{ criteria.name }}
+                  <div class="is-flex is-justify-content-space-between">
+                    <p>
+                      <span
+                        :class="
+                          criteria.name === activeCriteria?.name
+                            ? `has-text-${color}-active is-size-6bis`
+                            : `has-text-${color} is-size-6bis`
+                        "
+                      >
+                        {{
+                          getConcatenedCodeWithoutPillar(
+                            criteria.concatenatedCode
+                          )
+                        }}
+                      </span>
+                      {{ criteria.name }}
+                    </p>
+
+                    <AnalyticsScore
+                      v-if="
+                        props.showScores &&
+                        props.scores?.byCriteriaId[criteria.id]
+                      "
+                      :score="
+                        getScoreToDisplay(
+                          props.scores?.byCriteriaId[criteria.id]
+                        )
+                      "
+                      :color="
+                        criteria.name === activeCriteria?.name
+                          ? `${props.color}-active`
+                          : props.color
+                      "
+                      :size-circles="9"
+                      :show-number="false"
+                    />
+                  </div>
                 </a>
               </li>
             </ul>
@@ -73,10 +113,14 @@
     </aside>
     <div class="content column is-7">
       <div v-if="activeCriteria">
-        <header>
-          <h2 class="title is-4 mb-0_75">{{ criteriaTitle }}</h2>
-          <hr class="my-0_75" />
-        </header>
+        <QuestionnaireReferentialHeaderWithScore
+          :color="props.color"
+          :title="criteriaTitle"
+          :show-score="props.showScores"
+          :score="
+            getScoreToDisplay(props.scores?.byCriteriaId[activeCriteria.id])
+          "
+        />
         <slot name="criteria" :criteria="activeCriteria"></slot>
         <div>
           <button
@@ -88,10 +132,12 @@
         </div>
       </div>
       <div v-else-if="activeMarker">
-        <header>
-          <h2 class="title is-4 mb-0_75">{{ markerTitle }}</h2>
-          <hr class="my-0_75" />
-        </header>
+        <QuestionnaireReferentialHeaderWithScore
+          :color="props.color"
+          :title="markerTitle"
+          :show-score="props.showScores"
+          :score="getScoreToDisplay(props.scores?.byMarkerId[activeMarker.id])"
+        />
         <slot name="marker" :marker="activeMarker"></slot>
         <div>
           <button
@@ -112,8 +158,12 @@
         </div>
       </div>
       <div v-else>
-        <h2 class="title is-4 mb-0_75">{{ wordTitleCase(pillar.name) }}</h2>
-        <hr class="my-0_75" />
+        <QuestionnaireReferentialHeaderWithScore
+          :color="props.color"
+          :title="wordTitleCase(pillar.name)"
+          :show-score="props.showScores"
+          :score="getScoreToDisplay(props.scores?.byPillarId[pillar.id])"
+        />
         <RichText
           v-if="pillar.description"
           :rich-text="pillar.description"
@@ -137,22 +187,36 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue"
-
+import { computed, PropType } from "vue"
 import { wordTitleCase } from "~/utils/util"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
-import { Marker, Criteria } from "~/composables/types"
+import { Marker, Criteria, Scores } from "~/composables/types"
+import { getScoreToDisplay } from "~/utils/scores"
 
 const questionnaireStore = useQuestionnaireStore()
 
 const props = defineProps({
   pillar: { type: Object, required: true },
   color: { type: String, required: true },
-  markers: { type: Array, required: false },
+  markers: {
+    type: Array,
+    required: false,
+    default() {
+      return []
+    },
+  },
   initialQuestionId: {
     type: Number,
     required: false,
     default: undefined,
+  },
+  showScores: { type: Boolean, default: false },
+  scores: {
+    type: Object as PropType<Scores>,
+    required: false,
+    default() {
+      return undefined
+    },
   },
 })
 const getCriteriasOfActiveMarker = () => {

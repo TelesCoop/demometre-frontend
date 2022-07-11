@@ -1,26 +1,50 @@
 <template>
   <div>
     <div class="container">
-      <PageSection :title="assessmentStore.assessmentById[assessmentId]?.name">
-        <ParticipationBoard
-          :assessment="assessmentStore.assessmentById[assessmentId]"
-        ></ParticipationBoard>
-      </PageSection>
+      <PageTitle
+        :title="assessmentStore.assessmentById[assessmentId]?.name"
+        class="mt-4"
+      />
+      <ParticipationBoard
+        :assessment="assessmentStore.assessmentById[assessmentId]"
+      ></ParticipationBoard>
     </div>
 
     <div class="container mobile-mode">
-      <section class="columns is-multiline mt-4">
-        <div
-          v-for="pillar of questionnaireStore.pillars"
-          :key="pillar.name"
-          class="column"
-        >
-          <QuestionnairePillar
-            :name="pillar.name"
-            :active="pillar.name === activePillar?.name"
-            class="is-clickable"
-            @click="onSelectPillar(pillar)"
-          />
+      <section class="section">
+        <div class="is-flex is-justify-content-space-between">
+          <h2 class="title is-3 has-text-shade-700 mb-1">
+            Résultats par piliers
+          </h2>
+          <nuxt-link
+            class="button is-rounded is-responsive is-shade-600"
+            to="/demometre"
+          >
+            <span>En savoir plus sur le DémoMètre</span>
+            <span class="icon">
+              <icon size="20" name="arrow-right-line" />
+            </span>
+          </nuxt-link>
+        </div>
+        <div class="columns is-multiline mt-4">
+          <div
+            v-for="pillar of questionnaireStore.pillars"
+            :key="pillar.name"
+            class="column"
+          >
+            <QuestionnairePillar
+              :name="pillar.name"
+              :active="pillar.name === activePillar?.name"
+              :score="
+                getScoreToDisplay(
+                  assessmentStore.scoresByAssessmentId[assessmentId]
+                    ?.byPillarId[pillar.id]
+                )
+              "
+              class="is-clickable"
+              @click="onSelectPillar(pillar)"
+            />
+          </div>
         </div>
       </section>
       <section v-if="activePillar">
@@ -29,6 +53,8 @@
           :color="colorClass"
           :markers="markers"
           :initial-question-id="activeQuestionId"
+          :show-scores="true"
+          :scores="assessmentStore.scoresByAssessmentId[assessmentId]"
         >
           <template #criteria="criteriaProps">
             <RichText
@@ -63,8 +89,6 @@
             />
           </template>
           <template #pillar="pillarProps">
-            <!-- TODO: plus and minus points -->
-            <p>{{ pillarProps.pillar.name }}</p>
             <ResultPlusAndMinus
               :strengths-and-improvements="
                 getStrenghtAndImprovements(
@@ -87,7 +111,7 @@ import { Ref, ref } from "@vue/reactivity"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
 import { useAssessmentStore } from "~/stores/assessmentStore"
-import { getStrenghtAndImprovements } from "~/utils/strenghtAndImprovement"
+import { getStrenghtAndImprovements, getScoreToDisplay } from "~/utils/scores"
 
 definePageMeta({
   title: "Résultats",

@@ -196,7 +196,7 @@ export type Scores = {
   byQuestionId: { [key: number]: number }
   byCriteriaId: { [key: number]: number }
   byMarkerId: { [key: number]: number }
-  byQuestibyPillarIdonId: { [key: number]: number }
+  byPillarId: { [key: number]: number }
 }
 export type StrenghtsAndImprovements = {
   strengths: string[]

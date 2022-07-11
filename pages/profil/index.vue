@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="section">
-      <PageTitle title="Mon compte" subtitle />
+      <PageTitle title="Mon compte" />
       <div class="buttons is-flex-direction-column is-align-items-flex-start">
         <router-link
           v-if="userStore.isUnknownUser"
