@@ -193,7 +193,7 @@ export const useParticipationStore = defineStore("participation", {
       if (error.value) {
         return false
       }
-      this.participations[this.getCurrentParticipationId] = data.value
+      this.participations[this.currentParticipationId] = data.value
       return true
     },
     logoutUser() {
