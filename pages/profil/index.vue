@@ -1,17 +1,24 @@
 <template>
   <div class="container">
     <div class="section">
-      <PageTitle title="Mon compte" subtitle="" />
-      <router-link
-        v-if="userStore.isUnknownUser"
-        class="button is-primary mr-1 mb-1"
-        to="/signup"
-      >
-        S'enregistrer pour conserver vos résultats
-      </router-link>
-      <button class="button is-normal" type="button" @click.prevent="logout">
-        Se déconnecter
-      </button>
+      <PageTitle title="Mon compte" subtitle />
+      <div class="buttons is-flex-direction-column is-align-items-flex-start">
+        <router-link
+          v-if="userStore.isUnknownUser"
+          class="button is-primary mr-1 mb-1"
+          to="/signup"
+          >S'enregistrer pour conserver vos résultats</router-link
+        >
+        <NuxtLink
+          v-if="userStore.isExpertUser"
+          to="/profil/ateliers"
+          class="button is-rounded"
+          >Espace animateur</NuxtLink
+        >
+        <button class="button is-rounded" type="button" @click.prevent="logout">
+          Se déconnecter
+        </button>
+      </div>
     </div>
     <div v-if="assessmentStore.currentAssessment">
       <PageSection title="Mon profil" intro="Vos informations personnelles">
@@ -75,8 +82,7 @@
         intro="Vous n'avez pas d'évaluation en cours"
         button-text="Lancer l'évaluation"
         :button-link="userStep.url"
-      >
-      </PageSection>
+      ></PageSection>
     </div>
   </div>
 </template>

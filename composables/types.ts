@@ -2,6 +2,7 @@ export type User = {
   id: number | null
   email: string
   username: string
+  isExpert: boolean
   isUnknownUser: boolean
 }
 
@@ -229,6 +230,28 @@ export type QuestionResponse = {
   booleanResponse: boolean | null
   percentageResponse: number | null
   closedWithScaleResponseCategories: ClosedWithScaleResponse[]
+}
+
+// Workshops
+export type Workshop = {
+  id: number
+  assessmentId: number
+  date: string
+  name: string
+  animatorId: number
+  participationIds: number[]
+  changed: boolean
+  closed: boolean
+}
+export type WorkshopParticipation = {
+  id: number
+  participantEmail: string
+  participantName: string
+  assessmentId: number
+  roleId: number
+  responses: QuestionResponse[]
+  responseByQuestionId: { [key: number]: QuestionResponse }
+  changed: boolean
 }
 
 // Pages

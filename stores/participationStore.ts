@@ -10,8 +10,8 @@ import {
 } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
 import {
-  QUESTION_RESPONSE_VALUE_BY_TYPE,
   QUESTION_RESPONSES_BY_TYPE,
+  getQuestionResponseStructure,
 } from "~/utils/question-response"
 import { useUserStore } from "./userStore"
 import { useToastStore } from "./toastStore"
@@ -131,17 +131,13 @@ export const useParticipationStore = defineStore("participation", {
     },
 
     async saveResponse(question: Question, response: any, isAnswered: boolean) {
-      const questionResponse = {
-        questionId: question.id,
-        participationId: this.id,
-        assessmentId: useAssessmentStore().currentAssessmentId,
-        hasPassed: !isAnswered,
-      } as QuestionResponse
-
-      if (isAnswered) {
-        const questionValue = QUESTION_RESPONSE_VALUE_BY_TYPE[question.type]
-        questionResponse[questionValue] = response
-      }
+      const questionResponse = getQuestionResponseStructure(
+        question,
+        response,
+        isAnswered,
+        this.id,
+        useAssessmentStore().currentAssessmentId
+      )
 
       let apiResponse
       if (
