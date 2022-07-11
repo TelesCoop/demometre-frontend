@@ -4,7 +4,7 @@
       <PageTitle title="Espace animateur" subtitle />
       <PageSection
         title="Ateliers"
-        intro="Saisissez les ateliers que vous avez animé"
+        intro="Saisissez les ateliers que vous avez animés"
       >
         <div>
           <table class="table is-narrow is-fullwidth">
