@@ -56,7 +56,7 @@ if (!pageStore.evaluationQuestionnairePage.startTitle) {
 }
 
 const color = ref("no-pillar")
-const answer = ref(participationStore.participation.roleId)
+const answer = ref(participationStore.newParticipation.roleId)
 const isLoading = ref(false)
 
 const profilingStore = useProfilingStore()
@@ -82,8 +82,8 @@ async function onSubmit() {
   isLoading.value = true
   participationStore.chooseRole(answer.value)
   const isSuccess = await participationStore.createParticipation()
+
   if (isSuccess) {
-    await getDataOfParticipation()
     useProfilingJourney().goToNextQuestion(undefined)
   }
 }
