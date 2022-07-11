@@ -15,6 +15,9 @@ export const useUserStore = defineStore("user", {
     isUnknownUser() {
       return this.user?.isUnknownUser
     },
+    isExpertUser() {
+      return this.user?.isExpert
+    },
   },
   actions: {
     async createUnknownUser() {

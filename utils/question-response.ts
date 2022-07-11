@@ -57,3 +57,22 @@ export const getQuestionResponseString = (
   }
   return responseString
 }
+
+export const getQuestionResponseStructure = (
+  question: Question,
+  response: any,
+  isAnswered: boolean,
+  participationId: number,
+  assessmentId: number
+) => {
+  const questionResponse = {
+    questionId: question.id,
+    participationId: participationId,
+    assessmentId: assessmentId,
+    hasPassed: !isAnswered,
+  } as QuestionResponse
+
+  const questionValue = QUESTION_RESPONSE_VALUE_BY_TYPE[question.type]
+  questionResponse[questionValue] = response
+  return questionResponse
+}

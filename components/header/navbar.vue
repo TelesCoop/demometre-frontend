@@ -105,7 +105,6 @@ const emit = defineEmits<{
 
 const userStore = useUserStore()
 const userStep = useUserStep()
-// TODO : use router to highlight active route
 const route = useRoute()
 const isBurgerOpen = ref(false)
 

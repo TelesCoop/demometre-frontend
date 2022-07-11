@@ -7,10 +7,11 @@
       />
     </template>
 -->
+<!-- ALL icons are from RemixIcon-->
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    :viewBox="viewBox"
+    viewBox="0 0 24 24"
     :width="size"
     :height="size"
     :style="style"
@@ -124,6 +125,9 @@
         d="M12 2a1 1 0 0 1 1 1v3a1 1 0 0 1-2 0V3a1 1 0 0 1 1-1zm0 15a1 1 0 0 1 1 1v3a1 1 0 0 1-2 0v-3a1 1 0 0 1 1-1zm10-5a1 1 0 0 1-1 1h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 1 1zM7 12a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3a1 1 0 0 1 1 1zm12.071 7.071a1 1 0 0 1-1.414 0l-2.121-2.121a1 1 0 0 1 1.414-1.414l2.121 2.12a1 1 0 0 1 0 1.415zM8.464 8.464a1 1 0 0 1-1.414 0L4.93 6.344a1 1 0 0 1 1.414-1.415L8.464 7.05a1 1 0 0 1 0 1.414zM4.93 19.071a1 1 0 0 1 0-1.414l2.121-2.121a1 1 0 1 1 1.414 1.414l-2.12 2.121a1 1 0 0 1-1.415 0zM15.536 8.464a1 1 0 0 1 0-1.414l2.12-2.121a1 1 0 0 1 1.415 1.414L16.95 8.464a1 1 0 0 1-1.414 0z"
       />
     </template>
+    <template v-else-if="props.name === 'add-line'">
+      <path :fill="props.color" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" />
+    </template>
     <template v-else-if="props.name === 'arrow-right-s-line'">
       <path
         :fill="props.color"
@@ -136,9 +140,33 @@
         d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"
       />
     </template>
+    <template v-else-if="props.name === 'user-add-line'">
+      <path
+        :fill="props.color"
+        d="M14 14.252v2.09A6 6 0 0 0 6 22l-2-.001a8 8 0 0 1 10-7.748zM12 13c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm6 6v-3h2v3h3v2h-3v3h-2v-3h-3v-2h3z"
+      />
+    </template>
+    <template v-else-if="props.name === 'delete-bin-line'">
+      <path
+        :fill="props.color"
+        d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"
+      />
+    </template>
+    <template v-else-if="props.name === 'question-answer-line'">
+      <path
+        :fill="props.color"
+        d="M5.455 15L1 18.5V3a1 1 0 0 1 1-1h15a1 1 0 0 1 1 1v12H5.455zm-.692-2H16V4H3v10.385L4.763 13zM8 17h10.237L20 18.385V8h1a1 1 0 0 1 1 1v13.5L17.545 19H9a1 1 0 0 1-1-1v-1z"
+      />
+    </template>
     <template v-else-if="props.name === 'save'">
       <path
-        d="M2.5 8.5V5.5H7.5V8.5H8.5V2.914L7.086 1.5H1.5V8.5H2.5ZM1 0.5H7.5L9.5 2.5V9C9.5 9.13261 9.44732 9.25979 9.35355 9.35355C9.25979 9.44732 9.13261 9.5 9 9.5H1C0.867392 9.5 0.740215 9.44732 0.646447 9.35355C0.552678 9.25979 0.5 9.13261 0.5 9V1C0.5 0.867392 0.552678 0.740215 0.646447 0.646447C0.740215 0.552678 0.867392 0.5 1 0.5V0.5ZM3.5 6.5V8.5H6.5V6.5H3.5Z"
+        d="M7 19v-6h10v6h2V7.828L16.172 5H5v14h2zM4 3h13l4 4v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm5 12v4h6v-4H9z"
+        :fill="props.color"
+      />
+    </template>
+    <template v-else-if="props.name === 'close'">
+      <path
+        d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"
         :fill="props.color"
       />
     </template>
@@ -158,12 +186,5 @@ const size = computed(() => {
     return 24
   }
   return props.size
-})
-
-const CUSTOM_VIEWBOX = {
-  save: "0 0 10 10",
-}
-const viewBox = computed(() => {
-  return CUSTOM_VIEWBOX[props.name] || "0 0 24 24"
 })
 </script>

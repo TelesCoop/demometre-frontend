@@ -27,7 +27,7 @@ const QUESTION_FILTERS = {
   },
   population({ question, assessment }: QuestionDataFilter) {
     const population =
-      assessment.municipality?.population || assessment.epci?.population || 0
+      assessment?.municipality?.population || assessment?.epci?.population || 0
     return (
       (!question.populationLowerBound ||
         question.populationLowerBound <= population) &&

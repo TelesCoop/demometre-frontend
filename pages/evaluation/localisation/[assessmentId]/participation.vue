@@ -1,6 +1,11 @@
 <template>
   <div class="container is-tight">
-    <h1 class="title is-3 mt-2">Etes-vous actuellement...</h1>
+    <h1 class="title is-3 mt-2">
+      {{ pageStore.evaluationQuestionnairePage.roleQuestionTitle }}
+    </h1>
+    <p class="is-family-secondary">
+      {{ pageStore.evaluationQuestionnairePage.roleQuestionDescription }}
+    </p>
     <form @submit.prevent="onSubmit">
       <div class="my-1_5">
         <ResponseInputUniqueChoice
@@ -19,9 +24,9 @@
             <icon v-else size="24" name="check" />
           </span>
         </button>
-        <span v-if="isLoading" class="is-size-7 has-text-shade-600">
-          en cours de chargement
-        </span>
+        <span v-if="isLoading" class="is-size-7 has-text-shade-600"
+          >en cours de chargement</span
+        >
 
         <!-- Permet d'appuyer sur entrer -->
         <input type="submit" hidden />
@@ -36,6 +41,7 @@ import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getDataOfParticipation } from "~/composables/actions"
 import { useProfilingJourney } from "~/composables/journey"
+import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({
   title: "Question sur le role",
@@ -44,6 +50,10 @@ definePageMeta({
 })
 
 const participationStore = useParticipationStore()
+const pageStore = usePageStore()
+if (!pageStore.evaluationQuestionnairePage.startTitle) {
+  pageStore.getEvaluationQuestionnairePage()
+}
 
 const color = ref("no-pillar")
 const answer = ref(participationStore.newParticipation.roleId)

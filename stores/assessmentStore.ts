@@ -11,8 +11,8 @@ export const useAssessmentStore = defineStore("assessment", {
     representativityCriterias: <RepresentativityCriteria[]>[],
   }),
   getters: {
-    assessments() {
-      return Object.values(this.assessmentById)
+    assessments: (state) => {
+      return Object.values(state.assessmentById)
     },
     municipalityAssessments() {
       return this.assessments.find(
@@ -83,6 +83,9 @@ export const useAssessmentStore = defineStore("assessment", {
       this.currentAssessmentId = response.data.value.id
       return true
     },
+    addAssessment(assessment) {
+      this.assessmentById[assessment.id] = assessment
+    },
     async getRepresentativityCriterias() {
       const { data, error } = await useApiGet<RepresentativityCriteria>(
         "representativity-criterias/"
@@ -91,7 +94,7 @@ export const useAssessmentStore = defineStore("assessment", {
         this.representativityCriterias = data.value
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async initializeAssessment(payload) {
