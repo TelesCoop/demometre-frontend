@@ -14,4 +14,5 @@ export const ErrorMessages = {
     "La clé de réinitialisation du mot de passe est périmée (24h max), veuillez redemander un changement de mot de passe.",
   question_not_needed: "Vous n'avez pas à répondre à cette question.",
   missing_data_to_validate: "Il manque des données afin de valider",
+  invalid_email_shape: "La forme de l'email n'est pas correct",
 }
