@@ -8,6 +8,7 @@
       <li
         v-for="strength of props.strengthsAndImprovements.strengths"
         :key="strength"
+        class="ml-2 is-family-secondary"
       >
         {{ strength }}
       </li>
@@ -17,14 +18,13 @@
         <Picto name="weaknesses" />
         <p class="is-uppercase ml-0_75">Points d'amélioration</p>
       </div>
-      <ul>
-        <li
-          v-for="improvement of props.strengthsAndImprovements.improvements"
-          :key="improvement"
-        >
-          {{ improvement }}
-        </li>
-      </ul>
+      <li
+        v-for="improvement of props.strengthsAndImprovements.improvements"
+        :key="improvement"
+        class="ml-2 is-family-secondary"
+      >
+        {{ improvement }}
+      </li>
     </div>
   </div>
 </template>

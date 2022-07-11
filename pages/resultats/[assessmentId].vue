@@ -41,6 +41,7 @@
               :key="questionId"
               :color="colorClass"
               :question="questionnaireStore.questionById[questionId]"
+              class="mb-2"
             >
               <!-- TODO : Results graphs -->
             </QuestionnaireQuestionStatement>
@@ -51,10 +52,9 @@
               :rich-text="markerProps.marker.description"
               class="is-family-secondary subtitle mb-2"
             />
-            <!-- TODO: plus and minus points -->
             <ResultPlusAndMinus
               :strengths-and-improvements="
-                getMarkerStrenghtAndImprovement(
+                getMarkerStrenghtAndImprovements(
                   markerProps.marker,
                   assessmentStore.scoresByAssessmentId[assessmentId]
                 )
@@ -78,7 +78,7 @@ import { Ref, ref } from "@vue/reactivity"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
 import { useAssessmentStore } from "~/stores/assessmentStore"
-import { getMarkerStrenghtAndImprovement } from "~/utils/strenghtAndImprovement"
+import { getMarkerStrenghtAndImprovements } from "~/utils/strenghtAndImprovement"
 
 definePageMeta({
   title: "Résultats",

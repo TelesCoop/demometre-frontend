@@ -30,21 +30,23 @@ const getScoreToDisplay = (score) => {
   }
 }
 
-export const getMarkerStrenghtAndImprovement = (
+export const getMarkerStrenghtAndImprovements = (
   marker: Marker,
   assessmentScores: Scores
 ) => {
   const questionnaireStore = useQuestionnaireStore()
   const strenghtsAndImprovements = { strengths: [], improvements: [] }
   for (const criteriaId of marker.criteriaIds) {
-    const scoreToDisplay = getScoreToDisplay(
-      assessmentScores.byCriteriaId[criteriaId]
-    )
-    strenghtsAndImprovements[IS_STRENGHT_OR_IMPROVEMENT[scoreToDisplay]].push(
-      questionnaireStore.criteriaById[criteriaId][
-        STRENGHT_OR_IMPROVEMENT_FIELD[scoreToDisplay]
-      ]
-    )
+    if (assessmentScores.byCriteriaId[criteriaId]) {
+      const scoreToDisplay = getScoreToDisplay(
+        assessmentScores.byCriteriaId[criteriaId]
+      )
+      strenghtsAndImprovements[IS_STRENGHT_OR_IMPROVEMENT[scoreToDisplay]].push(
+        questionnaireStore.criteriaById[criteriaId][
+          STRENGHT_OR_IMPROVEMENT_FIELD[scoreToDisplay]
+        ]
+      )
+    }
   }
   return strenghtsAndImprovements
 }
