@@ -40,6 +40,15 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
           return questionIds.includes(question.id)
         }) as Question[]
     },
+    getQuestionnaireQuestionByPillarName: (state) => {
+      return (pillarName): Question[] => {
+        return Object.values(state.questionById).filter(
+          (question: Question) => {
+            return pillarName === question.pillarName
+          }
+        ) as Question[]
+      }
+    },
   },
   actions: {
     async getQuestionnaireStructure() {
@@ -103,11 +112,6 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         pillarName: marker.pillarName,
       }
       return hierarchicalQuestionStructure
-    },
-    getQuestionnaireQuestionByPillarName(pillarName): Question[] {
-      return Object.values(this.questionById).filter((question: Question) => {
-        return pillarName === question.pillarName
-      }) as Question[]
     },
   },
 })
