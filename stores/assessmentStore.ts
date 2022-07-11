@@ -1,5 +1,9 @@
 import { defineStore } from "pinia"
-import { Assessment, RepresentativityCriteria } from "~/composables/types"
+import {
+  Assessment,
+  RepresentativityCriteria,
+  Scores,
+} from "~/composables/types"
 import { useApiGet, useApiPost } from "~/composables/api"
 import { useToastStore } from "./toastStore"
 import { useUserStore } from "./userStore"
@@ -9,6 +13,8 @@ export const useAssessmentStore = defineStore("assessment", {
     assessmentById: <{ [key: number]: Assessment }>{},
     currentAssessmentId: <number>undefined,
     representativityCriterias: <RepresentativityCriteria[]>[],
+    assessmentsWithResultsLoaded: <boolean>false,
+    scoresByAssessmentId: <{ [key: number]: Scores }>{},
   }),
   getters: {
     assessments: (state) => {
@@ -34,6 +40,13 @@ export const useAssessmentStore = defineStore("assessment", {
       )
       // TODO : check if current user is assessment expert
     },
+    assessmentName: () => {
+      return (assessment): string => {
+        return assessment.municipality
+          ? assessment.municipality.name
+          : assessment.epci.name
+      }
+    },
     participationBoardTitle() {
       return (
         "Tableau de bord de " +
@@ -54,10 +67,10 @@ export const useAssessmentStore = defineStore("assessment", {
         return false
       }
       this.assessmentById[data.value.id] = data.value
+      this.assessmentById[data.value.id].name = this.assessmentName(data.value)
       this.currentAssessmentId = data.value.id
       return true
     },
-
     async getCurrentAssessment() {
       const response = await useApiGet<Assessment>(`assessments/current`)
 
@@ -66,6 +79,9 @@ export const useAssessmentStore = defineStore("assessment", {
       }
 
       this.assessmentById[response.data.value.id] = response.data.value
+      this.assessmentById[response.data.value.id].name = this.assessmentName(
+        response.data.value
+      )
       this.currentAssessmentId = response.data.value.id
       return true
     },
@@ -80,11 +96,30 @@ export const useAssessmentStore = defineStore("assessment", {
       }
 
       this.assessmentById[response.data.value.id] = response.data.value
+      this.assessmentById[response.data.value.id].name = this.assessmentName(
+        response.data.value
+      )
       this.currentAssessmentId = response.data.value.id
       return true
     },
     addAssessment(assessment) {
       this.assessmentById[assessment.id] = assessment
+    },
+    async getAssesmentsWithPublicatedResults() {
+      // TODO : Retrieve here ONLY assessments with publicated results
+      const { data, error } = await useApiGet<Assessment[]>(`assessments/`)
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+        return false
+      }
+      for (const assessment of data.value) {
+        this.assessmentById[assessment.id] = assessment
+        this.assessmentById[assessment.id].name =
+          this.assessmentName(assessment)
+      }
+      this.assessmentsWithResultsLoaded = true
+      return true
     },
     async getRepresentativityCriterias() {
       const { data, error } = await useApiGet<RepresentativityCriteria>(
@@ -130,6 +165,18 @@ export const useAssessmentStore = defineStore("assessment", {
     logoutUser() {
       this.currentAssessmentId = undefined
       this.assessmentById = {}
+    },
+    async getAssessmentScores(assessmentId) {
+      const { data, error } = await useApiGet<Scores>(
+        `assessments/${assessmentId}/scores`
+      )
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+        return false
+      }
+      this.scoresByAssessmentId[assessmentId] = data.value
+      return true
     },
   },
 })

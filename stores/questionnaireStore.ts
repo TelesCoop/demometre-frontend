@@ -66,7 +66,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
             for (const criteria of marker.criterias) {
               this.criteriaById[criteria.id] = criteria
               this.criteriaById[criteria.id].explanatory = eval(
-                criteria.explanatory
+                criteria.explanatory as string
               ).map((obj) => obj.value)
             }
           }

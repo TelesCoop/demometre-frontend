@@ -30,7 +30,9 @@
 
       <div class="column">
         <h3 class="has-text-weight-bold mb-0_5">Représentativité</h3>
-        <p class="mb-2">Survoler les barres pour afficher les statistiques.</p>
+        <p class="mb-2 is-size-7">
+          Survoler les barres pour afficher les statistiques.
+        </p>
         <div class="columns is-multiline">
           <div
             v-for="representativity of assessment.representativities"

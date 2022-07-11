@@ -16,6 +16,13 @@
     <p :class="`has-text-${colorClass}-dark is-size-4-tablet is-size-5-mobile`">
       {{ textTitle }}
     </p>
+    <AnalyticsScore
+      v-if="score"
+      :score="props.score"
+      :color="props.active ? `${colorClass}-active` : colorClass"
+      :size-circles="12"
+      size-number-class="is-size-5"
+    />
     <span :class="`icon has-text-${colorClass}`">
       <icon size="24" name="arrow-right-line" />
     </span>
@@ -24,11 +31,13 @@
 
 <script setup lang="ts">
 import { computed } from "vue"
+import { PillarParams } from "~/composables/types"
 
 const props = defineProps({
   name: { type: String, required: true },
   isCompleted: { type: Boolean, default: false },
-  active: { default: true },
+  active: { type: Boolean, default: true },
+  score: { type: Number, required: false, default: undefined },
 })
 const isHovered = ref(false)
 
@@ -37,7 +46,6 @@ const textTitle = computed(
   () => props.name[0].toUpperCase() + props.name.slice(1)
 )
 const circleClass = computed(() => {
-  props.active
   let toReturn = `pillar-circle has-border-${colorClass.value} `
 
   let other = props.active

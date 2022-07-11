@@ -36,9 +36,9 @@
 <script setup lang="ts">
 const props = defineProps({
   title: { type: String, required: true },
-  intro: { type: String, required: false },
-  buttonText: { type: String, required: false },
-  buttonLink: { type: String, required: false },
+  intro: { type: String, required: false, default: undefined },
+  buttonText: { type: String, required: false, default: undefined },
+  buttonLink: { type: String, required: false, default: undefined },
   buttonColor: { type: String, default: "shade-600" },
   buttonOutlined: { type: Boolean, default: false },
   buttonTextDark: { type: Boolean, default: false },

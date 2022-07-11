@@ -87,7 +87,6 @@
         </div>
 
         <!-- end inputs -->
-        <!-- TODO add links -->
         <div class="button-bar my-1_5">
           <div class="is-flex is-align-items-center">
             <button
@@ -123,11 +122,14 @@
             </span>
           </div>
           <div class="is-flex buttons rounds">
-            <a href class="button is-dark is-outlined is-rounded">
+            <NuxtLink
+              :to="`/resultats/${assessmentStore.currentAssessmentId}?question=${question.id}`"
+              class="button is-dark is-outlined is-rounded"
+            >
               <i class="icon">
                 <Icon size="16" name="bar-chart-box" />
               </i>
-            </a>
+            </NuxtLink>
             <NuxtLink
               :to="`/demometre?question=${question.id}`"
               class="button is-dark is-outlined is-rounded"

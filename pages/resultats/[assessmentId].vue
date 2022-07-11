@@ -1,0 +1,171 @@
+<template>
+  <div>
+    <div class="container">
+      <PageTitle
+        :title="assessmentStore.assessmentById[assessmentId]?.name"
+        class="mt-4"
+      />
+      <ParticipationBoard
+        :assessment="assessmentStore.assessmentById[assessmentId]"
+      ></ParticipationBoard>
+    </div>
+
+    <div class="container mobile-mode">
+      <section class="section">
+        <div class="is-flex is-justify-content-space-between">
+          <h2 class="title is-3 has-text-shade-700 mb-1">
+            Résultats par piliers
+          </h2>
+          <nuxt-link
+            class="button is-rounded is-responsive is-shade-600"
+            to="/demometre"
+          >
+            <span>En savoir plus sur le DémoMètre</span>
+            <span class="icon">
+              <icon size="20" name="arrow-right-line" />
+            </span>
+          </nuxt-link>
+        </div>
+        <div class="columns is-multiline mt-4">
+          <div
+            v-for="pillar of questionnaireStore.pillars"
+            :key="pillar.name"
+            class="column"
+          >
+            <QuestionnairePillar
+              :name="pillar.name"
+              :active="pillar.name === activePillar?.name"
+              :score="
+                getScoreToDisplay(
+                  assessmentStore.scoresByAssessmentId[assessmentId]
+                    ?.byPillarId[pillar.id]
+                )
+              "
+              class="is-clickable"
+              @click="onSelectPillar(pillar)"
+            />
+          </div>
+        </div>
+      </section>
+      <section v-if="activePillar">
+        <QuestionnairePillarReferential
+          :pillar="activePillar"
+          :color="colorClass"
+          :markers="markers"
+          :initial-question-id="activeQuestionId"
+          :show-scores="true"
+          :scores="assessmentStore.scoresByAssessmentId[assessmentId]"
+        >
+          <template #criteria="criteriaProps">
+            <RichText
+              v-if="criteriaProps.criteria.description"
+              :rich-text="criteriaProps.criteria.description"
+              class="is-family-secondary subtitle mb-2"
+            />
+            <QuestionnaireQuestionStatement
+              v-for="questionId of criteriaProps.criteria.questionIds"
+              :key="questionId"
+              :color="colorClass"
+              :question="questionnaireStore.questionById[questionId]"
+              class="mb-2"
+            >
+              <!-- TODO : Results graphs -->
+            </QuestionnaireQuestionStatement>
+          </template>
+          <template #marker="markerProps">
+            <RichText
+              v-if="markerProps.marker.description"
+              :rich-text="markerProps.marker.description"
+              class="is-family-secondary subtitle mb-2"
+            />
+            <ResultPlusAndMinus
+              :strengths-and-improvements="
+                getStrenghtAndImprovements(
+                  assessmentStore.scoresByAssessmentId[assessmentId],
+                  markerProps.marker.criteriaIds,
+                  'marker'
+                )
+              "
+            />
+          </template>
+          <template #pillar="pillarProps">
+            <ResultPlusAndMinus
+              :strengths-and-improvements="
+                getStrenghtAndImprovements(
+                  assessmentStore.scoresByAssessmentId[assessmentId],
+                  pillarProps.pillar.markerIds,
+                  'pillar'
+                )
+              "
+            />
+          </template>
+        </QuestionnairePillarReferential>
+      </section>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useRouter } from "vue-router"
+import { Ref, ref } from "@vue/reactivity"
+import { useQuestionnaireStore } from "~/stores/questionnaireStore"
+import { Marker, PillarType } from "~/composables/types"
+import { useAssessmentStore } from "~/stores/assessmentStore"
+import { getStrenghtAndImprovements, getScoreToDisplay } from "~/utils/scores"
+
+definePageMeta({
+  title: "Résultats",
+  breadcrumb: "Résultats",
+})
+
+const router = useRouter()
+
+const questionnaireStore = useQuestionnaireStore()
+const assessmentStore = useAssessmentStore()
+
+const activePillar = ref<PillarType>()
+const markers = ref<Marker[]>()
+
+const route = useRoute()
+const assessmentId: Ref<number> = ref(+route.params.assessmentId)
+const activeQuestionId = computed<number>(() => {
+  return parseInt(route.query.question as string)
+})
+
+if (!assessmentStore.assessmentById[assessmentId.value]?.name) {
+  assessmentStore.getAssessment(assessmentId.value)
+}
+if (!assessmentStore.scoresByAssessmentId[assessmentId.value]?.byQuestionId) {
+  assessmentStore.getAssessmentScores(assessmentId.value)
+}
+
+watch(activeQuestionId, () => {
+  const pillar =
+    questionnaireStore.pillarByName[
+      questionnaireStore.questionById[activeQuestionId.value].pillarName
+    ]
+  onSelectPillar(pillar)
+})
+
+const colorClass = computed(() =>
+  activePillar.value ? PillarParams[activePillar.value.name].color : ""
+)
+
+const onSelectPillar = (pillar) => {
+  activePillar.value = pillar
+  markers.value = activePillar.value?.markerIds.map(
+    (markerId) => questionnaireStore.markerById[markerId]
+  )
+  router.push({ query: { ...route.query, pillar: pillar.name } })
+}
+
+if (activeQuestionId.value) {
+  const pillar =
+    questionnaireStore.pillarByName[
+      questionnaireStore.questionById[activeQuestionId.value]?.pillarName
+    ]
+  onSelectPillar(pillar)
+}
+</script>
+
+<style scoped lang="sass"></style>

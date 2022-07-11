@@ -116,7 +116,79 @@
           :color="colorClass"
           :markers="markers"
           :initial-question-id="activeQuestionId"
-        />
+        >
+          <template #criteria="criteriaProps">
+            <RichText
+              v-if="criteriaProps.criteria.description"
+              :rich-text="criteriaProps.criteria.description"
+              class="is-family-secondary subtitle mb-2"
+            />
+            <Accordion
+              v-if="criteriaProps.criteria.definitionIds.length"
+              id="definitions"
+            >
+              <template #title>
+                <h3 class="subtitle has-text-weight-bold mb-1">Definitions</h3>
+              </template>
+              <template #content>
+                <div
+                  v-for="definitionId of criteriaProps.criteria.definitionIds"
+                  :key="definitionId"
+                >
+                  <p class="has-text-weight-bold">
+                    {{ definitionStore.definitionById[definitionId].word }}
+                  </p>
+                  <RichText
+                    :rich-text="
+                      definitionStore.definitionById[definitionId].explanation
+                    "
+                    class="is-family-secondary"
+                  />
+                </div>
+              </template>
+            </Accordion>
+            <template v-if="criteriaProps.criteria.explanatory">
+              <Accordion
+                v-for="explanatory of criteriaProps.criteria.explanatory"
+                :id="explanatory.title"
+                :key="explanatory.title"
+              >
+                <template #title>
+                  <h3 class="subtitle has-text-weight-bold mb-1">
+                    {{ explanatory.title }}
+                  </h3>
+                </template>
+                <template #content>
+                  <RichText
+                    :rich-text="explanatory.description"
+                    class="is-family-secondary"
+                  />
+                </template>
+              </Accordion>
+            </template>
+          </template>
+          <template #marker="markerProps">
+            <RichText
+              v-if="markerProps.marker.description"
+              :rich-text="markerProps.marker.description"
+              class="is-family-secondary subtitle mb-2"
+            />
+            <div class="score">
+              <div v-for="i in 4" :key="i" class="level">
+                <div class="level-left">
+                  <AnalyticsScore
+                    :score="i"
+                    :color="colorClass"
+                    class="level-item mr-1_5"
+                  />
+                  <p class="level-item">
+                    {{ markerProps.marker["score" + i] }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </template>
+        </QuestionnairePillarReferential>
       </section>
     </div>
   </div>
@@ -127,6 +199,7 @@ import { useRouter } from "vue-router"
 import { ref, onMounted } from "vue"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
+import { useDefinitionStore } from "~~/stores/definitionStore"
 import { Marker, PillarType } from "~/composables/types"
 import { MADIA_BASE_URL } from "~/composables/api"
 
@@ -139,6 +212,7 @@ const router = useRouter()
 
 const questionnaireStore = useQuestionnaireStore()
 const pageStore = usePageStore()
+const definitionStore = useDefinitionStore()
 
 if (!pageStore.referentialPage.title) {
   pageStore.getReferentialPage()
@@ -155,7 +229,7 @@ const activeQuestionId = computed<number>(() => {
 watch(activeQuestionId, () => {
   const pillar =
     questionnaireStore.pillarByName[
-      questionnaireStore.questionById[activeQuestionId.value].pillarName
+      questionnaireStore.questionById[activeQuestionId.value]?.pillarName
     ]
   onSelectPillar(pillar)
 })

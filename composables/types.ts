@@ -81,10 +81,6 @@ export type Criteria = {
   questionIds: number[]
   thematicTags: number[]
   description: string
-  score1: string
-  score2: string
-  score3: string
-  score4: string
   definitionIds: number[]
   explanatory: string | SimpleBlock[]
 }
@@ -190,10 +186,21 @@ export type Assessment = {
   epci: Locality | null
   participationNb: number
   representativities: RepresentativityCriteria[]
+  name: string
 }
 export const InitiatorType = {
   COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
   ASSOCIATION: { key: "association", value: "Une association" },
+}
+export type Scores = {
+  byQuestionId: { [key: number]: number }
+  byCriteriaId: { [key: number]: number }
+  byMarkerId: { [key: number]: number }
+  byPillarId: { [key: number]: number }
+}
+export type StrenghtsAndImprovements = {
+  strengths: string[]
+  improvements: string[]
 }
 
 // User participation
@@ -311,6 +318,12 @@ export type ReferentialPage = {
   criteriaBlockTitle: string
   criteriaBlockLeftContent: string
   criteriaBlockRightContent: string
+}
+export type ResultsPage = {
+  title: string
+  tagLine: string
+  introduction: string
+  introImageUrl: string
 }
 
 type ImageUrl = { id: number; url: string }

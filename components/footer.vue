@@ -3,9 +3,9 @@
     <div class="container">
       <div class="columns">
         <div class="column footer-column is-3">
-          <NuxtLink to="/" class="has-text-weight-bold has-text-shade-200">
-            DémoMètre
-          </NuxtLink>
+          <NuxtLink to="/" class="has-text-weight-bold has-text-shade-200"
+            >DémoMètre</NuxtLink
+          >
           <a
             class="has-text-shade-350"
             :href="MADIA_BASE_URL + settingStore.rgpdSettings.contentLicenseUrl"
@@ -18,9 +18,8 @@
             class="has-text-shade-350"
             :href="MADIA_BASE_URL + settingStore.rgpdSettings.legalMentionUrl"
             target="_blank"
+            >Mentions légales</a
           >
-            Mentions légales
-          </a>
           <a
             class="has-text-shade-350"
             :href="
@@ -28,16 +27,15 @@
               settingStore.rgpdSettings.confidentialityPolicyUrl
             "
             target="_blank"
+            >Politique de confidentialité</a
           >
-            Politique de confidentialité
-          </a>
         </div>
         <div class="column footer-column is-3">
           <NuxtLink to="/demometre" class="has-text-white">DémoMètre</NuxtLink>
           <NuxtLink to="/utilisations-possibles" class="has-text-white"
             >Utilisations possibles</NuxtLink
           >
-          <NuxtLink to="/" class="has-text-white">Résultats</NuxtLink>
+          <NuxtLink to="/resultats" class="has-text-white">Résultats</NuxtLink>
           <NuxtLink to="/projet" class="has-text-white">Le projet</NuxtLink>
         </div>
         <div class="column footer-column is-3">
@@ -45,7 +43,6 @@
           <NuxtLink to="/ressources" class="has-text-white"
             >Ressources</NuxtLink
           >
-          <NuxtLink to="/" class="has-text-white">FAQ</NuxtLink>
           <NuxtLink to="/" class="has-text-white">Contact</NuxtLink>
         </div>
         <div class="column footer-column is-3">
@@ -67,7 +64,7 @@
                 Je m'abonne
               </button>
             </div>
-          </div> -->
+          </div>-->
         </div>
       </div>
     </div>

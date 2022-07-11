@@ -26,16 +26,31 @@
             @mouseenter="hoverMarkerId = marker.id"
             @mouseleave="hoverMarkerId = null"
           >
-            <span
-              :class="
-                marker.name === activeMarker?.name && !activeCriteria
-                  ? `has-text-${color}-active is-size-6bis`
-                  : `has-text-${color} is-size-6bis`
-              "
-            >
-              {{ getConcatenedCodeWithoutPillar(marker.concatenatedCode) }}
-            </span>
-            {{ wordTitleCase(marker.name) }}
+            <div class="is-flex is-justify-content-space-between">
+              <p>
+                <span
+                  :class="
+                    marker.name === activeMarker?.name && !activeCriteria
+                      ? `has-text-${color}-active is-size-6bis`
+                      : `has-text-${color} is-size-6bis`
+                  "
+                >
+                  {{ getConcatenedCodeWithoutPillar(marker.concatenatedCode) }}
+                </span>
+                {{ wordTitleCase(marker.name) }}
+              </p>
+              <AnalyticsScore
+                v-if="props.showScores && props.scores?.byMarkerId[marker.id]"
+                :score="getScoreToDisplay(props.scores?.byMarkerId[marker.id])"
+                :color="
+                  marker.name === activeMarker?.name && !activeCriteria
+                    ? `${props.color}-active`
+                    : props.color
+                "
+                :size-circles="9"
+                :show-number="false"
+              />
+            </div>
           </a>
           <div v-if="marker.name === activeMarker?.name">
             <ul>
@@ -52,18 +67,43 @@
                   @mouseenter="hoverCriteriaId = criteria.id"
                   @mouseleave="hoverCriteriaId = null"
                 >
-                  <span
-                    :class="
-                      criteria.name === activeCriteria?.name
-                        ? `has-text-${color}-active is-size-6bis`
-                        : `has-text-${color} is-size-6bis`
-                    "
-                  >
-                    {{
-                      getConcatenedCodeWithoutPillar(criteria.concatenatedCode)
-                    }}
-                  </span>
-                  {{ criteria.name }}
+                  <div class="is-flex is-justify-content-space-between">
+                    <p>
+                      <span
+                        :class="
+                          criteria.name === activeCriteria?.name
+                            ? `has-text-${color}-active is-size-6bis`
+                            : `has-text-${color} is-size-6bis`
+                        "
+                      >
+                        {{
+                          getConcatenedCodeWithoutPillar(
+                            criteria.concatenatedCode
+                          )
+                        }}
+                      </span>
+                      {{ criteria.name }}
+                    </p>
+
+                    <AnalyticsScore
+                      v-if="
+                        props.showScores &&
+                        props.scores?.byCriteriaId[criteria.id]
+                      "
+                      :score="
+                        getScoreToDisplay(
+                          props.scores?.byCriteriaId[criteria.id]
+                        )
+                      "
+                      :color="
+                        criteria.name === activeCriteria?.name
+                          ? `${props.color}-active`
+                          : props.color
+                      "
+                      :size-circles="9"
+                      :show-number="false"
+                    />
+                  </div>
                 </a>
               </li>
             </ul>
@@ -73,56 +113,15 @@
     </aside>
     <div class="content column is-7">
       <div v-if="activeCriteria">
-        <header>
-          <h2 class="title is-4 mb-0_75">{{ criteriaTitle }}</h2>
-          <hr class="my-0_75" />
-          <RichText
-            v-if="activeCriteria.description"
-            :rich-text="activeCriteria.description"
-            class="is-family-secondary subtitle mb-2"
-          />
-        </header>
-        <Accordion v-if="activeCriteria.definitionIds.length" id="definitions">
-          <template #title>
-            <h3 class="subtitle has-text-weight-bold mb-1">Definitions</h3>
-          </template>
-          <template #content>
-            <div
-              v-for="definitionId of activeCriteria.definitionIds"
-              :key="definitionId"
-            >
-              <p class="has-text-weight-bold">
-                {{ definitionStore.definitionById[definitionId].word }}
-              </p>
-              <RichText
-                :rich-text="
-                  definitionStore.definitionById[definitionId].explanation
-                "
-                class="is-family-secondary"
-              />
-            </div>
-          </template>
-        </Accordion>
-        <template v-if="activeCriteria.explanatory">
-          <Accordion
-            v-for="explanatory of criteriaExplinatories"
-            :id="explanatory.title"
-            :key="explanatory.title"
-          >
-            <template #title>
-              <h3 class="subtitle has-text-weight-bold mb-1">
-                {{ explanatory.title }}
-              </h3>
-            </template>
-            <template #content>
-              <RichText
-                :rich-text="explanatory.description"
-                class="is-family-secondary"
-              />
-            </template>
-          </Accordion>
-        </template>
-
+        <QuestionnaireReferentialHeaderWithScore
+          :color="props.color"
+          :title="criteriaTitle"
+          :show-score="props.showScores"
+          :score="
+            getScoreToDisplay(props.scores?.byCriteriaId[activeCriteria.id])
+          "
+        />
+        <slot name="criteria" :criteria="activeCriteria"></slot>
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive`"
@@ -133,29 +132,13 @@
         </div>
       </div>
       <div v-else-if="activeMarker">
-        <header>
-          <h2 class="title is-4 mb-0_75">{{ markerTitle }}</h2>
-          <hr class="my-0_75" />
-          <RichText
-            v-if="activeMarker.description"
-            :rich-text="activeMarker.description"
-            class="is-family-secondary subtitle mb-2"
-          />
-        </header>
-        <div class="score">
-          <div v-for="i in 4" :key="i" class="level">
-            <div class="level-left">
-              <AnalyticsScore
-                :score="i"
-                :color="color"
-                class="level-item mr-1_5"
-              />
-              <p class="level-item">
-                {{ wordTitleCase(activeMarker["score" + i]) }}
-              </p>
-            </div>
-          </div>
-        </div>
+        <QuestionnaireReferentialHeaderWithScore
+          :color="props.color"
+          :title="markerTitle"
+          :show-score="props.showScores"
+          :score="getScoreToDisplay(props.scores?.byMarkerId[activeMarker.id])"
+        />
+        <slot name="marker" :marker="activeMarker"></slot>
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive mt-2 mr-1`"
@@ -175,13 +158,18 @@
         </div>
       </div>
       <div v-else>
-        <h2 class="title is-4 mb-0_75">{{ wordTitleCase(pillar.name) }}</h2>
-        <hr class="my-0_75" />
+        <QuestionnaireReferentialHeaderWithScore
+          :color="props.color"
+          :title="wordTitleCase(pillar.name)"
+          :show-score="props.showScores"
+          :score="getScoreToDisplay(props.scores?.byPillarId[pillar.id])"
+        />
         <RichText
           v-if="pillar.description"
           :rich-text="pillar.description"
           class="is-family-secondary subtitle mb-2"
         />
+        <slot name="pillar" :pillar="pillar"></slot>
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive is-outlined`"
@@ -199,24 +187,36 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue"
-
+import { computed, PropType } from "vue"
 import { wordTitleCase } from "~/utils/util"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
-import { Marker, Criteria } from "~/composables/types"
-import { useDefinitionStore } from "~~/stores/definitionStore"
+import { Marker, Criteria, Scores } from "~/composables/types"
+import { getScoreToDisplay } from "~/utils/scores"
 
 const questionnaireStore = useQuestionnaireStore()
-const definitionStore = useDefinitionStore()
 
 const props = defineProps({
   pillar: { type: Object, required: true },
   color: { type: String, required: true },
-  markers: { type: Array, required: false },
+  markers: {
+    type: Array,
+    required: false,
+    default() {
+      return []
+    },
+  },
   initialQuestionId: {
     type: Number,
     required: false,
     default: undefined,
+  },
+  showScores: { type: Boolean, default: false },
+  scores: {
+    type: Object as PropType<Scores>,
+    required: false,
+    default() {
+      return undefined
+    },
   },
 })
 const getCriteriasOfActiveMarker = () => {
@@ -242,10 +242,6 @@ const markerTitle = computed<string>(() =>
 )
 const criteriaTitle = computed<string>(() =>
   activeCriteria.value ? wordTitleCase(activeCriteria.value.name) : ""
-)
-
-const criteriaExplinatories = computed(() =>
-  activeCriteria.value ? activeCriteria.value.explanatory : []
 )
 
 watch(

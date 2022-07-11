@@ -20,7 +20,7 @@
     <PageSection
       v-if="assessmentStore.currentAssessment"
       :title="assessmentStore.participationBoardTitle"
-      :intro="assessmentStore.currentAssessment.municipality.name"
+      :intro="assessmentStore.currentAssessment.name"
     >
       <ParticipationBoard
         :assessment="assessmentStore.currentAssessment"
