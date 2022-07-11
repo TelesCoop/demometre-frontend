@@ -186,7 +186,9 @@ export const useAnimatorStore = defineStore("animator", {
       const { data, error } = await useApiPatch<Workshop>(
         `workshops/${workshopId}/closed/`
       )
+      const toastStore = useToastStore()
       if (error.value) {
+        toastStore.setError(error.value.data.messageCode)
         return false
       }
       const workshop = data.value
