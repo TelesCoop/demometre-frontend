@@ -54,9 +54,10 @@
             />
             <ResultPlusAndMinus
               :strengths-and-improvements="
-                getMarkerStrenghtAndImprovements(
-                  markerProps.marker,
-                  assessmentStore.scoresByAssessmentId[assessmentId]
+                getStrenghtAndImprovements(
+                  assessmentStore.scoresByAssessmentId[assessmentId],
+                  markerProps.marker.criteriaIds,
+                  'marker'
                 )
               "
             />
@@ -64,7 +65,15 @@
           <template #pillar="pillarProps">
             <!-- TODO: plus and minus points -->
             <p>{{ pillarProps.pillar.name }}</p>
-            <ResultPlusAndMinus :strengths-and-improvements="{}" />
+            <ResultPlusAndMinus
+              :strengths-and-improvements="
+                getStrenghtAndImprovements(
+                  assessmentStore.scoresByAssessmentId[assessmentId],
+                  pillarProps.pillar.markerIds,
+                  'pillar'
+                )
+              "
+            />
           </template>
         </QuestionnairePillarReferential>
       </section>
@@ -78,7 +87,7 @@ import { Ref, ref } from "@vue/reactivity"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
 import { useAssessmentStore } from "~/stores/assessmentStore"
-import { getMarkerStrenghtAndImprovements } from "~/utils/strenghtAndImprovement"
+import { getStrenghtAndImprovements } from "~/utils/strenghtAndImprovement"
 
 definePageMeta({
   title: "Résultats",

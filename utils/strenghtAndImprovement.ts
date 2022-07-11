@@ -1,18 +1,19 @@
-import { Marker, Scores } from "~/composables/types"
+import { Scores } from "~/composables/types"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
-
-const STRENGHT_OR_IMPROVEMENT_FIELD = {
-  1: "improvement1",
-  2: "improvement2",
-  3: "strength3",
-  4: "strength4",
-}
 
 const IS_STRENGHT_OR_IMPROVEMENT = {
   1: "improvements",
   2: "improvements",
   3: "strengths",
   4: "strengths",
+}
+const ASSESSMENT_SCORE_BY_SUB_LEVEL = {
+  pillar: "byMarkerId",
+  marker: "byCriteriaId",
+}
+const QUESTIONNAIRE_STORE_SUB_LEVEL = {
+  pillar: "markerById",
+  marker: "criteriaById",
 }
 
 const getScoreToDisplay = (score) => {
@@ -30,21 +31,20 @@ const getScoreToDisplay = (score) => {
   }
 }
 
-export const getMarkerStrenghtAndImprovements = (
-  marker: Marker,
-  assessmentScores: Scores
+export const getStrenghtAndImprovements = (
+  assessmentScores: Scores,
+  listIds: number[],
+  level: string
 ) => {
   const questionnaireStore = useQuestionnaireStore()
   const strenghtsAndImprovements = { strengths: [], improvements: [] }
-  for (const criteriaId of marker.criteriaIds) {
-    if (assessmentScores.byCriteriaId[criteriaId]) {
+  for (const itemId of listIds) {
+    if (assessmentScores[ASSESSMENT_SCORE_BY_SUB_LEVEL[level]][itemId]) {
       const scoreToDisplay = getScoreToDisplay(
-        assessmentScores.byCriteriaId[criteriaId]
+        assessmentScores[ASSESSMENT_SCORE_BY_SUB_LEVEL[level]][itemId]
       )
       strenghtsAndImprovements[IS_STRENGHT_OR_IMPROVEMENT[scoreToDisplay]].push(
-        questionnaireStore.criteriaById[criteriaId][
-          STRENGHT_OR_IMPROVEMENT_FIELD[scoreToDisplay]
-        ]
+        questionnaireStore[QUESTIONNAIRE_STORE_SUB_LEVEL[level]][itemId].name
       )
     }
   }

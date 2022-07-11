@@ -72,10 +72,6 @@ export type Marker = {
   score2: string
   score3: string
   score4: string
-  improvement1: string
-  improvement2: string
-  strength3: string
-  strength4: string
 }
 export type Criteria = {
   id: number
@@ -87,10 +83,6 @@ export type Criteria = {
   description: string
   definitionIds: number[]
   explanatory: string | SimpleBlock[]
-  improvement1: string
-  improvement2: string
-  strength3: string
-  strength4: string
 }
 export type ResponseChoice = {
   id: number
