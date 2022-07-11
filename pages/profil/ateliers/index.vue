@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="section">
-      <PageTitle title="Espace animateur" subtitle />
+      <PageTitle title="Espace animateur" />
       <PageSection
         title="Ateliers"
         intro="Saisissez les ateliers que vous avez animés"

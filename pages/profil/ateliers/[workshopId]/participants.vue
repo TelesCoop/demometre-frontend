@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="section">
-      <PageTitle title="Espace animateur" subtitle />
+      <PageTitle title="Espace animateur" />
       <PageSection
         title="Participant·e·s"
         :intro="`Saisissez les personnes ayant participées à votre atelier ${animatorStore.workshopById[workshopId].name}.`"

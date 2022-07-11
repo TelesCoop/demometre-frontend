@@ -30,7 +30,7 @@
           ></iframe>
         </div>
         <figure v-else-if="props.imageUrl" class="image is-128x128">
-          <img :src="MADIA_BASE_URL + props.imageUrl" alt="" />
+          <img :src="MADIA_BASE_URL + props.imageUrl" alt />
         </figure>
       </div>
     </section>
@@ -43,9 +43,9 @@ import { MADIA_BASE_URL } from "~/composables/api"
 const props = defineProps({
   title: { type: String, required: true },
   subtitle: { type: String, required: true },
-  introduction: { type: String, required: false },
-  youtubeVideoId: { type: String, required: false },
-  imageUrl: { type: String, required: false },
+  introduction: { type: String, required: false, default: undefined },
+  youtubeVideoId: { type: String, required: false, default: undefined },
+  imageUrl: { type: String, required: false, default: undefined },
   columnDistribution: {
     type: Array,
     default() {

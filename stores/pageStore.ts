@@ -7,6 +7,7 @@ import {
   HomePage,
   ProjectPage,
   ReferentialPage,
+  ResultsPage,
   UsagePage,
 } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
@@ -27,6 +28,7 @@ export const usePageStore = defineStore("page", {
     blogLoaded: <boolean>false,
     resourcesLoaded: <boolean>false,
     referentialPage: <ReferentialPage>{},
+    resultsPage: <ResultsPage>{},
     usagePage: <UsagePage>{},
     projectPage: <ProjectPage>{},
     evaluationIntroPage: <EvaluationIntroPage>{},
@@ -79,6 +81,19 @@ export const usePageStore = defineStore("page", {
           this.referentialPage = data.value[0]
         } else {
           console.error("Impossible to retrieve referential page")
+        }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
+    },
+    async getResultsPage() {
+      const { data, error } = await useApiGet<ResultsPage[]>("results-pages/")
+      if (!error.value) {
+        if (data.value.length) {
+          this.resultsPage = data.value[0]
+        } else {
+          console.error("Impossible to retrieve results page")
         }
       } else {
         const errorStore = useToastStore()
