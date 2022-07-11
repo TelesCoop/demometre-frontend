@@ -396,6 +396,8 @@ export type EvaluationInitPage = {
   initializationValidation: string
 }
 export type EvaluationQuestionnairePage = {
+  roleQuestionTitle: string
+  roleQuestionDescription: string
   startTitle: string
   startText: string
   intermediateStepTitle: string
