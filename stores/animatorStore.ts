@@ -162,7 +162,6 @@ export const useAnimatorStore = defineStore("animator", {
               question.id
             ]
 
-          console.log(response)
           if (response && Object.entries(response).length !== 0) {
             const apiResponse = await useApiPost<QuestionResponse>(
               `workshops/${workshopId}/participation/${participationId}/response/`,
