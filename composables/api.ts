@@ -72,17 +72,6 @@ export const MADIA_BASE_URL = media_base_url
 export const BASE_URL = base_url
 export const BASE_API_URL = BASE_URL + "/api/"
 
-export async function useGet<Type>(path: string, opts: any = {}) {
-  const options = {
-    method: "GET",
-    credentials: "include",
-    ...opts,
-    // avoid crash
-    header: opts.headers || useRequestHeaders(["cookie"]),
-  }
-  return await $fetch<Type>(`${BASE_API_URL}${path}`, options)
-}
-
 export async function useApiGet<Type>(path: string) {
   const loadingStore = useLoadingStore()
   const key = makeLoadingKey(path)

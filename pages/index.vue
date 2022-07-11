@@ -120,9 +120,7 @@
       :title="pageStore.homePage.partnerBlockTitle"
       :intro="pageStore.homePage.partnerBlockIntro"
     >
-      <PagePartnerList
-        :partners="pageStore.homePage.partners"
-      />
+      <PagePartnerList :partners="pageStore.homePage.partners" />
     </PageSection>
   </div>
 </template>
@@ -142,9 +140,7 @@ definePageMeta({
 
 const pageStore = usePageStore()
 const assessmentStore = useAssessmentStore()
-
 const participationStore = useParticipationStore()
-participationStore.getCurrentParticipation()
 
 if (!pageStore.homePage.title) {
   pageStore.getHomePage()

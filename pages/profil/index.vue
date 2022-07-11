@@ -66,7 +66,7 @@
       </PageSection>
       <PageSection
         :title="assessmentStore.participationBoardTitle"
-        :intro="assessmentStore.currentAssessment.municipality.name"
+        :intro="assessmentStore.currentAssessment?.municipality?.name"
         button-text="Voir les résultats"
         button-link="/resultats"
         :button-outlined="true"
