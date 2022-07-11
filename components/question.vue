@@ -5,7 +5,10 @@
         <h1 class="title is-size-3-tablet is-size-4-mobile">
           {{ question.questionStatement }}
         </h1>
-        <RichText :rich-text="question.description"></RichText>
+        <RichText
+          class="is-family-secondary"
+          :rich-text="question.description"
+        ></RichText>
 
         <!-- Center bloc : question inputs + button previous and next -->
         <div class="change-question-container" style="position: relative">
