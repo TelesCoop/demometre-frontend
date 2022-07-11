@@ -2,9 +2,7 @@ import { defineStore } from "pinia"
 import { User } from "~/composables/types"
 import { useApiGet, useApiPost } from "~/composables/api"
 import { useToastStore } from "./toastStore"
-import { getParticipationUserData } from "~/composables/actions"
-import { useParticipationStore } from "./participationStore"
-import { useAssessmentStore } from "./assessmentStore"
+import { cleanUserData, getUserData } from "~/composables/actions"
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -29,13 +27,14 @@ export const useUserStore = defineStore("user", {
       this.user = data.value
     },
     async login(email: string, password: string, callbackUrl = "/") {
+      cleanUserData()
       const { data, error } = await useApiPost<User>("auth/login", {
         email,
         password,
       })
       if (!error.value) {
         this.user = data.value
-        await getParticipationUserData()
+        await getUserData()
         const router = useRouter()
         router.push(callbackUrl)
       }
@@ -65,8 +64,7 @@ export const useUserStore = defineStore("user", {
       const { error } = await useApiPost<User>("auth/logout")
       if (!error.value) {
         this.user = { id: null, username: "", email: "" }
-        useParticipationStore().logoutUser()
-        useAssessmentStore().logoutUser()
+        cleanUserData()
         const router = useRouter()
         router.push("/login")
       } else {
@@ -74,11 +72,13 @@ export const useUserStore = defineStore("user", {
         errorStore.setError(error.value.data.messageCode)
       }
     },
-    async refreshProfile() {
+    async refreshProfile(showError = true) {
       const response = await useApiGet<User>(`auth/profile`)
       if (response.error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(response.error.value.data.messageCode)
+        if (showError) {
+          const errorStore = useToastStore()
+          errorStore.setError(response.error.value.data.messageCode)
+        }
         return false
       }
       this.user = response.data.value

@@ -1,26 +1,17 @@
-import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useParticipationStore } from "~/stores/participationStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
-export async function getDataOfParticipation() {
+export async function getUserData() {
   const participationStore = useParticipationStore()
-  const assessmentStore = useAssessmentStore()
-  // await Promise.all([
-  //   participationStore.getProfilingQuestionResponses(participationStore.id),
-  //   participationStore.getQuestionnaireQuestionResponses(
-  //     participationStore.id,
-  //     participationStore.participation.assessmentId
-  //   ),
-  //   assessmentStore.getAssessment(
-  //     participationStore.participation.assessmentId
-  //   ),
-  // ])
+  return Promise.all([
+    await participationStore.getCurrentParticipation(),
+    await useAssessmentStore().getCurrentAssessment(),
+    await participationStore.getCurrentProfilingQuestionResponses(),
+    await participationStore.getCurrentQuestionnaireQuestionResponses(),
+  ])
 }
 
-export async function getParticipationUserData() {
-  const participationStore = useParticipationStore()
-  if (!participationStore.id) {
-    if (await participationStore.getCurrentParticipation()) {
-      await getDataOfParticipation()
-    }
-  }
+export function cleanUserData() {
+  useParticipationStore().logoutUser()
+  useAssessmentStore().logoutUser()
 }

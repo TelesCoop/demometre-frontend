@@ -15,7 +15,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     const questionnaireStore = useQuestionnaireStore()
     const definitionStore = useDefinitionStore()
     const settingStore = useSettingStore()
-    userStore.refreshProfile()
+    userStore.refreshProfile(false)
     participationStore.getCurrentParticipation()
     assessmentStore.getCurrentAssessment()
     participationStore.getCurrentProfilingQuestionResponses()

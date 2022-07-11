@@ -62,8 +62,6 @@ export const useAssessmentStore = defineStore("assessment", {
       const response = await useApiGet<Assessment>(`assessments/current`)
 
       if (response.error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(response.error.value.data.messageCode)
         return false
       }
 
@@ -128,6 +126,7 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     logoutUser() {
       this.currentAssessmentId = undefined
+      this.assessmentById = {}
     },
   },
 })

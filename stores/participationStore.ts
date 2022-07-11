@@ -22,6 +22,8 @@ export const useParticipationStore = defineStore("participation", {
     responseByProfilingQuestionId: <{ [key: number]: QuestionResponse }>{},
     responseByQuestionnaireQuestionId: <{ [key: number]: QuestionResponse }>{},
     profilingCurrent: <number[]>[],
+    participations: <{ [key: number]: Participation }>{},
+    newParticipation: <Participation>{},
     currentParticipationId: <number>undefined,
     totalAndAnsweredQuestionsByPillarName: <
       { [key: string]: { total: number; answered: number; completed: boolean } }
@@ -29,7 +31,7 @@ export const useParticipationStore = defineStore("participation", {
   }),
   getters: {
     participation() {
-      return this.participations?.[this.currentParticipation] || {}
+      return this.participations?.[this.currentParticipationId] || {}
     },
     id() {
       return this.participation?.id
@@ -51,12 +53,13 @@ export const useParticipationStore = defineStore("participation", {
         "participations/",
         {
           assessmentId: useAssessmentStore().currentAssessmentId,
-          roleId: this.participation.roleId,
-          consent: this.participation.consent,
+          roleId: this.newParticipation.roleId,
+          consent: this.newParticipation.consent,
         }
       )
       if (!error.value) {
         this.currentParticipationId = data.value.id
+        this.participations[this.currentParticipationId] = data.value
         return true
       }
       const errorStore = useToastStore()
@@ -64,17 +67,13 @@ export const useParticipationStore = defineStore("participation", {
       return false
     },
     async getCurrentParticipation(): Promise<boolean> {
-      const response = await useApiGet<Participation[]>(
-        "participations/current"
-      )
+      const response = await useApiGet<Participation>("participations/current")
       if (response.error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(response.error.value.data.messageCode)
         return false
       }
       if (response.data.value?.id) {
         this.currentParticipationId = response.data.value.id
-        this.participations[response.data.value.id] = response.data.value
+        this.participations[this.currentParticipationId] = response.data.value
       }
 
       return true
@@ -91,10 +90,10 @@ export const useParticipationStore = defineStore("participation", {
       return true
     },
     setConsent() {
-      this.participations[this.currentParticipationId].consent = true
+      this.newParticipation.consent = true
     },
     chooseRole(roleId) {
-      this.participations[this.currentParticipationId].roleId = roleId
+      this.newParticipation.roleId = roleId
     },
 
     async getCurrentProfilingQuestionResponses() {
@@ -102,8 +101,6 @@ export const useParticipationStore = defineStore("participation", {
         `participation-responses/current/?context=profiling`
       )
       if (response.error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(response.error.value.data.messageCode)
         return false
       }
 
@@ -118,8 +115,6 @@ export const useParticipationStore = defineStore("participation", {
         `participation-responses/current/?context=questionnaire`
       )
       if (participationResponses.error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(participationResponses.error.value.data.messageCode)
         return false
       }
       participationResponses.data.value.forEach((item) => {
@@ -131,8 +126,6 @@ export const useParticipationStore = defineStore("participation", {
       )
 
       if (assessmentResponses.error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(assessmentResponses.error.value.data.messageCode)
         return false
       }
       assessmentResponses.data.value.forEach((item) => {
@@ -200,14 +193,15 @@ export const useParticipationStore = defineStore("participation", {
       if (error.value) {
         return false
       }
-      this.participation = data.value
+      this.participations[this.getCurrentParticipationId] = data.value
       return true
     },
     logoutUser() {
       this.responseByProfilingQuestionId = {}
       this.responseByQuestionnaireQuestionId = {}
       this.profilingCurrent = []
-      this.participation = {}
+      this.participations = {}
+      this.newParticipation = {}
       this.totalAndAnsweredQuestionsByPillarName = {}
     },
     setTotalAndAnsweredQuestionsInPillar(pillarName) {

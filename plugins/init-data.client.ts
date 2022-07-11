@@ -20,7 +20,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     const settingStore = useSettingStore()
 
     if (!userStore.user) {
-      userStore.refreshProfile()
+      userStore.refreshProfile(false)
     }
 
     if (!participationStore.participation) {
@@ -35,11 +35,16 @@ export default defineNuxtPlugin((nuxtApp) => {
       participationStore.getCurrentParticipation()
     }
 
-    if (participationStore.responseByProfilingQuestionId === {}) {
+    if (
+      Object.keys(participationStore.responseByProfilingQuestionId).length === 0
+    ) {
       participationStore.getCurrentProfilingQuestionResponses()
     }
 
-    if (participationStore.responseByQuestionnaireQuestionId === {}) {
+    if (
+      Object.keys(participationStore.responseByQuestionnaireQuestionId)
+        .length === 0
+    ) {
       participationStore.getCurrentQuestionnaireQuestionResponses()
     }
 

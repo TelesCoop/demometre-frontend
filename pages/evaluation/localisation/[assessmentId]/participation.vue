@@ -46,7 +46,7 @@ definePageMeta({
 const participationStore = useParticipationStore()
 
 const color = ref("no-pillar")
-const answer = ref(participationStore.participation.roleId)
+const answer = ref(participationStore.newParticipation.roleId)
 const isLoading = ref(false)
 
 const profilingStore = useProfilingStore()
@@ -71,10 +71,9 @@ const disabled = computed(() => {
 async function onSubmit() {
   isLoading.value = true
   participationStore.chooseRole(answer.value)
-  // TODO : if participaton exist, update it
   const isSuccess = await participationStore.createParticipation()
+
   if (isSuccess) {
-    await getDataOfParticipation()
     useProfilingJourney().goToNextQuestion(undefined)
   }
 }
