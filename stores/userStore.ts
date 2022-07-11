@@ -18,6 +18,9 @@ export const useUserStore = defineStore("user", {
     isUnknownUser() {
       return this.user?.isUnknownUser
     },
+    isExpertUser() {
+      return this.user?.isExpert
+    },
   },
   actions: {
     async createUnknownUser() {
@@ -36,6 +39,7 @@ export const useUserStore = defineStore("user", {
       })
       if (!error.value) {
         this.user = data.value
+        this.user.isExpert = true
         await getParticipationUserData()
         const router = useRouter()
         router.push(callbackUrl)
