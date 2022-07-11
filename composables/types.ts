@@ -226,6 +226,7 @@ export type Participation = {
   isProfilingQuestionsCompleted: boolean
   isPillarQuestionsCompleted: ParticipationPillarCompleted[]
   profileIds: number[]
+  isCurrent: boolean
 }
 export type ClosedWithScaleResponse = {
   id: number | null

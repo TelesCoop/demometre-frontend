@@ -71,19 +71,36 @@ export const useAssessmentStore = defineStore("assessment", {
       this.currentAssessmentId = data.value.id
       return true
     },
+    async getCurrentAssessment() {
+      const response = await useApiGet<Assessment>(`assessments/current`)
 
-    async getAssessment(id, headers = undefined) {
-      try {
-        const response = await useGet<Assessment>(`assessments/${id}/`, {
-          headers,
-        })
-        this.assessmentById[response.id] = response
-        this.assessmentById[response.id].name = this.assessmentName(response)
-        this.currentAssessmentId = response.id
-      } catch (error) {
-        const errorStore = useToastStore()
-        errorStore.setError(error.messageCode)
+      if (response.error.value) {
+        return false
       }
+
+      this.assessmentById[response.data.value.id] = response.data.value
+      this.assessmentById[response.data.value.id].name = this.assessmentName(
+        response.data.value
+      )
+      this.currentAssessmentId = response.data.value.id
+      return true
+    },
+
+    async getAssessment(id) {
+      const response = await useApiGet<Assessment>(`assessments/${id}/`)
+
+      if (response.error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(response.error.value.data.messageCode)
+        return false
+      }
+
+      this.assessmentById[response.data.value.id] = response.data.value
+      this.assessmentById[response.data.value.id].name = this.assessmentName(
+        response.data.value
+      )
+      this.currentAssessmentId = response.data.value.id
+      return true
     },
     addAssessment(assessment) {
       this.assessmentById[assessment.id] = assessment
@@ -147,6 +164,7 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     logoutUser() {
       this.currentAssessmentId = undefined
+      this.assessmentById = {}
     },
     async getAssessmentScores(assessmentId) {
       const { data, error } = await useApiGet<Scores>(
