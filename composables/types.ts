@@ -59,14 +59,6 @@ export type PillarType = {
   name: PillarName
   description: string
   markerIds: number[]
-  score1: string
-  score2: string
-  score3: string
-  score4: string
-  weakness1: string
-  weakness2: string
-  strength3: string
-  strength4: string
 }
 export type Marker = {
   id: number
@@ -80,8 +72,8 @@ export type Marker = {
   score2: string
   score3: string
   score4: string
-  weakness1: string
-  weakness2: string
+  improvement1: string
+  improvement2: string
   strength3: string
   strength4: string
 }
@@ -95,6 +87,10 @@ export type Criteria = {
   description: string
   definitionIds: number[]
   explanatory: string | SimpleBlock[]
+  improvement1: string
+  improvement2: string
+  strength3: string
+  strength4: string
 }
 export type ResponseChoice = {
   id: number
@@ -203,6 +199,16 @@ export type Assessment = {
 export const InitiatorType = {
   COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
   ASSOCIATION: { key: "association", value: "Une association" },
+}
+export type Scores = {
+  byQuestionId: { [key: number]: number }
+  byCriteriaId: { [key: number]: number }
+  byMarkerId: { [key: number]: number }
+  byQuestibyPillarIdonId: { [key: number]: number }
+}
+export type StrenghtsAndImprovements = {
+  strengths: string[]
+  improvements: string[]
 }
 
 // User participation

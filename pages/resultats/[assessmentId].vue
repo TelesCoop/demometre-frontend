@@ -52,12 +52,19 @@
               class="is-family-secondary subtitle mb-2"
             />
             <!-- TODO: plus and minus points -->
-            <ResultPlusAndMinus />
+            <ResultPlusAndMinus
+              :strengths-and-improvements="
+                getMarkerStrenghtAndImprovement(
+                  markerProps.marker,
+                  assessmentStore.scoresByAssessmentId[assessmentId]
+                )
+              "
+            />
           </template>
           <template #pillar="pillarProps">
             <!-- TODO: plus and minus points -->
             <p>{{ pillarProps.pillar.name }}</p>
-            <ResultPlusAndMinus />
+            <ResultPlusAndMinus :strengths-and-improvements="{}" />
           </template>
         </QuestionnairePillarReferential>
       </section>
@@ -70,7 +77,8 @@ import { useRouter } from "vue-router"
 import { Ref, ref } from "@vue/reactivity"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
-import { useAssessmentStore } from "~~/stores/assessmentStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
+import { getMarkerStrenghtAndImprovement } from "~/utils/strenghtAndImprovement"
 
 definePageMeta({
   title: "Résultats",
@@ -93,6 +101,9 @@ const activeQuestionId = computed<number>(() => {
 
 if (!assessmentStore.assessmentById[assessmentId.value]?.name) {
   assessmentStore.getAssessment(assessmentId.value)
+}
+if (!assessmentStore.scoresByAssessmentId[assessmentId.value]?.byQuestionId) {
+  assessmentStore.getAssessmentScores(assessmentId.value)
 }
 
 watch(activeQuestionId, () => {

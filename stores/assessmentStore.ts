@@ -1,5 +1,9 @@
 import { defineStore } from "pinia"
-import { Assessment, RepresentativityCriteria } from "~/composables/types"
+import {
+  Assessment,
+  RepresentativityCriteria,
+  Scores,
+} from "~/composables/types"
 import { useApiGet, useApiPost } from "~/composables/api"
 import { useToastStore } from "./toastStore"
 import { useUserStore } from "./userStore"
@@ -10,6 +14,7 @@ export const useAssessmentStore = defineStore("assessment", {
     currentAssessmentId: <number>undefined,
     representativityCriterias: <RepresentativityCriteria[]>[],
     assessmentsWithResultsLoaded: <boolean>false,
+    scoresByAssessmentId: <{ [key: number]: Scores }>{},
   }),
   getters: {
     assessments: (state) => {
@@ -142,6 +147,18 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     logoutUser() {
       this.currentAssessmentId = undefined
+    },
+    async getAssessmentScores(assessmentId) {
+      const { data, error } = await useApiGet<Scores>(
+        `assessments/${assessmentId}/scores`
+      )
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+        return false
+      }
+      this.scoresByAssessmentId[assessmentId] = data.value
+      return true
     },
   },
 })
