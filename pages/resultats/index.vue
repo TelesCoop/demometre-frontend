@@ -1,32 +1,38 @@
 <template>
   <div class="result-image-container">
-    <div class="container">
+    <div class="container page-height">
       <section class="columns section">
         <div class="column is-5">
           <PageTitle
             :title="pageStore.resultsPage.title"
-            :subtitle="pageStore.resultsPage.tagLine"
+            :subtitle="
+              assessmentStore.canSeeResultsAssessments.length
+                ? pageStore.resultsPage.tagLine
+                : pageStore.resultsPage.tagLineNoResults
+            "
           />
           <RichText
-            :rich-text="pageStore.referentialPage.description"
+            :rich-text="pageStore.resultsPage.description"
             class="is-family-secondary"
           />
-          <v-select
-            v-model="assessmentSelected"
-            label="name"
-            :options="assessmentStore.canSeeResultsAssessments"
-          ></v-select>
-          <button
-            class="button is-rounded is-shade-600 is-outlined mt-2"
-            type="button"
-            :disabled="!assessmentSelected"
-            @click.prevent="seeResults()"
-          >
-            <span class="icon">
-              <icon size="16" name="bar-chart-box-line" />
-            </span>
-            <span>Voir les résultats</span>
-          </button>
+          <div v-if="assessmentStore.canSeeResultsAssessments.length">
+            <v-select
+              v-model="assessmentSelected"
+              label="name"
+              :options="assessmentStore.canSeeResultsAssessments"
+            ></v-select>
+            <button
+              class="button is-rounded is-shade-600 is-outlined mt-2"
+              type="button"
+              :disabled="!assessmentSelected"
+              @click.prevent="seeResults()"
+            >
+              <span class="icon">
+                <icon size="16" name="bar-chart-box-line" />
+              </span>
+              <span>Voir les résultats</span>
+            </button>
+          </div>
         </div>
       </section>
     </div>
@@ -71,6 +77,12 @@ const seeResults = () => {
 </script>
 
 <style scoped lang="sass">
+.page-height
+  min-height: 580px
+@include touch
+  .page-height
+    min-height: fit-content
+
 .result-image
   position: absolute
   top: -4rem

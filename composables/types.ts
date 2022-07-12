@@ -330,6 +330,7 @@ export type ReferentialPage = {
 export type ResultsPage = {
   title: string
   tagLine: string
+  tagLineNoResults: string
   introduction: string
   introImageUrl: string
 }

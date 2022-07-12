@@ -35,7 +35,7 @@ export const useAssessmentStore = defineStore("assessment", {
       return this.assessmentById[this.currentAssessmentId]
     },
     canSeeResultsAssessments() {
-      return this.assessments.find(
+      return this.assessments.filter(
         (assessment: Assessment) =>
           assessment.publishedResults === true ||
           assessment.id === this.currentAssessmentId
