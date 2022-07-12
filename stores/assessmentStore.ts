@@ -34,6 +34,13 @@ export const useAssessmentStore = defineStore("assessment", {
     currentAssessment() {
       return this.assessmentById[this.currentAssessmentId]
     },
+    canSeeResultsAssessments() {
+      return this.assessments.find(
+        (assessment: Assessment) =>
+          assessment.publishedResults === true ||
+          assessment.id === this.currentAssessmentId
+      )
+    },
     userIsAssessmentAdmin() {
       return (
         this.currentAssessment.initiatedByUser?.id === useUserStore().user.id
@@ -106,8 +113,9 @@ export const useAssessmentStore = defineStore("assessment", {
       this.assessmentById[assessment.id] = assessment
     },
     async getAssesmentsWithPublicatedResults() {
-      // TODO : Retrieve here ONLY assessments with publicated results
-      const { data, error } = await useApiGet<Assessment[]>(`assessments/`)
+      const { data, error } = await useApiGet<Assessment[]>(
+        `assessments/published/`
+      )
       if (error.value) {
         const errorStore = useToastStore()
         errorStore.setError(error.value.data.messageCode)

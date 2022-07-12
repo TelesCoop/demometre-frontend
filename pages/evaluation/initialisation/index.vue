@@ -68,9 +68,8 @@
                   <label
                     :for="initiatorType.key"
                     class="button is-normal locality"
+                    >{{ initiatorType.value }}</label
                   >
-                    {{ initiatorType.value }}
-                  </label>
                 </div>
               </div>
             </div>
@@ -92,12 +91,12 @@
             </div>
 
             <div class="field mb-3">
-              <label class="label">{{
-                pageStore.evaluationInitPage.publicNameQuestion
-              }}</label>
-              <span class="is-family-secondary is-size-6">{{
-                pageStore.evaluationInitPage.publicNameQuestionDescription
-              }}</span>
+              <label class="label">
+                {{ pageStore.evaluationInitPage.publicNameQuestion }}
+              </label>
+              <span class="is-family-secondary is-size-6">
+                {{ pageStore.evaluationInitPage.publicNameQuestionDescription }}
+              </span>
               <div class="buttons mt-1">
                 <div
                   v-for="(consentPublicName, index) of [true, false]"
@@ -116,9 +115,8 @@
                   <label
                     :for="consentPublicName"
                     class="button is-normal locality"
+                    >{{ consentPublicName ? "Oui" : "Non" }}</label
                   >
-                    {{ consentPublicName ? "Oui" : "Non" }}
-                  </label>
                 </div>
               </div>
             </div>
@@ -157,10 +155,9 @@
                 Les réponses possibles sont :
                 <span
                   v-for="responseChoice of representativityCriteria.responseChoiceStatements"
-                  :key="responseChoice"
+                  :key="responseChoice.id"
+                  >{{ responseChoice.responseChoice }},</span
                 >
-                  {{ responseChoice }},
-                </span>
                 <br />
                 L'équilibre parfait serait:
                 {{

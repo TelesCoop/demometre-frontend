@@ -11,11 +11,10 @@
             :rich-text="pageStore.referentialPage.description"
             class="is-family-secondary"
           />
-          <!-- TODO : reduire à seulement les villes qui ont des résultats publiés, sinon écrire qu'il n'y en a pas encore -->
           <v-select
             v-model="assessmentSelected"
             label="name"
-            :options="assessmentStore.assessments"
+            :options="assessmentStore.canSeeResultsAssessments"
           ></v-select>
           <button
             class="button is-rounded is-shade-600 is-outlined mt-2"

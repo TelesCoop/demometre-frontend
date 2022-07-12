@@ -167,10 +167,17 @@ export type RepresentativityCriteria = {
   id: number
   name: string
   profilingQuestionId: number
-  countByResponseChoice: CountByResponseChoice[]
   acceptabilityThreshold: number
-  responseChoiceStatements: string[]
+  responseChoiceStatements: { id: number; responseChoice: string }[]
   minRate: number
+}
+export type AssessmentRepresentativity = {
+  id: number
+  assessmentId: number
+  representativityCriteriaName: string
+  countByResponseChoice: CountByResponseChoice[]
+  acceptabilityThresholdConsidered: number
+  respected: boolean
 }
 export type Assessment = {
   id: number
@@ -185,8 +192,9 @@ export type Assessment = {
   municipality: Locality | null
   epci: Locality | null
   participationNb: number
-  representativities: RepresentativityCriteria[]
+  representativities: AssessmentRepresentativity[]
   name: string
+  publishedResults: boolean
 }
 export const InitiatorType = {
   COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
