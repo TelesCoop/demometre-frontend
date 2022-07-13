@@ -4,7 +4,7 @@
       v-for="(item, index) in items"
       :key="index"
       class="distribution-chart-item"
-      :style="`width: ${item.displayValue}%;`"
+      :style="`width: ${item.widthValue}%;`"
       @mouseenter="onMouseEnter(item)"
       @mouseleave="onMouseLeave()"
     ></div>
@@ -28,6 +28,7 @@ const emit = defineEmits<{
 }>()
 
 const total = ref<number>(getTotal(props.data))
+const nbValue0 = ref<number>(getNbValue0(props.data))
 const items = ref(getItemValues(props.data))
 
 watch(
@@ -41,10 +42,16 @@ watch(
 function getTotal(data) {
   return data.reduce((value, item) => value + item.value, 0)
 }
+function getNbValue0(data) {
+  return data.reduce((value, item) => value + (item.value ? 0 : 1), 0)
+}
 function getItemValues(data) {
   return props.data.map((item) => {
     return {
       ...item,
+      widthValue: item.value
+        ? round((item.value / total.value) * (100 - nbValue0.value), 2)
+        : 2,
       displayValue: round((item.value / total.value) * 100, 2),
     }
   })

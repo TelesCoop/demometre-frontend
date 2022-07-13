@@ -36,11 +36,11 @@
         <div class="columns is-multiline">
           <div
             v-for="representativity of assessment.representativities"
-            :key="representativity.name"
+            :key="representativity.representativityCriteriaName"
             class="column is-half"
           >
             <ParticipationBoardRepresentativity
-              :representativity-criteria="representativity"
+              :representativity="representativity"
             ></ParticipationBoardRepresentativity>
           </div>
         </div>
@@ -50,8 +50,11 @@
 </template>
 
 <script setup lang="ts">
+import { PropType } from "vue"
+import { Assessment } from "~/composables/types"
+
 const props = defineProps({
-  assessment: { type: Object, required: true },
+  assessment: { type: Object as PropType<Assessment>, required: true },
 })
 
 const initializationDate = computed(() =>
