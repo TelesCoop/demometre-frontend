@@ -161,6 +161,7 @@ type CountByResponseChoice = {
   responseChoiceName: string
   responseChoiceId: number
   total: number
+  ignoreForAcceptabilityThreshold: boolean
 }
 
 export type RepresentativityCriteria = {

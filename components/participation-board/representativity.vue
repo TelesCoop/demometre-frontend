@@ -5,9 +5,9 @@
         :score="score"
         class="mr-1_5"
       ></AnalyticsSemaphoreRate>
-      <span class="has-text-shade-500">
-        {{ representativity.representativityCriteriaName }}
-      </span>
+      <span class="has-text-shade-500">{{
+        representativity.representativityCriteriaName
+      }}</span>
     </div>
     <div class="mb-0_75">
       <AnalyticsDistributionBar
@@ -28,7 +28,7 @@
           Représentativité actuelle :
           {{ hoverRepresentativity?.displayValue }}%
         </div>
-        <div>
+        <div v-if="!hoverRepresentativity?.ignoreThreshold">
           Objectif de représentativité :
           {{ props.representativity.acceptabilityThresholdConsidered }}%
         </div>
@@ -52,7 +52,11 @@ const hoverRepresentativity = ref(null)
 
 const distributionBarData = () => {
   return props.representativity.countByResponseChoice.map((item) => {
-    return { name: item.responseChoiceName, value: item.total }
+    return {
+      name: item.responseChoiceName,
+      value: item.total,
+      ignoreThreshold: item.ignoreForAcceptabilityThreshold,
+    }
   })
 }
 
