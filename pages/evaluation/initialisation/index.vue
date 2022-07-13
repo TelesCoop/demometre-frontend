@@ -68,9 +68,8 @@
                   <label
                     :for="initiatorType.key"
                     class="button is-normal locality"
+                    >{{ initiatorType.value }}</label
                   >
-                    {{ initiatorType.value }}
-                  </label>
                 </div>
               </div>
             </div>
@@ -116,9 +115,8 @@
                   <label
                     :for="consentPublicName"
                     class="button is-normal locality"
+                    >{{ consentPublicName ? "Oui" : "Non" }}</label
                   >
-                    {{ consentPublicName ? "Oui" : "Non" }}
-                  </label>
                 </div>
               </div>
             </div>
@@ -158,9 +156,8 @@
                 <span
                   v-for="responseChoice of representativityCriteria.responseChoiceStatements"
                   :key="responseChoice"
+                  >{{ responseChoice }},</span
                 >
-                  {{ responseChoice }},
-                </span>
                 <br />
                 L'équilibre parfait serait:
                 {{
