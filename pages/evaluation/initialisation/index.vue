@@ -91,12 +91,12 @@
             </div>
 
             <div class="field mb-3">
-              <label class="label">
-                {{ pageStore.evaluationInitPage.publicNameQuestion }}
-              </label>
-              <span class="is-family-secondary is-size-6">
-                {{ pageStore.evaluationInitPage.publicNameQuestionDescription }}
-              </span>
+              <label class="label">{{
+                pageStore.evaluationInitPage.publicNameQuestion
+              }}</label>
+              <span class="is-family-secondary is-size-6">{{
+                pageStore.evaluationInitPage.publicNameQuestionDescription
+              }}</span>
               <div class="buttons mt-1">
                 <div
                   v-for="(consentPublicName, index) of [true, false]"
@@ -155,8 +155,8 @@
                 Les réponses possibles sont :
                 <span
                   v-for="responseChoice of representativityCriteria.responseChoiceStatements"
-                  :key="responseChoice.id"
-                  >{{ responseChoice.responseChoice }},</span
+                  :key="responseChoice"
+                  >{{ responseChoice }},</span
                 >
                 <br />
                 L'équilibre parfait serait:
