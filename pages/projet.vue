@@ -122,6 +122,20 @@
     <div ref="whoBlockRef" class="scroll-margin-top_5">
       <PageBigSection :title="pageStore.projectPage.whoBlockTitle">
         <PageSection
+          v-if="pageStore.projectPage.whoCrewSubBlockTitle"
+          :title="pageStore.projectPage.whoCrewSubBlockTitle"
+        >
+          <figure class="image">
+            <img
+              :src="
+                MADIA_BASE_URL + pageStore.projectPage.whoCrewSubBlockImageUrl
+              "
+              :alt="pageStore.projectPage.whoCrewSubBlockTitle"
+              class="logo-open-democracy is-hidden-mobile"
+            />
+          </figure>
+        </PageSection>
+        <PageSection
           v-if="pageStore.projectPage.whoPartnerSubBlockTitle"
           :title="pageStore.projectPage.whoPartnerSubBlockTitle"
         >
@@ -218,4 +232,8 @@ const scrollIntoWhyBlock = () => {
   .impact
     .image
       height: 150px
+.logo-open-democracy
+  position: absolute
+  top: 3rem
+  right: 0
 </style>

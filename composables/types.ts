@@ -403,7 +403,7 @@ export type ProjectPage = {
   whoBlockTitle: string
   whoCrewSubBlockTitle: string
   whoCrewSubBlockImageUrl: ImageUrl[]
-  whoCrewSubBlockMemberIds: { [key: number]: Person }
+  whoCrewSubBlockMemberIds: number[]
   whoCommitteeSubBlockTitle: string
   whoCommitteeSubBlockDescription: string
   whoCommitteeSubBlockData: string
