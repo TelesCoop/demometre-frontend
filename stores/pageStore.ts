@@ -148,6 +148,13 @@ export const usePageStore = defineStore("page", {
             "image",
             this.projectPage.imagesUrl
           )
+          this.projectPage.whoCommitteeSubBlockData =
+            getStreamFieldStructWithListLinkedObjects(
+              this.projectPage.whoCommitteeSubBlockData,
+              "persons",
+              this.projectPage.partners,
+              "id"
+            )
           this.projectPage.whoPartnerSubBlockData =
             getStreamFieldStructWithListLinkedObjects(
               this.projectPage.whoPartnerSubBlockData,
