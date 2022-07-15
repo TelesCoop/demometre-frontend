@@ -66,7 +66,7 @@
                     <figure class="image is-4by3 has-text-centered">
                       <img
                         :src="MADIA_BASE_URL + objective.svgUrl"
-                        alt=""
+                        :alt="objective.title"
                         :style="`height: 100px; width: 100px`"
                         class="mt-2"
                       />
@@ -98,7 +98,7 @@
                     <figure class="image has-text-centered">
                       <img
                         :src="MADIA_BASE_URL + impact.imageUrl"
-                        alt=""
+                        :alt="impact.title"
                         class="fit-without-distortion"
                       />
                     </figure>
@@ -134,6 +134,24 @@
               class="logo-open-democracy is-hidden-mobile"
             />
           </figure>
+          <div class="columns mb-2">
+            <!-- <Carousel
+              v-if="pageStore.projectPage.whoCrewSubBlockTitle.length"
+              :settings="settings"
+              :breakpoints="breakpointsSmallElements"
+            > -->
+            <!-- <Slide
+              v-for="ids in pageStore.projectPage.whoCrewSubBlockMemberIds"
+              :key="ids"
+              class="column is-one-third-tablet is-11-mobile"
+            > -->
+            <!-- <PageFeedbackCard
+                :persons="pageStore.projectPage.persons.ids"
+                class="carousel-item"
+              /> -->
+            <!-- </Slide> -->
+            <!-- </Carousel> -->
+          </div>
         </PageSection>
         <PageSection
           v-if="pageStore.projectPage.whoPartnerSubBlockTitle"
