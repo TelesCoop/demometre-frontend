@@ -36,28 +36,36 @@
           <span>{{ props.assessmentType.pdf_button }}</span>
         </a>
         <br />
-        <nuxt-link
+        <button
           class="button is-shade-600 has-text-white is-rounded is-responsive"
-          :to="userStep.url"
+          @click.prevent="letsGo"
         >
           <span class="icon">
             <icon size="16" name="arrow-right-line" />
           </span>
           <span>C'est parti !</span>
-        </nuxt-link>
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { PropType } from "vue"
 import { MADIA_BASE_URL } from "~/composables/api"
+import { useAssessmentStore } from "~/stores/assessmentStore"
+import { AssessmentTypeDetails } from "~~/composables/types"
 const props = defineProps({
-  assessmentType: { type: Object, required: true },
+  assessmentType: {
+    type: Object as PropType<AssessmentTypeDetails>,
+    required: true,
+  },
   backgroundColor: { type: String, required: true },
 })
 
+const router = useRouter()
 const userStep = useUserStep()
+const assessmentStore = useAssessmentStore()
 
 const caracteristics = [
   {
@@ -81,6 +89,11 @@ const caracteristics = [
     icon: "money-euro-circle-line",
   },
 ]
+
+function letsGo() {
+  assessmentStore.creatingAssessmentType = props.assessmentType.assessmentType
+  router.push(userStep.value.url)
+}
 </script>
 
 <style scoped lang="sass">

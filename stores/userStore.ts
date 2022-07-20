@@ -59,7 +59,7 @@ export const useUserStore = defineStore("user", {
         return { error: error.value.data }
       }
       this.user = data.value
-      await getParticipationUserData()
+      await getUserData()
       const router = useRouter()
       router.push(callbackUrl)
     },

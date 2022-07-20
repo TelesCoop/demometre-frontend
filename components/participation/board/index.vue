@@ -22,6 +22,13 @@
           </div>
         </template>
 
+        <template v-if="assessment.initializedToTheNameOf">
+          <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
+            initiée par
+          </div>
+          <div class="mb-2">{{ assessment.initializedToTheNameOf }}</div>
+        </template>
+
         <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
           Lancée le
         </div>

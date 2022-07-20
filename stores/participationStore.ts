@@ -89,9 +89,6 @@ export const useParticipationStore = defineStore("participation", {
 
       return true
     },
-    setConsent() {
-      this.newParticipation.consent = true
-    },
     chooseRole(roleId) {
       this.newParticipation.roleId = roleId
     },

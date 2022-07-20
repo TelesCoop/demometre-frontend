@@ -57,15 +57,6 @@ const props = defineProps({
 </script>
 
 <style scoped lang="sass">
-.intro
-  .intro__visual
-    // TODO change when we have the ressource
-    background-clip: content-box
-    background-color: $blue
-    height: 154px
-    @include desktop
-      height: revert
-
 .buttons
   &.are-medium-desktop
     .button:not(.is-normal):not(.is-medium):not(.is-large)
