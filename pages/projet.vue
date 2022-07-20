@@ -134,11 +134,11 @@
               class="logo-open-democracy is-hidden-mobile"
             />
           </figure>
-          <div class="columns is-flex-mobile">
+          <div class="columns is-mobile">
             <div
               v-for="memberId in pageStore.projectPage.whoCrewSubBlockMemberIds"
               :key="memberId"
-              class="column is-one-fifth is-half-mobile mb-1"
+              class="column is-one-fifth-tablet is-half-mobile mb-1"
             >
               <PageMemberCard
                 :persons="pageStore.projectPageMember(memberId)"
@@ -168,7 +168,7 @@
                     "
                   >
                     <a
-                      class="tab is-size-4 has-text-weight-bold has-text-shade-500"
+                      class="tab is-size-6 has-text-weight-bold has-text-shade-500"
                       @click="setTab(tab.id)"
                     >
                       {{ tab.label }}
@@ -176,31 +176,29 @@
                   </li>
                 </ul>
               </div>
-              <div v-if="isTabsOpen">
+              <div
+                v-for="(group_committees, index) in pageStore.projectPage
+                  .whoCommitteeSubBlockData"
+                :key="index"
+              >
                 <div
-                  v-for="(group_committees, index) in pageStore.projectPage
-                    .whoCommitteeSubBlockData"
-                  :key="index"
+                  v-show="
+                    currentTabId ===
+                    group_committees.value.committee.replace(/\s+/g, '')
+                  "
+                  class="columns is-mobile"
                 >
                   <div
-                    v-show="
-                      currentTabId ===
-                      group_committees.value.committee.replace(/\s+/g, '')
-                    "
-                    class="columns is-flex-mobile"
+                    v-for="committee_member in group_committees.value
+                      .committee_members"
+                    :key="committee_member"
+                    class="column is-half-mobile is-one-fifth-tablet mb-1"
                   >
-                    <div
-                      v-for="committee_member in group_committees.value
-                        .committee_members"
-                      :key="committee_member"
-                      class="column is-one-fifth mb-1 is-half-mobile"
-                    >
-                      <PageMemberCard
-                        :persons="
-                          pageStore.projectPageMember(committee_member.value)
-                        "
-                      />
-                    </div>
+                    <PageMemberCard
+                      :persons="
+                        pageStore.projectPageMember(committee_member.value)
+                      "
+                    />
                   </div>
                 </div>
               </div>
@@ -277,7 +275,6 @@ const whyBlockRef = ref(null)
 
 type tabDef = { label: string; id: string }
 const tabs = ref<tabDef[]>([])
-const isTabsOpen = ref(false)
 const committeeData = (pageStore.projectPage.whoCommitteeSubBlockData ||
   []) as CommitteeSubBlock[]
 if (committeeData.length) {
@@ -291,7 +288,6 @@ if (committeeData.length) {
 const currentTabId = ref<string>(tabs.value[0]?.id)
 function setTab(tabId) {
   currentTabId.value = tabId
-  isTabsOpen.value = true
 }
 
 onMounted(() => {

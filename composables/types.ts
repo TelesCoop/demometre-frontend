@@ -416,7 +416,7 @@ export type ProjectPage = {
   impactBlockData: string | SimpleBlockWithImage[]
   whoBlockTitle: string
   whoCrewSubBlockTitle: string
-  whoCrewSubBlockImageUrl: ImageUrl[]
+  whoCrewSubBlockImageUrl: ImageUrl
   whoCrewSubBlockMemberIds: number[]
   whoCommitteeSubBlockTitle: string
   whoCommitteeSubBlockDescription: string
