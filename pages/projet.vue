@@ -134,23 +134,77 @@
               class="logo-open-democracy is-hidden-mobile"
             />
           </figure>
-          <div class="columns mb-2">
-            <!-- <Carousel
-              v-if="pageStore.projectPage.whoCrewSubBlockTitle.length"
-              :settings="settings"
-              :breakpoints="breakpointsSmallElements"
-            > -->
-            <!-- <Slide
-              v-for="ids in pageStore.projectPage.whoCrewSubBlockMemberIds"
-              :key="ids"
-              class="column is-one-third-tablet is-11-mobile"
-            > -->
-            <!-- <PageFeedbackCard
-                :persons="pageStore.projectPage.persons.ids"
-                class="carousel-item"
-              /> -->
-            <!-- </Slide> -->
-            <!-- </Carousel> -->
+          <div class="columns is-flex-mobile">
+            <div
+              v-for="memberId in pageStore.projectPage.whoCrewSubBlockMemberIds"
+              :key="memberId"
+              class="column is-one-fifth is-half-mobile mb-2"
+            >
+              <PageMemberCard
+                :persons="pageStore.projectPageMember(memberId)"
+              />
+            </div>
+          </div>
+        </PageSection>
+        <PageSection
+          v-if="pageStore.projectPage.whoCommitteeSubBlockTitle"
+          :title="pageStore.projectPage.whoCommitteeSubBlockTitle"
+        >
+          <div class="my-2">
+            <RichText
+              class="is-family-secondary column-2 has-text-shade-600 mb-2"
+              :rich-text="pageStore.projectPage.whoCommitteeSubBlockDescription"
+            ></RichText>
+            <div>
+              <div class="tabs">
+                <ul>
+                  <li
+                    v-for="tab of tabs"
+                    :key="tab.id"
+                    :class="
+                      tab.id === currentTabId
+                        ? 'is-active'
+                        : `has-text-shade-500-hover`
+                    "
+                  >
+                    <a
+                      class="tab is-size-4 has-text-weight-bold has-text-shade-500"
+                      @click="setTab(tab.id)"
+                    >
+                      {{ tab.label }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div v-if="isTabsOpen">
+                <div
+                  v-for="(group_committees, index) in pageStore.projectPage
+                    .whoCommitteeSubBlockData"
+                  :key="index"
+                >
+                  <div
+                    v-show="
+                      currentTabId ===
+                      group_committees.value.committee.replace(/\s+/g, '')
+                    "
+                    class="columns is-flex-mobile"
+                  >
+                    <div
+                      v-for="committee_member in group_committees.value
+                        .committee_members"
+                      :key="committee_member"
+                      class="column is-one-fifth mb-2 is-half-mobile"
+                    >
+                      <PageMemberCard
+                        :persons="
+                          pageStore.projectPageMember(committee_member.value)
+                        "
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </PageSection>
         <PageSection
@@ -201,6 +255,7 @@
 </template>
 
 <script setup lang="ts">
+import { CommitteeSubBlock } from "~/composables/types"
 import { MADIA_BASE_URL } from "~/composables/api"
 import { usePageStore } from "~/stores/pageStore"
 
@@ -219,6 +274,26 @@ if (!pageStore.projectPage.title) {
 const howBlockRef = ref(null)
 const whoBlockRef = ref(null)
 const whyBlockRef = ref(null)
+
+type tabDef = { label: string; id: string }
+const tabs = ref<tabDef[]>([])
+const isTabsOpen = ref(false)
+const committeeData = (pageStore.projectPage.whoCommitteeSubBlockData ||
+  []) as CommitteeSubBlock[]
+if (committeeData.length) {
+  committeeData.forEach((element) => {
+    tabs.value.push({
+      label: `${element.value.committee}`,
+      id: `${element.value.committee.replace(/\s+/g, "")}`,
+    })
+  })
+}
+const currentTabId = ref<string>(tabs.value[0]?.id)
+function setTab(tabId) {
+  currentTabId.value = tabId
+  isTabsOpen.value = true
+}
+
 onMounted(() => {
   howBlockRef.value.focus()
   whoBlockRef.value.focus()

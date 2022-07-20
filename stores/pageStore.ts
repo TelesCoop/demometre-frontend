@@ -35,6 +35,12 @@ export const usePageStore = defineStore("page", {
     evaluationInitPage: <EvaluationInitPage>{},
     evaluationQuestionnairePage: <EvaluationQuestionnairePage>{},
   }),
+  getters: {
+    projectPageMember: (state) => {
+      return (memberId: number) =>
+        state.projectPage.persons.find((person) => person.id === memberId)
+    },
+  },
   actions: {
     async getHomePage() {
       const { data, error } = await useApiGet<HomePage[]>("home-pages/")

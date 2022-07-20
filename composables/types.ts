@@ -389,6 +389,20 @@ type ObjectiveBlock = {
   svgUrl: string
   title: string
 }
+type CommitteeMember = {
+  id: string
+  type: string
+  value: number
+}
+type CommitteeSubBlockValue = {
+  committee: string
+  committeeMembers: CommitteeMember
+}
+export type CommitteeSubBlock = {
+  id: string
+  type: string
+  value: CommitteeSubBlockValue
+}
 export type ProjectPage = {
   title: string
   introduction: string
@@ -406,7 +420,7 @@ export type ProjectPage = {
   whoCrewSubBlockMemberIds: number[]
   whoCommitteeSubBlockTitle: string
   whoCommitteeSubBlockDescription: string
-  whoCommitteeSubBlockData: string
+  whoCommitteeSubBlockData: string | CommitteeSubBlock[]
   whoPartnerSubBlockTitle: string
   whoPartnerSubBlockData: string
   howBlockTitle: string
