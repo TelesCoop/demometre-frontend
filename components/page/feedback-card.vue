@@ -6,7 +6,10 @@
       <div class="media is-flex is-flex-direction-row mb-1_5">
         <div v-if="props.feedback.pictureUrl" class="media-left mr-1">
           <figure class="image is-48x48 is-rounded">
-            <img :src="MADIA_BASE_URL + props.feedback.pictureUrl" alt="" />
+            <img
+              :src="MADIA_BASE_URL + props.feedback.pictureUrl"
+              :alt="props.feedback.personName"
+            />
           </figure>
         </div>
         <div class="media-content">

@@ -305,6 +305,12 @@ type Partner = {
   height: number
   showInHomePage: boolean
 }
+type Person = {
+  id: number
+  name: string
+  imageUrl: string
+  jobTitle: string
+}
 export type HomePage = {
   title: string
   introduction: string
@@ -392,6 +398,20 @@ type ObjectiveBlock = {
   svgUrl: string
   title: string
 }
+type CommitteeMember = {
+  id: string
+  type: string
+  value: number
+}
+type CommitteeSubBlockValue = {
+  committee: string
+  committeeMembers: CommitteeMember
+}
+export type CommitteeSubBlock = {
+  id: string
+  type: string
+  value: CommitteeSubBlockValue
+}
 export type ProjectPage = {
   title: string
   introduction: string
@@ -404,12 +424,19 @@ export type ProjectPage = {
   impactBlockTitle: string
   impactBlockData: string | SimpleBlockWithImage[]
   whoBlockTitle: string
+  whoCrewSubBlockTitle: string
+  whoCrewSubBlockImageUrl: ImageUrl
+  whoCrewSubBlockMemberIds: number[]
+  whoCommitteeSubBlockTitle: string
+  whoCommitteeSubBlockDescription: string
+  whoCommitteeSubBlockData: string | CommitteeSubBlock[]
   whoPartnerSubBlockTitle: string
   whoPartnerSubBlockData: string
   howBlockTitle: string
   howBlockData: string
   imagesUrl: ImageUrl[]
   svgsUrl: ImageUrl[]
+  persons: Person[]
   partners: Partner[]
 }
 export type EvaluationInitiationPage = {

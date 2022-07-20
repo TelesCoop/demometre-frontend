@@ -33,6 +33,12 @@ export const usePageStore = defineStore("page", {
     evaluationInitiationPage: <EvaluationInitiationPage>{},
     evaluationQuestionnairePage: <EvaluationQuestionnairePage>{},
   }),
+  getters: {
+    projectPageMember: (state) => {
+      return (memberId: number) =>
+        state.projectPage.persons.find((person) => person.id === memberId)
+    },
+  },
   actions: {
     async getHomePage() {
       const { data, error } = await useApiGet<HomePage[]>("home-pages/")
@@ -145,6 +151,9 @@ export const usePageStore = defineStore("page", {
             this.projectPage.impactBlockData,
             "image",
             this.projectPage.imagesUrl
+          )
+          this.projectPage.whoCommitteeSubBlockData = eval(
+            this.projectPage.whoCommitteeSubBlockData
           )
           this.projectPage.whoPartnerSubBlockData =
             getStreamFieldStructWithListLinkedObjects(
