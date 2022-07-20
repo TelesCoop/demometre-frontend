@@ -74,12 +74,12 @@
     >
       <form @submit.prevent="goToNextStep">
         <div class="field mb-3">
-          <label class="label">{{
-            pageStore.evaluationInitiationPage.initiatorNameQuestion
-          }}</label>
-          <span class="is-family-secondary is-size-6">{{
-            pageStore.evaluationInitiationPage.initiatorNameDescription
-          }}</span>
+          <label class="label">
+            {{ pageStore.evaluationInitiationPage.initiatorNameQuestion }}
+          </label>
+          <span class="is-family-secondary is-size-6">
+            {{ pageStore.evaluationInitiationPage.initiatorNameDescription }}
+          </span>
           <div class="control">
             <input
               v-model="initiatorName"
@@ -107,46 +107,11 @@
               name="initiationType"
               required
             />
-            <label :for="initiatorType.key" class="button is-normal locality">{{
-              initiatorType.value
-            }}</label>
+            <label :for="initiatorType.key" class="button is-normal locality">
+              {{ initiatorType.value }}
+            </label>
           </div>
         </div>
-
-        <!-- <div class="field mb-3">
-          <label class="label">
-            {{
-            pageStore.evaluationInitPage.publicNameQuestion
-            }}
-          </label>
-          <span class="is-family-secondary is-size-6">
-            {{
-            pageStore.evaluationInitPage.publicNameQuestionDescription
-            }}
-          </span>
-          <div class="buttons mt-1">
-            <div
-              v-for="(consentPublicName, index) of [true, false]"
-              :key="index"
-              class="margin-between"
-            >
-              <input
-                :id="consentPublicName"
-                v-model="consentPublicNameSelected"
-                type="radio"
-                :value="consentPublicName"
-                class="custom-hidden white-on-black-input-checked"
-                name="consentPublicName"
-                required
-              />
-              <label
-                :for="consentPublicName"
-                class="button is-normal locality"
-              >{{ consentPublicName ? "Oui" : "Non" }}</label>
-            </div>
-          </div>
-        </div>-->
-
         <div class="buttons mt-4">
           <button class="button is-normal is-rounded" :disabled="disabled">
             <span>Suivant</span>
