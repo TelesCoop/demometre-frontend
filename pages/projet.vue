@@ -66,7 +66,7 @@
                     <figure class="image is-4by3 has-text-centered">
                       <img
                         :src="MADIA_BASE_URL + objective.svgUrl"
-                        alt=""
+                        :alt="objective.title"
                         :style="`height: 100px; width: 100px`"
                         class="mt-2"
                       />
@@ -98,7 +98,7 @@
                     <figure class="image has-text-centered">
                       <img
                         :src="MADIA_BASE_URL + impact.imageUrl"
-                        alt=""
+                        :alt="impact.title"
                         class="fit-without-distortion"
                       />
                     </figure>
@@ -121,6 +121,90 @@
     <!-- Who block -->
     <div ref="whoBlockRef" class="scroll-margin-top_5">
       <PageBigSection :title="pageStore.projectPage.whoBlockTitle">
+        <PageSection
+          v-if="pageStore.projectPage.whoCrewSubBlockTitle"
+          :title="pageStore.projectPage.whoCrewSubBlockTitle"
+        >
+          <figure class="image">
+            <img
+              :src="
+                MADIA_BASE_URL + pageStore.projectPage.whoCrewSubBlockImageUrl
+              "
+              :alt="pageStore.projectPage.whoCrewSubBlockTitle"
+              class="logo-open-democracy is-hidden-mobile"
+            />
+          </figure>
+          <div class="columns is-mobile">
+            <div
+              v-for="memberId in pageStore.projectPage.whoCrewSubBlockMemberIds"
+              :key="memberId"
+              class="column is-one-fifth-tablet is-half-mobile mb-1"
+            >
+              <PageMemberCard
+                :persons="pageStore.projectPageMember(memberId)"
+              />
+            </div>
+          </div>
+        </PageSection>
+        <PageSection
+          v-if="pageStore.projectPage.whoCommitteeSubBlockTitle"
+          :title="pageStore.projectPage.whoCommitteeSubBlockTitle"
+        >
+          <div class="my-2">
+            <RichText
+              class="is-family-secondary column-2 has-text-shade-600 mb-2"
+              :rich-text="pageStore.projectPage.whoCommitteeSubBlockDescription"
+            ></RichText>
+            <div>
+              <div class="tabs">
+                <ul>
+                  <li
+                    v-for="tab of tabs"
+                    :key="tab.id"
+                    :class="
+                      tab.id === currentTabId
+                        ? 'is-active'
+                        : `has-text-shade-500-hover`
+                    "
+                  >
+                    <a
+                      class="tab is-size-6 has-text-weight-bold has-text-shade-500"
+                      @click="setTab(tab.id)"
+                    >
+                      {{ tab.label }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div
+                v-for="(group_committees, index) in pageStore.projectPage
+                  .whoCommitteeSubBlockData"
+                :key="index"
+              >
+                <div
+                  v-show="
+                    currentTabId ===
+                    group_committees.value.committee.replace(/\s+/g, '')
+                  "
+                  class="columns is-mobile"
+                >
+                  <div
+                    v-for="committee_member in group_committees.value
+                      .committee_members"
+                    :key="committee_member"
+                    class="column is-half-mobile is-one-fifth-tablet mb-1"
+                  >
+                    <PageMemberCard
+                      :persons="
+                        pageStore.projectPageMember(committee_member.value)
+                      "
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </PageSection>
         <PageSection
           v-if="pageStore.projectPage.whoPartnerSubBlockTitle"
           :title="pageStore.projectPage.whoPartnerSubBlockTitle"
@@ -169,6 +253,7 @@
 </template>
 
 <script setup lang="ts">
+import { CommitteeSubBlock } from "~/composables/types"
 import { MADIA_BASE_URL } from "~/composables/api"
 import { usePageStore } from "~/stores/pageStore"
 
@@ -187,6 +272,24 @@ if (!pageStore.projectPage.title) {
 const howBlockRef = ref(null)
 const whoBlockRef = ref(null)
 const whyBlockRef = ref(null)
+
+type tabDef = { label: string; id: string }
+const tabs = ref<tabDef[]>([])
+const committeeData = (pageStore.projectPage.whoCommitteeSubBlockData ||
+  []) as CommitteeSubBlock[]
+if (committeeData.length) {
+  committeeData.forEach((element) => {
+    tabs.value.push({
+      label: `${element.value.committee}`,
+      id: `${element.value.committee.replace(/\s+/g, "")}`,
+    })
+  })
+}
+const currentTabId = ref<string>(tabs.value[0]?.id)
+function setTab(tabId) {
+  currentTabId.value = tabId
+}
+
 onMounted(() => {
   howBlockRef.value.focus()
   whoBlockRef.value.focus()
@@ -218,4 +321,8 @@ const scrollIntoWhyBlock = () => {
   .impact
     .image
       height: 150px
+.logo-open-democracy
+  position: absolute
+  top: 3rem
+  right: 0
 </style>
