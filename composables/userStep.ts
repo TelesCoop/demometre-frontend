@@ -16,13 +16,15 @@ export function useUserStep<Type>() {
 
   const state = computed(() => {
     if (!assessmentStore.currentAssessmentId) {
+      // No locality chosen, when a locality is chosen we get or create assessment
       return {
         step: "localisation",
-        url: `/evaluation`,
+        url: `/evaluation/localisation`,
         text: START_EVALUATION_TEXT,
       }
     }
     if (!assessmentStore.currentAssessment?.initializationDate) {
+      // The locality has been chosen but the assessment is not initialize
       return {
         step: "initialization",
         url: `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`,
@@ -33,6 +35,7 @@ export function useUserStep<Type>() {
       !assessmentStore.currentAssessment?.isInitializationQuestionsCompleted &&
       assessmentStore.userIsAssessmentAdmin
     ) {
+      // The assessment is initialize but the objective questions are not completed
       const questionId = initilizationJourney.nextQuestionId(undefined, true)
       return {
         step: "initialization-objectives-questions",
@@ -41,14 +44,30 @@ export function useUserStep<Type>() {
       }
     }
     if (!participationStore.id) {
+      if (!participationStore.newParticipation.consent) {
+        // If the consent is not checked we go to the beginning of the participation
+        return {
+          step: "participation",
+          url: `/evaluation/participation/${assessmentStore.currentAssessmentId}`,
+          text: RESUME_EVALUATION_TEXT,
+        }
+      }
+      if (assessmentStore.addingExpert) {
+        return {
+          step: "participation",
+          url: `/evaluation/participation/${assessmentStore.currentAssessmentId}/ajout-expert`,
+          text: RESUME_EVALUATION_TEXT,
+        }
+      }
       return {
         step: "role",
-        url: `/evaluation/localisation/${assessmentStore.currentAssessmentId}`,
+        url: `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`,
         text: RESUME_EVALUATION_TEXT,
       }
     }
 
     if (!participationStore.participation.isProfilingQuestionsCompleted) {
+      // If there is a participation but the profiling is not completed
       const questionId = profilingJourney.nextQuestionId(undefined, true)
       if (questionId) {
         return {

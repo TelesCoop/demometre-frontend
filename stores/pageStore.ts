@@ -1,8 +1,7 @@
 import { defineStore } from "pinia"
 import {
   Article,
-  EvaluationInitPage,
-  EvaluationIntroPage,
+  EvaluationInitiationPage,
   EvaluationQuestionnairePage,
   HomePage,
   ProjectPage,
@@ -31,8 +30,7 @@ export const usePageStore = defineStore("page", {
     resultsPage: <ResultsPage>{},
     usagePage: <UsagePage>{},
     projectPage: <ProjectPage>{},
-    evaluationIntroPage: <EvaluationIntroPage>{},
-    evaluationInitPage: <EvaluationInitPage>{},
+    evaluationInitiationPage: <EvaluationInitiationPage>{},
     evaluationQuestionnairePage: <EvaluationQuestionnairePage>{},
   }),
   actions: {
@@ -169,30 +167,15 @@ export const usePageStore = defineStore("page", {
         errorStore.setError(error.value.data.messageCode)
       }
     },
-    async getEvaluationIntroPage() {
-      const { data, error } = await useApiGet<EvaluationIntroPage[]>(
-        "evaluation-intro-pages/"
+    async getEvaluationInitiationPage() {
+      const { data, error } = await useApiGet<EvaluationInitiationPage[]>(
+        "evaluation-initiation-pages/"
       )
       if (!error.value) {
         if (data.value.length) {
-          this.evaluationIntroPage = data.value[0]
+          this.evaluationInitiationPage = data.value[0]
         } else {
-          console.error("Impossible to retrieve evaluation intro page")
-        }
-      } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
-      }
-    },
-    async getEvaluationInitPage() {
-      const { data, error } = await useApiGet<EvaluationInitPage[]>(
-        "evaluation-init-pages/"
-      )
-      if (!error.value) {
-        if (data.value.length) {
-          this.evaluationInitPage = data.value[0]
-        } else {
-          console.error("Impossible to retrieve evaluation init page")
+          console.error("Impossible to retrieve evaluation initiation page")
         }
       } else {
         const errorStore = useToastStore()

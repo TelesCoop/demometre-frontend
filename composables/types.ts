@@ -123,6 +123,7 @@ export type Question = {
   surveyType: SurveyType
   maxMultipleChoices: number | null
   roleIds: number[]
+  assessmentTypes: string[]
   populationLowerBound: number | null
   populationUpperBound: number | null
   profileIds: number[]
@@ -150,6 +151,11 @@ export type Definition = {
 export const LocalityType = {
   MUNICIPALITY: { key: "municipality", value: "Commune" },
   INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" },
+}
+export const AssessmentType = {
+  QUICK: { key: "quick", value: "Diagnostic rapide" },
+  PARTICIPATIVE: { key: "participative", value: "Evaluation participative" },
+  WITH_EXPERT: { key: "with_expert", value: "Evaluation avec experts" },
 }
 type Locality = {
   id: number
@@ -182,6 +188,7 @@ export type AssessmentRepresentativity = {
 }
 export type Assessment = {
   id: number
+  assessmentType: string
   localityType: string
   initiatedByUser: User
   initiatorType: string
@@ -200,6 +207,8 @@ export type Assessment = {
 export const InitiatorType = {
   COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
   ASSOCIATION: { key: "association", value: "Une association" },
+  INDIVIDUAL: { key: "individual", value: "Un particulier" },
+  OTHER: { key: "other", value: "Autre" },
 }
 export type Scores = {
   byQuestionId: { [key: number]: number }
@@ -337,7 +346,7 @@ export type ResultsPage = {
 }
 
 type ImageUrl = { id: number; url: string }
-type AssessmentTypeDetails = {
+export type AssessmentTypeDetails = {
   id: number
   name: string
   assessmentType: string
@@ -403,21 +412,41 @@ export type ProjectPage = {
   svgsUrl: ImageUrl[]
   partners: Partner[]
 }
-export type EvaluationIntroPage = {
-  title: string
-  introduction: string
-  dataConsent: string
-  accountIncentive: string
-  accountIncentiveTitle: string
-}
-export type EvaluationInitPage = {
-  title: string
-  introduction: string
-  publicNameQuestion: string
-  publicNameQuestionDescription: string
-  representativityQuestion: string
+export type EvaluationInitiationPage = {
+  searchAssessmentTitle: string
+  searchAssessmentDescription: string
+  consentTitle: string
+  consentDescription: string
+  noAssessmentTitle: string
+  noAssessmentDescription: string
+  oneQuickAssessmentTitle: string
+  oneQuickAssessmentDescription: string
+  oneAssessmentWithExpertTitle: string
+  oneAssessmentWithExpertDescription: string
+  oneParticipationAssessmentTitle: string
+  oneParticipationAssessmentDescription: string
+  addExpertTitle: string
+  addExpertDescription: string
+  addExpertButtonYes: string
+  addExpertButtonNo: string
+  mustBeConnectedToCreateTitle: string
+  mustBeConnectedToCreateDescription: string
+  createQuickAssessmentTitle: string
+  createQuickAssessmentDescription: string
+  createParticipationAssessmentTitle: string
+  createParticipationAssessmentDescription: string
+  createAssessmentWithExpertTitle: string
+  createAssessmentWithExpertDescription: string
+  chooseExpertText: string
+  ifNoExpertText: string
+  initTitle: string
+  initDescription: string
+  initiatorNameQuestion: string
+  initiatorNameDescription: string
+  representativityTitle: string
   representativityDescription: string
-  initializationValidation: string
+  initializationValidationTitle: string
+  initializationValidationDescription: string
 }
 export type EvaluationQuestionnairePage = {
   roleQuestionTitle: string

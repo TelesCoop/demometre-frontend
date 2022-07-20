@@ -10,7 +10,7 @@
     </p>
     <div class="tags">
       <span
-        v-for="roleId of roleIds"
+        v-for="roleId of props.question.roleIds"
         :key="roleId"
         :class="`tag is-${props.color}`"
         >{{ profilingStore.roleById[roleId].name }}</span
@@ -41,7 +41,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue"
 import { useProfilingStore } from "~~/stores/profilingStore"
 
 const props = defineProps({
@@ -50,12 +49,6 @@ const props = defineProps({
 })
 
 const profilingStore = useProfilingStore()
-
-const roleIds = computed(() =>
-  props.question.roleIds.length
-    ? props.question.roleIds
-    : Object.keys(profilingStore.roleById)
-)
 </script>
 
 <style scoped lang="sass">

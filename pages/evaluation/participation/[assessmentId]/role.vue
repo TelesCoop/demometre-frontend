@@ -39,7 +39,6 @@
 import { ref } from "@vue/reactivity"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
-import { getDataOfParticipation } from "~/composables/actions"
 import { useProfilingJourney } from "~/composables/journey"
 import { usePageStore } from "~/stores/pageStore"
 

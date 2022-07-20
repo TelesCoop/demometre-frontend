@@ -3,6 +3,7 @@ import {
   Assessment,
   RepresentativityCriteria,
   Scores,
+  User,
 } from "~/composables/types"
 import { useApiGet, useApiPost } from "~/composables/api"
 import { useToastStore } from "./toastStore"
@@ -15,6 +16,9 @@ export const useAssessmentStore = defineStore("assessment", {
     representativityCriterias: <RepresentativityCriteria[]>[],
     assessmentsWithResultsLoaded: <boolean>false,
     scoresByAssessmentId: <{ [key: number]: Scores }>{},
+    expertById: <{ [key: number]: User }>{},
+    creatingAssessmentType: <string>"",
+    addingExpert: <boolean>false,
   }),
   getters: {
     assessments: (state) => {
@@ -61,6 +65,9 @@ export const useAssessmentStore = defineStore("assessment", {
           ? "ma ville"
           : "mon inter-communalité")
       )
+    },
+    experts: (state) => {
+      return Object.values(state.expertById)
     },
   },
   actions: {
@@ -146,9 +153,10 @@ export const useAssessmentStore = defineStore("assessment", {
         {
           representativityThresholds: this.representativityCriterias.map(
             (item) => {
-              return { id: item.id, value: item.acceptabilityThreshold }
+              return { id: item.id, value: item.acceptabilityThreshold || null }
             }
           ),
+          assessmentType: this.creatingAssessmentType,
           ...payload,
         }
       )
@@ -184,6 +192,32 @@ export const useAssessmentStore = defineStore("assessment", {
         return false
       }
       this.scoresByAssessmentId[assessmentId] = data.value
+      return true
+    },
+    async getExperts() {
+      const { data, error } = await useApiGet<User[]>(`experts/`)
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+        return false
+      }
+      for (const expert of data.value) {
+        this.expertById[expert.id] = expert
+        this.expertById[expert.id].name = this.expertById[expert.id].username
+      }
+      return true
+    },
+    async addExpert(assessmentId, expertId) {
+      const { data, error } = await useApiPatch<Scores>(
+        `assessments/${assessmentId}/add-expert/`,
+        { expertId }
+      )
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+        return false
+      }
+      this.assessmentById[assessmentId] = data.value
       return true
     },
   },

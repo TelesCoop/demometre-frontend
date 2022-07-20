@@ -1,31 +1,30 @@
 <template>
   <div class="container">
-    <section v-if="props.title" class="section">
-      <h3 v-if="props.isInsideBigSection" :class="titleClasses">
-        {{ props.title }}
-      </h3>
-      <h2 v-else :class="titleClasses">{{ props.title }}</h2>
+    <section v-if="title" class="section">
+      <h3 v-if="isInsideBigSection" :class="titleClasses">{{ title }}</h3>
+      <h1 v-else-if="isFirstElement" :class="titleClasses">{{ title }}</h1>
+      <h2 v-else :class="titleClasses">{{ title }}</h2>
       <div
         class="is-flex is-flex-direction-row is-justify-content-space-between is-flex-wrap-wrap mb-3"
       >
-        <p v-if="props.intro" class="is-family-secondary is-size-5 mb-1">
-          {{ props.intro }}
+        <p v-if="intro" class="is-family-secondary is-size-5 mb-1">
+          {{ intro }}
         </p>
         <nuxt-link
-          v-if="props.buttonLink && props.buttonText"
+          v-if="buttonLink && buttonText"
           class="button is-normal is-rounded is-responsive"
           :class="[
-            props.buttonOutlined && `is-outlined`,
-            props.buttonTextDark && ` has-text-${buttonColor}-dark`,
-            ` is-${props.buttonColor}`,
+            buttonOutlined && `is-outlined`,
+            buttonTextDark && ` has-text-${buttonColor}-dark`,
+            ` is-${buttonColor}`,
           ]"
-          :to="props.buttonLink"
+          :to="buttonLink"
         >
-          <span v-if="!props.leftIcon">{{ props.buttonText }}</span>
+          <span v-if="!leftIcon">{{ buttonText }}</span>
           <span class="icon">
-            <icon size="20" :name="props.icon" />
+            <icon size="20" :name="icon" />
           </span>
-          <span v-if="props.leftIcon">{{ props.buttonText }}</span>
+          <span v-if="leftIcon">{{ buttonText }}</span>
         </nuxt-link>
       </div>
       <slot></slot>
@@ -34,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
   title: { type: String, required: true },
   intro: { type: String, required: false, default: undefined },
   buttonText: { type: String, required: false, default: undefined },
@@ -45,6 +44,7 @@ const props = defineProps({
   leftIcon: { type: Boolean, default: false },
   icon: { type: String, default: "arrow-right-line" },
   isInsideBigSection: { type: Boolean, default: false },
+  isFirstElement: { type: Boolean, default: false },
 })
 
 const titleClasses = ["title", "is-3", "has-text-shade-900", "mb-1"]

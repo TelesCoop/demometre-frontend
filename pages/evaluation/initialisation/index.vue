@@ -1,202 +1,223 @@
 <template>
-  <div class="container">
-    <section class="columns is-centered">
-      <div v-if="!userStore.isLoggedIn" class="column is-8">
-        <h1 class="title is-3 has-text-black-ter">
-          {{ pageStore.evaluationInitPage.title }}
-        </h1>
-        <p class="is-family-secondary is-size-5 mb-1">
-          Vous devez être connecté afin d'initialiser une évaluation
-        </p>
-        <div class="buttons mb-0_5">
-          <NuxtLink class="button is-normal is-rounded" to="/signup"
-            >Faire un compte</NuxtLink
-          >
-          <NuxtLink class="button is-normal is-rounded" to="/login"
-            >Se connecter</NuxtLink
-          >
+  <div>
+    <!-- User not logged in -->
+    <PageSection
+      v-if="!userStore.isLoggedIn"
+      class="column is-8"
+      :title="pageStore.evaluationInitiationPage.mustBeConnectedToCreateTitle"
+      :intro="
+        pageStore.evaluationInitiationPage.mustBeConnectedToCreateDescription
+      "
+      :is-first-element="true"
+    >
+      <div class="buttons mb-0_5">
+        <NuxtLink class="button is-normal is-rounded" to="/signup"
+          >Faire un compte</NuxtLink
+        >
+        <NuxtLink class="button is-normal is-rounded" to="/login"
+          >Se connecter</NuxtLink
+        >
+      </div>
+    </PageSection>
+
+    <!-- Choose Assessment type step-->
+    <PageSection
+      v-else-if="initializationSteps[currentStep] === steps.ASSESSMENT_TYPE"
+      :title="pageStore.evaluationInitiationPage.noAssessmentTitle"
+      :intro="pageStore.evaluationInitiationPage.noAssessmentDescription"
+      :is-first-element="true"
+    >
+      <div class="columns mb-2">
+        <div
+          v-for="assessmentType in pageStore.usagePage.startAssessmentBlockData"
+          :key="assessmentType.id"
+          class="column is-one-third"
+        >
+          <PageAssessmentCard
+            :assessment-type="assessmentType"
+            background-color="white"
+          />
         </div>
       </div>
+    </PageSection>
 
-      <div v-else class="column is-8">
-        <!-- Start initialization step -->
-        <div v-if="initializationSteps[currentStep] === steps.START">
-          <h1 class="title is-3 has-text-black-ter">
-            {{ pageStore.evaluationInitPage.title }}
-          </h1>
-          <RichText
-            :rich-text="pageStore.evaluationInitPage.introduction"
-            class="is-family-secondary"
-          />
+    <!-- Start initialization step -->
+    <!-- TODO : 3 senarios -->
+    <PageSection
+      v-else-if="initializationSteps[currentStep] === steps.START"
+      class="column is-8"
+      :title="startInitializationTitleAndDesc[0]"
+      :intro="startInitializationTitleAndDesc[1]"
+      :is-first-element="true"
+    >
+      <div
+        v-if="
+          assessmentStore.creatingAssessmentType ===
+          AssessmentType.WITH_EXPERT.key
+        "
+      >
+        <p>{{ pageStore.evaluationInitiationPage.chooseExpertText }}</p>
+        <p>{{ pageStore.evaluationInitiationPage.ifNoExpertText }}</p>
+      </div>
+      <button class="button is-normal is-rounded mt-4" @click="goToNextStep">
+        <span>C’est parti !</span>
+      </button>
+    </PageSection>
 
-          <button
-            class="button is-normal is-rounded mt-4"
-            @click="goToNextStep"
+    <!-- Assessment Initiator step -->
+    <PageSection
+      v-else-if="initializationSteps[currentStep] === steps.INITIATOR"
+      class="column is-8"
+      :title="pageStore.evaluationInitiationPage.initTitle"
+      :intro="pageStore.evaluationInitiationPage.initDescription"
+      :is-first-element="true"
+    >
+      <form @submit.prevent="goToNextStep">
+        <div class="field mb-3">
+          <label class="label">{{
+            pageStore.evaluationInitiationPage.initiatorNameQuestion
+          }}</label>
+          <span class="is-family-secondary is-size-6">{{
+            pageStore.evaluationInitiationPage.initiatorNameDescription
+          }}</span>
+          <div class="control">
+            <input
+              v-model="initiatorName"
+              class="input is-normal-width"
+              type="text"
+              placeholder="Mairie de ..."
+            />
+          </div>
+        </div>
+        <label class="label"
+          >Au nom de qui lancez-vous cette évaluation &nbsp;?</label
+        >
+        <div class="buttons mt-1">
+          <div
+            v-for="initiatorType of InitiatorType"
+            :key="initiatorType.key"
+            class="margin-between"
           >
-            <span>Initialiser une évaluation</span>
+            <input
+              :id="initiatorType.key"
+              v-model="initiatorTypeSelected"
+              type="radio"
+              :value="initiatorType.key"
+              class="custom-hidden white-on-black-input-checked"
+              name="initiationType"
+              required
+            />
+            <label :for="initiatorType.key" class="button is-normal locality">{{
+              initiatorType.value
+            }}</label>
+          </div>
+        </div>
+
+        <!-- <div class="field mb-3">
+          <label class="label">
+            {{
+            pageStore.evaluationInitPage.publicNameQuestion
+            }}
+          </label>
+          <span class="is-family-secondary is-size-6">
+            {{
+            pageStore.evaluationInitPage.publicNameQuestionDescription
+            }}
+          </span>
+          <div class="buttons mt-1">
+            <div
+              v-for="(consentPublicName, index) of [true, false]"
+              :key="index"
+              class="margin-between"
+            >
+              <input
+                :id="consentPublicName"
+                v-model="consentPublicNameSelected"
+                type="radio"
+                :value="consentPublicName"
+                class="custom-hidden white-on-black-input-checked"
+                name="consentPublicName"
+                required
+              />
+              <label
+                :for="consentPublicName"
+                class="button is-normal locality"
+              >{{ consentPublicName ? "Oui" : "Non" }}</label>
+            </div>
+          </div>
+        </div>-->
+
+        <div class="buttons mt-4">
+          <button class="button is-normal is-rounded" :disabled="disabled">
+            <span>Suivant</span>
             <span class="icon">
               <icon size="20" name="arrow-right-line" />
             </span>
           </button>
+
+          <!-- Permet d'appuyer sur entrer -->
+          <input type="submit" hidden />
         </div>
-        <!-- Assessment Initiator step -->
-        <div v-if="initializationSteps[currentStep] === steps.INITIATOR">
-          <h1 class="title is-3 has-text-black-ter">
-            Lancement d'une nouvelle évaluation
-          </h1>
+      </form>
+    </PageSection>
 
-          <form @submit.prevent="goToNextStep">
-            <div class="field my-3">
-              <label class="label"
-                >Au nom de qui lancez-vous cette évaluation &nbsp;?</label
-              >
-              <div class="buttons mt-1">
-                <div
-                  v-for="initiatorType of InitiatorType"
-                  :key="initiatorType.key"
-                  class="margin-between"
-                >
-                  <input
-                    :id="initiatorType.key"
-                    v-model="initiatorTypeSelected"
-                    type="radio"
-                    :value="initiatorType.key"
-                    class="custom-hidden white-on-black-input-checked"
-                    name="initiatorType"
-                    required
-                  />
-                  <label
-                    :for="initiatorType.key"
-                    class="button is-normal locality"
-                    >{{ initiatorType.value }}</label
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div v-if="initiatorTypeSelected === InitiatorType.ASSOCIATION.key">
-              <div class="field mb-3">
-                <label class="label"
-                  >Quel est le nom de votre association ?</label
-                >
-                <div class="control">
-                  <input
-                    v-model="associationName"
-                    class="input is-normal-width"
-                    type="text"
-                    placeholder="Démocratie Ouverte"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div class="field mb-3">
-              <label class="label">{{
-                pageStore.evaluationInitPage.publicNameQuestion
-              }}</label>
-              <span class="is-family-secondary is-size-6">{{
-                pageStore.evaluationInitPage.publicNameQuestionDescription
-              }}</span>
-              <div class="buttons mt-1">
-                <div
-                  v-for="(consentPublicName, index) of [true, false]"
-                  :key="index"
-                  class="margin-between"
-                >
-                  <input
-                    :id="consentPublicName"
-                    v-model="consentPublicNameSelected"
-                    type="radio"
-                    :value="consentPublicName"
-                    class="custom-hidden white-on-black-input-checked"
-                    name="consentPublicName"
-                    required
-                  />
-                  <label
-                    :for="consentPublicName"
-                    class="button is-normal locality"
-                    >{{ consentPublicName ? "Oui" : "Non" }}</label
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div class="buttons mt-4">
-              <button class="button is-normal is-rounded" :disabled="disabled">
-                <span>Suivant</span>
-                <span class="icon">
-                  <icon size="20" name="arrow-right-line" />
-                </span>
-              </button>
-
-              <!-- Permet d'appuyer sur entrer -->
-              <input type="submit" hidden />
-            </div>
-          </form>
-        </div>
-        <!-- Representativity rates step -->
-        <div v-if="initializationSteps[currentStep] === steps.REPRESENTATIVITY">
-          <h1 class="title is-3 has-text-black-ter">
-            {{ pageStore.evaluationInitPage.representativityTitle }}
-          </h1>
-          <RichText
-            class="is-family-secondary mb-2"
-            :rich-text="
-              pageStore.evaluationInitPage.representativityDescription
-            "
-          ></RichText>
-          <form @submit.prevent="onSubmit">
-            <div
-              v-for="representativityCriteria of assessmentStore.representativityCriterias"
-              :key="representativityCriteria.id"
+    <!-- Representativity rates step -->
+    <PageSection
+      v-else-if="initializationSteps[currentStep] === steps.REPRESENTATIVITY"
+      class="column is-8"
+      :title="pageStore.evaluationInitiationPage.representativityTitle"
+      :intro="pageStore.evaluationInitiationPage.representativityDescription"
+      :is-first-element="true"
+    >
+      <form @submit.prevent="onSubmit">
+        <div
+          v-for="representativityCriteria of assessmentStore.representativityCriterias"
+          :key="representativityCriteria.id"
+        >
+          <label class="label">{{ representativityCriteria.name }}</label>
+          <span class="is-family-secondary is-size-6">
+            Les réponses entrant en considération sont :
+            <span
+              v-for="responseChoice of representativityCriteria.responseChoiceStatements"
+              :key="responseChoice"
+              >{{ responseChoice }}, &nbsp;</span
             >
-              <label class="label">{{ representativityCriteria.name }}</label>
-              <span class="is-family-secondary is-size-6">
-                Les réponses possibles sont :
-                <span
-                  v-for="responseChoice of representativityCriteria.responseChoiceStatements"
-                  :key="responseChoice"
-                  >{{ responseChoice }},</span
-                >
-                <br />
-                L'équilibre parfait serait:
-                {{
-                  (
-                    100 /
-                    representativityCriteria.responseChoiceStatements.length
-                  ).toFixed(2)
-                }}
-                %
-              </span>
-              <ResponseInputPercentage
-                v-model="representativityCriteria.acceptabilityThreshold"
-                class="mt-1"
-                :color="color"
-                :question-id="representativityCriteria.id"
-              />
-            </div>
-            <div class="buttons mt-1_5">
-              <button class="button is-normal is-rounded" :disabled="disabled">
-                <span>Valider</span>
-                <span class="icon">
-                  <icon size="24" name="check" />
-                </span>
-              </button>
-
-              <!-- Permet d'appuyer sur entrer -->
-              <input type="submit" hidden />
-            </div>
-          </form>
+            <br />
+            L'équilibre parfait serait:
+            {{
+              (
+                100 / representativityCriteria.responseChoiceStatements.length
+              ).toFixed(2)
+            }}
+            %
+          </span>
+          <ResponseInputPercentage
+            v-model="representativityCriteria.acceptabilityThreshold"
+            class="mt-1"
+            :color="color"
+            :question-id="representativityCriteria.id"
+          />
         </div>
-      </div>
-    </section>
+        <div class="buttons mt-1_5">
+          <button class="button is-normal is-rounded" :disabled="disabled">
+            <span>Valider</span>
+            <span class="icon">
+              <icon size="24" name="check" />
+            </span>
+          </button>
+
+          <!-- Permet d'appuyer sur entrer -->
+          <input type="submit" hidden />
+        </div>
+      </form>
+    </PageSection>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useInitializationJourney } from "~/composables/journey"
 import { usePageStore } from "~/stores/pageStore"
-import { InitiatorType } from "~/composables/types"
+import { InitiatorType, AssessmentType } from "~/composables/types"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useUserStore } from "~/stores/userStore"
 
@@ -210,8 +231,11 @@ definePageMeta({
 const userStore = useUserStore()
 
 const pageStore = usePageStore()
-if (!pageStore.evaluationInitPage.title) {
-  pageStore.getEvaluationInitPage()
+if (!pageStore.evaluationInitiationPage.initTitle) {
+  pageStore.getEvaluationInitiationPage()
+}
+if (!pageStore.usagePage.startAssessmentBlockData) {
+  pageStore.getUsagePage()
 }
 
 const assessmentStore = useAssessmentStore()
@@ -222,30 +246,57 @@ if (assessmentStore.representativityCriterias.length === 0) {
 const color = ref("no-pillar")
 
 enum steps {
+  ASSESSMENT_TYPE = "assessment_type",
   START = "start",
   INITIATOR = "initiator",
   REPRESENTATIVITY = "representativity",
 }
 const initializationSteps = [
+  steps.ASSESSMENT_TYPE,
   steps.START,
   steps.INITIATOR,
   steps.REPRESENTATIVITY,
 ]
-const currentStep = ref<number>(0)
+const currentStep = ref<number>(assessmentStore.creatingAssessmentType ? 1 : 0)
 
 const initiatorTypeSelected = ref<string>()
-const consentPublicNameSelected = ref<boolean>()
-const associationName = ref<string>("")
+const initiatorName = ref<string>("")
+
+watch(
+  () => assessmentStore.creatingAssessmentType,
+  () => {
+    if (currentStep.value === 0 && assessmentStore.creatingAssessmentType) {
+      currentStep.value = 1
+    }
+  }
+)
 
 const disabled = computed(() => {
   if (initializationSteps[currentStep.value] === steps.INITIATOR) {
-    return initiatorTypeSelected.value &&
-      consentPublicNameSelected.value !== undefined &&
-      (initiatorTypeSelected.value === InitiatorType.ASSOCIATION.key
-        ? associationName.value
-        : true)
-      ? false
-      : true
+    return initiatorTypeSelected.value && initiatorName.value ? false : true
+  }
+  return false
+})
+
+const startInitializationTitleAndDesc = computed(() => {
+  switch (assessmentStore.creatingAssessmentType) {
+    case AssessmentType.QUICK.key:
+      return [
+        pageStore.evaluationInitiationPage.createQuickAssessmentTitle,
+        pageStore.evaluationInitiationPage.createQuickAssessmentDescription,
+      ]
+    case AssessmentType.PARTICIPATIVE.key:
+      return [
+        pageStore.evaluationInitiationPage.createParticipationAssessmentTitle,
+        pageStore.evaluationInitiationPage
+          .createParticipationAssessmentDescription,
+      ]
+    case AssessmentType.WITH_EXPERT.key:
+      return [
+        pageStore.evaluationInitiationPage.createAssessmentWithExpertTitle,
+        pageStore.evaluationInitiationPage
+          .createAssessmentWithExpertDescription,
+      ]
   }
 })
 
@@ -259,7 +310,14 @@ onMounted(() => {
 
 function goToNextStep() {
   if (initializationSteps.length - 1 > currentStep.value) {
-    currentStep.value += 1
+    if (
+      initializationSteps[currentStep.value + 1] === steps.REPRESENTATIVITY &&
+      assessmentStore.creatingAssessmentType === AssessmentType.QUICK.key
+    ) {
+      onSubmit()
+    } else {
+      currentStep.value += 1
+    }
   } else {
     onSubmit()
   }
@@ -268,8 +326,7 @@ function goToNextStep() {
 async function onSubmit() {
   const isSuccess = await assessmentStore.initializeAssessment({
     initiatorType: initiatorTypeSelected.value,
-    consent: consentPublicNameSelected.value,
-    initiatorName: associationName.value,
+    initiatorName: initiatorName.value,
   })
   if (isSuccess) {
     useInitializationJourney().goToNextQuestion(undefined)
