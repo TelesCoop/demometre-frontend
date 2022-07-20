@@ -20,10 +20,7 @@ type QuestionDataFilter = {
 }
 const QUESTION_FILTERS = {
   role({ question, participation }: QuestionDataFilter): boolean {
-    return (
-      !question.roleIds?.length ||
-      question.roleIds.includes(participation.roleId)
-    )
+    return question.roleIds.includes(participation.roleId)
   },
   population({ question, assessment }: QuestionDataFilter) {
     const population =
@@ -41,6 +38,12 @@ const QUESTION_FILTERS = {
       question.profileIds.some((profileId) =>
         participation.profileIds.includes(profileId)
       )
+    )
+  },
+  assessmentType({ question, assessment }: QuestionDataFilter) {
+    return (
+      !question.assessmentTypes ||
+      question.assessmentTypes?.includes(assessment?.assessmentType)
     )
   },
 }
