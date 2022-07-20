@@ -138,7 +138,7 @@
             <div
               v-for="memberId in pageStore.projectPage.whoCrewSubBlockMemberIds"
               :key="memberId"
-              class="column is-one-fifth is-half-mobile mb-2"
+              class="column is-one-fifth is-half-mobile mb-1"
             >
               <PageMemberCard
                 :persons="pageStore.projectPageMember(memberId)"
@@ -193,7 +193,7 @@
                       v-for="committee_member in group_committees.value
                         .committee_members"
                       :key="committee_member"
-                      class="column is-one-fifth mb-2 is-half-mobile"
+                      class="column is-one-fifth mb-1 is-half-mobile"
                     >
                       <PageMemberCard
                         :persons="
