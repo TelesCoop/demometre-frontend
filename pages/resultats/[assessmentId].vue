@@ -69,7 +69,13 @@
               :question="questionnaireStore.questionById[questionId]"
               class="mb-2"
             >
-              <!-- TODO : Results graphs -->
+              <p class="is-uppercase is-size-6bis mb-0_5 mt-2">Résultat</p>
+
+              <AnalyticsChartByQuestionType
+                :color="colorClass"
+                :assessment-id="assessmentId"
+                :question="questionnaireStore.questionById[questionId]"
+              ></AnalyticsChartByQuestionType>
             </QuestionnaireQuestionStatement>
           </template>
           <template #marker="markerProps">

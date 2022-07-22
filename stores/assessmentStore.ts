@@ -16,6 +16,11 @@ export const useAssessmentStore = defineStore("assessment", {
     representativityCriterias: <RepresentativityCriteria[]>[],
     assessmentsWithResultsLoaded: <boolean>false,
     scoresByAssessmentId: <{ [key: number]: Scores }>{},
+    chartDataByAssessmentIdAndQuestionId: <
+      {
+        [key: number]: any
+      }
+    >{},
     expertById: <{ [key: number]: User }>{},
     creatingAssessmentType: <string>"",
     addingExpert: <boolean>false,
@@ -218,6 +223,25 @@ export const useAssessmentStore = defineStore("assessment", {
         return false
       }
       this.assessmentById[assessmentId] = data.value
+      return true
+    },
+    async getChartDataByAssessmentIdAndQuestionId(
+      assessmentId,
+      questionId
+    ): boolean {
+      const { data, error } = await useApiGet<any>(
+        `assessments/${assessmentId}/questions/${questionId}/chart-data/`
+      )
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+        return false
+      }
+      if (!this.chartDataByAssessmentIdAndQuestionId[assessmentId]) {
+        this.chartDataByAssessmentIdAndQuestionId[assessmentId] = {}
+      }
+      this.chartDataByAssessmentIdAndQuestionId[assessmentId][questionId] =
+        data.value
       return true
     },
   },
