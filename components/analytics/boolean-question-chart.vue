@@ -18,6 +18,10 @@
         :class="`has-background-${color}-hover`"
         :style="`width: ${truePercentage}%;`"
       ></span>
+      <span
+        class="boolean-chart-bar-center-line"
+        :class="`has-background-${color}-dark`"
+      ></span>
     </div>
   </div>
 </template>
@@ -41,9 +45,17 @@ const falsePercentage = getPercentage(props.data.false.value, props.data.count)
     justify-content: space-between
     align-items: center
   &-bar
+    position: relative
     height: 24px
     width: 100%
     &-load
       display: flex
       height: 100%
+    &-center-line
+      position: absolute
+      top: 50%
+      left: 50%
+      width: 1px
+      height: 36px
+      transform: translate(-50%, -50%)
 </style>
