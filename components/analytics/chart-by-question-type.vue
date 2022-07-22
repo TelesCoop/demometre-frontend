@@ -15,6 +15,15 @@
       "
       :color="color"
     ></AnalyticsBooleanQuestionChart>
+    <AnalyticsPercentageQuestionChart
+      v-else-if="question.type === QuestionType.PERCENTAGE"
+      :data="
+        assessmentStore.chartDataByAssessmentIdAndQuestionId[assessmentId][
+          question.id
+        ].data
+      "
+      :color="color"
+    ></AnalyticsPercentageQuestionChart>
   </template>
 </template>
 
