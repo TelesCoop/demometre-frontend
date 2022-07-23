@@ -27,13 +27,12 @@
 </template>
 
 <script setup lang="ts">
+import { getPercentage } from "assets/utils/percentage"
+
 const props = defineProps({
   data: { type: Object, required: true },
   color: { type: String },
 })
-const getPercentage = (value: number, total: number) => {
-  return Math.round((value / total) * 100)
-}
 const truePercentage = getPercentage(props.data.true.value, props.data.count)
 const falsePercentage = getPercentage(props.data.false.value, props.data.count)
 </script>

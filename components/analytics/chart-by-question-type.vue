@@ -15,6 +15,19 @@
       "
       :color="color"
     ></AnalyticsBooleanQuestionChart>
+    <AnalyticsChoiceQuestionChart
+      v-if="
+        [QuestionType.UNIQUE_CHOICE, QuestionType.MULTIPLE_CHOICE].includes(
+          question.type
+        )
+      "
+      :data="
+        assessmentStore.chartDataByAssessmentIdAndQuestionId[assessmentId][
+          question.id
+        ].data
+      "
+      :color="color"
+    ></AnalyticsChoiceQuestionChart>
     <AnalyticsPercentageQuestionChart
       v-else-if="question.type === QuestionType.PERCENTAGE"
       :data="
