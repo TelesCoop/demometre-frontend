@@ -3,7 +3,7 @@
     <div class="is-flex is-justify-content-space-between">
       <h2 class="title is-4 mb-0_75">{{ props.title }}</h2>
       <AnalyticsScore
-        v-if="props.showScore && props.score"
+        v-if="props.showScore && !isNullOrUndefined(props.score)"
         :score="props.score"
         :color="props.color"
         :size-circles="16"
@@ -15,6 +15,8 @@
 </template>
 
 <script setup lang="ts">
+import { isNullOrUndefined } from "assets/utils"
+
 const props = defineProps({
   title: { type: String, required: true },
   color: { type: String, required: true },

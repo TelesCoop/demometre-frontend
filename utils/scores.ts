@@ -1,5 +1,6 @@
 import { Scores } from "~/composables/types"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
+import { isNullOrUndefined } from "assets/utils"
 
 const IS_STRENGHT_OR_IMPROVEMENT = {
   1: "improvements",
@@ -17,7 +18,7 @@ const QUESTIONNAIRE_STORE_SUB_LEVEL = {
 }
 
 export const getScoreToDisplay = (score) => {
-  if (!score) {
+  if (isNullOrUndefined(score)) {
     return null
   }
   if (score < 0.25) {
