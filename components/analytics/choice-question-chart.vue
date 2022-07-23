@@ -25,31 +25,52 @@
         >%
       </div>
     </template>
-    <template v-for="index in separatorNumber" :key="index">
+    <template v-for="index in totalSeparator" :key="index">
       <AnalyticsChoiceQuestionChartLine
         class="choice-question-chart-line"
         :class="`is-${color}`"
         :index="index - 1"
         :color="color"
-        :total-line="separatorNumber"
-        :full-line-modulo="5"
-        :percentage-of-space-already-taken="0.25"
-        :gap-size="2"
-        :percentage-size="80"
+        :total-line="totalSeparator"
+        :full-line-modulo="fullLineModulo"
+        :percentage-of-space-already-taken="percentageOfSpaceAlreadyTaken"
+        :gap-size="gapSize"
+        :percentage-size="percentageSize"
       >
       </AnalyticsChoiceQuestionChartLine>
+      <div
+        v-if="(index - 1) % fullLineModulo === 0"
+        class="choice-question-chart-line-number"
+        :class="`has-text-${color}-hover`"
+        :style="
+          getLeftStyle(
+            index - 1,
+            percentageOfSpaceAlreadyTaken,
+            totalSeparator,
+            gapSize,
+            percentageSize
+          )
+        "
+      >
+        {{ (index - 1) * 10 }}%
+      </div>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import { getPercentage } from "assets/utils/percentage"
+import { getLeftStyle } from "assets/utils/choice-question-chart"
 
 const props = defineProps({
   data: { type: Object, required: true },
   color: { type: String },
 })
-const separatorNumber = 11
+const totalSeparator = 11
+const fullLineModulo = 5
+const percentageOfSpaceAlreadyTaken = 0.25
+const gapSize = 2
+const percentageSize = 80
 </script>
 
 <style scoped lang="sass">
@@ -82,4 +103,9 @@ const separatorNumber = 11
     &.is-dashed
       border-left-style: dashed
       border-left-color: var(--color)
+
+  &-line-number
+     position: absolute
+     bottom: 0
+     transform: translate(-50%, 100%)
 </style>

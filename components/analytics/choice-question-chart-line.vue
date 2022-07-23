@@ -1,13 +1,20 @@
 <template>
   <div
     :class="{ 'is-dashed': index % fullLineModulo !== 0 }"
-    :style="`left: calc((100% - ${gapSize}rem - ${percentageSize}px) * ${leftValue} + 1rem)`"
+    :style="
+      getLeftStyle(
+        index,
+        percentageOfSpaceAlreadyTaken,
+        totalLine,
+        gapSize,
+        percentageSize
+      )
+    "
   ></div>
 </template>
 
 <script setup lang="ts">
-import { getPercentage } from "assets/utils/percentage"
-import { computed } from "vue"
+import { getLeftStyle } from "assets/utils/choice-question-chart"
 
 const props = defineProps({
   index: { type: Number, required: true },
@@ -17,14 +24,6 @@ const props = defineProps({
   gapSize: { type: Number, required: true },
   fullLineModulo: { type: Number, required: true },
   percentageSize: { type: Number, required: true },
-})
-
-const leftValue = computed(() => {
-  return (
-    props.percentageOfSpaceAlreadyTaken +
-    ((1 - props.percentageOfSpaceAlreadyTaken) * props.index) /
-      (props.totalLine - 1)
-  )
 })
 </script>
 
