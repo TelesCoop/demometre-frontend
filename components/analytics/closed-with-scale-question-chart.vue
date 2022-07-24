@@ -5,7 +5,7 @@
         <div :class="`has-text-${color}-hover`">Caractéristique(s)</div>
         <div class="is-flex">
           <div
-            v-for="(choice, choiceId) in choices"
+            v-for="(choice, choiceId) in props.data.choices"
             :key="choiceId"
             class="has-text-weight-bold px-0_5"
             style="flex: 1 1"
@@ -119,12 +119,8 @@ const percentageOfSpaceAlreadyTaken = 0.25
 const gapSize = 1
 const percentageSize = 0
 
-const choices = computed(() => {
-  const firstKey = Object.keys(props.data.value)[0]
-  return props.data.value[firstKey].value
-})
 const choiceLength = computed(() => {
-  return Object.keys(choices.value).length
+  return Object.keys(props.data.choices).length
 })
 
 const totalSeparator = computed(() => {
