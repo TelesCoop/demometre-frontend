@@ -70,7 +70,7 @@
 
 <script setup lang="ts">
 import { getPercentage } from "assets/utils/percentage"
-import { getLeftStyle } from "assets/utils/choice-question-chart"
+import { getLeftStyle } from "assets/utils/charts"
 
 const props = defineProps({
   data: { type: Object, required: true },
@@ -85,6 +85,8 @@ const percentageSize = 80
 
 <style scoped lang="sass">
 .choice-question-chart
+  padding-bottom: 2rem
+
   &-grid
     position: relative
     display: grid
@@ -118,5 +120,5 @@ const percentageSize = 80
   &-line-number
      position: absolute
      bottom: 0
-     transform: translate(-50%, 100%)
+     transform: translate(-50%, 120%)
 </style>

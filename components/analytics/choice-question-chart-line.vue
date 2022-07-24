@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { getLeftStyle } from "assets/utils/choice-question-chart"
+import { getLeftStyle } from "assets/utils/charts"
 
 const props = defineProps({
   index: { type: Number, required: true },

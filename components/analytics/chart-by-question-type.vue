@@ -28,6 +28,15 @@
       "
       :color="color"
     ></AnalyticsChoiceQuestionChart>
+    <AnalyticsClosedWithScaleQuestionChart
+      v-else-if="question.type === QuestionType.CLOSED_WITH_SCALE"
+      :data="
+        assessmentStore.chartDataByAssessmentIdAndQuestionId[assessmentId][
+          question.id
+        ].data
+      "
+      :color="color"
+    ></AnalyticsClosedWithScaleQuestionChart>
     <AnalyticsPercentageQuestionChart
       v-else-if="question.type === QuestionType.PERCENTAGE"
       :data="
