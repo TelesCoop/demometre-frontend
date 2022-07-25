@@ -44,7 +44,7 @@ import { MADIA_BASE_URL } from "~/composables/api"
 const props = defineProps({
   freeBody: { type: Array, required: true },
   hTitle: { type: String, default: "h2" },
-  insideTwoColumns: { type: Array, required: true },
+  insideTwoColumns: { type: Boolean, required: true },
 })
 
 const titleClasses = ["title", "is-3", "has-text-shade-900", "mb-1", "mt-4"]
