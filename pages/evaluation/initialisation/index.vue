@@ -74,12 +74,12 @@
     >
       <form @submit.prevent="goToNextStep">
         <div class="field mb-3">
-          <label class="label">
-            {{ pageStore.evaluationInitiationPage.initiatorNameQuestion }}
-          </label>
-          <span class="is-family-secondary is-size-6">
-            {{ pageStore.evaluationInitiationPage.initiatorNameDescription }}
-          </span>
+          <label class="label">{{
+            pageStore.evaluationInitiationPage.initiatorNameQuestion
+          }}</label>
+          <span class="is-family-secondary is-size-6">{{
+            pageStore.evaluationInitiationPage.initiatorNameDescription
+          }}</span>
           <div class="control">
             <input
               v-model="initiatorName"
@@ -107,9 +107,9 @@
               name="initiationType"
               required
             />
-            <label :for="initiatorType.key" class="button is-normal locality">
-              {{ initiatorType.value }}
-            </label>
+            <label :for="initiatorType.key" class="button is-normal locality">{{
+              initiatorType.value
+            }}</label>
           </div>
         </div>
         <div class="buttons mt-4">
@@ -133,6 +133,7 @@
       :title="pageStore.evaluationInitiationPage.representativityTitle"
       :intro="pageStore.evaluationInitiationPage.representativityDescription"
       :is-first-element="true"
+      :intro-is-rich-text="true"
     >
       <form @submit.prevent="onSubmit">
         <div

@@ -24,7 +24,7 @@
       <slot name="left-symbol">{{ letter }}</slot>
     </div>
     <div class="response-choice-content">
-      <p class="response-choice-title has-text-black">
+      <p class="response-choice-title has-text-black is-size-5">
         {{ props.responseChoice.responseChoice }}
       </p>
       <p class="response-choice-description is-size-6bis">

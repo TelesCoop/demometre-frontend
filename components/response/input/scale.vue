@@ -1,15 +1,15 @@
 <template>
   <fieldset>
-    <legend class="is-size-7 mb-0_75 has-text-grey legend-container">
+    <legend
+      class="is-size-5 mb-0_75 legend-container"
+      :class="`has-text-${props.color}-dark `"
+    >
       <div
         v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
         :key="responseChoiceIndex"
-        class="legend has-text-centered"
+        class="legend has-text-centered mb-0_5"
       >
-        <div
-          class="number mr-0_5"
-          :class="`has-border-${props.color} has-background-white has-text-${props.color}-dark `"
-        >
+        <div class="number mr-0_5" :class="`has-background-${props.color}`">
           <slot name="left-symbol">{{ responseChoiceIndex + 1 }}</slot>
         </div>
         <span>{{ responseChoice.responseChoice }}</span>
@@ -113,9 +113,9 @@ function hasAnsweredCategory(categoryId) {
 
 <style lang="sass" scoped>
 .number
-  min-width: 18px
-  height: 18px
-  border-radius: 3px
+  min-width: 32px
+  height: 32px
+  border-radius: 50px
 .legend-container
   display: flex
   align-items: center
