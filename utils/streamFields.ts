@@ -9,7 +9,7 @@ export const getStreamFieldStructMediaWithUrl = (
    */
   const streamFieldString = initialData
   const dataToReturn = []
-  for (const item of eval(streamFieldString)) {
+  for (const item of JSON.parse(streamFieldString)) {
     dataToReturn.push({
       ...item.value,
       [objectType + "Url"]: listObjectWithUrl.filter(
@@ -31,7 +31,7 @@ export const getStreamFieldMediaWithUrl = (
    */
   const streamFieldString = initialData
   const dataToReturn = []
-  for (const item of eval(streamFieldString)) {
+  for (const item of JSON.parse(streamFieldString)) {
     if (item.type === objectType) {
       dataToReturn.push({
         ...item,
@@ -59,7 +59,7 @@ export const getStreamFieldStructWithLinkedObject = (
    */
   const streamFieldString = initialData
   const dataToReturn = []
-  for (const item of eval(streamFieldString)) {
+  for (const item of JSON.parse(streamFieldString)) {
     dataToReturn.push({
       ...item.value,
       ...listObject.filter(
@@ -81,7 +81,7 @@ export const getStreamFieldStructWithListLinkedObjects = (
    */
   const streamFieldString = initialData
   const dataToReturn = []
-  for (const firstLevelItem of eval(streamFieldString)) {
+  for (const firstLevelItem of JSON.parse(streamFieldString)) {
     const secondLevelItemToReturn = []
     for (const secondLevelItem of firstLevelItem.value[streamFieldListName]) {
       secondLevelItemToReturn.push({
@@ -110,7 +110,7 @@ export const getStreamFieldListStructMediaWithUrl = (
    */
   const streamFieldString = initialData
   const dataToReturn = []
-  for (const firstLevelItem of eval(streamFieldString)) {
+  for (const firstLevelItem of JSON.parse(streamFieldString)) {
     const secondLevelItemToReturn = []
     if (firstLevelItem.type === streamFieldListName) {
       for (const secondLevelItem of firstLevelItem.value) {

@@ -65,7 +65,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
             this.markerById[marker.id] = marker
             for (const criteria of marker.criterias) {
               this.criteriaById[criteria.id] = criteria
-              this.criteriaById[criteria.id].explanatory = eval(
+              this.criteriaById[criteria.id].explanatory = JSON.parse(
                 criteria.explanatory as string
               ).map((obj) => obj.value)
             }
