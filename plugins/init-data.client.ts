@@ -66,5 +66,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     if (!settingStore.rgpdSettingsLoaded) {
       settingStore.getRgpdSettings()
     }
+    if (!settingStore.structureSettings.email) {
+      settingStore.getStructureSettings()
+    }
   })
 })

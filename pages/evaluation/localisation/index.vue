@@ -54,9 +54,9 @@
               name="localityType"
               required
             />
-            <label :for="localityType.key" class="button is-normal locality">{{
-              localityType.value
-            }}</label>
+            <label :for="localityType.key" class="button is-normal locality">
+              {{ localityType.value }}
+            </label>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@ async function onSubmit() {
       )
     } else {
       useRouter().push(
-        `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`
+        `/evaluation/participation/${assessmentStore.currentAssessmentId}`
       )
     }
   }

@@ -67,7 +67,7 @@ export const useParticipationStore = defineStore("participation", {
       return false
     },
     async getCurrentParticipation(): Promise<boolean> {
-      const response = await useApiGet<Participation>("participations/current")
+      const response = await useApiGet<Participation>("participations/current/")
       if (response.error.value) {
         return false
       }

@@ -1,26 +1,37 @@
 <template>
   <div>
-    <label class="label has-text-shade-800">{{
-      pageStore.evaluationInitiationPage.consentTitle
-    }}</label>
+    <label class="label has-text-shade-800">{{ consentData.title }}</label>
     <span class="is-family-secondary is-size-6 has-text-shade-600">{{
-      pageStore.evaluationInitiationPage.consentDescription
+      consentData.desc
     }}</span>
     <label class="checkbox is-size-7 mt-1">
       <input
+        v-if="props.type === `cgv`"
+        v-model="assessmentStore.newAssessment.conditionsOfSaleConsent"
+        type="checkbox"
+        required
+      />
+      <input
+        v-else-if="props.initiator === true"
+        v-model="assessmentStore.newAssessment.initiatorUsageConsent"
+        type="checkbox"
+        required
+      />
+      <input
+        v-else
         v-model="participationStore.newParticipation.consent"
         type="checkbox"
         required
       />
       En cochant cette case, vous confirmez avoir pris connaissance des
-      <a
-        :href="MADIA_BASE_URL + settingStore.rgpdSettings.termsOfUseUrl"
-        target="_blank"
-        class="is-underlined"
-        >conditions générales d’utilisations</a
-      >
+      <a :href="consentData.url" target="_blank" class="is-underlined">
+        {{ consentData.urlText }}
+      </a>
       et des règles d’accessibilité du DémoMètre.
     </label>
+    <p class="is-family-secondary is-size-6 has-text-shade-600 mt-2">
+      {{ consentData.additionalText }}
+    </p>
   </div>
 </template>
 
@@ -29,10 +40,45 @@ import { MADIA_BASE_URL } from "~/composables/api"
 import { usePageStore } from "~/stores/pageStore"
 import { useSettingStore } from "~/stores/settingStore"
 import { useParticipationStore } from "~/stores/participationStore"
+import { useUserStore } from "~/stores/userStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
+
+const props = defineProps({
+  type: { type: String, required: true },
+  initiator: { type: Boolean, default: false },
+})
 
 const settingStore = useSettingStore()
 const pageStore = usePageStore()
 const participationStore = useParticipationStore()
+const assessmentStore = useAssessmentStore()
+const userStore = useUserStore()
+
+const consentData = computed(() => {
+  switch (props.type) {
+    case "cgu":
+      return {
+        title: pageStore.evaluationInitiationPage.cguConsentTitle,
+        desc: userStore.isLoggedIn
+          ? pageStore.evaluationInitiationPage.cguConsentDescriptionLoggedin
+          : pageStore.evaluationInitiationPage.cguConsentDescriptionLoggedout,
+        url: MADIA_BASE_URL + settingStore.rgpdSettings.termsOfUseUrl,
+        urlText: "conditions générales d’utilisations",
+        linkedState: props.initiator
+          ? assessmentStore.newAssessment.initiatorUsageConsent
+          : participationStore.newParticipation.consent,
+      }
+    case "cgv":
+      return {
+        title: pageStore.evaluationInitiationPage.cgvConsentTitle,
+        desc: pageStore.evaluationInitiationPage.cgvConsentDescription,
+        url: MADIA_BASE_URL + settingStore.rgpdSettings.termsOfSaleUrl,
+        urlText: "conditions générales de vente",
+        linkedState: assessmentStore.newAssessment.conditionsOfSaleConsent,
+        additionalText: pageStore.evaluationInitiationPage.royaltyDescription,
+      }
+  }
+})
 </script>
 
 <style scoped lang="sass"></style>

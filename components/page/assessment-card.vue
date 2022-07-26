@@ -91,7 +91,8 @@ const caracteristics = [
 ]
 
 function letsGo() {
-  assessmentStore.creatingAssessmentType = props.assessmentType.assessmentType
+  assessmentStore.newAssessment.assessmentType =
+    props.assessmentType.assessmentType
   router.push(userStep.value.url)
 }
 </script>

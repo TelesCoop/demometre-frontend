@@ -189,6 +189,8 @@ export type AssessmentRepresentativity = {
 export type Assessment = {
   id: number
   assessmentType: string
+  conditionsOfSaleConsent: boolean
+  initiatorUsageConsent: boolean
   localityType: string
   initiatedByUser: User
   initiatorType: string
@@ -442,8 +444,12 @@ export type ProjectPage = {
 export type EvaluationInitiationPage = {
   searchAssessmentTitle: string
   searchAssessmentDescription: string
-  consentTitle: string
-  consentDescription: string
+  cguConsentTitle: string
+  cguConsentDescriptionLoggedin: string
+  cguConsentDescriptionLoggedout: string
+  cgvConsentTitle: string
+  cgvConsentDescription: string
+  royaltyDescription: string
   noAssessmentTitle: string
   noAssessmentDescription: string
   oneQuickAssessmentTitle: string
@@ -504,4 +510,8 @@ export type RgpdSettings = {
   termsOfSaleUrl: string
   confidentialityPolicyUrl: string
   contentLicenseUrl: string
+}
+
+export type StructureSettings = {
+  email: string
 }
