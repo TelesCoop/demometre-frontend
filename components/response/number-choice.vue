@@ -16,7 +16,9 @@
             :max="props.bounds.max.value"
             :tooltips="false"
           />
-          <div class="value-display">{{ props.selected ? answer : "?" }}</div>
+          <div class="value-display is-size-5">
+            {{ props.selected ? answer : "?" }}
+          </div>
         </div>
       </template>
     </ResponseChoice>
@@ -59,7 +61,7 @@ const responseChoice = computed<ResponseChoiceType>(() => {
 <style lang="sass">
 // do not add scoped, it would break slider customizations
 .number-choice .input-container
-  width: 168px
+  width: 178px
   justify-content: space-between
   align-items: center
   .choice-slider
@@ -67,13 +69,13 @@ const responseChoice = computed<ResponseChoiceType>(() => {
     --slider-connect-bg: var(--color)
     --slider-handle-shadow: 0
     --slider-handle-shadow-active: 0
-    --slider-handle-border: 1px solid var(--color-dark)
-    --slider-handle-width: 18px
-    --slider-handle-height: 18px
+    --slider-handle-border: 0
+    --slider-handle-width: 32px
+    --slider-handle-height: 32px
     --slider-handle-bg: var(--color)
-    --slider-height: 12px
+    --slider-height: 15px
     width: 138px
-    margin-left: 10px
+    margin-left: 0px
 
     // customization not planned by the module
     .slider-base, .slider-connects

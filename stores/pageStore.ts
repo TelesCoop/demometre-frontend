@@ -152,7 +152,7 @@ export const usePageStore = defineStore("page", {
             "image",
             this.projectPage.imagesUrl
           )
-          this.projectPage.whoCommitteeSubBlockData = eval(
+          this.projectPage.whoCommitteeSubBlockData = JSON.parse(
             this.projectPage.whoCommitteeSubBlockData
           )
           this.projectPage.whoPartnerSubBlockData =
