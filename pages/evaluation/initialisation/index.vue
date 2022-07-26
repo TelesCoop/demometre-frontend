@@ -1,8 +1,30 @@
 <template>
   <div>
-    <!-- User not logged in -->
+    <!-- Choose Assessment type step-->
     <PageSection
-      v-if="!userStore.isLoggedIn"
+      v-if="initializationSteps[currentStep] === steps.ASSESSMENT_TYPE"
+      :title="pageStore.evaluationInitiationPage.noAssessmentTitle"
+      :intro="pageStore.evaluationInitiationPage.noAssessmentDescription"
+      :is-first-element="true"
+      :intro-is-rich-text="true"
+    >
+      <div class="columns mb-2">
+        <div
+          v-for="assessmentType in pageStore.usagePage.startAssessmentBlockData"
+          :key="assessmentType.id"
+          class="column is-one-third"
+        >
+          <PageAssessmentCard
+            :assessment-type="assessmentType"
+            background-color="white"
+          />
+        </div>
+      </div>
+    </PageSection>
+
+    <!-- User not logged in can not initialize assessment-->
+    <PageSection
+      v-else-if="!userStore.isLoggedIn"
       class="column is-8"
       :title="pageStore.evaluationInitiationPage.mustBeConnectedToCreateTitle"
       :intro="
@@ -20,47 +42,33 @@
       </div>
     </PageSection>
 
-    <!-- Choose Assessment type step-->
-    <PageSection
-      v-else-if="initializationSteps[currentStep] === steps.ASSESSMENT_TYPE"
-      :title="pageStore.evaluationInitiationPage.noAssessmentTitle"
-      :intro="pageStore.evaluationInitiationPage.noAssessmentDescription"
-      :is-first-element="true"
-    >
-      <div class="columns mb-2">
-        <div
-          v-for="assessmentType in pageStore.usagePage.startAssessmentBlockData"
-          :key="assessmentType.id"
-          class="column is-one-third"
-        >
-          <PageAssessmentCard
-            :assessment-type="assessmentType"
-            background-color="white"
-          />
-        </div>
-      </div>
-    </PageSection>
-
     <!-- Start initialization step -->
-    <!-- TODO : 3 senarios -->
     <PageSection
       v-else-if="initializationSteps[currentStep] === steps.START"
       class="column is-8"
       :title="startInitializationTitleAndDesc[0]"
       :intro="startInitializationTitleAndDesc[1]"
       :is-first-element="true"
+      :intro-is-rich-text="true"
     >
       <div
         v-if="
-          assessmentStore.creatingAssessmentType ===
+          assessmentStore.newAssessment.assessmentType ===
           AssessmentType.WITH_EXPERT.key
         "
       >
-        <p>{{ pageStore.evaluationInitiationPage.chooseExpertText }}</p>
-        <p>{{ pageStore.evaluationInitiationPage.ifNoExpertText }}</p>
+        <AssessmentAddExpert
+          v-model="expertSelected"
+          :initiation-page="pageStore.evaluationInitiationPage"
+        />
       </div>
-      <button class="button is-normal is-rounded mt-4" @click="goToNextStep">
-        <span>C’est parti !</span>
+      <ParticipationConsent class="mt-1_5" type="cgu" :initiator="true" />
+      <button
+        class="button is-normal is-rounded mt-4"
+        :disabled="disabled"
+        @click.prevent="goToNextStep"
+      >
+        <span>Valider</span>
       </button>
     </PageSection>
 
@@ -71,6 +79,7 @@
       :title="pageStore.evaluationInitiationPage.initTitle"
       :intro="pageStore.evaluationInitiationPage.initDescription"
       :is-first-element="true"
+      :intro-is-rich-text="true"
     >
       <form @submit.prevent="goToNextStep">
         <div class="field mb-3">
@@ -144,18 +153,20 @@
           <span class="is-family-secondary is-size-6">
             Les réponses entrant en considération sont :
             <span
-              v-for="responseChoice of representativityCriteria.responseChoiceStatements"
+              v-for="(
+                responseChoice, index
+              ) of representativityCriteria.responseChoiceStatements"
               :key="responseChoice"
-              >{{ responseChoice }}, &nbsp;</span
             >
-            <br />
-            L'équilibre parfait serait:
-            {{
-              (
-                100 / representativityCriteria.responseChoiceStatements.length
-              ).toFixed(2)
-            }}
-            %
+              {{ responseChoice }}
+              <span
+                v-if="
+                  index + 1 <
+                  representativityCriteria.responseChoiceStatements.length
+                "
+                >, &nbsp;</span
+              >
+            </span>
           </span>
           <ResponseInputPercentage
             v-model="representativityCriteria.acceptabilityThreshold"
@@ -223,29 +234,44 @@ const initializationSteps = [
   steps.INITIATOR,
   steps.REPRESENTATIVITY,
 ]
-const currentStep = ref<number>(assessmentStore.creatingAssessmentType ? 1 : 0)
+const currentStep = ref<number>(
+  assessmentStore.newAssessment.assessmentType ? 1 : 0
+)
 
 const initiatorTypeSelected = ref<string>()
 const initiatorName = ref<string>("")
 
 watch(
-  () => assessmentStore.creatingAssessmentType,
+  () => assessmentStore.newAssessment.assessmentType,
   () => {
-    if (currentStep.value === 0 && assessmentStore.creatingAssessmentType) {
+    if (
+      currentStep.value === 0 &&
+      assessmentStore.newAssessment.assessmentType
+    ) {
       currentStep.value = 1
     }
   }
 )
 
 const disabled = computed(() => {
-  if (initializationSteps[currentStep.value] === steps.INITIATOR) {
-    return initiatorTypeSelected.value && initiatorName.value ? false : true
+  switch (initializationSteps[currentStep.value]) {
+    case steps.START:
+      const cguConsent = assessmentStore.newAssessment.initiatorUsageConsent
+      const cgvConsent =
+        assessmentStore.newAssessment.assessmentType ===
+        AssessmentType.WITH_EXPERT.key
+          ? assessmentStore.newAssessment.conditionsOfSaleConsent
+          : true
+      return !(cguConsent && cgvConsent)
+    case steps.INITIATOR:
+      return initiatorTypeSelected.value && initiatorName.value ? false : true
+    default:
+      return false
   }
-  return false
 })
 
 const startInitializationTitleAndDesc = computed(() => {
-  switch (assessmentStore.creatingAssessmentType) {
+  switch (assessmentStore.newAssessment.assessmentType) {
     case AssessmentType.QUICK.key:
       return [
         pageStore.evaluationInitiationPage.createQuickAssessmentTitle,
@@ -278,7 +304,7 @@ function goToNextStep() {
   if (initializationSteps.length - 1 > currentStep.value) {
     if (
       initializationSteps[currentStep.value + 1] === steps.REPRESENTATIVITY &&
-      assessmentStore.creatingAssessmentType === AssessmentType.QUICK.key
+      assessmentStore.newAssessment.assessmentType === AssessmentType.QUICK.key
     ) {
       onSubmit()
     } else {

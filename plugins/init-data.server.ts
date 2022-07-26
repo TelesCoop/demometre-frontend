@@ -26,5 +26,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     assessmentStore.getRepresentativityCriterias()
     definitionStore.getDefinitions()
     settingStore.getRgpdSettings()
+    settingStore.getStructureSettings()
   })
 })

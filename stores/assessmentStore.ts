@@ -8,6 +8,7 @@ import {
 import { useApiGet, useApiPost } from "~/composables/api"
 import { useToastStore } from "./toastStore"
 import { useUserStore } from "./userStore"
+import { useParticipationStore } from "./participationStore"
 
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
@@ -22,8 +23,8 @@ export const useAssessmentStore = defineStore("assessment", {
       }
     >{},
     expertById: <{ [key: number]: User }>{},
-    creatingAssessmentType: <string>"",
     addingExpert: <boolean>false,
+    newAssessment: <Assessment>{},
   }),
   getters: {
     assessments: (state) => {
@@ -91,17 +92,18 @@ export const useAssessmentStore = defineStore("assessment", {
       return true
     },
     async getCurrentAssessment() {
-      const response = await useApiGet<Assessment>(`assessments/current`)
+      const response = await useApiGet<Assessment>(`assessments/current/`)
 
       if (response.error.value) {
         return false
       }
-
-      this.assessmentById[response.data.value.id] = response.data.value
-      this.assessmentById[response.data.value.id].name = this.assessmentName(
-        response.data.value
-      )
-      this.currentAssessmentId = response.data.value.id
+      if (response.data.value.id) {
+        this.assessmentById[response.data.value.id] = response.data.value
+        this.assessmentById[response.data.value.id].name = this.assessmentName(
+          response.data.value
+        )
+        this.currentAssessmentId = response.data.value.id
+      }
       return true
     },
 
@@ -161,7 +163,7 @@ export const useAssessmentStore = defineStore("assessment", {
               return { id: item.id, value: item.acceptabilityThreshold || null }
             }
           ),
-          assessmentType: this.creatingAssessmentType,
+          ...this.newAssessment,
           ...payload,
         }
       )
@@ -171,6 +173,7 @@ export const useAssessmentStore = defineStore("assessment", {
         return false
       }
       this.assessmentById[data.value.id] = data.value
+      useParticipationStore().newParticipation.consent = true
       return true
     },
     async saveEndInitializationQuestions() {
@@ -215,7 +218,10 @@ export const useAssessmentStore = defineStore("assessment", {
     async addExpert(assessmentId, expertId) {
       const { data, error } = await useApiPatch<Scores>(
         `assessments/${assessmentId}/add-expert/`,
-        { expertId }
+        {
+          expertId,
+          conditionsOfSaleConsent: this.newAssessment.conditionsOfSaleConsent,
+        }
       )
       if (error.value) {
         const errorStore = useToastStore()

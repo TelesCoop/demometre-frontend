@@ -9,6 +9,7 @@
         pageStore.evaluationInitiationPage.createAssessmentWithExpertDescription
       "
       :is-first-element="true"
+      :intro-is-rich-text="true"
     >
       <div v-if="!userStore.isLoggedIn" class="buttons mb-0_5">
         <!-- User not logged in -->
@@ -20,37 +21,14 @@
           >Se connecter</NuxtLink
         >
       </div>
-      <div v-else class="columns is-variable is-8">
-        <div class="column is-half">
-          <p class="has-text-weight-bold has-text-shade-800 mb-1">
-            {{ pageStore.evaluationInitiationPage.chooseExpertText }}
-          </p>
-          <v-select
-            v-model="expertSelected"
-            label="name"
-            :options="assessmentStore.experts"
-          ></v-select>
-        </div>
-        <div class="column is-half">
-          <p class="has-text-weight-bold has-text-shade-800 mb-1">
-            {{ pageStore.evaluationInitiationPage.ifNoExpertText }}
-          </p>
-          <!-- Envoyer un mail -->
-          <a
-            class="button is-normal is-rounded"
-            href="mailto:camille@telescoop.fr"
-            target="_blank"
-          >
-            <span>Nous contactez</span>
-            <span class="icon">
-              <icon size="20" name="mail-line" />
-            </span>
-          </a>
-        </div>
-      </div>
-
+      <AssessmentAddExpert
+        v-else
+        v-model="expertSelected"
+        :initiation-page="pageStore.evaluationInitiationPage"
+      />
       <button
         class="button is-normal is-rounded mt-4"
+        :disabled="disabled"
         @click.prevent="onSubmit"
       >
         <span>C’est parti !</span>
@@ -61,9 +39,8 @@
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
-import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useUserStore } from "~/stores/userStore"
-import vSelect from "vue-select"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 import { User } from "~/composables/types"
 
 definePageMeta({
@@ -73,14 +50,18 @@ definePageMeta({
   middleware: ["assessment", "user-step"],
 })
 
+const assessmentStore = useAssessmentStore()
+
+const disabled = computed(() =>
+  assessmentStore.newAssessment.conditionsOfSaleConsent ? false : true
+)
+
 const route = useRoute()
 const userStore = useUserStore()
-const assessmentStore = useAssessmentStore()
 const pageStore = usePageStore()
 if (!pageStore.evaluationInitiationPage.initTitle) {
   pageStore.getEvaluationInitiationPage()
 }
-assessmentStore.getExperts()
 
 const expertSelected = ref<User>()
 

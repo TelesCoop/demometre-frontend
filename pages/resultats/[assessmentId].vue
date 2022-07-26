@@ -84,7 +84,7 @@
               :rich-text="markerProps.marker.description"
               class="is-family-secondary subtitle mb-2"
             />
-            <ResultPlusAndMinus
+            <AnalyticsPlusAndMinus
               :strengths-and-improvements="
                 getStrenghtAndImprovements(
                   assessmentStore.scoresByAssessmentId[assessmentId],
@@ -95,7 +95,7 @@
             />
           </template>
           <template #pillar="pillarProps">
-            <ResultPlusAndMinus
+            <AnalyticsPlusAndMinus
               :strengths-and-improvements="
                 getStrenghtAndImprovements(
                   assessmentStore.scoresByAssessmentId[assessmentId],
