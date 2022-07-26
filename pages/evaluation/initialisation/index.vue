@@ -6,6 +6,7 @@
       :title="pageStore.evaluationInitiationPage.noAssessmentTitle"
       :intro="pageStore.evaluationInitiationPage.noAssessmentDescription"
       :is-first-element="true"
+      :intro-is-rich-text="true"
     >
       <div class="columns mb-2">
         <div
@@ -48,21 +49,26 @@
       :title="startInitializationTitleAndDesc[0]"
       :intro="startInitializationTitleAndDesc[1]"
       :is-first-element="true"
+      :intro-is-rich-text="true"
     >
       <div
         v-if="
-          assessmentStore.creatingAssessmentType ===
+          assessmentStore.newAssessment.assessmentType ===
           AssessmentType.WITH_EXPERT.key
         "
       >
         <AssessmentAddExpert
-          :assessment-id="assessmentStore.currentAssessmentId"
+          v-model="expertSelected"
           :initiation-page="pageStore.evaluationInitiationPage"
-          :redirect-after-validation="`/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`"
         />
       </div>
-      <button class="button is-normal is-rounded mt-4" @click="goToNextStep">
-        <span>C’est parti !</span>
+      <ParticipationConsent class="mt-1_5" type="cgu" :initiator="true" />
+      <button
+        class="button is-normal is-rounded mt-4"
+        :disabled="disabled"
+        @click.prevent="goToNextStep"
+      >
+        <span>Valider</span>
       </button>
     </PageSection>
 
@@ -73,15 +79,16 @@
       :title="pageStore.evaluationInitiationPage.initTitle"
       :intro="pageStore.evaluationInitiationPage.initDescription"
       :is-first-element="true"
+      :intro-is-rich-text="true"
     >
       <form @submit.prevent="goToNextStep">
         <div class="field mb-3">
-          <label class="label">
-            {{ pageStore.evaluationInitiationPage.initiatorNameQuestion }}
-          </label>
-          <span class="is-family-secondary is-size-6">
-            {{ pageStore.evaluationInitiationPage.initiatorNameDescription }}
-          </span>
+          <label class="label">{{
+            pageStore.evaluationInitiationPage.initiatorNameQuestion
+          }}</label>
+          <span class="is-family-secondary is-size-6">{{
+            pageStore.evaluationInitiationPage.initiatorNameDescription
+          }}</span>
           <div class="control">
             <input
               v-model="initiatorName"
@@ -109,9 +116,9 @@
               name="initiationType"
               required
             />
-            <label :for="initiatorType.key" class="button is-normal locality">
-              {{ initiatorType.value }}
-            </label>
+            <label :for="initiatorType.key" class="button is-normal locality">{{
+              initiatorType.value
+            }}</label>
           </div>
         </div>
         <div class="buttons mt-4">
@@ -227,29 +234,44 @@ const initializationSteps = [
   steps.INITIATOR,
   steps.REPRESENTATIVITY,
 ]
-const currentStep = ref<number>(assessmentStore.creatingAssessmentType ? 1 : 0)
+const currentStep = ref<number>(
+  assessmentStore.newAssessment.assessmentType ? 1 : 0
+)
 
 const initiatorTypeSelected = ref<string>()
 const initiatorName = ref<string>("")
 
 watch(
-  () => assessmentStore.creatingAssessmentType,
+  () => assessmentStore.newAssessment.assessmentType,
   () => {
-    if (currentStep.value === 0 && assessmentStore.creatingAssessmentType) {
+    if (
+      currentStep.value === 0 &&
+      assessmentStore.newAssessment.assessmentType
+    ) {
       currentStep.value = 1
     }
   }
 )
 
 const disabled = computed(() => {
-  if (initializationSteps[currentStep.value] === steps.INITIATOR) {
-    return initiatorTypeSelected.value && initiatorName.value ? false : true
+  switch (initializationSteps[currentStep.value]) {
+    case steps.START:
+      const cguConsent = assessmentStore.newAssessment.initiatorUsageConsent
+      const cgvConsent =
+        assessmentStore.newAssessment.assessmentType ===
+        AssessmentType.WITH_EXPERT.key
+          ? assessmentStore.newAssessment.conditionsOfSaleConsent
+          : true
+      return !(cguConsent && cgvConsent)
+    case steps.INITIATOR:
+      return initiatorTypeSelected.value && initiatorName.value ? false : true
+    default:
+      return false
   }
-  return false
 })
 
 const startInitializationTitleAndDesc = computed(() => {
-  switch (assessmentStore.creatingAssessmentType) {
+  switch (assessmentStore.newAssessment.assessmentType) {
     case AssessmentType.QUICK.key:
       return [
         pageStore.evaluationInitiationPage.createQuickAssessmentTitle,
@@ -282,7 +304,7 @@ function goToNextStep() {
   if (initializationSteps.length - 1 > currentStep.value) {
     if (
       initializationSteps[currentStep.value + 1] === steps.REPRESENTATIVITY &&
-      assessmentStore.creatingAssessmentType === AssessmentType.QUICK.key
+      assessmentStore.newAssessment.assessmentType === AssessmentType.QUICK.key
     ) {
       onSubmit()
     } else {

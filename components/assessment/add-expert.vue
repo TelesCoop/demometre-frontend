@@ -28,9 +28,7 @@
         </a>
       </div>
     </div>
-    <button class="button is-normal is-rounded mt-4" @click.prevent="onSubmit">
-      <span>C’est parti !</span>
-    </button>
+    <ParticipationConsent class="mt-1_5" type="cgv" />
   </div>
 </template>
 
@@ -42,28 +40,16 @@ import vSelect from "vue-select"
 import { useSettingStore } from "~~/stores/settingStore"
 
 const props = defineProps({
-  assessmentId: { type: String, required: true },
   initiationPage: {
     type: Object as PropType<EvaluationInitiationPage>,
     required: true,
   },
-  redirectAfterValidation: { type: String, required: true },
+  modelValue: { type: Object as PropType<User>, required: true },
 })
 
 const assessmentStore = useAssessmentStore()
 const settingsStore = useSettingStore()
 assessmentStore.getExperts()
 
-const expertSelected = ref<User>()
-
-async function onSubmit() {
-  const isSuccess = await assessmentStore.addExpert(
-    props.assessmentId,
-    expertSelected.value.id
-  )
-  if (isSuccess) {
-    assessmentStore.addingExpert = false
-    useRouter().push(props.redirectAfterValidation)
-  }
-}
+const expertSelected = useModel("modelValue")
 </script>
