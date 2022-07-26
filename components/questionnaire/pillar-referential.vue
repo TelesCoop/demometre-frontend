@@ -40,7 +40,10 @@
                 {{ wordTitleCase(marker.name) }}
               </p>
               <AnalyticsScore
-                v-if="props.showScores && props.scores?.byMarkerId[marker.id]"
+                v-if="
+                  props.showScores &&
+                  !isNullOrUndefined(props.scores?.byMarkerId[marker.id])
+                "
                 :score="getScoreToDisplay(props.scores?.byMarkerId[marker.id])"
                 :color="
                   marker.name === activeMarker?.name && !activeCriteria
@@ -88,7 +91,9 @@
                     <AnalyticsScore
                       v-if="
                         props.showScores &&
-                        props.scores?.byCriteriaId[criteria.id]
+                        !isNullOrUndefined(
+                          props.scores?.byCriteriaId[criteria.id]
+                        )
                       "
                       :score="
                         getScoreToDisplay(
@@ -192,6 +197,7 @@ import { wordTitleCase } from "~/utils/util"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, Criteria, Scores } from "~/composables/types"
 import { getScoreToDisplay } from "~/utils/scores"
+import { isNullOrUndefined } from "assets/utils"
 
 const questionnaireStore = useQuestionnaireStore()
 

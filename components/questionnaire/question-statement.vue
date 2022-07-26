@@ -5,9 +5,7 @@
       {{ props.question.questionStatement }}
     </p>
     <slot></slot>
-    <p :class="`is-uppercase is-size-6bis mb-0_5 mt-2`">
-      Acteur(s) concerné(s)
-    </p>
+    <p class="is-uppercase is-size-6bis mb-0_5 mt-2">Acteur(s) concerné(s)</p>
     <div class="tags">
       <span
         v-for="roleId of props.question.roleIds"

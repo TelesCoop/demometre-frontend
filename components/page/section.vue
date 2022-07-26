@@ -7,9 +7,17 @@
       <div
         class="is-flex is-flex-direction-row is-justify-content-space-between is-flex-wrap-wrap mb-3"
       >
-        <p v-if="intro" class="is-family-secondary is-size-5 mb-1">
+        <p
+          v-if="intro && !introIsRichText"
+          class="is-family-secondary is-size-5 mb-1"
+        >
           {{ intro }}
         </p>
+        <RichText
+          v-if="intro && introIsRichText"
+          :rich-text="intro"
+          class="is-family-secondary"
+        />
         <nuxt-link
           v-if="buttonLink && buttonText"
           class="button is-normal is-rounded is-responsive"
@@ -45,6 +53,7 @@ defineProps({
   icon: { type: String, default: "arrow-right-line" },
   isInsideBigSection: { type: Boolean, default: false },
   isFirstElement: { type: Boolean, default: false },
+  introIsRichText: { type: Boolean, default: false },
 })
 
 const titleClasses = ["title", "is-3", "has-text-shade-900", "mb-1"]

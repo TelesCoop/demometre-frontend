@@ -17,7 +17,7 @@
       {{ textTitle }}
     </p>
     <AnalyticsScore
-      v-if="score"
+      v-if="!isNullOrUndefined(score)"
       :score="props.score"
       :color="props.active ? `${colorClass}-active` : colorClass"
       :size-circles="12"
@@ -32,6 +32,7 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { PillarParams } from "~/composables/types"
+import { isNullOrUndefined } from "assets/utils"
 
 const props = defineProps({
   name: { type: String, required: true },
