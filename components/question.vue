@@ -6,7 +6,8 @@
           {{ question.questionStatement }}
         </h1>
         <RichText
-          class="is-family-secondary"
+          v-if="question.description"
+          class="is-family-secondary p-1 has-background-shade-200"
           :rich-text="question.description"
         ></RichText>
 

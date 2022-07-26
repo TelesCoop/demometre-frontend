@@ -1,5 +1,5 @@
 export const ErrorMessages = {
-  default: "Une erreur c'est produite dans le serveur",
+  default: "Une erreur s'est produite dans le serveur",
   assessment_already_initiated: "L'évaluation a déjà été initialisée",
   email_not_corresponding_assessment:
     "L'email ne correspond pas à l'instance initiatrice",
