@@ -1,28 +1,8 @@
 <template>
   <div>
-    <!-- User not logged in -->
-    <PageSection
-      v-if="!userStore.isLoggedIn"
-      class="column is-8"
-      :title="pageStore.evaluationInitiationPage.mustBeConnectedToCreateTitle"
-      :intro="
-        pageStore.evaluationInitiationPage.mustBeConnectedToCreateDescription
-      "
-      :is-first-element="true"
-    >
-      <div class="buttons mb-0_5">
-        <NuxtLink class="button is-normal is-rounded" to="/signup"
-          >Faire un compte</NuxtLink
-        >
-        <NuxtLink class="button is-normal is-rounded" to="/login"
-          >Se connecter</NuxtLink
-        >
-      </div>
-    </PageSection>
-
     <!-- Choose Assessment type step-->
     <PageSection
-      v-else-if="initializationSteps[currentStep] === steps.ASSESSMENT_TYPE"
+      v-if="initializationSteps[currentStep] === steps.ASSESSMENT_TYPE"
       :title="pageStore.evaluationInitiationPage.noAssessmentTitle"
       :intro="pageStore.evaluationInitiationPage.noAssessmentDescription"
       :is-first-element="true"
@@ -41,8 +21,27 @@
       </div>
     </PageSection>
 
+    <!-- User not logged in can not initialize assessment-->
+    <PageSection
+      v-else-if="!userStore.isLoggedIn"
+      class="column is-8"
+      :title="pageStore.evaluationInitiationPage.mustBeConnectedToCreateTitle"
+      :intro="
+        pageStore.evaluationInitiationPage.mustBeConnectedToCreateDescription
+      "
+      :is-first-element="true"
+    >
+      <div class="buttons mb-0_5">
+        <NuxtLink class="button is-normal is-rounded" to="/signup"
+          >Faire un compte</NuxtLink
+        >
+        <NuxtLink class="button is-normal is-rounded" to="/login"
+          >Se connecter</NuxtLink
+        >
+      </div>
+    </PageSection>
+
     <!-- Start initialization step -->
-    <!-- TODO : 3 senarios -->
     <PageSection
       v-else-if="initializationSteps[currentStep] === steps.START"
       class="column is-8"
@@ -56,8 +55,11 @@
           AssessmentType.WITH_EXPERT.key
         "
       >
-        <p>{{ pageStore.evaluationInitiationPage.chooseExpertText }}</p>
-        <p>{{ pageStore.evaluationInitiationPage.ifNoExpertText }}</p>
+        <AssessmentAddExpert
+          :assessment-id="assessmentStore.currentAssessmentId"
+          :initiation-page="pageStore.evaluationInitiationPage"
+          :redirect-after-validation="`/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`"
+        />
       </div>
       <button class="button is-normal is-rounded mt-4" @click="goToNextStep">
         <span>C’est parti !</span>
@@ -74,12 +76,12 @@
     >
       <form @submit.prevent="goToNextStep">
         <div class="field mb-3">
-          <label class="label">{{
-            pageStore.evaluationInitiationPage.initiatorNameQuestion
-          }}</label>
-          <span class="is-family-secondary is-size-6">{{
-            pageStore.evaluationInitiationPage.initiatorNameDescription
-          }}</span>
+          <label class="label">
+            {{ pageStore.evaluationInitiationPage.initiatorNameQuestion }}
+          </label>
+          <span class="is-family-secondary is-size-6">
+            {{ pageStore.evaluationInitiationPage.initiatorNameDescription }}
+          </span>
           <div class="control">
             <input
               v-model="initiatorName"
@@ -107,9 +109,9 @@
               name="initiationType"
               required
             />
-            <label :for="initiatorType.key" class="button is-normal locality">{{
-              initiatorType.value
-            }}</label>
+            <label :for="initiatorType.key" class="button is-normal locality">
+              {{ initiatorType.value }}
+            </label>
           </div>
         </div>
         <div class="buttons mt-4">
@@ -144,18 +146,20 @@
           <span class="is-family-secondary is-size-6">
             Les réponses entrant en considération sont :
             <span
-              v-for="responseChoice of representativityCriteria.responseChoiceStatements"
+              v-for="(
+                responseChoice, index
+              ) of representativityCriteria.responseChoiceStatements"
               :key="responseChoice"
-              >{{ responseChoice }}, &nbsp;</span
             >
-            <br />
-            L'équilibre parfait serait:
-            {{
-              (
-                100 / representativityCriteria.responseChoiceStatements.length
-              ).toFixed(2)
-            }}
-            %
+              {{ responseChoice }}
+              <span
+                v-if="
+                  index + 1 <
+                  representativityCriteria.responseChoiceStatements.length
+                "
+                >, &nbsp;</span
+              >
+            </span>
           </span>
           <ResponseInputPercentage
             v-model="representativityCriteria.acceptabilityThreshold"

@@ -505,3 +505,7 @@ export type RgpdSettings = {
   confidentialityPolicyUrl: string
   contentLicenseUrl: string
 }
+
+export type StructureSettings = {
+  email: string
+}

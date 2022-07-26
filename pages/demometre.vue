@@ -126,6 +126,7 @@
             <Accordion
               v-if="criteriaProps.criteria.definitionIds.length"
               id="definitions"
+              :initially-open="true"
             >
               <template #title>
                 <h3 class="subtitle has-text-weight-bold mb-1">Definitions</h3>
@@ -152,6 +153,7 @@
                 v-for="explanatory of criteriaProps.criteria.explanatory"
                 :id="explanatory.title"
                 :key="explanatory.title"
+                :initially-open="true"
               >
                 <template #title>
                   <h3 class="subtitle has-text-weight-bold mb-1">

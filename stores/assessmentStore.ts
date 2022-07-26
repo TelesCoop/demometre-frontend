@@ -91,17 +91,18 @@ export const useAssessmentStore = defineStore("assessment", {
       return true
     },
     async getCurrentAssessment() {
-      const response = await useApiGet<Assessment>(`assessments/current`)
+      const response = await useApiGet<Assessment>(`assessments/current/`)
 
       if (response.error.value) {
         return false
       }
-
-      this.assessmentById[response.data.value.id] = response.data.value
-      this.assessmentById[response.data.value.id].name = this.assessmentName(
-        response.data.value
-      )
-      this.currentAssessmentId = response.data.value.id
+      if (response.data.value.id) {
+        this.assessmentById[response.data.value.id] = response.data.value
+        this.assessmentById[response.data.value.id].name = this.assessmentName(
+          response.data.value
+        )
+        this.currentAssessmentId = response.data.value.id
+      }
       return true
     },
 
