@@ -2,19 +2,15 @@
   <div>
     <div class="columns is-variable is-8">
       <div class="column is-half">
-        <p class="has-text-weight-bold has-text-shade-800 mb-1">
-          {{ props.initiationPage.chooseExpertText }}
-        </p>
-        <v-select
-          v-model="expertSelected"
-          label="name"
-          :options="assessmentStore.experts"
-        ></v-select>
+        <p
+          class="has-text-weight-bold has-text-shade-800 mb-1"
+        >{{ props.initiationPage.chooseExpertText }}</p>
+        <v-select v-model="expertSelected" label="name" :options="assessmentStore.experts"></v-select>
       </div>
       <div class="column is-half">
-        <p class="has-text-weight-bold has-text-shade-800 mb-1">
-          {{ props.initiationPage.ifNoExpertText }}
-        </p>
+        <p
+          class="has-text-weight-bold has-text-shade-800 mb-1"
+        >{{ props.initiationPage.ifNoExpertText }}</p>
         <!-- Envoyer un mail -->
         <a
           class="button is-normal is-rounded"
