@@ -33,17 +33,23 @@ export function useUserStep<Type>() {
     }
     if (
       !assessmentStore.currentAssessment?.isInitializationQuestionsCompleted &&
-      assessmentStore.userIsAssessmentAdmin
+      assessmentStore.userIsAssessmentInitiator
     ) {
       // The assessment is initialize but the objective questions are not completed
-      const questionId = initilizationJourney.nextQuestionId(undefined, true)
       return {
         step: "initialization-objectives-questions",
-        url: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives/${questionId}`,
+        url: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives`,
         text: START_EVALUATION_TEXT,
       }
     }
     if (!participationStore.id) {
+      if (
+        !participationStore.newParticipation.consent &&
+        assessmentStore.userIsAssessmentInitiator
+      ) {
+        participationStore.newParticipation.consent =
+          assessmentStore.currentAssessment.initiatorUsageConsent
+      }
       if (!participationStore.newParticipation.consent) {
         // If the consent is not checked we go to the beginning of the participation
         return {

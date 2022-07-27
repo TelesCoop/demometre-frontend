@@ -1,40 +1,53 @@
 <template>
-  <div class="container">
-    <section class="columns is-centered">
-      <div class="column is-8">
-        <h1 class="title is-3 has-text-black-ter">
-          Vous devez maintenant répondre aux questions objectives
-        </h1>
-
-        <button
-          class="button is-normal is-rounded mt-4"
-          @click.prevent="goToFirstObjectiveQuestion"
-        >
-          <span>Commencer les questions objectives</span>
-          <span class="icon">
-            <icon v-if="isLoading" size="24" name="loader-2-line" />
-            <icon v-else size="16" name="arrow-right-line" />
-          </span>
-        </button>
-        <span v-if="isLoading" class="is-size-7 has-text-shade-600">
-          en cours de chargement
+  <PageSection
+    :title="pageStore.evaluationInitiationPage.objectiveQuestionsTitle"
+    :intro="pageStore.evaluationInitiationPage.objectiveQuestionsDescription"
+    :is-first-element="true"
+    :intro-is-rich-text="true"
+    class="column is-8 questionnaire-container"
+  >
+    <div class="nav-questionnaire-container">
+      <button
+        class="button is-normal is-rounded mt-4"
+        @click.prevent="goToFirstObjectiveQuestion"
+      >
+        <span>Commencer</span>
+        <span class="icon">
+          <icon v-if="isLoading" size="24" name="loader-2-line" />
+          <icon v-else size="16" name="arrow-right-line" />
         </span>
-      </div>
-    </section>
-  </div>
+      </button>
+      <span v-if="isLoading" class="is-size-7 has-text-shade-600"
+        >en cours de chargement</span
+      >
+      <!-- <QuestionnairePreviousButton @go-back="goBack" /> -->
+    </div>
+  </PageSection>
 </template>
 
 <script setup lang="ts">
 import { useInitializationJourney } from "~/composables/journey"
+import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({
   title: "Initialisation",
-  breadcrumb: "Initialisation",
   step: "initialization-objectives-questions",
   middleware: ["assessment", "user-step"],
 })
 
+const pageStore = usePageStore()
+if (!pageStore.evaluationInitiationPage.objectiveQuestionsTitle) {
+  pageStore.getEvaluationInitiationPage()
+}
+
 const isLoading = ref(false)
+
+// function goBack() {
+//   // TODO : allow to reset initialization of an assessment, rigth now the back does not allow it
+//   // router.push(
+//   //   `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`
+//   // )
+// }
 
 const goToFirstObjectiveQuestion = () => {
   isLoading.value = true

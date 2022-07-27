@@ -18,7 +18,6 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 
 definePageMeta({
   title: "Questions objectives",
-  breadcrumb: "Questions objectives",
   step: "initialization-objectives-questions",
   middleware: ["assessment", "user-step"],
 })

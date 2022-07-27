@@ -4,21 +4,21 @@
     :intro="startParticipationTitleAndDesc[1]"
     :is-first-element="true"
     :intro-is-rich-text="true"
-    class="column is-8"
+    class="column is-8 questionnaire-container"
   >
-    <form @submit.prevent="onSubmit">
+    <form class="nav-questionnaire-container" @submit.prevent="onSubmit">
       <div
         v-if="
           assessmentStore.currentAssessment.assessmentType ===
           AssessmentType.PARTICIPATIVE.key
         "
       >
-        <label class="label has-text-shade-800">
-          {{ pageStore.evaluationInitiationPage.addExpertTitle }}
-        </label>
-        <span class="is-family-secondary is-size-6 has-text-shade-600">
-          {{ pageStore.evaluationInitiationPage.addExpertDescription }}
-        </span>
+        <label class="label has-text-shade-800">{{
+          pageStore.evaluationInitiationPage.addExpertTitle
+        }}</label>
+        <span class="is-family-secondary is-size-6 has-text-shade-600">{{
+          pageStore.evaluationInitiationPage.addExpertDescription
+        }}</span>
         <div class="buttons mt-1">
           <div v-for="bool of [true, false]" :key="bool" class="margin-between">
             <input
@@ -41,6 +41,8 @@
       </div>
       <ParticipationConsent class="mt-1_5" type="cgu" />
 
+      <QuestionnairePreviousButton @go-back="goBack" />
+
       <div class="buttons mt-4">
         <button class="button is-normal is-rounded" :disabled="disabled">
           <span>C'est parti !</span>
@@ -61,11 +63,11 @@ import { useParticipationStore } from "~~/stores/participationStore"
 
 definePageMeta({
   title: "Consentement",
-  breadcrumb: "Consentement",
   step: "participation",
   middleware: ["assessment", "user-step"],
 })
 
+const router = useRouter()
 const pageStore = usePageStore()
 const assessmentStore = useAssessmentStore()
 const participationStore = useParticipationStore()
@@ -99,6 +101,11 @@ const startParticipationTitleAndDesc = computed(() => {
       ]
   }
 })
+
+function goBack() {
+  assessmentStore.currentAssessmentId = undefined
+  router.push("/evaluation/localisation")
+}
 
 async function onSubmit() {
   if (
