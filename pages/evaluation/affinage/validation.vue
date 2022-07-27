@@ -3,12 +3,11 @@
     <section class="section columns is-centered questionnaire-container">
       <div class="column is-8 nav-questionnaire-container">
         <h1 class="title is-3 has-text-black-ter">
-          {{ pageStore.evaluationInitiationPage.initializationValidationTitle }}
+          {{ pageStore.evaluationQuestionnairePage.endOfProfilingTitle }}
         </h1>
         <RichText
           :rich-text="
-            pageStore.evaluationInitiationPage
-              .initializationValidationDescription
+            pageStore.evaluationQuestionnairePage.endOfProfilingDescription
           "
           class="is-family-secondary"
         />
@@ -19,9 +18,9 @@
           class="button is-normal is-rounded mt-4"
           @click.prevent="submit"
         >
-          <span>Commencer l'évaluation</span>
+          <span>Valider</span>
           <span class="icon">
-            <icon size="16" name="arrow-right-line" />
+            <icon size="16" name="check" />
           </span>
         </button>
       </div>
@@ -31,19 +30,19 @@
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
-import { useAssessmentStore } from "~/stores/assessmentStore"
+import { useParticipationStore } from "~/stores/participationStore"
 
 definePageMeta({
-  title: "Initialisation",
-  step: "initialization-objectives-questions",
-  middleware: ["assessment", "user-step"],
+  title: "Affinage",
+  step: "profiling",
+  middleware: ["user-step"],
 })
 
 const router = useRouter()
-const assessmentStore = useAssessmentStore()
+const participationStore = useParticipationStore()
 const pageStore = usePageStore()
-if (!pageStore.evaluationInitiationPage.initializationValidationTitle) {
-  pageStore.getEvaluationInitiationPage()
+if (!pageStore.evaluationQuestionnairePage.endOfProfilingTitle) {
+  pageStore.getEvaluationQuestionnairePage()
 }
 
 function goBack() {
@@ -51,7 +50,7 @@ function goBack() {
 }
 
 async function submit() {
-  await assessmentStore.saveEndInitializationQuestions()
-  useRouter().push("/evaluation")
+  await participationStore.saveEndQuestionnaire(true)
+  useRouter().push("/evaluation/questionnaire")
 }
 </script>

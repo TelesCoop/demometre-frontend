@@ -149,7 +149,7 @@ export function useProfilingJourney<Type>() {
   const goToNextQuestion = (currentQuestionId: number) => {
     const userStore = useUserStore()
     if (isLastQuestion(currentQuestionId)) {
-      useRouter().push("/evaluation/questionnaire")
+      useRouter().push("/evaluation/affinage/validation")
     } else {
       const questionId = nextQuestionId(currentQuestionId, true)
       useRouter().push(`/evaluation/affinage/${questionId}`)
@@ -205,7 +205,7 @@ export function useQuestionnaireJourney<Type>(pillarName: string) {
             test({ question, participation, assessment })
           ) &&
           // the objective questions are shown only to assessment admin users
-          (assessmentStore.userIsAssessmentAdmin
+          (assessmentStore.userIsAssessmentInitiator
             ? true
             : question.objectivity === Objectivity.SUBJECTIVE)
         )
@@ -310,7 +310,11 @@ export function useInitializationJourney<Type>() {
 
   const goToPreviousQuestion = (currentQuestionId: number) => {
     const assessmentStore = useAssessmentStore()
-    if (!isFirstQuestion(currentQuestionId)) {
+    if (isFirstQuestion(currentQuestionId)) {
+      useRouter().push(
+        `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives`
+      )
+    } else {
       const questionId = nextQuestionId(currentQuestionId, false)
       useRouter().push({
         path: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives/${questionId}`,

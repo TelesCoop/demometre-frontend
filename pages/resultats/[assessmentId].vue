@@ -143,7 +143,7 @@ const activeQuestionId = computed<number>(() => {
 if (!assessmentStore.assessmentById[assessmentId.value]?.name) {
   assessmentStore.getAssessment(assessmentId.value)
 }
-if (!assessmentStore.scoresByAssessmentId[assessmentId.value]?.byQuestionId) {
+if (!assessmentStore.scoresByAssessmentId[assessmentId.value]) {
   assessmentStore.getAssessmentScores(assessmentId.value)
 }
 if (!profilingStore.roles.length) {

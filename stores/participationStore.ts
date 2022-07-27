@@ -197,6 +197,7 @@ export const useParticipationStore = defineStore("participation", {
       this.profilingCurrent = []
       this.participations = {}
       this.newParticipation = {}
+      this.currentParticipationId = undefined
       this.totalAndAnsweredQuestionsByPillarName = {}
     },
     setTotalAndAnsweredQuestionsInPillar(pillarName) {

@@ -478,12 +478,16 @@ export type EvaluationInitiationPage = {
   initiatorNameDescription: string
   representativityTitle: string
   representativityDescription: string
+  objectiveQuestionsTitle: string
+  objectiveQuestionsDescription: string
   initializationValidationTitle: string
   initializationValidationDescription: string
 }
 export type EvaluationQuestionnairePage = {
   roleQuestionTitle: string
   roleQuestionDescription: string
+  endOfProfilingTitle: string
+  endOfProfilingDescription: string
   startTitle: string
   startText: string
   intermediateStepTitle: string
