@@ -79,6 +79,11 @@
               to="/signup"
               class="has-text-shade-500"
               style="text-decoration-line: revert"
+              @click="
+                () => {
+                  userStore.nbreCallback -= 1
+                }
+              "
               >Créez-en un</NuxtLink
             >
           </span>

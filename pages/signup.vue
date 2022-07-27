@@ -98,6 +98,11 @@
               to="/login"
               class="has-text-shade-500"
               style="text-decoration-line: revert"
+              @click="
+                () => {
+                  userStore.nbreCallback -= 1
+                }
+              "
               >Connectez-vous</NuxtLink
             >
           </span>

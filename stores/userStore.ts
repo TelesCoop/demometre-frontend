@@ -7,6 +7,7 @@ import { cleanUserData, getUserData } from "~/composables/actions"
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: <User>{},
+    nbreCallback: <number>-1,
   }),
   getters: {
     isLoggedIn() {
@@ -29,7 +30,7 @@ export const useUserStore = defineStore("user", {
       }
       this.user = data.value
     },
-    async login(email: string, password: string, callbackUrl = "/") {
+    async login(email: string, password: string) {
       cleanUserData()
       const { data, error } = await useApiPost<User>("auth/login", {
         email,
@@ -38,11 +39,10 @@ export const useUserStore = defineStore("user", {
       if (!error.value) {
         this.user = data.value
         await getUserData()
-        const router = useRouter()
-        router.push(callbackUrl)
+        useRouter().go(this.nbreCallback)
       }
     },
-    async signup(email: string, password: string, callbackUrl = "/") {
+    async signup(email: string, password: string) {
       const { data, error } = await useApiPost<User>("auth/signup", {
         email,
         password,
@@ -52,8 +52,8 @@ export const useUserStore = defineStore("user", {
       }
       this.user = data.value
       await getUserData()
-      const router = useRouter()
-      router.push(callbackUrl)
+
+      useRouter().go(this.nbreCallback)
     },
     async logout() {
       const { error } = await useApiPost<User>("auth/logout")
