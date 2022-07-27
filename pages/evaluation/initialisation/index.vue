@@ -88,12 +88,12 @@
     >
       <form class="nav-questionnaire-container" @submit.prevent="goToNextStep">
         <div class="field mb-3">
-          <label class="label">
-            {{ pageStore.evaluationInitiationPage.initiatorNameQuestion }}
-          </label>
-          <span class="is-family-secondary is-size-6">
-            {{ pageStore.evaluationInitiationPage.initiatorNameDescription }}
-          </span>
+          <label class="label">{{
+            pageStore.evaluationInitiationPage.initiatorNameQuestion
+          }}</label>
+          <span class="is-family-secondary is-size-6">{{
+            pageStore.evaluationInitiationPage.initiatorNameDescription
+          }}</span>
           <div class="control">
             <input
               v-model="initiatorName"
@@ -121,9 +121,9 @@
               name="initiationType"
               required
             />
-            <label :for="initiatorType.key" class="button is-normal locality">
-              {{ initiatorType.value }}
-            </label>
+            <label :for="initiatorType.key" class="button is-normal locality">{{
+              initiatorType.value
+            }}</label>
           </div>
         </div>
         <div class="buttons mt-4">
@@ -156,25 +156,13 @@
           v-for="representativityCriteria of assessmentStore.representativityCriterias"
           :key="representativityCriteria.id"
         >
-          <label class="label">{{ representativityCriteria.name }}</label>
-          <span class="is-family-secondary is-size-6">
-            Les réponses entrant en considération sont :
-            <span
-              v-for="(
-                responseChoice, index
-              ) of representativityCriteria.responseChoiceStatements"
-              :key="responseChoice"
-            >
-              {{ responseChoice }}
-              <span
-                v-if="
-                  index + 1 <
-                  representativityCriteria.responseChoiceStatements.length
-                "
-                >, &nbsp;</span
-              >
-            </span>
-          </span>
+          <label class="label is-size-5">{{
+            representativityCriteria.name
+          }}</label>
+          <RichText
+            class="is-family-secondary is-size-6"
+            :rich-text="representativityCriteria.explanation"
+          ></RichText>
           <ResponseInputPercentage
             v-model="representativityCriteria.acceptabilityThreshold"
             class="mt-1"

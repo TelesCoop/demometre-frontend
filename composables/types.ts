@@ -175,8 +175,8 @@ export type RepresentativityCriteria = {
   name: string
   profilingQuestionId: number
   acceptabilityThreshold: number
-  responseChoiceStatements: string[]
   minRate: number
+  explanation: string
 }
 export type AssessmentRepresentativity = {
   id: number
