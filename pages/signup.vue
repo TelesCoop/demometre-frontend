@@ -2,38 +2,7 @@
   <div class="is-flex flex-center">
     <div class="sm-container">
       <form class="my-8" @submit.prevent="onSubmit">
-        <h1 class="title is-1 has-text-shade-800">
-          {{ text.title }}
-        </h1>
-
-        <!-- first name -->
-        <div class="field has-text-shade-800">
-          <label class="label">Prénom</label>
-          <div class="control has-icons-left has-icons-right">
-            <input
-              v-model="firstName"
-              class="input"
-              type="text"
-              placeholder="Caroline"
-            />
-            <span v-if="!isMailValid" class="icon is-small is-right">
-              <i class="fas fa-exclamation-triangle"></i>
-            </span>
-          </div>
-        </div>
-
-        <!-- last name -->
-        <div class="field">
-          <label class="label">Nom de famille</label>
-          <div class="control has-icons-left has-icons-right">
-            <input
-              v-model="lastName"
-              class="input"
-              type="text"
-              placeholder="Dupond"
-            />
-          </div>
-        </div>
+        <h1 class="title is-1 has-text-shade-800">{{ text.title }}</h1>
 
         <!-- email -->
         <div class="field">
@@ -55,7 +24,7 @@
               <i class="fas fa-exclamation-triangle"></i>
             </span>
           </div>
-          <p v-if="!isMailValid" class="help is-danger">
+          <p v-if="!isMailValid" class="help is-danger width-fit-content">
             {{ emailErrorMessage }}
           </p>
         </div>
@@ -80,7 +49,7 @@
               <i class="fas fa-exclamation-triangle"></i>
             </span>
           </div>
-          <p v-if="!isPasswordValid" class="help is-danger">
+          <p v-if="!isPasswordValid" class="help is-danger width-fit-content">
             {{ passwordErrorMessage }}
           </p>
         </div>
@@ -105,7 +74,7 @@
               <i class="fas fa-exclamation-triangle"></i>
             </span>
           </div>
-          <p v-if="!isSamePassword" class="help is-danger">
+          <p v-if="!isSamePassword" class="help is-danger width-fit-content">
             {{ confirmPasswordErrorMessage }}
           </p>
         </div>
@@ -123,16 +92,15 @@
           <input type="submit" hidden />
         </div>
         <div class="mt-1">
-          <span class="is-size-7 has-text-shade-800"
-            >Vous avez déjà un compte ?
+          <span class="is-size-7 has-text-shade-800">
+            Vous avez déjà un compte ?
             <NuxtLink
               to="/login"
               class="has-text-shade-500"
               style="text-decoration-line: revert"
+              >Connectez-vous</NuxtLink
             >
-              Connectez-vous</NuxtLink
-            ></span
-          >
+          </span>
         </div>
       </form>
     </div>
@@ -143,16 +111,13 @@
 import { useUserStore } from "~/stores/userStore"
 import { ErrorMessages } from "~/composables/errors"
 
-const firstName = ref("")
-const lastName = ref("")
 const email = ref("")
 const isEmailUntouched = ref(true)
 const isPasswordUntouched = ref(true)
-const passwordErrorMessage = ref("")
 const confirmPasswordErrorMessage = ref("")
 const password = ref("")
 const confirmPassword = ref("")
-const confirmSignupErrorMessage = reactive({ field: "", message: "" })
+const confirmSignupErrorMessage = reactive({ email: [], password: [] })
 const userStore = useUserStore()
 
 const onEmailUpdate = () => {
@@ -168,23 +133,25 @@ const emailErrorMessage = computed(() => {
   if (!email.value.includes("@")) {
     return "Le courriel doit contenir @"
   }
-  if (confirmSignupErrorMessage.field == "email")
-    return confirmSignupErrorMessage.message
+  if (confirmSignupErrorMessage.email.length)
+    return confirmSignupErrorMessage.email.join(", ")
 })
 const isMailValid = computed(
   () => isEmailUntouched.value || !emailErrorMessage.value
 )
-const isPasswordValid = computed(() => {
+const passwordErrorMessage = computed(() => {
   if (isPasswordUntouched.value) {
-    return true
+    return ""
   }
   if (!password.value.length) {
-    passwordErrorMessage.value = "Le mot de passe ne peut pas être vide"
-    return false
+    return "Le mot de passe ne peut pas être vide"
   }
-  passwordErrorMessage.value = ""
-  return true
+  if (confirmSignupErrorMessage.password.length)
+    return confirmSignupErrorMessage.password.join(", ")
 })
+const isPasswordValid = computed(
+  () => isPasswordUntouched.value || !passwordErrorMessage.value
+)
 const isSamePassword = computed(() => {
   if (isPasswordUntouched.value) {
     return true
@@ -222,16 +189,19 @@ const text = computed(() => {
 })
 
 async function onSubmit() {
-  const response = await userStore.signup(
-    firstName.value,
-    lastName.value,
-    email.value,
-    password.value
-  )
+  const response = await userStore.signup(email.value, password.value)
   if (response && response.error) {
-    confirmSignupErrorMessage.field = response.error.field
-    confirmSignupErrorMessage.message =
-      ErrorMessages[response.error.messageCode] || ErrorMessages.default
+    if (response.error.email) {
+      confirmSignupErrorMessage.email = response.error.email.email
+    }
+    if (response.error.password) {
+      confirmSignupErrorMessage.password = response.error.password.password
+    }
+    if (response.error.field) {
+      confirmSignupErrorMessage[response.error.field] = [
+        ErrorMessages[response.error.messageCode] || ErrorMessages.default,
+      ]
+    }
   }
 }
 </script>

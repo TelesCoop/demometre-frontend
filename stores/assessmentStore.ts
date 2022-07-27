@@ -51,11 +51,10 @@ export const useAssessmentStore = defineStore("assessment", {
           assessment.id === this.currentAssessmentId
       )
     },
-    userIsAssessmentAdmin() {
+    userIsAssessmentInitiator() {
       return (
-        this.currentAssessment.initiatedByUser?.id === useUserStore().user.id
+        this.currentAssessment?.initiatedByUser?.id === useUserStore().user.id
       )
-      // TODO : check if current user is assessment expert
     },
     assessmentName: () => {
       return (assessment): string => {
@@ -189,10 +188,17 @@ export const useAssessmentStore = defineStore("assessment", {
     logoutUser() {
       this.currentAssessmentId = undefined
       this.assessmentById = {}
+      this.representativityCriterias = []
+      this.assessmentsWithResultsLoaded = false
+      this.scoresByAssessmentId = {}
+      this.chartDataByAssessmentIdAndQuestionId = {}
+      this.expertById = {}
+      this.addingExpert = false
+      this.newAssessment = {}
     },
     async getAssessmentScores(assessmentId) {
       const { data, error } = await useApiGet<Scores>(
-        `assessments/${assessmentId}/scores`
+        `assessments/${assessmentId}/scores/`
       )
       if (error.value) {
         const errorStore = useToastStore()

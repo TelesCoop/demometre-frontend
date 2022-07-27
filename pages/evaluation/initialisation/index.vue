@@ -7,8 +7,9 @@
       :intro="pageStore.evaluationInitiationPage.noAssessmentDescription"
       :is-first-element="true"
       :intro-is-rich-text="true"
+      class="questionnaire-container column is-10"
     >
-      <div class="columns mb-2">
+      <div class="columns mb-2 nav-questionnaire-container">
         <div
           v-for="assessmentType in pageStore.usagePage.startAssessmentBlockData"
           :key="assessmentType.id"
@@ -19,6 +20,7 @@
             background-color="white"
           />
         </div>
+        <QuestionnairePreviousButton @go-back="goBack" />
       </div>
     </PageSection>
 
@@ -45,50 +47,53 @@
     <!-- Start initialization step -->
     <PageSection
       v-else-if="initializationSteps[currentStep] === steps.START"
-      class="column is-8"
+      class="column is-8 questionnaire-container"
       :title="startInitializationTitleAndDesc[0]"
       :intro="startInitializationTitleAndDesc[1]"
       :is-first-element="true"
       :intro-is-rich-text="true"
     >
-      <div
-        v-if="
-          assessmentStore.newAssessment.assessmentType ===
-          AssessmentType.WITH_EXPERT.key
-        "
-      >
-        <AssessmentAddExpert
-          v-model="expertSelected"
-          :initiation-page="pageStore.evaluationInitiationPage"
-        />
+      <div class="nav-questionnaire-container">
+        <div
+          v-if="
+            assessmentStore.newAssessment.assessmentType ===
+            AssessmentType.WITH_EXPERT.key
+          "
+        >
+          <AssessmentAddExpert
+            v-model="expertSelected"
+            :initiation-page="pageStore.evaluationInitiationPage"
+          />
+        </div>
+        <ParticipationConsent class="mt-1_5" type="cgu" :initiator="true" />
+        <QuestionnairePreviousButton @go-back="goBack" />
+        <button
+          class="button is-normal is-rounded mt-4"
+          :disabled="disabled"
+          @click.prevent="goToNextStep"
+        >
+          <span>Valider</span>
+        </button>
       </div>
-      <ParticipationConsent class="mt-1_5" type="cgu" :initiator="true" />
-      <button
-        class="button is-normal is-rounded mt-4"
-        :disabled="disabled"
-        @click.prevent="goToNextStep"
-      >
-        <span>Valider</span>
-      </button>
     </PageSection>
 
     <!-- Assessment Initiator step -->
     <PageSection
       v-else-if="initializationSteps[currentStep] === steps.INITIATOR"
-      class="column is-8"
+      class="column is-8 questionnaire-container"
       :title="pageStore.evaluationInitiationPage.initTitle"
       :intro="pageStore.evaluationInitiationPage.initDescription"
       :is-first-element="true"
       :intro-is-rich-text="true"
     >
-      <form @submit.prevent="goToNextStep">
+      <form class="nav-questionnaire-container" @submit.prevent="goToNextStep">
         <div class="field mb-3">
-          <label class="label">{{
-            pageStore.evaluationInitiationPage.initiatorNameQuestion
-          }}</label>
-          <span class="is-family-secondary is-size-6">{{
-            pageStore.evaluationInitiationPage.initiatorNameDescription
-          }}</span>
+          <label class="label">
+            {{ pageStore.evaluationInitiationPage.initiatorNameQuestion }}
+          </label>
+          <span class="is-family-secondary is-size-6">
+            {{ pageStore.evaluationInitiationPage.initiatorNameDescription }}
+          </span>
           <div class="control">
             <input
               v-model="initiatorName"
@@ -116,9 +121,9 @@
               name="initiationType"
               required
             />
-            <label :for="initiatorType.key" class="button is-normal locality">{{
-              initiatorType.value
-            }}</label>
+            <label :for="initiatorType.key" class="button is-normal locality">
+              {{ initiatorType.value }}
+            </label>
           </div>
         </div>
         <div class="buttons mt-4">
@@ -132,19 +137,21 @@
           <!-- Permet d'appuyer sur entrer -->
           <input type="submit" hidden />
         </div>
+
+        <QuestionnairePreviousButton @go-back="goBack" />
       </form>
     </PageSection>
 
     <!-- Representativity rates step -->
     <PageSection
       v-else-if="initializationSteps[currentStep] === steps.REPRESENTATIVITY"
-      class="column is-8"
+      class="column is-8 questionnaire-container"
       :title="pageStore.evaluationInitiationPage.representativityTitle"
       :intro="pageStore.evaluationInitiationPage.representativityDescription"
       :is-first-element="true"
       :intro-is-rich-text="true"
     >
-      <form @submit.prevent="onSubmit">
+      <form class="nav-questionnaire-container" @submit.prevent="onSubmit">
         <div
           v-for="representativityCriteria of assessmentStore.representativityCriterias"
           :key="representativityCriteria.id"
@@ -186,6 +193,8 @@
           <!-- Permet d'appuyer sur entrer -->
           <input type="submit" hidden />
         </div>
+
+        <QuestionnairePreviousButton @go-back="goBack" />
       </form>
     </PageSection>
   </div>
@@ -200,11 +209,11 @@ import { useUserStore } from "~/stores/userStore"
 
 definePageMeta({
   title: "Initialisation",
-  breadcrumb: "Initialisation",
   step: "initialization",
   middleware: ["assessment"],
 })
 
+const router = useRouter()
 const userStore = useUserStore()
 
 const pageStore = usePageStore()
@@ -300,12 +309,25 @@ onMounted(() => {
   })
 })
 
+function goBack() {
+  if (initializationSteps[currentStep.value] === steps.ASSESSMENT_TYPE) {
+    assessmentStore.currentAssessmentId = undefined
+    router.push("/evaluation/localisation")
+  } else if (initializationSteps[currentStep.value] === steps.START) {
+    assessmentStore.newAssessment.assessmentType = undefined
+    currentStep.value -= 1
+  } else {
+    currentStep.value -= 1
+  }
+}
+
 function goToNextStep() {
   if (initializationSteps.length - 1 > currentStep.value) {
     if (
       initializationSteps[currentStep.value + 1] === steps.REPRESENTATIVITY &&
       assessmentStore.newAssessment.assessmentType === AssessmentType.QUICK.key
     ) {
+      // There is no representativity logic for quick diagnostics
       onSubmit()
     } else {
       currentStep.value += 1

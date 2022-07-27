@@ -42,16 +42,8 @@ export const useUserStore = defineStore("user", {
         router.push(callbackUrl)
       }
     },
-    async signup(
-      firstName: string,
-      lastName: string,
-      email: string,
-      password: string,
-      callbackUrl = "/"
-    ) {
+    async signup(email: string, password: string, callbackUrl = "/") {
       const { data, error } = await useApiPost<User>("auth/signup", {
-        firstName,
-        lastName,
         email,
         password,
       })

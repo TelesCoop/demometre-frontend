@@ -3,11 +3,13 @@
     <h1 class="title is-3 mt-2">
       {{ pageStore.evaluationQuestionnairePage.roleQuestionTitle }}
     </h1>
-    <p class="is-family-secondary">
-      {{ pageStore.evaluationQuestionnairePage.roleQuestionDescription }}
-    </p>
-    <form @submit.prevent="onSubmit">
-      <div class="my-1_5">
+    <RichText
+      v-if="pageStore.evaluationQuestionnairePage.roleQuestionDescription"
+      class="is-family-secondary p-1 has-background-shade-200"
+      :rich-text="pageStore.evaluationQuestionnairePage.roleQuestionDescription"
+    ></RichText>
+    <form class="questionnaire-container" @submit.prevent="onSubmit">
+      <div class="my-1_5 nav-questionnaire-container">
         <ResponseInputUniqueChoice
           v-model="answer"
           :response-choices="responseChoices"
@@ -15,6 +17,8 @@
           question-id="role"
           :white-letter-when-select="true"
         />
+
+        <QuestionnairePreviousButton @go-back="goBack" />
       </div>
       <div class="buttons mt-1_5">
         <button class="button is-normal is-rounded" :disabled="disabled">
@@ -41,6 +45,7 @@ import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useProfilingJourney } from "~/composables/journey"
 import { usePageStore } from "~/stores/pageStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 definePageMeta({
   title: "Question sur le role",
@@ -48,7 +53,9 @@ definePageMeta({
   middleware: ["assessment", "user-step"],
 })
 
+const router = useRouter()
 const participationStore = useParticipationStore()
+const assessmentStore = useAssessmentStore()
 const pageStore = usePageStore()
 if (!pageStore.evaluationQuestionnairePage.startTitle) {
   pageStore.getEvaluationQuestionnairePage()
@@ -76,6 +83,12 @@ const responseChoices = computed(() =>
 const disabled = computed(() => {
   return !answer.value || isLoading.value
 })
+
+function goBack() {
+  router.push(
+    `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`
+  )
+}
 
 async function onSubmit() {
   isLoading.value = true
