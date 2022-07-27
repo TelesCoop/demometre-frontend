@@ -1,7 +1,11 @@
 <template>
   <div v-if="question">
     <section class="section">
-      <form v-if="question" class="question-container" @submit.prevent="submit">
+      <form
+        v-if="question"
+        class="questionnaire-container"
+        @submit.prevent="submit"
+      >
         <h1 class="title is-size-3-tablet is-size-4-mobile">
           {{ question.questionStatement }}
         </h1>
@@ -12,7 +16,7 @@
         ></RichText>
 
         <!-- Center bloc : question inputs + button previous and next -->
-        <div class="change-question-container" style="position: relative">
+        <div class="nav-questionnaire-container" style="position: relative">
           <!-- all possible inputs -->
           <div class="my-1_5">
             <ResponseInputOpen
@@ -60,22 +64,15 @@
           </div>
 
           <!-- button previous next -->
-          <button
+          <QuestionnairePreviousButton
             v-if="
               !props.context.journey.isFirstQuestion(question.id) ||
               props.context.hasPreviousStep
             "
-            class="button is-dark is-outlined is-rounded change-question-button previous"
-            @click.prevent="goToPreviousQuestion"
-          >
-            <div>
-              <i class="icon">
-                <Icon size="16" name="arrow-left-line" class="mt-0_5" />
-              </i>
-            </div>
-          </button>
+            @go-back="goToPreviousQuestion"
+          />
           <button
-            class="button is-dark is-outlined is-rounded change-question-button next"
+            class="button is-dark is-outlined is-rounded nav-questionnaire-button next"
             :disabled="nextQuestionDisabled"
             @click.prevent="goToNextQuestion"
           >
@@ -318,9 +315,7 @@ const submit = async () => {
   if (result) {
     if (props.context.journey.isLastQuestion(question.value.id)) {
       if (props.context.journey.surveyType() === SurveyType.INITILIZATION) {
-        await assessmentStore.saveEndInitializationQuestions()
-      } else if (props.context.journey.surveyType() === SurveyType.PROFILING) {
-        await participationStore.saveEndQuestionnaire(true)
+        // await assessmentStore.saveEndInitializationQuestions()
       } else if (
         props.context.journey.surveyType() === SurveyType.QUESTIONNAIRE
       ) {
@@ -363,43 +358,4 @@ const submit = async () => {
     color: var(--color-dark)
   &:hover
     color: var(--color-active)
-
-.change-question
-  &-container
-    position: relative
-  &-button
-    position: absolute
-    top: 50%
-    @include widescreen
-      &.next
-        right: -10rem
-      &.previous
-        left: -10rem
-    @include desktop-only
-      &.next
-        right: -5rem
-      &.previous
-        left: -5rem
-
-@include tablet-only
-  .question-container
-    margin-left: 5rem
-    margin-right: 5rem
-  .change-question-button
-    &.next
-      right: -5rem
-    &.previous
-      left: -5rem
-@include mobile
-  .question-container
-    margin-left: 1rem
-    margin-right: 1rem
-  .change-question-button
-    top: -2rem
-    &.next
-      right: -2rem
-      padding: 0 15px
-    &.previous
-      left: -2rem
-      padding: 0 15px
 </style>

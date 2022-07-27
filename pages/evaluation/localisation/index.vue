@@ -54,9 +54,9 @@
               name="localityType"
               required
             />
-            <label :for="localityType.key" class="button is-normal locality">
-              {{ localityType.value }}
-            </label>
+            <label :for="localityType.key" class="button is-normal locality">{{
+              localityType.value
+            }}</label>
           </div>
         </div>
       </div>
@@ -84,7 +84,6 @@ import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({
   title: "Localisation",
-  breadcrumb: "Localisation",
   step: "localisation",
   middleware: ["user-step"],
 })

@@ -23,7 +23,7 @@
               <i class="fas fa-exclamation-triangle"></i>
             </span>
           </div>
-          <p v-if="!isMailValid" class="help is-danger">
+          <p v-if="!isMailValid" class="help is-danger width-fit-content">
             {{ emailErrorMessage }}
           </p>
         </div>
@@ -47,7 +47,7 @@
               <i class="fas fa-exclamation-triangle"></i>
             </span>
           </div>
-          <p v-if="!isPasswordValid" class="help is-danger">
+          <p v-if="!isPasswordValid" class="help is-danger width-fit-content">
             {{ passwordErrorMessage }}
           </p>
         </div>
@@ -59,8 +59,7 @@
               to="/nouveau-mdp"
               class="has-text-shade-500"
               style="text-decoration-line: revert"
-            >
-              Mot de passe oublié ?</NuxtLink
+              >Mot de passe oublié ?</NuxtLink
             >
           </div>
           <button class="button is-shade-600 is-small" :disabled="disabled">
@@ -74,16 +73,15 @@
           <input type="submit" hidden />
         </div>
         <div class="mt-1">
-          <span class="is-size-7 has-text-shade-800"
-            >Vous n'avez pas encore de compte ?
+          <span class="is-size-7 has-text-shade-800">
+            Vous n'avez pas encore de compte ?
             <NuxtLink
               to="/signup"
               class="has-text-shade-500"
               style="text-decoration-line: revert"
+              >Créez-en un</NuxtLink
             >
-              Créez-en un</NuxtLink
-            ></span
-          >
+          </span>
         </div>
       </form>
     </div>
@@ -92,7 +90,6 @@
 
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
-import { cleanUserData } from "~/composables/actions"
 definePageMeta({
   title: "Connexion",
 })

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="mx-2">
+    <section class="section mx-2">
       <h1 class="title is-3 mb-0_5">
         Tableau de bord de
         {{
@@ -26,7 +26,7 @@
           </span>
         </NuxtLink>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -35,7 +35,6 @@ import { useAssessmentStore } from "~/stores/assessmentStore"
 
 definePageMeta({
   title: "Localisation",
-  breadcrumb: "Localisation",
   step: "role",
   middleware: ["assessment", "user-step"],
 })

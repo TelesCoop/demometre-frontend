@@ -56,6 +56,9 @@ hr
 .is-fullwidth
   width: 100%
 
+.width-fit-content
+  max-width: fit-content
+
 // we use directly svg as icons, so we need to add spacing
 .control
   // Modifiers
@@ -123,3 +126,41 @@ hr
   object-fit: cover
   width: 100%
   height: 100%
+
+// Buttons previous and next
+.nav-questionnaire
+  &-container
+    position: relative
+  &-button
+    position: absolute
+    top: 25%
+    @include widescreen
+      &.next
+        right: -8rem
+      &.previous
+        left: -8rem
+    @include desktop-only
+      &.next
+        right: -5rem
+      &.previous
+        left: -5rem
+@include tablet-only
+  .questionnaire-container
+    margin-left: 5rem
+    margin-right: 5rem
+  .nav-questionnaire-button
+    &.next
+      right: -5rem
+    &.previous
+      left: -5rem
+@include mobile
+  .questionnaire-container
+    margin-left: 1rem
+    margin-right: 1rem
+  .nav-questionnaire-button
+    &.next
+      right: -2rem
+      padding: 0 15px
+    &.previous
+      left: -2rem
+      padding: 0 15px

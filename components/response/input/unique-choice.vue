@@ -15,6 +15,7 @@
         :name="genInputId()"
         :value="responseChoice.id"
         class="custom-hidden"
+        @click="unCheck(responseChoice.id)"
       />
       <label :for="genInputId(responseChoiceIndex)">
         <ResponseChoice
@@ -43,6 +44,7 @@ const props = defineProps({
   questionId: { type: [Number, String], required: true },
 })
 
+const previousAnswer = ref()
 const answer = useModel("modelValue")
 
 const isResponseChoiceSelected = computed(
@@ -54,5 +56,12 @@ function genInputId(responseChoiceIndex = null) {
     return `question-${props.questionId}-unique-choice`
   }
   return `question-${props.questionId}-unique-choice-${responseChoiceIndex}`
+}
+
+function unCheck(responseChoiceId) {
+  if (responseChoiceId === previousAnswer.value) {
+    answer.value = null
+  }
+  previousAnswer.value = props.modelValue
 }
 </script>
