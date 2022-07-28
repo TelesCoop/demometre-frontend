@@ -45,7 +45,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       Object.keys(participationStore.responseByQuestionnaireQuestionId)
         .length === 0
     ) {
-      participationStore.getCurrentQuestionnaireQuestionResponses()
+      participationStore.getCurrentQuestionnaireSubjectiveQuestionResponses()
+      participationStore.getCurrentQuestionnaireObjectiveQuestionResponses()
     }
 
     if (!profilingStore.orderedQuestionId.length) {

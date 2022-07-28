@@ -107,22 +107,27 @@ export const useParticipationStore = defineStore("participation", {
       return true
     },
 
-    async getCurrentQuestionnaireQuestionResponses() {
+    async getCurrentQuestionnaireSubjectiveQuestionResponses() {
       const participationResponses = await useApiGet<QuestionResponse[]>(
         `participation-responses/current/?context=questionnaire`
       )
       if (participationResponses.error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(participationResponses.error.value.data.messageCode)
         return false
       }
       participationResponses.data.value.forEach((item) => {
         this.responseByQuestionnaireQuestionId[item.questionId] = item
       })
-
+      return true
+    },
+    async getCurrentQuestionnaireObjectiveQuestionResponses() {
       const assessmentResponses = await useApiGet<QuestionResponse[]>(
         `assessment-responses/current/`
       )
-
       if (assessmentResponses.error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(assessmentResponses.error.value.data.messageCode)
         return false
       }
       assessmentResponses.data.value.forEach((item) => {

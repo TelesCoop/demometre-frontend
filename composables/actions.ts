@@ -7,7 +7,8 @@ export async function getUserData() {
     await participationStore.getCurrentParticipation(),
     await useAssessmentStore().getCurrentAssessment(),
     await participationStore.getCurrentProfilingQuestionResponses(),
-    await participationStore.getCurrentQuestionnaireQuestionResponses(),
+    await participationStore.getCurrentQuestionnaireSubjectiveQuestionResponses(),
+    await participationStore.getCurrentQuestionnaireObjectiveQuestionResponses(),
   ])
 }
 
