@@ -10,6 +10,9 @@ export const useUserStore = defineStore("user", {
     nbreCallback: <number>-1,
   }),
   getters: {
+    isLoggedOut() {
+      return !this.user.email
+    },
     isLoggedIn() {
       return !!this.user.email && !this.user.isUnknownUser
     },

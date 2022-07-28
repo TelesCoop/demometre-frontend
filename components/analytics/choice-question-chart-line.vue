@@ -7,7 +7,8 @@
         percentageOfSpaceAlreadyTaken,
         totalLine,
         gapSize,
-        percentageSize
+        percentageSize,
+        leftBaseMargin
       )
     "
   ></div>
@@ -16,7 +17,7 @@
 <script setup lang="ts">
 import { getLeftStyle } from "assets/utils/choice-question-chart"
 
-const props = defineProps({
+defineProps({
   index: { type: Number, required: true },
   color: { type: String },
   totalLine: { type: Number, required: true },
@@ -24,6 +25,7 @@ const props = defineProps({
   gapSize: { type: Number, required: true },
   fullLineModulo: { type: Number, required: true },
   percentageSize: { type: Number, required: true },
+  leftBaseMargin: { type: Number, default: 1 },
 })
 </script>
 

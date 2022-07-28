@@ -13,12 +13,13 @@ export function getLeftStyle(
   percentageOfSpaceAlreadyTaken: number,
   totalLine: number,
   gapSize: number,
-  percentageSize: number
+  percentageSize: number,
+  leftBaseMargin = 1
 ): string {
   const leftValue = getLeftValue(
     index,
     percentageOfSpaceAlreadyTaken,
     totalLine
   )
-  return `left: calc((100% - ${gapSize}rem - ${percentageSize}px) * ${leftValue} + 1rem)`
+  return `left: calc((100% - ${gapSize}rem - ${percentageSize}px) * ${leftValue} + ${leftBaseMargin}rem)`
 }

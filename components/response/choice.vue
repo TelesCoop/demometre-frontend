@@ -93,7 +93,6 @@ input:focus-visible,input:not(:checked):hover + label .response-choice
 
 .response-choice:hover, .response-choice.dragging, *:focus .response-choice
   @include choice-hover
-  // border: var(--color-dark) dashed 1px !important
 
 .response-choice:focus-within
   @include choice-hover

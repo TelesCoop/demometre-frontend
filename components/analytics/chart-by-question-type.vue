@@ -15,8 +15,20 @@
       "
       :color="color"
     ></AnalyticsBooleanQuestionChart>
-    <AnalyticsChoiceQuestionChart
+    <AnalyticsObjectiveChoiceQuestionChart
       v-if="
+        question.type === QuestionType.UNIQUE_CHOICE &&
+        question.objectivity === Objectivity.OBJECTIVE
+      "
+      :data="
+        assessmentStore.chartDataByAssessmentIdAndQuestionId[assessmentId][
+          question.id
+        ].data
+      "
+      :color="color"
+    ></AnalyticsObjectiveChoiceQuestionChart>
+    <AnalyticsChoiceQuestionChart
+      v-else-if="
         [QuestionType.UNIQUE_CHOICE, QuestionType.MULTIPLE_CHOICE].includes(
           question.type
         )
@@ -37,12 +49,21 @@
       "
       :color="color"
     ></AnalyticsPercentageQuestionChart>
+    <AnalyticsScaleQuestionChart
+      v-else-if="question.type === QuestionType.CLOSED_WITH_SCALE"
+      :data="
+        assessmentStore.chartDataByAssessmentIdAndQuestionId[assessmentId][
+          question.id
+        ].data
+      "
+      :color="color"
+    ></AnalyticsScaleQuestionChart>
   </template>
 </template>
 
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
-import { QuestionType } from "~/composables/types"
+import { QuestionType, Objectivity } from "~/composables/types"
 
 const props = defineProps({
   assessmentId: { type: Number, required: true },

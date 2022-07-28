@@ -112,8 +112,6 @@ export const useParticipationStore = defineStore("participation", {
         `participation-responses/current/?context=questionnaire`
       )
       if (participationResponses.error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(participationResponses.error.value.data.messageCode)
         return false
       }
       participationResponses.data.value.forEach((item) => {
@@ -126,8 +124,6 @@ export const useParticipationStore = defineStore("participation", {
         `assessment-responses/current/`
       )
       if (assessmentResponses.error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(assessmentResponses.error.value.data.messageCode)
         return false
       }
       assessmentResponses.data.value.forEach((item) => {
