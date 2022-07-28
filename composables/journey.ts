@@ -15,7 +15,7 @@ import { useUserStore } from "~/stores/userStore"
 
 type QuestionDataFilter = {
   question: Question
-  participation: Participation
+  participation: Participation | undefined
   assessment: Assessment
 }
 const QUESTION_FILTERS = {
@@ -278,10 +278,25 @@ export function useInitializationJourney<Type>() {
   const vm = getCurrentInstance()
   const journey = computed(() => {
     const questionnaireStore = useQuestionnaireStore()
+    const assessmentStore = useAssessmentStore()
     const questionIds = questionnaireStore.questions
-      .filter(
-        (question: Question) => question.objectivity === Objectivity.OBJECTIVE
-      )
+      .filter((question: Question) => {
+        const assessment = assessmentStore.currentAssessment
+        const participation = undefined
+        return (
+          QUESTION_FILTERS.population({
+            question,
+            participation,
+            assessment,
+          }) &&
+          QUESTION_FILTERS.assessmentType({
+            question,
+            participation,
+            assessment,
+          }) &&
+          question.objectivity === Objectivity.OBJECTIVE
+        )
+      })
       .map((question: Question) => question.id)
     return questionIds
   })
