@@ -42,7 +42,7 @@
                 )
               "
               class="is-clickable"
-              @click="onSelectPillar(pillar)"
+              @click="onSelectPillar(pillar, true)"
             />
           </div>
         </div>
@@ -67,10 +67,55 @@
               :key="questionId"
               :color="colorClass"
               :question="questionnaireStore.questionById[questionId]"
-              class="mb-2"
+              class="mb-4"
             >
+              <div
+                v-if="
+                  questionnaireStore.questionById[questionId]
+                    .explainsByQuestionIds.length
+                "
+              >
+                <p class="is-uppercase is-size-6bis mb-0_5 mt-1">
+                  Explicitée par :
+                </p>
+                <a
+                  v-for="explainsByQuestionId of questionnaireStore
+                    .questionById[questionId].explainsByQuestionIds"
+                  :key="explainsByQuestionId"
+                  class="is-underlined"
+                  @click="onSelectQuestion(explainsByQuestionId)"
+                >
+                  <span>{{
+                    questionnaireStore.questionById[explainsByQuestionId].name
+                  }}</span>
+                </a>
+              </div>
+              <div
+                v-if="
+                  questionnaireStore.questionById[questionId].allowsToExplain
+                "
+              >
+                <p class="is-uppercase is-size-6bis mb-0_5 mt-1">
+                  Permet d'expliciter :
+                </p>
+                <a
+                  class="is-underlined"
+                  @click="
+                    onSelectQuestion(
+                      questionnaireStore.questionById[questionId]
+                        .allowsToExplain
+                    )
+                  "
+                >
+                  <span>{{
+                    questionnaireStore.questionById[
+                      questionnaireStore.questionById[questionId]
+                        .allowsToExplain
+                    ].name
+                  }}</span>
+                </a>
+              </div>
               <p class="is-uppercase is-size-6bis mb-0_5 mt-2">Résultat</p>
-
               <AnalyticsChartByQuestionType
                 :color="colorClass"
                 :assessment-id="assessmentId"
@@ -136,9 +181,10 @@ const markers = ref<Marker[]>()
 
 const route = useRoute()
 const assessmentId: Ref<number> = ref(+route.params.assessmentId)
-const activeQuestionId = computed<number>(() => {
-  return parseInt(route.query.question as string)
-})
+const changeSelectedQuestion = ref<number>(0)
+const activeQuestionId: Ref<number> = ref(
+  parseInt(route.query.question as string)
+)
 
 if (!assessmentStore.assessmentById[assessmentId.value]?.name) {
   assessmentStore.getAssessment(assessmentId.value)
@@ -150,33 +196,51 @@ if (!profilingStore.roles.length) {
   profilingStore.getRoles()
 }
 
-watch(activeQuestionId, () => {
-  const pillar =
-    questionnaireStore.pillarByName[
-      questionnaireStore.questionById[activeQuestionId.value].pillarName
-    ]
-  onSelectPillar(pillar)
+const pillarOfQuestionId = (questionId) => {
+  return questionnaireStore.pillarByName[
+    questionnaireStore.questionById[questionId].pillarName
+  ]
+}
+const changeActiveQuestionId = () => {
+  if (activeQuestionId.value) {
+    const pillar = pillarOfQuestionId(activeQuestionId.value)
+    onSelectPillar(pillar)
+  }
+}
+
+watch(
+  () => route.query.question,
+  () => {
+    activeQuestionId.value = parseInt(route.query.question as string)
+    changeActiveQuestionId()
+  }
+)
+watch(changeSelectedQuestion, () => {
+  changeActiveQuestionId()
 })
 
 const colorClass = computed(() =>
   activePillar.value ? PillarParams[activePillar.value.name].color : ""
 )
 
-const onSelectPillar = (pillar) => {
+const onSelectPillar = (pillar, cleanUrl = false) => {
   activePillar.value = pillar
   markers.value = activePillar.value?.markerIds.map(
     (markerId) => questionnaireStore.markerById[markerId]
   )
-  router.push({ query: { ...route.query, pillar: pillar.name } })
+  const query = cleanUrl
+    ? { pillar: pillar.name }
+    : { ...route.query, pillar: pillar.name }
+  router.push({ query })
 }
 
-if (activeQuestionId.value) {
-  const pillar =
-    questionnaireStore.pillarByName[
-      questionnaireStore.questionById[activeQuestionId.value]?.pillarName
-    ]
-  onSelectPillar(pillar)
+const onSelectQuestion = (questionId) => {
+  changeSelectedQuestion.value += 1
+  activeQuestionId.value = questionId
+  router.replace({ query: { ...route.query, question: questionId } })
 }
+
+changeActiveQuestionId()
 </script>
 
 <style scoped lang="sass"></style>

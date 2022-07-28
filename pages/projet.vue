@@ -134,7 +134,7 @@
               class="logo-open-democracy is-hidden-mobile"
             />
           </figure>
-          <div class="columns is-mobile">
+          <div class="columns is-mobile is-multiline">
             <div
               v-for="memberId in pageStore.projectPage.whoCrewSubBlockMemberIds"
               :key="memberId"
@@ -170,9 +170,8 @@
                     <a
                       class="tab is-size-6 has-text-weight-bold has-text-shade-500"
                       @click="setTab(tab.id)"
+                      >{{ tab.label }}</a
                     >
-                      {{ tab.label }}
-                    </a>
                   </li>
                 </ul>
               </div>
@@ -186,7 +185,7 @@
                     currentTabId ===
                     group_committees.value.committee.replace(/\s+/g, '')
                   "
-                  class="columns is-mobile"
+                  class="columns is-mobile is-multiline"
                 >
                   <div
                     v-for="committee_member in group_committees.value
@@ -214,22 +213,23 @@
               v-for="(partner_group, index) in pageStore.projectPage
                 .whoPartnerSubBlockData"
               :key="index"
-              class="columns mb-3"
             >
-              <div class="column is-5 pr-4">
-                <p class="is-size-4 has-text-black has-text-weight-bold pb-1">
-                  {{ partner_group.title }}
-                </p>
-                <p class="is-size-5 is-family-secondary has-text-shade-600">
-                  {{ partner_group.description }}
-                </p>
-              </div>
-              <div class="column is-7">
-                <PagePartnerList
-                  :partners="partner_group.partners"
-                  :logo-height="60"
-                  column-gap="3rem"
-                />
+              <p class="is-size-4 has-text-black has-text-weight-bold pb-1">
+                {{ partner_group.title }}
+              </p>
+              <div class="columns mb-3">
+                <div class="column is-5 pr-4">
+                  <p class="is-size-5 is-family-secondary has-text-shade-600">
+                    {{ partner_group.description }}
+                  </p>
+                </div>
+                <div class="column is-7">
+                  <PagePartnerList
+                    :partners="partner_group.partners"
+                    :logo-height="60"
+                    column-gap="3rem"
+                  />
+                </div>
               </div>
             </div>
           </div>

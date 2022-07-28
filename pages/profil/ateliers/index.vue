@@ -3,8 +3,8 @@
     <div class="section">
       <PageTitle title="Espace animateur" />
       <PageSection
-        title="Ateliers"
-        intro="Saisissez les ateliers que vous avez animés"
+        :title="pageStore.animatorPage.listWorkshopsTitle"
+        :intro="pageStore.animatorPage.listWorkshopIntro"
       >
         <div>
           <table class="table is-narrow is-fullwidth">
@@ -161,12 +161,7 @@
           </button>
         </header>
         <section class="modal-card-body">
-          <div>
-            Vous vous apprêtez à clôturer l'atelier afin que le calcul des
-            résultats soit mis à jour et que les utilisateurs puissent récupérer
-            les informations de leur participation. Attention: il ne sera plus
-            possible de faire de modification sur cet atelier
-          </div>
+          <div>{{ pageStore.animatorPage.closeWorkshopValidation }}</div>
         </section>
         <footer class="modal-card-foot">
           <button
@@ -186,22 +181,33 @@
 import { useAnimatorStore } from "~/stores/animatorStore"
 import { Workshop } from "~/composables/types"
 import { useUserStore } from "~/stores/userStore"
+import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({
   title: "Ateliers",
   breadcrumb: "Ateliers",
-  middleware: ["animator-space"],
 })
 
 const animatorStore = useAnimatorStore()
 const userStore = useUserStore()
+const pageStore = usePageStore()
 const router = useRouter()
 
+if (!pageStore.animatorPage.listWorkshopsTitle) {
+  pageStore.getAnimatorPage()
+}
 if (!animatorStore.allAssessmentsLoaded) {
   animatorStore.getAnimatorAssessments()
 }
 if (!animatorStore.allWorkshopsLoaded) {
   animatorStore.getWorkshops()
+}
+
+if (!userStore.isLoggedIn) {
+  navigateTo(`/login`)
+}
+if (!userStore.isExpertUser) {
+  navigateTo(`/`)
 }
 
 const closeWorkshopIdModal = ref<number>(undefined)

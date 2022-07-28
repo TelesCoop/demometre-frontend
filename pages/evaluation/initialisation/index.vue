@@ -189,7 +189,6 @@
 </template>
 
 <script setup lang="ts">
-import { useInitializationJourney } from "~/composables/journey"
 import { usePageStore } from "~/stores/pageStore"
 import { InitiatorType, AssessmentType } from "~/composables/types"
 import { useAssessmentStore } from "~/stores/assessmentStore"
@@ -331,7 +330,9 @@ async function onSubmit() {
     initiatorName: initiatorName.value,
   })
   if (isSuccess) {
-    useInitializationJourney().goToNextQuestion(undefined)
+    useRouter().push(
+      `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives`
+    )
   }
 }
 </script>

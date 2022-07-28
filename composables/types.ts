@@ -127,6 +127,8 @@ export type Question = {
   populationLowerBound: number | null
   populationUpperBound: number | null
   profileIds: number[]
+  allowsToExplain: number
+  explainsByQuestionIds: number[]
 }
 
 type Bound = { value: number; label: string }
@@ -497,6 +499,15 @@ export type EvaluationQuestionnairePage = {
   finishedTitle: string
   finishedTextLoggedIn: string
   finishedTextLoggedOut: string
+}
+export type AnimatorPage = {
+  listWorkshopsTitle: string
+  listWorkshopIntro: string
+  closeWorkshopValidation: string
+  addParticipantsTitle: string
+  addParticipantsIntro: string
+  responsesTitle: string
+  responsesIntro: string
 }
 
 // Props

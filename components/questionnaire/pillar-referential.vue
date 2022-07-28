@@ -34,9 +34,10 @@
                       ? `has-text-${color}-active is-size-6bis`
                       : `has-text-${color} is-size-6bis`
                   "
+                  >{{
+                    getConcatenedCodeWithoutPillar(marker.concatenatedCode)
+                  }}</span
                 >
-                  {{ getConcatenedCodeWithoutPillar(marker.concatenatedCode) }}
-                </span>
                 {{ wordTitleCase(marker.name) }}
               </p>
               <AnalyticsScore
@@ -231,11 +232,13 @@ const getCriteriasOfActiveMarker = () => {
   )
 }
 
-const initialActiveCriteria =
-  questionnaireStore.criteriaById[
+const getCriteriaOfQuestionId = () => {
+  return questionnaireStore.criteriaById[
     questionnaireStore.questionById[props.initialQuestionId]?.criteriaId
   ]
-const activeCriteria = ref<Criteria>(initialActiveCriteria)
+}
+
+const activeCriteria = ref<Criteria>(getCriteriaOfQuestionId())
 const activeMarker = ref<Marker>(
   questionnaireStore.markerById[activeCriteria.value?.markerId]
 )
@@ -255,6 +258,16 @@ watch(
   () => {
     activeMarker.value = null
     activeCriteria.value = null
+  }
+)
+
+watch(
+  () => props.initialQuestionId,
+  () => {
+    activeCriteria.value = getCriteriaOfQuestionId()
+    activeMarker.value =
+      questionnaireStore.markerById[activeCriteria.value?.markerId]
+    criterias.value = getCriteriasOfActiveMarker()
   }
 )
 

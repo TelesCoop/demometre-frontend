@@ -42,8 +42,8 @@ if (!pageStore.evaluationInitiationPage.objectiveQuestionsTitle) {
 
 const isLoading = ref(false)
 
+// TODO : allow to reset initialization of an assessment, rigth now the back does not allow it
 // function goBack() {
-//   // TODO : allow to reset initialization of an assessment, rigth now the back does not allow it
 //   // router.push(
 //   //   `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`
 //   // )

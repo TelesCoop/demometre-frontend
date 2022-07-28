@@ -151,10 +151,10 @@
         <ul>
           <li v-for="tab of tabs" :key="tab.id">
             <a
-              class="tab"
+              class="tab is-size-5"
               :class="
                 tab.id === currentTabId
-                  ? 'is-active'
+                  ? `is-active`
                   : `has-text-${color}-hover`
               "
               @click="setTab(tab.id)"
@@ -163,12 +163,12 @@
           </li>
         </ul>
         <button
-          :class="`button is-white has-text-${color}-hover`"
+          :class="`button is-white has-text-${color}-hover is-large`"
           @click.prevent="isTabsOpen = !isTabsOpen"
         >
           <i class="icon">
-            <Icon v-if="isTabsOpen" size="20" name="arrow-down-line" />
-            <Icon v-else size="20" name="arrow-up-line" />
+            <Icon v-if="isTabsOpen" size="28" name="arrow-down-line" />
+            <Icon v-else size="28" name="arrow-up-line" />
           </i>
         </button>
       </div>

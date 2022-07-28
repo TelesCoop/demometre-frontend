@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
 import {
+  AnimatorPage,
   Article,
   EvaluationInitiationPage,
   EvaluationQuestionnairePage,
@@ -32,6 +33,7 @@ export const usePageStore = defineStore("page", {
     projectPage: <ProjectPage>{},
     evaluationInitiationPage: <EvaluationInitiationPage>{},
     evaluationQuestionnairePage: <EvaluationQuestionnairePage>{},
+    animatorPage: <AnimatorPage>{},
   }),
   getters: {
     projectPageMember: (state) => {
@@ -200,6 +202,19 @@ export const usePageStore = defineStore("page", {
           this.evaluationQuestionnairePage = data.value[0]
         } else {
           console.error("Impossible to retrieve evaluation questionnaire page")
+        }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
+    },
+    async getAnimatorPage() {
+      const { data, error } = await useApiGet<AnimatorPage[]>("animator-pages/")
+      if (!error.value) {
+        if (data.value.length) {
+          this.animatorPage = data.value[0]
+        } else {
+          console.error("Impossible to retrieve animator page")
         }
       } else {
         const errorStore = useToastStore()

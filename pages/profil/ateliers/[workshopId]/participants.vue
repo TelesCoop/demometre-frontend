@@ -3,13 +3,16 @@
     <div class="section">
       <PageTitle title="Espace animateur" />
       <PageSection
-        title="Participant·e·s"
-        :intro="`Saisissez les personnes ayant participées à votre atelier ${animatorStore.workshopById[workshopId].name}.`"
+        :title="pageStore.animatorPage.addParticipantsTitle"
+        :intro="pageStore.animatorPage.addParticipantsIntro"
         button-text="Revenir aux ateliers"
         button-link="/profil/ateliers"
         :left-icon="true"
         icon="arrow-left-line"
       >
+        <p class="is-family-secondary mb-4" style="margin-top: -3rem">
+          Atelier: {{ animatorStore.workshopById[workshopId].name }}
+        </p>
         <div>
           <table class="table is-narrow is-fullwidth">
             <thead>
@@ -166,20 +169,26 @@
 import { useProfilingStore } from "~/stores/profilingStore"
 import { WorkshopParticipation } from "~/composables/types"
 import { Ref, ref } from "@vue/reactivity"
-import { useAnimatorStore } from "~~/stores/animatorStore"
+import { useAnimatorStore } from "~/stores/animatorStore"
+import { usePageStore } from "~/stores/pageStore"
+import { useUserStore } from "~/stores/userStore"
 
 definePageMeta({
   title: "Participants",
   breadcrumb: "Participants",
-  middleware: ["animator-space"],
 })
 
 const profilingStore = useProfilingStore()
 const animatorStore = useAnimatorStore()
+const pageStore = usePageStore()
+const userStore = useUserStore()
 const route = useRoute()
 const router = useRouter()
 const workshopId: Ref<number> = ref(+route.params.workshopId)
 
+if (!pageStore.animatorPage.listWorkshopsTitle) {
+  pageStore.getAnimatorPage()
+}
 if (!profilingStore.roles.length) {
   profilingStore.getRoles()
 }
@@ -189,6 +198,13 @@ if (
     animatorStore.workshopParticipations(workshopId.value).length
 ) {
   animatorStore.getWorkshop(workshopId.value)
+}
+
+if (!userStore.isLoggedIn) {
+  navigateTo(`/login`)
+}
+if (!userStore.isExpertUser) {
+  navigateTo(`/`)
 }
 
 const newParticipations = ref<WorkshopParticipation[]>([])

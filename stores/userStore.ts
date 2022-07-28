@@ -11,7 +11,7 @@ export const useUserStore = defineStore("user", {
   }),
   getters: {
     isLoggedIn() {
-      return !!this.user.email
+      return !!this.user.email && !this.user.isUnknownUser
     },
     isUnknownUser() {
       return this.user?.isUnknownUser

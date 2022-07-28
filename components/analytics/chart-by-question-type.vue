@@ -51,10 +51,17 @@ const props = defineProps({
 })
 
 const assessmentStore = useAssessmentStore()
-assessmentStore.getChartDataByAssessmentIdAndQuestionId(
-  props.assessmentId,
-  props.question.id
-)
+if (
+  !assessmentStore.chartDataByAssessmentIdAndQuestionId[props.assessmentId] ||
+  !assessmentStore.chartDataByAssessmentIdAndQuestionId[props.assessmentId][
+    props.question.id
+  ]
+) {
+  assessmentStore.getChartDataByAssessmentIdAndQuestionId(
+    props.assessmentId,
+    props.question.id
+  )
+}
 </script>
 
 <style scoped lang="sass"></style>

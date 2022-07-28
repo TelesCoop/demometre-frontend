@@ -3,13 +3,16 @@
     <div class="section">
       <PageTitle title="Espace animateur" />
       <PageSection
-        title="Réponses"
-        :intro="`Saisissez les réponses à l’évaluation pour chacun·e des participant·e·s. de votre atelier ${animatorStore.workshopById[workshopId].name}.`"
+        :title="pageStore.animatorPage.responsesTitle"
+        :intro="pageStore.animatorPage.responsesIntro"
         button-text="Revenir aux participant·e·s"
         :button-link="`/profil/ateliers/${workshopId}/participants`"
         :left-icon="true"
         icon="arrow-left-line"
       >
+        <p class="is-family-secondary mb-4" style="margin-top: -3rem">
+          Atelier: {{ animatorStore.workshopById[workshopId].name }}
+        </p>
         <div class="container">
           <section ref="pillarsRef" class="columns is-multiline mt-4">
             <div
@@ -42,26 +45,40 @@
 import { Ref, ref } from "@vue/reactivity"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
-import { useAnimatorStore } from "~~/stores/animatorStore"
-import { useProfilingStore } from "~~/stores/profilingStore"
+import { useAnimatorStore } from "~/stores/animatorStore"
+import { useProfilingStore } from "~/stores/profilingStore"
+import { usePageStore } from "~/stores/pageStore"
+import { useUserStore } from "~/stores/userStore"
 
 definePageMeta({
   title: "Réponses",
   breadcrumb: "Réponses",
-  middleware: ["animator-space"],
 })
 
 const questionnaireStore = useQuestionnaireStore()
 const profilingStore = useProfilingStore()
+const pageStore = usePageStore()
+const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
 const workshopId: Ref<number> = ref(+route.params.workshopId)
 const animatorStore = useAnimatorStore()
+
+if (!pageStore.animatorPage.listWorkshopsTitle) {
+  pageStore.getAnimatorPage()
+}
 if (!animatorStore.workshopById[workshopId.value]) {
   animatorStore.getWorkshop(workshopId.value)
 }
 if (!profilingStore.roles.length) {
   profilingStore.getRoles()
+}
+
+if (!userStore.isLoggedIn) {
+  navigateTo(`/login`)
+}
+if (!userStore.isExpertUser) {
+  navigateTo(`/`)
 }
 
 const activePillar = ref<PillarType>()
