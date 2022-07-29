@@ -2,7 +2,7 @@
   <div class="choice-question-chart">
     <div class="choice-question-chart-grid mb-1">
       <div></div>
-      <div class="choice-question-chart-role-choice">
+      <div>
         <p :class="`has-text-${color}-hover`">Personne(s) concernée(s)</p>
         <p :class="`has-text-${color}-dark mt-0_5`">
           Sélectionner ci-dessous un ou plusieurs acteurs
@@ -30,8 +30,14 @@
       :class="`has-text-${color}-hover`"
     >
       <div>Caractéristique(s)</div>
-      <div v-for="(choice, choiceKey) in data.choices" :key="choiceKey">
-        {{ choice.label }}
+      <div class="choice-question-chart-sub-grid">
+        <div
+          v-for="(choice, choiceKey) in data.choices"
+          :key="choiceKey"
+          class="choice-question-chart-menu"
+        >
+          {{ choice.label }}
+        </div>
       </div>
     </div>
     <div class="choice-question-chart-grid">
@@ -45,41 +51,45 @@
         >
           {{ category.label }}
         </div>
-        <div
-          v-for="(choice, key) in category.value"
-          :key="key"
-          :class="`has-background-${color}-light`"
-          class="choice-question-chart-bar-cell"
-        >
+        <div class="choice-question-chart-sub-grid">
           <div
-            v-for="(roleId, index) of question.roleIds"
-            :key="roleId"
-            class="choice-question-chart-bar-container"
+            v-for="(choice, key) in category.value"
+            :key="key"
+            :class="`has-background-${color}-light`"
+            class="choice-question-chart-bar-cell"
           >
             <div
-              v-if="roleIdsSelected.includes(roleId)"
-              class="choice-question-chart-bar"
-              :class="`has-background-${rolesGradiants[index][0]} has-border-${color}-dark`"
-              :style="`width: ${getPercentage(
-                getValueByRoleId(choice, roleId),
-                data.count
-              )}%`"
-            ></div>
+              v-for="(roleId, index) of question.roleIds"
+              :key="roleId"
+              class="choice-question-chart-bar-container"
+            >
+              <div
+                v-if="roleIdsSelected.includes(roleId)"
+                class="choice-question-chart-bar"
+                :class="`has-background-${rolesGradiants[index][0]} has-border-${color}-dark`"
+                :style="`width: ${getPercentage(
+                  getValueByRoleId(choice, roleId),
+                  data.count
+                )}%`"
+              ></div>
+            </div>
+            <template v-for="index in totalSeparator" :key="index">
+              <AnalyticsChoiceQuestionChartLine
+                class="choice-question-chart-line"
+                :class="`is-${color}`"
+                :index="index - 1"
+                :color="color"
+                :total-line="totalSeparator"
+                :full-line-modulo="fullLineModulo"
+                :percentage-of-space-already-taken="
+                  percentageOfSpaceAlreadyTaken
+                "
+                :gap-size="gapSize"
+                :percentage-size="percentageSize"
+                :left-base-margin="leftBaseMargin"
+              ></AnalyticsChoiceQuestionChartLine>
+            </template>
           </div>
-          <template v-for="index in totalSeparator" :key="index">
-            <AnalyticsChoiceQuestionChartLine
-              class="choice-question-chart-line"
-              :class="`is-${color}`"
-              :index="index - 1"
-              :color="color"
-              :total-line="totalSeparator"
-              :full-line-modulo="fullLineModulo"
-              :percentage-of-space-already-taken="percentageOfSpaceAlreadyTaken"
-              :gap-size="gapSize"
-              :percentage-size="percentageSize"
-              :left-base-margin="leftBaseMargin"
-            ></AnalyticsChoiceQuestionChartLine>
-          </template>
         </div>
       </template>
     </div>
@@ -129,11 +139,15 @@ const getValueByRoleId = (choice, roleId) => {
 .choice-question-chart
   &-grid
     display: grid
-    grid-template-columns: 135px repeat(auto-fill, 110px)
+    grid-template-columns: 1fr 4fr
     grid-gap: 1rem
 
-  &-role-choice
-    grid-column: 2/-1
+  &-sub-grid
+    display: flex
+    grid-gap: 1rem
+
+  &-menu
+    width: 110px
 
   &-cell
     padding: 6px
@@ -151,6 +165,7 @@ const getValueByRoleId = (choice, roleId) => {
     flex-direction: column
     justify-content: center
     position: relative
+    width: 110px
 
   &-line
     position: absolute
