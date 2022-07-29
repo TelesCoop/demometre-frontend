@@ -161,7 +161,9 @@
           </button>
         </header>
         <section class="modal-card-body">
-          <div>{{ pageStore.animatorPage.closeWorkshopValidation }}</div>
+          <RichText
+            :rich-text="pageStore.animatorPage.closeWorkshopValidation"
+          ></RichText>
         </section>
         <footer class="modal-card-foot">
           <button

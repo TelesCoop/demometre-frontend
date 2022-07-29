@@ -103,7 +103,10 @@
 
 <script setup lang="ts">
 import { getPercentage } from "assets/utils/percentage"
-import { getLeftStyle } from "assets/utils/choice-question-chart"
+import {
+  getLeftStyle,
+  getColorGradients,
+} from "assets/utils/choice-question-chart"
 import { useProfilingStore } from "~/stores/profilingStore"
 
 const props = defineProps({
@@ -118,34 +121,8 @@ const percentageOfSpaceAlreadyTaken = 0.25
 const gapSize = 2
 const percentageSize = 80
 
-const colorGradients = {
-  1: [[`${props.color}-dark`, "white"]],
-  2: [
-    [`${props.color}-light-active`, `${props.color}-dark`],
-    [`${props.color}-dark`, "white"],
-  ],
-  3: [
-    [`${props.color}-light-active`, `${props.color}-dark`],
-    [`${props.color}`, `${props.color}-dark`],
-    [`${props.color}-dark`, "white"],
-  ],
-  4: [
-    [`${props.color}-light-active`, `${props.color}-dark`],
-    [`${props.color}`, `${props.color}-dark`],
-    [`${props.color}-hover`, "white"],
-    [`${props.color}-dark`, "white"],
-  ],
-  5: [
-    [`${props.color}-light-active`, `${props.color}-dark`],
-    [`${props.color}`, `${props.color}-dark`],
-    [`${props.color}-hover`, "white"],
-    [`${props.color}-active`, "white"],
-    [`${props.color}-dark`, "white"],
-  ],
-}
-
 const rolesGradiants = computed(
-  () => colorGradients[props.question.roleIds.length]
+  () => getColorGradients(props.color)[props.question.roleIds.length]
 )
 
 const roleIdsSelected = ref<number[]>([])
