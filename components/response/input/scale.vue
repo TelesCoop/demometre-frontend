@@ -95,7 +95,7 @@ function updateOne(value, categoryId) {
 function getResponseChoiceIdByCategoryId(categoryId) {
   return answer.value.filter(
     (categoryResponse) => categoryResponse.categoryId === categoryId
-  )[0].responseChoiceId
+  )[0]?.responseChoiceId
 }
 
 function getAnswerSliderValue(categoryId) {

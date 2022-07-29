@@ -11,15 +11,17 @@
       :is-first-element="true"
       :intro-is-rich-text="true"
     >
-      <div v-if="!userStore.isLoggedIn" class="buttons mb-0_5">
+      <div v-if="!userStore.isLoggedIn">
         <!-- User not logged in -->
-        <p>Vous devez être connecté pour ajouter un expert</p>
-        <NuxtLink class="button is-normal is-rounded" to="/signup"
-          >Faire un compte</NuxtLink
-        >
-        <NuxtLink class="button is-normal is-rounded" to="/login"
-          >Se connecter</NuxtLink
-        >
+        <p class="mb-1">Vous devez être connecté pour ajouter un expert</p>
+        <div class="buttons mb-0_5">
+          <NuxtLink class="button is-normal is-rounded" to="/signup"
+            >Faire un compte</NuxtLink
+          >
+          <NuxtLink class="button is-normal is-rounded" to="/login"
+            >Se connecter</NuxtLink
+          >
+        </div>
       </div>
       <AssessmentAddExpert
         v-else
