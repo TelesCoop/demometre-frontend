@@ -78,8 +78,8 @@ const responseChoice = computed<ResponseChoiceType>(() => {
     margin-left: 0px
 
     // customization not planned by the module
-    .slider-base, .slider-connects
-      border: 1px solid var(--color)
+    .slider-base
+      border: 2px solid var(--color)
       box-sizing: content-box
 
     &.slider-horizontal .slider-handle

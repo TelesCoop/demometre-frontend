@@ -14,6 +14,7 @@
         :response-choice-index="parseInt(responseChoiceIndex)"
         :selected="responseChoice.value === 1"
         :color="color"
+        response-choice-size="is-size-6"
       />
     </div>
   </div>
@@ -22,7 +23,7 @@
 <script setup lang="ts">
 defineProps({
   data: { type: Object, required: true },
-  color: { type: String },
+  color: { type: String, required: true },
 })
 </script>
 

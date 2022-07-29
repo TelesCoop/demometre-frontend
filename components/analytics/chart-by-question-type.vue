@@ -39,6 +39,7 @@
         ].data
       "
       :color="color"
+      :question="question"
     ></AnalyticsChoiceQuestionChart>
     <AnalyticsPercentageQuestionChart
       v-else-if="question.type === QuestionType.PERCENTAGE"
@@ -57,6 +58,7 @@
         ].data
       "
       :color="color"
+      :question="question"
     ></AnalyticsScaleQuestionChart>
   </template>
 </template>
@@ -68,7 +70,7 @@ import { QuestionType, Objectivity } from "~/composables/types"
 const props = defineProps({
   assessmentId: { type: Number, required: true },
   question: { type: Object, required: true },
-  color: { type: String },
+  color: { type: String, required: true },
 })
 
 const assessmentStore = useAssessmentStore()

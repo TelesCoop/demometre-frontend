@@ -5,8 +5,8 @@
         {{ data.true.label }}
         <strong :class="`has-text-${color}-hover`"
           >{{ truePercentage }}%</strong
-        ></span
-      >
+        >
+      </span>
       <span :class="`has-text-${color}`">
         <strong :class="`has-text-${color}`">{{ falsePercentage }}%</strong>
         {{ data.false.label }}
@@ -31,7 +31,7 @@ import { getPercentage } from "assets/utils/percentage"
 
 const props = defineProps({
   data: { type: Object, required: true },
-  color: { type: String },
+  color: { type: String, required: true },
 })
 const truePercentage = getPercentage(props.data.true.value, props.data.count)
 const falsePercentage = getPercentage(props.data.false.value, props.data.count)

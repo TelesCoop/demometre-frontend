@@ -19,7 +19,7 @@ import { getLeftStyle } from "assets/utils/choice-question-chart"
 
 defineProps({
   index: { type: Number, required: true },
-  color: { type: String },
+  color: { type: String, required: true },
   totalLine: { type: Number, required: true },
   percentageOfSpaceAlreadyTaken: { type: Number, required: true },
   gapSize: { type: Number, required: true },

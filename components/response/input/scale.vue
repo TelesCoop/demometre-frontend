@@ -12,7 +12,7 @@
         <div class="number mr-0_5" :class="`has-background-${props.color}`">
           <slot name="left-symbol">{{ responseChoiceIndex + 1 }}</slot>
         </div>
-        <span>{{ responseChoice.responseChoice }}</span>
+        <span class="legend-text">{{ responseChoice.responseChoice }}</span>
       </div>
     </legend>
     <div
@@ -125,9 +125,10 @@ function hasAnsweredCategory(categoryId) {
   align-items: center
   display: flex
   flex-basis: auto
-  flex-shrink: 0
   justify-content: center
   margin-right: 1.5rem
+  &-text
+    text-align: start
 @include mobile
   .legend-container
     margin-right: 1rem

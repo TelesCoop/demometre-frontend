@@ -54,9 +54,9 @@
 <script setup lang="ts">
 import { getPercentage } from "assets/utils/percentage"
 
-const props = defineProps({
+defineProps({
   data: { type: Object, required: true },
-  color: { type: String },
+  color: { type: String, required: true },
 })
 const totalSeparator = 11
 const fullLineModulo = 5
@@ -70,7 +70,7 @@ const leftBaseMargin = 0
 .choice-question-chart
   &-grid
     display: grid
-    grid-template-columns: 135px repeat(auto-fill, 115px)
+    grid-template-columns: 135px repeat(auto-fill, 110px)
     grid-gap: 1rem
 
   &-cell

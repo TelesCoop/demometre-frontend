@@ -42,31 +42,33 @@
               getXPosition(index + 1, data.ranges.length) -
               getXPosition(1, data.ranges.length) / 2
             }%`"
-            ><AnalyticsScore
-              class="has-text-black"
+          >
+            <AnalyticsScore
+              :class="`has-text-${color}-dark`"
               :score="range.score"
               :show-number="true"
               :color="color"
               :size-circles="9"
               size-number-class="is-size-6"
-            ></AnalyticsScore
-          ></span>
+            ></AnalyticsScore>
+          </span>
         </template>
       </span>
       <span
         class="percentage-chart-bar-result-line"
-        :class="`has-background-black`"
+        :class="`has-background-${color}-dark`"
         :style="`left: ${valuePosition}%`"
       ></span>
       <span
         class="percentage-chart-bar-result-value"
-        :class="`has-text-black is-size-4${
+        :class="`has-text-${color}-dark is-size-4${
           valuePosition < 20 ? ' has-text-right' : ''
         }`"
         :style="`left: ${valuePosition}%`"
-        ><strong>{{ data.value.value }}</strong
-        >%</span
       >
+        <strong>{{ data.value.value }}</strong
+        >%
+      </span>
     </div>
   </div>
 </template>
@@ -76,7 +78,7 @@ import { computed } from "vue"
 
 const props = defineProps({
   data: { type: Object, required: true },
-  color: { type: String },
+  color: { type: String, required: true },
 })
 const getXPosition = (index: number, length: number): number => {
   return (index / length) * 100

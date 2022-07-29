@@ -48,33 +48,42 @@
             "
           >
             <span>{{ wordTitleCase(pillarName) }}</span>
-            <span
-              >{{ getNbAnsweredQuestions(pillarName) }}/{{
+            <span>
+              {{ getNbAnsweredQuestions(pillarName) }}/{{
                 getTotalQuestions(pillarName)
-              }}</span
-            >
+              }}
+            </span>
           </div>
           <div
             v-if="pillarName !== hoverPillarName || !props.header"
-            class="progress-bar"
+            style="width: 100%"
           >
-            <div
-              v-for="index in getTotalQuestions(pillarName)"
-              :key="index"
-              class="progress-bar-link"
-              :style="`width: ${getWidth(pillarName)}%;`"
-              :class="[
-                index <= getNbAnsweredQuestions(pillarName)
-                  ? `has-background-${PillarParams[pillarName].color}`
-                  : `has-background-${PillarParams[pillarName].color}-light-active`,
-                index === getNbAnsweredQuestions(pillarName) &&
-                  getNbAnsweredQuestions(pillarName) !==
-                    getTotalQuestions(pillarName) &&
-                  ' last-complete',
-                index === getTotalQuestions(pillarName) && ' all-completed',
-                index === 1 && ' one-completed',
-              ]"
-            ></div>
+            <div v-if="getTotalQuestions(pillarName)" class="progress-bar">
+              <div
+                v-for="index in getTotalQuestions(pillarName)"
+                :key="index"
+                class="progress-bar-link"
+                :style="`width: ${getWidth(pillarName)}%;`"
+                :class="[
+                  index <= getNbAnsweredQuestions(pillarName)
+                    ? `has-background-${PillarParams[pillarName].color}`
+                    : `has-background-${PillarParams[pillarName].color}-light-active`,
+                  index === getNbAnsweredQuestions(pillarName) &&
+                    getNbAnsweredQuestions(pillarName) !==
+                      getTotalQuestions(pillarName) &&
+                    ' last-complete',
+                  index === getTotalQuestions(pillarName) && ' all-completed',
+                  index === 1 && ' one-completed',
+                ]"
+              ></div>
+            </div>
+            <div v-else class="progress-bar">
+              <div
+                class="progress-bar-link last-complete one-completed all-completed"
+                style="width: 100%"
+                :class="`has-background-${PillarParams[pillarName].color}`"
+              ></div>
+            </div>
           </div>
         </div>
       </div>
@@ -120,11 +129,11 @@
               style="margin-right: 5px; margin-left: 5px"
               :color="`${PillarParams[pillarName].color}-dark`"
             />
-            <span style="margin-right: 5px; margin-top: 3px"
-              >{{ getNbAnsweredQuestions(pillarName) }}/{{
+            <span style="margin-right: 5px; margin-top: 3px">
+              {{ getNbAnsweredQuestions(pillarName) }}/{{
                 getTotalQuestions(pillarName)
-              }}</span
-            >
+              }}
+            </span>
           </div>
         </div>
       </div>

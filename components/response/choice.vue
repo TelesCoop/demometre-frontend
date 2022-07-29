@@ -24,7 +24,10 @@
       <slot name="left-symbol">{{ letter }}</slot>
     </div>
     <div class="response-choice-content">
-      <p class="response-choice-title has-text-black is-size-5">
+      <p
+        class="response-choice-title has-text-black"
+        :class="responseChoiceSize"
+      >
         {{ props.responseChoice.responseChoice }}
       </p>
       <p class="response-choice-description is-size-6bis">
@@ -61,6 +64,7 @@ const props = defineProps({
   dragging: { type: Boolean, default: false },
   color: { type: String, required: true },
   hideLeftSymbol: { type: Boolean, default: false },
+  responseChoiceSize: { type: String, default: "is-size-5" },
 })
 const choiceElement = ref<HTMLElement>()
 const letters = "ABCDEFGHIJKLMOPQRSTUVWXYZ"

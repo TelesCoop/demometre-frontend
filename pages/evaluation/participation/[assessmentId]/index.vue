@@ -7,6 +7,7 @@
     class="column is-8 questionnaire-container"
   >
     <form class="nav-questionnaire-container" @submit.prevent="onSubmit">
+      <ParticipationConsent class="mt-1_5" type="cgu" />
       <div
         v-if="
           assessmentStore.currentAssessment.assessmentType ===
@@ -20,7 +21,7 @@
           pageStore.evaluationInitiationPage.addExpertDescription
         }}</span>
         <div class="buttons mt-1">
-          <div v-for="bool of [true, false]" :key="bool" class="margin-between">
+          <!-- <div v-for="bool of [true, false]" :key="bool" class="margin-between">
             <input
               :id="bool"
               v-model="addExpert"
@@ -31,16 +32,18 @@
             />
             <label :for="bool" class="button is-normal">
               {{
-                bool
-                  ? pageStore.evaluationInitiationPage.addExpertButtonYes
-                  : pageStore.evaluationInitiationPage.addExpertButtonNo
+              bool
+              ? pageStore.evaluationInitiationPage.addExpertButtonYes
+              : pageStore.evaluationInitiationPage.addExpertButtonNo
               }}
             </label>
-          </div>
+          </div>-->
+          <label class="checkbox is-size-7">
+            <input v-model="assessmentStore.addingExpert" type="checkbox" />
+            {{ pageStore.evaluationInitiationPage.addExpertButtonYes }}
+          </label>
         </div>
       </div>
-      <ParticipationConsent class="mt-1_5" type="cgu" />
-
       <QuestionnairePreviousButton @go-back="goBack" />
 
       <div class="buttons mt-4">
@@ -56,7 +59,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "@vue/reactivity"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useParticipationStore } from "~~/stores/participationStore"
@@ -76,7 +78,6 @@ if (!pageStore.evaluationInitiationPage.searchAssessmentTitle) {
   pageStore.getEvaluationInitiationPage()
 }
 
-const addExpert = ref<boolean>(false)
 const disabled = computed(() =>
   participationStore.newParticipation.consent ? false : true
 )
@@ -111,9 +112,8 @@ async function onSubmit() {
   if (
     assessmentStore.currentAssessment.assessmentType ===
       AssessmentType.PARTICIPATIVE.key &&
-    addExpert.value
+    assessmentStore.addingExpert
   ) {
-    assessmentStore.addingExpert = true
     useRouter().push(
       `/evaluation/participation/${assessmentStore.currentAssessmentId}/ajout-expert`
     )

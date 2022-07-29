@@ -5,7 +5,28 @@
       :class="`has-text-${color}-hover`"
     >
       <div>Réponse(s)</div>
-      <div>Résultat(s)</div>
+      <div>
+        <p>Personne(s) concernée(s)</p>
+        <p :class="`has-text-${color}-dark mt-0_5`">
+          Sélectionner ci-dessous un ou plusieurs acteurs
+        </p>
+        <div class="buttons mt-0_5">
+          <button
+            v-for="(roleId, index) of question.roleIds"
+            :key="roleId"
+            class="button is-outlined"
+            :class="
+              `has-border-${color}-dark ` +
+              (isRoleActive(roleId)
+                ? `has-background-${rolesGradiants[index][0]} has-text-${rolesGradiants[index][1]}`
+                : `has-text-${color}-dark`)
+            "
+            @click.prevent="onRoleClick(roleId)"
+          >
+            {{ profilingStore.roleById[roleId].name }}
+          </button>
+        </div>
+      </div>
       <div>Totaux</div>
     </div>
     <div class="choice-question-chart-grid">
@@ -21,16 +42,29 @@
           class="choice-question-chart-bar-cell"
         >
           <div
-            class="choice-question-chart-bar"
-            :class="`has-background-${color}`"
-            :style="`width: ${getPercentage(choice.value, data.count)}%`"
-          ></div>
+            v-for="(roleId, index) of question.roleIds"
+            :key="roleId"
+            class="choice-question-chart-bar-container"
+          >
+            <div
+              v-if="roleIdsSelected.includes(roleId)"
+              class="choice-question-chart-bar mb-0_5"
+              :class="`has-background-${rolesGradiants[index][0]} has-border-${color}-dark`"
+              :style="`width: ${getPercentage(
+                getValueByRoleId(choice, roleId),
+                data.count
+              )}%`"
+            ></div>
+          </div>
         </div>
         <div
           :class="`has-background-${color}-light`"
           class="choice-question-chart-cell"
         >
-          <strong>{{ getPercentage(choice.value, data.count) }}</strong
+          <strong>
+            {{
+              getPercentage(getTotalValueOfRolesSelected(choice), data.count)
+            }} </strong
           >%
         </div>
       </template>
@@ -45,8 +79,7 @@
           :percentage-of-space-already-taken="percentageOfSpaceAlreadyTaken"
           :gap-size="gapSize"
           :percentage-size="percentageSize"
-        >
-        </AnalyticsChoiceQuestionChartLine>
+        ></AnalyticsChoiceQuestionChartLine>
         <div
           v-if="(index - 1) % fullLineModulo === 0"
           class="choice-question-chart-line-number"
@@ -71,16 +104,72 @@
 <script setup lang="ts">
 import { getPercentage } from "assets/utils/percentage"
 import { getLeftStyle } from "assets/utils/choice-question-chart"
+import { useProfilingStore } from "~/stores/profilingStore"
 
 const props = defineProps({
   data: { type: Object, required: true },
-  color: { type: String },
+  color: { type: String, required: true },
+  question: { type: Object, required: true },
 })
+const profilingStore = useProfilingStore()
 const totalSeparator = 11
 const fullLineModulo = 5
 const percentageOfSpaceAlreadyTaken = 0.25
 const gapSize = 2
 const percentageSize = 80
+
+const colorGradients = {
+  1: [[`${props.color}-dark`, "white"]],
+  2: [
+    [`${props.color}-light-active`, `${props.color}-dark`],
+    [`${props.color}-dark`, "white"],
+  ],
+  3: [
+    [`${props.color}-light-active`, `${props.color}-dark`],
+    [`${props.color}`, `${props.color}-dark`],
+    [`${props.color}-dark`, "white"],
+  ],
+  4: [
+    [`${props.color}-light-active`, `${props.color}-dark`],
+    [`${props.color}`, `${props.color}-dark`],
+    [`${props.color}-hover`, "white"],
+    [`${props.color}-dark`, "white"],
+  ],
+  5: [
+    [`${props.color}-light-active`, `${props.color}-dark`],
+    [`${props.color}`, `${props.color}-dark`],
+    [`${props.color}-hover`, "white"],
+    [`${props.color}-active`, "white"],
+    [`${props.color}-dark`, "white"],
+  ],
+}
+
+const rolesGradiants = computed(
+  () => colorGradients[props.question.roleIds.length]
+)
+
+const roleIdsSelected = ref<number[]>([])
+
+const onRoleClick = (roleId) => {
+  if (!roleIdsSelected.value.includes(roleId)) {
+    roleIdsSelected.value.push(roleId)
+  } else {
+    roleIdsSelected.value.splice(roleIdsSelected.value.indexOf(roleId), 1)
+  }
+}
+const isRoleActive = (roleId) => {
+  return roleIdsSelected.value.includes(roleId)
+}
+const getValueByRoleId = (choice, roleId) => {
+  const roleName = profilingStore.roleById[roleId].name
+  return choice[roleName] ? choice[roleName].value : 0
+}
+const getTotalValueOfRolesSelected = (choice) => {
+  return roleIdsSelected.value.reduce(
+    (value, roleId) => value + getValueByRoleId(choice, roleId),
+    0
+  )
+}
 </script>
 
 <style scoped lang="sass">
@@ -90,9 +179,13 @@ const percentageSize = 80
     display: grid
     grid-template-columns: 1fr 3fr 80px
     grid-gap: 1rem
+    align-items: end
 
   &-cell
     padding: 6px
+
+  &-bar-container
+    z-index: 2
 
   &-bar
     z-index: 1
@@ -110,13 +203,14 @@ const percentageSize = 80
     border-left-width: 1px
     border-left-style: solid
     border-left-color: var(--color-hover)
+    z-index: 0
 
     &.is-dashed
       border-left-style: dashed
       border-left-color: var(--color)
 
   &-line-number
-     position: absolute
-     bottom: 0
-     transform: translate(-50%, 100%)
+    position: absolute
+    bottom: 0
+    transform: translate(-50%, 100%)
 </style>

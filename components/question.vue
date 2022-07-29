@@ -147,7 +147,7 @@
       :class="`menu is-${color}`"
       style="width: 100%"
     >
-      <div class="tabs" style="width: 100%">
+      <div class="tabs has-background-shade-500" style="width: 100%">
         <ul>
           <li v-for="tab of tabs" :key="tab.id">
             <a
@@ -155,7 +155,7 @@
               :class="
                 tab.id === currentTabId
                   ? `is-active`
-                  : `has-text-${color}-hover`
+                  : `has-text-${color}-light`
               "
               @click="setTab(tab.id)"
               >{{ tab.label }}</a
@@ -163,7 +163,7 @@
           </li>
         </ul>
         <button
-          :class="`button is-white has-text-${color}-hover is-large`"
+          :class="`button is-shade-500 has-text-${color}-light-hover is-large`"
           @click.prevent="isTabsOpen = !isTabsOpen"
         >
           <i class="icon">
@@ -355,7 +355,7 @@ const submit = async () => {
   color: var(--color)
   border-bottom-color: currentColor
   &.is-active
-    color: var(--color-dark)
+    color: var(--color)
   &:hover
-    color: var(--color-active)
+    color: var(--color-light-hover)
 </style>

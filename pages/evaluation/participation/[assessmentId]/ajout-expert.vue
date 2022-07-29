@@ -1,7 +1,7 @@
 <template>
   <div>
     <PageSection
-      class="column is-8"
+      class="column is-8 questionnaire-container"
       :title="
         pageStore.evaluationInitiationPage.createAssessmentWithExpertTitle
       "
@@ -11,30 +11,33 @@
       :is-first-element="true"
       :intro-is-rich-text="true"
     >
-      <div v-if="!userStore.isLoggedIn">
-        <!-- User not logged in -->
-        <p class="mb-1">Vous devez être connecté pour ajouter un expert</p>
-        <div class="buttons mb-0_5">
-          <NuxtLink class="button is-normal is-rounded" to="/signup"
-            >Faire un compte</NuxtLink
-          >
-          <NuxtLink class="button is-normal is-rounded" to="/login"
-            >Se connecter</NuxtLink
-          >
+      <div class="nav-questionnaire-container">
+        <div v-if="!userStore.isLoggedIn">
+          <!-- User not logged in -->
+          <p class="mb-1">Vous devez être connecté pour ajouter un expert</p>
+          <div class="buttons mb-0_5">
+            <NuxtLink class="button is-normal is-rounded" to="/signup"
+              >Faire un compte</NuxtLink
+            >
+            <NuxtLink class="button is-normal is-rounded" to="/login"
+              >Se connecter</NuxtLink
+            >
+          </div>
         </div>
+        <AssessmentAddExpert
+          v-else
+          v-model="expertSelected"
+          :initiation-page="pageStore.evaluationInitiationPage"
+        />
+        <QuestionnairePreviousButton @go-back="goBack" />
+        <button
+          class="button is-normal is-rounded mt-4"
+          :disabled="disabled"
+          @click.prevent="onSubmit"
+        >
+          <span>C’est parti !</span>
+        </button>
       </div>
-      <AssessmentAddExpert
-        v-else
-        v-model="expertSelected"
-        :initiation-page="pageStore.evaluationInitiationPage"
-      />
-      <button
-        class="button is-normal is-rounded mt-4"
-        :disabled="disabled"
-        @click.prevent="onSubmit"
-      >
-        <span>C’est parti !</span>
-      </button>
     </PageSection>
   </div>
 </template>
@@ -52,6 +55,7 @@ definePageMeta({
   middleware: ["assessment", "user-step"],
 })
 
+const router = useRouter()
 const assessmentStore = useAssessmentStore()
 
 const disabled = computed(() =>
@@ -66,6 +70,12 @@ if (!pageStore.evaluationInitiationPage.initTitle) {
 }
 
 const expertSelected = ref<User>()
+
+function goBack() {
+  router.push(
+    `/evaluation/participation/${assessmentStore.currentAssessmentId}`
+  )
+}
 
 async function onSubmit() {
   const isSuccess = await assessmentStore.addExpert(

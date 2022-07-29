@@ -3,7 +3,7 @@
     <section class="columns is-desktop section">
       <div class="column is-5-desktop">
         <PageTitle
-          v-if="pillarsCompleted.length === 0"
+          v-if="pillarsCompleted.length - pillarsWithoutQuestions.length === 0"
           :title="pageStore.evaluationQuestionnairePage.startTitle"
           :subtitle="pageStore.evaluationQuestionnairePage.startText"
         />
@@ -115,13 +115,22 @@ const pillarsCompleted = computed(() =>
         .completed
   )
 )
+const pillarsWithoutQuestions = computed(() =>
+  Object.keys(participationStore.totalAndAnsweredQuestionsByPillarName).filter(
+    (pillarName) =>
+      participationStore.totalAndAnsweredQuestionsByPillarName[pillarName]
+        .completed &&
+      participationStore.totalAndAnsweredQuestionsByPillarName[pillarName]
+        .answered === 0
+  )
+)
 
 const intermediateStepTitle = computed(() => {
   const pillarNames = pageStore.evaluationQuestionnairePage
     .isIntermediateStepTitleWithPillarNames
     ? pillarsCompleted.value.join(", ")
     : ""
-  return `${pageStore.evaluationQuestionnairePage.intermediateStepTitle} ${pillarNames}.`
+  return `${pageStore.evaluationQuestionnairePage.intermediateStepTitle} ${pillarNames}`
 })
 
 const startPillar = (pillarName) => {
