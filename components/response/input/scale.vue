@@ -80,6 +80,8 @@ const answer = useModel<ClosedWithScaleResponse[]>("modelValue", {
 })
 
 function updateOne(value, categoryId) {
+  // If object is empty because user pass the question in first time
+  // generate default answer to fix bug
   const myValue = Object.keys(answer.value).length
     ? answer.value
     : getDefaultAnswerValue(props.categories)
