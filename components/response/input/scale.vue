@@ -1,5 +1,7 @@
 <template>
   <fieldset>
+    value: {{ answer }}
+
     <legend
       class="is-size-5 mb-0_75 legend-container"
       :class="`has-text-${props.color}-dark `"
@@ -41,6 +43,7 @@ import {
   ResponseChoice as ResponseChoiceType,
 } from "~/composables/types"
 import { useModel } from "~/composables/modelWrapper"
+import { getDefaultAnswerValue } from "assets/utils/close-with-scale"
 
 const props = defineProps({
   categories: {
@@ -51,9 +54,7 @@ const props = defineProps({
     type: Array as PropType<ClosedWithScaleResponse[]>,
     required: false,
     default: (props) => {
-      return props.categories.map((category) => {
-        return { categoryId: category.id, responseChoiceId: null }
-      })
+      return getDefaultAnswerValue(props.categories)
     },
   },
   color: { type: String, required: true },
@@ -79,7 +80,10 @@ const answer = useModel<ClosedWithScaleResponse[]>("modelValue", {
 })
 
 function updateOne(value, categoryId) {
-  const newAnswer = answer.value.map((categoryResponse) => {
+  const myValue = Object.keys(answer.value).length
+    ? answer.value
+    : getDefaultAnswerValue(props.categories)
+  const newAnswer = myValue.map((categoryResponse) => {
     if (categoryResponse.categoryId === categoryId) {
       return {
         ...categoryResponse,
