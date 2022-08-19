@@ -1,7 +1,5 @@
 <template>
   <fieldset>
-    value: {{ answer }}
-
     <legend
       class="is-size-5 mb-0_75 legend-container"
       :class="`has-text-${props.color}-dark `"
