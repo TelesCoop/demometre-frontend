@@ -41,6 +41,7 @@ import {
   ResponseChoice as ResponseChoiceType,
 } from "~/composables/types"
 import { useModel } from "~/composables/modelWrapper"
+import { getDefaultAnswerValue } from "assets/utils/close-with-scale"
 
 const props = defineProps({
   categories: {
@@ -51,9 +52,7 @@ const props = defineProps({
     type: Array as PropType<ClosedWithScaleResponse[]>,
     required: false,
     default: (props) => {
-      return props.categories.map((category) => {
-        return { categoryId: category.id, responseChoiceId: null }
-      })
+      return getDefaultAnswerValue(props.categories)
     },
   },
   color: { type: String, required: true },
@@ -79,7 +78,12 @@ const answer = useModel<ClosedWithScaleResponse[]>("modelValue", {
 })
 
 function updateOne(value, categoryId) {
-  const newAnswer = answer.value.map((categoryResponse) => {
+  // If object is empty because user pass the question in first time
+  // generate default answer to fix bug
+  const myValue = Object.keys(answer.value).length
+    ? answer.value
+    : getDefaultAnswerValue(props.categories)
+  const newAnswer = myValue.map((categoryResponse) => {
     if (categoryResponse.categoryId === categoryId) {
       return {
         ...categoryResponse,
