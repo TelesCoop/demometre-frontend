@@ -8,6 +8,7 @@
     <div class="card-image">
       <figure class="image is-4by3">
         <img
+          v-if="props.article.imageUrl"
           :src="MADIA_BASE_URL + props.article.imageUrl"
           :alt="props.article.title"
           :style="`max-height: ${props.imageHeight}px`"
