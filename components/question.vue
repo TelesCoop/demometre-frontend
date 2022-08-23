@@ -143,7 +143,7 @@
     <section
       v-if="tabs.length"
       id="menu"
-      class="section container is-tight pb-0 pt-1"
+      class="section container is-tight pb-0 pt-0 mt-1"
       :class="`menu is-${color}`"
       style="width: 100%"
     >
@@ -345,6 +345,7 @@ const submit = async () => {
   width: 40px
 
 .menu
+  z-index: 1
   position: fixed
   bottom: 0
   background-color: white
