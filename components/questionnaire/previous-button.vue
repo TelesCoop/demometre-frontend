@@ -1,6 +1,7 @@
 <template>
   <button
     class="button is-dark is-outlined is-rounded nav-questionnaire-button previous"
+    type="button"
     @click.prevent="goBack"
   >
     <div>

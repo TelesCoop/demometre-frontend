@@ -73,6 +73,7 @@
           />
           <button
             class="button is-dark is-outlined is-rounded nav-questionnaire-button next"
+            type="button"
             :disabled="nextQuestionDisabled"
             @click.prevent="goToNextQuestion"
           >
@@ -91,6 +92,7 @@
               v-if="isAnswered || question.mandatory"
               class="button is-dark is-outlined is-rounded mr-0_75"
               :disabled="validationDisabled"
+              type="submit"
             >
               <span>Valider</span>
               <i class="icon">
@@ -101,6 +103,7 @@
             <button
               v-else
               class="button is-dark is-outlined is-rounded mr-0_75"
+              type="button"
             >
               <span>Je ne sais pas / Je passe</span>
               <i class="icon">
@@ -143,7 +146,7 @@
     <section
       v-if="tabs.length"
       id="menu"
-      class="section container is-tight pb-0 pt-1"
+      class="section container is-tight pb-0 pt-0 mt-1"
       :class="`menu is-${color}`"
       style="width: 100%"
     >
@@ -345,6 +348,7 @@ const submit = async () => {
   width: 40px
 
 .menu
+  z-index: 1
   position: fixed
   bottom: 0
   background-color: white

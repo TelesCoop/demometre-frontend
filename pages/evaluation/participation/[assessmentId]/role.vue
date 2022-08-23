@@ -21,7 +21,11 @@
         <QuestionnairePreviousButton @go-back="goBack" />
       </div>
       <div class="buttons mt-1_5">
-        <button class="button is-normal is-rounded" :disabled="disabled">
+        <button
+          class="button is-normal is-rounded"
+          type="submit"
+          :disabled="disabled"
+        >
           <span>Valider</span>
           <span class="icon">
             <icon v-if="isLoading" size="24" name="loader-2-line" />
@@ -31,9 +35,10 @@
         <span v-if="isLoading" class="is-size-7 has-text-shade-600"
           >en cours de chargement</span
         >
-
-        <!-- Permet d'appuyer sur entrer -->
-        <input type="submit" hidden />
+        <span v-else class="is-size-7 has-text-shade-600 hidden-in-mobile-mode">
+          appuyez sur
+          <span class="has-text-weight-bold">Entrer ⏎</span>
+        </span>
       </div>
     </form>
   </div>
