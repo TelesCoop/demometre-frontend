@@ -73,6 +73,7 @@
           />
           <button
             class="button is-dark is-outlined is-rounded nav-questionnaire-button next"
+            type="button"
             :disabled="nextQuestionDisabled"
             @click.prevent="goToNextQuestion"
           >
@@ -91,6 +92,7 @@
               v-if="isAnswered || question.mandatory"
               class="button is-dark is-outlined is-rounded mr-0_75"
               :disabled="validationDisabled"
+              type="submit"
             >
               <span>Valider</span>
               <i class="icon">
@@ -101,6 +103,7 @@
             <button
               v-else
               class="button is-dark is-outlined is-rounded mr-0_75"
+              type="button"
             >
               <span>Je ne sais pas / Je passe</span>
               <i class="icon">
