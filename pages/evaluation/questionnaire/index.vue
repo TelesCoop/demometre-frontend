@@ -134,7 +134,10 @@ const intermediateStepTitle = computed(() => {
 })
 
 const startPillar = (pillarName) => {
-  useQuestionnaireJourney(pillarName).goToNextQuestion(undefined)
+  const { lastQuestionId, isLast } = getLastQuestionOfPillar(pillarName)
+  useQuestionnaireJourney(pillarName).goToNextQuestion(
+    isLast ? undefined : lastQuestionId
+  )
 }
 
 const onStartQuestionnaire = () => {

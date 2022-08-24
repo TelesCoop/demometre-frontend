@@ -3,10 +3,7 @@ import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import {
   useProfilingJourney,
-  useInitializationJourney,
   getLastAnsweredProfilingQuestionId,
-  getLastQuestionIdOfIncompletePillar,
-  useQuestionnaireJourney,
 } from "~/composables/journey"
 
 const START_EVALUATION_TEXT = " Lancer l'évaluation"
@@ -15,7 +12,6 @@ export function useUserStep<Type>() {
   const assessmentStore = useAssessmentStore()
   const participationStore = useParticipationStore()
   const profilingJourney = useProfilingJourney()
-  const initilizationJourney = useInitializationJourney()
 
   const state = computed(() => {
     if (!assessmentStore.currentAssessmentId) {
@@ -90,21 +86,9 @@ export function useUserStep<Type>() {
       }
     }
 
-    const { pillarName, lastQuestionId } = getLastQuestionIdOfIncompletePillar()
-    let url = "/evaluation/questionnaire"
-    if (lastQuestionId) {
-      const questionnaireJourney = useQuestionnaireJourney(pillarName)
-      const questionId = questionnaireJourney.nextQuestionId(
-        lastQuestionId,
-        true
-      )
-      if (questionId) {
-        url = `/evaluation/questionnaire/${questionId}?pillar=${pillarName}`
-      }
-    }
     return {
       step: "questionnaire",
-      url: url,
+      url: "/evaluation/questionnaire",
       text: RESUME_EVALUATION_TEXT,
     }
   })

@@ -165,7 +165,10 @@ const isLoadingPillarName = ref<string>("")
 
 const goToFirstQuestionPillar = (pillarName) => {
   isLoadingPillarName.value = pillarName
-  useQuestionnaireJourney(pillarName).goToNextQuestion(undefined)
+  const { lastQuestionId, isLast } = getLastQuestionOfPillar(pillarName)
+  useQuestionnaireJourney(pillarName).goToNextQuestion(
+    isLast ? undefined : lastQuestionId
+  )
   isLoadingPillarName.value = ""
 }
 

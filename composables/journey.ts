@@ -369,7 +369,11 @@ export const getLastQuestionIdOfJourney = (responses, journey) => {
     answeredQuestionIds.includes(questionId.toString())
   )
 
-  return orderedAnsweredQuestionIds[orderedAnsweredQuestionIds.length - 1]
+  return {
+    lastQuestionId:
+      orderedAnsweredQuestionIds[orderedAnsweredQuestionIds.length - 1],
+    isLast: orderedAnsweredQuestionIds.length === journey.length,
+  }
 }
 
 export const getLastAnsweredProfilingQuestionId = () => {
@@ -379,41 +383,15 @@ export const getLastAnsweredProfilingQuestionId = () => {
   return getLastQuestionIdOfJourney(
     participationStore.responseByProfilingQuestionId,
     profilingJourney.journey.value
-  )
+  ).lastQuestionId
 }
 
-export const getLastQuestionIdOfIncompletePillar = () => {
+export const getLastQuestionOfPillar = (pillarName: string) => {
   const participationStore = useParticipationStore()
-  const questionnaireQuestion = useQuestionnaireStore()
+  const questionnaireJourney = useQuestionnaireJourney(pillarName)
 
-  const notCompletedPillars =
-    participationStore.participation.isPillarQuestionsCompleted.filter(
-      (isPillarCompleted) => {
-        return !isPillarCompleted.completed
-      }
-    )
-
-  for (const notCompletedPillar of notCompletedPillars) {
-    const pillarName = questionnaireQuestion.getPillarNameById(
-      notCompletedPillar.pillarId
-    )
-
-    const questionnaireJourney = useQuestionnaireJourney(pillarName)
-    const lastQuestionId = getLastQuestionIdOfJourney(
-      participationStore.responseByQuestionnaireQuestionId,
-      questionnaireJourney.journey.value
-    )
-
-    if (lastQuestionId) {
-      return {
-        lastQuestionId: lastQuestionId,
-        pillarName: pillarName,
-      }
-    }
-  }
-
-  return {
-    lastQuestionId: undefined,
-    pillarName: undefined,
-  }
+  return getLastQuestionIdOfJourney(
+    participationStore.responseByQuestionnaireQuestionId,
+    questionnaireJourney.journey.value
+  )
 }
