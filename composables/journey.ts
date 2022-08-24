@@ -362,3 +362,58 @@ export function useInitializationJourney<Type>() {
     surveyType,
   }
 }
+
+export const getLastQuestionIdOfJourney = (responses, journey) => {
+  const answeredQuestionIds = Object.keys(responses)
+  const orderedAnsweredQuestionIds = journey.filter((questionId) =>
+    answeredQuestionIds.includes(questionId.toString())
+  )
+
+  return orderedAnsweredQuestionIds[orderedAnsweredQuestionIds.length - 1]
+}
+
+export const getLastAnsweredProfilingQuestionId = () => {
+  const participationStore = useParticipationStore()
+  const profilingJourney = useProfilingJourney()
+
+  return getLastQuestionIdOfJourney(
+    participationStore.responseByProfilingQuestionId,
+    profilingJourney.journey.value
+  )
+}
+
+export const getLastQuestionIdOfIncompletePillar = () => {
+  const participationStore = useParticipationStore()
+  const questionnaireQuestion = useQuestionnaireStore()
+
+  const notCompletedPillars =
+    participationStore.participation.isPillarQuestionsCompleted.filter(
+      (isPillarCompleted) => {
+        return !isPillarCompleted.completed
+      }
+    )
+
+  for (const notCompletedPillar of notCompletedPillars) {
+    const pillarName = questionnaireQuestion.getPillarNameById(
+      notCompletedPillar.pillarId
+    )
+
+    const questionnaireJourney = useQuestionnaireJourney(pillarName)
+    const lastQuestionId = getLastQuestionIdOfJourney(
+      participationStore.responseByQuestionnaireQuestionId,
+      questionnaireJourney.journey.value
+    )
+
+    if (lastQuestionId) {
+      return {
+        lastQuestionId: lastQuestionId,
+        pillarName: pillarName,
+      }
+    }
+  }
+
+  return {
+    lastQuestionId: undefined,
+    pillarName: undefined,
+  }
+}

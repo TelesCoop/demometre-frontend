@@ -4,6 +4,9 @@ import { useAssessmentStore } from "~/stores/assessmentStore"
 import {
   useProfilingJourney,
   useInitializationJourney,
+  getLastAnsweredProfilingQuestionId,
+  getLastQuestionIdOfIncompletePillar,
+  useQuestionnaireJourney,
 } from "~/composables/journey"
 
 const START_EVALUATION_TEXT = " Lancer l'évaluation"
@@ -73,20 +76,35 @@ export function useUserStep<Type>() {
     }
 
     if (!participationStore.participation.isProfilingQuestionsCompleted) {
+      const lastAnsweredQuestionId = getLastAnsweredProfilingQuestionId()
+
       // If there is a participation but the profiling is not completed
-      const questionId = profilingJourney.nextQuestionId(undefined, true)
-      if (questionId) {
-        return {
-          step: "profiling",
-          url: `/evaluation/affinage/${questionId}`,
-          text: RESUME_EVALUATION_TEXT,
-        }
+      const questionId = profilingJourney.nextQuestionId(
+        lastAnsweredQuestionId,
+        true
+      )
+      return {
+        step: "profiling",
+        url: `/evaluation/affinage/${questionId}`,
+        text: RESUME_EVALUATION_TEXT,
       }
     }
 
+    const { pillarName, lastQuestionId } = getLastQuestionIdOfIncompletePillar()
+    let url = "/evaluation/questionnaire"
+    if (lastQuestionId) {
+      const questionnaireJourney = useQuestionnaireJourney(pillarName)
+      const questionId = questionnaireJourney.nextQuestionId(
+        lastQuestionId,
+        true
+      )
+      if (questionId) {
+        url = `/evaluation/questionnaire/${questionId}?pillar=${pillarName}`
+      }
+    }
     return {
       step: "questionnaire",
-      url: "/evaluation/questionnaire",
+      url: url,
       text: RESUME_EVALUATION_TEXT,
     }
   })
