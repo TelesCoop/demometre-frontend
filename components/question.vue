@@ -103,7 +103,7 @@
             <button
               v-else
               class="button is-dark is-outlined is-rounded mr-0_75"
-              type="button"
+              type="input"
             >
               <span>Je ne sais pas / Je passe</span>
               <i class="icon">
