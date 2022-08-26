@@ -40,7 +40,10 @@
 
     <!-- Why block -->
     <div ref="whyBlockRef" class="scroll-margin-top_5">
-      <PageBigSection :title="pageStore.projectPage.whyBlockTitle">
+      <PageBigSection
+        :title="pageStore.projectPage.whyBlockTitle"
+        label="Pourquoi"
+      >
         <div class="container">
           <section class="column-2 section">
             <PageFreeBody
@@ -120,7 +123,10 @@
 
     <!-- Who block -->
     <div ref="whoBlockRef" class="scroll-margin-top_5">
-      <PageBigSection :title="pageStore.projectPage.whoBlockTitle">
+      <PageBigSection
+        :title="pageStore.projectPage.whoBlockTitle"
+        label="Avec qui"
+      >
         <PageSection
           v-if="pageStore.projectPage.whoCrewSubBlockTitle"
           :title="pageStore.projectPage.whoCrewSubBlockTitle"
@@ -228,6 +234,7 @@
                     :partners="partner_group.partners"
                     :logo-height="60"
                     column-gap="3rem"
+                    row-gap="2rem"
                   />
                 </div>
               </div>
@@ -239,7 +246,10 @@
 
     <!-- How block -->
     <div ref="howBlockRef" class="scroll-margin-top_5">
-      <PageBigSection :title="pageStore.projectPage.howBlockTitle">
+      <PageBigSection
+        :title="pageStore.projectPage.howBlockTitle"
+        label="Comment"
+      >
         <div class="container">
           <PageFreeBody
             :free-body="pageStore.projectPage.howBlockData"

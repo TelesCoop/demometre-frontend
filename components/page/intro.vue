@@ -30,7 +30,11 @@
           ></iframe>
         </div>
         <figure v-else-if="props.imageUrl" class="image is-128x128">
-          <img :src="MADIA_BASE_URL + props.imageUrl" alt />
+          <img
+            :src="MADIA_BASE_URL + props.imageUrl"
+            alt
+            style="border-radius: 6px"
+          />
         </figure>
       </div>
     </section>

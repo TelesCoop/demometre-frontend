@@ -1,9 +1,14 @@
 <template>
   <a
-    :class="`card has-background-${backgroundColor} is-fullheight is-clickable`"
+    :class="
+      `card has-background-${backgroundColor} is-fullheight is-clickable ` +
+      (isHovered && ` has-background-${backgroundColorHover}`)
+    "
     :href="props.article.externalLink"
     target="_blank"
     rel="external noopener noreferrer"
+    @mouseenter="isHovered = true"
+    @mouseleave="isHovered = false"
   >
     <div class="card-image">
       <figure class="image is-4by3">
@@ -20,9 +25,7 @@
         <p class="is-size-4 has-text-shade-600 has-text-weight-bold">
           {{ props.article.title }}
         </p>
-        <p class="has-text-shade-500">
-          {{ publicationDate }}
-        </p>
+        <p class="has-text-shade-500">{{ publicationDate }}</p>
       </div>
       <div class="content">
         <p class="is-family-secondary is-size-6">
@@ -36,10 +39,9 @@
               PillarParams[questionnaireStore.getPillarNameById(pillarId)].color
             }`"
             style="padding: 6px 12px"
-            >{{
-              wordTitleCase(questionnaireStore.getPillarNameById(pillarId))
-            }}</span
           >
+            {{ wordTitleCase(questionnaireStore.getPillarNameById(pillarId)) }}
+          </span>
         </div>
       </div>
     </div>
@@ -55,11 +57,14 @@ import { wordTitleCase } from "~/utils/util"
 const props = defineProps({
   article: { type: Object, required: true },
   backgroundColor: { type: String, required: true },
+  backgroundColorHover: { type: String, required: true },
   imageHeight: { type: Number, required: true },
   showLinkedPillars: { type: Boolean, default: false },
 })
 
 const questionnaireStore = useQuestionnaireStore()
+
+const isHovered = ref(false)
 
 const publicationDate = computed(() =>
   new Date(props.article.publicationDate).toLocaleString("fr-FR", {

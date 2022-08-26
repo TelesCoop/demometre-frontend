@@ -17,7 +17,7 @@
             class="is-flex mb-0_5"
           >
             <span class="icon mr-1">
-              <icon size="20" :name="caracteristic.icon" />
+              <icon size="20" :name="caracteristic.icon" color="shade-600" />
             </span>
             <p class="is-family-secondary is-size-6 has-text-shade-600">
               {{ props.assessmentType[caracteristic.textKey] }}

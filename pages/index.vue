@@ -76,6 +76,7 @@
             <PageArticleCard
               :article="blogPost"
               background-color="shade-100"
+              background-color-hover="shade-200"
               :image-height="260"
               class="carousel-item"
             />
@@ -106,6 +107,7 @@
               <PageArticleCard
                 :article="resource"
                 background-color="white"
+                background-color-hover="shade-100"
                 :image-height="300"
                 class="carousel-item"
               />
