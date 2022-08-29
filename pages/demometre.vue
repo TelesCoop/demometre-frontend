@@ -7,6 +7,7 @@
             <PageTitle
               :title="pageStore.referentialPage.title"
               :subtitle="pageStore.referentialPage.introduction"
+              :margin-bottom="1"
             />
             <RichText
               :rich-text="pageStore.referentialPage.description"
@@ -69,12 +70,12 @@
         v-if="pageStore.referentialPage.markerBlockTitle"
         :title="pageStore.referentialPage.markerBlockTitle"
       >
-        <div class="column-2">
+        <div class="columns is-align-items-center">
           <RichText
             :rich-text="pageStore.referentialPage.markerBlockContent"
-            class="is-family-secondary"
+            class="is-family-secondary column"
           />
-          <QuestionnaireRosetteCooperation />
+          <QuestionnaireRosetteCooperation class="column" />
         </div>
       </PageSection>
 

@@ -5,7 +5,11 @@
       :class="`is-${props.columnGap}`"
     >
       <div class="column" :class="`is-${props.columnDistribution[0]}`">
-        <PageTitle :title="props.title" :subtitle="props.subtitle" />
+        <PageTitle
+          :title="props.title"
+          :subtitle="props.subtitle"
+          :margin-bottom="1"
+        />
         <RichText
           v-if="props.introduction"
           :rich-text="props.introduction"

@@ -1,8 +1,10 @@
 <template>
   <a
+    class="card is-fullheight is-clickable"
     :class="
-      `card has-background-${backgroundColor} is-fullheight is-clickable ` +
-      (isHovered && ` has-background-${backgroundColorHover}`)
+      isHovered
+        ? ` has-background-${backgroundColorHover}`
+        : `has-background-${backgroundColor}`
     "
     :href="props.article.externalLink"
     target="_blank"
@@ -20,7 +22,14 @@
         />
       </figure>
     </div>
-    <div class="card-content">
+    <div
+      class="card-content"
+      :class="
+        isHovered
+          ? ` has-background-${backgroundColorHover}`
+          : `has-background-${backgroundColor}`
+      "
+    >
       <div class="mb-1_5">
         <p class="is-size-4 has-text-shade-600 has-text-weight-bold">
           {{ props.article.title }}
@@ -39,9 +48,10 @@
               PillarParams[questionnaireStore.getPillarNameById(pillarId)].color
             }`"
             style="padding: 6px 12px"
+            >{{
+              wordTitleCase(questionnaireStore.getPillarNameById(pillarId))
+            }}</span
           >
-            {{ wordTitleCase(questionnaireStore.getPillarNameById(pillarId)) }}
-          </span>
         </div>
       </div>
     </div>
