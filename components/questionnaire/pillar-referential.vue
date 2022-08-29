@@ -1,11 +1,11 @@
 <template>
   <div class="columns">
     <aside class="menu column is-5 mr-2">
-      <div class="tabs">
-        <ul>
+      <div class="tabs" style="margin-top: 6px">
+        <ul :class="`is-${color}`">
           <li class="is-active">
             <a
-              :class="`has-text-${color}`"
+              :class="`has-text-${color}-dark`"
               style="border-bottom-color: currentColor"
               >Marqueurs</a
             >
@@ -27,19 +27,20 @@
             @mouseleave="hoverMarkerId = null"
           >
             <div class="is-flex is-justify-content-space-between">
-              <p>
-                <span
+              <div class="is-flex">
+                <p
+                  class="is-size-6bis mr-0_5"
+                  style="margin-top: 2px"
                   :class="
                     marker.name === activeMarker?.name && !activeCriteria
-                      ? `has-text-${color}-active is-size-6bis`
-                      : `has-text-${color} is-size-6bis`
+                      ? `has-text-${color}-active`
+                      : `has-text-${color}-hover`
                   "
-                  >{{
-                    getConcatenedCodeWithoutPillar(marker.concatenatedCode)
-                  }}</span
                 >
-                {{ wordTitleCase(marker.name) }}
-              </p>
+                  {{ getConcatenedCodeWithoutPillar(marker.concatenatedCode) }}
+                </p>
+                <p>{{ wordTitleCase(marker.name) }}</p>
+              </div>
               <AnalyticsScore
                 v-if="
                   props.showScores &&
@@ -57,7 +58,7 @@
             </div>
           </a>
           <div v-if="marker.name === activeMarker?.name">
-            <ul>
+            <ul :class="`is-${color}`">
               <li v-for="criteria of criterias" :key="criteria.id">
                 <a
                   :class="
@@ -72,12 +73,14 @@
                   @mouseleave="hoverCriteriaId = null"
                 >
                   <div class="is-flex is-justify-content-space-between">
-                    <p>
-                      <span
+                    <div class="is-flex">
+                      <p
+                        class="is-size-6bis mr-0_5"
+                        style="margin-top: 2px"
                         :class="
                           criteria.name === activeCriteria?.name
-                            ? `has-text-${color}-active is-size-6bis`
-                            : `has-text-${color} is-size-6bis`
+                            ? `has-text-${color}-active`
+                            : `has-text-${color}-hover`
                         "
                       >
                         {{
@@ -85,10 +88,9 @@
                             criteria.concatenatedCode
                           )
                         }}
-                      </span>
-                      {{ criteria.name }}
-                    </p>
-
+                      </p>
+                      <p>{{ criteria.name }}</p>
+                    </div>
                     <AnalyticsScore
                       v-if="
                         props.showScores &&
@@ -156,7 +158,7 @@
             :class="`button is-${color} is-rounded is-responsive mt-2 mr-1 is-outlined`"
             @click="onFirstCriteriaButtonClick()"
           >
-            <span>Premier critère</span>
+            <span :class="`has-text-${color}-dark`">Premier critère</span>
             <span class="icon">
               <icon name="arrow-right-line" size="10" class="icon" />
             </span>
@@ -181,7 +183,7 @@
             :class="`button is-${color} is-rounded is-responsive is-outlined`"
             @click="onFirstMarkerButtonClick()"
           >
-            <span>Premier marqueur</span>
+            <span :class="`has-text-${color}-dark`">Premier marqueur</span>
             <span class="icon">
               <icon name="arrow-right-line" size="10" class="icon" />
             </span>
@@ -311,3 +313,10 @@ const onReturnToMarkerButtonClick = () => {
   activeCriteria.value = null
 }
 </script>
+
+<style scoped lang="sass">
+.tabs ul
+  border-bottom-color: var(--color) !important
+.menu-list li ul
+  border-left-color: var(--color) !important
+</style>
