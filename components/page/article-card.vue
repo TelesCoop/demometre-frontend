@@ -12,10 +12,9 @@
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <div class="card-image">
+    <div v-if="props.article.imageUrl" class="card-image">
       <figure class="image is-4by3">
         <img
-          v-if="props.article.imageUrl"
           :src="MADIA_BASE_URL + props.article.imageUrl"
           :alt="props.article.title"
           :style="`max-height: ${props.imageHeight}px`"
@@ -48,10 +47,9 @@
               PillarParams[questionnaireStore.getPillarNameById(pillarId)].color
             }`"
             style="padding: 6px 12px"
-            >{{
-              wordTitleCase(questionnaireStore.getPillarNameById(pillarId))
-            }}</span
           >
+            {{ wordTitleCase(questionnaireStore.getPillarNameById(pillarId)) }}
+          </span>
         </div>
       </div>
     </div>
