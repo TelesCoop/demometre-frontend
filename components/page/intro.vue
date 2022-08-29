@@ -13,7 +13,7 @@
         <RichText
           v-if="props.introduction"
           :rich-text="props.introduction"
-          class="is-family-secondary has-text-shade-600"
+          class="is-family-secondary"
         />
         <slot></slot>
       </div>
