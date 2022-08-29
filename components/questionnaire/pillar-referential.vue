@@ -155,10 +155,10 @@
             <span>Revenir au pilier</span>
           </button>
           <button
-            :class="`button is-${color} is-rounded is-responsive mt-2 mr-1 is-outlined`"
+            :class="`button is-${color} is-rounded is-responsive mt-2 mr-1 is-outlined has-text-${color}-dark`"
             @click="onFirstCriteriaButtonClick()"
           >
-            <span :class="`has-text-${color}-dark`">Premier critère</span>
+            <span>Premier critère</span>
             <span class="icon">
               <icon name="arrow-right-line" size="10" class="icon" />
             </span>
@@ -180,10 +180,10 @@
         <slot name="pillar" :pillar="pillar"></slot>
         <div>
           <button
-            :class="`button is-${color} is-rounded is-responsive is-outlined`"
+            :class="`button is-${color} is-rounded is-responsive is-outlined has-text-${color}-dark`"
             @click="onFirstMarkerButtonClick()"
           >
-            <span :class="`has-text-${color}-dark`">Premier marqueur</span>
+            <span>Premier marqueur</span>
             <span class="icon">
               <icon name="arrow-right-line" size="10" class="icon" />
             </span>
