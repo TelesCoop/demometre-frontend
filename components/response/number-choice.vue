@@ -64,6 +64,7 @@ const responseChoice = computed<ResponseChoiceType>(() => {
   width: 178px
   justify-content: space-between
   align-items: center
+  margin-left: 15px
   .choice-slider
     --slider-bg: #FFF
     --slider-connect-bg: var(--color)
