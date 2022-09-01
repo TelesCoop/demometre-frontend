@@ -1,5 +1,5 @@
 <template>
-  <div class="has-navbar-fixed-top" :style="`padding-top: ${height}px;`">
+  <div class="has-navbar-fixed-top test" :style="`padding-top: ${height}px;`">
     <div>
       <HeaderNavbar @change-header-height="onChangeHeaderHight($event)" />
       <Breadcrumb />
@@ -23,3 +23,9 @@ const onChangeHeaderHight = (newHeight) => {
   height.value = newHeight
 }
 </script>
+
+<style scoped lang="sass">
+.test
+  width: 100vw
+  overflow: hidden
+</style>
