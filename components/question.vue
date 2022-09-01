@@ -150,7 +150,7 @@
       :class="`menu is-${color}`"
       style="width: 100%"
     >
-      <div class="tabs has-background-shade-500" style="width: 100%">
+      <div class="tabs has-background-shade-600" style="width: 100%">
         <ul>
           <li v-for="tab of tabs" :key="tab.id">
             <a
@@ -166,7 +166,7 @@
           </li>
         </ul>
         <button
-          :class="`button is-shade-500 has-text-${color}-light-hover is-large`"
+          :class="`button is-shade-600 has-text-${color}-light-hover is-large`"
           @click.prevent="isTabsOpen = !isTabsOpen"
         >
           <i class="icon">
@@ -355,11 +355,15 @@ const submit = async () => {
   max-height: 50%
   overflow: overlay
 
+.tabs ul
+  border: 2px solid $shade-600
+
 .tabs .tab
   color: var(--color)
-  border-bottom-color: currentColor
+  border-bottom-color: $shade-600
   &.is-active
-    color: var(--color)
+    color: var(--color-dark)
+    background-color: white
   &:hover
-    color: var(--color-light-hover)
+    color: var(--color-hover)
 </style>
