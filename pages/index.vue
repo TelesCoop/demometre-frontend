@@ -47,6 +47,7 @@
               <PageFeedbackCard
                 :feedback="feedback"
                 background-color="white"
+                background-color-hover="shade-100"
                 class="carousel-item"
               />
             </Slide>

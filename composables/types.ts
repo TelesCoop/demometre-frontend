@@ -291,6 +291,7 @@ type Feedback = {
   pictureUrl: string
   personContext: string
   quote: string
+  externalLink: string
   publish: boolean
 }
 export type Article = {
