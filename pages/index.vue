@@ -12,10 +12,26 @@
 
     <!-- Connected section -->
 
-    <QuestionnaireProgressBars
-      v-if="participationStore.participation.id"
-      class="mb-4"
-    />
+    <template v-if="participationStore.participation.id">
+      <QuestionnaireProgressBars class="mb-2" />
+
+      <div class="container mb-4">
+        <div class="buttons">
+          <router-link
+            class="button is-shade-600 is-rounded"
+            :to="userStep.url"
+          >
+            Reprendre mon évaluation
+          </router-link>
+          <button
+            class="button is-rounded"
+            @click="participationStore.setShowCancelParticipationModal(true)"
+          >
+            Recommencer
+          </button>
+        </div>
+      </div>
+    </template>
 
     <PageSection
       v-if="assessmentStore.currentAssessment"
@@ -135,6 +151,7 @@ import "vue3-carousel/dist/carousel.css"
 import { usePageStore } from "~/stores/pageStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { useUserStep } from "~/composables/userStep"
 
 definePageMeta({
   title: "Accueil",
@@ -144,6 +161,7 @@ definePageMeta({
 const pageStore = usePageStore()
 const assessmentStore = useAssessmentStore()
 const participationStore = useParticipationStore()
+const userStep = useUserStep()
 
 if (!pageStore.homePage.title) {
   pageStore.getHomePage()
