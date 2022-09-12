@@ -29,7 +29,7 @@
           v-model="expertSelected"
           :initiation-page="pageStore.evaluationInitiationPage"
         />
-        <QuestionnairePreviousButton @go-back="goBack" />
+        <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
         <button
           class="button is-shade-600 is-rounded mt-4"
           :disabled="disabled"

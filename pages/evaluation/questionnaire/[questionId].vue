@@ -34,7 +34,11 @@ let journey = useQuestionnaireJourney(pillarName)
 const color = computed<string>(() => PillarParams[pillarName].color)
 
 router.beforeEach((to) => {
-  if (+to.params.questionId) {
+  // This function is call each time the url change and this page is loaded in the client side
+  if (
+    +to.params.questionId &&
+    route.path.includes("evaluation/questionnaire")
+  ) {
     questionId.value = +to.params.questionId
     pillarName = questionnaireStore.questionById[questionId.value].pillarName
     journey = useQuestionnaireJourney(pillarName)

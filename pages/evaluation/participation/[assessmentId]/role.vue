@@ -18,7 +18,7 @@
           :white-letter-when-select="true"
         />
 
-        <QuestionnairePreviousButton @go-back="goBack" />
+        <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
       </div>
       <div class="buttons mt-1_5">
         <button

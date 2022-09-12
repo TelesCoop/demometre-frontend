@@ -19,7 +19,7 @@
             :class="{ 'is-loading': isLoading }"
             @click="cancelParticipation"
           >
-            Oui, recommencer
+            Oui, reinitialiser
           </button>
           <button class="button is-shade-600 is-outlined" @click="closeModal()">
             Non

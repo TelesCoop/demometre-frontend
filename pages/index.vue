@@ -24,7 +24,7 @@
             class="button is-rounded is-shade-600 is-outlined"
             @click="participationStore.setShowCancelParticipationModal(true)"
           >
-            Recommencer
+            Réinitialiser
           </button>
         </div>
       </div>

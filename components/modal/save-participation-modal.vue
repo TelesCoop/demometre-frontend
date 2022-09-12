@@ -16,10 +16,10 @@
             :class="{ 'is-loading': isLoading }"
             @click="saveParticipation"
           >
-            Oui, faire un compte
+            Oui, créer un compte
           </button>
           <button class="button is-shade-600 is-outlined" @click="closeModal()">
-            Non, ne pas enregistrer
+            Non, ne rien enregistrer
           </button>
         </div>
       </div>

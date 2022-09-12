@@ -93,7 +93,7 @@
           class="column button is-shade-200 navbar-progress-bar-save-button"
           @click="participationStore.setShowCancelParticipationModal(true)"
         >
-          <span>Recommencer</span>
+          <span>Réinitialiser</span>
           <span class="icon">
             <icon size="15" name="restart" />
           </span>

@@ -12,7 +12,7 @@
           class="is-family-secondary"
         />
 
-        <QuestionnairePreviousButton @go-back="goBack" />
+        <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
 
         <button
           class="button is-shade-600 is-rounded mt-4"

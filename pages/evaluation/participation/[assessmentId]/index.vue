@@ -14,12 +14,12 @@
           AssessmentType.PARTICIPATIVE.key
         "
       >
-        <label class="label has-text-shade-800">
-          {{ pageStore.evaluationInitiationPage.addExpertTitle }}
-        </label>
-        <span class="is-family-secondary is-size-6 has-text-shade-600">
-          {{ pageStore.evaluationInitiationPage.addExpertDescription }}
-        </span>
+        <label class="label has-text-shade-800">{{
+          pageStore.evaluationInitiationPage.addExpertTitle
+        }}</label>
+        <span class="is-family-secondary is-size-6 has-text-shade-600">{{
+          pageStore.evaluationInitiationPage.addExpertDescription
+        }}</span>
         <div class="buttons mt-1">
           <!-- <div v-for="bool of [true, false]" :key="bool" class="margin-between">
             <input
@@ -44,7 +44,7 @@
           </label>
         </div>
       </div>
-      <QuestionnairePreviousButton @go-back="goBack" />
+      <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
 
       <div class="buttons mt-4">
         <button class="button is-shade-600 is-rounded" :disabled="disabled">

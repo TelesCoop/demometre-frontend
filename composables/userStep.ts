@@ -75,7 +75,10 @@ export function useUserStep<Type>() {
     if (!participationStore.participation.isProfilingQuestionsCompleted) {
       // If there is a participation but the profiling is not completed
       const questionId = profilingJourney.nextQuestionId(undefined, true)
+      console.log("Dans le profilage")
+      console.log(questionId)
       if (questionId) {
+        console.log("JE retourne l'affinage")
         return {
           step: "profiling",
           url: `/evaluation/affinage/${questionId}`,
@@ -84,6 +87,7 @@ export function useUserStep<Type>() {
       }
     }
 
+    console.log("JE retourne le questionnaire")
     return {
       step: "questionnaire",
       url: "/evaluation/questionnaire",
