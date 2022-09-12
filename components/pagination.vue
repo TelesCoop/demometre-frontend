@@ -9,23 +9,27 @@
         aria-label="pagination"
       >
         <button
-          class="pagination-previous button is-outlined has-border-shade-300 has-text-no-pillar-dark"
+          class="pagination-previous button is-outlined has-border-shade-300 has-text-shade-600"
           :disabled="previousDisabled"
           @click.prevent="previousPage"
         >
-          <span class="icon"> <icon size="20" name="arrow-left-line" /> </span>
+          <span class="icon">
+            <icon size="20" name="arrow-left-line" />
+          </span>
         </button>
         <button
-          class="pagination-next button is-outlined has-border-shade-300 has-text-no-pillar-dark"
+          class="pagination-next button is-outlined has-border-shade-300 has-text-shade-600"
           :disabled="nextDisabled"
           @click.prevent="nextPage"
         >
-          <span class="icon"> <icon size="20" name="arrow-right-line" /> </span>
+          <span class="icon">
+            <icon size="20" name="arrow-right-line" />
+          </span>
         </button>
         <ul class="pagination-list">
           <li v-if="numberOfPages > 1 && currentPage > 2">
             <button
-              class="pagination-link button is-outlined has-border-shade-300 has-text-no-pillar-dark"
+              class="pagination-link button is-outlined has-border-shade-300 has-text-shade-600"
               :disabled="previousDisabled"
               @click.prevent="firstPage"
             >
@@ -37,7 +41,7 @@
           </li>
           <li v-if="currentPage > 1">
             <button
-              class="pagination-link button is-outlined has-border-shade-300 has-text-no-pillar-dark"
+              class="pagination-link button is-outlined has-border-shade-300 has-text-shade-600"
               :disabled="previousDisabled"
               @click.prevent="previousPage"
             >
@@ -46,7 +50,7 @@
           </li>
           <li>
             <button
-              class="pagination-link button has-background-no-pillar-dark has-text-white"
+              class="pagination-link button has-background-shade-600 has-text-white"
               aria-current="page"
             >
               {{ currentPage }}
@@ -54,7 +58,7 @@
           </li>
           <li v-if="currentPage < numberOfPages">
             <button
-              class="pagination-link button is-outlined has-border-shade-300 has-text-no-pillar-dark"
+              class="pagination-link button is-outlined has-border-shade-300 has-text-shade-600"
               :disabled="nextDisabled"
               @click.prevent="nextPage"
             >
@@ -66,7 +70,7 @@
           </li>
           <li v-if="numberOfPages > 2 && currentPage < numberOfPages - 1">
             <button
-              class="pagination-link button is-outlined has-border-shade-300 has-text-no-pillar-dark"
+              class="pagination-link button is-outlined has-border-shade-300 has-text-shade-600"
               :disabled="nextDisabled"
               @click.prevent="lastPage"
             >

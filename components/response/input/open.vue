@@ -1,11 +1,11 @@
 <template>
   <div class="open">
     <label
-      class="is-size-6bis mb-0_75 is-block has-text-grey"
+      class="is-size-6bis mb-0_75 is-block"
+      :class="`has-text-${props.color}-dark`"
       :for="`$question-${props.questionId}-open`"
+      >Réponse ouverte</label
     >
-      Réponse ouverte
-    </label>
     <textarea
       :id="`$question-${props.questionId}-open`"
       v-model="answer"

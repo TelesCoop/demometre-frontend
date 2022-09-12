@@ -15,7 +15,7 @@
         <QuestionnairePreviousButton @go-back="goBack" />
 
         <button
-          class="button is-normal is-rounded mt-4"
+          class="button is-shade-600 is-rounded mt-4"
           @click.prevent="submit"
         >
           <span>Valider</span>

@@ -6,7 +6,10 @@
         class="questionnaire-container"
         @submit.prevent="submit"
       >
-        <h1 class="title is-size-3-tablet is-size-4-mobile">
+        <h1
+          class="title is-size-3-tablet is-size-4-mobile"
+          :class="`has-text-${props.color}-dark`"
+        >
           {{ question.questionStatement }}
         </h1>
         <RichText
@@ -69,19 +72,23 @@
               !props.context.journey.isFirstQuestion(question.id) ||
               props.context.hasPreviousStep
             "
+            :color="props.color"
             @go-back="goToPreviousQuestion"
           />
           <button
-            class="button is-dark is-outlined is-rounded nav-questionnaire-button next"
+            :class="
+              props.color === 'no-pillar'
+                ? `is-shade-600`
+                : `is-${props.color} text-color-hover`
+            "
+            class="button is-outlined is-rounded nav-questionnaire-button next"
             type="button"
             :disabled="nextQuestionDisabled"
             @click.prevent="goToNextQuestion"
           >
-            <div>
-              <i class="icon">
-                <Icon size="16" name="arrow-right-line" class="mt-0_5" />
-              </i>
-            </div>
+            <i class="icon">
+              <Icon size="16" name="arrow-right-line" />
+            </i>
           </button>
         </div>
 
@@ -90,25 +97,35 @@
           <div class="is-flex is-align-items-center">
             <button
               v-if="isAnswered || question.mandatory"
-              class="button is-dark is-outlined is-rounded mr-0_75"
+              :class="
+                props.color === 'no-pillar'
+                  ? `is-shade-600`
+                  : `is-${props.color} text-color-dark`
+              "
+              class="button is-rounded mr-0_75"
               :disabled="validationDisabled"
               type="submit"
             >
               <span>Valider</span>
               <i class="icon">
-                <Icon v-if="isLoading" size="16" name="loader-2-line" />
-                <Icon v-else size="16" name="check" />
+                <Icon v-if="isLoading" size="20" name="loader-2-line" />
+                <Icon v-else size="20" name="check" />
               </i>
             </button>
             <button
               v-else
-              class="button is-dark is-outlined is-rounded mr-0_75"
+              :class="
+                props.color === 'no-pillar'
+                  ? `is-shade-600`
+                  : `is-${props.color} text-color-dark`
+              "
+              class="button is-outlined is-rounded mr-0_75"
               type="input"
             >
               <span>Je ne sais pas / Je passe</span>
               <i class="icon">
-                <Icon v-if="isLoading" size="16" name="loader-2-line" />
-                <Icon v-else size="16" name="arrow-right-line" />
+                <Icon v-if="isLoading" size="20" name="loader-2-line" />
+                <Icon v-else size="20" name="arrow-right-line" />
               </i>
             </button>
             <span v-if="isLoading" class="is-size-7 has-text-shade-600"
@@ -122,10 +139,11 @@
               <span class="has-text-weight-bold">Entrer ⏎</span>
             </span>
           </div>
-          <div class="is-flex buttons rounds">
+          <div v-if="props.isQuestionnaire" class="is-flex buttons rounds">
             <NuxtLink
               :to="`/resultats/${assessmentStore.currentAssessmentId}?question=${question.id}`"
-              class="button is-dark is-outlined is-rounded"
+              :class="`is-${props.color}`"
+              class="button is-outlined is-rounded text-color-hover"
             >
               <i class="icon">
                 <Icon size="16" name="bar-chart-box" />
@@ -133,7 +151,8 @@
             </NuxtLink>
             <NuxtLink
               :to="`/demometre?question=${question.id}`"
-              class="button is-dark is-outlined is-rounded"
+              :class="`is-${props.color}`"
+              class="button is-outlined is-rounded text-color-hover"
             >
               <i class="icon">
                 <Icon size="16" name="question-mark" />
@@ -226,6 +245,7 @@ const props = defineProps({
   questionId: { type: Number, required: true },
   context: { type: Object as PropType<QuestionContextProps>, required: true },
   color: { type: String, required: true },
+  isQuestionnaire: { type: Boolean, required: true },
 })
 
 const participationStore = useParticipationStore()

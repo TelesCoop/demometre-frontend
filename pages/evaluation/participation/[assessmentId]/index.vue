@@ -14,12 +14,12 @@
           AssessmentType.PARTICIPATIVE.key
         "
       >
-        <label class="label has-text-shade-800">{{
-          pageStore.evaluationInitiationPage.addExpertTitle
-        }}</label>
-        <span class="is-family-secondary is-size-6 has-text-shade-600">{{
-          pageStore.evaluationInitiationPage.addExpertDescription
-        }}</span>
+        <label class="label has-text-shade-800">
+          {{ pageStore.evaluationInitiationPage.addExpertTitle }}
+        </label>
+        <span class="is-family-secondary is-size-6 has-text-shade-600">
+          {{ pageStore.evaluationInitiationPage.addExpertDescription }}
+        </span>
         <div class="buttons mt-1">
           <!-- <div v-for="bool of [true, false]" :key="bool" class="margin-between">
             <input
@@ -30,7 +30,7 @@
               class="custom-hidden white-on-black-input-checked"
               name="addExpert"
             />
-            <label :for="bool" class="button is-normal">
+            <label :for="bool" class="button is-shade-600 is-outlined">
               {{
               bool
               ? pageStore.evaluationInitiationPage.addExpertButtonYes
@@ -47,7 +47,7 @@
       <QuestionnairePreviousButton @go-back="goBack" />
 
       <div class="buttons mt-4">
-        <button class="button is-normal is-rounded" :disabled="disabled">
+        <button class="button is-shade-600 is-rounded" :disabled="disabled">
           <span>C'est parti !</span>
         </button>
 
@@ -105,6 +105,7 @@ const startParticipationTitleAndDesc = computed(() => {
 
 function goBack() {
   assessmentStore.currentAssessmentId = undefined
+  assessmentStore.addingExpert = false
   router.push("/evaluation/localisation")
 }
 
