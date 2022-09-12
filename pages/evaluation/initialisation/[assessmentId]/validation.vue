@@ -16,12 +16,12 @@
         <QuestionnairePreviousButton @go-back="goBack" />
 
         <button
-          class="button is-normal is-rounded mt-4"
+          class="button is-shade-600 is-rounded mt-4"
           @click.prevent="submit"
         >
           <span>Commencer l'évaluation</span>
           <span class="icon">
-            <icon size="16" name="arrow-right-line" />
+            <icon size="20" name="arrow-right-line" />
           </span>
         </button>
       </div>

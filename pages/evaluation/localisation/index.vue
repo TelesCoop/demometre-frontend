@@ -54,18 +54,21 @@
               name="localityType"
               required
             />
-            <label :for="localityType.key" class="button is-normal locality">{{
-              localityType.value
-            }}</label>
+            <label
+              :for="localityType.key"
+              class="button is-shade-600 is-outlined locality"
+            >
+              {{ localityType.value }}
+            </label>
           </div>
         </div>
       </div>
 
       <div class="buttons mt-4">
-        <button class="button is-normal is-rounded" :disabled="disabled">
+        <button class="button is-shade-600 is-rounded" :disabled="disabled">
           <span>Valider</span>
           <span class="icon">
-            <icon size="24" name="check" />
+            <icon size="20" name="check" />
           </span>
         </button>
 

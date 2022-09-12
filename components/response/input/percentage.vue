@@ -6,11 +6,11 @@
       type="number"
       min="0"
       max="100"
-      class="input has-text-grey-dark"
-      :class="`has-background-${props.color}-light has-border-${props.color}-dark`"
+      class="input"
+      :class="`has-background-${props.color}-light has-border-${props.color}-dark has-text-${props.color}-dark`"
       placeholder="50"
     />
-    <i class="icon is-small is-right has-text-grey-dark">
+    <i class="icon is-small is-right" :class="`has-text-${props.color}-dark`">
       <span>%</span>
     </i>
   </div>
