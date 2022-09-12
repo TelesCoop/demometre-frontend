@@ -5,7 +5,7 @@
     :color="props.color"
     :question-id="questionId"
   >
-    <template #legend> Choisissez oui ou non. </template>
+    <template #legend>Choisissez oui ou non.</template>
   </ResponseInputUniqueChoice>
 </template>
 

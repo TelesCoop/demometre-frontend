@@ -90,8 +90,8 @@ hr
   clip: rect(0 0 0 0)
 
 .white-on-black-input-checked:checked + label
-  background-color: $black
-  color: $white
+  background-color: $black !important
+  color: $white !important
 
 .buttons .margin-between:not(:last-child):not(.is-fullwidth)
   margin-right: 0.5rem
@@ -127,6 +127,13 @@ hr
   width: 100%
   height: 100%
 
+// Buttons with different text color
+.button
+  &.text-color-dark
+    color: var(--color-dark) !important
+  &.text-color-hover
+    color: var(--color-hover) !important
+
 // Buttons previous and next
 .nav-questionnaire
   &-container
@@ -134,6 +141,8 @@ hr
   &-button
     position: absolute
     top: 25%
+    height: 40px
+    width: 40px
     @include widescreen
       &.next
         right: -8rem
@@ -160,7 +169,5 @@ hr
   .nav-questionnaire-button
     &.next
       right: -2rem
-      padding: 0 15px
     &.previous
       left: -2rem
-      padding: 0 15px

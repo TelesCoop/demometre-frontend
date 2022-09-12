@@ -25,8 +25,8 @@
     </div>
     <div class="response-choice-content">
       <p
-        class="response-choice-title has-text-black"
-        :class="responseChoiceSize"
+        class="response-choice-title"
+        :class="`${responseChoiceSize} has-text-${props.color}-dark`"
       >
         {{ props.responseChoice.responseChoice }}
       </p>
@@ -117,9 +117,9 @@ input:focus-visible,input:not(:checked):hover + label .response-choice
     min-width: 40px
     height: 40px
     border-radius: 6px
-    margin-right: 4rem
+    margin-right: 1rem
     @include mobile
-      margin-right: 1rem
+      margin-right: 0.5rem
       padding-top: 4px
       min-width: 30px
       height: 30px

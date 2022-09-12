@@ -5,7 +5,7 @@
       action="/evaluation/localisation"
       @submit.prevent="onSubmit"
     >
-      <h1 class="title is-3 has-text-black-ter">Commencer une évaluation</h1>
+      <h1 class="title is-3 has-text-black">Commencer une évaluation</h1>
       <div class="buttons mt-4">
         <button class="button is-normal is-rounded">
           <span>Commencer</span>
