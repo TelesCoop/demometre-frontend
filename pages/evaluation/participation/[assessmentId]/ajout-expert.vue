@@ -17,7 +17,7 @@
           <p class="mb-1">Vous devez être connecté pour ajouter un expert</p>
           <div class="buttons mb-0_5">
             <NuxtLink class="button is-shade-600 is-rounded" to="/signup"
-              >Faire un compte</NuxtLink
+              >Créer un compte</NuxtLink
             >
             <NuxtLink class="button is-shade-600 is-rounded" to="/login"
               >Se connecter</NuxtLink

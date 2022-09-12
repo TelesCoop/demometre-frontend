@@ -36,7 +36,7 @@
     >
       <div class="buttons mb-0_5">
         <NuxtLink class="button is-shade-600 is-rounded" to="/signup"
-          >Faire un compte</NuxtLink
+          >Créer un compte</NuxtLink
         >
         <NuxtLink class="button is-shade-600 is-rounded" to="/login"
           >Se connecter</NuxtLink
@@ -88,12 +88,12 @@
     >
       <form class="nav-questionnaire-container" @submit.prevent="goToNextStep">
         <div class="field mb-2">
-          <label class="label">
-            {{ pageStore.evaluationInitiationPage.initiatorNameQuestion }}
-          </label>
-          <span class="is-family-secondary is-size-6">
-            {{ pageStore.evaluationInitiationPage.initiatorNameDescription }}
-          </span>
+          <label class="label">{{
+            pageStore.evaluationInitiationPage.initiatorNameQuestion
+          }}</label>
+          <span class="is-family-secondary is-size-6">{{
+            pageStore.evaluationInitiationPage.initiatorNameDescription
+          }}</span>
           <div class="control mt-0_5">
             <input
               v-model="initiatorName"
@@ -124,9 +124,8 @@
             <label
               :for="initiatorType.key"
               class="button is-shade-600 is-outlined locality"
+              >{{ initiatorType.value }}</label
             >
-              {{ initiatorType.value }}
-            </label>
           </div>
         </div>
         <div class="buttons mt-4">
@@ -159,9 +158,9 @@
           v-for="representativityCriteria of assessmentStore.representativityCriterias"
           :key="representativityCriteria.id"
         >
-          <label class="label is-size-5">
-            {{ representativityCriteria.name }}
-          </label>
+          <label class="label is-size-5">{{
+            representativityCriteria.name
+          }}</label>
           <RichText
             class="is-family-secondary is-size-6"
             :rich-text="representativityCriteria.explanation"
