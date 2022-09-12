@@ -17,14 +17,11 @@
 
       <div class="container mb-4">
         <div class="buttons">
-          <router-link
-            class="button is-shade-600 is-rounded"
-            :to="userStep.url"
+          <router-link class="button is-shade-600 is-rounded" :to="userStep.url"
+            >Reprendre mon évaluation</router-link
           >
-            Reprendre mon évaluation
-          </router-link>
           <button
-            class="button is-rounded"
+            class="button is-rounded is-shade-600 is-outlined"
             @click="participationStore.setShowCancelParticipationModal(true)"
           >
             Recommencer

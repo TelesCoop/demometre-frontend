@@ -29,6 +29,7 @@ export const useParticipationStore = defineStore("participation", {
       { [key: string]: { total: number; answered: number; completed: boolean } }
     >{},
     showCancelParticipationModal: <boolean>false,
+    showSaveParticipationModal: <boolean>false,
   }),
   getters: {
     participation() {
@@ -227,6 +228,9 @@ export const useParticipationStore = defineStore("participation", {
     },
     setShowCancelParticipationModal(show) {
       this.showCancelParticipationModal = show
+    },
+    setShowSaveParticipationModal(show) {
+      this.showSaveParticipationModal = show
     },
   },
 })

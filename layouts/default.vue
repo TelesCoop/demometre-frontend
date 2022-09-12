@@ -1,5 +1,6 @@
 <template>
   <ModalCancelParticipationModal></ModalCancelParticipationModal>
+  <ModalSaveParticipationModal></ModalSaveParticipationModal>
   <div class="has-navbar-fixed-top test" :style="`padding-top: ${height}px;`">
     <div>
       <HeaderNavbar @change-header-height="onChangeHeaderHight($event)" />
