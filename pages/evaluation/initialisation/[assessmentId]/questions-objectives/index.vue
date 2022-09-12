@@ -11,7 +11,9 @@
         class="button is-shade-600 is-rounded mt-4"
         @click.prevent="goToFirstObjectiveQuestion"
       >
-        <span>Commencer</span>
+        <span>{{
+          pageStore.evaluationInitiationPage.objectiveQuestionsCallToAction
+        }}</span>
         <span class="icon">
           <icon v-if="isLoading" size="20" name="loader-2-line" />
           <icon v-else size="20" name="arrow-right-line" />

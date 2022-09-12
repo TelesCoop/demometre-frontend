@@ -18,7 +18,9 @@
           class="button is-shade-600 is-rounded mt-4"
           @click.prevent="submit"
         >
-          <span>Valider</span>
+          <span>{{
+            pageStore.evaluationQuestionnairePage.endOfProfilingCallToAction
+          }}</span>
           <span class="icon">
             <icon size="16" name="check" />
           </span>

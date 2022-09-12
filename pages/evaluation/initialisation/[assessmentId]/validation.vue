@@ -19,7 +19,10 @@
           class="button is-shade-600 is-rounded mt-4"
           @click.prevent="submit"
         >
-          <span>Commencer l'évaluation</span>
+          <span>{{
+            pageStore.evaluationInitiationPage
+              .initializationValidationCallToAction
+          }}</span>
           <span class="icon">
             <icon size="20" name="arrow-right-line" />
           </span>

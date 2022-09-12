@@ -88,12 +88,12 @@
     >
       <form class="nav-questionnaire-container" @submit.prevent="goToNextStep">
         <div class="field mb-2">
-          <label class="label">
-            {{ pageStore.evaluationInitiationPage.initiatorNameQuestion }}
-          </label>
-          <span class="is-family-secondary is-size-6">
-            {{ pageStore.evaluationInitiationPage.initiatorNameDescription }}
-          </span>
+          <label class="label">{{
+            pageStore.evaluationInitiationPage.initiatorNameQuestion
+          }}</label>
+          <span class="is-family-secondary is-size-6">{{
+            pageStore.evaluationInitiationPage.initiatorNameDescription
+          }}</span>
           <div class="control mt-0_5">
             <input
               v-model="initiatorName"
@@ -130,9 +130,9 @@
         </div>
         <div class="buttons mt-4">
           <button class="button is-shade-600 is-rounded" :disabled="disabled">
-            <span>Suivant</span>
+            <span>Valider</span>
             <span class="icon">
-              <icon size="20" name="arrow-right-line" />
+              <icon size="20" name="check" />
             </span>
           </button>
 
@@ -158,9 +158,9 @@
           v-for="representativityCriteria of assessmentStore.representativityCriterias"
           :key="representativityCriteria.id"
         >
-          <label class="label is-size-5">
-            {{ representativityCriteria.name }}
-          </label>
+          <label class="label is-size-5">{{
+            representativityCriteria.name
+          }}</label>
           <RichText
             class="is-family-secondary is-size-6"
             :rich-text="representativityCriteria.explanation"
