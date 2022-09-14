@@ -362,3 +362,36 @@ export function useInitializationJourney<Type>() {
     surveyType,
   }
 }
+
+export const getLastQuestionIdOfJourney = (responses, journey) => {
+  const answeredQuestionIds = Object.keys(responses)
+  const orderedAnsweredQuestionIds = journey.filter((questionId) =>
+    answeredQuestionIds.includes(questionId.toString())
+  )
+
+  return {
+    lastQuestionId:
+      orderedAnsweredQuestionIds[orderedAnsweredQuestionIds.length - 1],
+    isLast: orderedAnsweredQuestionIds.length === journey.length,
+  }
+}
+
+export const getLastAnsweredProfilingQuestionId = () => {
+  const participationStore = useParticipationStore()
+  const profilingJourney = useProfilingJourney()
+
+  return getLastQuestionIdOfJourney(
+    participationStore.responseByProfilingQuestionId,
+    profilingJourney.journey.value
+  ).lastQuestionId
+}
+
+export const getLastQuestionOfPillar = (pillarName: string) => {
+  const participationStore = useParticipationStore()
+  const questionnaireJourney = useQuestionnaireJourney(pillarName)
+
+  return getLastQuestionIdOfJourney(
+    participationStore.responseByQuestionnaireQuestionId,
+    questionnaireJourney.journey.value
+  )
+}
