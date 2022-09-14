@@ -5,9 +5,9 @@
         :score="score"
         class="mr-1_5"
       ></AnalyticsSemaphoreRate>
-      <span class="has-text-shade-500">
-        {{ representativity.representativityCriteriaName }}
-      </span>
+      <span class="has-text-shade-500">{{
+        representativity.representativityCriteriaName
+      }}</span>
     </div>
     <div class="mb-0_75">
       <AnalyticsDistributionBar
@@ -29,7 +29,7 @@
           {{ hoverRepresentativity?.displayValue }}%
         </div>
         <div v-if="!hoverRepresentativity?.ignoreThreshold">
-          Objectif de représentativité :
+          Seuil minimal de représentativité :
           {{ props.representativity.acceptabilityThresholdConsidered }}%
         </div>
       </div>

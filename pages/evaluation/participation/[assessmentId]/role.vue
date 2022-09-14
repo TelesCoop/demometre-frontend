@@ -8,7 +8,7 @@
       class="is-family-secondary p-1 has-background-shade-200"
       :rich-text="pageStore.evaluationQuestionnairePage.roleQuestionDescription"
     ></RichText>
-    <form class="questionnaire-container" @submit.prevent="onSubmit">
+    <form class="questionnaire-container mb-4" @submit.prevent="onSubmit">
       <div class="my-1_5 nav-questionnaire-container">
         <ResponseInputUniqueChoice
           v-model="answer"

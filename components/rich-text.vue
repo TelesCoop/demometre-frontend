@@ -1,13 +1,19 @@
 <template>
   <div>
-    <span class="rich-text" v-html="props.richText"></span>
+    <span v-links-in-new-window class="rich-text" v-html="richText"></span>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
   richText: { type: String, default: "" },
 })
+const vLinksInNewWindow = {
+  mounted: (el) => {
+    const anchors = el.querySelectorAll("a")
+    anchors.forEach((anchor) => (anchor.target = "_blank"))
+  },
+}
 </script>
 
 <style scoped lang="sass">
