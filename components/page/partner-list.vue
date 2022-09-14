@@ -1,7 +1,7 @@
 <template>
   <div
     class="is-flex is-flex-direction-row is-flex-wrap-wrap"
-    :style="`column-gap: ${props.columnGap}`"
+    :style="`column-gap: ${props.columnGap}; row-gap:${props.rowGap}`"
   >
     <figure v-for="partner of props.partners" :key="partner.id" class="image">
       <img
@@ -19,6 +19,7 @@ import { MADIA_BASE_URL } from "~/composables/api"
 const props = defineProps({
   partners: { type: Array, required: true },
   columnGap: { type: String, default: "4rem" },
+  rowGap: { type: String, default: "3rem" },
 })
 </script>
 

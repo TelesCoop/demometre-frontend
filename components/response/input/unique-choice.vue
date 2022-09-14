@@ -1,6 +1,9 @@
 <template>
   <fieldset>
-    <legend class="is-size-6bis mb-0_75 is-block has-text-grey">
+    <legend
+      class="is-size-6bis mb-0_75 is-block"
+      :class="`has-text-${props.color}-dark`"
+    >
       <slot name="legend">Choisissez une réponse.</slot>
     </legend>
     <div

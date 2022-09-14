@@ -1,6 +1,16 @@
 <template>
-  <div
-    :class="`card has-background-${backgroundColor} is-fullheight is-clickable`"
+  <a
+    class="card is-fullheight is-clickable"
+    :class="
+      isHovered
+        ? ` has-background-${backgroundColorHover}`
+        : `has-background-${backgroundColor}`
+    "
+    :href="props.feedback.externalLink"
+    target="_blank"
+    rel="external noopener noreferrer"
+    @mouseenter="isHovered = true"
+    @mouseleave="isHovered = false"
   >
     <div class="card-content">
       <div class="media is-flex is-flex-direction-row mb-1_5">
@@ -25,7 +35,7 @@
         {{ props.feedback.quote }}
       </div>
     </div>
-  </div>
+  </a>
 </template>
 
 <script setup lang="ts">
@@ -34,7 +44,10 @@ import { MADIA_BASE_URL } from "~/composables/api"
 const props = defineProps({
   feedback: { type: Object, required: true },
   backgroundColor: { type: String, required: true },
+  backgroundColorHover: { type: String, required: true },
 })
+
+const isHovered = ref(false)
 </script>
 
 <style scoped lang="sass">

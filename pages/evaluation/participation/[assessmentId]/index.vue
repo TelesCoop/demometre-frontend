@@ -30,7 +30,7 @@
               class="custom-hidden white-on-black-input-checked"
               name="addExpert"
             />
-            <label :for="bool" class="button is-normal">
+            <label :for="bool" class="button is-shade-600 is-outlined">
               {{
               bool
               ? pageStore.evaluationInitiationPage.addExpertButtonYes
@@ -44,10 +44,10 @@
           </label>
         </div>
       </div>
-      <QuestionnairePreviousButton @go-back="goBack" />
+      <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
 
       <div class="buttons mt-4">
-        <button class="button is-normal is-rounded" :disabled="disabled">
+        <button class="button is-shade-600 is-rounded" :disabled="disabled">
           <span>C'est parti !</span>
         </button>
 
@@ -105,6 +105,7 @@ const startParticipationTitleAndDesc = computed(() => {
 
 function goBack() {
   assessmentStore.currentAssessmentId = undefined
+  assessmentStore.addingExpert = false
   router.push("/evaluation/localisation")
 }
 

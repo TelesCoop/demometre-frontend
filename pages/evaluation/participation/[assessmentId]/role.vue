@@ -8,7 +8,7 @@
       class="is-family-secondary p-1 has-background-shade-200"
       :rich-text="pageStore.evaluationQuestionnairePage.roleQuestionDescription"
     ></RichText>
-    <form class="questionnaire-container" @submit.prevent="onSubmit">
+    <form class="questionnaire-container mb-4" @submit.prevent="onSubmit">
       <div class="my-1_5 nav-questionnaire-container">
         <ResponseInputUniqueChoice
           v-model="answer"
@@ -18,18 +18,18 @@
           :white-letter-when-select="true"
         />
 
-        <QuestionnairePreviousButton @go-back="goBack" />
+        <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
       </div>
       <div class="buttons mt-1_5">
         <button
-          class="button is-normal is-rounded"
+          class="button is-shade-600 is-rounded"
           type="submit"
           :disabled="disabled"
         >
           <span>Valider</span>
           <span class="icon">
             <icon v-if="isLoading" size="24" name="loader-2-line" />
-            <icon v-else size="24" name="check" />
+            <icon v-else size="20" name="check" />
           </span>
         </button>
         <span v-if="isLoading" class="is-size-7 has-text-shade-600"

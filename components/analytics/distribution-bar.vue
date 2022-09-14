@@ -52,7 +52,9 @@ function getItemValues(data) {
       widthValue: item.value
         ? round((item.value / total.value) * (100 - nbValue0.value), 2)
         : 2,
-      displayValue: round((item.value / total.value) * 100, 2),
+      displayValue: total.value
+        ? round((item.value / total.value) * 100, 2)
+        : 0,
     }
   })
 }

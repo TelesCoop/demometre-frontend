@@ -16,10 +16,10 @@
           <!-- User not logged in -->
           <p class="mb-1">Vous devez être connecté pour ajouter un expert</p>
           <div class="buttons mb-0_5">
-            <NuxtLink class="button is-normal is-rounded" to="/signup"
-              >Faire un compte</NuxtLink
+            <NuxtLink class="button is-shade-600 is-rounded" to="/signup"
+              >Créer un compte</NuxtLink
             >
-            <NuxtLink class="button is-normal is-rounded" to="/login"
+            <NuxtLink class="button is-shade-600 is-rounded" to="/login"
               >Se connecter</NuxtLink
             >
           </div>
@@ -29,9 +29,9 @@
           v-model="expertSelected"
           :initiation-page="pageStore.evaluationInitiationPage"
         />
-        <QuestionnairePreviousButton @go-back="goBack" />
+        <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
         <button
-          class="button is-normal is-rounded mt-4"
+          class="button is-shade-600 is-rounded mt-4"
           :disabled="disabled"
           @click.prevent="onSubmit"
         >

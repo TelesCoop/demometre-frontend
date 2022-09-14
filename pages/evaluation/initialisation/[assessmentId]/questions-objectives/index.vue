@@ -8,19 +8,21 @@
   >
     <div class="nav-questionnaire-container">
       <button
-        class="button is-normal is-rounded mt-4"
+        class="button is-shade-600 is-rounded mt-4"
         @click.prevent="goToFirstObjectiveQuestion"
       >
-        <span>Commencer</span>
+        <span>{{
+          pageStore.evaluationInitiationPage.objectiveQuestionsCallToAction
+        }}</span>
         <span class="icon">
-          <icon v-if="isLoading" size="24" name="loader-2-line" />
-          <icon v-else size="16" name="arrow-right-line" />
+          <icon v-if="isLoading" size="20" name="loader-2-line" />
+          <icon v-else size="20" name="arrow-right-line" />
         </span>
       </button>
       <span v-if="isLoading" class="is-size-7 has-text-shade-600"
         >en cours de chargement</span
       >
-      <!-- <QuestionnairePreviousButton @go-back="goBack" /> -->
+      <!-- <QuestionnairePreviousButton @go-back="goBack" color="no-pillar" /> -->
     </div>
   </PageSection>
 </template>

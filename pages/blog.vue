@@ -19,9 +19,9 @@
           >
             <PageArticleCard
               :article="blogPost"
-              background-color="white"
-              :image-height="300"
-              :show-linked-pillars="true"
+              background-color="shade-100"
+              background-color-hover="shade-200"
+              :image-height="260"
             />
           </div>
         </div>

@@ -4,6 +4,7 @@
       v-if="context"
       :context="context"
       :question-id="questionId"
+      :is-questionnaire="false"
       :color="color"
     />
   </div>

@@ -36,9 +36,12 @@
               v-if="pillar.markerIds.includes(hoverMarkerId)"
               class="pillar-marker-title"
             >
-              <span class="is-size-7 has-text-weight-bold">{{
-                questionnaireStore.markerById[hoverMarkerId].name
-              }}</span>
+              <span
+                class="is-size-7 has-text-weight-bold"
+                style="margin: 0px 8px"
+              >
+                {{ questionnaireStore.markerById[hoverMarkerId].name }}
+              </span>
             </div>
             <div v-else>
               <Picto
@@ -67,9 +70,9 @@
             @mouseleave="hoverMarkerId = null"
             @click="onMarkerClick(markerId)"
           >
-            <span class="marker-index is-size-7 has-text-weight-bold">{{
-              index + 1
-            }}</span>
+            <span class="marker-index is-size-7 has-text-weight-bold">
+              {{ index + 1 }}
+            </span>
           </div>
         </div>
       </div>

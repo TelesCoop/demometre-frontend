@@ -1,5 +1,5 @@
 <template>
-  <section class="intro-text mb-3">
+  <section class="intro-text" :class="`mb-${marginBottom}`">
     <h1 class="title is-size-1-desktop is-2 has-text-black">{{ title }}</h1>
     <div
       v-if="subtitle"
@@ -14,6 +14,7 @@
 defineProps({
   title: { type: String, required: true, default: undefined },
   subtitle: { type: String, required: false, default: undefined },
+  marginBottom: { type: Number, default: 3 },
 })
 </script>
 

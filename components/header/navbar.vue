@@ -53,10 +53,18 @@
           <div class="navbar-item">
             <div class="buttons">
               <NuxtLink
+                v-if="!isEvaluationRoute"
                 :to="userStep.url"
                 class="button evaluation is-rounded has-border-cooperation has-text-cooperation-dark"
                 >{{ userStep.text }}</NuxtLink
               >
+              <button
+                v-if="isEvaluationRoute && userStore.isUnknownUser"
+                class="button save is-rounded is-shade-600 is-outlined"
+                @click="participationStore.setShowSaveParticipationModal(true)"
+              >
+                Enregistrer
+              </button>
               <NuxtLink
                 v-if="userStore.isLoggedIn"
                 to="/profil"
@@ -81,15 +89,15 @@
     >
       <QuestionnaireProgressBars class="navbar-progress-bar" :header="true" />
       <div v-if="userStore.isUnknownUser" class="navbar-progress-bar-save">
-        <nuxt-link
-          class="column button is-normal is-shade-200 navbar-progress-bar-save-button"
-          to="/signup"
+        <button
+          class="column button is-shade-200 navbar-progress-bar-save-button"
+          @click="participationStore.setShowCancelParticipationModal(true)"
         >
-          <span>Enregistrer</span>
+          <span>Réinitialiser</span>
           <span class="icon">
-            <icon size="15" name="save" />
+            <icon size="15" name="restart" />
           </span>
-        </nuxt-link>
+        </button>
       </div>
     </div>
     <HeaderLine v-else :active-pillar-name="activePillar" />
@@ -98,6 +106,7 @@
 
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
+import { useParticipationStore } from "~/stores/participationStore"
 
 const emit = defineEmits<{
   (e: "change-header-height", value: number): void
@@ -105,11 +114,16 @@ const emit = defineEmits<{
 
 const userStore = useUserStore()
 const userStep = useUserStep()
+const participationStore = useParticipationStore()
 const route = useRoute()
 const isBurgerOpen = ref(false)
 
 const isRouteActive = computed(() => (path) => {
   return route.path === path
+})
+
+const isEvaluationRoute = computed(() => {
+  return route.path.includes("evaluation")
 })
 
 const isQuestionnaireRoute = computed(() => {
@@ -158,6 +172,14 @@ const navItems = [
   margin: 14px 24px
 .button.evaluation:hover
   background: $cooperation
+.button.save
+  background: white
+  &:hover
+    background: $shade-600
+    border-color: white
+  &:focus
+    background: $shade-600
+    border-color: white
 
 .navbar-progress-bar-wrapper
   $navbar-progress-bar-save-button-width: 180px
@@ -175,6 +197,9 @@ const navItems = [
   .navbar-progress-bar-save-button
     flex-grow: 1
     width: $navbar-progress-bar-save-button-width
+
+.button .icon
+  vertical-align: middle
 
 @include until-widescreen
   .navbar-progress-bar-wrapper

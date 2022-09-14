@@ -7,6 +7,7 @@
             <PageTitle
               :title="pageStore.referentialPage.title"
               :subtitle="pageStore.referentialPage.introduction"
+              :margin-bottom="1"
             />
             <RichText
               :rich-text="pageStore.referentialPage.description"
@@ -69,12 +70,12 @@
         v-if="pageStore.referentialPage.markerBlockTitle"
         :title="pageStore.referentialPage.markerBlockTitle"
       >
-        <div class="column-2">
+        <div class="columns is-align-items-center">
           <RichText
             :rich-text="pageStore.referentialPage.markerBlockContent"
-            class="is-family-secondary"
+            class="is-family-secondary column"
           />
-          <QuestionnaireRosetteCooperation />
+          <QuestionnaireRosetteCooperation class="column" />
         </div>
       </PageSection>
 
@@ -176,14 +177,14 @@
               class="is-family-secondary subtitle mb-2"
             />
             <div class="score">
-              <div v-for="i in 4" :key="i" class="level">
-                <div class="level-left">
+              <div v-for="i in 4" :key="i" class="is-flex mb-1">
+                <div class="is-flex">
                   <AnalyticsScore
                     :score="i"
                     :color="colorClass"
-                    class="level-item mr-1_5"
+                    class="mr-1_5"
                   />
-                  <p class="level-item">
+                  <p class="is-family-secondary" style="margin-top: 2px">
                     {{ markerProps.marker["score" + i] }}
                   </p>
                 </div>

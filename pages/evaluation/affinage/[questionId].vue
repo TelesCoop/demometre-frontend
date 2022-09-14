@@ -4,6 +4,7 @@
       v-if="context"
       :context="context"
       :question-id="questionId"
+      :is-questionnaire="false"
       color="no-pillar"
     />
   </div>
@@ -28,7 +29,7 @@ const router = useRouter()
 const questionId = ref(+route.params.questionId)
 
 router.beforeEach((to) => {
-  if (+to.params.questionId) {
+  if (+to.params.questionId && route.path.includes("evaluation/affinage")) {
     questionId.value = +to.params.questionId
   }
 })

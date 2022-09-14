@@ -28,6 +28,8 @@ export const useParticipationStore = defineStore("participation", {
     totalAndAnsweredQuestionsByPillarName: <
       { [key: string]: { total: number; answered: number; completed: boolean } }
     >{},
+    showCancelParticipationModal: <boolean>false,
+    showSaveParticipationModal: <boolean>false,
   }),
   getters: {
     participation() {
@@ -223,6 +225,12 @@ export const useParticipationStore = defineStore("participation", {
       for (const pillarName in PillarName) {
         this.setTotalAndAnsweredQuestionsInPillar(PillarName[pillarName])
       }
+    },
+    setShowCancelParticipationModal(show) {
+      this.showCancelParticipationModal = show
+    },
+    setShowSaveParticipationModal(show) {
+      this.showSaveParticipationModal = show
     },
   },
 })

@@ -29,7 +29,7 @@
           {{ hoverRepresentativity?.displayValue }}%
         </div>
         <div v-if="!hoverRepresentativity?.ignoreThreshold">
-          Objectif de représentativité :
+          Seuil minimal de représentativité :
           {{ props.representativity.acceptabilityThresholdConsidered }}%
         </div>
       </div>

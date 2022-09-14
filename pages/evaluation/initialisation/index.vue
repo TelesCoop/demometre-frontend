@@ -20,7 +20,7 @@
             background-color="white"
           />
         </div>
-        <QuestionnairePreviousButton @go-back="goBack" />
+        <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
       </div>
     </PageSection>
 
@@ -35,10 +35,10 @@
       :is-first-element="true"
     >
       <div class="buttons mb-0_5">
-        <NuxtLink class="button is-normal is-rounded" to="/signup"
-          >Faire un compte</NuxtLink
+        <NuxtLink class="button is-shade-600 is-rounded" to="/signup"
+          >Créer un compte</NuxtLink
         >
-        <NuxtLink class="button is-normal is-rounded" to="/login"
+        <NuxtLink class="button is-shade-600 is-rounded" to="/login"
           >Se connecter</NuxtLink
         >
       </div>
@@ -66,9 +66,9 @@
           />
         </div>
         <ParticipationConsent class="mt-1_5" type="cgu" :initiator="true" />
-        <QuestionnairePreviousButton @go-back="goBack" />
+        <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
         <button
-          class="button is-normal is-rounded mt-4"
+          class="button is-shade-600 is-rounded mt-4"
           :disabled="disabled"
           @click.prevent="goToNextStep"
         >
@@ -87,14 +87,14 @@
       :intro-is-rich-text="true"
     >
       <form class="nav-questionnaire-container" @submit.prevent="goToNextStep">
-        <div class="field mb-3">
+        <div class="field mb-2">
           <label class="label">{{
             pageStore.evaluationInitiationPage.initiatorNameQuestion
           }}</label>
           <span class="is-family-secondary is-size-6">{{
             pageStore.evaluationInitiationPage.initiatorNameDescription
           }}</span>
-          <div class="control">
+          <div class="control mt-0_5">
             <input
               v-model="initiatorName"
               class="input is-normal-width"
@@ -121,16 +121,18 @@
               name="initiationType"
               required
             />
-            <label :for="initiatorType.key" class="button is-normal locality">{{
-              initiatorType.value
-            }}</label>
+            <label
+              :for="initiatorType.key"
+              class="button is-shade-600 is-outlined locality"
+              >{{ initiatorType.value }}</label
+            >
           </div>
         </div>
         <div class="buttons mt-4">
-          <button class="button is-normal is-rounded" :disabled="disabled">
-            <span>Suivant</span>
+          <button class="button is-shade-600 is-rounded" :disabled="disabled">
+            <span>Valider</span>
             <span class="icon">
-              <icon size="20" name="arrow-right-line" />
+              <icon size="20" name="check" />
             </span>
           </button>
 
@@ -138,7 +140,7 @@
           <input type="submit" hidden />
         </div>
 
-        <QuestionnairePreviousButton @go-back="goBack" />
+        <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
       </form>
     </PageSection>
 
@@ -171,10 +173,10 @@
           />
         </div>
         <div class="buttons mt-1_5">
-          <button class="button is-normal is-rounded" :disabled="disabled">
+          <button class="button is-shade-600 is-rounded" :disabled="disabled">
             <span>Valider</span>
             <span class="icon">
-              <icon size="24" name="check" />
+              <icon size="20" name="check" />
             </span>
           </button>
 
@@ -182,7 +184,7 @@
           <input type="submit" hidden />
         </div>
 
-        <QuestionnairePreviousButton @go-back="goBack" />
+        <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
       </form>
     </PageSection>
   </div>
@@ -228,7 +230,8 @@ const initializationSteps = [
   steps.ASSESSMENT_TYPE,
   steps.START,
   steps.INITIATOR,
-  steps.REPRESENTATIVITY,
+  // At the last moment it was decided not to give the possibility to customize the representativity in order not to confuse the user
+  // steps.REPRESENTATIVITY,
 ]
 const currentStep = ref<number>(
   assessmentStore.newAssessment.assessmentType ? 1 : 0

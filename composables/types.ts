@@ -291,6 +291,7 @@ type Feedback = {
   pictureUrl: string
   personContext: string
   quote: string
+  externalLink: string
   publish: boolean
 }
 export type Article = {
@@ -482,14 +483,17 @@ export type EvaluationInitiationPage = {
   representativityDescription: string
   objectiveQuestionsTitle: string
   objectiveQuestionsDescription: string
+  objectiveQuestionsCallToAction: string
   initializationValidationTitle: string
   initializationValidationDescription: string
+  initializationValidationCallToAction: string
 }
 export type EvaluationQuestionnairePage = {
   roleQuestionTitle: string
   roleQuestionDescription: string
   endOfProfilingTitle: string
   endOfProfilingDescription: string
+  endOfProfilingCallToAction: string
   startTitle: string
   startText: string
   intermediateStepTitle: string

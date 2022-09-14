@@ -5,7 +5,11 @@
       :class="`is-${props.columnGap}`"
     >
       <div class="column" :class="`is-${props.columnDistribution[0]}`">
-        <PageTitle :title="props.title" :subtitle="props.subtitle" />
+        <PageTitle
+          :title="props.title"
+          :subtitle="props.subtitle"
+          :margin-bottom="1"
+        />
         <RichText
           v-if="props.introduction"
           :rich-text="props.introduction"
@@ -30,7 +34,11 @@
           ></iframe>
         </div>
         <figure v-else-if="props.imageUrl" class="image is-128x128">
-          <img :src="MADIA_BASE_URL + props.imageUrl" alt />
+          <img
+            :src="MADIA_BASE_URL + props.imageUrl"
+            alt
+            style="border-radius: 6px"
+          />
         </figure>
       </div>
     </section>

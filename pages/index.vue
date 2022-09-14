@@ -12,10 +12,23 @@
 
     <!-- Connected section -->
 
-    <QuestionnaireProgressBars
-      v-if="participationStore.participation.id"
-      class="mb-4"
-    />
+    <template v-if="participationStore.participation.id">
+      <QuestionnaireProgressBars class="mb-2" />
+
+      <div class="container mb-4">
+        <div class="buttons">
+          <router-link class="button is-shade-600 is-rounded" :to="userStep.url"
+            >Reprendre mon évaluation</router-link
+          >
+          <button
+            class="button is-rounded is-shade-600 is-outlined"
+            @click="participationStore.setShowCancelParticipationModal(true)"
+          >
+            Réinitialiser
+          </button>
+        </div>
+      </div>
+    </template>
 
     <PageSection
       v-if="assessmentStore.currentAssessment"
@@ -47,6 +60,7 @@
               <PageFeedbackCard
                 :feedback="feedback"
                 background-color="white"
+                background-color-hover="shade-100"
                 class="carousel-item"
               />
             </Slide>
@@ -76,6 +90,7 @@
             <PageArticleCard
               :article="blogPost"
               background-color="shade-100"
+              background-color-hover="shade-200"
               :image-height="260"
               class="carousel-item"
             />
@@ -106,6 +121,7 @@
               <PageArticleCard
                 :article="resource"
                 background-color="white"
+                background-color-hover="shade-100"
                 :image-height="300"
                 class="carousel-item"
               />
@@ -132,6 +148,7 @@ import "vue3-carousel/dist/carousel.css"
 import { usePageStore } from "~/stores/pageStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { useUserStep } from "~/composables/userStep"
 
 definePageMeta({
   title: "Accueil",
@@ -141,6 +158,7 @@ definePageMeta({
 const pageStore = usePageStore()
 const assessmentStore = useAssessmentStore()
 const participationStore = useParticipationStore()
+const userStep = useUserStep()
 
 if (!pageStore.homePage.title) {
   pageStore.getHomePage()
