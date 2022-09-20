@@ -1,7 +1,7 @@
 <template>
   <fieldset>
     <legend
-      class="is-size-5 mb-0_75 legend-container"
+      class="is-size-6bis mb-0_75 legend-container"
       :class="`has-text-${props.color}-dark `"
     >
       <div
@@ -120,6 +120,7 @@ function hasAnsweredCategory(categoryId) {
   min-width: 32px
   height: 32px
   border-radius: 50px
+  padding-top: 5px
 .legend-container
   display: flex
   align-items: center

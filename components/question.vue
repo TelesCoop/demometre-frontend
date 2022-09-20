@@ -14,7 +14,8 @@
         </h1>
         <RichText
           v-if="question.description"
-          class="is-family-secondary p-1 has-background-shade-200"
+          class="is-family-secondary"
+          :class="`has-text-${props.color}-dark`"
           :rich-text="question.description"
         ></RichText>
         <section
@@ -376,6 +377,7 @@ const submit = async () => {
 .tabs .tab
   color: var(--color)
   border-bottom-color: currentColor
+  padding: 0.5em 1.5em 0.5em 0em
   &.is-active
     color: var(--color-dark)
   &:hover
