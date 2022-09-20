@@ -46,7 +46,7 @@
         :title="pageStore.homePage.feedbackBlockTitle"
         :intro="pageStore.homePage.feedbackBlockIntro"
       >
-        <div class="columns mb-2">
+        <div class="mb-2">
           <Carousel
             v-if="pageStore.homePage.feedbacks.length"
             :settings="settings"
@@ -55,7 +55,6 @@
             <Slide
               v-for="feedback in pageStore.homePage.feedbacks"
               :key="feedback.id"
-              class="column is-one-third-tablet is-11-mobile"
             >
               <PageFeedbackCard
                 :feedback="feedback"
@@ -76,7 +75,7 @@
       button-text="Explorer les articles"
       button-link="/blog"
     >
-      <div class="columns mb-2">
+      <div class="mb-2">
         <Carousel
           v-if="pageStore.homePage.blogPosts.length"
           :settings="settings"
@@ -85,7 +84,6 @@
           <Slide
             v-for="blogPost of pageStore.homePage.blogPosts"
             :key="blogPost.id"
-            class="column is-one-third-tablet is-11-mobile"
           >
             <PageArticleCard
               :article="blogPost"
@@ -107,7 +105,7 @@
         button-text="Explorer les ressources"
         button-link="/ressources"
       >
-        <div class="columns mb-2" style="display: block">
+        <div class="mb-2" style="display: block">
           <Carousel
             v-if="pageStore.homePage.resources.length"
             :settings="settings"
@@ -116,7 +114,6 @@
             <Slide
               v-for="resource of pageStore.homePage.resources"
               :key="resource.id"
-              class="column is-one-third-tablet is-11-mobile"
             >
               <PageArticleCard
                 :article="resource"
@@ -194,4 +191,6 @@ const breakpointsSmallElements = {
 .carousel-item
   width: 100%
   text-align: start
+.carousel__slide:not(:last-child)
+  padding-right: 20px
 </style>
