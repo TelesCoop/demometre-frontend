@@ -55,7 +55,6 @@
             <Slide
               v-for="feedback in pageStore.homePage.feedbacks"
               :key="feedback.id"
-              class=""
             >
               <PageFeedbackCard
                 :feedback="feedback"
@@ -106,7 +105,7 @@
         button-text="Explorer les ressources"
         button-link="/ressources"
       >
-        <div class="columns mb-2" style="display: block">
+        <div class="mb-2" style="display: block">
           <Carousel
             v-if="pageStore.homePage.resources.length"
             :settings="settings"
@@ -115,7 +114,6 @@
             <Slide
               v-for="resource of pageStore.homePage.resources"
               :key="resource.id"
-              class="column is-one-third-tablet is-11-mobile"
             >
               <PageArticleCard
                 :article="resource"
