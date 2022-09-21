@@ -167,13 +167,8 @@ const hoverPillarName = ref<string>()
 const isLoadingPillarName = ref<string>("")
 
 const goToFirstQuestionPillar = (pillarName) => {
-  console.log("goToFirstQuestionPillar")
   isLoadingPillarName.value = pillarName
   const { lastQuestionId, isLast } = getLastQuestionOfPillar(pillarName)
-  console.log(lastQuestionId)
-  console.log(isLast)
-  console.log("end goToFirstQuestionPillar")
-
   useQuestionnaireJourney(pillarName).goToNextQuestion(
     isLast ? undefined : lastQuestionId
   )
