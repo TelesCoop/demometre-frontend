@@ -195,19 +195,15 @@ export function useQuestionnaireJourney<Type>(pillarName: string) {
     const questionnaireStore = useQuestionnaireStore()
     const participationStore = useParticipationStore()
     const assessmentStore = useAssessmentStore()
+
+    const participation = participationStore.participation
+    const assessment = assessmentStore.currentAssessment
+
     const questionIds = questionnaireStore
       .getQuestionnaireQuestionByPillarName(pillarName)
       .filter((question: Question) => {
-        const participation = participationStore.participation
-        const assessment = assessmentStore.currentAssessment
-        return (
-          QUESTION_FILTERS_VALUES.every((test) =>
-            test({ question, participation, assessment })
-          ) &&
-          // the objective questions are shown only to assessment admin users
-          (assessmentStore.userIsAssessmentInitiator
-            ? true
-            : question.objectivity === Objectivity.SUBJECTIVE)
+        return QUESTION_FILTERS_VALUES.every((test) =>
+          test({ question, participation, assessment })
         )
       })
       .map((question: Question) => question.id)
