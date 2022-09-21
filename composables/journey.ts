@@ -224,9 +224,6 @@ export function useQuestionnaireJourney<Type>(pillarName: string) {
       useRouter().push("/evaluation/questionnaire")
     } else {
       const questionId = nextQuestionId(currentQuestionId, true)
-      console.log("nextQuestionId")
-      console.log(questionId)
-      console.log("end nextQuestionId")
       useRouter().push({
         path: `/evaluation/questionnaire/${questionId}`,
         query: { pillar: pillarName },
