@@ -219,21 +219,19 @@ export function useQuestionnaireJourney<Type>(pillarName: string) {
   }
 
   const goToNextQuestion = (currentQuestionId: number) => {
-    console.log("####nextQuestionId####")
     const userStore = useUserStore()
     if (isLastQuestion(currentQuestionId)) {
-      console.log("islastQuestion")
       useRouter().push("/evaluation/questionnaire")
     } else {
       const questionId = nextQuestionId(currentQuestionId, true)
-      console.log("is nextQuestionId")
+      console.log("nextQuestionId")
       console.log(questionId)
+      console.log("end nextQuestionId")
       useRouter().push({
         path: `/evaluation/questionnaire/${questionId}`,
         query: { pillar: pillarName },
       })
     }
-    console.log("####end nextQuestionId####")
   }
 
   const goToPreviousQuestion = (currentQuestionId: number) => {
