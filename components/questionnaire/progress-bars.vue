@@ -142,7 +142,10 @@
 </template>
 
 <script setup lang="ts">
-import { useQuestionnaireJourney } from "~/composables/journey"
+import {
+  getLastQuestionOfPillar,
+  useQuestionnaireJourney,
+} from "~/composables/journey"
 import { useParticipationStore } from "~/stores/participationStore"
 import { PillarName, PillarParams } from "~/composables/types"
 import { wordTitleCase } from "~/utils/util"

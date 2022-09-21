@@ -366,14 +366,15 @@ export function useInitializationJourney<Type>() {
 
 export const getLastQuestionIdOfJourney = (responses, journey) => {
   const answeredQuestionIds = Object.keys(responses)
-  const orderedAnsweredQuestionIds = journey.filter((questionId) =>
-    answeredQuestionIds.includes(questionId.toString())
+  const index = journey.findIndex(
+    (questionId) => !answeredQuestionIds.includes(questionId.toString())
   )
 
+  const isLast = index === -1
+
   return {
-    lastQuestionId:
-      orderedAnsweredQuestionIds[orderedAnsweredQuestionIds.length - 1],
-    isLast: orderedAnsweredQuestionIds.length === journey.length,
+    lastQuestionId: isLast ? journey[journey.length] : journey[index - 1],
+    isLast: isLast,
   }
 }
 
