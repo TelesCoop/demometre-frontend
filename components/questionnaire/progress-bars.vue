@@ -156,12 +156,12 @@ const props = defineProps({
 
 const participationStore = useParticipationStore()
 
-// if (
-//   Object.keys(participationStore.totalAndAnsweredQuestionsByPillarName)
-//     .length !== 4
-// ) {
-participationStore.setTotalAndAnsweredQuestionsByPillarName()
-// }
+if (
+  Object.keys(participationStore.totalAndAnsweredQuestionsByPillarName)
+    .length !== 4
+) {
+  participationStore.setTotalAndAnsweredQuestionsByPillarName()
+}
 
 const hoverPillarName = ref<string>()
 const isLoadingPillarName = ref<string>("")
