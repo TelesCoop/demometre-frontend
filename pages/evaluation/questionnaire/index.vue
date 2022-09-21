@@ -97,12 +97,7 @@ const participationStore = useParticipationStore()
 const pageStore = usePageStore()
 const userStore = useUserStore()
 
-if (
-  Object.keys(participationStore.totalAndAnsweredQuestionsByPillarName)
-    .length !== 4
-) {
-  participationStore.setTotalAndAnsweredQuestionsByPillarName()
-}
+participationStore.setTotalAndAnsweredQuestionsByPillarName()
 
 if (!pageStore.evaluationQuestionnairePage.startTitle) {
   pageStore.getEvaluationQuestionnairePage()
