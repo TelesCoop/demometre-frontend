@@ -64,7 +64,7 @@ const props = defineProps({
   dragging: { type: Boolean, default: false },
   color: { type: String, required: true },
   hideLeftSymbol: { type: Boolean, default: false },
-  responseChoiceSize: { type: String, default: "is-size-5" },
+  responseChoiceSize: { type: String, default: "is-size-5 is-size-6-mobile" },
 })
 const choiceElement = ref<HTMLElement>()
 const letters = "ABCDEFGHIJKLMOPQRSTUVWXYZ"

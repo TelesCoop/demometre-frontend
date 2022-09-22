@@ -1,7 +1,9 @@
 <template>
   <header>
     <div class="is-flex is-justify-content-space-between">
-      <h2 class="title is-4 mb-0_5">{{ props.title }}</h2>
+      <h2 class="title is-4 mb-0_5" :class="`has-text-${color}-dark`">
+        {{ props.title }}
+      </h2>
       <AnalyticsScore
         v-if="props.showScore && !isNullOrUndefined(props.score)"
         :score="props.score"
