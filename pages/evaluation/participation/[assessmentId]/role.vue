@@ -18,7 +18,11 @@
           :white-letter-when-select="true"
         />
 
-        <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
+        <ButtonsArrowButton
+          color="no-pillar"
+          class="arrow-button-fixed is-left"
+          @click.prevent="goBack"
+        />
       </div>
       <div class="buttons mt-1_5">
         <button

@@ -7,3 +7,23 @@ input[type=checkbox],input[type=radio]
       opacity: 0
       width: 0
       position: absolute
+
+
+.arrow-button-fixed
+  position: fixed
+  top: 50%
+  transform: translateY(-50%)
+
+  &.is-left
+    left: 2rem
+
+    @include touch
+      left: 3px
+
+  &.is-right
+    right: 2rem
+    svg
+      transform: rotate(180deg)
+
+    @include touch
+      right: 3px

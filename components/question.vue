@@ -202,29 +202,21 @@
               </div>
             </div>
             <!-- button previous next -->
-            <QuestionnairePreviousButton
+            <ButtonsArrowButton
               v-if="
                 !props.context.journey.isFirstQuestion(question.id) ||
                 props.context.hasPreviousStep
               "
+              class="arrow-button-fixed is-left"
               :color="props.color"
-              @go-back="goToPreviousQuestion"
+              @click.prevent="goToPreviousQuestion"
             />
-            <button
-              :class="
-                props.color === 'no-pillar'
-                  ? `is-shade-600`
-                  : `is-${props.color} text-color-hover`
-              "
-              class="button is-outlined is-rounded nav-questionnaire-button next"
-              type="button"
+            <ButtonsArrowButton
+              class="arrow-button-fixed is-right"
               :disabled="nextQuestionDisabled"
+              :color="props.color"
               @click.prevent="goToNextQuestion"
-            >
-              <i class="icon">
-                <Icon size="16" name="arrow-right-line" />
-              </i>
-            </button>
+            />
           </div>
         </section>
       </form>
