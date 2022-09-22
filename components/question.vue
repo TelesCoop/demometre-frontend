@@ -374,12 +374,17 @@ const submit = async () => {
   height: 40px
   width: 40px
 
-.tabs .tab
-  color: var(--color)
-  border-bottom-color: currentColor
-  padding: 0.5em 1.5em 0.5em 0em
-  &.is-active
-    color: var(--color-active)
-  &:hover
+.tabs
+  ul
+    border-bottom-color: var(--color)
+  .tab
     color: var(--color-hover)
+    border-bottom-color: var(--color)
+    padding: 0.5em 1.5em 0.5em 0em
+    &.is-active
+      color: var(--color-dark)
+      border-bottom-color: var(--color-dark)
+    &:hover
+      color: var(--color-active)
+      border-bottom-color: var(--color-active)
 </style>
