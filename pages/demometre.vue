@@ -207,8 +207,8 @@ import { Marker, PillarType } from "~/composables/types"
 import { MADIA_BASE_URL } from "~/composables/api"
 
 definePageMeta({
-  title: "DemoMètre",
-  breadcrumb: "DemoMètre",
+  title: "DémoMètre",
+  breadcrumb: "DémoMètre",
 })
 
 const router = useRouter()
