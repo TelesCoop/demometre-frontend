@@ -12,7 +12,11 @@
           class="is-family-secondary"
         />
 
-        <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
+        <ButtonsArrowButton
+          class="arrow-button-fixed is-left"
+          color="no-pillar"
+          @click.prevent="goBack"
+        />
 
         <button
           class="button is-shade-600 is-rounded mt-4"

@@ -44,7 +44,11 @@
           </label>
         </div>
       </div>
-      <QuestionnairePreviousButton color="no-pillar" @go-back="goBack" />
+      <ButtonsArrowButton
+        color="no-pillar"
+        class="arrow-button-fixed is-left"
+        @click.prevent="goBack"
+      />
 
       <div class="buttons mt-4">
         <button class="button is-shade-600 is-rounded" :disabled="disabled">
