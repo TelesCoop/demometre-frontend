@@ -173,12 +173,12 @@
                     <NuxtLink
                       :to="`/resultats/${assessmentStore.currentAssessmentId}?question=${question.id}`"
                       :class="`is-${props.color}`"
-                      class="button is-outlined is-rounded text-color-hover results-button"
+                      class="button is-outlined is-rounded text-color-hover"
                       title="Voir les résultats"
                       target="_blank"
                     >
                       <i class="icon">
-                        <Icon size="22" name="bar-chart-box" />
+                        <Icon size="20" name="bar-chart-line" />
                       </i>
                     </NuxtLink>
                     <NuxtLink
@@ -376,9 +376,6 @@ const submit = async () => {
 .buttons.rounds .button, .button.round
   height: 40px
   width: 40px
-.buttons.rounds .results-button
-  height: 60px
-  width: 60px
 
 .tabs .tab
   color: var(--color)

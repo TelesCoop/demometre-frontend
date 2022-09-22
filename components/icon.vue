@@ -107,6 +107,12 @@
         d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm1 2v14h16V5H4zm3 8h2v4H7v-4zm4-6h2v10h-2V7zm4 3h2v7h-2v-7z"
       />
     </template>
+    <template v-else-if="props.name === 'bar-chart-line'">
+      <path
+        :fill="props.color"
+        d="M3 12h2v9H3v-9zm16-4h2v13h-2V8zm-8-6h2v19h-2V2z"
+      />
+    </template>
     <template v-else-if="props.name === 'money-euro-circle-line'">
       <path
         :fill="props.color"
