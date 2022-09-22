@@ -15,6 +15,7 @@
             :min="props.bounds.min.value"
             :max="props.bounds.max.value"
             :tooltips="false"
+            :lazy="false"
           />
           <div class="value-display is-size-5">
             {{ props.selected ? answer : "?" }}
