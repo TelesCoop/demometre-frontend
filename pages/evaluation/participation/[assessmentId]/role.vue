@@ -5,7 +5,7 @@
     </h1>
     <RichText
       v-if="pageStore.evaluationQuestionnairePage.roleQuestionDescription"
-      class="is-family-secondary p-1 has-background-shade-200"
+      class="is-family-secondary"
       :rich-text="pageStore.evaluationQuestionnairePage.roleQuestionDescription"
     ></RichText>
     <form class="questionnaire-container mb-4" @submit.prevent="onSubmit">
