@@ -29,11 +29,10 @@
               <li v-for="tab of tabs" :key="tab.id">
                 <a
                   class="tab is-size-6"
-                  :class="
-                    tab.id === currentTabId
-                      ? `is-active`
-                      : `has-text-${color}-hover`
-                  "
+                  :class="[
+                    `is-${color}`,
+                    tab.id === currentTabId ? `is-active` : ``,
+                  ]"
                   @click="setTab(tab.id)"
                   >{{ tab.label }}</a
                 >
@@ -386,7 +385,7 @@ const submit = async () => {
   border-bottom-color: currentColor
   padding: 0.5em 1.5em 0.5em 0em
   &.is-active
-    color: var(--color-dark)
-  &:hover
     color: var(--color-active)
+  &:hover
+    color: var(--color-hover)
 </style>
