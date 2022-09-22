@@ -42,12 +42,14 @@
           size="24"
           class="icon mt-0_5 mr-0_5"
         />
-        <icon
-          v-else-if="props.selected"
-          name="check"
-          size="24"
-          class="icon mt-0_5 mr-0_5"
-        />
+        <template v-else>
+          <icon
+            name="check"
+            size="24"
+            class="icon mt-0_5 mr-0_5"
+            :style="`opacity: ${props.selected ? 1 : 0}`"
+          />
+        </template>
       </slot>
     </div>
   </div>
@@ -61,7 +63,6 @@ const props = defineProps({
   responseChoice: { required: true, type: Object as PropType<ResponseChoice> },
   responseChoiceIndex: { type: Number, default: 0 },
   selected: { type: Boolean, default: false },
-  dragging: { type: Boolean, default: false },
   color: { type: String, required: true },
   hideLeftSymbol: { type: Boolean, default: false },
   responseChoiceSize: { type: String, default: "is-size-5 is-size-6-mobile" },
