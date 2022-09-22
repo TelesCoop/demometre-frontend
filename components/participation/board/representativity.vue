@@ -5,9 +5,9 @@
         :score="score"
         class="mr-1_5"
       ></AnalyticsSemaphoreRate>
-      <span class="has-text-shade-500">{{
-        representativity.representativityCriteriaName
-      }}</span>
+      <span class="has-text-shade-500">
+        {{ representativity.representativityCriteriaName }}
+      </span>
     </div>
     <div class="mb-0_75">
       <AnalyticsDistributionBar
@@ -16,13 +16,10 @@
         @mouseleave-item="hoverRepresentativity = null"
       ></AnalyticsDistributionBar>
     </div>
-    <div
-      class="has-text-shade-500"
-      :class="{
-        'is-invisible': !hoverRepresentativity,
-      }"
-    >
-      <div>{{ hoverRepresentativity?.name || "\u00a0" }}</div>
+    <div v-if="hoverRepresentativity" class="has-text-shade-500">
+      <div class="has-text-weight-bold">
+        {{ hoverRepresentativity?.name || "\u00a0" }}
+      </div>
       <div class="is-size-7">
         <div>
           Représentativité actuelle :
@@ -31,6 +28,17 @@
         <div v-if="!hoverRepresentativity?.ignoreThreshold">
           Seuil minimal de représentativité :
           {{ props.representativity.acceptabilityThresholdConsidered }}%
+        </div>
+      </div>
+    </div>
+    <div v-else class="has-text-shade-350">
+      <div class="has-text-weight-bold">
+        {{ representativity.representativityCriteriaName }}
+      </div>
+      <div class="is-size-7">
+        <div>Représentativité actuelle : ...%</div>
+        <div v-if="!hoverRepresentativity?.ignoreThreshold">
+          Seuil minimal de représentativité : ...%
         </div>
       </div>
     </div>
