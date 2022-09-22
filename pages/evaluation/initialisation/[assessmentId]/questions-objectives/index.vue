@@ -22,7 +22,7 @@
       <span v-if="isLoading" class="is-size-7 has-text-shade-600"
         >en cours de chargement</span
       >
-      <!-- <QuestionnairePreviousButton @go-back="goBack" color="no-pillar" /> -->
+      <!-- <ButtonsArrowButton class="arrow-button-fixed is-left" @click.prevent="goBack" color="no-pillar" /> -->
     </div>
   </PageSection>
 </template>
