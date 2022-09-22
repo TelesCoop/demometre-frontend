@@ -15,12 +15,12 @@
     <div class="card-content">
       <div class="media is-flex is-flex-direction-row mb-1_5">
         <div v-if="props.feedback.pictureUrl" class="media-left mr-1">
-          <figure class="image is-48x48 is-rounded">
-            <img
-              :src="MADIA_BASE_URL + props.feedback.pictureUrl"
-              :alt="props.feedback.personName"
-            />
-          </figure>
+          <div
+            class="image-profile"
+            :style="`background-image: url(${
+              MADIA_BASE_URL + props.feedback.pictureUrl
+            })`"
+          ></div>
         </div>
         <div class="media-content">
           <p class="has-text-shade-600 has-text-weight-bold">
@@ -56,4 +56,10 @@ const isHovered = ref(false)
   max-width: 48px
   img
     border-radius: 50%
+
+.image-profile
+  border-radius: 50%
+  height: 48px
+  width: 48px
+  background-size: cover
 </style>
