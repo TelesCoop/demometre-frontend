@@ -54,7 +54,7 @@
       <div class="column is-6-desktop is-offset-1">
         <QuestionnaireRosette
           class="rosette-menu"
-          center-button-name="Commencer"
+          :center-button-name="rosetteButtonText"
           :pillars-completed="pillarsCompleted"
           @center-button-click="onStartQuestionnaire"
           @pillar-click="onRosettePillarClicked($event)"
@@ -107,6 +107,23 @@ if (
 if (!pageStore.evaluationQuestionnairePage.startTitle) {
   pageStore.getEvaluationQuestionnairePage()
 }
+const rosetteButtonText = computed(() => {
+  const total = Object.values(
+    participationStore.totalAndAnsweredQuestionsByPillarName
+  ).reduce(
+    (accum: any, total: any) => {
+      accum.completed += total.completed ? 1 : 0
+      accum.hasStarted = accum.hasStarted || total.answered > 0
+      return accum
+    },
+    { completed: 0, hasStarted: false }
+  )
+
+  if (total.completed === 4) {
+    return "Reprendre"
+  }
+  return total.hasStarted ? "Continuer" : "Commencer"
+})
 
 const pillarsCompleted = computed(() =>
   Object.keys(participationStore.totalAndAnsweredQuestionsByPillarName).filter(
