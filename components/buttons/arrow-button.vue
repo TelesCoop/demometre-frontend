@@ -1,6 +1,8 @@
 <template>
   <button
-    :class="color === 'no-pillar' ? `is-shade-600` : `is-${color}`"
+    :class="
+      color === 'no-pillar' ? `is-shade-600` : `is-${color} text-color-hover`
+    "
     class="button is-outlined arrow-button"
     type="button"
   >
@@ -24,5 +26,4 @@ defineProps({
   width: 40px
   height: 40px
   border-radius: 50%
-  color: var(--color-hover)
 </style>
