@@ -160,7 +160,12 @@
                     >
                     <span
                       v-else
-                      class="is-size-7 has-text-shade-600 hidden-in-mobile-mode"
+                      class="is-size-7 hidden-in-mobile-mode"
+                      :class="
+                        props.color === 'no-pillar'
+                          ? 'has-text-shade-600'
+                          : `has-text-${props.color}-dark`
+                      "
                     >
                       appuyez sur
                       <span class="has-text-weight-bold">Entrer ⏎</span>
