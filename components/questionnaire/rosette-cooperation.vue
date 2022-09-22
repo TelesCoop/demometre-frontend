@@ -18,9 +18,9 @@
             v-if="pillar.markerIds.includes(hoverMarkerId)"
             class="pillar-marker-title"
           >
-            <span class="is-size-7 has-text-weight-bold">{{
-              questionnaireStore.markerById[hoverMarkerId].name
-            }}</span>
+            <span class="is-size-7 has-text-weight-bold">
+              {{ questionnaireStore.markerById[hoverMarkerId].name }}
+            </span>
           </div>
           <div v-else>
             <Picto
@@ -46,9 +46,9 @@
           @mouseenter="hoverMarkerId = markerId"
           @mouseleave="hoverMarkerId = null"
         >
-          <span class="marker-index is-size-7 has-text-weight-bold">{{
-            index + 1
-          }}</span>
+          <span class="marker-index is-size-7 has-text-weight-bold">
+            {{ index + 1 }}
+          </span>
         </div>
       </div>
     </section>
@@ -97,6 +97,9 @@ $marker-translate: translateY(90px)
   position: absolute
   top: 50%
   left: 50%
+  display: flex
+  align-items: center
+  justify-content: center
   border: 1px solid
   width: 30px
   height: 30px
@@ -106,8 +109,7 @@ $marker-translate: translateY(90px)
     &:nth-child(#{$i})
       transform: translate(-50%, -50%) rotate((($i - 2) * 45deg) - calc(($nb-markers - 1) * 45 / 2)) $marker-translate rotate(calc(($nb-markers - 1) * 45 / 2) - (($i - 2) * 45deg))
 .marker-index
-  vertical-align: middle
-  padding-left: 9px
+  text-align: center
 
 .pillar
   &-title
