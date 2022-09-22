@@ -159,6 +159,9 @@ $pillars: ("representation": (translateX(-170px), 5, translateX(-90px)), "transp
 
   .marker-circle-#{$name}
     position: absolute
+    display: flex
+    align-items: center
+    justify-content: center
     top: 50%
     left: 50%
     border: 1px solid
@@ -166,12 +169,12 @@ $pillars: ("representation": (translateX(-170px), 5, translateX(-90px)), "transp
     height: 30px
     border-radius: 50%
     cursor: pointer
+
     @for $i from 1 through 8
       &:nth-child(#{$i})
         transform: translate(-50%, -50%) rotate((($i - 2) * 45deg) - calc(($nb-markers - 1) * 45 / 2)) $marker-translate rotate(calc(($nb-markers - 1) * 45 / 2) - (($i - 2) * 45deg))
   .marker-index
-    vertical-align: middle
-    padding-left: 9px
+    text-align: center
 
 .pillar
   &-title
