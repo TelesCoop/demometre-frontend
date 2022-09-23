@@ -4,6 +4,7 @@
       <div class="rosette">
         <div class="center-button are-normal is-shade-600">
           <button
+            v-if="props.centerButtonName"
             class="button is-rounded is-responsive is-outlined is-shade-600"
             @click.prevent="onCenterButtonClick()"
           >
