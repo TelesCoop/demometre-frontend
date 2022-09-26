@@ -287,7 +287,7 @@ watch(question, () => {
 const validationDisabled = computed(() => (isAnswered.value ? false : true))
 
 const nextQuestionDisabled = computed(() =>
-  initialValue ||
+  initialValue !== undefined ||
   props.context.responseByQuestionId[props.questionId]?.hasPassed
     ? false
     : true
