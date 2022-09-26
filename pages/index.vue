@@ -159,7 +159,9 @@ const assessmentStore = useAssessmentStore()
 const participationStore = useParticipationStore()
 const userStep = useUserStep()
 const userStore = useUserStore()
+const { $rollbar } = useNuxtApp()
 
+$rollbar.info("youhouuuu")
 if (!pageStore.homePage.title) {
   pageStore.getHomePage()
 }
