@@ -21,6 +21,7 @@
             >Reprendre mon évaluation</router-link
           >
           <button
+            v-if="userStore.isUnknownUser"
             class="button is-rounded is-shade-600 is-outlined"
             @click="participationStore.setShowCancelParticipationModal(true)"
           >
@@ -146,6 +147,7 @@ import { usePageStore } from "~/stores/pageStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useUserStep } from "~/composables/userStep"
+import { useUserStore } from "~/stores/userStore"
 
 definePageMeta({
   title: "Accueil",
@@ -156,6 +158,7 @@ const pageStore = usePageStore()
 const assessmentStore = useAssessmentStore()
 const participationStore = useParticipationStore()
 const userStep = useUserStep()
+const userStore = useUserStore()
 
 if (!pageStore.homePage.title) {
   pageStore.getHomePage()
