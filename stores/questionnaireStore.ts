@@ -17,31 +17,32 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     markerById: <{ [key: number]: Marker }>{},
     criteriaById: <{ [key: number]: Criteria }>{},
     questionById: <{ [key: number]: Question }>{},
+    orderedQuestionIds: <number[]>[],
   }),
   getters: {
-    getPillarByName: (state) => {
-      return (pillarName) => state.pillarByName[pillarName]
+    getPillarByName(this) {
+      return (pillarName) => this.pillarByName[pillarName]
     },
 
-    pillars: (state) => {
-      return Object.values(state.pillarByName)
+    pillars() {
+      return Object.values(this.pillarByName)
     },
-    questions: (state) => {
-      return Object.values(state.questionById)
+    questions() {
+      return this.orderedQuestionIds.map(
+        (questionId) => this.questionById[questionId]
+      )
     },
-    getQuestionsFromIdList: (state) => {
+    getQuestionsFromIdList() {
       return (questionIds: number[]) =>
-        Object.values(state.questionById).filter((question: Question) => {
+        Object.values(this.questionById).filter((question: Question) => {
           return questionIds.includes(question.id)
         }) as Question[]
     },
-    getQuestionnaireQuestionByPillarName: (state) => {
+    getQuestionnaireQuestionByPillarName() {
       return (pillarName): Question[] => {
-        return Object.values(state.questionById).filter(
-          (question: Question) => {
-            return pillarName === question.pillarName
-          }
-        ) as Question[]
+        return this.questions.filter((question: Question) => {
+          return pillarName === question.pillarName
+        }) as Question[]
       }
     },
   },
@@ -85,8 +86,11 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         errorStore.setError(error.value.data.messageCode)
         return false
       }
+      this.orderedQuestionIds = []
+
       for (const question of data.value) {
         this.questionById[question.id] = question
+        this.orderedQuestionIds.push(question.id)
       }
       return true
     },
