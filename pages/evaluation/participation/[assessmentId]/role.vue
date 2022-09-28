@@ -39,7 +39,10 @@
         <span v-if="isLoading" class="is-size-7 has-text-shade-600"
           >en cours de chargement</span
         >
-        <span v-else class="is-size-7 has-text-shade-600 hidden-in-mobile-mode">
+        <span
+          v-else-if="!disabled"
+          class="is-size-7 has-text-shade-600 hidden-in-mobile-mode"
+        >
           appuyez sur
           <span class="has-text-weight-bold">Entrer ⏎</span>
         </span>
