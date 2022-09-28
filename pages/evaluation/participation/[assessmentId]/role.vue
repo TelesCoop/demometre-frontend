@@ -55,6 +55,7 @@ import { useParticipationStore } from "~/stores/participationStore"
 import { useProfilingJourney } from "~/composables/journey"
 import { usePageStore } from "~/stores/pageStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { usePressEnter } from "~/composables/pressEnter"
 
 definePageMeta({
   title: "Question sur le role",
@@ -108,4 +109,6 @@ async function onSubmit() {
     useProfilingJourney().goToNextQuestion(undefined)
   }
 }
+
+usePressEnter(onSubmit, () => !disabled.value)
 </script>
