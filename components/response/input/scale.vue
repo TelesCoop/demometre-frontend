@@ -65,11 +65,8 @@ const props = defineProps({
 const bounds = computed<QuestionBounds>(() => {
   const length = props.responseChoices.length
   return {
-    min: { label: props.responseChoices[0].responseChoice, value: 1 },
-    max: {
-      label: props.responseChoices[length - 1].responseChoice,
-      value: length,
-    },
+    min: 0,
+    max: length,
   }
 })
 
@@ -87,7 +84,8 @@ function updateOne(value, categoryId) {
     if (categoryResponse.categoryId === categoryId) {
       return {
         ...categoryResponse,
-        responseChoiceId: props.responseChoices[value - 1].id,
+        responseChoiceId:
+          value === 0 ? null : props.responseChoices[value - 1].id,
       }
     } else {
       return categoryResponse
@@ -106,7 +104,7 @@ function getAnswerSliderValue(categoryId) {
   return (
     props.responseChoices
       .map((responseChoice) => responseChoice.id)
-      .indexOf(getResponseChoiceIdByCategoryId(categoryId)) + 1 || 1
+      .indexOf(getResponseChoiceIdByCategoryId(categoryId)) + 1 || 0
   )
 }
 
