@@ -12,8 +12,8 @@
           <Slider
             v-model="answer"
             class="choice-slider"
-            :min="props.bounds.min.value"
-            :max="props.bounds.max.value"
+            :min="props.bounds.min"
+            :max="props.bounds.max"
             :tooltips="false"
             :lazy="false"
           />

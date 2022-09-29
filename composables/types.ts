@@ -131,8 +131,7 @@ export type Question = {
   explainsByQuestionIds: number[]
 }
 
-type Bound = { value: number; label: string }
-export type QuestionBounds = { min: Bound; max: Bound }
+export type QuestionBounds = { min: number; max: number }
 
 export type Category = { id: number; category: string }
 
