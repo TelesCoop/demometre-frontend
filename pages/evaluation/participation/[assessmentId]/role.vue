@@ -109,6 +109,7 @@ async function onSubmit() {
   const isSuccess = await participationStore.createParticipation()
 
   if (isSuccess) {
+    await participationStore.getCurrentQuestionnaireObjectiveQuestionResponses()
     useProfilingJourney().goToNextQuestion(undefined)
   }
 }
