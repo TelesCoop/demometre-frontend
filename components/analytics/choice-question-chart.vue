@@ -33,7 +33,7 @@
       <template v-for="(choice, key) in data.value" :key="key">
         <div
           :class="`has-background-${color}-light`"
-          class="choice-question-chart-cell has-text-right"
+          class="choice-question-chart-cell"
         >
           {{ choice.label }}
         </div>

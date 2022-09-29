@@ -47,7 +47,7 @@
       >
         <div
           :class="`has-background-${color}-light`"
-          class="choice-question-chart-cell has-text-right"
+          class="choice-question-chart-cell"
         >
           {{ category.label }}
         </div>
