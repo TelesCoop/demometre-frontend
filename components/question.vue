@@ -147,7 +147,7 @@
                           : `is-${props.color} text-color-dark`
                       "
                       class="button is-outlined is-rounded mr-0_75"
-                      type="input"
+                      type="submit"
                     >
                       <span>Je ne sais pas / Je passe</span>
                       <i class="icon">
@@ -159,7 +159,7 @@
                       >en cours de chargement</span
                     >
                     <span
-                      v-else
+                      v-else-if="canPressEnter()"
                       class="is-size-7 hidden-in-mobile-mode"
                       :class="
                         props.color === 'no-pillar'
@@ -235,13 +235,14 @@ import {
   SurveyType,
   SimpleBlock,
 } from "~/composables/types"
-import { computed, PropType, watch } from "vue"
+import { computed, onBeforeUnmount, onMounted, PropType, watch } from "vue"
 import { ref } from "@vue/reactivity"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getQuestionResponseValue } from "~/utils/question-response"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { usePressEnter } from "~/composables/pressEnter"
 
 type tabDef = { label: string; id: string }
 const props = defineProps({
@@ -358,6 +359,8 @@ const submit = async () => {
     goToNextQuestion()
   }
 }
+const canPressEnter = () => isAnswered.value || !question.value.mandatory
+usePressEnter(submit, canPressEnter)
 </script>
 
 <style scoped lang="sass">
