@@ -49,5 +49,13 @@ export function getColorGradients(color: string) {
       [`${color}-active`, "white"],
       [`${color}-dark`, "white"],
     ],
+    6: [
+      [`${color}-light-active`, `${color}-dark`],
+      [`${color}`, `${color}-dark`],
+      [`${color}-hover`, "white"],
+      [`${color}-active`, "white"],
+      [`${color}-dark`, "white"],
+      [`${color}-light-active`, `${color}-dark`],
+    ],
   }
 }
