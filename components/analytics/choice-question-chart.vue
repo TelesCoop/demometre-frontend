@@ -34,6 +34,7 @@
         <div
           :class="`has-background-${color}-light`"
           class="choice-question-chart-cell"
+          style="text-align: right"
         >
           {{ choice.label }}
         </div>
