@@ -13,7 +13,9 @@
     @mouseleave="isHovered = false"
   >
     <div class="card-content">
-      <div class="media is-flex is-flex-direction-row mb-1_5">
+      <div
+        class="media is-flex is-flex-direction-row is-align-items-center mb-1_5"
+      >
         <div v-if="props.feedback.pictureUrl" class="media-left mr-1">
           <div
             class="image-profile"
@@ -52,14 +54,14 @@ const isHovered = ref(false)
 
 <style scoped lang="sass">
 .image
-  max-height: 48px
-  max-width: 48px
+  max-height: 100px
+  max-width: 100px
   img
     border-radius: 50%
 
 .image-profile
   border-radius: 50%
-  height: 48px
-  width: 48px
+  height: 100px
+  width: 100px
   background-size: cover
 </style>
