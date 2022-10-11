@@ -18,27 +18,14 @@
       <!--      </div>-->
 
       <div class="field mb-3">
-        <label class="label">Code postal</label>
-        <div class="control">
-          <input
-            v-model="zipCode"
-            class="input is-normal-width"
-            type="text"
-            placeholder="Code postal"
-            required
-          />
-        </div>
-      </div>
-
-      <div class="field mb-3">
-        <label class="label">
-          Êtes-vous intéressé·e par la démocratie dans votre commune ou votre
-          intercommunalité&nbsp;?
-        </label>
-        <span class="is-family-secondary is-size-6">
-          Une intercommunalité est une forme de coopération entre plusieurs
-          communes.
-        </span>
+        <label class="label">{{
+          pageStore.evaluationInitiationPage
+            .searchAssessmentLocalityTypeQuestion
+        }}</label>
+        <span class="is-family-secondary is-size-6">{{
+          pageStore.evaluationInitiationPage
+            .searchAssessmentLocalityTypeDescription
+        }}</span>
         <div class="buttons mt-1">
           <div
             v-for="localityType of LocalityType"
@@ -57,9 +44,67 @@
             <label
               :for="localityType.key"
               class="button is-shade-600 is-outlined locality"
+              >{{ localityType.value }}</label
             >
-              {{ localityType.value }}
-            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field mb-3">
+        <label class="label">{{
+          pageStore.evaluationInitiationPage.searchAssessmentZipCodeQuestion
+        }}</label>
+        <span class="is-family-secondary is-size-6">{{
+          pageStore.evaluationInitiationPage.searchAssessmentZipCodeDescription
+        }}</span>
+        <div class="control mt-1">
+          <input
+            v-model="zipCode"
+            class="input is-normal-width"
+            type="text"
+            placeholder="Code postal"
+            required
+          />
+          <button
+            class="pagination-next button is-outlined is-shade-600"
+            style="border-color: transparent"
+            :disabled="!zipCode"
+            @click.prevent="searchLocalities"
+          >
+            <span class="icon">
+              <icon size="20" name="search" />
+            </span>
+          </button>
+        </div>
+        <p
+          v-if="!localitiesToShow.length && searched"
+          class="is-family-secondary is-size-6bis mt-1"
+        >
+          {{ pageStore.evaluationInitiationPage.searchAssessmentNoResult }}
+        </p>
+      </div>
+
+      <div class="field mb-3">
+        <div class="buttons mt-1">
+          <div
+            v-for="locality of localitiesToShow"
+            :key="locality.name"
+            class="margin-between"
+          >
+            <input
+              :id="locality.name"
+              v-model="localityId"
+              type="radio"
+              :value="locality.id"
+              class="custom-hidden white-on-black-input-checked"
+              name="locality"
+              required
+            />
+            <label
+              :for="locality.name"
+              class="button is-shade-600 is-outlined locality"
+              >{{ locality.name }}</label
+            >
           </div>
         </div>
       </div>
@@ -82,7 +127,7 @@
 <script setup lang="ts">
 import { ref } from "@vue/reactivity"
 import { useAssessmentStore } from "~/stores/assessmentStore"
-import { LocalityType } from "~/composables/types"
+import { Localities, LocalityType } from "~/composables/types"
 import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({
@@ -99,15 +144,31 @@ if (!pageStore.evaluationInitiationPage.searchAssessmentTitle) {
 
 const zipCode = ref("")
 const localityTypeSelected = ref<string>()
+const localityId = ref<number>()
+const localities = ref<Localities>({
+  municipality: [],
+  intercommunality: [],
+})
+const searched = ref<number>(0)
+const localitiesToShow = computed(() =>
+  localityTypeSelected.value
+    ? localities.value[localityTypeSelected.value]
+    : Object.values(localities.value).flat()
+)
 const disabled = computed(() =>
-  zipCode.value && localityTypeSelected.value ? false : true
+  zipCode.value && localityId.value ? false : true
 )
 
 const assessmentStore = useAssessmentStore()
 
+async function searchLocalities() {
+  localities.value = await assessmentStore.getLocalities(zipCode.value)
+  searched.value = 1
+}
+
 async function onSubmit() {
   const isSuccess = await assessmentStore.getOrCreateAssessment({
-    zipCode: zipCode.value,
+    localityId: localityId.value,
     localityType: localityTypeSelected.value,
   })
   if (isSuccess) {

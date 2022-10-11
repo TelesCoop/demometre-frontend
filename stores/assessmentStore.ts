@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import {
   Assessment,
+  Localities,
   RepresentativityCriteria,
   Scores,
   User,
@@ -76,9 +77,19 @@ export const useAssessmentStore = defineStore("assessment", {
     },
   },
   actions: {
-    async getOrCreateAssessment({ zipCode, localityType }) {
+    async getLocalities(zipCode) {
+      const { data, error } = await useApiGet<Localities>(
+        `localites/by-zip-code/${parseInt(zipCode.replace(" ", ""))}/`
+      )
+      if (error.value) {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
+      return data.value
+    },
+    async getOrCreateAssessment({ localityId, localityType }) {
       const { data, error } = await useApiGet<Assessment>(
-        `assessments/by-locality/?zip_code=${zipCode}&locality_type=${localityType}`
+        `assessments/by-locality/?locality_id=${localityId}&locality_type=${localityType}`
       )
       if (error.value) {
         const errorStore = useToastStore()

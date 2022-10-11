@@ -164,6 +164,10 @@ type Locality = {
   population: number
   zip_codes: number[]
 }
+export type Localities = {
+  municipality: Locality[]
+  intercommunality: Locality[]
+}
 type CountByResponseChoice = {
   responseChoiceName: string
   responseChoiceId: number
@@ -446,6 +450,11 @@ export type ProjectPage = {
 export type EvaluationInitiationPage = {
   searchAssessmentTitle: string
   searchAssessmentDescription: string
+  searchAssessmentLocalityTypeQuestion: string
+  searchAssessmentLocalityTypeDescription: string
+  searchAssessmentZipCodeQuestion: string
+  searchAssessmentZipCodeDescription: string
+  searchAssessmentNoResult: string
   cguConsentTitle: string
   cguConsentDescriptionLoggedin: string
   cguConsentDescriptionLoggedout: string
