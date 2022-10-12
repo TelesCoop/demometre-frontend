@@ -18,14 +18,18 @@
       <!--      </div>-->
 
       <div class="field mb-3">
-        <label class="label">{{
-          pageStore.evaluationInitiationPage
-            .searchAssessmentLocalityTypeQuestion
-        }}</label>
-        <span class="is-family-secondary is-size-6">{{
-          pageStore.evaluationInitiationPage
-            .searchAssessmentLocalityTypeDescription
-        }}</span>
+        <label class="label">
+          {{
+            pageStore.evaluationInitiationPage
+              .searchAssessmentLocalityTypeQuestion
+          }}
+        </label>
+        <span class="is-family-secondary is-size-6">
+          {{
+            pageStore.evaluationInitiationPage
+              .searchAssessmentLocalityTypeDescription
+          }}
+        </span>
         <div class="buttons mt-1">
           <div
             v-for="localityType of LocalityType"
@@ -51,12 +55,17 @@
       </div>
 
       <div class="field mb-3">
-        <label class="label">{{
-          pageStore.evaluationInitiationPage.searchAssessmentZipCodeQuestion
-        }}</label>
-        <span class="is-family-secondary is-size-6">{{
-          pageStore.evaluationInitiationPage.searchAssessmentZipCodeDescription
-        }}</span>
+        <label class="label">
+          {{
+            pageStore.evaluationInitiationPage.searchAssessmentZipCodeQuestion
+          }}
+        </label>
+        <span class="is-family-secondary is-size-6">
+          {{
+            pageStore.evaluationInitiationPage
+              .searchAssessmentZipCodeDescription
+          }}
+        </span>
         <div class="control mt-1">
           <input
             v-model="zipCode"
@@ -164,6 +173,7 @@ const assessmentStore = useAssessmentStore()
 async function searchLocalities() {
   localities.value = await assessmentStore.getLocalities(zipCode.value)
   searched.value = 1
+  localityId.value = undefined
 }
 
 async function onSubmit() {
