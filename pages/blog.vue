@@ -2,7 +2,7 @@
   <div class="container">
     <section class="columns section">
       <div class="column is-5">
-        <PageTitle title="Blog" subtitle="Paragraphe d'intro du blog" />
+        <PageTitle title="Blog" />
       </div>
     </section>
     <section>

@@ -2,10 +2,7 @@
   <div class="container">
     <section class="columns section">
       <div class="column is-5">
-        <PageTitle
-          title="Ressources"
-          subtitle="Paragraphe d'intro des ressources"
-        />
+        <PageTitle title="Ressources" />
       </div>
     </section>
     <section>
