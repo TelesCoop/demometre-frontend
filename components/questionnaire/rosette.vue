@@ -121,7 +121,7 @@ function onMarkerClick(markerId) {
 .rosette
   position: relative
   width: 600px
-  height: 600px
+  height: 500px
 .center-button
   position: absolute
   top: 50%

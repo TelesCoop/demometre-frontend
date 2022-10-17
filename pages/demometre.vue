@@ -36,6 +36,10 @@
             @pillar-click="onRosettePillarClicked($event)"
             @marker-click="onRosetteMarkerClicked($event)"
           />
+          <div
+            class="rosette-legend"
+            v-html="pageStore.referentialPage.rosetteLegend"
+          ></div>
         </div>
       </section>
     </div>
@@ -284,5 +288,7 @@ img
   object-fit: cover
 @include touch
   .rosette-menu
+    display: none
+  .rosette-legend
     display: none
 </style>

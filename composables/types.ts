@@ -341,6 +341,7 @@ export type HomePage = {
 export type ReferentialPage = {
   title: string
   introduction: string
+  rosetteLegend: string
   pillarBlockTitle: string
   pillarBlockLeftContent: string
   pillarBlockRightContent: string
