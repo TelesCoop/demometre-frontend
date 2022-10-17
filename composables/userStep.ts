@@ -6,7 +6,7 @@ import {
   getLastAnsweredProfilingQuestionId,
 } from "~/composables/journey"
 
-const START_EVALUATION_TEXT = " Lancer l'évaluation"
+const START_EVALUATION_TEXT = "Commencer l'évaluation"
 const RESUME_EVALUATION_TEXT = "Reprendre l'évaluation"
 export function useUserStep<Type>() {
   const assessmentStore = useAssessmentStore()

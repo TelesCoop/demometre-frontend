@@ -80,7 +80,7 @@
       <PageSection
         title="Mon profil"
         intro="Vous n'avez pas d'évaluation en cours"
-        button-text="Lancer l'évaluation"
+        button-text="Commencer l'évaluation"
         :button-link="userStep.url"
       ></PageSection>
     </div>
