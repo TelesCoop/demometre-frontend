@@ -52,6 +52,7 @@
       </div>
 
       <div class="column is-6-desktop is-offset-1">
+        <!-- Pillar navigation for desktop  -->
         <QuestionnaireRosette
           class="rosette-menu"
           :center-button-name="rosetteButtonText"
@@ -60,6 +61,7 @@
           @pillar-click="onRosettePillarClicked($event)"
           @marker-click="onRosetteMarkerClicked($event)"
         />
+        <!-- Pillar navigation for mobile  -->
         <section ref="pillarsRef" class="columns is-multiline mt-4 list-menu">
           <div
             v-for="pillar of questionnaireStore.pillars"
