@@ -38,7 +38,7 @@
           />
           <RichText
             :rich-text="pageStore.referentialPage.rosetteLegend"
-            class="rosette-legend"
+            class="rosette-legend mt-1"
           />
         </div>
       </section>
