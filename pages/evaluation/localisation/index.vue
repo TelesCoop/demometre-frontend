@@ -73,13 +73,16 @@
             type="text"
             placeholder="Code postal"
             required
+            @keyup.enter.stop="searchLocalities"
           />
           <button
+            type="button"
             class="pagination-next button is-outlined is-shade-600"
             style="border-color: transparent"
             :disabled="!zipCode"
-            @click.prevent="searchLocalities"
+            @click="searchLocalities"
           >
+            <span>Rechercher</span>
             <span class="icon">
               <icon size="20" name="search" />
             </span>
@@ -108,6 +111,7 @@
               class="custom-hidden white-on-black-input-checked"
               name="locality"
               required
+              @click="localityTypeSelected = locality.localityType"
             />
             <label
               :for="locality.name"
@@ -119,15 +123,16 @@
       </div>
 
       <div class="buttons mt-4">
-        <button class="button is-shade-600 is-rounded" :disabled="disabled">
+        <button
+          class="button is-shade-600 is-rounded"
+          :disabled="disabled"
+          type="submit"
+        >
           <span>Valider</span>
           <span class="icon">
             <icon size="20" name="check" />
           </span>
         </button>
-
-        <!-- Permet d'appuyer sur entrer -->
-        <input type="submit" hidden />
       </div>
     </form>
   </PageSection>
@@ -138,6 +143,7 @@ import { ref } from "@vue/reactivity"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { Localities, LocalityType } from "~/composables/types"
 import { usePageStore } from "~/stores/pageStore"
+import { usePressEnter } from "~/composables/pressEnter"
 
 definePageMeta({
   title: "Localisation",
@@ -164,9 +170,7 @@ const localitiesToShow = computed(() =>
     ? localities.value[localityTypeSelected.value]
     : Object.values(localities.value).flat()
 )
-const disabled = computed(() =>
-  zipCode.value && localityId.value ? false : true
-)
+const disabled = computed(() => (localityId.value ? false : true))
 
 const assessmentStore = useAssessmentStore()
 
@@ -193,4 +197,7 @@ async function onSubmit() {
     }
   }
 }
+
+const canPressEnter = () => !disabled.value
+usePressEnter(onSubmit, canPressEnter)
 </script>

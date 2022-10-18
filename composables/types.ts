@@ -163,6 +163,7 @@ type Locality = {
   name: string
   population: number
   zip_codes: number[]
+  localityType: string
 }
 export type Localities = {
   municipality: Locality[]
