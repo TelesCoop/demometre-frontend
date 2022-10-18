@@ -233,7 +233,7 @@ import {
   SurveyType,
   SimpleBlock,
 } from "~/composables/types"
-import { computed, onBeforeUnmount, onMounted, PropType, watch } from "vue"
+import { computed, PropType, watch } from "vue"
 import { ref } from "@vue/reactivity"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
