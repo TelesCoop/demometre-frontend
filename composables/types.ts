@@ -347,6 +347,7 @@ export type ReferentialPage = {
   pillarBlockLeftContent: string
   pillarBlockRightContent: string
   pillarBlockImageUrl: string
+  pillarStructureLegend: string
   markerBlockTitle: string
   markerBlockContent: string
   criteriaBlockTitle: string

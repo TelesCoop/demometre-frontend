@@ -100,8 +100,15 @@
       </PageSection>
     </div>
 
+    <div class="container">
+      <RichText
+        v-if="pageStore.referentialPage.pillarStructureLegend"
+        :rich-text="pageStore.referentialPage.pillarStructureLegend"
+        class="mt-4"
+      />
+    </div>
     <div class="container mobile-mode">
-      <section ref="pillarsRef" class="columns is-multiline mt-4">
+      <section ref="pillarsRef" class="columns is-multiline mt-2">
         <div
           v-for="pillar of questionnaireStore.pillars"
           :key="pillar.name"
