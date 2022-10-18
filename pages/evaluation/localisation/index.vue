@@ -133,6 +133,10 @@
             <icon size="20" name="check" />
           </span>
         </button>
+        <span v-if="canPressEnter()" class="is-size-7 hidden-in-mobile-mode">
+          appuyez sur
+          <span class="has-text-weight-bold">Entrer ⏎</span>
+        </span>
       </div>
     </form>
   </PageSection>
