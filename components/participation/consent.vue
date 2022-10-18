@@ -1,9 +1,9 @@
 <template>
   <div>
     <label class="label has-text-shade-800">{{ consentData.title }}</label>
-    <span class="is-family-secondary is-size-6 has-text-shade-600">{{
-      consentData.desc
-    }}</span>
+    <span class="is-family-secondary is-size-6 has-text-shade-600">
+      {{ consentData.desc }}
+    </span>
     <label class="checkbox is-size-7 mt-1">
       <input
         v-if="props.type === `cgv`"
@@ -23,11 +23,21 @@
         type="checkbox"
         required
       />
-      En cochant cette case, vous confirmez avoir pris connaissance des
-      <a :href="consentData.url" target="_blank" class="is-underlined">
-        {{ consentData.urlText }}
-      </a>
-      et des règles d’accessibilité du DémoMètre.
+      {{ consentData.checkboxIntro }}
+      Vous pouvez consulter ici nos
+      <a :href="consentData.url" target="_blank" class="is-underlined">{{
+        consentData.urlText
+      }}</a>
+      et
+      <a
+        :href="
+          MADIA_BASE_URL + settingStore.rgpdSettings.confidentialityPolicyUrl
+        "
+        target="_blank"
+        class="is-underlined"
+        >Charte relative à la protection des données à caractère personnel</a
+      >
+      .
     </label>
     <p class="is-family-secondary is-size-6 has-text-shade-600 mt-2">
       {{ consentData.additionalText }}
@@ -62,8 +72,10 @@ const consentData = computed(() => {
         desc: userStore.isLoggedIn
           ? pageStore.evaluationInitiationPage.cguConsentDescriptionLoggedin
           : pageStore.evaluationInitiationPage.cguConsentDescriptionLoggedout,
+        checkboxIntro:
+          "J’accepte les conditions générales d’utilisation de la plateforme.",
         url: MADIA_BASE_URL + settingStore.rgpdSettings.termsOfUseUrl,
-        urlText: "conditions générales d’utilisations",
+        urlText: "CGU",
         linkedState: props.initiator
           ? assessmentStore.newAssessment.initiatorUsageConsent
           : participationStore.newParticipation.consent,
@@ -72,8 +84,10 @@ const consentData = computed(() => {
       return {
         title: pageStore.evaluationInitiationPage.cgvConsentTitle,
         desc: pageStore.evaluationInitiationPage.cgvConsentDescription,
+        checkboxIntro:
+          "J’accepte les conditions générales de vente de la plateforme.",
         url: MADIA_BASE_URL + settingStore.rgpdSettings.termsOfSaleUrl,
-        urlText: "conditions générales de vente",
+        urlText: "CGV",
         linkedState: assessmentStore.newAssessment.conditionsOfSaleConsent,
         additionalText: pageStore.evaluationInitiationPage.royaltyDescription,
       }
