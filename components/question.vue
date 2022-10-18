@@ -171,25 +171,23 @@
                       <span class="has-text-weight-bold">Entrer ⏎</span>
                     </span>
                   </div>
-                  <div
-                    v-if="props.isQuestionnaire"
-                    class="is-flex buttons rounds"
-                  >
+                  <div v-if="props.isQuestionnaire" class="is-flex buttons">
                     <NuxtLink
                       :to="`/resultats/${assessmentStore.currentAssessmentId}?question=${question.id}`"
                       :class="`is-${props.color}`"
-                      class="button is-outlined is-rounded text-color-hover"
+                      class="button is-outlined text-color-hover is-rounded"
                       title="Voir les résultats"
                       target="_blank"
                     >
-                      <i class="icon">
+                      <span>Voir les résultats</span>
+                      <span class="icon">
                         <Icon size="20" name="bar-chart-line" />
-                      </i>
+                      </span>
                     </NuxtLink>
                     <NuxtLink
                       :to="`/demometre?question=${question.id}`"
                       :class="`is-${props.color}`"
-                      class="button is-outlined is-rounded text-color-hover"
+                      class="button is-outlined text-color-hover round"
                       title="Plus d'informations"
                       target="_blank"
                     >
@@ -373,9 +371,11 @@ usePressEnter(submit, canPressEnter)
     top: 50%
     left: 50%
     transform: translate(-50%, -50%)
-.buttons.rounds .button, .button.round
+.buttons .round, .button.round
   height: 40px
   width: 40px
+  padding: 0
+  border-radius: 50%
 
 .tabs
   ul
