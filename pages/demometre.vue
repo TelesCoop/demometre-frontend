@@ -36,10 +36,10 @@
             @pillar-click="onRosettePillarClicked($event)"
             @marker-click="onRosetteMarkerClicked($event)"
           />
-          <div
+          <RichText
+            :rich-text="pageStore.referentialPage.rosetteLegend"
             class="rosette-legend"
-            v-html="pageStore.referentialPage.rosetteLegend"
-          ></div>
+          />
         </div>
       </section>
     </div>
