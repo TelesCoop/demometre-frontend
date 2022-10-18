@@ -5,12 +5,9 @@
         :title="assessmentStore.assessmentById[assessmentId]?.name"
         class="mt-4"
       />
-      <ParticipationBoard
-        :assessment="assessmentStore.assessmentById[assessmentId]"
-      ></ParticipationBoard>
     </div>
 
-    <div class="container mobile-mode">
+    <div class="container mobile-mode mb-4">
       <section class="section">
         <div class="is-flex is-justify-content-space-between">
           <h2 class="title is-3 has-text-shade-700 mb-1">
@@ -152,6 +149,12 @@
           </template>
         </QuestionnairePillarReferential>
       </section>
+    </div>
+
+    <div class="container">
+      <ParticipationBoard
+        :assessment="assessmentStore.assessmentById[assessmentId]"
+      ></ParticipationBoard>
     </div>
   </div>
 </template>
