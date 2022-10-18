@@ -12,7 +12,7 @@
             "
           />
           <RichText
-            :rich-text="pageStore.resultsPage.description"
+            :rich-text="pageStore.resultsPage.introduction"
             class="is-family-secondary"
           />
           <div v-if="assessmentStore.canSeeResultsAssessments.length">
