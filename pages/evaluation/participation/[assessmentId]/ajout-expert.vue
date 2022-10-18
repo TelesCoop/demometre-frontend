@@ -89,7 +89,7 @@ async function onSubmit() {
   if (isSuccess) {
     assessmentStore.addingExpert = false
     useRouter().push(
-      `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`
+      `/evaluation/participation/${assessmentStore.currentAssessmentId}/role`
     )
   }
 }

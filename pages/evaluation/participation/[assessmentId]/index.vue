@@ -124,7 +124,7 @@ async function onSubmit() {
     )
   }
   useRouter().push(
-    `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`
+    `/evaluation/participation/${assessmentStore.currentAssessmentId}/role`
   )
 }
 </script>

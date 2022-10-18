@@ -66,7 +66,7 @@ export function useUserStep<Type>() {
       }
       return {
         step: "role",
-        url: `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`,
+        url: `/evaluation/participation/${assessmentStore.currentAssessmentId}/role`,
         text: RESUME_EVALUATION_TEXT,
       }
     }
