@@ -133,7 +133,7 @@
             <icon size="20" name="check" />
           </span>
         </button>
-        <span v-if="canPressEnter()" class="is-size-7 hidden-in-mobile-mode">
+        <span v-if="canPressEnter()" class="is-size-7 is-hidden-mobile">
           appuyez sur
           <span class="has-text-weight-bold">Entrer ⏎</span>
         </span>

@@ -41,7 +41,7 @@
         >
         <span
           v-else-if="!disabled"
-          class="is-size-7 has-text-shade-600 hidden-in-mobile-mode"
+          class="is-size-7 has-text-shade-600 is-hidden-mobile"
         >
           appuyez sur
           <span class="has-text-weight-bold">Entrer ⏎</span>

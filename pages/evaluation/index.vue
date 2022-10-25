@@ -10,7 +10,7 @@
         <button class="button is-normal is-rounded">
           <span>Commencer</span>
         </button>
-        <span class="is-size-7 hidden-in-mobile-mode">
+        <span class="is-size-7 is-hidden-mobile">
           appuyez sur
           <span class="has-text-weight-bold">Entrer ⏎</span>
         </span>

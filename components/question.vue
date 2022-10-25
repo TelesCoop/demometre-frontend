@@ -149,7 +149,10 @@
                       class="button is-outlined is-rounded mr-0_75"
                       type="submit"
                     >
-                      <span>Je ne sais pas / Je passe</span>
+                      <span class="is-hidden-mobile"
+                        >Je ne sais pas / Je passe</span
+                      >
+                      <span class="is-hidden-tablet">Je passe</span>
                       <i class="icon">
                         <Icon v-if="isLoading" size="20" name="loader-2-line" />
                         <Icon v-else size="20" name="arrow-right-line" />
@@ -160,7 +163,7 @@
                     >
                     <span
                       v-else-if="canPressEnter()"
-                      class="is-size-7 hidden-in-mobile-mode"
+                      class="is-size-7 is-hidden-mobile"
                       :class="
                         props.color === 'no-pillar'
                           ? 'has-text-shade-600'
