@@ -15,8 +15,8 @@
         <RichText
           v-if="question.description"
           class="is-family-secondary"
-          :class="`has-text-${props.color}-dark`"
           :rich-text="question.description"
+          :color="props.color"
         ></RichText>
         <section
           id="menu"
@@ -51,6 +51,7 @@
                 <RichText
                   class="mt-1 is-block is-family-secondary"
                   :rich-text="definition.explanation"
+                  :color="props.color"
                 />
               </div>
             </div>
@@ -61,7 +62,10 @@
               :key="element.title.replace(/\s+/g, '')"
             >
               <div v-show="currentTabId === element.title.replace(/\s+/g, '')">
-                <RichText :rich-text="element.description" />
+                <RichText
+                  :rich-text="element.description"
+                  :color="props.color"
+                />
               </div>
             </div>
 

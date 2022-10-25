@@ -128,12 +128,14 @@
           :color="colorClass"
           :markers="markers"
           :initial-question-id="activeQuestionId"
+          :class="`has-text-${colorClass}-dark`"
         >
           <template #criteria="criteriaProps">
             <RichText
               v-if="criteriaProps.criteria.description"
               :rich-text="criteriaProps.criteria.description"
               class="is-family-secondary subtitle mb-2"
+              :color="colorClass"
             />
             <Accordion
               v-if="criteriaProps.criteria.definitionIds.length"
@@ -141,7 +143,12 @@
               :initially-open="true"
             >
               <template #title>
-                <h3 class="subtitle has-text-weight-bold mb-1">Definitions</h3>
+                <h3
+                  class="subtitle has-text-weight-bold mb-1"
+                  :class="`has-text-${colorClass}-dark`"
+                >
+                  Definitions
+                </h3>
               </template>
               <template #content>
                 <div
@@ -156,6 +163,7 @@
                       definitionStore.definitionById[definitionId].explanation
                     "
                     class="is-family-secondary"
+                    :color="colorClass"
                   />
                 </div>
               </template>
@@ -168,7 +176,10 @@
                 :initially-open="true"
               >
                 <template #title>
-                  <h3 class="subtitle has-text-weight-bold mb-1">
+                  <h3
+                    class="subtitle has-text-weight-bold mb-1"
+                    :class="`has-text-${colorClass}-dark`"
+                  >
                     {{ explanatory.title }}
                   </h3>
                 </template>
@@ -176,6 +187,7 @@
                   <RichText
                     :rich-text="explanatory.description"
                     class="is-family-secondary"
+                    :color="colorClass"
                   />
                 </template>
               </Accordion>
@@ -186,6 +198,7 @@
               v-if="markerProps.marker.description"
               :rich-text="markerProps.marker.description"
               class="is-family-secondary subtitle mb-2"
+              :color="colorClass"
             />
             <div class="score">
               <div v-for="i in 4" :key="i" class="is-flex mb-1">

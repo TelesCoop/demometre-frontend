@@ -3,7 +3,7 @@
     <RichText
       v-if="item.type === 'richtext'"
       :rich-text="item.value"
-      class="is-family-secondary mb-2 has-text-shade-600"
+      class="is-family-secondary mb-2"
       :class="!props.insideTwoColumns && 'column-2'"
     />
     <img

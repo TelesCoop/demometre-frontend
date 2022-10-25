@@ -176,6 +176,7 @@
           v-if="pillar.description"
           :rich-text="pillar.description"
           class="is-family-secondary subtitle mb-2"
+          :color="props.color"
         />
         <slot name="pillar" :pillar="pillar"></slot>
         <div>

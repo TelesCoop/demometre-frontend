@@ -40,7 +40,7 @@
         <RichText
           v-if="props.step.richtext"
           :rich-text="props.step.richtext"
-          class="is-family-secondary mb-2 has-text-shade-500"
+          class="is-family-secondary mb-2"
         />
         <div class="has-text-centered">
           <a

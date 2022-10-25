@@ -158,7 +158,7 @@
         >
           <div class="my-2">
             <RichText
-              class="is-family-secondary column-2 has-text-shade-600 mb-2"
+              class="is-family-secondary column-2 mb-2"
               :rich-text="pageStore.projectPage.whoCommitteeSubBlockDescription"
             ></RichText>
             <div>
