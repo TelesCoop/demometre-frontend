@@ -43,7 +43,7 @@
           <NuxtLink to="/ressources" class="has-text-white"
             >Ressources</NuxtLink
           >
-          <NuxtLink to="/" class="has-text-white">Contact</NuxtLink>
+          <NuxtLink to="/faq" class="has-text-white">FAQ</NuxtLink>
         </div>
         <div class="column footer-column is-3">
           <!-- <label class="label is-size-7" for="email"

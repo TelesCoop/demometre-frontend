@@ -191,17 +191,17 @@
                         <Icon size="20" name="bar-chart-line" />
                       </span>
                     </NuxtLink>
-                    <!-- <NuxtLink
-                      :to="`/demometre#pillarsRef?question=${question.id}`"
+                    <NuxtLink
+                      :to="`/faq`"
                       :class="`is-${props.color}`"
                       class="button is-outlined text-color-hover round"
-                      title="Plus d'informations"
+                      title="FAQ"
                       target="_blank"
                     >
                       <i class="icon">
                         <Icon size="16" name="question-mark" />
                       </i>
-                    </NuxtLink>-->
+                    </NuxtLink>
                   </div>
                 </div>
               </div>

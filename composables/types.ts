@@ -525,6 +525,15 @@ export type AnimatorPage = {
   responsesIntro: string
 }
 
+type ContentPage = {
+  title: string
+  content: string
+}
+
+export type ImportantPages = {
+  faqPage: ContentPage
+}
+
 // Props
 export type QuestionContextProps = {
   journey: any

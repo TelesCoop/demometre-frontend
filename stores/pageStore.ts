@@ -5,6 +5,7 @@ import {
   EvaluationInitiationPage,
   EvaluationQuestionnairePage,
   HomePage,
+  ImportantPages,
   ProjectPage,
   ReferentialPage,
   ResultsPage,
@@ -34,6 +35,7 @@ export const usePageStore = defineStore("page", {
     evaluationInitiationPage: <EvaluationInitiationPage>{},
     evaluationQuestionnairePage: <EvaluationQuestionnairePage>{},
     animatorPage: <AnimatorPage>{},
+    importantPages: <ImportantPages>{},
   }),
   getters: {
     projectPageMember: (state) => {
@@ -216,6 +218,17 @@ export const usePageStore = defineStore("page", {
         } else {
           console.error("Impossible to retrieve animator page")
         }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
+    },
+    async getImportantPages() {
+      const { data, error } = await useApiGet<ImportantPages[]>(
+        "important-pages-settings/"
+      )
+      if (!error.value) {
+        this.importantPages = data.value[0]
       } else {
         const errorStore = useToastStore()
         errorStore.setError(error.value.data.messageCode)

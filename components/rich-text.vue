@@ -35,4 +35,13 @@ const vLinksInNewWindow = {
   text-decoration: underline
   color: var(--color-dark)
   text-decoration-color: var(--color-hover)
+.rich-text :deep(h2)
+  font-size: 2.5rem
+  font-weight: 600
+.rich-text :deep(h3)
+  font-size: 2rem
+  font-weight: 550
+.rich-text :deep(h4)
+  font-size: 1.5rem
+  font-weight: 500
 </style>
