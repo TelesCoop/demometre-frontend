@@ -335,4 +335,5 @@ const scrollIntoWhyBlock = () => {
   position: absolute
   top: 3rem
   right: 0
+  max-height: 40px
 </style>

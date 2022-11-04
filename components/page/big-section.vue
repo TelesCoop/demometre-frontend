@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  title: { type: String, required: true },
-  label: { type: String, required: true },
+  title: { type: String, required: true, default: "" },
+  label: { type: String, required: true, default: "" },
 })
 </script>
 

@@ -216,12 +216,16 @@ function closeMenu() {
     background-color: white
   .navbar-item-inactive
     color: $shade-400
+    &:hover
+      color: $shade-500
 
 @include touch
   .navbar-menu-mobile
     background-color: $shade-600
   .navbar-item-inactive
     color: $shade-200
+    &:hover
+      color: $shade-500
 
 @include until-widescreen
   .navbar-progress-bar-wrapper
