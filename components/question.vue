@@ -186,7 +186,8 @@
                       title="Voir les résultats"
                       target="_blank"
                     >
-                      <span>Voir les résultats</span>
+                      <span class="is-hidden-mobile">Voir les résultats</span>
+                      <span class="is-hidden-tablet">Résultats</span>
                       <span class="icon">
                         <Icon size="20" name="bar-chart-line" />
                       </span>
@@ -373,6 +374,8 @@ usePressEnter(submit, canPressEnter)
   display: flex
   justify-content: space-between
   position: relative
+  flex-wrap: wrap
+  row-gap: 1rem
   .absolute-centered
     position: absolute
     top: 50%
