@@ -26,23 +26,18 @@
 
       <div
         id="navbarMenu"
-        class="navbar-menu"
-        :class="isBurgerOpen ? 'is-active has-background-shade-600' : ''"
+        class="navbar-menu navbar-menu-mobile"
+        :class="isBurgerOpen && 'is-active'"
       >
-        <div
-          class="navbar-start px-1"
-          :class="
-            isBurgerOpen ? '' : 'has-background-white inline-navbar-start'
-          "
-        >
+        <div class="navbar-start px-1 navbar-items">
           <NuxtLink
             v-for="(item, index) of navItems"
             :key="index"
             :to="item.to"
             :class="
               isRouteActive(item.to)
-                ? 'is-active has-text-shade-600'
-                : 'has-text-shade-400'
+                ? 'is-active navbar-item-active'
+                : 'navbar-item-inactive'
             "
             class="navbar-item"
             @click="closeMenu"
@@ -180,9 +175,6 @@ function closeMenu() {
   right: 0
   top: 0
   z-index: 30
-.inline-navbar-start
-  border-radius: 1000px
-  margin: 14px 24px
 .button.evaluation:hover
   background: $cooperation
 .button.save
@@ -213,6 +205,23 @@ function closeMenu() {
 
 .button .icon
   vertical-align: middle
+
+.navbar-item-active
+  color: $shade-600 !important
+
+@include desktop
+  .navbar-items
+    border-radius: 1000px
+    margin: 14px 24px
+    background-color: white
+  .navbar-item-inactive
+    color: $shade-400
+
+@include touch
+  .navbar-menu-mobile
+    background-color: $shade-600
+  .navbar-item-inactive
+    color: $shade-200
 
 @include until-widescreen
   .navbar-progress-bar-wrapper
