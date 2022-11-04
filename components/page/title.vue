@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 defineProps({
-  title: { type: String, required: true, default: undefined },
+  title: { type: String, required: true, default: "" },
   subtitle: { type: String, required: false, default: undefined },
   marginBottom: { type: Number, default: 3 },
 })

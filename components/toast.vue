@@ -1,6 +1,6 @@
 <template>
   <Transition>
-    <div v-if="message" id="snackbar">{{ message }}</div>
+    <div id="snackbar">{{ message }}</div>
   </Transition>
 </template>
 

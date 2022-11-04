@@ -1,17 +1,19 @@
 <template>
-  <ModalCancelParticipationModal></ModalCancelParticipationModal>
-  <ModalSaveParticipationModal></ModalSaveParticipationModal>
-  <div
-    class="has-navbar-fixed-top default-page"
-    :style="`padding-top: ${height}px;`"
-  >
-    <HeaderNavbar @change-header-height="onChangeHeaderHight($event)" />
-    <div class="default-page-content">
-      <Breadcrumb />
-      <slot></slot>
+  <div>
+    <ModalCancelParticipationModal></ModalCancelParticipationModal>
+    <ModalSaveParticipationModal></ModalSaveParticipationModal>
+    <div
+      class="has-navbar-fixed-top default-page"
+      :style="`padding-top: ${height}px;`"
+    >
+      <HeaderNavbar @change-header-height="onChangeHeaderHight($event)" />
+      <div class="default-page-content">
+        <Breadcrumb />
+        <slot></slot>
+      </div>
+      <Footer v-if="showFooter" />
+      <Toast v-if="toastStore.message" :message="toastStore.message" />
     </div>
-    <Footer v-if="showFooter" />
-    <Toast :message="toastStore.message" />
   </div>
 </template>
 

@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 defineProps({
-  title: { type: String, required: true },
+  title: { type: String, required: true, default: "" },
   intro: { type: String, required: false, default: undefined },
   buttonText: { type: String, required: false, default: undefined },
   buttonLink: { type: String, required: false, default: undefined },

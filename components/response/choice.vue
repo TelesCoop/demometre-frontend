@@ -77,7 +77,7 @@ onMounted(() => {
 const letter = computed(() => letters[props.responseChoiceIndex])
 
 function compareKey(key: string) {
-  if ((key as string).toUpperCase() === letter.value)
+  if ((key as string).toUpperCase() === letter.value && choiceElement.value)
     choiceElement.value.click()
 }
 </script>

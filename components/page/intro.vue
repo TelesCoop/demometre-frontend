@@ -49,8 +49,8 @@
 import { MADIA_BASE_URL } from "~/composables/api"
 
 const props = defineProps({
-  title: { type: String, required: true },
-  subtitle: { type: String, required: true },
+  title: { type: String, required: true, default: "" },
+  subtitle: { type: String, required: true, default: "" },
   introduction: { type: String, required: false, default: undefined },
   youtubeVideoId: { type: String, required: false, default: undefined },
   imageUrl: { type: String, required: false, default: undefined },

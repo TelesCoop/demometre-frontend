@@ -13,12 +13,11 @@
         <div class="buttons">
           <button
             class="button is-shade-600 is-outlined"
-            :class="{ 'is-loading': isLoading }"
             @click="saveParticipation"
           >
             Oui, créer un compte
           </button>
-          <button class="button is-shade-600 is-outlined" @click="closeModal()">
+          <button class="button is-shade-600 is-outlined" @click="closeModal">
             Non, ne rien enregistrer
           </button>
         </div>
