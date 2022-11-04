@@ -1,6 +1,6 @@
 <template>
   <div class="container is-tight">
-    <h1 class="title is-3 mt-2">
+    <h1 class="title is-3 mt-2 has-text-black">
       {{ pageStore.evaluationQuestionnairePage.roleQuestionTitle }}
     </h1>
     <RichText

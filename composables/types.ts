@@ -476,6 +476,8 @@ export type EvaluationInitiationPage = {
   addExpertDescription: string
   addExpertButtonYes: string
   addExpertButtonNo: string
+  dashboardTitle: string
+  dashboardDescription: string
   mustBeConnectedToCreateTitle: string
   mustBeConnectedToCreateDescription: string
   createQuickAssessmentTitle: string

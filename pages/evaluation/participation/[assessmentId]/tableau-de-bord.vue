@@ -1,17 +1,17 @@
 <template>
   <div class="container">
     <section class="section mx-2">
-      <h1 class="title is-3 mb-0_5">
-        Tableau de bord de
-        {{
-          assessmentStore.currentAssessment.municipality
-            ? "ma ville"
-            : "mon inter-communalité"
-        }}
+      <h1 class="title is-3 mb-0_5 has-text-black">
+        {{ pageStore.evaluationInitiationPage.dashboardTitle }}
       </h1>
-      <h2 class="is-size-5 mb-2 is-family-secondary">
+      <h2 class="is-size-5 mb-1 is-family-secondary">
         {{ assessmentStore.currentAssessment.municipality.name }}
       </h2>
+      <RichText
+        v-if="pageStore.evaluationInitiationPage.dashboardDescription"
+        class="is-family-secondary mb-2"
+        :rich-text="pageStore.evaluationInitiationPage.dashboardDescription"
+      ></RichText>
       <ParticipationBoard
         :assessment="assessmentStore.currentAssessment"
       ></ParticipationBoard>
@@ -32,12 +32,18 @@
 
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({
   title: "Localisation",
   step: "role",
   middleware: ["assessment", "user-step"],
 })
+
+const pageStore = usePageStore()
+if (!pageStore.evaluationInitiationPage.dashboardTitle) {
+  pageStore.getEvaluationInitiationPage()
+}
 
 const assessmentStore = useAssessmentStore()
 </script>
