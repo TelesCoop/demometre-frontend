@@ -195,6 +195,7 @@ export function useQuestionnaireJourney<Type>(pillarName: string) {
     const questionnaireStore = useQuestionnaireStore()
     const participationStore = useParticipationStore()
     const assessmentStore = useAssessmentStore()
+    const userStore = useUserStore()
 
     const participation = participationStore.participation
     const assessment = assessmentStore.currentAssessment
@@ -202,8 +203,12 @@ export function useQuestionnaireJourney<Type>(pillarName: string) {
     const questionIds = questionnaireStore
       .getQuestionnaireQuestionByPillarName(pillarName)
       .filter((question: Question) => {
-        return QUESTION_FILTERS_VALUES.every((test) =>
-          test({ question, participation, assessment })
+        return (
+          QUESTION_FILTERS_VALUES.every((test) =>
+            test({ question, participation, assessment })
+          ) &&
+          (question.objectivity === Objectivity.SUBJECTIVE ||
+            userStore.isLoggedIn)
         )
       })
       .map((question: Question) => question.id)
