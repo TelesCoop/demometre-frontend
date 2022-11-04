@@ -16,7 +16,7 @@
           aria-expanded="false"
           data-target="navbarMenu"
           :class="isBurgerOpen ? 'is-active' : ''"
-          @click="isBurgerOpen = !isBurgerOpen"
+          @click="closeMenu"
         >
           <span aria-hidden="true" class="has-text-white"></span>
           <span aria-hidden="true" class="has-text-white"></span>
@@ -45,6 +45,7 @@
                 : 'has-text-shade-400'
             "
             class="navbar-item"
+            @click="closeMenu"
             >{{ item.name }}</NuxtLink
           >
         </div>
@@ -56,12 +57,18 @@
                 v-if="!isEvaluationRoute"
                 :to="userStep.url"
                 class="button evaluation is-rounded has-border-cooperation has-text-cooperation-dark"
+                @click="closeMenu"
                 >{{ userStep.text }}</NuxtLink
               >
               <button
                 v-if="isEvaluationRoute && userStore.isUnknownUser"
                 class="button save is-rounded is-shade-600 is-outlined"
-                @click="participationStore.setShowSaveParticipationModal(true)"
+                @click="
+                  () => {
+                    participationStore.setShowSaveParticipationModal(true)
+                    closeMenu()
+                  }
+                "
               >
                 Enregistrer
               </button>
@@ -69,12 +76,14 @@
                 v-if="userStore.isLoggedIn"
                 to="/profil"
                 class="button is-white is-outlined is-rounded"
+                @click="closeMenu"
                 >{{ userStore.user.email }}</NuxtLink
               >
               <NuxtLink
                 v-else
                 to="/login"
                 class="button is-white is-outlined is-rounded"
+                @click="closeMenu"
                 >Se connecter</NuxtLink
               >
             </div>
@@ -158,6 +167,10 @@ const navItems = [
     to: "/projet",
   },
 ]
+
+function closeMenu() {
+  isBurgerOpen.value = !isBurgerOpen.value
+}
 </script>
 
 <style scoped lang="sass">
