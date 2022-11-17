@@ -46,6 +46,23 @@
           <NuxtLink to="/faq" class="has-text-white">FAQ</NuxtLink>
         </div>
         <div class="column footer-column is-3">
+          <a
+            class="has-text-shade-200"
+            href="https://praticable.fr/"
+            target="_blank"
+          >
+            Désigné par
+            <b>Praticable</b>
+          </a>
+          <a
+            class="has-text-shade-200"
+            href="https://www.telescoop.fr/"
+            target="_blank"
+          >
+            Développé par
+            <b>TelesCoop</b>
+          </a>
+
           <!-- <label class="label is-size-7" for="email"
             >Lettre d'information</label
           >
