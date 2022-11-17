@@ -1,12 +1,9 @@
 <template>
   <div class="container">
     <section class="section mx-2">
-      <h1 class="title is-3 mb-0_5 has-text-black">
+      <h1 class="title is-3 mb-2 has-text-black">
         {{ pageStore.evaluationInitiationPage.dashboardTitle }}
       </h1>
-      <h2 class="is-size-5 mb-1 is-family-secondary">
-        {{ assessmentStore.currentAssessment.municipality.name }}
-      </h2>
       <RichText
         v-if="pageStore.evaluationInitiationPage.dashboardDescription"
         class="is-family-secondary mb-2"

@@ -82,9 +82,11 @@
                   class="is-underlined"
                   @click="onSelectQuestion(explainsByQuestionId)"
                 >
-                  <span>{{
-                    questionnaireStore.questionById[explainsByQuestionId].name
-                  }}</span>
+                  <span>
+                    {{
+                      questionnaireStore.questionById[explainsByQuestionId].name
+                    }}
+                  </span>
                 </a>
               </div>
               <div
@@ -104,12 +106,14 @@
                     )
                   "
                 >
-                  <span>{{
-                    questionnaireStore.questionById[
-                      questionnaireStore.questionById[questionId]
-                        .allowsToExplain
-                    ].name
-                  }}</span>
+                  <span>
+                    {{
+                      questionnaireStore.questionById[
+                        questionnaireStore.questionById[questionId]
+                          .allowsToExplain
+                      ].name
+                    }}
+                  </span>
                 </a>
               </div>
               <p class="is-uppercase is-size-6bis mb-0_5 mt-2">Résultat</p>

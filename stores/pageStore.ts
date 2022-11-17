@@ -6,6 +6,7 @@ import {
   EvaluationQuestionnairePage,
   HomePage,
   ImportantPages,
+  ParticipationBoardPage,
   ProjectPage,
   ReferentialPage,
   ResultsPage,
@@ -29,6 +30,7 @@ export const usePageStore = defineStore("page", {
     blogLoaded: <boolean>false,
     resourcesLoaded: <boolean>false,
     referentialPage: <ReferentialPage>{},
+    participationBoardPage: <ParticipationBoardPage>{},
     resultsPage: <ResultsPage>{},
     usagePage: <UsagePage>{},
     projectPage: <ProjectPage>{},
@@ -89,6 +91,21 @@ export const usePageStore = defineStore("page", {
           this.referentialPage = data.value[0]
         } else {
           console.error("Impossible to retrieve referential page")
+        }
+      } else {
+        const errorStore = useToastStore()
+        errorStore.setError(error.value.data.messageCode)
+      }
+    },
+    async getParticipationBoardPage() {
+      const { data, error } = await useApiGet<ParticipationBoardPage[]>(
+        "participation-board-pages/"
+      )
+      if (!error.value) {
+        if (data.value.length) {
+          this.participationBoardPage = data.value[0]
+        } else {
+          console.error("Impossible to retrieve participation board page")
         }
       } else {
         const errorStore = useToastStore()

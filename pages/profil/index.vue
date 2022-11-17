@@ -65,8 +65,7 @@
         <QuestionnaireProgressBars class="mb-4" />
       </PageSection>
       <PageSection
-        :title="assessmentStore.participationBoardTitle"
-        :intro="assessmentStore.currentAssessment?.municipality?.name"
+        :title="'Tableau de bord ' + assessmentStore.assessmentTypeTitle"
         button-text="Voir les résultats"
         button-link="/resultats"
         :button-outlined="true"

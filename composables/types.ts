@@ -354,6 +354,9 @@ export type ReferentialPage = {
   criteriaBlockLeftContent: string
   criteriaBlockRightContent: string
 }
+export type ParticipationBoardPage = {
+  title: string
+}
 export type ResultsPage = {
   title: string
   tagLine: string

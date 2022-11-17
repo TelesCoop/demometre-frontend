@@ -33,8 +33,7 @@
 
     <PageSection
       v-if="assessmentStore.currentAssessment"
-      :title="assessmentStore.participationBoardTitle"
-      :intro="assessmentStore.currentAssessment.name"
+      :title="'Tableau de bord ' + assessmentStore.assessmentTypeTitle"
     >
       <ParticipationBoard
         :assessment="assessmentStore.currentAssessment"

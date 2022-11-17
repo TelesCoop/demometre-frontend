@@ -64,9 +64,9 @@ export const useAssessmentStore = defineStore("assessment", {
           : assessment.epci.name
       }
     },
-    participationBoardTitle() {
+    assessmentTypeTitle() {
       return (
-        "Tableau de bord de " +
+        "de " +
         (this.currentAssessment?.municipality
           ? "ma ville"
           : "mon inter-communalité")

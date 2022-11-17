@@ -1,22 +1,22 @@
 <template>
   <div class="has-background-shade-100 board-container">
     <p class="title has-text-shade-900 is-4">
-      Tableau de bord de la participation citoyenne
+      {{ pageStore.participationBoardPage.title }}
     </p>
     <div class="columns">
       <div class="column is-one-third">
         <h3 class="has-text-weight-bold mb-2">Évaluation</h3>
 
         <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
-          Participation
+          Territoire
         </div>
-        <div class="mb-2">{{ assessment.participationNb }}</div>
+        <div class="mb-1_5">{{ assessmentStore.currentAssessment.name }}</div>
 
         <template v-if="assessment.initiatedBy">
           <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
             Portée par
           </div>
-          <div class="mb-2">
+          <div class="mb-1_5">
             {{ assessment.initiatedBy?.firstName }}
             {{ assessment.initiatedBy?.lastName }}
           </div>
@@ -24,15 +24,20 @@
 
         <template v-if="assessment.initializedToTheNameOf">
           <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
-            initiée par
+            Initiateur
           </div>
-          <div class="mb-2">{{ assessment.initializedToTheNameOf }}</div>
+          <div class="mb-1_5">{{ assessment.initializedToTheNameOf }}</div>
         </template>
 
         <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
-          Lancée le
+          Date de lancement
         </div>
-        <div class="mb-2">{{ initializationDate }}</div>
+        <div class="mb-1_5">{{ initializationDate }}</div>
+
+        <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
+          Nombre de participants
+        </div>
+        <div class="mb-1">{{ assessment.participationNb }}</div>
       </div>
 
       <div class="column">
@@ -59,10 +64,18 @@
 <script setup lang="ts">
 import { PropType } from "vue"
 import { Assessment } from "~/composables/types"
+import { useAssessmentStore } from "~/stores/assessmentStore"
+import { usePageStore } from "~/stores/pageStore"
 
 const props = defineProps({
   assessment: { type: Object as PropType<Assessment>, required: true },
 })
+
+const assessmentStore = useAssessmentStore()
+const pageStore = usePageStore()
+if (!pageStore.participationBoardPage.title) {
+  pageStore.getParticipationBoardPage()
+}
 
 const initializationDate = computed(() =>
   new Date(props.assessment.initializationDate).toLocaleString("fr-FR", {
