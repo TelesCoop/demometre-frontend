@@ -51,7 +51,7 @@
             href="https://praticable.fr/"
             target="_blank"
           >
-            Désigné par
+            Designé par
             <b>Praticable</b>
           </a>
           <a
@@ -59,7 +59,7 @@
             href="https://www.telescoop.fr/"
             target="_blank"
           >
-            Développé par
+            Réalisé par
             <b>TelesCoop</b>
           </a>
 
