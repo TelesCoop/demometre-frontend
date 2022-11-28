@@ -2,7 +2,7 @@
   <div class="score">
     <b
       v-if="props.showNumber"
-      class="score-number mr-0_5"
+      class="score-number"
       :class="props.sizeNumberClass"
       >{{ score }}</b
     >
@@ -37,10 +37,18 @@ const props = defineProps({
   min-width: fit-content
   &-number
     vertical-align: middle
+    margin-right: 0.5rem
 
   &-circle
     border-radius: 100%
     margin: 2px
     display: inline-block
     vertical-align: middle
+@include until(430px)
+  .score
+    &-number
+      margin-right: 0.2rem
+      font-size: 1em !important
+    &-circle
+      margin: 1px
 </style>

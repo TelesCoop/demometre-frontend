@@ -23,7 +23,12 @@
       :size-circles="12"
       size-number-class="is-size-5"
     />
-    <span :class="`icon has-text-${colorClass}`">
+    <span
+      class="icon"
+      :class="
+        (!isNullOrUndefined(score) && `with-score `) + `has-text-${colorClass}`
+      "
+    >
       <icon size="24" name="arrow-right-line" />
     </span>
   </div>
@@ -105,6 +110,7 @@ const circleClass = computed(() => {
     display: block
     position: absolute
     right: 1rem
+
     svg
       vertical-align: middle
 
@@ -123,11 +129,17 @@ const circleClass = computed(() => {
       display: none
     &.little
       display: block
-@include until(350px)
+@include until(430px)
   .pillar-card
     padding: 0.75rem
     margin: 0
+    column-gap: 0.3rem
+    p
+      margin-right: 2px
+      font-size: 1rem !important
   .pillar-circle
     width: 45px
     height: 45px
+  .icon.with-score
+    display: none
 </style>
