@@ -17,12 +17,6 @@
           question-id="role"
           :white-letter-when-select="true"
         />
-
-        <ButtonsArrowButton
-          color="no-pillar"
-          class="arrow-button-fixed is-left"
-          @click.prevent="goBack"
-        />
       </div>
       <div class="buttons mt-1_5">
         <button
@@ -96,12 +90,6 @@ const responseChoices = computed(() =>
 const disabled = computed(() => {
   return !answer.value || isLoading.value
 })
-
-function goBack() {
-  router.push(
-    `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`
-  )
-}
 
 async function onSubmit() {
   isLoading.value = true
