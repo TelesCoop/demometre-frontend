@@ -1,7 +1,7 @@
 import { useLoadingStore } from "~/stores/loadingStore"
 import { useFetch, useRequestHeaders } from "#app"
 
-let base_url = "/"
+let base_url = ""
 let media_base_url
 type MyHeaders = { [key: string]: string }
 
@@ -11,12 +11,10 @@ if (process.env.NODE_ENV !== "production") {
   media_base_url = "http://localhost:8000"
 } else {
   // production server
-  media_base_url = "https://demometre.org"
+  media_base_url = "/"
   if (process.server) {
     // server-side rendering
     base_url = "http://localhost:8064"
-  } else {
-    base_url = "https://demometre.org"
   }
 }
 
