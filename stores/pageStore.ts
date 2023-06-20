@@ -49,7 +49,8 @@ export const usePageStore = defineStore("page", {
     async getHomePage() {
       const { data, error } = await useApiGet<HomePage[]>("home-pages/")
       if (!error.value) {
-        if (data.value.length) {
+        console.log("data.value", data.value)
+        if (data.value?.length) {
           const homePageData = data.value[0]
           this.blogPosts = homePageData.blogPosts
           this.resources = homePageData.resources
