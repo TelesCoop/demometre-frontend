@@ -60,7 +60,7 @@ export const usePageStore = defineStore("page", {
         }
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getBlogPosts() {
@@ -70,7 +70,7 @@ export const usePageStore = defineStore("page", {
         this.blogLoaded = true
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getResources() {
@@ -80,7 +80,7 @@ export const usePageStore = defineStore("page", {
         this.resourcesLoaded = true
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getReferentialPage() {
@@ -95,7 +95,7 @@ export const usePageStore = defineStore("page", {
         }
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getParticipationBoardPage() {
@@ -110,7 +110,7 @@ export const usePageStore = defineStore("page", {
         }
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getResultsPage() {
@@ -123,7 +123,7 @@ export const usePageStore = defineStore("page", {
         }
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getUsagePage() {
@@ -150,7 +150,7 @@ export const usePageStore = defineStore("page", {
         }
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getProjectPage() {
@@ -195,7 +195,7 @@ export const usePageStore = defineStore("page", {
         }
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getEvaluationInitiationPage() {
@@ -210,7 +210,7 @@ export const usePageStore = defineStore("page", {
         }
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getEvaluationQuestionnairePage() {
@@ -225,7 +225,7 @@ export const usePageStore = defineStore("page", {
         }
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getAnimatorPage() {
@@ -238,7 +238,7 @@ export const usePageStore = defineStore("page", {
         }
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getImportantPages() {
@@ -249,7 +249,7 @@ export const usePageStore = defineStore("page", {
         this.importantPages = data.value[0]
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
   },

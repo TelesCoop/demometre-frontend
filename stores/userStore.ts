@@ -28,7 +28,7 @@ export const useUserStore = defineStore("user", {
       const { data, error } = await useApiPost<User>("auth/unknown-user")
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       this.user = data.value
@@ -69,7 +69,7 @@ export const useUserStore = defineStore("user", {
         router.push("/login")
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async refreshProfile(showError = true) {
@@ -77,7 +77,7 @@ export const useUserStore = defineStore("user", {
       if (response.error.value) {
         if (showError) {
           const errorStore = useToastStore()
-          errorStore.setError(response.error.value.data.messageCode)
+          errorStore.setError(response.error.value.data?.messageCode)
         }
         return false
       }
@@ -96,7 +96,7 @@ export const useUserStore = defineStore("user", {
         router.push("/nouveau-mdp-confirmation")
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async resetPassword(resetKey: string, password: string) {
@@ -110,7 +110,7 @@ export const useUserStore = defineStore("user", {
         router.push("/login")
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
   },

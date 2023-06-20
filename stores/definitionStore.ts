@@ -29,7 +29,7 @@ export const useDefinitionStore = defineStore("definition", {
         this.definitionLoaded = true
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     // async getDefinitions(): Promise<{ [key: number]: Definition }> {

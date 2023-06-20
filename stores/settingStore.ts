@@ -21,7 +21,7 @@ export const useSettingStore = defineStore("setting", {
         this.rgpdSettingsLoaded = true
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getStructureSettings() {
@@ -36,7 +36,7 @@ export const useSettingStore = defineStore("setting", {
         }
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
   },

@@ -65,7 +65,7 @@ export const useParticipationStore = defineStore("participation", {
         return true
       }
       const errorStore = useToastStore()
-      errorStore.setError(error.value.data.messageCode)
+      errorStore.setError(error.value.data?.messageCode)
       return false
     },
     async getCurrentParticipation(): Promise<boolean> {
@@ -84,7 +84,7 @@ export const useParticipationStore = defineStore("participation", {
       const response = await useApiGet<Participation[]>("participations")
       if (response.error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(response.error.value.data.messageCode)
+        errorStore.setError(response.error.value.data?.messageCode)
         return false
       }
       this.participations = response.data.value
@@ -162,7 +162,7 @@ export const useParticipationStore = defineStore("participation", {
 
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
       if (!error.value && data.value) {
         const questionResponses =

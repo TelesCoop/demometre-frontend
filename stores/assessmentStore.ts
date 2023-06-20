@@ -83,7 +83,7 @@ export const useAssessmentStore = defineStore("assessment", {
       )
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
       return data.value
     },
@@ -93,7 +93,7 @@ export const useAssessmentStore = defineStore("assessment", {
       )
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       this.assessmentById[data.value.id] = data.value
@@ -122,7 +122,7 @@ export const useAssessmentStore = defineStore("assessment", {
 
       if (response.error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(response.error.value.data.messageCode)
+        errorStore.setError(response.error.value.data?.messageCode)
         return false
       }
 
@@ -142,7 +142,7 @@ export const useAssessmentStore = defineStore("assessment", {
       )
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       for (const assessment of data.value) {
@@ -179,7 +179,7 @@ export const useAssessmentStore = defineStore("assessment", {
       )
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       this.assessmentById[data.value.id] = data.value
@@ -213,7 +213,7 @@ export const useAssessmentStore = defineStore("assessment", {
       )
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       this.scoresByAssessmentId[assessmentId] = data.value
@@ -223,7 +223,7 @@ export const useAssessmentStore = defineStore("assessment", {
       const { data, error } = await useApiGet<User[]>(`experts/`)
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       for (const expert of data.value) {
@@ -242,7 +242,7 @@ export const useAssessmentStore = defineStore("assessment", {
       )
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       this.assessmentById[assessmentId] = data.value
@@ -257,7 +257,7 @@ export const useAssessmentStore = defineStore("assessment", {
       )
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       if (!this.chartDataByAssessmentIdAndQuestionId[assessmentId]) {

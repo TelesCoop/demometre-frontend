@@ -57,6 +57,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         "questionnaire-structure/"
       )
       if (!error.value) {
+        console.log("### got questionnaire structure")
         this.pillarByName = {}
         this.markerById = {}
         this.criteriaById = {}
@@ -74,7 +75,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         }
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getQuestionnaireQuestions() {
@@ -83,7 +84,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
       )
       if (error.value) {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       this.orderedQuestionIds = []

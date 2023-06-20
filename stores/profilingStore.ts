@@ -23,7 +23,7 @@ export const useProfilingStore = defineStore("profiling", {
         }
       } else {
         const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getProfilingQuestions() {
