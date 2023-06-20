@@ -204,12 +204,19 @@ if (!profilingStore.roles.length) {
 }
 
 const pillarOfQuestionId = (questionId) => {
+  console.log(
+    "### pillar for question ID",
+    questionId,
+    "pillars",
+    JSON.stringify(Object.keys(questionnaireStore.pillarByName))
+  )
   return questionnaireStore.pillarByName[
     questionnaireStore.questionById[questionId].pillarName
   ]
 }
 const changeActiveQuestionId = () => {
   if (activeQuestionId.value) {
+    console.log("### active question id", activeQuestionId.value)
     const pillar = pillarOfQuestionId(activeQuestionId.value)
     onSelectPillar(pillar)
   }
