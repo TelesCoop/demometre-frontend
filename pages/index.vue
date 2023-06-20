@@ -159,10 +159,6 @@ const participationStore = useParticipationStore()
 const userStep = useUserStep()
 const userStore = useUserStore()
 
-if (!pageStore.homePage.title) {
-  pageStore.getHomePage()
-}
-
 const settings = {
   itemsToShow: 1.05,
   snapAlign: "start",

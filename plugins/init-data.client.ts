@@ -5,6 +5,7 @@ import { useDefinitionStore } from "~~/stores/definitionStore"
 import { useSettingStore } from "~~/stores/settingStore"
 import { useUserStore } from "~/stores/userStore"
 import { useParticipationStore } from "~/stores/participationStore"
+import { usePageStore } from "~/stores/pageStore"
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook("app:mounted", () => {
@@ -18,6 +19,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     const questionnaireStore = useQuestionnaireStore()
     const definitionStore = useDefinitionStore()
     const settingStore = useSettingStore()
+    const pageStore = usePageStore()
 
     if (!userStore.user) {
       userStore.refreshProfile(false)
@@ -69,6 +71,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
     if (!settingStore.structureSettings.email) {
       settingStore.getStructureSettings()
+    }
+
+    if (!pageStore.homePage.title) {
+      pageStore.getHomePage()
     }
   })
 })

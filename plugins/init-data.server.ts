@@ -5,6 +5,7 @@ import { useDefinitionStore } from "~~/stores/definitionStore"
 import { useSettingStore } from "~~/stores/settingStore"
 import { useUserStore } from "~/stores/userStore"
 import { useParticipationStore } from "~/stores/participationStore"
+import { usePageStore } from "~/stores/pageStore"
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook("vue:setup", () => {
@@ -15,6 +16,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     const questionnaireStore = useQuestionnaireStore()
     const definitionStore = useDefinitionStore()
     const settingStore = useSettingStore()
+    const pageStore = usePageStore()
     userStore.refreshProfile(false)
     participationStore.getCurrentParticipation()
     assessmentStore.getCurrentAssessment()
@@ -28,5 +30,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     definitionStore.getDefinitions()
     settingStore.getRgpdSettings()
     settingStore.getStructureSettings()
+    pageStore.getHomePage()
   })
 })
