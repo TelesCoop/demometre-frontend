@@ -16,7 +16,7 @@ if (process.env.NODE_ENV !== "production") {
     // server-side rendering
     base_url = "http://127.0.0.1:8046"
     // base_url = "http://127.0.0.1:" + process.env.NUXT_BACKEND_PORT
-    console.log("### backend port", base_url, process.env.NUXT_BACKEND_PORT)
+    console.log("### backend port", base_url, process.env.VITE_BACKEND_PORT)
   }
 }
 
@@ -82,10 +82,8 @@ export async function useApiGet<Type>(path: string) {
     headers: getHeaders(),
   })
   if (error.value) {
-    console.log("### GET error for path", path, error.value)
     loadingStore.markError(key)
   } else {
-    console.log("### GET OK for path", path)
     loadingStore.markDone(key)
   }
   return { data, error }

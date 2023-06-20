@@ -205,19 +205,12 @@ if (!profilingStore.roles.length) {
 }
 
 const pillarOfQuestionId = (questionId) => {
-  console.log(
-    "### pillar for question ID",
-    questionId,
-    "pillars",
-    JSON.stringify(Object.keys(questionnaireStore.pillarByName))
-  )
   return questionnaireStore.pillarByName[
     questionnaireStore.questionById[questionId].pillarName
   ]
 }
 const changeActiveQuestionId = () => {
   if (activeQuestionId.value) {
-    console.log("### active question id", activeQuestionId.value)
     const pillar = pillarOfQuestionId(activeQuestionId.value)
     onSelectPillar(pillar)
   }
@@ -227,7 +220,7 @@ watch(
   () => route.query.question,
   () => {
     activeQuestionId.value = parseInt(route.query.question as string)
-    setTimeout(changeActiveQuestionId, 1000)
+    changeActiveQuestionId()
   }
 )
 watch(changeSelectedQuestion, () => {
@@ -255,7 +248,7 @@ const onSelectQuestion = (questionId) => {
   router.replace({ query: { ...route.query, question: questionId } })
 }
 
-setTimeout(changeActiveQuestionId, 1000)
+changeActiveQuestionId()
 </script>
 
 <style scoped lang="sass"></style>

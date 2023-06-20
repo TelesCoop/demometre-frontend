@@ -57,7 +57,6 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         "questionnaire-structure/"
       )
       if (!error.value) {
-        console.log("### got questionnaire structure")
         this.pillarByName = {}
         this.markerById = {}
         this.criteriaById = {}
