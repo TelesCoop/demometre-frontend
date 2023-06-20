@@ -80,8 +80,10 @@ export async function useApiGet<Type>(path: string) {
     headers: getHeaders(),
   })
   if (error.value) {
+    console.log("### GET error for path", path)
     loadingStore.markError(key)
   } else {
+    console.log("### GET OK for path", path)
     loadingStore.markDone(key)
   }
   return { data, error }

@@ -1,7 +1,7 @@
 <template>
   <div class="has-background-shade-100 board-container">
     <p class="title has-text-shade-900 is-4">
-      {{ pageStore.participationBoardPage.title }}
+      {{ pageStore.participationBoardPage?.title }}
     </p>
     <div class="columns">
       <div class="column is-one-third">
@@ -10,9 +10,9 @@
         <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
           Territoire
         </div>
-        <div class="mb-1_5">{{ assessmentStore.currentAssessment.name }}</div>
+        <div class="mb-1_5">{{ assessmentStore.currentAssessment?.name }}</div>
 
-        <template v-if="assessment.initiatedBy">
+        <template v-if="assessment?.initiatedBy">
           <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
             Portée par
           </div>
