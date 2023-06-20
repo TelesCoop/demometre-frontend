@@ -1,8 +1,5 @@
 import { useLoadingStore } from "~/stores/loadingStore"
 import { useFetch, useRequestHeaders } from "#app"
-import dns from "node:dns"
-
-dns.setDefaultResultOrder("ipv4first")
 
 let base_url = ""
 let media_base_url
@@ -18,6 +15,8 @@ if (process.env.NODE_ENV !== "production") {
   if (process.server) {
     // server-side rendering
     base_url = "http://127.0.0.1:8046"
+    // base_url = "http://127.0.0.1:" + process.env.NUXT_BACKEND_PORT
+    console.log("### backend port", base_url, process.env.NUXT_BACKEND_PORT)
   }
 }
 
