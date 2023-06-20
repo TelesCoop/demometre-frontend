@@ -226,7 +226,7 @@ watch(
   () => route.query.question,
   () => {
     activeQuestionId.value = parseInt(route.query.question as string)
-    changeActiveQuestionId()
+    setTimeout(changeActiveQuestionId, 1000)
   }
 )
 watch(changeSelectedQuestion, () => {
@@ -254,7 +254,7 @@ const onSelectQuestion = (questionId) => {
   router.replace({ query: { ...route.query, question: questionId } })
 }
 
-changeActiveQuestionId()
+setTimeout(changeActiveQuestionId, 1000)
 </script>
 
 <style scoped lang="sass"></style>
