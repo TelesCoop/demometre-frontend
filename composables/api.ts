@@ -1,5 +1,8 @@
 import { useLoadingStore } from "~/stores/loadingStore"
 import { useFetch, useRequestHeaders } from "#app"
+import dns from "node:dns"
+
+dns.setDefaultResultOrder("ipv4first")
 
 let base_url = ""
 let media_base_url
