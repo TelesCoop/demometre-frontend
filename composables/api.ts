@@ -14,8 +14,14 @@ if (process.env.NODE_ENV !== "production") {
   media_base_url = ""
   if (process.server) {
     // server-side rendering
-    base_url = `http://127.0.0.1:${process.env.NUXT_BACKEND_PORT}`
-    console.log("### API backend port", process.env.NUXT_BACKEND_PORT)
+    base_url = `http://127.0.0.1:${
+      process.env.NUXT_BACKEND_PORT || process.env.VITE_BACKEND_PORT
+    }`
+    console.log(
+      "### API backend port",
+      process.env.NUXT_BACKEND_PORT,
+      process.env.VITE_BACKEND_PORT
+    )
   }
 }
 
