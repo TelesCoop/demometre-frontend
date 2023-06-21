@@ -15,6 +15,7 @@ if (process.env.NODE_ENV !== "production") {
   if (process.server) {
     // server-side rendering
     base_url = `http://127.0.0.1:${process.env.NUXT_BACKEND_PORT}`
+    console.log("### API backend port", process.env.NUXT_BACKEND_PORT)
   }
 }
 
