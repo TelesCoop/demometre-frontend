@@ -8,7 +8,6 @@ import {
   SurveyType,
 } from "~/composables/types"
 import { useParticipationStore } from "~/stores/participationStore"
-import { useRouter } from "#app"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useUserStore } from "~/stores/userStore"
