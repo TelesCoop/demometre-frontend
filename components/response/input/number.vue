@@ -31,5 +31,5 @@ const answer = useModel("modelValue")
 <style scoped lang="sass">
 .number
   width: min-content
-  min-width: 6rem
+  min-width: 10rem
 </style>
