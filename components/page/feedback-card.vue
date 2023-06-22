@@ -20,7 +20,7 @@
           <div
             class="image-profile"
             :style="`background-image: url(${
-              MADIA_BASE_URL + props.feedback.pictureUrl
+              MEDIA_BASE_URL + props.feedback.pictureUrl
             })`"
           ></div>
         </div>
@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 
 const props = defineProps({
   feedback: { type: Object, required: true },

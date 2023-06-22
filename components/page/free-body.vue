@@ -8,7 +8,7 @@
     />
     <img
       v-else-if="item.type === 'image'"
-      :src="MADIA_BASE_URL + item.imageUrl"
+      :src="MEDIA_BASE_URL + item.imageUrl"
       alt="img"
       class="mb-1"
       style="border-radius: 6px"
@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 
 const props = defineProps({
   freeBody: { type: Array, required: true },

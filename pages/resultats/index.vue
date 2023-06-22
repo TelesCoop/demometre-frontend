@@ -40,7 +40,7 @@
       v-if="pageStore.resultsPage.introImageUrl"
       class="result-image is-hidden-mobile"
       :style="`background-image: url(${
-        MADIA_BASE_URL + pageStore.resultsPage.introImageUrl
+        MEDIA_BASE_URL + pageStore.resultsPage.introImageUrl
       })`"
     ></div>
   </div>
@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { Assessment } from "~/composables/types"
 import vSelect from "vue-select"

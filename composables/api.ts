@@ -1,23 +1,27 @@
 import { useLoadingStore } from "~/stores/loadingStore"
 
-let base_url = ""
+const base_url = ""
 let media_base_url
 type MyHeaders = { [key: string]: string }
 
 // local
-if (process.env.NODE_ENV !== "production") {
-  base_url = "http://localhost:8000"
-  media_base_url = "http://localhost:8000"
-} else {
-  // production server
-  media_base_url = ""
-  if (process.server) {
-    const config = useRuntimeConfig()
 
-    // server-side rendering
-    base_url = `http://127.0.0.1:${config.backendPort}`
-    console.log("### API backend port", process.env.config.backendPort)
+const useApiUrl = () => {
+  let apiUrl: string
+  if (process.env.NODE_ENV !== "production") {
+    apiUrl = "http://localhost:8000"
+  } else {
+    // production server
+    if (process.server) {
+      const config = useRuntimeConfig()
+
+      // server-side rendering
+      apiUrl = `http://127.0.0.1:${config.backendPort}`
+      console.log("### API backend port", config.backendPort)
+    }
   }
+
+  return `${apiUrl}/api/`
 }
 
 const makeLoadingKey = (path: string) => {
@@ -70,15 +74,19 @@ function getHeaders(withCsrfCookie = false): MyHeaders {
   return headers
 }
 
-export const MADIA_BASE_URL = media_base_url
-export const BASE_URL = base_url
-export const BASE_API_URL = BASE_URL + "/api/"
+if (process.env.NODE_ENV !== "production") {
+  media_base_url = "http://localhost:8000"
+} else {
+  // production server
+  media_base_url = ""
+}
+export const MEDIA_BASE_URL = media_base_url
 
 export async function useApiGet<Type>(path: string) {
   const loadingStore = useLoadingStore()
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
-  const { data, error } = await useFetch<Type>(`${BASE_API_URL}${path}`, {
+  const { data, error } = await useFetch<Type>(`${useApiUrl()}${path}`, {
     key: key,
     method: "GET",
     credentials: "include",
@@ -101,7 +109,7 @@ export async function useAPIwithCsrfToken<Type>(
 
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
-  const { data, error } = await useFetch<Type>(`${BASE_API_URL}${path}`, {
+  const { data, error } = await useFetch<Type>(`${useApiUrl()}${path}`, {
     key: key,
     method,
     body: payload,

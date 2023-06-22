@@ -31,7 +31,7 @@
       et
       <a
         :href="
-          MADIA_BASE_URL + settingStore.rgpdSettings.confidentialityPolicyUrl
+          MEDIA_BASE_URL + settingStore.rgpdSettings.confidentialityPolicyUrl
         "
         target="_blank"
         class="is-underlined"
@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 import { usePageStore } from "~/stores/pageStore"
 import { useSettingStore } from "~/stores/settingStore"
 import { useParticipationStore } from "~/stores/participationStore"
@@ -74,7 +74,7 @@ const consentData = computed(() => {
           : pageStore.evaluationInitiationPage.cguConsentDescriptionLoggedout,
         checkboxIntro:
           "J’accepte les conditions générales d’utilisation de la plateforme.",
-        url: MADIA_BASE_URL + settingStore.rgpdSettings.termsOfUseUrl,
+        url: MEDIA_BASE_URL + settingStore.rgpdSettings.termsOfUseUrl,
         urlText: "CGU",
         linkedState: props.initiator
           ? assessmentStore.newAssessment.initiatorUsageConsent
@@ -86,7 +86,7 @@ const consentData = computed(() => {
         desc: pageStore.evaluationInitiationPage.cgvConsentDescription,
         checkboxIntro:
           "J’accepte les conditions générales de vente de la plateforme.",
-        url: MADIA_BASE_URL + settingStore.rgpdSettings.termsOfSaleUrl,
+        url: MEDIA_BASE_URL + settingStore.rgpdSettings.termsOfSaleUrl,
         urlText: "CGV",
         linkedState: assessmentStore.newAssessment.conditionsOfSaleConsent,
         additionalText: pageStore.evaluationInitiationPage.royaltyDescription,
