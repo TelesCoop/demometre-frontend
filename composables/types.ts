@@ -22,6 +22,7 @@ export enum QuestionType {
   CLOSED_WITH_SCALE = "closed_with_scale",
   BOOLEAN = "boolean",
   PERCENTAGE = "percentage",
+  NUMBER = "number",
 }
 export enum SurveyType {
   PROFILING = "profiling",
@@ -129,6 +130,9 @@ export type Question = {
   profileIds: number[]
   allowsToExplain: number
   explainsByQuestionIds: number[]
+  minNumberValue: number | null
+  maxNumberValue: number | null
+  stepNumberValue: number | null
 }
 
 export type QuestionBounds = { min: number; max: number }
@@ -263,6 +267,7 @@ export type QuestionResponse = {
   multipleChoiceResponseIds: number[]
   booleanResponse: boolean | null
   percentageResponse: number | null
+  numberResponse: number | null
   closedWithScaleResponseCategories: ClosedWithScaleResponse[]
 }
 
