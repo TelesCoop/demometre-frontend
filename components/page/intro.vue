@@ -35,7 +35,7 @@
         </div>
         <figure v-else-if="props.imageUrl" class="image is-128x128">
           <img
-            :src="MADIA_BASE_URL + props.imageUrl"
+            :src="MEDIA_BASE_URL + props.imageUrl"
             alt
             style="border-radius: 6px"
           />
@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 
 const props = defineProps({
   title: { type: String, required: true, default: "" },

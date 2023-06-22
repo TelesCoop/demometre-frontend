@@ -15,7 +15,7 @@
     <div v-if="props.article.imageUrl" class="card-image">
       <figure class="image is-4by3">
         <img
-          :src="MADIA_BASE_URL + props.article.imageUrl"
+          :src="MEDIA_BASE_URL + props.article.imageUrl"
           :alt="props.article.title"
           :style="`max-height: ${props.imageHeight}px`"
         />
@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { PillarParams } from "~/composables/types"
 import { wordTitleCase } from "~/utils/util"

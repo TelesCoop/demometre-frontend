@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 
 const props = defineProps({
   step: { type: Object, required: true },
@@ -73,7 +73,7 @@ const props = defineProps({
 
 const imageUrl = computed(
   () =>
-    MADIA_BASE_URL +
+    MEDIA_BASE_URL +
     (props.step.imageUrl ? props.step.imageUrl : props.step.svgUrl)
 )
 </script>

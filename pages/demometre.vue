@@ -62,7 +62,7 @@
             <img
               v-if="pageStore.referentialPage.pillarBlockImageUrl"
               :src="
-                MADIA_BASE_URL + pageStore.referentialPage.pillarBlockImageUrl
+                MEDIA_BASE_URL + pageStore.referentialPage.pillarBlockImageUrl
               "
               alt="image des piliers"
               :style="`max-height: 250px`"
@@ -228,7 +228,7 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useDefinitionStore } from "~~/stores/definitionStore"
 import { Marker, PillarType } from "~/composables/types"
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 
 definePageMeta({
   title: "DémoMètre",

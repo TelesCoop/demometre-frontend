@@ -27,7 +27,7 @@
         <a
           v-if="props.assessmentType.pdfUrl"
           class="button is-shade-600 is-outlined is-rounded is-responsive mb-0_5"
-          :href="MADIA_BASE_URL + props.assessmentType.pdfUrl"
+          :href="MEDIA_BASE_URL + props.assessmentType.pdfUrl"
           target="_blank"
         >
           <span class="icon">
@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import { PropType } from "vue"
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { AssessmentTypeDetails } from "~~/composables/types"
 const props = defineProps({
