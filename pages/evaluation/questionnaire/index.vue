@@ -122,7 +122,7 @@ const rosetteButtonText = computed(() => {
   )
 
   if (total.completed === 4) {
-    return null
+    return ""
   }
   return total.hasStarted ? "Continuer" : "Commencer"
 })
