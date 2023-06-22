@@ -1,5 +1,4 @@
 import { useLoadingStore } from "~/stores/loadingStore"
-import { useFetch, useRequestHeaders } from "#app"
 
 let base_url = ""
 let media_base_url
@@ -43,8 +42,10 @@ const makeLoadingKey = (path: string) => {
 }
 
 function getCookie() {
-  let cookie = useRequestHeaders(["cookie"])["cookie"] || ""
-  if (!cookie && process.client) {
+  let cookie: string
+  if (process.server) {
+    cookie = useRequestHeaders(["cookie"])["cookie"] || ""
+  } else {
     cookie = document.cookie
   }
   return cookie
@@ -82,6 +83,7 @@ export async function useApiGet<Type>(path: string) {
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
   const { data, error } = await useFetch<Type>(`${BASE_API_URL}${path}`, {
+    key: key,
     method: "GET",
     credentials: "include",
     headers: getHeaders(),
@@ -104,6 +106,7 @@ export async function useAPIwithCsrfToken<Type>(
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
   const { data, error } = await useFetch<Type>(`${BASE_API_URL}${path}`, {
+    key: key,
     method,
     body: payload,
     credentials: "include",

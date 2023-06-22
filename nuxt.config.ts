@@ -1,9 +1,9 @@
-import { defineNuxtConfig } from "nuxt"
+import { defineNuxtConfig } from "nuxt/config"
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
   css: ["@/css/app.sass"],
-  buildModules: ["@pinia/nuxt"],
+  modules: ["@pinia/nuxt"],
   vite: {
     css: {
       preprocessorOptions: {
@@ -13,5 +13,5 @@ export default defineNuxtConfig({
       },
     },
   },
-  head: {},
+  // head: {},
 })
