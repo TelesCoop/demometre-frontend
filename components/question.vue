@@ -353,7 +353,6 @@ const goToNextQuestion = () => {
 
 const submit = async () => {
   isLoading.value = true
-  debugger
   const result = await participationStore.saveResponse(
     question.value,
     answer.value,
