@@ -32,13 +32,7 @@ const makeLoadingKey = (path: string) => {
   if (path.startsWith("/")) {
     path = path.slice(1)
   }
-  let words = path.split("/")
-  words = words.filter((word) => !/^\d+$/.test(word))
-  for (const [ix, word] of Object.entries(words.slice(1))) {
-    const newWord = word[0].toUpperCase() + word.slice(1)
-    words[parseInt(ix) + 1] = newWord
-  }
-  return words.join("")
+  return path.replace(/\//g, "-")
 }
 
 function getCookie() {
@@ -87,7 +81,6 @@ export async function useApiGet<Type>(path: string) {
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
   const { data, error } = await useFetch<Type>(`${useApiUrl()}${path}`, {
-    key: key,
     method: "GET",
     credentials: "include",
     headers: getHeaders(),
@@ -110,7 +103,6 @@ export async function useAPIwithCsrfToken<Type>(
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
   const { data, error } = await useFetch<Type>(`${useApiUrl()}${path}`, {
-    key: key,
     method,
     body: payload,
     credentials: "include",
