@@ -7,7 +7,7 @@ type MyHeaders = { [key: string]: string }
 // local
 
 const useApiUrl = () => {
-  let apiUrl: string
+  let apiUrl = ""
   if (process.env.NODE_ENV !== "production") {
     apiUrl = "http://localhost:8000"
   } else {
