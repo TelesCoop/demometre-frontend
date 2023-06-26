@@ -99,7 +99,6 @@ export async function useAPIwithCsrfToken<Type>(
   payload: any = {}
 ) {
   const loadingStore = useLoadingStore()
-
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
   const { data, error } = await useFetch<Type>(`${useApiUrl()}${path}`, {

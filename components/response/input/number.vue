@@ -1,8 +1,9 @@
 <template>
-  <div class="control number ml-0_5 mb-4">
+  <div class="control number mb-4">
     <input
       :id="`$question-${props.questionId}-number`"
       v-model="answer"
+      :readonly="readOnly"
       type="number"
       :min="min"
       :max="max"
@@ -23,6 +24,7 @@ const props = defineProps({
   min: { type: Number },
   max: { type: Number },
   step: { type: Number, required: true },
+  readOnly: { type: Boolean, default: false },
 })
 
 const answer = useModel("modelValue")

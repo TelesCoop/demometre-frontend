@@ -249,9 +249,9 @@ export const useAssessmentStore = defineStore("assessment", {
       return true
     },
     async getChartDataByAssessmentIdAndQuestionId(
-      assessmentId,
-      questionId
-    ): boolean {
+      assessmentId: number,
+      questionId: number
+    ): Promise<boolean> {
       const { data, error } = await useApiGet<any>(
         `assessments/${assessmentId}/questions/${questionId}/chart-data/`
       )
