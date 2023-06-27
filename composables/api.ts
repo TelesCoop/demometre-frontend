@@ -31,7 +31,13 @@ const makeLoadingKey = (path: string) => {
   if (path.startsWith("/")) {
     path = path.slice(1)
   }
-  return path.replace(/\//g, "-")
+  let words = path.split("/")
+  words = words.filter((word) => !/^\d+$/.test(word))
+  for (const [ix, word] of Object.entries(words.slice(1))) {
+    const newWord = word[0].toUpperCase() + word.slice(1)
+    words[parseInt(ix) + 1] = newWord
+  }
+  return words.join("")
 }
 
 function getCookie() {
