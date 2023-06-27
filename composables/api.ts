@@ -1,6 +1,5 @@
 import { useLoadingStore } from "~/stores/loadingStore"
 
-const base_url = ""
 let media_base_url
 type MyHeaders = { [key: string]: string }
 
