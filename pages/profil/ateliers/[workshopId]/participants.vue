@@ -168,7 +168,7 @@
 <script setup lang="ts">
 import { useProfilingStore } from "~/stores/profilingStore"
 import { WorkshopParticipation } from "~/composables/types"
-import { Ref, ref } from "@vue/reactivity"
+import { Ref, ref } from "vue"
 import { useAnimatorStore } from "~/stores/animatorStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useUserStore } from "~/stores/userStore"

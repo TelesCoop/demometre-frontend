@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref } from "@vue/reactivity"
+import { Ref, ref } from "vue"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
 import { useAnimatorStore } from "~/stores/animatorStore"

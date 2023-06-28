@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "@vue/reactivity"
+import { ref } from "vue"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useProfilingJourney } from "~/composables/journey"
