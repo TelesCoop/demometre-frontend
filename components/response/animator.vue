@@ -15,6 +15,16 @@
       :question-id="question.id"
       @change="adaptQuestionResponse()"
     />
+    <ResponseInputNumber
+      v-else-if="question.type === QuestionType.NUMBER"
+      v-model="answer"
+      :color="props.color"
+      :question-id="question.id"
+      :min="question.minNumberValue"
+      :max="question.maxNumberValue"
+      :step="question.stepNumberValue"
+      @change="adaptQuestionResponse()"
+    />
     <div
       v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
       class="select"
@@ -95,7 +105,7 @@ import {
   WorkshopParticipation,
 } from "~/composables/types"
 import { computed, PropType, watch } from "vue"
-import { ref } from "@vue/reactivity"
+import { ref } from "vue"
 import {
   getQuestionResponseStructure,
   getQuestionResponseValue,

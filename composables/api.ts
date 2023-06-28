@@ -1,6 +1,5 @@
 import { useLoadingStore } from "~/stores/loadingStore"
 
-const base_url = ""
 let media_base_url
 type MyHeaders = { [key: string]: string }
 
@@ -32,7 +31,13 @@ const makeLoadingKey = (path: string) => {
   if (path.startsWith("/")) {
     path = path.slice(1)
   }
-  return path.replace(/\//g, "-")
+  let words = path.split("/")
+  words = words.filter((word) => !/^\d+$/.test(word))
+  for (const [ix, word] of Object.entries(words.slice(1))) {
+    const newWord = word[0].toUpperCase() + word.slice(1)
+    words[parseInt(ix) + 1] = newWord
+  }
+  return words.join("")
 }
 
 function getCookie() {
@@ -99,7 +104,6 @@ export async function useAPIwithCsrfToken<Type>(
   payload: any = {}
 ) {
   const loadingStore = useLoadingStore()
-
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
   const { data, error } = await useFetch<Type>(`${useApiUrl()}${path}`, {
