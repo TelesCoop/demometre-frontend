@@ -16,7 +16,7 @@
     :height="size"
     :style="style"
   >
-    <path fill="none" d="M0 0h24v24H0z" />
+    <path fill="none" d="M0 0h24v24H0z" class="no-fill" />
     <template v-if="props.name === 'mail-line'">
       <path
         :fill="props.color"

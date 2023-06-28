@@ -166,7 +166,7 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router"
-import { Ref, ref } from "@vue/reactivity"
+import { Ref, ref } from "vue"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
 import { useAssessmentStore } from "~/stores/assessmentStore"
