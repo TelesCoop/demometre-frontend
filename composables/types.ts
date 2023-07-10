@@ -1,3 +1,5 @@
+import { string } from "postcss-selector-parser"
+
 export type User = {
   id: number | null
   email: string
@@ -303,9 +305,15 @@ type Feedback = {
   externalLink: string
   publish: boolean
 }
+export type Block = {
+  type: string
+  id: string
+  value: any
+}
 export type Article = {
   id: number
   title: string
+  content: Block[]
   shortDescription: string
   publicationDate: string
   imageUrl: string
