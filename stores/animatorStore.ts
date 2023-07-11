@@ -8,7 +8,7 @@ import {
   WorkshopParticipation,
 } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
-import { useToastStore } from "./toastStore"
+import { useErrorStore } from "./toastStore"
 
 type FullWorkshop = Workshop & {
   participations: WorkshopParticipation[]
@@ -78,7 +78,7 @@ export const useAnimatorStore = defineStore("animator", {
         }
         this.allAssessmentsLoaded = true
       } else {
-        const errorStore = useToastStore()
+        const errorStore = useErrorStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -107,7 +107,7 @@ export const useAnimatorStore = defineStore("animator", {
         this.workshopById[data.value.id].changed = false
         return data.value
       }
-      const errorStore = useToastStore()
+      const errorStore = useErrorStore()
       errorStore.setError(error.value.data?.messageCode)
       return false
     },
@@ -118,7 +118,7 @@ export const useAnimatorStore = defineStore("animator", {
       participation.responses = Object.values(
         JSON.parse(JSON.stringify(participation.responseByQuestionId))
       )
-      const toastStore = useToastStore()
+      const toastStore = useErrorStore()
       const { data, error } = await useApiPost<WorkshopParticipation>(
         `workshops/${workshopId}/participation/`,
         { ...participation, workshopId: workshopId }
@@ -173,7 +173,7 @@ export const useAnimatorStore = defineStore("animator", {
           }
         }
       }
-      const toastStore = useToastStore()
+      const toastStore = useErrorStore()
 
       if (errorOccured) {
         toastStore.setError("Une erreur s'est produite lors de la sauvegarde")
@@ -186,7 +186,7 @@ export const useAnimatorStore = defineStore("animator", {
       const { data, error } = await useApiPatch<Workshop>(
         `workshops/${workshopId}/closed/`
       )
-      const toastStore = useToastStore()
+      const toastStore = useErrorStore()
       if (error.value) {
         toastStore.setError(error.value.data?.messageCode)
         return false

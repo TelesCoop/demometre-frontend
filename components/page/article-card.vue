@@ -1,24 +1,27 @@
 <template>
-  <a
+  <NuxtLink
     class="card is-fullheight is-clickable"
     :class="
       isHovered
         ? ` has-background-${backgroundColorHover}`
         : `has-background-${backgroundColor}`
     "
-    :href="props.article.externalLink"
-    target="_blank"
+    :to="href"
+    :target="isExternal ? '_blank' : null"
     rel="external noopener noreferrer"
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <div v-if="props.article.imageUrl" class="card-image">
+    <div
+      v-if="props.article.imageUrl"
+      class="card-image"
+    >
       <figure class="image is-4by3">
         <img
           :src="MEDIA_BASE_URL + props.article.imageUrl"
           :alt="props.article.title"
           :style="`max-height: ${props.imageHeight}px`"
-        />
+        >
       </figure>
     </div>
     <div
@@ -33,13 +36,18 @@
         <p class="is-size-4 has-text-shade-600 has-text-weight-bold">
           {{ props.article.title }}
         </p>
-        <p class="has-text-shade-500">{{ publicationDate }}</p>
+        <p class="has-text-shade-500">
+          {{ publicationDate }}
+        </p>
       </div>
       <div class="content">
         <p class="is-family-secondary is-size-6">
           {{ props.article.shortDescription }}
         </p>
-        <div v-if="props.showLinkedPillars" class="is-size-7 mt-2">
+        <div
+          v-if="props.showLinkedPillars"
+          class="is-size-7 mt-2"
+        >
           <span
             v-for="pillarId of props.article.pillars"
             :key="pillarId"
@@ -53,17 +61,18 @@
         </div>
       </div>
     </div>
-  </a>
+  </NuxtLink>
 </template>
 
 <script setup lang="ts">
 import { MEDIA_BASE_URL } from "~/composables/api"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
-import { PillarParams } from "~/composables/types"
+import { PillarParams, Article } from "~/composables/types"
 import { wordTitleCase } from "~/utils/util"
+import { PropType } from "vue/dist/vue"
 
 const props = defineProps({
-  article: { type: Object, required: true },
+  article: { type: Object as PropType<Article>, required: true },
   backgroundColor: { type: String, required: true },
   backgroundColorHover: { type: String, required: true },
   imageHeight: { type: Number, required: true },
@@ -81,6 +90,8 @@ const publicationDate = computed(() =>
     day: "numeric",
   })
 )
+const isExternal = !!props.article?.externalLink
+const href = isExternal ? props.article?.externalLink : `/blog/${props.article.slug}`
 </script>
 
 <style scoped lang="sass">

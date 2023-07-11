@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <h2>SECTION</h2>
-    <pre>{{ block }}</pre>
-  </div>
+  <div v-html="block.value.html" />
 </template>
 
 <script setup lang="ts">

@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { ErrorMessages } from "~/composables/errors"
 
-export const useToastStore = defineStore("toast", {
+export const useErrorStore = defineStore("toast", {
   state: () => ({
     type: <string>"",
     message: <string>"",

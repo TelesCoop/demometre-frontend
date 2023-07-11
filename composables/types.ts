@@ -1,5 +1,3 @@
-import { string } from "postcss-selector-parser"
-
 export type User = {
   id: number | null
   email: string
@@ -313,6 +311,7 @@ export type Block = {
 export type Article = {
   id: number
   title: string
+  slug: string
   content: Block[]
   shortDescription: string
   publicationDate: string

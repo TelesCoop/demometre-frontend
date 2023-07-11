@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { Criteria, Marker, PillarType, Question } from "~/composables/types"
-import { useToastStore } from "./toastStore"
+import { useErrorStore } from "./toastStore"
 import { useApiGet } from "~/composables/api"
 
 type FullMarkers = Marker & { criterias: Criteria[] }
@@ -73,7 +73,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
           }
         }
       } else {
-        const errorStore = useToastStore()
+        const errorStore = useErrorStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -82,7 +82,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         `questionnaire-questions/`
       )
       if (error.value) {
-        const errorStore = useToastStore()
+        const errorStore = useErrorStore()
         errorStore.setError(error.value.data?.messageCode)
         return false
       }

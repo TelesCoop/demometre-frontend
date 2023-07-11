@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <h2>TITLE</h2>
-    <pre>{{ block }}</pre>
-  </div>
+  <PageTitle :title="block.value" />
 </template>
 
 <script setup lang="ts">
