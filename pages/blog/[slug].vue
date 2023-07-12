@@ -2,6 +2,7 @@
   <div class="container">
     <section class="columns section">
       <div class="column is-5">
+        <PageTitle :title="post.title" />
         <template v-if="post">
           <ArticleContent :content="post.content" />
         </template>

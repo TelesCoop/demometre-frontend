@@ -1,5 +1,8 @@
 <template>
-  <div v-html="block.value.html" />
+  <div
+    class="content"
+    v-html="block.value.html"
+  />
 </template>
 
 <script setup lang="ts">

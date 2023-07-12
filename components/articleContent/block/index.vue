@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <p>### {{ block.type }} ###</p> -->
     <ArticleContentBlockImage
       v-if="block.type == 'image'"
       :block="block"
@@ -9,8 +8,8 @@
       v-else-if="block.type == 'pdf'"
       :block="block"
     />
-    <ArticleContentBlockSection
-      v-else-if="block.type == 'section'"
+    <ArticleContentBlockRichText
+      v-else-if="block.type == 'rich_text'"
       :block="block"
     />
     <ArticleContentBlockTitle
