@@ -1,16 +1,23 @@
 <template>
-  <div>
+  <div class="mt-3">
     <a
-      :href="url"
+      :href="block.value.url"
       target="_blank"
-    >ouvrir</a>
+      class="button is-primary"
+    >
+      <icon
+        name="file-download-line"
+        size="16"
+        class="mr-0_5"
+      />
+      Télécharger : {{ block.value.title }}
+    </a>
   </div>
 </template>
 
 <script setup lang="ts">
 import { PropType } from "vue"
 import { Block } from "~/composables/types"
-import { useBackendUrl } from "~/composables/api"
 
 const props = defineProps({
   block: {
@@ -18,5 +25,4 @@ const props = defineProps({
     required: true,
   },
 })
-const url = `${useBackendUrl(false)}${props.block.value.url}`
 </script>

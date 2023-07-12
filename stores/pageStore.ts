@@ -81,7 +81,6 @@ export const usePageStore = defineStore("page", {
       }
     },
     async getBlogPost(slug: string) {
-      console.log("### getblogpost", slug)
       const { data, error } = await useApiGet<Article>(`blog-posts/by-slug/${slug}`)
       if (!error.value && data.value) {
         const post: Article = data.value

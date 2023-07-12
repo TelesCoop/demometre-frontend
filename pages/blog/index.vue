@@ -47,5 +47,5 @@ if (pageStore.blogPosts.length === 0 && !pageStore.blogLoaded) {
 
 <style scoped lang="sass">
 .buttons .button
-  height: fit-content
+    height: fit-content
 </style>

@@ -16,12 +16,21 @@
       v-if="props.article.imageUrl"
       class="card-image"
     >
-      <figure class="image is-4by3">
+      <figure class="image">
         <img
           :src="MEDIA_BASE_URL + props.article.imageUrl"
           :alt="props.article.title"
           :style="`max-height: ${props.imageHeight}px`"
         >
+        <figure class="image">
+          <img
+            :src="MEDIA_BASE_URL + props.article.imageUrl"
+            :alt="props.article.title"
+            :style="`max-height: ${props.imageHeight}px`"
+          >
+        </figure>
+
+        />
       </figure>
     </div>
     <div
@@ -91,11 +100,13 @@ const publicationDate = computed(() =>
   })
 )
 const isExternal = !!props.article?.externalLink
-const href = isExternal ? props.article?.externalLink : `/blog/${props.article.slug}`
+const href = isExternal
+  ? props.article?.externalLink
+  : `/blog/${props.article.slug}`
 </script>
 
 <style scoped lang="sass">
 img
-  width: 100%
-  object-fit: cover
+    width: 100%
+    object-fit: cover
 </style>

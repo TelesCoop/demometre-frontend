@@ -1,10 +1,14 @@
 <template>
   <div>
-    <img
-      :src="url"
-      class="image"
-      alt=""
-    >
+    <figure class="image">
+      <img
+        :src="url"
+        alt=""
+      >
+      <figcaption class="has-text-shade-500 is-size-7">
+        {{ block.value.caption }}
+      </figcaption>
+    </figure>
   </div>
 </template>
 

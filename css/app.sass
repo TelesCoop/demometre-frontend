@@ -18,6 +18,7 @@
 @import "../node_modules/bulma/sass/elements/title.sass"
 @import "../node_modules/bulma/sass/elements/table.sass"
 @import "../node_modules/bulma/sass/elements/content.sass"
+@import "../node_modules/bulma/sass/elements/image.sass"
 @import "../node_modules/bulma/sass/form/_all.sass"
 @import "../node_modules/bulma/sass/components/breadcrumb.sass"
 @import "../node_modules/bulma/sass/components/navbar.sass"
@@ -33,113 +34,124 @@
 @import '../node_modules/vue-select/dist/vue-select.css'
 
 .is-flex
-  display: flex
+    display: flex
 
 .is-block
-  display: block
+    display: block
 
 .flex-center
-  justify-content: center
-  align-items: center
+    justify-content: center
+    align-items: center
 
 .is-size-6bis
-  font-size: 0.875em !important
+    font-size: 0.875em !important
 
 .has-border-transparent
-  border: 1px solid transparent
+    border: 1px solid transparent
 
 hr
-  background-color: hsl(0, 0%, 77%)
-  height: 1px
+    background-color: hsl(0, 0%, 77%)
+    height: 1px
 
 .is-fullheight
-  height: 100%
+    height: 100%
+
 .is-fullwidth
-  width: 100%
+    width: 100%
 
 .width-fit-content
-  max-width: fit-content
+    max-width: fit-content
 
 // we use directly svg as icons, so we need to add spacing
 .control
-  // Modifiers
-  &.has-icons-left,
-  &.has-icons-right
-    .icon
-      top: 8px
-  &.has-icons-left
-    .icon.is-left
-      left: 8px
-  &.has-icons-right
-    right: 8px
+    // Modifiers
+    &.has-icons-left,
+    &.has-icons-right
+        .icon
+            top: 8px
+
+    &.has-icons-left
+        .icon.is-left
+            left: 8px
+
+    &.has-icons-right
+        right: 8px
 
 // Custom sass
 @import "inputs"
 
 .container.is-tight
-  @include tablet
-    max-width: 760px !important
+    @include tablet
+        max-width: 760px !important
 
 .assistive-text
-  position: absolute
-  margin: -1px
-  border: 0
-  padding: 0
-  width: 1px
-  height: 1px
-  overflow: hidden
-  clip: rect(0 0 0 0)
+    position: absolute
+    margin: -1px
+    border: 0
+    padding: 0
+    width: 1px
+    height: 1px
+    overflow: hidden
+    clip: rect(0 0 0 0)
 
 .white-on-black-input-checked:checked + label
-  background-color: $black !important
-  color: $white !important
+    background-color: $black !important
+    color: $white !important
 
 .buttons .margin-between:not(:last-child):not(.is-fullwidth)
-  margin-right: 0.5rem
+    margin-right: 0.5rem
 
 .button
-  height: fit-content
+    height: fit-content
 
 .scroll-margin-top_5
-  scroll-margin-top: 5rem
+    scroll-margin-top: 5rem
 
 .column-2
-  column-count: 2
-  column-gap: 4rem
-@include touch
-  .column-2
-    column-count: 1
-
-  .columns.is-variable
-    --columnGap: 0rem
+    column-count: 2
+    column-gap: 4rem
 
 @include touch
-  .section
-    padding: 3rem 0rem
-  .container
-    padding: 0 1rem
+    .column-2
+        column-count: 1
+
+    .columns.is-variable
+        --columnGap: 0rem
+
+@include touch
+    .section
+        padding: 3rem 0rem
+    .container
+        padding: 0 1rem
 
 .fit-without-distortion
-  object-fit: cover
-  width: 100%
-  height: 100%
+    object-fit: cover
+    width: 100%
+    height: 100%
 
 // Buttons with different text color
 .button
-  &.text-color-dark
-    color: var(--color-dark) !important
-  &.text-color-hover
-    color: var(--color-hover) !important
+    &.text-color-dark
+        color: var(--color-dark) !important
 
-// Buttons previous and next
+    &.text-color-hover
+        color: var(--color-hover) !important
+
+// Buttons previous and nexta
 .nav-questionnaire
-  &-container
-    position: relative
+    &-container
+        position: relative
+
 @include tablet-only
-  .questionnaire-container
-    margin-left: 5rem
-    margin-right: 5rem
+    .questionnaire-container
+        margin-left: 5rem
+        margin-right: 5rem
+
 @include mobile
-  .questionnaire-container
-    margin-left: 1rem
-    margin-right: 1rem
+    .questionnaire-container
+        margin-left: 1rem
+        margin-right: 1rem
+
+.background-center
+    background-position: center
+    background-size: cover

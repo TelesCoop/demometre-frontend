@@ -9,6 +9,7 @@ module.exports = {
     "vue/multi-word-component-names": "off",
     "vue/script-setup-no-uses-vars": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "indent": ["error", 2],
     semi: [2, "never"],
   },
 }
