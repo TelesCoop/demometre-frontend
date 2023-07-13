@@ -13,17 +13,17 @@
       </div>
       <Footer v-if="showFooter" />
       <Toast
-        v-if="toastStore.message"
-        :message="toastStore.message"
+        v-if="messageStore.message"
+        :message="messageStore.message"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useErrorStore } from "~/stores/toastStore"
+import { useMessageStore } from "~/stores/messageStore"
 
-const toastStore = useErrorStore()
+const messageStore = useMessageStore()
 const route = useRoute()
 
 const height = ref<number>(75)

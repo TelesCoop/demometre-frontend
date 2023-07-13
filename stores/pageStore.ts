@@ -20,7 +20,7 @@ import {
   getStreamFieldStructWithLinkedObject,
   getStreamFieldStructWithListLinkedObjects,
 } from "~/utils/streamFields"
-import { useErrorStore } from "./toastStore"
+import { useMessageStore } from "./messageStore"
 
 export const usePageStore = defineStore("page", {
   state: () => ({
@@ -66,7 +66,7 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve home page")
         }
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -76,7 +76,7 @@ export const usePageStore = defineStore("page", {
         this.setBlogPosts(data.value)
         this.blogLoaded = true
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error!.value.data?.messageCode)
       }
     },
@@ -86,7 +86,7 @@ export const usePageStore = defineStore("page", {
         const post: Article = data.value
         this.blogPostsBySlug[post.slug] = slug
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error!.value.data?.messageCode)
       }
     },
@@ -96,7 +96,7 @@ export const usePageStore = defineStore("page", {
         this.resources = data.value
         this.resourcesLoaded = true
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -111,7 +111,7 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve referential page")
         }
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -126,7 +126,7 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve participation board page")
         }
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -139,7 +139,7 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve results page")
         }
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -166,7 +166,7 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve usage page")
         }
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -211,7 +211,7 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve usage page")
         }
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -226,7 +226,7 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve evaluation initiation page")
         }
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -241,7 +241,7 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve evaluation questionnaire page")
         }
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -254,7 +254,7 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve animator page")
         }
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -265,7 +265,7 @@ export const usePageStore = defineStore("page", {
       if (!error.value) {
         this.importantPages = data.value[0]
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },

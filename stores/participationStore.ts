@@ -14,7 +14,7 @@ import {
   getQuestionResponseStructure,
 } from "~/utils/question-response"
 import { useUserStore } from "./userStore"
-import { useErrorStore } from "./toastStore"
+import { useMessageStore } from "./messageStore"
 import { useQuestionnaireStore } from "./questionnaireStore"
 
 export const useParticipationStore = defineStore("participation", {
@@ -64,7 +64,7 @@ export const useParticipationStore = defineStore("participation", {
         this.participations[this.currentParticipationId] = data.value
         return true
       }
-      const errorStore = useErrorStore()
+      const errorStore = useMessageStore()
       errorStore.setError(error.value.data?.messageCode)
       return false
     },
@@ -83,7 +83,7 @@ export const useParticipationStore = defineStore("participation", {
     async getParticipations(): Promise<boolean> {
       const response = await useApiGet<Participation[]>("participations")
       if (response.error.value) {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(response.error.value.data?.messageCode)
         return false
       }
@@ -161,7 +161,7 @@ export const useParticipationStore = defineStore("participation", {
       const { data, error } = apiResponse
 
       if (error.value) {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
       if (!error.value && data.value) {

@@ -7,7 +7,7 @@ import {
   User,
 } from "~/composables/types"
 import { useApiGet, useApiPost } from "~/composables/api"
-import { useErrorStore } from "./toastStore"
+import { useMessageStore } from "./messageStore"
 import { useUserStore } from "./userStore"
 import { useParticipationStore } from "./participationStore"
 
@@ -82,7 +82,7 @@ export const useAssessmentStore = defineStore("assessment", {
         `localites/by-zip-code/${parseInt(zipCode.replace(" ", ""))}/`
       )
       if (error.value) {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
       return data.value
@@ -92,7 +92,7 @@ export const useAssessmentStore = defineStore("assessment", {
         `assessments/by-locality/?locality_id=${localityId}&locality_type=${localityType}`
       )
       if (error.value) {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
         return false
       }
@@ -121,7 +121,7 @@ export const useAssessmentStore = defineStore("assessment", {
       const response = await useApiGet<Assessment>(`assessments/${id}/`)
 
       if (response.error.value) {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(response.error.value.data?.messageCode)
         return false
       }
@@ -141,7 +141,7 @@ export const useAssessmentStore = defineStore("assessment", {
         `assessments/published/`
       )
       if (error.value) {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
         return false
       }
@@ -160,7 +160,7 @@ export const useAssessmentStore = defineStore("assessment", {
       if (!error.value) {
         this.representativityCriterias = data.value
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -178,7 +178,7 @@ export const useAssessmentStore = defineStore("assessment", {
         }
       )
       if (error.value) {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
         return false
       }
@@ -212,7 +212,7 @@ export const useAssessmentStore = defineStore("assessment", {
         `assessments/${assessmentId}/scores/`
       )
       if (error.value) {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
         return false
       }
@@ -222,7 +222,7 @@ export const useAssessmentStore = defineStore("assessment", {
     async getExperts() {
       const { data, error } = await useApiGet<User[]>(`experts/`)
       if (error.value) {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
         return false
       }
@@ -241,7 +241,7 @@ export const useAssessmentStore = defineStore("assessment", {
         }
       )
       if (error.value) {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
         return false
       }
@@ -256,7 +256,7 @@ export const useAssessmentStore = defineStore("assessment", {
         `assessments/${assessmentId}/questions/${questionId}/chart-data/`
       )
       if (error.value) {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
         return false
       }

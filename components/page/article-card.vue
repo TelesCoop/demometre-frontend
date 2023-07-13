@@ -22,15 +22,6 @@
           :alt="props.article.title"
           :style="`max-height: ${props.imageHeight}px`"
         >
-        <figure class="image">
-          <img
-            :src="MEDIA_BASE_URL + props.article.imageUrl"
-            :alt="props.article.title"
-            :style="`max-height: ${props.imageHeight}px`"
-          >
-        </figure>
-
-        />
       </figure>
     </div>
     <div

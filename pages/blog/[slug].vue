@@ -1,13 +1,12 @@
 <template>
   <div class="container">
     <div
-      v-if="post.imageUrl"
+      v-if="post?.imageUrl"
       class="background-center main-image"
       :style="`background-image: url(${mainImageUrl})`"
-    >
-      <!--<img :src="mainImageUrl" alt="" class="is-fullwidth" />-->
-    </div>
+    />
     <section
+      v-if="post"
       class="columns section"
       style="justify-content: center"
     >
@@ -30,6 +29,7 @@
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
+import { useMessageStore } from "~/stores/messageStore"
 
 definePageMeta({
   title: "title",
@@ -37,19 +37,30 @@ definePageMeta({
 })
 
 const route = useRoute()
+const router = useRouter()
+const messageStore = useMessageStore()
 const pageStore = usePageStore()
 const slug: string = route.params.slug as string
 if (!pageStore.blogPostsBySlug[slug]) {
   await pageStore.getBlogPost(slug)
 }
 const post = pageStore.blogPostsBySlug[slug]
-const date = new Date(post.publicationDate).toLocaleDateString("fr-FR", {
-  weekday: "long",
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-})
-const mainImageUrl = `${useBackendUrl(false)}${post.imageUrl}`
+let mainImageUrl: string
+let date: string
+if (post == null) {
+  if (process.client) {
+    // blog post does not exist, redirect to blog list
+    window.location.href = "/blog"
+  }
+} else {
+  date = new Date(post.publicationDate).toLocaleDateString("fr-FR", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+  mainImageUrl = `${useBackendUrl(false)}${post.imageUrl}`
+}
 </script>
 
 <style lang="sass" scoped>

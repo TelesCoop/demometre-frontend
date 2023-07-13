@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { User } from "~/composables/types"
 import { useApiGet, useApiPost } from "~/composables/api"
-import { useErrorStore } from "./toastStore"
+import { useMessageStore } from "./messageStore"
 import { cleanUserData, getUserData } from "~/composables/actions"
 
 export const useUserStore = defineStore("user", {
@@ -27,7 +27,7 @@ export const useUserStore = defineStore("user", {
     async createUnknownUser() {
       const { data, error } = await useApiPost<User>("auth/unknown-user")
       if (error.value) {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
         return false
       }
@@ -68,7 +68,7 @@ export const useUserStore = defineStore("user", {
         const router = useRouter()
         router.push("/login")
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -76,7 +76,7 @@ export const useUserStore = defineStore("user", {
       const response = await useApiGet<User>(`auth/profile`)
       if (response.error.value) {
         if (showError) {
-          const errorStore = useErrorStore()
+          const errorStore = useMessageStore()
           errorStore.setError(response.error.value.data?.messageCode)
         }
         return false
@@ -95,7 +95,7 @@ export const useUserStore = defineStore("user", {
         const router = useRouter()
         router.push("/nouveau-mdp-confirmation")
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -109,7 +109,7 @@ export const useUserStore = defineStore("user", {
         router.replace({ query: { reset_key: null } })
         router.push("/login")
       } else {
-        const errorStore = useErrorStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },

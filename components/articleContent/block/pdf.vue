@@ -1,7 +1,7 @@
 <template>
   <div class="mt-3">
     <a
-      :href="block.value.url"
+      :href="url"
       target="_blank"
       class="button is-primary"
     >
@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import { PropType } from "vue"
 import { Block } from "~/composables/types"
+import { useBackendUrl } from "~/composables/api"
 
 const props = defineProps({
   block: {
@@ -25,4 +26,5 @@ const props = defineProps({
     required: true,
   },
 })
+const url = `${useBackendUrl(false)}${props.block.value.url}`
 </script>
