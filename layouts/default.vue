@@ -1,7 +1,7 @@
 <template>
   <div>
-    <ModalCancelParticipationModal></ModalCancelParticipationModal>
-    <ModalSaveParticipationModal></ModalSaveParticipationModal>
+    <ModalCancelParticipationModal />
+    <ModalSaveParticipationModal />
     <div
       class="has-navbar-fixed-top default-page"
       :style="`padding-top: ${height}px;`"
@@ -9,18 +9,21 @@
       <HeaderNavbar @change-header-height="onChangeHeaderHight($event)" />
       <div class="default-page-content">
         <Breadcrumb />
-        <slot></slot>
+        <slot />
       </div>
       <Footer v-if="showFooter" />
-      <Toast v-if="toastStore.message" :message="toastStore.message" />
+      <Toast
+        v-if="messageStore.message"
+        :message="messageStore.message"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useToastStore } from "~/stores/toastStore"
+import { useMessageStore } from "~/stores/messageStore"
 
-const toastStore = useToastStore()
+const messageStore = useMessageStore()
 const route = useRoute()
 
 const height = ref<number>(75)

@@ -8,7 +8,7 @@ import {
   WorkshopParticipation,
 } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
-import { useToastStore } from "./toastStore"
+import { useMessageStore } from "./messageStore"
 
 type FullWorkshop = Workshop & {
   participations: WorkshopParticipation[]
@@ -78,7 +78,7 @@ export const useAnimatorStore = defineStore("animator", {
         }
         this.allAssessmentsLoaded = true
       } else {
-        const errorStore = useToastStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -107,7 +107,7 @@ export const useAnimatorStore = defineStore("animator", {
         this.workshopById[data.value.id].changed = false
         return data.value
       }
-      const errorStore = useToastStore()
+      const errorStore = useMessageStore()
       errorStore.setError(error.value.data?.messageCode)
       return false
     },
@@ -118,7 +118,7 @@ export const useAnimatorStore = defineStore("animator", {
       participation.responses = Object.values(
         JSON.parse(JSON.stringify(participation.responseByQuestionId))
       )
-      const toastStore = useToastStore()
+      const messageStore = useMessageStore()
       const { data, error } = await useApiPost<WorkshopParticipation>(
         `workshops/${workshopId}/participation/`,
         { ...participation, workshopId: workshopId }
@@ -132,11 +132,11 @@ export const useAnimatorStore = defineStore("animator", {
         ) {
           this.workshopById[workshopId].participationIds.push(data.value.id)
         }
-        toastStore.setInfo("Sauvegarde réussie")
+        messageStore.setInfo("Sauvegarde réussie")
         return data.value
       }
 
-      toastStore.setError(error.value.data?.messageCode)
+      messageStore.setError(error.value.data?.messageCode)
       return false
     },
     async createOrUpdateQuestionnaireResponses(
@@ -173,22 +173,22 @@ export const useAnimatorStore = defineStore("animator", {
           }
         }
       }
-      const toastStore = useToastStore()
+      const messageStore = useMessageStore()
 
       if (errorOccured) {
-        toastStore.setError("Une erreur s'est produite lors de la sauvegarde")
+        messageStore.setError("Une erreur s'est produite lors de la sauvegarde")
         return false
       }
-      toastStore.setInfo("Sauvegarde réussie")
+      messageStore.setInfo("Sauvegarde réussie")
       return true
     },
     async closeWorkshop(workshopId: number) {
       const { data, error } = await useApiPatch<Workshop>(
         `workshops/${workshopId}/closed/`
       )
-      const toastStore = useToastStore()
+      const messageStore = useMessageStore()
       if (error.value) {
-        toastStore.setError(error.value.data?.messageCode)
+        messageStore.setError(error.value.data?.messageCode)
         return false
       }
       const workshop = data.value

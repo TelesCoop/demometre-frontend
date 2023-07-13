@@ -303,9 +303,16 @@ type Feedback = {
   externalLink: string
   publish: boolean
 }
+export type Block = {
+  type: string
+  id: string
+  value: any
+}
 export type Article = {
   id: number
   title: string
+  slug: string
+  content: Block[]
   shortDescription: string
   publicationDate: string
   imageUrl: string

@@ -5,22 +5,26 @@ type MyHeaders = { [key: string]: string }
 
 // local
 
-const useApiUrl = () => {
-  let apiUrl = ""
+export const useBackendUrl = (api = true) => {
+  let backendUrl = ""
   if (process.env.NODE_ENV !== "production") {
-    apiUrl = "http://localhost:8000"
+    backendUrl = "http://localhost:8000"
   } else {
     // production server
     if (process.server) {
       const config = useRuntimeConfig()
 
       // server-side rendering
-      apiUrl = `http://127.0.0.1:${config.backendPort}`
+      backendUrl = `http://127.0.0.1:${config.backendPort}`
       console.log("### API backend port", config.backendPort)
     }
   }
 
-  return `${apiUrl}/api/`
+  if (!api){
+    return backendUrl
+  }
+
+  return `${backendUrl}/api/`
 }
 
 const makeLoadingKey = (path: string) => {
@@ -85,7 +89,7 @@ export async function useApiGet<Type>(path: string) {
   const loadingStore = useLoadingStore()
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
-  const { data, error } = await useFetch<Type>(`${useApiUrl()}${path}`, {
+  const { data, error } = await useFetch<Type>(`${useBackendUrl()}${path}`, {
     method: "GET",
     credentials: "include",
     headers: getHeaders(),
@@ -106,7 +110,7 @@ export async function useAPIwithCsrfToken<Type>(
   const loadingStore = useLoadingStore()
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
-  const { data, error } = await useFetch<Type>(`${useApiUrl()}${path}`, {
+  const { data, error } = await useFetch<Type>(`${useBackendUrl()}${path}`, {
     method,
     body: payload,
     credentials: "include",
@@ -120,9 +124,9 @@ export async function useAPIwithCsrfToken<Type>(
   return { data, error }
 }
 export async function useApiPost<Type>(path: string, payload: any = {}) {
-  return useAPIwithCsrfToken(path, "POST", payload)
+  return useAPIwithCsrfToken<Type>(path, "POST", payload)
 }
 
 export async function useApiPatch<Type>(path: string, payload: any = {}) {
-  return useAPIwithCsrfToken(path, "PATCH", payload)
+  return useAPIwithCsrfToken<Type>(path, "PATCH", payload)
 }
