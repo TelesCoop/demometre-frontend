@@ -19,7 +19,7 @@
                 <td class="has-text-shade-400 is-uppercase is-size-6">
                   Evaluation*
                 </td>
-                <td></td>
+                <td />
               </tr>
             </thead>
             <tbody>
@@ -36,7 +36,7 @@
                     :class="`input is-shade-300`"
                     type="text"
                     placeholder="écrire ici ..."
-                  />
+                  >
                 </td>
                 <td>
                   <input
@@ -45,7 +45,7 @@
                     type="date"
                     :timezone="true"
                     lang="fr-FR"
-                  />
+                  >
                 </td>
                 <td>
                   <div class="select">
@@ -79,7 +79,10 @@
                     >
                       <span>Saisir les participant·e·s</span>
                       <span class="icon">
-                        <icon size="16" name="user-add-line" />
+                        <icon
+                          size="16"
+                          name="user-add-line"
+                        />
                       </span>
                     </button>
                     <button
@@ -93,7 +96,10 @@
                   <div v-else>
                     <span class="tag is-shade-500">
                       Atelier clôturé
-                      <icon size="16" name="check" />
+                      <icon
+                        size="16"
+                        name="check"
+                      />
                     </span>
                   </div>
                 </td>
@@ -112,7 +118,10 @@
                 @click.prevent="addWorkshop()"
               >
                 <span class="icon">
-                  <icon size="16" name="add-line" />
+                  <icon
+                    size="16"
+                    name="add-line"
+                  />
                 </span>
                 <span>Ajouter un atelier</span>
               </button>
@@ -123,7 +132,10 @@
                 @click.prevent="removeWorkshop()"
               >
                 <span class="icon">
-                  <icon size="16" name="delete-bin-line" />
+                  <icon
+                    size="16"
+                    name="delete-bin-line"
+                  />
                 </span>
                 <span>Retirer un atelier</span>
               </button>
@@ -137,7 +149,10 @@
             >
               <span>Valider</span>
               <span class="icon">
-                <icon size="16" name="check" />
+                <icon
+                  size="16"
+                  name="check"
+                />
               </span>
             </button>
           </div>
@@ -149,21 +164,29 @@
       class="modal"
       :class="closeWorkshopIdModal && `is-active`"
     >
-      <div class="modal-background" @click.prevent="closeModal()"></div>
+      <div
+        class="modal-background"
+        @click.prevent="closeModal()"
+      />
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Clôturer l'atelier</p>
+          <p class="modal-card-title">
+            Clôturer l'atelier
+          </p>
           <button
             class="button is-ghost is-rounded is-outlined"
             @click.prevent="closeModal()"
           >
-            <icon size="20" name="close" />
+            <icon
+              size="20"
+              name="close"
+            />
           </button>
         </header>
         <section class="modal-card-body">
           <RichText
             :rich-text="pageStore.animatorPage.closeWorkshopValidation"
-          ></RichText>
+          />
         </section>
         <footer class="modal-card-foot">
           <button
@@ -172,7 +195,12 @@
           >
             Clôturer
           </button>
-          <button class="button" @click.prevent="closeModal()">Annuler</button>
+          <button
+            class="button"
+            @click.prevent="closeModal()"
+          >
+            Annuler
+          </button>
         </footer>
       </div>
     </div>
@@ -255,7 +283,7 @@ async function saveAndGoToParticipants(workshop) {
 
   if (workshopResponse) {
     await animatorStore.getWorkshop(workshopResponse.id)
-    router.push(`/profil/ateliers/${workshopResponse.id}/participants`)
+    router.push(`/compte/ateliers/${workshopResponse.id}/participants`)
   }
 }
 

@@ -6,23 +6,30 @@
         :title="pageStore.animatorPage.addParticipantsTitle"
         :intro="pageStore.animatorPage.addParticipantsIntro"
         button-text="Revenir aux ateliers"
-        button-link="/profil/ateliers"
+        button-link="/compte/ateliers"
         :left-icon="true"
         icon="arrow-left-line"
       >
-        <p class="is-family-secondary mb-4" style="margin-top: -3rem">
+        <p
+          class="is-family-secondary mb-4"
+          style="margin-top: -3rem"
+        >
           Atelier: {{ animatorStore.workshopById[workshopId].name }}
         </p>
         <div>
           <table class="table is-narrow is-fullwidth">
             <thead>
               <tr>
-                <td></td>
+                <td />
                 <td class="has-text-shade-400 is-uppercase is-size-6">
                   Prénom nom
                 </td>
-                <td class="has-text-shade-400 is-uppercase is-size-6">Mail</td>
-                <td class="has-text-shade-400 is-uppercase is-size-6">Rôle</td>
+                <td class="has-text-shade-400 is-uppercase is-size-6">
+                  Mail
+                </td>
+                <td class="has-text-shade-400 is-uppercase is-size-6">
+                  Rôle
+                </td>
               </tr>
             </thead>
             <tbody>
@@ -42,7 +49,7 @@
                       type="text"
                       placeholder="écrire ici ..."
                       @change="participation.changed = true"
-                    />
+                    >
                   </td>
                   <td>
                     <input
@@ -51,7 +58,7 @@
                       type="email"
                       placeholder="écrire ici ..."
                       @change="participation.changed = true"
-                    />
+                    >
                   </td>
                   <td>
                     <div class="select">
@@ -112,7 +119,10 @@
                       >
                         <span>Valider le profil</span>
                         <span class="icon">
-                          <icon size="16" name="check" />
+                          <icon
+                            size="16"
+                            name="check"
+                          />
                         </span>
                       </button>
                     </div>
@@ -130,7 +140,10 @@
                 @click.prevent="addParticipation()"
               >
                 <span class="icon">
-                  <icon size="16" name="add-line" />
+                  <icon
+                    size="16"
+                    name="add-line"
+                  />
                 </span>
                 <span>Ajouter un·e participant·e</span>
               </button>
@@ -141,7 +154,10 @@
                 @click.prevent="removeParticipation()"
               >
                 <span class="icon">
-                  <icon size="16" name="delete-bin-line" />
+                  <icon
+                    size="16"
+                    name="delete-bin-line"
+                  />
                 </span>
                 <span>Retirer un·e participant·e</span>
               </button>
@@ -155,7 +171,10 @@
             >
               <span>Valider les participant·e·s</span>
               <span class="icon">
-                <icon size="16" name="check" />
+                <icon
+                  size="16"
+                  name="check"
+                />
               </span>
             </button>
           </div>
@@ -265,7 +284,7 @@ async function onSubmit() {
     }
   }
 
-  router.push(`/profil/ateliers/${workshopId.value}/reponses`)
+  router.push(`/compte/ateliers/${workshopId.value}/reponses`)
 }
 </script>
 

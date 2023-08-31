@@ -4,7 +4,6 @@ import { useAssessmentStore } from "~~/stores/assessmentStore"
 import { useDefinitionStore } from "~~/stores/definitionStore"
 import { useSettingStore } from "~~/stores/settingStore"
 import { useUserStore } from "~/stores/userStore"
-import { useParticipationStore } from "~/stores/participationStore"
 import { usePageStore } from "~/stores/pageStore"
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -13,7 +12,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     // but if it's missing, we try again from the client
 
     const userStore = useUserStore()
-    const participationStore = useParticipationStore()
     const assessmentStore = useAssessmentStore()
     const profilingStore = useProfilingStore()
     const questionnaireStore = useQuestionnaireStore()
@@ -25,30 +23,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       userStore.refreshProfile(false)
     }
 
-    if (!participationStore.participation) {
-      participationStore.getCurrentParticipation()
-    }
-
     if (!assessmentStore.currentAssessment) {
-      assessmentStore.getCurrentAssessment()
-    }
-
-    if (!assessmentStore.currentAssessment) {
-      participationStore.getCurrentParticipation()
-    }
-
-    if (
-      Object.keys(participationStore.responseByProfilingQuestionId).length === 0
-    ) {
-      participationStore.getCurrentProfilingQuestionResponses()
-    }
-
-    if (
-      Object.keys(participationStore.responseByQuestionnaireQuestionId)
-        .length === 0
-    ) {
-      participationStore.getCurrentQuestionnaireSubjectiveQuestionResponses()
-      participationStore.getCurrentQuestionnaireObjectiveQuestionResponses()
+      assessmentStore.getAssessmentsForUser()
     }
 
     if (!profilingStore.orderedQuestionId.length) {

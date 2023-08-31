@@ -6,15 +6,21 @@
         :title="pageStore.animatorPage.responsesTitle"
         :intro="pageStore.animatorPage.responsesIntro"
         button-text="Revenir aux participant·e·s"
-        :button-link="`/profil/ateliers/${workshopId}/participants`"
+        :button-link="`/compte/ateliers/${workshopId}/participants`"
         :left-icon="true"
         icon="arrow-left-line"
       >
-        <p class="is-family-secondary mb-4" style="margin-top: -3rem">
+        <p
+          class="is-family-secondary mb-4"
+          style="margin-top: -3rem"
+        >
           Atelier: {{ animatorStore.workshopById[workshopId].name }}
         </p>
         <div class="container">
-          <section ref="pillarsRef" class="columns is-multiline mt-4">
+          <section
+            ref="pillarsRef"
+            class="columns is-multiline mt-4"
+          >
             <div
               v-for="pillar of questionnaireStore.pillars"
               :key="pillar.name"

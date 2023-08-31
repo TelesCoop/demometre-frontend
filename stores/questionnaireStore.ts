@@ -21,13 +21,12 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
   }),
   getters: {
     getPillarByName(this) {
-      return (pillarName) => this.pillarByName[pillarName]
+      return (pillarName: string) => this.pillarByName[pillarName]
     },
-
-    pillars() {
+    pillars(): PillarType[] {
       return Object.values(this.pillarByName)
     },
-    questions() {
+    questions(): Question[] {
       return this.orderedQuestionIds.map(
         (questionId) => this.questionById[questionId]
       )
@@ -39,7 +38,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         }) as Question[]
     },
     getQuestionnaireQuestionByPillarName() {
-      return (pillarName): Question[] => {
+      return (pillarName: string): Question[] => {
         return this.questions.filter((question: Question) => {
           return pillarName === question.pillarName
         }) as Question[]
