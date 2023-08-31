@@ -1,12 +1,18 @@
 <template>
-  <header class="header-fixed" fixed="top">
+  <header
+    class="header-fixed"
+    fixed="top"
+  >
     <nav
       class="navbar has-background-shade-600"
       role="navigation"
       aria-label="main navigation"
     >
       <div class="navbar-brand">
-        <NuxtLink class="navbar-item" to="/">
+        <NuxtLink
+          class="navbar-item"
+          to="/"
+        >
           <HeaderLogo :active-pillar-name="activePillar" />
         </NuxtLink>
         <a
@@ -18,9 +24,18 @@
           :class="isBurgerOpen ? 'is-active' : ''"
           @click="closeMenu"
         >
-          <span aria-hidden="true" class="has-text-white"></span>
-          <span aria-hidden="true" class="has-text-white"></span>
-          <span aria-hidden="true" class="has-text-white"></span>
+          <span
+            aria-hidden="true"
+            class="has-text-white"
+          />
+          <span
+            aria-hidden="true"
+            class="has-text-white"
+          />
+          <span
+            aria-hidden="true"
+            class="has-text-white"
+          />
         </a>
       </div>
 
@@ -41,8 +56,9 @@
             "
             class="navbar-item"
             @click="closeMenu"
-            >{{ item.name }}</NuxtLink
           >
+            {{ item.name }}
+          </NuxtLink>
         </div>
 
         <div class="navbar-end">
@@ -53,8 +69,9 @@
                 :to="userStep.url"
                 class="button evaluation is-rounded has-border-cooperation has-text-cooperation-dark"
                 @click="closeMenu"
-                >{{ userStep.text }}</NuxtLink
               >
+                {{ userStep.text }}
+              </NuxtLink>
               <button
                 v-if="isEvaluationRoute && userStore.isUnknownUser"
                 class="button save is-rounded is-shade-600 is-outlined"
@@ -69,18 +86,20 @@
               </button>
               <NuxtLink
                 v-if="userStore.isLoggedIn"
-                to="/profil"
-                class="button is-white is-outlined is-rounded"
+                to="/compte"
+                class="button is-white is-rounded"
                 @click="closeMenu"
-                >{{ userStore.user.email }}</NuxtLink
               >
+                Mon compte
+              </NuxtLink>
               <NuxtLink
                 v-else
                 to="/login"
                 class="button is-white is-outlined is-rounded"
                 @click="closeMenu"
-                >Se connecter</NuxtLink
               >
+                Se connecter
+              </NuxtLink>
             </div>
           </div>
         </div>
@@ -91,20 +110,32 @@
       class="is-flex navbar-progress-bar-wrapper"
       :class="{ 'is-unknown-user': userStore.isUnknownUser }"
     >
-      <QuestionnaireProgressBars class="navbar-progress-bar" :header="true" />
-      <div v-if="userStore.isUnknownUser" class="navbar-progress-bar-save">
+      <QuestionnaireProgressBars
+        class="navbar-progress-bar"
+        :header="true"
+      />
+      <div
+        v-if="userStore.isUnknownUser"
+        class="navbar-progress-bar-save"
+      >
         <button
           class="column button is-shade-200 navbar-progress-bar-save-button"
           @click="participationStore.setShowCancelParticipationModal(true)"
         >
           <span>Réinitialiser</span>
           <span class="icon">
-            <icon size="15" name="restart" />
+            <icon
+              size="15"
+              name="restart"
+            />
           </span>
         </button>
       </div>
     </div>
-    <HeaderLine v-else :active-pillar-name="activePillar" />
+    <HeaderLine
+      v-else
+      :active-pillar-name="activePillar"
+    />
   </header>
 </template>
 
@@ -143,24 +174,24 @@ const activePillar = computed(() => {
 const navItems = [
   {
     name: "Accueil",
-    to: "/",
+    to: "/"
   },
   {
     name: "DémoMètre",
-    to: "/demometre",
+    to: "/demometre"
   },
   {
     name: "Utilisations possibles",
-    to: "/utilisations-possibles",
+    to: "/utilisations-possibles"
   },
   {
     name: "Résultats",
-    to: "/resultats",
+    to: "/resultats"
   },
   {
     name: "Le projet",
-    to: "/projet",
-  },
+    to: "/projet"
+  }
 ]
 
 function closeMenu() {
@@ -175,13 +206,17 @@ function closeMenu() {
   right: 0
   top: 0
   z-index: 30
+
 .button.evaluation:hover
   background: $cooperation
+
 .button.save
   background: white
+
   &:hover
     background: $shade-600
     border-color: white
+
   &:focus
     background: $shade-600
     border-color: white
@@ -189,12 +224,14 @@ function closeMenu() {
 .navbar-progress-bar-wrapper
   $navbar-progress-bar-save-button-width: 180px
   width: 100%
+
   &.is-unknown-user
     .navbar-progress-bar
       width: calc(100% - #{$navbar-progress-bar-save-button-width})
 
   .navbar-progress-bar
     width: 100%
+
   .navbar-progress-bar-save
     display: flex
     flex-direction: column
@@ -216,6 +253,7 @@ function closeMenu() {
     background-color: white
   .navbar-item-inactive
     color: $shade-400
+
     &:hover
       color: $shade-500
 
@@ -224,22 +262,27 @@ function closeMenu() {
     background-color: $shade-600
   .navbar-item-inactive
     color: $shade-200
+
     &:hover
       color: $shade-500
 
 @include until-widescreen
   .navbar-progress-bar-wrapper
     $navbar-progress-bar-save-button-width: 50px
+
     &.is-unknown-user
       .navbar-progress-bar
         width: calc(100% - #{$navbar-progress-bar-save-button-width})
+
     .navbar-progress-bar-save-button
       width: $navbar-progress-bar-save-button-width
+
       .icon
         display: flex
         align-items: center
         justify-content: center
         margin-left: 0
+
       span:not(.icon)
         display: none
 

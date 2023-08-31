@@ -197,24 +197,29 @@ export type AssessmentRepresentativity = {
   respected: boolean
 }
 export type Assessment = {
-  id: number
   assessmentType: string
   conditionsOfSaleConsent: boolean
-  initiatorUsageConsent: boolean
-  localityType: string
+  created: string
+  code: string
+  collectivityName: string
+  endDate: string
+  epci: Locality | null
+  id: number
+  initializationDate: string
+  initializedToTheNameOf: string
   initiatedByUser: User
   initiatorType: string
-  initializedToTheNameOf: string
-  publicInitiator: boolean
-  initializationDate: string
+  initiatorUsageConsent: boolean
+  isCurrent: boolean
   isInitializationQuestionsCompleted: boolean
-  endDate: string
+  localityType: string
   municipality: Locality | null
-  epci: Locality | null
-  participationNb: number
-  representativities: AssessmentRepresentativity[]
   name: string
+  participationCount: number
+  publicInitiator: boolean
   publishedResults: boolean
+  representativities: AssessmentRepresentativity[]
+  workshopCount
 }
 export const InitiatorType = {
   COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },

@@ -14,9 +14,12 @@
     viewBox="0 0 24 24"
     :width="size"
     :height="size"
-    :style="style"
   >
-    <path fill="none" d="M0 0h24v24H0z" class="no-fill" />
+    <path
+      fill="none"
+      d="M0 0h24v24H0z"
+      class="no-fill"
+    />
     <template v-if="props.name === 'mail-line'">
       <path
         :fill="props.color"
@@ -132,7 +135,10 @@
       />
     </template>
     <template v-else-if="props.name === 'add-line'">
-      <path :fill="props.color" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" />
+      <path
+        :fill="props.color"
+        d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"
+      />
     </template>
     <template v-else-if="props.name === 'arrow-right-s-line'">
       <path
@@ -194,9 +200,8 @@
 <script setup lang="ts">
 const props = defineProps({
   name: { type: String, required: true },
-  size: { default: "1x" },
-  color: { type: String, default: "currentColor" },
-  style: { default: "" },
+  size: { type: String, default: "1x" },
+  color: { type: String, default: "currentColor" }
 })
 
 const size = computed(() => {
