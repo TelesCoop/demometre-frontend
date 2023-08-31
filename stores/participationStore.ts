@@ -86,7 +86,7 @@ export const useParticipationStore = defineStore("participation", {
       return false
     },
     async getParticipationForAssessment(assessmentId: number): Promise<boolean> {
-      const response = await useApiGet<Participation>("participations/by-assessment/" + assessmentId + "/")
+      const response = await useApiGet<Participation>(`participations/by-assessment/${assessmentId}/`)
       if (response.error.value) {
         return false
       }
@@ -138,14 +138,15 @@ export const useParticipationStore = defineStore("participation", {
       })
       return true
     },
-    async getCurrentQuestionnaireObjectiveQuestionResponses() {
+    async getQuestionnaireObjectiveQuestionResponsesForAssessment(assessmentId: number) {
       const assessmentResponses = await useApiGet<QuestionResponse[]>(
-        `assessment-responses/current/`
+        `assessment-responses/by-assessment/${assessmentId}/`
       )
       if (assessmentResponses.error.value) {
         return false
       }
-      assessmentResponses.data.value.forEach((item) => {
+      const responses = <QuestionResponse[]>assessmentResponses!.data.value
+      responses.forEach((item) => {
         this.responseByQuestionnaireQuestionId[item.questionId] = item
       })
       return true

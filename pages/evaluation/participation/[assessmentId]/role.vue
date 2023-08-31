@@ -7,8 +7,11 @@
       v-if="pageStore.evaluationQuestionnairePage.roleQuestionDescription"
       class="is-family-secondary"
       :rich-text="pageStore.evaluationQuestionnairePage.roleQuestionDescription"
-    ></RichText>
-    <form class="questionnaire-container mb-4" @submit.prevent="onSubmit">
+    />
+    <form
+      class="questionnaire-container mb-4"
+      @submit.prevent="onSubmit"
+    >
       <div class="my-1_5 nav-questionnaire-container">
         <ResponseInputUniqueChoice
           v-model="answer"
@@ -32,13 +35,22 @@
         >
           <span>Valider</span>
           <span class="icon">
-            <icon v-if="isLoading" size="24" name="loader-2-line" />
-            <icon v-else size="20" name="check" />
+            <icon
+              v-if="isLoading"
+              size="24"
+              name="loader-2-line"
+            />
+            <icon
+              v-else
+              size="20"
+              name="check"
+            />
           </span>
         </button>
-        <span v-if="isLoading" class="is-size-7 has-text-shade-600"
-          >en cours de chargement</span
-        >
+        <span
+          v-if="isLoading"
+          class="is-size-7 has-text-shade-600"
+        >en cours de chargement</span>
         <span
           v-else-if="!disabled"
           class="is-size-7 has-text-shade-600 is-hidden-mobile"
@@ -63,7 +75,7 @@ import { usePressEnter } from "~/composables/pressEnter"
 definePageMeta({
   title: "Question sur le role",
   step: "role",
-  middleware: ["assessment", "user-step"],
+  middleware: ["assessment", "user-step"]
 })
 
 const router = useRouter()
@@ -88,7 +100,7 @@ const responseChoices = computed(() =>
     return {
       id: role.id,
       responseChoice: role.name,
-      description: role.description,
+      description: role.description
     }
   })
 )
@@ -109,7 +121,7 @@ async function onSubmit() {
   const isSuccess = await participationStore.createParticipation()
 
   if (isSuccess) {
-    await participationStore.getCurrentQuestionnaireObjectiveQuestionResponses()
+    await participationStore.getQuestionnaireObjectiveQuestionResponsesForAssessment(assessmentStore.currentAssessmentId)
     useProfilingJourney().goToNextQuestion(undefined)
   }
 }
