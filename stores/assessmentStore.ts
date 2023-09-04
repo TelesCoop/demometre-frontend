@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import {
-  Assessment,
+  Assessment, AssessmentDocumentType,
   Localities,
   RepresentativityCriteria,
   Scores,
@@ -13,11 +13,11 @@ import { useParticipationStore } from "./participationStore"
 
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
-    assessmentById: <{ [key: number]: Assessment }>{},
+    assessmentById: <Record<number, Assessment>>{},
     currentAssessmentId: <number>undefined,
     representativityCriterias: <RepresentativityCriteria[]>[],
     assessmentsWithResultsLoaded: <boolean>false,
-    scoresByAssessmentId: <{ [key: number]: Scores }>{},
+    scoresByAssessmentId: <Record<number, Scores>>{},
     chartDataByAssessmentIdAndQuestionId: <
       {
         [key: number]: any
@@ -89,13 +89,24 @@ export const useAssessmentStore = defineStore("assessment", {
       this.assessmentById[assessmentId] = data.value
       return true
     },
+    async addDocument(payload: any, assessmentId: number) {
+      const { data, error } = await useApiPost<AssessmentDocumentType>(
+        `assessment-documents/`,
+        payload,
+        "Impossible de téléverser le document"
+      )
+      if (!error.value) {
+        this.assessmentById[assessmentId].documents.push(data.value)
+      }
+    },
     async deleteDocument(assessmentId, assessmentDocumentId: number) {
-      const { data, error } = await useApiDelete<Scores>(
+      const { error } = await useApiDelete<Scores>(
         `assessment-documents/${assessmentDocumentId}/`
       )
       if (error.value) {
         return false
       } else {
+        console.log("### remove document", assessmentId, this.assessmentById[assessmentId])
         this.assessmentById[assessmentId].documents = this.assessmentById[assessmentId].documents.filter(
           doc => doc.id != assessmentDocumentId
         )

@@ -260,6 +260,12 @@
         :fill="props.color"
       />
     </template>
+    <template v-else-if="props.name === 'file-upload-line'">
+      <path
+        d="M15 4H5V20H19V8H15V4ZM3 2.9918C3 2.44405 3.44749 2 3.9985 2H16L20.9997 7L21 20.9925C21 21.5489 20.5551 22 20.0066 22H3.9934C3.44476 22 3 21.5447 3 21.0082V2.9918ZM13 12V16H11V12H8L12 8L16 12H13Z"
+        :fill="props.color"
+      />
+    </template>
     <template v-else-if="props.name === ''">
       <path
         d="M13 20H11V13H4V20H2V4H4V11H11V4H13V20ZM21.0005 8V20H19.0005L19 10.204L17 10.74V8.67L19.5005 8H21.0005Z"

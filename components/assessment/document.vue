@@ -1,13 +1,13 @@
 <template>
   <div class="document">
     <NuxtLink
-      :to="document.file"
+      :to="document.file?.link"
       target="_blank"
     >
       <h4 class="title is-6 mb-0_5">
         {{ document.name }}
       </h4>
-      <p>{{ extension }} · {{ document.size }} · {{ shownDate }}</p>
+      <p>{{ extension }} · {{ document.file?.size }} · {{ shownDate }}</p>
     </NuxtLink>
     <button
       class="delete-button"
@@ -37,8 +37,7 @@ const props = defineProps({
   assessmentId: { type: Number, required: true }
 })
 const extension = computed(() => {
-  const split = props.document?.file.split(".")
-  return split[split.length - 1]
+  return props.document?.file?.mimeType
 })
 const shownDate = computed(() => new Date(props.document?.created).toLocaleDateString())
 

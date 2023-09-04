@@ -635,12 +635,17 @@ export type RichTextToolbarItem = {
 }
 export type RichTextToolbar = RichTextToolbarItem[]
 export type AssessmentDocumentCategory = "assessment_reports" | "other" | "invoices"
+export type AssessmentDocumentTypeFile = {
+  link: string,
+  mimetype: string,
+  name: string,
+  size: string,
+}
 export type AssessmentDocumentType = {
   assessment: number,
   category: AssessmentDocumentCategory,
   created: string,
-  file: string,
+  file: AssessmentDocumentTypeFile,
   id: number,
   name: string,
-  size: string,
 }

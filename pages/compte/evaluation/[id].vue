@@ -155,6 +155,8 @@
                 v-for="document of documentsForCategory(category.value)"
                 :key="document.id"
                 :document="document"
+                :assessment-id="assessmentId"
+                class="mb-1"
               />
               <div
                 v-if="!documentsForCategory(category.value).length"
@@ -220,9 +222,9 @@
       :assessment="assessment"
       @close="showInformationsEditModal = false"
     />
-    <InformationsEditModal
+    <AddDocumentModal
       v-if="showAddDocumentModal"
-      :assessment="assessment"
+      :assessment-id="assessmentId"
       @close="showAddDocumentModal = false"
     />
   </div>
@@ -235,7 +237,7 @@ import { useParticipationStore } from "~/stores/participationStore"
 import { Assessment, AssessmentDocumentCategory, AssessmentDocumentType } from "~/composables/types"
 import { ASSESSMENT_DOCUMENT_CATEGORIES, PARTICIPANT_TYPE } from "~/utils/constants"
 import InformationsEditModal from "~/components/assessment/informationsEditModal.vue"
-import Document from "~/components/assessment/document.vue"
+import AddDocumentModal from "~/components/assessment/addDocumentModal.vue"
 
 definePageMeta({
   title: "Évaluation",
@@ -249,7 +251,7 @@ const route = useRoute()
 const userStep = useUserStep()
 const showInformationsEditModal = ref(false)
 const showExpertsEditModal = ref(false)
-const showAddDocumentModal = ref(false)
+const showAddDocumentModal = ref(true)
 
 const assessmentId = parseInt(route.params.id as string)
 assessmentStore.currentAssessmentId = assessmentId

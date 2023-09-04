@@ -26,7 +26,7 @@
       <div class="modal-background" />
       <div class="modal-content p-2">
         <div class="modal-card-head">
-          <h2 class="title is-4">
+          <h2>
             {{ mainStore.confirmation.title }}
           </h2>
         </div>
