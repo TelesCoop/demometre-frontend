@@ -3,6 +3,7 @@
     <p class="has-text-shade-400 is-uppercase is-size-6 mb-0_5">
       {{ title }}
     </p>
+    <!-- disabling eslint because the v-html is alright, value is clean from backend -->
     <!-- eslint-disable -->
     <div
       v-if="value"
