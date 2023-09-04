@@ -10,3 +10,8 @@ export const ASSESSMENT_CONTEXT_FIELDS = {
   "stakeholders": "parties prenantes",
   "calendar": "calendrier"
 }
+export const ASSESSMENT_DOCUMENT_CATEGORIES = [
+  { label: "Rapports d'évaluation", value: "assessment_reports" },
+  { label: "Autres documents", value: "other" },
+  { label: "Factures", value: "invoices" }
+]

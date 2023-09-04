@@ -6,7 +6,7 @@ import {
   Scores,
   User
 } from "~/composables/types"
-import { useApiGet, useApiPost } from "~/composables/api"
+import { useApiDelete, useApiGet, useApiPost } from "~/composables/api"
 import { useMessageStore } from "./messageStore"
 import { useUserStore } from "./userStore"
 import { useParticipationStore } from "./participationStore"
@@ -28,35 +28,6 @@ export const useAssessmentStore = defineStore("assessment", {
     newAssessment: <Assessment>{}
   }),
   getters: {
-    assessments: (state) => {
-      return Object.values(state.assessmentById)
-    },
-    municipalityAssessments() {
-      return this.assessments.find(
-        (assessment: Assessment) => assessment.localityType === "municipality"
-      )
-    },
-    intercommunalityAssessments() {
-      return this.assessments.find(
-        (assessment: Assessment) =>
-          assessment.localityType === "intercommunality"
-      )
-    },
-    currentAssessment() {
-      return this.assessmentById[this.currentAssessmentId]
-    },
-    canSeeResultsAssessments() {
-      return this.assessments.filter(
-        (assessment: Assessment) =>
-          assessment.publishedResults === true ||
-          assessment.id === this.currentAssessmentId
-      )
-    },
-    userIsAssessmentInitiator() {
-      return (
-        this.currentAssessment?.initiatedByUser?.id === useUserStore().user.id
-      )
-    },
     assessmentTypeTitle() {
       return (
         "de " +
@@ -65,8 +36,37 @@ export const useAssessmentStore = defineStore("assessment", {
           : "mon inter-communalité")
       )
     },
+    assessments: (state) => {
+      return Object.values(state.assessmentById)
+    },
+    canSeeResultsAssessments() {
+      return this.assessments.filter(
+        (assessment: Assessment) =>
+          assessment.publishedResults === true ||
+          assessment.id === this.currentAssessmentId
+      )
+    },
+    currentAssessment() {
+      return this.assessmentById[this.currentAssessmentId]
+    },
     experts: (state) => {
       return Object.values(state.expertById)
+    },
+    intercommunalityAssessments() {
+      return this.assessments.find(
+        (assessment: Assessment) =>
+          assessment.localityType === "intercommunality"
+      )
+    },
+    municipalityAssessments() {
+      return this.assessments.find(
+        (assessment: Assessment) => assessment.localityType === "municipality"
+      )
+    },
+    userIsAssessmentInitiator() {
+      return (
+        this.currentAssessment?.initiatedByUser?.id === useUserStore().user.id
+      )
     }
   },
   actions: {
@@ -88,6 +88,19 @@ export const useAssessmentStore = defineStore("assessment", {
       }
       this.assessmentById[assessmentId] = data.value
       return true
+    },
+    async deleteDocument(assessmentId, assessmentDocumentId: number) {
+      const { data, error } = await useApiDelete<Scores>(
+        `assessment-documents/${assessmentDocumentId}/`
+      )
+      if (error.value) {
+        return false
+      } else {
+        this.assessmentById[assessmentId].documents = this.assessmentById[assessmentId].documents.filter(
+          doc => doc.id != assessmentDocumentId
+        )
+        return true
+      }
     },
     async getAssesmentsWithPublicatedResults() {
       const { data, error } = await useApiGet<Assessment[]>(

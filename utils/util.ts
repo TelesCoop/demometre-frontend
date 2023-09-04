@@ -11,3 +11,7 @@ export function round(value: number, digits: number): number {
 }
 
 export const generateRandomId = () => Math.random().toString(36).slice(2, 10)
+
+export function doNothing(): void {
+  // do nothing
+}

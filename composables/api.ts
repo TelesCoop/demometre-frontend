@@ -131,3 +131,7 @@ export async function useApiPost<Type>(path: string, payload: any = {}) {
 export async function useApiPatch<Type>(path: string, payload: any = {}) {
   return useAPIwithCsrfToken<Type>(path, "PATCH", payload)
 }
+
+export async function useApiDelete<Type>(path: string) {
+  return useAPIwithCsrfToken<Type>(path, "DELETE")
+}

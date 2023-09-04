@@ -134,6 +134,44 @@
           </div>
         </div>
       </PageSection>
+
+      <div v-if="assessment.details.hasDetailAccess">
+        <hr>
+        <PageSection
+          title="Documents"
+          :buttons="[{text: 'Ajouter un document', icon: 'add-line'}]"
+          @button-click="showAddDocumentModal = true"
+        >
+          <div class="columns is-tablet is-variable is-6">
+            <div
+              v-for="category of ASSESSMENT_DOCUMENT_CATEGORIES"
+              :key="category.value"
+              class="column is-4-tablet"
+            >
+              <h3 class="has-text-shade-400 is-uppercase is-size-6 mb-0_5">
+                {{ category.label }}
+              </h3>
+              <AssessmentDocument
+                v-for="document of documentsForCategory(category.value)"
+                :key="document.id"
+                :document="document"
+              />
+              <div
+                v-if="!documentsForCategory(category.value).length"
+                class="message is-small"
+              >
+                <div class="message-body">
+                  <p>
+                    Aucun document dans cette catégorie.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </PageSection>
+      </div>
+
+      <hr>
       <section class="section">
         <div class="is-flex is-justify-content-space-between">
           <div>
@@ -176,10 +214,16 @@
         </div>
       </section>
     </div>
+
     <InformationsEditModal
       v-if="showInformationsEditModal"
       :assessment="assessment"
       @close="showInformationsEditModal = false"
+    />
+    <InformationsEditModal
+      v-if="showAddDocumentModal"
+      :assessment="assessment"
+      @close="showAddDocumentModal = false"
     />
   </div>
 </template>
@@ -188,9 +232,10 @@
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
-import { Assessment } from "~/composables/types"
-import { PARTICIPANT_TYPE } from "~/utils/constants"
+import { Assessment, AssessmentDocumentCategory, AssessmentDocumentType } from "~/composables/types"
+import { ASSESSMENT_DOCUMENT_CATEGORIES, PARTICIPANT_TYPE } from "~/utils/constants"
 import InformationsEditModal from "~/components/assessment/informationsEditModal.vue"
+import Document from "~/components/assessment/document.vue"
 
 definePageMeta({
   title: "Évaluation",
@@ -202,8 +247,9 @@ const profilingStore = useProfilingStore()
 const participationStore = useParticipationStore()
 const route = useRoute()
 const userStep = useUserStep()
-const showInformationsEditModal = ref(true)
+const showInformationsEditModal = ref(false)
 const showExpertsEditModal = ref(false)
+const showAddDocumentModal = ref(false)
 
 const assessmentId = parseInt(route.params.id as string)
 assessmentStore.currentAssessmentId = assessmentId
@@ -221,6 +267,9 @@ if (participationStore.status.total == 0) {
   await participationStore.getParticipationForAssessment(assessmentId)
   await participationStore.setTotalAndAnsweredQuestionsByPillarName()
 }
+const documentsForCategory = computed(() => (category: AssessmentDocumentCategory) => {
+  return assessment.value.documents.filter((document: AssessmentDocumentType) => document.category === category)
+})
 
 const onInformationButtonClick = (buttonIx: number) => {
   if (buttonIx === 0) {

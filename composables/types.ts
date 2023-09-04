@@ -1,9 +1,9 @@
 export type User = {
-  id: number | null
   email: string
-  username: string
+  id: number | null
   isExpert: boolean
   isUnknownUser: boolean
+  username: string
 }
 
 // Questionnaire and profiling
@@ -215,6 +215,7 @@ export type Assessment = {
   code: string
   collectivityName: string
   details: AssessmentDetails
+  documents: AssessmentDocumentType[]
   endDate: string
   epci: Locality | null
   id: number
@@ -633,3 +634,13 @@ export type RichTextToolbarItem = {
   title: string
 }
 export type RichTextToolbar = RichTextToolbarItem[]
+export type AssessmentDocumentCategory = "assessment_reports" | "other" | "invoices"
+export type AssessmentDocumentType = {
+  assessment: number,
+  category: AssessmentDocumentCategory,
+  created: string,
+  file: string,
+  id: number,
+  name: string,
+  size: string,
+}
