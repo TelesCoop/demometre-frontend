@@ -4,7 +4,7 @@ import {
   Localities,
   RepresentativityCriteria,
   Scores,
-  User,
+  User
 } from "~/composables/types"
 import { useApiGet, useApiPost } from "~/composables/api"
 import { useMessageStore } from "./messageStore"
@@ -22,10 +22,10 @@ export const useAssessmentStore = defineStore("assessment", {
       {
         [key: number]: any
       }
-    >{},
+      >{},
     expertById: <{ [key: number]: User }>{},
     addingExpert: <boolean>false,
-    newAssessment: <Assessment>{},
+    newAssessment: <Assessment>{}
   }),
   getters: {
     assessments: (state) => {
@@ -67,7 +67,7 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     experts: (state) => {
       return Object.values(state.expertById)
-    },
+    }
   },
   actions: {
     addAssessment(assessment) {
@@ -78,7 +78,7 @@ export const useAssessmentStore = defineStore("assessment", {
         `assessments/${assessmentId}/add-expert/`,
         {
           expertId,
-          conditionsOfSaleConsent: this.newAssessment.conditionsOfSaleConsent,
+          conditionsOfSaleConsent: this.newAssessment.conditionsOfSaleConsent
         }
       )
       if (error.value) {
@@ -87,29 +87,6 @@ export const useAssessmentStore = defineStore("assessment", {
         return false
       }
       this.assessmentById[assessmentId] = data.value
-      return true
-    },
-    async getAssessmentsForUser() {
-      const response = await useApiGet<Assessment[]>(`assessments/mine/`)
-      if (response.error.value) {
-        return false
-      }
-      for (const assessment of response.data.value!) {
-        this.assessmentById[assessment.id] = assessment
-      }
-      return true
-    },
-    async getAssessment(id) {
-      const response = await useApiGet<Assessment>(`assessments/${id}/`)
-
-      if (response.error.value) {
-        const errorStore = useMessageStore()
-        errorStore.setError(response.error.value.data?.messageCode)
-        return false
-      }
-
-      this.assessmentById[response.data.value.id] = response.data.value
-      this.currentAssessmentId = response.data.value.id
       return true
     },
     async getAssesmentsWithPublicatedResults() {
@@ -125,6 +102,73 @@ export const useAssessmentStore = defineStore("assessment", {
         this.assessmentById[assessment.id] = assessment
       }
       this.assessmentsWithResultsLoaded = true
+      return true
+    },
+    async getAssessment(id) {
+      const response = await useApiGet<Assessment>(`assessments/${id}/`)
+
+      if (response.error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(response.error.value.data?.messageCode)
+        return false
+      }
+
+      this.assessmentById[response.data.value.id] = response.data.value
+      this.currentAssessmentId = response.data.value.id
+      return true
+    },
+    async getAssessmentScores(assessmentId) {
+      const { data, error } = await useApiGet<Scores>(
+        `assessments/${assessmentId}/scores/`
+      )
+      if (error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+        return false
+      }
+      this.scoresByAssessmentId[assessmentId] = data.value
+      return true
+    },
+    async getAssessmentsForUser() {
+      const response = await useApiGet<Assessment[]>(`assessments/mine/`)
+      if (response.error.value) {
+        return false
+      }
+      for (const assessment of response.data.value!) {
+        this.assessmentById[assessment.id] = assessment
+      }
+      return true
+    },
+    async getChartDataByAssessmentIdAndQuestionId(
+      assessmentId: number,
+      questionId: number
+    ): Promise<boolean> {
+      const { data, error } = await useApiGet<any>(
+        `assessments/${assessmentId}/questions/${questionId}/chart-data/`
+      )
+      if (error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+        return false
+      }
+      if (!this.chartDataByAssessmentIdAndQuestionId[assessmentId]) {
+        this.chartDataByAssessmentIdAndQuestionId[assessmentId] = {}
+      }
+      this.chartDataByAssessmentIdAndQuestionId[assessmentId][questionId] =
+        data.value
+      return true
+    },
+    async getExperts() {
+      const { data, error } = await useApiGet<User[]>(`experts/`)
+      if (error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+        return false
+      }
+      for (const expert of data.value) {
+        this.expertById[expert.id] = expert
+        this.expertById[expert.id].name = this.expertById[expert.id].username
+      }
       return true
     },
     async getLocalities(zipCode) {
@@ -171,7 +215,7 @@ export const useAssessmentStore = defineStore("assessment", {
             }
           ),
           ...this.newAssessment,
-          ...payload,
+          ...payload
         }
       )
       if (error.value) {
@@ -194,48 +238,14 @@ export const useAssessmentStore = defineStore("assessment", {
       this.addingExpert = false
       this.newAssessment = {}
     },
-    async getAssessmentScores(assessmentId) {
-      const { data, error } = await useApiGet<Scores>(
-        `assessments/${assessmentId}/scores/`
+    async saveAssessment(assessmentId: number, payload: any) {
+      const { data, error } = await useApiPatch<Assessment>(
+        `assessments/${assessmentId}/`, payload
       )
       if (error.value) {
-        const errorStore = useMessageStore()
-        errorStore.setError(error.value.data?.messageCode)
         return false
       }
-      this.scoresByAssessmentId[assessmentId] = data.value
-      return true
-    },
-    async getExperts() {
-      const { data, error } = await useApiGet<User[]>(`experts/`)
-      if (error.value) {
-        const errorStore = useMessageStore()
-        errorStore.setError(error.value.data?.messageCode)
-        return false
-      }
-      for (const expert of data.value) {
-        this.expertById[expert.id] = expert
-        this.expertById[expert.id].name = this.expertById[expert.id].username
-      }
-      return true
-    },
-    async getChartDataByAssessmentIdAndQuestionId(
-      assessmentId: number,
-      questionId: number
-    ): Promise<boolean> {
-      const { data, error } = await useApiGet<any>(
-        `assessments/${assessmentId}/questions/${questionId}/chart-data/`
-      )
-      if (error.value) {
-        const errorStore = useMessageStore()
-        errorStore.setError(error.value.data?.messageCode)
-        return false
-      }
-      if (!this.chartDataByAssessmentIdAndQuestionId[assessmentId]) {
-        this.chartDataByAssessmentIdAndQuestionId[assessmentId] = {}
-      }
-      this.chartDataByAssessmentIdAndQuestionId[assessmentId][questionId] =
-        data.value
+      this.assessmentById[assessmentId] = data.value
       return true
     },
     async saveEndInitializationQuestions() {
@@ -247,6 +257,6 @@ export const useAssessmentStore = defineStore("assessment", {
       }
       this.assessmentById[this.currentAssessmentId] = data.value
       return true
-    },
-  },
+    }
+  }
 })

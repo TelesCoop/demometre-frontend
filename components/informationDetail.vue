@@ -1,6 +1,6 @@
 <template>
   <div style="min-width: 250px">
-    <p class="has-text-shade-400 is-uppercase is-size-6">
+    <p class="has-text-shade-400 is-uppercase is-size-6 mb-0_5">
       {{ title }}
     </p>
     <p class="has-text-shade-600 is-size-5">

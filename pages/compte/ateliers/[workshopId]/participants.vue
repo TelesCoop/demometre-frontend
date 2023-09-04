@@ -5,10 +5,7 @@
       <PageSection
         :title="pageStore.animatorPage.addParticipantsTitle"
         :intro="pageStore.animatorPage.addParticipantsIntro"
-        button-text="Revenir aux ateliers"
-        button-link="/compte/ateliers"
-        :left-icon="true"
-        icon="arrow-left-line"
+        :buttons="[{text: 'Revenir aux ateliers', link: `/compte/ateliers`, iconLeft: true, icon: 'arrow-left-line'}]"
       >
         <p
           class="is-family-secondary mb-4"
@@ -194,7 +191,7 @@ import { useUserStore } from "~/stores/userStore"
 
 definePageMeta({
   title: "Participants",
-  breadcrumb: "Participants",
+  breadcrumb: "Participants"
 })
 
 const profilingStore = useProfilingStore()
@@ -214,7 +211,7 @@ if (!profilingStore.roles.length) {
 if (
   !animatorStore.workshopById[workshopId.value] ||
   animatorStore.workshopById[workshopId.value].participationIds.length !==
-    animatorStore.workshopParticipations(workshopId.value).length
+  animatorStore.workshopParticipations(workshopId.value).length
 ) {
   animatorStore.getWorkshop(workshopId.value)
 }
@@ -231,7 +228,7 @@ const newParticipations = ref<WorkshopParticipation[]>([])
 const validateDisabled = computed(() =>
   [
     ...newParticipations.value,
-    ...animatorStore.workshopParticipations(workshopId.value),
+    ...animatorStore.workshopParticipations(workshopId.value)
   ].some(
     (participation) =>
       !(participation?.participantName && participation?.roleId)
@@ -247,7 +244,7 @@ function addParticipation() {
     participantEmail: "",
     responses: undefined,
     responseByQuestionId: {},
-    changed: true,
+    changed: true
   })
 }
 
@@ -270,7 +267,7 @@ async function onSubmit() {
     const newParticipationsTmp = newParticipations.value
     for (const participation of [
       ...animatorStore.workshopParticipations(workshopId.value),
-      ...newParticipationsTmp,
+      ...newParticipationsTmp
     ]) {
       if (!participation.id) {
         newParticipations.value.shift()

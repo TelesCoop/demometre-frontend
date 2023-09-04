@@ -20,7 +20,7 @@ export const useBackendUrl = (api = true) => {
     }
   }
 
-  if (!api){
+  if (!api) {
     return backendUrl
   }
 
@@ -92,7 +92,7 @@ export async function useApiGet<Type>(path: string) {
   const { data, error } = await useFetch<Type>(`${useBackendUrl()}${path}`, {
     method: "GET",
     credentials: "include",
-    headers: getHeaders(),
+    headers: getHeaders()
   })
   if (error.value) {
     loadingStore.markError(key)
@@ -114,7 +114,7 @@ export async function useAPIwithCsrfToken<Type>(
     method,
     body: payload,
     credentials: "include",
-    headers: getHeaders(true),
+    headers: getHeaders(true)
   })
   if (error.value) {
     loadingStore.markError(key)
@@ -123,6 +123,7 @@ export async function useAPIwithCsrfToken<Type>(
   }
   return { data, error }
 }
+
 export async function useApiPost<Type>(path: string, payload: any = {}) {
   return useAPIwithCsrfToken<Type>(path, "POST", payload)
 }
