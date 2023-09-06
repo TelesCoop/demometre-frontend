@@ -72,8 +72,7 @@
       <PageSection
         title="Mes évaluations"
         intro="Toutes mes évaluations en cours et terminées"
-        button-text="Lancer une évaluation"
-        button-link="/evaluation/localisation"
+        :buttons="[{text: 'Lancer une évaluation', link: `/evaluation/localisation`}]"
       >
         <div class="tabs is-fullwidth">
           <ul>
@@ -134,7 +133,7 @@
               >
                 <td>{{ assessment.name }}</td>
                 <td>{{ new Date(assessment.created).toLocaleDateString() }}</td>
-                <td>{{ PARTICIPANT_TYPE[assessment.role] || "inconnu" }}</td>
+                <td>{{ PARTICIPANT_TYPE[assessment.details.role] || "inconnu" }}</td>
                 <td>{{ assessment.code }}</td>
                 <td>{{ assessment.collectivityName }}</td>
                 <td>France</td>

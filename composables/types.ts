@@ -1,9 +1,9 @@
 export type User = {
-  id: number | null
   email: string
-  username: string
+  id: number | null
   isExpert: boolean
   isUnknownUser: boolean
+  username: string
 }
 
 // Questionnaire and profiling
@@ -11,10 +11,12 @@ export enum Objectivity {
   OBJECTIVE = "objective",
   SUBJECTIVE = "subjective",
 }
+
 export enum Method {
   QUANTITATIVE = "quantitative",
   QUALITATIVE = "qualitative",
 }
+
 export enum QuestionType {
   OPEN = "open",
   UNIQUE_CHOICE = "unique_choice",
@@ -24,11 +26,13 @@ export enum QuestionType {
   PERCENTAGE = "percentage",
   NUMBER = "number",
 }
+
 export enum SurveyType {
   PROFILING = "profiling",
   QUESTIONNAIRE = "questionnaire",
   INITILIZATION = "initilization",
 }
+
 export enum PillarName {
   REPRESENTATION = "représentation",
   TRANSPARENCY = "transparence",
@@ -39,20 +43,20 @@ export enum PillarName {
 export const PillarParams = {
   [PillarName.REPRESENTATION]: {
     key: "representation",
-    color: "representation",
+    color: "representation"
   },
   [PillarName.TRANSPARENCY]: {
     key: "transparency",
-    color: "transparency",
+    color: "transparency"
   },
   [PillarName.PARTICIPATION]: {
     key: "participation",
-    color: "participation",
+    color: "participation"
   },
   [PillarName.COOPERATION]: {
     key: "cooperation",
-    color: "cooperation",
-  },
+    color: "cooperation"
+  }
 }
 export type PillarType = {
   id: number
@@ -155,12 +159,12 @@ export type Definition = {
 // Assessment
 export const LocalityType = {
   MUNICIPALITY: { key: "municipality", value: "Commune" },
-  INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" },
+  INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" }
 }
 export const AssessmentType = {
   QUICK: { key: "quick", value: "Diagnostic rapide" },
   PARTICIPATIVE: { key: "participative", value: "Evaluation participative" },
-  WITH_EXPERT: { key: "with_expert", value: "Evaluation avec expert" },
+  WITH_EXPERT: { key: "with_expert", value: "Evaluation avec expert" }
 }
 type Locality = {
   id: number
@@ -196,12 +200,22 @@ export type AssessmentRepresentativity = {
   acceptabilityThresholdConsidered: number
   respected: boolean
 }
+export type AssessmentDetails = {
+  calendar: string
+  context: string
+  hasDetailAccess: boolean
+  objectives: string
+  role: "initiator" | "expert" | "participant" | "" | null
+  stakeholders: string
+}
 export type Assessment = {
   assessmentType: string
   conditionsOfSaleConsent: boolean
   created: string
   code: string
   collectivityName: string
+  details: AssessmentDetails
+  documents: AssessmentDocumentType[]
   endDate: string
   epci: Locality | null
   id: number
@@ -225,7 +239,7 @@ export const InitiatorType = {
   COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
   ASSOCIATION: { key: "association", value: "Une association" },
   INDIVIDUAL: { key: "individual", value: "Un particulier" },
-  OTHER: { key: "other", value: "Autre" },
+  OTHER: { key: "other", value: "Autre" }
 }
 export type Scores = {
   byQuestionId: { [key: number]: number }
@@ -575,4 +589,63 @@ export type RgpdSettings = {
 
 export type StructureSettings = {
   email: string
+}
+export type SectionButton = {
+  icon: string
+  iconLeft?: boolean
+  link?: string
+  text: string
+}
+
+
+// rich text (TipTap)
+export enum HeadingType {
+  H1 = "h1",
+  H2 = "h2",
+  H3 = "h3",
+  H4 = "h4",
+  H5 = "h5",
+  H6 = "h6",
+}
+
+export enum OtherRichTextActions {
+  BOLD = "bold",
+  ITALIC = "italic",
+  LIST_ORDERED = "list-ordered",
+  LIST_UNORDERED = "list-unordered",
+  LINK = "link",
+  LINK_UNLINK = "link",
+}
+
+type RichTextToolbarActions = HeadingType | OtherRichTextActions
+export type RichTextToolbarHeadingSwitch = {
+  [key in HeadingType]?: Level
+}
+export type RichTextToolbarOptions = {
+  show?: RichTextToolbarActions[]
+  headingSwitch?: RichTextToolbarHeadingSwitch
+}
+export type RichTextToolbarItem = {
+  name: RichTextToolbarActions
+  testActive: () => boolean
+  onClick: () => void
+  icon: string
+  disabled: () => boolean
+  title: string
+}
+export type RichTextToolbar = RichTextToolbarItem[]
+export type AssessmentDocumentCategory = "assessment_reports" | "other" | "invoices"
+export type AssessmentDocumentTypeFile = {
+  link: string,
+  mimetype: string,
+  name: string,
+  size: string,
+}
+export type AssessmentDocumentType = {
+  assessment: number,
+  category: AssessmentDocumentCategory,
+  created: string,
+  file: AssessmentDocumentTypeFile,
+  id: number,
+  name: string,
 }

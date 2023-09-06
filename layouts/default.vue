@@ -17,13 +17,53 @@
         :message="messageStore.message"
       />
     </div>
+
+    <!-- confirmation modal -->
+    <div
+      v-if="mainStore.confirmation.title"
+      class="modal is-active"
+    >
+      <div class="modal-background" />
+      <div class="modal-content p-2">
+        <div class="modal-card-head">
+          <h2>
+            {{ mainStore.confirmation.title }}
+          </h2>
+        </div>
+        <div class="modal-card-body">
+          {{ mainStore.confirmation.text }}
+        </div>
+        <footer class="modal-card-foot">
+          <button
+            class="button is-rounded is-dark"
+            @click="mainStore.confirmation.onConfirm"
+          >
+            <span>{{ mainStore.confirmation.confirmationLabel }}</span>
+            <!--            <span class="icon">-->
+            <!--              <icon-->
+            <!--                size="16"-->
+            <!--                name="check"-->
+            <!--              />-->
+            <!--            </span>-->
+          </button>
+          <button
+            class="button is-rounded is-outlined is-dark"
+            @click="mainStore.confirmation.onCancel"
+          >
+            Annuler
+          </button>
+        </footer>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useMessageStore } from "~/stores/messageStore"
+import { useMainStore } from "~/stores/mainStore"
 
 const messageStore = useMessageStore()
+const mainStore = useMainStore()
 const route = useRoute()
 
 const height = ref<number>(75)

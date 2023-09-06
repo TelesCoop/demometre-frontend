@@ -1,4 +1,5 @@
 import { useLoadingStore } from "~/stores/loadingStore"
+import { useMessageStore } from "~/stores/messageStore"
 
 let media_base_url
 type MyHeaders = { [key: string]: string }
@@ -20,7 +21,7 @@ export const useBackendUrl = (api = true) => {
     }
   }
 
-  if (!api){
+  if (!api) {
     return backendUrl
   }
 
@@ -85,17 +86,20 @@ if (process.env.NODE_ENV !== "production") {
 }
 export const MEDIA_BASE_URL = media_base_url
 
-export async function useApiGet<Type>(path: string) {
+export async function useApiGet<Type>(path: string, onErrorMessage: string) {
   const loadingStore = useLoadingStore()
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
   const { data, error } = await useFetch<Type>(`${useBackendUrl()}${path}`, {
     method: "GET",
     credentials: "include",
-    headers: getHeaders(),
+    headers: getHeaders()
   })
   if (error.value) {
     loadingStore.markError(key)
+    if (onErrorMessage) {
+      messageStore.setError(onErrorMessage)
+    }
   } else {
     loadingStore.markDone(key)
   }
@@ -105,28 +109,38 @@ export async function useApiGet<Type>(path: string) {
 export async function useAPIwithCsrfToken<Type>(
   path: string,
   method: string,
-  payload: any = {}
+  payload: any = {},
+  onErrorMessage: string
 ) {
   const loadingStore = useLoadingStore()
+  const messageStore = useMessageStore()
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
   const { data, error } = await useFetch<Type>(`${useBackendUrl()}${path}`, {
     method,
     body: payload,
     credentials: "include",
-    headers: getHeaders(true),
+    headers: getHeaders(true)
   })
   if (error.value) {
     loadingStore.markError(key)
+    if (onErrorMessage) {
+      messageStore.setMessage(onErrorMessage, "error")
+    }
   } else {
     loadingStore.markDone(key)
   }
   return { data, error }
 }
-export async function useApiPost<Type>(path: string, payload: any = {}) {
-  return useAPIwithCsrfToken<Type>(path, "POST", payload)
+
+export async function useApiPost<Type>(path: string, payload: any = {}, onErrorMessage: string) {
+  return useAPIwithCsrfToken<Type>(path, "POST", payload, onErrorMessage)
 }
 
-export async function useApiPatch<Type>(path: string, payload: any = {}) {
-  return useAPIwithCsrfToken<Type>(path, "PATCH", payload)
+export async function useApiPatch<Type>(path: string, payload: any = {}, onErrorMessage: string) {
+  return useAPIwithCsrfToken<Type>(path, "PATCH", payload, onErrorMessage)
+}
+
+export async function useApiDelete<Type>(path: string, onErrorMessage: string) {
+  return useAPIwithCsrfToken<Type>(path, "DELETE", {}, onErrorMessage)
 }

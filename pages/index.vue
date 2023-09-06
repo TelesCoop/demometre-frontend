@@ -17,9 +17,12 @@
 
       <div class="container mb-4">
         <div class="buttons">
-          <router-link class="button is-shade-600 is-rounded" :to="userStep.url"
-            >Reprendre mon évaluation</router-link
+          <router-link
+            class="button is-shade-600 is-rounded"
+            :to="userStep.url"
           >
+            Reprendre mon évaluation
+          </router-link>
           <button
             v-if="userStore.isUnknownUser"
             class="button is-rounded is-shade-600 is-outlined"
@@ -37,7 +40,7 @@
     >
       <ParticipationBoard
         :assessment="assessmentStore.currentAssessment"
-      ></ParticipationBoard>
+      />
     </PageSection>
 
     <!-- Feedbacks -->
@@ -72,8 +75,7 @@
     <PageSection
       :title="pageStore.homePage.blogBlockTitle"
       :intro="pageStore.homePage.blogBlockIntro"
-      button-text="Explorer les articles"
-      button-link="/blog"
+      :buttons="[{text: 'Explorer les articles', link: `/blog`}]"
     >
       <div class="mb-2">
         <Carousel
@@ -102,10 +104,12 @@
       <PageSection
         :title="pageStore.homePage.resourcesBlockTitle"
         :intro="pageStore.homePage.resourcesBlockTitle"
-        button-text="Explorer les ressources"
-        button-link="/ressources"
+        :buttons="[{text: 'Explorer les ressources', link: `/ressources`}]"
       >
-        <div class="mb-2" style="display: block">
+        <div
+          class="mb-2"
+          style="display: block"
+        >
           <Carousel
             v-if="pageStore.homePage.resources.length"
             :settings="settings"
@@ -150,7 +154,7 @@ import { useUserStore } from "~/stores/userStore"
 
 definePageMeta({
   title: "Accueil",
-  breadcrumb: "Accueil",
+  breadcrumb: "Accueil"
 })
 
 const pageStore = usePageStore()
@@ -161,27 +165,27 @@ const userStore = useUserStore()
 
 const settings = {
   itemsToShow: 1.05,
-  snapAlign: "start",
+  snapAlign: "start"
 }
 const breakpointsLargeElements = {
   1024: {
     itemsToShow: 3.1,
-    snapAlign: "start",
+    snapAlign: "start"
   },
   768: {
     itemsToShow: 1.1,
-    snapAlign: "start",
-  },
+    snapAlign: "start"
+  }
 }
 const breakpointsSmallElements = {
   1024: {
     itemsToShow: 3.1,
-    snapAlign: "start",
+    snapAlign: "start"
   },
   768: {
     itemsToShow: 1.1,
-    snapAlign: "start",
-  },
+    snapAlign: "start"
+  }
 }
 </script>
 
@@ -189,6 +193,7 @@ const breakpointsSmallElements = {
 .carousel-item
   width: 100%
   text-align: start
+
 .carousel__slide:not(:last-child)
   padding-right: 20px
 </style>

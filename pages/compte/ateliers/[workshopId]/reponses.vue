@@ -5,10 +5,7 @@
       <PageSection
         :title="pageStore.animatorPage.responsesTitle"
         :intro="pageStore.animatorPage.responsesIntro"
-        button-text="Revenir aux participant·e·s"
-        :button-link="`/compte/ateliers/${workshopId}/participants`"
-        :left-icon="true"
-        icon="arrow-left-line"
+        :buttons="[{text: 'Revenir aux participant·e·s', link: `/compte/ateliers/${workshopId}/participants`, iconLeft: true, icon: 'arrow-left-line'}]"
       >
         <p
           class="is-family-secondary mb-4"
@@ -58,7 +55,7 @@ import { useUserStore } from "~/stores/userStore"
 
 definePageMeta({
   title: "Réponses",
-  breadcrumb: "Réponses",
+  breadcrumb: "Réponses"
 })
 
 const questionnaireStore = useQuestionnaireStore()

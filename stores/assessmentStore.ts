@@ -1,62 +1,33 @@
 import { defineStore } from "pinia"
 import {
-  Assessment,
+  Assessment, AssessmentDocumentType,
   Localities,
   RepresentativityCriteria,
   Scores,
-  User,
+  User
 } from "~/composables/types"
-import { useApiGet, useApiPost } from "~/composables/api"
+import { useApiDelete, useApiGet, useApiPost } from "~/composables/api"
 import { useMessageStore } from "./messageStore"
 import { useUserStore } from "./userStore"
 import { useParticipationStore } from "./participationStore"
 
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
-    assessmentById: <{ [key: number]: Assessment }>{},
+    assessmentById: <Record<number, Assessment>>{},
     currentAssessmentId: <number>undefined,
     representativityCriterias: <RepresentativityCriteria[]>[],
     assessmentsWithResultsLoaded: <boolean>false,
-    scoresByAssessmentId: <{ [key: number]: Scores }>{},
+    scoresByAssessmentId: <Record<number, Scores>>{},
     chartDataByAssessmentIdAndQuestionId: <
       {
         [key: number]: any
       }
-    >{},
+      >{},
     expertById: <{ [key: number]: User }>{},
     addingExpert: <boolean>false,
-    newAssessment: <Assessment>{},
+    newAssessment: <Assessment>{}
   }),
   getters: {
-    assessments: (state) => {
-      return Object.values(state.assessmentById)
-    },
-    municipalityAssessments() {
-      return this.assessments.find(
-        (assessment: Assessment) => assessment.localityType === "municipality"
-      )
-    },
-    intercommunalityAssessments() {
-      return this.assessments.find(
-        (assessment: Assessment) =>
-          assessment.localityType === "intercommunality"
-      )
-    },
-    currentAssessment() {
-      return this.assessmentById[this.currentAssessmentId]
-    },
-    canSeeResultsAssessments() {
-      return this.assessments.filter(
-        (assessment: Assessment) =>
-          assessment.publishedResults === true ||
-          assessment.id === this.currentAssessmentId
-      )
-    },
-    userIsAssessmentInitiator() {
-      return (
-        this.currentAssessment?.initiatedByUser?.id === useUserStore().user.id
-      )
-    },
     assessmentTypeTitle() {
       return (
         "de " +
@@ -65,9 +36,38 @@ export const useAssessmentStore = defineStore("assessment", {
           : "mon inter-communalité")
       )
     },
+    assessments: (state) => {
+      return Object.values(state.assessmentById)
+    },
+    canSeeResultsAssessments() {
+      return this.assessments.filter(
+        (assessment: Assessment) =>
+          assessment.publishedResults === true ||
+          assessment.id === this.currentAssessmentId
+      )
+    },
+    currentAssessment() {
+      return this.assessmentById[this.currentAssessmentId]
+    },
     experts: (state) => {
       return Object.values(state.expertById)
     },
+    intercommunalityAssessments() {
+      return this.assessments.find(
+        (assessment: Assessment) =>
+          assessment.localityType === "intercommunality"
+      )
+    },
+    municipalityAssessments() {
+      return this.assessments.find(
+        (assessment: Assessment) => assessment.localityType === "municipality"
+      )
+    },
+    userIsAssessmentInitiator() {
+      return (
+        this.currentAssessment?.initiatedByUser?.id === useUserStore().user.id
+      )
+    }
   },
   actions: {
     addAssessment(assessment) {
@@ -78,7 +78,7 @@ export const useAssessmentStore = defineStore("assessment", {
         `assessments/${assessmentId}/add-expert/`,
         {
           expertId,
-          conditionsOfSaleConsent: this.newAssessment.conditionsOfSaleConsent,
+          conditionsOfSaleConsent: this.newAssessment.conditionsOfSaleConsent
         }
       )
       if (error.value) {
@@ -89,14 +89,43 @@ export const useAssessmentStore = defineStore("assessment", {
       this.assessmentById[assessmentId] = data.value
       return true
     },
-    async getAssessmentsForUser() {
-      const response = await useApiGet<Assessment[]>(`assessments/mine/`)
-      if (response.error.value) {
+    async addDocument(payload: any, assessmentId: number) {
+      const { data, error } = await useApiPost<AssessmentDocumentType>(
+        `assessment-documents/`,
+        payload,
+        "Impossible de téléverser le document"
+      )
+      if (!error.value) {
+        this.assessmentById[assessmentId].documents.push(data.value)
+      }
+    },
+    async deleteDocument(assessmentId, assessmentDocumentId: number) {
+      const { error } = await useApiDelete<Scores>(
+        `assessment-documents/${assessmentDocumentId}/`
+      )
+      if (error.value) {
+        return false
+      } else {
+        console.log("### remove document", assessmentId, this.assessmentById[assessmentId])
+        this.assessmentById[assessmentId].documents = this.assessmentById[assessmentId].documents.filter(
+          doc => doc.id != assessmentDocumentId
+        )
+        return true
+      }
+    },
+    async getAssesmentsWithPublicatedResults() {
+      const { data, error } = await useApiGet<Assessment[]>(
+        `assessments/published/`
+      )
+      if (error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
-      for (const assessment of response.data.value!) {
+      for (const assessment of data.value) {
         this.assessmentById[assessment.id] = assessment
       }
+      this.assessmentsWithResultsLoaded = true
       return true
     },
     async getAssessment(id) {
@@ -112,19 +141,58 @@ export const useAssessmentStore = defineStore("assessment", {
       this.currentAssessmentId = response.data.value.id
       return true
     },
-    async getAssesmentsWithPublicatedResults() {
-      const { data, error } = await useApiGet<Assessment[]>(
-        `assessments/published/`
+    async getAssessmentScores(assessmentId) {
+      const { data, error } = await useApiGet<Scores>(
+        `assessments/${assessmentId}/scores/`
       )
       if (error.value) {
         const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
         return false
       }
-      for (const assessment of data.value) {
+      this.scoresByAssessmentId[assessmentId] = data.value
+      return true
+    },
+    async getAssessmentsForUser() {
+      const response = await useApiGet<Assessment[]>(`assessments/mine/`)
+      if (response.error.value) {
+        return false
+      }
+      for (const assessment of response.data.value!) {
         this.assessmentById[assessment.id] = assessment
       }
-      this.assessmentsWithResultsLoaded = true
+      return true
+    },
+    async getChartDataByAssessmentIdAndQuestionId(
+      assessmentId: number,
+      questionId: number
+    ): Promise<boolean> {
+      const { data, error } = await useApiGet<any>(
+        `assessments/${assessmentId}/questions/${questionId}/chart-data/`
+      )
+      if (error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+        return false
+      }
+      if (!this.chartDataByAssessmentIdAndQuestionId[assessmentId]) {
+        this.chartDataByAssessmentIdAndQuestionId[assessmentId] = {}
+      }
+      this.chartDataByAssessmentIdAndQuestionId[assessmentId][questionId] =
+        data.value
+      return true
+    },
+    async getExperts() {
+      const { data, error } = await useApiGet<User[]>(`experts/`)
+      if (error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+        return false
+      }
+      for (const expert of data.value) {
+        this.expertById[expert.id] = expert
+        this.expertById[expert.id].name = this.expertById[expert.id].username
+      }
       return true
     },
     async getLocalities(zipCode) {
@@ -171,7 +239,7 @@ export const useAssessmentStore = defineStore("assessment", {
             }
           ),
           ...this.newAssessment,
-          ...payload,
+          ...payload
         }
       )
       if (error.value) {
@@ -194,48 +262,14 @@ export const useAssessmentStore = defineStore("assessment", {
       this.addingExpert = false
       this.newAssessment = {}
     },
-    async getAssessmentScores(assessmentId) {
-      const { data, error } = await useApiGet<Scores>(
-        `assessments/${assessmentId}/scores/`
+    async saveAssessment(assessmentId: number, payload: any) {
+      const { data, error } = await useApiPatch<Assessment>(
+        `assessments/${assessmentId}/`, payload
       )
       if (error.value) {
-        const errorStore = useMessageStore()
-        errorStore.setError(error.value.data?.messageCode)
         return false
       }
-      this.scoresByAssessmentId[assessmentId] = data.value
-      return true
-    },
-    async getExperts() {
-      const { data, error } = await useApiGet<User[]>(`experts/`)
-      if (error.value) {
-        const errorStore = useMessageStore()
-        errorStore.setError(error.value.data?.messageCode)
-        return false
-      }
-      for (const expert of data.value) {
-        this.expertById[expert.id] = expert
-        this.expertById[expert.id].name = this.expertById[expert.id].username
-      }
-      return true
-    },
-    async getChartDataByAssessmentIdAndQuestionId(
-      assessmentId: number,
-      questionId: number
-    ): Promise<boolean> {
-      const { data, error } = await useApiGet<any>(
-        `assessments/${assessmentId}/questions/${questionId}/chart-data/`
-      )
-      if (error.value) {
-        const errorStore = useMessageStore()
-        errorStore.setError(error.value.data?.messageCode)
-        return false
-      }
-      if (!this.chartDataByAssessmentIdAndQuestionId[assessmentId]) {
-        this.chartDataByAssessmentIdAndQuestionId[assessmentId] = {}
-      }
-      this.chartDataByAssessmentIdAndQuestionId[assessmentId][questionId] =
-        data.value
+      this.assessmentById[assessmentId] = data.value
       return true
     },
     async saveEndInitializationQuestions() {
@@ -247,6 +281,6 @@ export const useAssessmentStore = defineStore("assessment", {
       }
       this.assessmentById[this.currentAssessmentId] = data.value
       return true
-    },
-  },
+    }
+  }
 })
