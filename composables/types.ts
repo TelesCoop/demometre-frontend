@@ -205,6 +205,9 @@ export type AssessmentDetails = {
   context: string
   hasDetailAccess: boolean
   objectives: string
+  paymentAmount: number
+  paymentAuthor: string
+  paymentDate: string
   role: "initiator" | "expert" | "participant" | "" | null
   stakeholders: string
 }

@@ -217,6 +217,49 @@
       </section>
     </div>
 
+    <div v-if="assessment.details.hasDetailAccess">
+      <hr>
+      <PageSection
+        title="État de paiement de la redevance"
+      >
+        <template v-if="assessment.details.paymentDate">
+          <div
+            class="message"
+          >
+            <div class="message-body p-3">
+              <div class="columns is-tablet">
+                <div class="column is-8">
+                  <p class="title is-4 mb-0_5">
+                    Paiement effectué
+                  </p>
+                  <p>
+                    L’expert a bien réglé le paiement de la commission d’utilisation du
+                    DémoMètre.
+                  </p>
+                </div>
+                <div class="column is-4">
+                  <InformationDetail
+                    title="Expert"
+                    :value="assessment.details.paymentAuthor"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <div class="message is-warning">
+            <div class="message-body p-3">
+              <p class="title is-4 mb-0_5">
+                Paiement en attente
+              </p>
+              <p>Le paiement n'a pas encore été effectué.</p>
+            </div>
+          </div>
+        </template>
+      </PageSection>
+    </div>
+
     <InformationsEditModal
       v-if="showInformationsEditModal"
       :assessment="assessment"
@@ -251,7 +294,7 @@ const route = useRoute()
 const userStep = useUserStep()
 const showInformationsEditModal = ref(false)
 const showExpertsEditModal = ref(false)
-const showAddDocumentModal = ref(true)
+const showAddDocumentModal = ref(false)
 
 const assessmentId = parseInt(route.params.id as string)
 assessmentStore.currentAssessmentId = assessmentId
