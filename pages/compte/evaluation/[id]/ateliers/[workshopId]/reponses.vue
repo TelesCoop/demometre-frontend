@@ -11,7 +11,7 @@
           class="is-family-secondary mb-4"
           style="margin-top: -3rem"
         >
-          Atelier: {{ animatorStore.workshopById[workshopId].name }}
+          Atelier: {{ workshopStore.workshopById[workshopId].name }}
         </p>
         <div class="container">
           <section
@@ -48,7 +48,7 @@
 import { Ref, ref } from "vue"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
-import { useAnimatorStore } from "~/stores/animatorStore"
+import { useWorkshopStore } from "~/stores/workshopStore"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useUserStore } from "~/stores/userStore"
@@ -65,13 +65,13 @@ const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
 const workshopId: Ref<number> = ref(+route.params.workshopId)
-const animatorStore = useAnimatorStore()
+const workshopStore = useWorkshopStore()
 
 if (!pageStore.animatorPage.listWorkshopsTitle) {
   pageStore.getAnimatorPage()
 }
-if (!animatorStore.workshopById[workshopId.value]) {
-  animatorStore.getWorkshop(workshopId.value)
+if (!workshopStore.workshopById[workshopId.value]) {
+  workshopStore.getWorkshop(workshopId.value)
 }
 if (!profilingStore.roles.length) {
   profilingStore.getRoles()

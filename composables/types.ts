@@ -295,24 +295,28 @@ export type QuestionResponse = {
 
 // Workshops
 export type Workshop = {
-  id: number
+  animatorId?: number
   assessmentId: number
+  changed?: boolean
+  closed?: boolean
   date: string
+  id?: number
   name: string
-  animatorId: number
-  participationIds: number[]
-  changed: boolean
-  closed: boolean
+  participationIds?: number[]
+  place: string
+  type: "assessment" | "results"
 }
 export type WorkshopParticipation = {
+  assessmentId: number
+  changed: boolean
   id: number
+  medium: "paper" | "online"
   participantEmail: string
   participantName: string
-  assessmentId: number
-  roleId: number
-  responses: QuestionResponse[]
   responseByQuestionId: { [key: number]: QuestionResponse }
-  changed: boolean
+  responses: QuestionResponse[]
+  roleId: number
+  workshopId?: number
 }
 
 // Pages
@@ -632,8 +636,9 @@ export type RichTextToolbarItem = {
   name: RichTextToolbarActions
   testActive: () => boolean
   onClick: () => void
-  icon: string
+  icon?: string
   disabled: () => boolean
+  text?: string
   title: string
 }
 export type RichTextToolbar = RichTextToolbarItem[]

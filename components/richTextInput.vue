@@ -37,9 +37,11 @@
             @click="button.onClick"
           >
             <icon
+              v-if="button.icon"
               :name="button.icon"
               size="16"
             />
+            <span v-else>{{ button.text }}</span>
           </button>
         </div>
         <editor-content :editor="editor" />
@@ -49,8 +51,11 @@
           class="modal"
           :class="{ 'is-active': isAddingLink }"
         >
-          <div class="modal-background" />
-          <div class="modal-content p-2">
+          <div
+            class="modal-background"
+            @click="emit('close')"
+          />
+          <div class="modal-content">
             <div class="modal-card-head">
               <h2 class="title is-2">
                 Ajouter un lien
@@ -195,24 +200,27 @@ const defaultToolbar = (): RichTextToolbar => [
     name: HeadingType.H1,
     testActive: () => testActiveHeading(1),
     onClick: () => onClickHeading(1),
-    icon: "h-1",
+    icon: "",
     disabled: () => false,
+    text: "titre 1",
     title: "Titre de niveau 1"
   },
   {
     name: HeadingType.H2,
     testActive: () => testActiveHeading(2),
     onClick: () => onClickHeading(2),
-    icon: "h-2",
+    icon: "",
     disabled: () => false,
+    text: "titre 2",
     title: "Titre de niveau 2"
   },
   {
     name: HeadingType.H3,
     testActive: () => testActiveHeading(3),
     onClick: () => onClickHeading(3),
-    icon: "h-3",
+    icon: "",
     disabled: () => false,
+    text: "titre 3",
     title: "Titre de niveau 3"
   },
   {
@@ -385,7 +393,7 @@ button:not(:disabled).is-active
   padding: 2px 4px 0 4px
   height: 22px
   line-height: 28px
-  font-size: 0
+  font-size: 10px
 
 .proseMirror
   padding-left: 2px

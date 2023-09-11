@@ -23,8 +23,11 @@
       v-if="mainStore.confirmation.title"
       class="modal is-active"
     >
-      <div class="modal-background" />
-      <div class="modal-content p-2">
+      <div
+        class="modal-background"
+        @click="emit('close')"
+      />
+      <div class="modal-content">
         <div class="modal-card-head">
           <h2>
             {{ mainStore.confirmation.title }}
