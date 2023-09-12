@@ -79,7 +79,7 @@
       <hr>
       <PageSection
         title="Participants"
-        :buttons="[{text: 'Ajouter un participant', icon: 'add-line'}, {text: 'Saisir les réponses papier', link: `/compte/evaluation/${workshop?.assessmentId}/atelier/${workshopId}/reponses`, icon: 'file-paper'}]"
+        :buttons="[{text: 'Ajouter un participant', icon: 'add-line'}, {text: 'Saisir les réponses papier', link: `/compte/evaluation/${workshop?.assessmentId}/ateliers/${workshopId}/reponses/`, icon: 'file-paper'}]"
         @button-click="onParticipantsButtonClick"
       >
         <div>
@@ -248,9 +248,9 @@ const onParticipantsButtonClick = (buttonIx: number) => {
 
 const confirmDeletion = (participant: WorkshopParticipation) => {
   confirm(
-    `Voulez-vous supprimer le participant ${participant.participantName} ?`,
-    "Supprimer le participant",
-    "Supprimer",
+    "En supprimant ce participant, vous supprimez également les évaluations du participant. Cette action est irréversible.",
+    `Supprimer le participant ${participant.participantName}`,
+    "Oui, supprimer",
     () => workshopStore.deleteParticipation(participant.id)
   )
 }
