@@ -17,7 +17,7 @@ import { useUserStore } from "./userStore"
 import { useMessageStore } from "./messageStore"
 import { useQuestionnaireStore } from "./questionnaireStore"
 
-type Status = { total: number; answered: number; completed: boolean }
+type Status = { total: number; answered: number; completed: boolean; participated?: boolean }
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
@@ -56,7 +56,8 @@ export const useParticipationStore = defineStore("participation", {
       return {
         total,
         answered,
-        completed: total === answered
+        completed: total === answered,
+        participated: answered > 0
       }
     }
   },

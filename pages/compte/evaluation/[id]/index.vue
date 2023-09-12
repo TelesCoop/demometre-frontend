@@ -51,6 +51,7 @@
     <div>
       <hr>
       <PageSection
+        v-if="assessment"
         title="Informations"
         :buttons="assessment.details.hasDetailAccess ? [{text: 'Modifier les informations', icon: 'list-settings-line'}, {text: 'Changer d\'expert', icon: 'user-2-line'}] : []"
         @button-click="onInformationButtonClick"
@@ -180,13 +181,25 @@
             <h2 class="title is-3 has-text-shade-900 mb-1">
               État de l'évaluation
             </h2>
-            <p class="is-size-5">
+            <p
+              v-if="participationStore.status.participated"
+              class="is-size-5"
+            >
               Nombre de questions répondues : {{ participationStore.status.answered }} /
               {{ participationStore.status.total }}
             </p>
+            <div
+              v-else
+              class="message mb-2"
+            >
+              <div class="message-body">
+                Vous n'avez pas participé à cette évaluation.
+              </div>
+            </div>
           </div>
           <div>
             <NuxtLink
+              v-if="participationStore.status.participated"
               :to="userStep.url"
               class="button is-rounded is-dark"
             >
@@ -209,7 +222,10 @@
           </div>
         </div>
         <div>
-          <QuestionnaireProgressBars class="mb-3" />
+          <QuestionnaireProgressBars
+            v-if="participationStore.status.participated"
+            class="mb-3"
+          />
           <ParticipationBoard
             :assessment="assessmentStore.currentAssessment"
           />
@@ -281,10 +297,8 @@
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
-import { Assessment, AssessmentDocumentCategory, AssessmentDocumentType } from "~/composables/types"
+import { Assessment, AssessmentDocumentCategory, AssessmentDocumentType, AssessmentType } from "~/composables/types"
 import { ASSESSMENT_DOCUMENT_CATEGORIES, PARTICIPANT_TYPE } from "~/utils/constants"
-import InformationsEditModal from "~/components/assessment/informationsEditModal.vue"
-import AddDocumentModal from "~/components/assessment/addDocumentModal.vue"
 
 definePageMeta({
   title: "Évaluation",
@@ -322,10 +336,8 @@ const documentsForCategory = computed(() => (category: AssessmentDocumentCategor
 
 const onInformationButtonClick = (buttonIx: number) => {
   if (buttonIx === 0) {
-    console.log("### 0")
     showInformationsEditModal.value = true
   } else if (buttonIx === 1) {
-    console.log("### 1")
     showExpertsEditModal.value = true
   }
 }
