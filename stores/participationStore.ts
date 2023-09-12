@@ -130,7 +130,7 @@ export const useParticipationStore = defineStore("participation", {
       const participationResponses = await useApiGet<QuestionResponse[]>(
         `participation-responses/by-assessment/${assessmentId}/?context=questionnaire`
       )
-      if (participationResponses.error.value) {
+      if (participationResponses.error.value || !participationResponses.data.value) {
         return false
       }
       participationResponses.data.value.forEach((item) => {
