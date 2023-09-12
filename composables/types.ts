@@ -164,7 +164,8 @@ export const LocalityType = {
 export const AssessmentType = {
   QUICK: { key: "quick", value: "Diagnostic rapide" },
   PARTICIPATIVE: { key: "participative", value: "Evaluation participative" },
-  WITH_EXPERT: { key: "with_expert", value: "Evaluation avec expert" }
+  WITH_EXPERT: { key: "with_expert", value: "Evaluation avec expert" },
+  "": { key: "", value: "Non renseigné" }
 }
 type Locality = {
   id: number

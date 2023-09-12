@@ -73,7 +73,7 @@
         >
           <InformationDetail
             title="type d'évaluation"
-            :value="AssessmentType[assessment.assessmentType.toUpperCase()].value"
+            :value="AssessmentType[assessment.assessmentType?.toUpperCase() || ''].value"
           />
           <InformationDetail
             title="lancée le"
