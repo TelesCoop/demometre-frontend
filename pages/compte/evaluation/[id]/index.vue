@@ -89,7 +89,7 @@
           />
           <InformationDetail
             title="Mon rôle"
-            :value="PARTICIPANT_TYPE[assessment.role]"
+            :value="PARTICIPANT_TYPE[assessment.details.role]"
           />
           <InformationDetail
             title="participants"
@@ -260,7 +260,11 @@
       </PageSection>
     </div>
 
-    <InformationsEditModal
+    <hr>
+
+    <AssessmentWorkshops :assessment="assessment" />
+
+    <AssessmentInformationsEditModal
       v-if="showInformationsEditModal"
       :assessment="assessment"
       @close="showInformationsEditModal = false"

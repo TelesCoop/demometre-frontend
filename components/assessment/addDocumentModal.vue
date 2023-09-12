@@ -1,6 +1,9 @@
 <template>
   <div class="modal is-active">
-    <div class="modal-background" />
+    <div
+      class="modal-background"
+      @click="emit('close')"
+    />
     <div class="modal-card">
       <header class="modal-card-head">
         <h2 class="modal-card-title">
@@ -33,11 +36,11 @@
               <div class="select">
                 <select v-model="category">
                   <option
-                    v-for="category of ASSESSMENT_DOCUMENT_CATEGORIES"
-                    :key="category.value"
-                    :value="category.value"
+                    v-for="categoryOption of ASSESSMENT_DOCUMENT_CATEGORIES"
+                    :key="categoryOption.value"
+                    :value="categoryOption.value"
                   >
-                    {{ category.label }}
+                    {{ categoryOption.label }}
                   </option>
                 </select>
               </div>

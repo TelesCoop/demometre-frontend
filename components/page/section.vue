@@ -5,27 +5,25 @@
       class="section"
     >
       <div class="is-flex is-justify-content-space-between">
-        <h3
-          v-if="isInsideBigSection"
-          :class="titleClasses"
-        >
-          {{ title }}
-        </h3>
-        <h1
-          v-else-if="isFirstElement"
-          :class="titleClasses"
-        >
-          {{ title }}
-        </h1>
-        <h2
-          v-else
-          :class="titleClasses"
-        >
-          {{ title }}
-        </h2>
-        <div
-          class="is-flex is-flex-direction-row is-justify-content-space-between is-flex-wrap-wrap mb-3"
-        >
+        <div>
+          <h3
+            v-if="isInsideBigSection"
+            :class="titleClasses"
+          >
+            {{ title }}
+          </h3>
+          <h1
+            v-else-if="isFirstElement"
+            :class="titleClasses"
+          >
+            {{ title }}
+          </h1>
+          <h2
+            v-else
+            :class="titleClasses"
+          >
+            {{ title }}
+          </h2>
           <p
             v-if="intro && !introIsRichText"
             class="is-family-secondary is-size-5 mb-1"
@@ -37,6 +35,11 @@
             :rich-text="intro"
             class="is-family-secondary"
           />
+        </div>
+
+        <div
+          class="is-flex is-flex-direction-row is-justify-content-space-between is-flex-wrap-wrap mb-3"
+        >
           <div>
             <template
               v-for="(button, buttonIx) in buttons"

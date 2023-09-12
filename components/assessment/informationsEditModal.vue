@@ -1,6 +1,9 @@
 <template>
   <div class="modal is-active">
-    <div class="modal-background" />
+    <div
+      class="modal-background"
+      @click="emit('close')"
+    />
     <div class="modal-card">
       <header class="modal-card-head">
         <h2 class="modal-card-title">

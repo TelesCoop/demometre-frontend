@@ -4,7 +4,10 @@
       class="modal"
       :class="{ 'is-active': participationStore.showCancelParticipationModal }"
     >
-      <div class="modal-background"></div>
+      <div
+        class="modal-background"
+        @click="emit('close')"
+      />
       <div class="modal-content has-background-shade-100 p-2">
         <h2 class="is-size-4 has-text-weight-bold pb-0_5">
           Souhaitez-vous réinitialiser votre évaluation&nbsp;?
@@ -21,7 +24,10 @@
           >
             Oui, reinitialiser
           </button>
-          <button class="button is-shade-600 is-outlined" @click="closeModal()">
+          <button
+            class="button is-shade-600 is-outlined"
+            @click="closeModal()"
+          >
             Non
           </button>
         </div>
@@ -30,14 +36,14 @@
         class="modal-close is-large"
         aria-label="close"
         @click="cancelParticipation"
-      ></button>
+      />
     </div>
   </Teleport>
 </template>
 <script setup lang="ts">
 import { useParticipationStore } from "~/stores/participationStore"
 import { useUserStore } from "~/stores/userStore"
-import { ref } from "@vue/reactivity"
+import { ref } from "vue"
 import { useUserStep } from "~/composables/userStep"
 import { useRouter } from "vue-router"
 

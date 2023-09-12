@@ -25,7 +25,7 @@
             <tbody>
               <tr
                 v-for="workshop of [
-                  ...animatorStore.workshops,
+                  ...workshopStore.workshops,
                   ...newWorkshops,
                 ]"
                 :key="workshop.id"
@@ -51,7 +51,7 @@
                   <div class="select">
                     <select v-model="workshop.assessmentId">
                       <option
-                        v-for="assessment of animatorStore.assessments"
+                        v-for="assessment of workshopStore.assessments"
                         :key="assessment.id"
                         :value="assessment.id"
                       >
@@ -208,17 +208,17 @@
 </template>
 
 <script setup lang="ts">
-import { useAnimatorStore } from "~/stores/animatorStore"
+import { useWorkshopStore } from "~/stores/workshopStore"
 import { Workshop } from "~/composables/types"
 import { useUserStore } from "~/stores/userStore"
 import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({
   title: "Ateliers",
-  breadcrumb: "Ateliers",
+  breadcrumb: "Ateliers"
 })
 
-const animatorStore = useAnimatorStore()
+const workshopStore = useWorkshopStore()
 const userStore = useUserStore()
 const pageStore = usePageStore()
 const router = useRouter()
@@ -226,11 +226,11 @@ const router = useRouter()
 if (!pageStore.animatorPage.listWorkshopsTitle) {
   pageStore.getAnimatorPage()
 }
-if (!animatorStore.allAssessmentsLoaded) {
-  animatorStore.getAnimatorAssessments()
+if (!workshopStore.allAssessmentsLoaded) {
+  workshopStore.getAnimatorAssessments()
 }
-if (!animatorStore.allWorkshopsLoaded) {
-  animatorStore.getWorkshops()
+if (!workshopStore.allWorkshopsLoaded) {
+  workshopStore.getWorkshops()
 }
 
 if (!userStore.isLoggedIn) {
@@ -243,7 +243,7 @@ if (!userStore.isExpertUser) {
 const closeWorkshopIdModal = ref<number>(undefined)
 const newWorkshops = ref<Workshop[]>([])
 const validateDisabled = computed(() =>
-  [...newWorkshops.value, ...animatorStore.workshops].some(
+  [...newWorkshops.value, ...workshopStore.workshops].some(
     (workshop) => !(workshop.assessmentId && workshop.date && workshop.name)
   )
 )
@@ -263,7 +263,7 @@ function addWorkshop() {
     animatorId: userStore.user.id,
     participationIds: [],
     changed: true,
-    closed: false,
+    closed: false
   })
 }
 
@@ -279,28 +279,28 @@ async function saveAndGoToParticipants(workshop) {
   if (!workshop.id) {
     newWorkshops.value.shift()
   }
-  const workshopResponse = await animatorStore.createOrUpdateWorkshop(workshop)
+  const workshopResponse = await workshopStore.createOrUpdateWorkshop(workshop)
 
   if (workshopResponse) {
-    await animatorStore.getWorkshop(workshopResponse.id)
+    await workshopStore.getWorkshop(workshopResponse.id)
     router.push(`/compte/ateliers/${workshopResponse.id}/participants`)
   }
 }
 
 async function onSubmit() {
   const newWorkshopsTmp = newWorkshops.value
-  for (const workshop of [...animatorStore.workshops, ...newWorkshopsTmp]) {
+  for (const workshop of [...workshopStore.workshops, ...newWorkshopsTmp]) {
     if (!workshop.id) {
       newWorkshops.value.shift()
     }
     if (workshop.changed) {
-      await animatorStore.createOrUpdateWorkshop(workshop)
+      await workshopStore.createOrUpdateWorkshop(workshop)
     }
   }
 }
 
 async function closeWorkshop() {
-  await animatorStore.closeWorkshop(closeWorkshopIdModal.value)
+  await workshopStore.closeWorkshop(closeWorkshopIdModal.value)
   closeModal()
 }
 </script>

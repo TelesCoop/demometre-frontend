@@ -39,6 +39,9 @@ export const useAssessmentStore = defineStore("assessment", {
     assessments: (state) => {
       return Object.values(state.assessmentById)
     },
+    assessmentsWithDetails: (state): Assessment[] => {
+      return Object.values(state.assessmentById).filter((ass: Assessment) => ass.details.hasDetailAccess)
+    },
     canSeeResultsAssessments() {
       return this.assessments.filter(
         (assessment: Assessment) =>

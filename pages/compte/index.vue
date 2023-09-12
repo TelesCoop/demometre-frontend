@@ -1,60 +1,60 @@
 <template>
   <div class="container">
     <div class="section">
-      <PageTitle title="Mon compte" />
+      <div class="is-flex is-justify-content-space-between">
+        <h1 class="title is-size-1-desktop is-2 has-text-black">
+          Mon compte
+        </h1>
+        <div>
+          <button
+            class="button is-rounded"
+            @click.prevent="logout"
+          >
+            Se déconnecter
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      v-if="userStore.isUnknownUser || true"
+      class="section"
+      style="margin-top: -64px"
+    >
+      <div class="message">
+        <div class="message-body">
+          Votre participation ne sera pas comptabilisée tant que vous n'êtes pas
+          enregistré. Elle sera supprimée au bout d'un mois.
+        </div>
+      </div>
       <div class="buttons is-flex-direction-column is-align-items-flex-start">
         <router-link
-          v-if="userStore.isUnknownUser"
-          class="button is-primary mr-1 mb-1"
+
+          class="button is-rounded is-primary mr-1 mb-1"
           to="/signup"
         >
           S'enregistrer pour conserver vos résultats
         </router-link>
-        <NuxtLink
-          v-if="userStore.isExpertUser"
-          to="/compte/ateliers"
-          class="button is-rounded"
-        >
-          Espace animateur
-        </NuxtLink>
-        <button
-          class="button is-rounded"
-          type="button"
-          @click.prevent="logout"
-        >
-          Se déconnecter
-        </button>
       </div>
     </div>
     <div>
       <hr>
       <PageSection
-        title="Mon profil"
-        intro="Vos informations personnelles"
+        title="Mes informations"
+        :buttons="[{text: 'Modifier les informations', icon: 'list-settings-line'}]"
+        @button-click="showEditUserInfoModal = true"
       >
         <div
           class="is-flex is-flex-wrap-wrap"
           style="row-gap: 1.5rem; column-gap: 3rem"
         >
-          <div style="min-width: 200px">
-            <p class="has-text-shade-400 is-uppercase is-size-6">
-              mail
-            </p>
-            <p class="has-text-shade-600 is-size-5">
-              {{ userStore.user.email }}
-            </p>
-          </div>
-          <div style="min-width: 200px">
-            <p class="has-text-shade-400 is-uppercase is-size-6">
-              rôle
-            </p>
-            <p class="has-text-shade-600 is-size-5">
-              {{
-                profilingStore.roleById[participationStore.participation.roleId]
-                  ?.name
-              }}
-            </p>
-          </div>
+          <InformationDetail
+            title="Nom"
+            :value="userStore.user.username"
+          />
+          <InformationDetail
+            title="mail"
+            :value="userStore.user.email"
+          />
           <div
             v-for="questionId in profilingJourney.journey.value"
             :key="questionId"
@@ -69,10 +69,11 @@
           </div>
         </div>
       </PageSection>
+      <hr>
       <PageSection
         title="Mes évaluations"
         intro="Toutes mes évaluations en cours et terminées"
-        :buttons="[{text: 'Lancer une évaluation', link: `/evaluation/localisation`}]"
+        :buttons="[{text: 'Lancer une évaluation', link: `/evaluation/localisation`, icon: 'arrow-right-line'}]"
       >
         <div class="tabs is-fullwidth">
           <ul>
@@ -133,7 +134,19 @@
               >
                 <td>{{ assessment.name }}</td>
                 <td>{{ new Date(assessment.created).toLocaleDateString() }}</td>
-                <td>{{ PARTICIPANT_TYPE[assessment.details.role] || "inconnu" }}</td>
+                <td>
+                  {{ PARTICIPANT_TYPE[assessment.details.role] || "inconnu" }}
+                  <template v-if="assessment.details.hasDetailAccess">
+                    <span
+                      v-if="assessment.details.paymentAmount"
+                      class="tag"
+                    >Redevance payée</span>
+                    <span
+                      v-else
+                      class="tag is-danger"
+                    >Redevance impayée</span>
+                  </template>
+                </td>
                 <td>{{ assessment.code }}</td>
                 <td>{{ assessment.collectivityName }}</td>
                 <td>France</td>
@@ -148,6 +161,10 @@
         </div>
       </PageSection>
     </div>
+    <AccountEditUserInfoModal
+      v-if="showEditUserInfoModal"
+      @close="showEditUserInfoModal = false"
+    />
   </div>
 </template>
 
@@ -176,6 +193,7 @@ if (!profilingStore.roles.length) {
 }
 
 const isCurrentAssessmentsTab = ref(true)
+const showEditUserInfoModal = ref(false)
 
 const currentAssessments = computed(() => assessmentStore.assessments.filter(ass => ass.isCurrent))
 const finishedAssessments = computed(() => assessmentStore.assessments.filter(ass => !ass.isCurrent))

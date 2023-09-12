@@ -86,8 +86,9 @@ if (process.env.NODE_ENV !== "production") {
 }
 export const MEDIA_BASE_URL = media_base_url
 
-export async function useApiGet<Type>(path: string, onErrorMessage: string) {
+export async function useApiGet<Type>(path: string, onErrorMessage: string = "") {
   const loadingStore = useLoadingStore()
+  const messageStore = useMessageStore()
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
   const { data, error } = await useFetch<Type>(`${useBackendUrl()}${path}`, {
@@ -110,7 +111,7 @@ export async function useAPIwithCsrfToken<Type>(
   path: string,
   method: string,
   payload: any = {},
-  onErrorMessage: string
+  onErrorMessage: string = ""
 ) {
   const loadingStore = useLoadingStore()
   const messageStore = useMessageStore()
