@@ -44,12 +44,11 @@
               class="custom-hidden white-on-black-input-checked"
               name="localityType"
               required
-            />
+            >
             <label
               :for="localityType.key"
               class="button is-shade-600 is-outlined locality"
-              >{{ localityType.value }}</label
-            >
+            >{{ localityType.value }}</label>
           </div>
         </div>
       </div>
@@ -74,7 +73,7 @@
             placeholder="Code postal"
             required
             @keyup.enter.stop="searchLocalities"
-          />
+          >
           <button
             type="button"
             class="pagination-next button is-outlined is-shade-600"
@@ -84,7 +83,10 @@
           >
             <span>Rechercher</span>
             <span class="icon">
-              <icon size="20" name="search" />
+              <icon
+                size="20"
+                name="search"
+              />
             </span>
           </button>
         </div>
@@ -112,12 +114,11 @@
               name="locality"
               required
               @click="localityTypeSelected = locality.localityType"
-            />
+            >
             <label
               :for="locality.name"
               class="button is-shade-600 is-outlined locality"
-              >{{ locality.name }}</label
-            >
+            >{{ locality.name }}</label>
           </div>
         </div>
       </div>
@@ -130,10 +131,16 @@
         >
           <span>Valider</span>
           <span class="icon">
-            <icon size="20" name="check" />
+            <icon
+              size="20"
+              name="check"
+            />
           </span>
         </button>
-        <span v-if="canPressEnter()" class="is-size-7 is-hidden-mobile">
+        <span
+          v-if="canPressEnter()"
+          class="is-size-7 is-hidden-mobile"
+        >
           appuyez sur
           <span class="has-text-weight-bold">Entrer ⏎</span>
         </span>
@@ -143,19 +150,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "@vue/reactivity"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { Localities, LocalityType } from "~/composables/types"
 import { usePageStore } from "~/stores/pageStore"
 import { usePressEnter } from "~/composables/pressEnter"
+import { useUserStore } from "~/stores/userStore"
 
 definePageMeta({
   title: "Localisation",
   step: "localisation",
-  middleware: ["user-step"],
+  middleware: ["user-step"]
 })
 
 const pageStore = usePageStore()
+const userStore = useUserStore()
+const router = useRouter()
 
 if (!pageStore.evaluationInitiationPage.searchAssessmentTitle) {
   pageStore.getEvaluationInitiationPage()
@@ -166,7 +175,7 @@ const localityTypeSelected = ref<string>()
 const localityId = ref<number>()
 const localities = ref<Localities>({
   municipality: [],
-  intercommunality: [],
+  intercommunality: []
 })
 const searched = ref<number>(0)
 const localitiesToShow = computed(() =>
@@ -187,15 +196,15 @@ async function searchLocalities() {
 async function onSubmit() {
   const isSuccess = await assessmentStore.getOrCreateAssessment({
     localityId: localityId.value,
-    localityType: localityTypeSelected.value,
+    localityType: localityTypeSelected.value
   })
   if (isSuccess) {
     if (!assessmentStore.currentAssessment?.initializationDate) {
-      useRouter().push(
+      router.push(
         `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`
       )
     } else {
-      useRouter().push(
+      router.push(
         `/evaluation/participation/${assessmentStore.currentAssessmentId}`
       )
     }

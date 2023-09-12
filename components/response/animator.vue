@@ -124,7 +124,6 @@ import {
   WorkshopParticipation
 } from "~/composables/types"
 import { computed, PropType, watch } from "vue"
-import { ref } from "vue"
 import {
   getQuestionResponseStructure,
   getQuestionResponseValue

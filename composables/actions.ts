@@ -3,11 +3,11 @@ import { useAssessmentStore } from "~/stores/assessmentStore"
 
 export async function getUserData() {
   return Promise.all([
-    await useAssessmentStore().getAssessmentsForUser(),
+    await useAssessmentStore().getAssessmentsForUser()
   ])
 }
 
-export function cleanUserData() {
+export function cleanUserData(onlyResponses = false) {
   useParticipationStore().onUserLogout()
-  useAssessmentStore().onUserLogout()
+  useAssessmentStore().onUserLogout(onlyResponses)
 }

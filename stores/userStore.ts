@@ -42,7 +42,7 @@ export const useUserStore = defineStore("user", {
       return false
     },
     async login(email: string, password: string) {
-      cleanUserData()
+      cleanUserData(true)
       const { data, error } = await useApiPost<User>("auth/login", {
         email,
         password
@@ -55,7 +55,7 @@ export const useUserStore = defineStore("user", {
     },
     async signup(email: string, password: string) {
       // clean user data to reload journey after unkown user create account
-      cleanUserData()
+      cleanUserData(true)
       const { data, error } = await useApiPost<User>("auth/signup", {
         email,
         password

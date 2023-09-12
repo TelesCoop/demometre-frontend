@@ -254,16 +254,18 @@ export const useAssessmentStore = defineStore("assessment", {
       useParticipationStore().newParticipation.consent = true
       return true
     },
-    onUserLogout() {
-      this.currentAssessmentId = undefined
-      this.assessmentById = {}
+    onUserLogout(onlyResponses = false) {
       this.representativityCriterias = []
       this.assessmentsWithResultsLoaded = false
       this.scoresByAssessmentId = {}
       this.chartDataByAssessmentIdAndQuestionId = {}
       this.expertById = {}
       this.addingExpert = false
-      this.newAssessment = {}
+      if (!onlyResponses) {
+        this.currentAssessmentId = undefined
+        this.assessmentById = {}
+        this.newAssessment = {}
+      }
     },
     async saveAssessment(assessmentId: number, payload: any) {
       const { data, error } = await useApiPatch<Assessment>(

@@ -43,7 +43,6 @@
 <script setup lang="ts">
 import { useParticipationStore } from "~/stores/participationStore"
 import { useUserStore } from "~/stores/userStore"
-import { ref } from "vue"
 import { useUserStep } from "~/composables/userStep"
 import { useRouter } from "vue-router"
 

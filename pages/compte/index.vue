@@ -16,7 +16,7 @@
       </div>
     </div>
     <div
-      v-if="userStore.isUnknownUser || true"
+      v-if="userStore.isUnknownUser"
       class="section"
       style="margin-top: -64px"
     >
