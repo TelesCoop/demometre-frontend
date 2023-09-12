@@ -40,7 +40,7 @@
                   Atelier d'évaluation
                 </option>
                 <option value="results">
-                  Atelier de présentation de résultat
+                  Atelier sur les résultats
                 </option>
               </select>
             </div>

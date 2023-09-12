@@ -55,18 +55,6 @@
             title="mail"
             :value="userStore.user.email"
           />
-          <div
-            v-for="questionId in profilingJourney.journey.value"
-            :key="questionId"
-            style="min-width: 200px"
-          >
-            <p class="has-text-shade-400 is-uppercase is-size-6">
-              {{ profilingStore.questionById[questionId].name }}
-            </p>
-            <p class="has-text-shade-600 is-size-5">
-              {{ getResponseString(questionId) }}
-            </p>
-          </div>
         </div>
       </PageSection>
       <hr>
@@ -171,10 +159,6 @@
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useUserStore } from "~/stores/userStore"
-import { useProfilingStore } from "~/stores/profilingStore"
-import { useParticipationStore } from "~/stores/participationStore"
-import { getQuestionResponseString } from "~/utils/question-response"
-import { useProfilingJourney } from "~/composables/journey"
 import { PARTICIPANT_TYPE } from "~/utils/constants"
 
 definePageMeta({
@@ -183,14 +167,8 @@ definePageMeta({
 })
 
 const assessmentStore = useAssessmentStore()
-const profilingStore = useProfilingStore()
-const participationStore = useParticipationStore()
 const userStore = useUserStore()
 const router = useRouter()
-const profilingJourney = useProfilingJourney()
-if (!profilingStore.roles.length) {
-  profilingStore.getRoles()
-}
 
 const isCurrentAssessmentsTab = ref(true)
 const showEditUserInfoModal = ref(false)
@@ -199,12 +177,6 @@ const currentAssessments = computed(() => assessmentStore.assessments.filter(ass
 const finishedAssessments = computed(() => assessmentStore.assessments.filter(ass => !ass.isCurrent))
 const selectedAssessments = computed(() => isCurrentAssessmentsTab.value ? currentAssessments.value : finishedAssessments.value)
 
-const getResponseString = (questionId) => {
-  return getQuestionResponseString(
-    profilingStore.questionById[questionId],
-    participationStore.responseByProfilingQuestionId[questionId]
-  )
-}
 const selectAssessment = (assessmentId: number) => {
   router.push(`/compte/evaluation/${assessmentId}`)
 }
