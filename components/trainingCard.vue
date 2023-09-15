@@ -1,0 +1,71 @@
+<template>
+  <div class="card has-background-shade-250">
+    <div class="card-content">
+      <h3 class="title is-4">
+        {{ training.name }}
+      </h3>
+      <div class="element-holder mb-0_5">
+        <div class="element-icon">
+          <icon name="check" />
+        </div>
+        <!-- disabling eslint because the v-html is alright, value is clean from backend -->
+        <!-- eslint-disable -->
+        <div
+          class="element-text"
+          v-html="training.description"
+        />
+        <!-- eslint-enable -->
+      </div>
+      <div class="element-holder mb-0_5">
+        <div class="element-icon">
+          <icon name="group" />
+        </div>
+        <div
+          class="element-text"
+        >
+          {{ training.audience }}
+        </div>
+      </div>
+      <div class="element-holder mb-0_5">
+        <div class="element-icon">
+          <icon name="time" />
+        </div>
+        <div
+          class="element-text"
+        >
+          {{ training.duration }}
+        </div>
+      </div>
+      <div class="mt-1_5">
+        <a
+          :href="training.url"
+          target="_blank"
+          class="button is-dark is-rounded"
+        >
+          <span>Vous renseigner</span>
+          <span class="icon">
+            <icon
+              size="16"
+              name="arrow-right-line"
+            />
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { PropType } from "vue"
+import { Training } from "~/composables/types"
+
+const props = defineProps({ training: { type: Object as PropType<Training>, required: true } })
+</script>
+
+<style scoped lang="sass">
+.element-holder
+  display: flex
+
+.element-icon
+  width: 40px
+</style>
