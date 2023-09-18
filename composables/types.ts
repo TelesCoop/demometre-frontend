@@ -283,6 +283,7 @@ export type ClosedWithScaleResponse = {
 }
 export type QuestionResponse = {
   id: number
+  isDirty?: boolean
   participationId: number | null
   assessmentId: number | null
   questionId: number

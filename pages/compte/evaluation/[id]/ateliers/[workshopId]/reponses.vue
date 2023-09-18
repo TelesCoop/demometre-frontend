@@ -19,6 +19,12 @@
       <p class="is-size-4">
         Saisissez les réponses des participants aux évaluations papier.
       </p>
+      <p
+        v-if="!activePillar"
+        class="is-size-4"
+      >
+        Choisissez un pillier pour commencer.
+      </p>
 
       <div class="container">
         <section
