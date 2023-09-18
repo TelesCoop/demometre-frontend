@@ -65,6 +65,7 @@
       </PageSection>
     </div>
     <PageSection
+      v-if="trainingStore.trainings.length"
       :title="pageStore.usagePage.trainingBlockTitle"
       :intro="pageStore.usagePage.trainingBlockIntro"
     >

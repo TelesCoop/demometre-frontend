@@ -1,9 +1,18 @@
 <template>
   <div class="card has-background-shade-250">
     <div class="card-content">
-      <h3 class="title is-4">
-        {{ training.name }}
-      </h3>
+      <div class="is-flex is-justify-content-space-between">
+        <h3 class="title is-4">
+          {{ training.name }}
+        </h3>
+        <span
+          v-if="training.isAvailableSoon"
+          class="tag"
+        >
+          Bientôt disponible !
+        </span>
+      </div>
+
       <div class="element-holder mb-0_5">
         <div class="element-icon">
           <icon name="check" />
@@ -37,7 +46,15 @@
         </div>
       </div>
       <div class="mt-1_5">
+        <button
+          v-if="training.isAvailableSoon"
+          disabled
+          class="button is-dark is-rounded"
+        >
+          Vous renseigner
+        </button>
         <a
+          v-else
           :href="training.url"
           target="_blank"
           class="button is-dark is-rounded"
@@ -59,7 +76,10 @@
 import { PropType } from "vue"
 import { Training } from "~/composables/types"
 
-const props = defineProps({ training: { type: Object as PropType<Training>, required: true } })
+defineProps(
+  {
+    training: { type: Object as PropType<Training>, required: true }
+  })
 </script>
 
 <style scoped lang="sass">
