@@ -52,7 +52,7 @@ export const useAssessmentStore = defineStore("assessment", {
     currentAssessment() {
       return this.assessmentById[this.currentAssessmentId]
     },
-    experts: (state) => {
+    experts: (state): User[] => {
       return Object.values(state.expertById)
     },
     intercommunalityAssessments() {
@@ -274,6 +274,15 @@ export const useAssessmentStore = defineStore("assessment", {
       if (error.value) {
         return false
       }
+      // after an update, experts might be a list of Ids
+      let experts = data.value.experts || []
+      experts = experts.map((expert: any) => {
+        if (typeof expert === "number") {
+          return this.expertById[expert]
+        }
+        return expert
+      })
+      data.value.experts = experts
       this.assessmentById[assessmentId] = data.value
       return true
     },

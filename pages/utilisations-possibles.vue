@@ -64,11 +64,27 @@
         </div>
       </PageSection>
     </div>
+    <PageSection
+      v-if="trainingStore.trainings.length"
+      :title="pageStore.usagePage.trainingBlockTitle"
+      :intro="pageStore.usagePage.trainingBlockIntro"
+    >
+      <div
+        style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;"
+      >
+        <TrainingCard
+          v-for="training of trainingStore.trainings"
+          :key="training.id"
+          :training="training"
+        />
+      </div>
+    </PageSection>
   </div>
 </template>
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
+import { useTrainingStore } from "~/stores/traningStore"
 
 definePageMeta({
   title: "Utilisations possibles",
@@ -77,9 +93,13 @@ definePageMeta({
 
 const userStep = useUserStep()
 const pageStore = usePageStore()
+const trainingStore = useTrainingStore()
 
 if (!pageStore.usagePage.title) {
   pageStore.getUsagePage()
+}
+if (!trainingStore.loaded) {
+  trainingStore.getTrainings()
 }
 </script>
 

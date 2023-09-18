@@ -16,14 +16,21 @@ type FullWorkshop = Workshop & {
 export const useWorkshopStore = defineStore("workshop", {
   state: () => ({
     allAssessmentsLoaded: <boolean>false,
-    workshopById: <Record<number, Workshop>>{},
-    workshopsLoadedByAssessments: <Record<number, boolean>>{},
-    participationById: <Record<number, WorkshopParticipation>>{},
     assessmentResponseByQuestionIdByWorkshopId: <
       { [key: number]: { [key: number]: QuestionResponse } }
-      >{}
+      >{},
+    isDirtyByParticipationIdByQuestionId: <Record<number, Record<number, boolean>>>{},
+    participationById: <Record<number, WorkshopParticipation>>{},
+    workshopById: <Record<number, Workshop>>{},
+    workshopsLoadedByAssessments: <Record<number, boolean>>{}
+
   }),
   getters: {
+    isDirty: (state) => {
+      return (participationId: number, questionId: number): boolean => {
+        return !!(state.isDirtyByParticipationIdByQuestionId[participationId] || {})[questionId]
+      }
+    },
     workshops: (state) => {
       return Object.values(state.workshopById)
     },
@@ -181,7 +188,12 @@ export const useWorkshopStore = defineStore("workshop", {
       this.workshopById[workshopId] = data.value
       return true
     },
-
+    markDirty(participationId: number, questionId: number, dirty = true) {
+      if (this.isDirtyByParticipationIdByQuestionId[participationId] == null) {
+        this.isDirtyByParticipationIdByQuestionId[participationId] = {}
+      }
+      this.isDirtyByParticipationIdByQuestionId[participationId][questionId] = dirty
+    },
     setFullWorkshopFromApiToStore(workshop: FullWorkshop) {
       this.workshopById[workshop.id] = workshop
       this.workshopById[workshop.id].changed = false

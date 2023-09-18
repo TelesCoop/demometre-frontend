@@ -53,7 +53,7 @@
       <PageSection
         v-if="assessment"
         title="Informations"
-        :buttons="assessment.details.hasDetailAccess ? [{text: 'Modifier les informations', icon: 'list-settings-line'}, {text: 'Changer d\'expert', icon: 'user-2-line'}] : []"
+        :buttons="informationsButtons"
         @button-click="onInformationButtonClick"
       >
         <div
@@ -199,6 +199,17 @@
           </div>
           <div>
             <NuxtLink
+              v-if="assessment.details.hasDetailAccess && !assessment.endDate"
+              class="button is-rounded is-dark"
+              @click="confirmCloseAssessment"
+            >
+              <span>Clôturer l'évaluation</span>
+              <span class="icon"><icon
+                size="20"
+                name="check"
+              /></span>
+            </NuxtLink>
+            <NuxtLink
               v-if="participationStore.status.participated"
               :to="userStep.url"
               class="button is-rounded is-dark"
@@ -285,7 +296,12 @@
       :assessment="assessment"
       @close="showInformationsEditModal = false"
     />
-    <AddDocumentModal
+    <AssessmentChangeExpertModal
+      v-if="showExpertsEditModal"
+      :assessment="assessment"
+      @close="showExpertsEditModal = false"
+    />
+    <AssessmentAddDocumentModal
       v-if="showAddDocumentModal"
       :assessment-id="assessmentId"
       @close="showAddDocumentModal = false"
@@ -299,6 +315,7 @@ import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { Assessment, AssessmentDocumentCategory, AssessmentDocumentType, AssessmentType } from "~/composables/types"
 import { ASSESSMENT_DOCUMENT_CATEGORIES, PARTICIPANT_TYPE } from "~/utils/constants"
+import { useConfirm } from "~/composables/useConfirm"
 
 definePageMeta({
   title: "Évaluation",
@@ -310,6 +327,8 @@ const profilingStore = useProfilingStore()
 const participationStore = useParticipationStore()
 const route = useRoute()
 const userStep = useUserStep()
+const confirm = useConfirm()
+
 const showInformationsEditModal = ref(false)
 const showExpertsEditModal = ref(false)
 const showAddDocumentModal = ref(false)
@@ -340,6 +359,24 @@ const onInformationButtonClick = (buttonIx: number) => {
   } else if (buttonIx === 1) {
     showExpertsEditModal.value = true
   }
+}
+const informationsButtons = computed(() => {
+  if (!assessment.value.details.hasDetailAccess) {
+    return []
+  }
+  const toReturn = [{ text: "Modifier les informations", icon: "list-settings-line" }]
+  if (assessment.value.details.role === "initiator") {
+    toReturn.push({ text: "Changer d'expert", icon: "user-2-line" })
+  }
+  return toReturn
+})
+const confirmCloseAssessment = () => {
+  confirm(
+    "En clôturant l’évaluation, vous mettez fin à l’évaluation et n’autorisez plus de participation. Cette action est irréversible, n’oubliez pas de bien vérifier avant.",
+    `Souhaitez-vous clôturer l'évaluation ${assessment.value.name} ?`,
+    "Oui, clôturer l'évaluation",
+    () => assessmentStore.saveAssessment(assessmentId, { endDate: (new Date()).toISOString().split("T")[0] })
+  )
 }
 </script>
 

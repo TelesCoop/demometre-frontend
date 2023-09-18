@@ -156,9 +156,11 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Question, Objectivity } from "~/composables/types"
 import { wordTitleCase } from "~/utils/util"
 import { useWorkshopStore } from "~/stores/workshopStore"
+import { useConfirm } from "~/composables/useConfirm"
 
 const questionnaireStore = useQuestionnaireStore()
 const workshopStore = useWorkshopStore()
+const confirm = useConfirm()
 
 const props = defineProps({
   pillar: { type: Object, required: true },
@@ -176,11 +178,23 @@ const activeQuestionIndex = computed(() =>
   questions.value.indexOf(activeQuestion.value)
 )
 
-const onSelectQuestion = (question) => {
+const onSelectQuestion = (question: Question) => {
   activeQuestion.value = question
 }
 
 const nextQuestion = () => {
+  if (isDirty.value) {
+    confirm(
+      "Des réponses ont été rentrées mais non sauvegardées. Pour les enregistrer, annulez et cliquez sur le bouton Valider les réponses.",
+      "Ignorer les réponses rentrées ?",
+      "Ignorer et aller à la question suivante",
+      goNextQuestion
+    )
+    return
+  }
+  goNextQuestion()
+}
+const goNextQuestion = () => {
   activeQuestion.value = questions.value[activeQuestionIndex.value + 1]
 }
 
@@ -191,11 +205,30 @@ watch(
   }
 )
 
+const isDirty = computed(() => {
+  for (const participation of workshopStore.workshopParticipations(
+    props.workshopId
+  )) {
+    if (workshopStore.isDirty(participation.id, activeQuestion.value?.id)) {
+      return true
+    }
+  }
+  return false
+})
+
 async function onSubmit() {
-  await workshopStore.createOrUpdateQuestionnaireResponses(
+  const isSuccessful = await workshopStore.createOrUpdateQuestionnaireResponses(
     props.workshopId,
     activeQuestion.value
   )
+  if (isSuccessful) {
+    // mark answers clean (not dirty anymore, selected choices have been answered)
+    for (const participation of workshopStore.workshopParticipations(
+      props.workshopId
+    )) {
+      workshopStore.markDirty(participation.id, activeQuestion.value?.id, false)
+    }
+  }
 }
 </script>
 

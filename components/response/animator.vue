@@ -128,6 +128,7 @@ import {
   getQuestionResponseStructure,
   getQuestionResponseValue
 } from "~/utils/question-response"
+import { useWorkshopStore } from "~/stores/workshopStore"
 
 const props = defineProps({
   question: {
@@ -151,6 +152,7 @@ const props = defineProps({
 })
 
 const questionResponse = useModel<QuestionResponse>("modelValue")
+const workshopStore = useWorkshopStore()
 
 const isAnswered = computed(() => {
   if (Array.isArray(answer.value)) return !!answer.value.length
@@ -176,6 +178,7 @@ function adaptQuestionResponse() {
     props.participation.id,
     props.assessmentId
   )
+  workshopStore.markDirty(props.participation.id, props.question.id)
 }
 
 function adaptQuestionResponseForCloseWithScaleType() {
@@ -191,6 +194,7 @@ function adaptQuestionResponseForCloseWithScaleType() {
     props.participation.id,
     props.assessmentId
   )
+  workshopStore.markDirty(props.participation.id, props.question.id)
 }
 
 function getAnswerInitialValue() {

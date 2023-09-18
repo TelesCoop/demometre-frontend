@@ -222,6 +222,7 @@ export type Assessment = {
   documents: AssessmentDocumentType[]
   endDate: string
   epci: Locality | null
+  experts?: number[]
   id: number
   initializationDate: string
   initializedToTheNameOf: string
@@ -237,7 +238,7 @@ export type Assessment = {
   publicInitiator: boolean
   publishedResults: boolean
   representativities: AssessmentRepresentativity[]
-  workshopCount
+  workshopCount: number
 }
 export const InitiatorType = {
   COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
@@ -282,6 +283,7 @@ export type ClosedWithScaleResponse = {
 }
 export type QuestionResponse = {
   id: number
+  isDirty?: boolean
   participationId: number | null
   assessmentId: number | null
   questionId: number
@@ -429,22 +431,24 @@ export type SimpleBlock = {
   description: string
 }
 export type UsagePage = {
-  title: string
-  introduction: string
-  tagLine: string
+  assessmentTypesDetails: AssessmentTypeDetails[]
   introImageUrl: string
-  stepOfUseTitle: string
-  stepOfUseIntro: string
-  stepsOfUse: string | SimpleBlockWithImage[]
-  stepsImagesUrl: ImageUrl[]
-  participateBlockTitle: string
+  introduction: string
   participateBlockIntro: string
+  participateBlockTitle: string
   participateLeftParagraph: string
   participateRightParagraph: string
-  startAssessmentBlockTitle: string
-  startAssessmentBlockIntro: string
   startAssessmentBlockData: string | AssessmentTypeDetails[]
-  assessmentTypesDetails: AssessmentTypeDetails[]
+  startAssessmentBlockIntro: string
+  startAssessmentBlockTitle: string
+  stepOfUseIntro: string
+  stepOfUseTitle: string
+  stepsImagesUrl: ImageUrl[]
+  stepsOfUse: string | SimpleBlockWithImage[]
+  tagLine: string
+  title: string
+  trainingBlockIntro: string
+  trainingBlockTitle: string
 }
 type ObjectiveBlock = {
   svg: number
@@ -657,4 +661,13 @@ export type AssessmentDocumentType = {
   file: AssessmentDocumentTypeFile,
   id: number,
   name: string,
+}
+export type Training = {
+  audience: string
+  description: string
+  duration: string
+  id: number
+  isAvailableSoon: boolean
+  name: string
+  url: string
 }
