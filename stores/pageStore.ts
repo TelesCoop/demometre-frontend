@@ -10,7 +10,7 @@ import {
   ProjectPage,
   ReferentialPage,
   ResultsPage,
-  UsagePage,
+  UsagePage
 } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 import {
@@ -18,7 +18,7 @@ import {
   getStreamFieldMediaWithUrl,
   getStreamFieldStructMediaWithUrl,
   getStreamFieldStructWithLinkedObject,
-  getStreamFieldStructWithListLinkedObjects,
+  getStreamFieldStructWithListLinkedObjects
 } from "~/utils/streamFields"
 import { useMessageStore } from "./messageStore"
 
@@ -37,14 +37,14 @@ export const usePageStore = defineStore("page", {
     evaluationInitiationPage: <EvaluationInitiationPage>{},
     evaluationQuestionnairePage: <EvaluationQuestionnairePage>{},
     animatorPage: <AnimatorPage>{},
-    importantPages: <ImportantPages>{},
+    importantPages: <ImportantPages>{}
   }),
   getters: {
     projectPageMember: (state) => {
       return (memberId: number) =>
         state.projectPage.persons.find((person) => person.id === memberId)
     },
-    blogPosts: (state) => Object.values(state.blogPostsBySlug),
+    blogPosts: (state) => Object.values(state.blogPostsBySlug)
   },
   actions: {
     setBlogPosts(blogPostsList: Article[]) {
@@ -268,6 +268,6 @@ export const usePageStore = defineStore("page", {
         const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
-    },
-  },
+    }
+  }
 })

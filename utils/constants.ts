@@ -35,7 +35,7 @@ export const WORKSHOP_TYPES = {
   },
   results: {
     label: "Résultats",
-    bottomFields: ["result_observations", "improvementObservations"],
+    bottomFields: ["resultObservations", "improvementObservations"],
     bottomFieldsLabel: "Remarques",
     bottomFieldsButtonLabel: "Modifier les remarques"
   }

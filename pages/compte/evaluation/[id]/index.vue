@@ -93,7 +93,7 @@
             :value="PARTICIPANT_TYPE[assessment.details.role]"
           />
           <InformationDetail
-            title="participants"
+            title="participants hors ateliers"
             :value="assessment.participationCount"
           />
           <InformationDetail
@@ -244,6 +244,10 @@
       </section>
     </div>
 
+    <hr>
+
+    <AssessmentWorkshops :assessment="assessment" />
+
     <div v-if="assessment.details.hasDetailAccess">
       <hr>
       <PageSection
@@ -286,10 +290,6 @@
         </template>
       </PageSection>
     </div>
-
-    <hr>
-
-    <AssessmentWorkshops :assessment="assessment" />
 
     <AssessmentInformationsEditModal
       v-if="showInformationsEditModal"

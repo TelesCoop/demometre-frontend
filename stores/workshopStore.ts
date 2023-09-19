@@ -35,14 +35,18 @@ export const useWorkshopStore = defineStore("workshop", {
       return Object.values(state.workshopById)
     },
     workshopParticipations: (state) => {
-      return (workshopId: number): WorkshopParticipation[] => {
+      return (workshopId: number, filterMedium = ""): WorkshopParticipation[] => {
         const workshop = state.workshopById[workshopId]
         if (workshop == null) {
           return []
         }
-        return workshop.participationIds!.map(
+        const toReturn: WorkshopParticipation[] = workshop.participationIds!.map(
           (participationId) => state.participationById[participationId]
         ).filter(el => el != null)
+        if (filterMedium) {
+          return toReturn.filter((participation: WorkshopParticipation) => participation.medium === filterMedium)
+        }
+        return toReturn
       }
     }
   },

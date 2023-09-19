@@ -68,7 +68,7 @@
             </tr>
             <tr
               v-for="participation of workshopStore.workshopParticipations(
-                props.workshopId
+                props.workshopId, 'paper'
               )"
               :key="participation.id"
             >

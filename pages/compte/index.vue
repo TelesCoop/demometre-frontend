@@ -105,7 +105,7 @@
                 <th>Nom</th>
                 <th>Date de création</th>
                 <th>Rôle</th>
-                <th>Code INSEE</th>
+                <th>Échelon</th>
                 <th>Localité</th>
                 <th>Pays</th>
                 <th>Actions</th>
@@ -135,7 +135,7 @@
                     >Redevance impayée</span>
                   </template>
                 </td>
-                <td>{{ assessment.code }}</td>
+                <td>{{ assessment.localityType === "intercommunality" ? "EPCI" : "Commune" }}</td>
                 <td>{{ assessment.collectivityName }}</td>
                 <td>France</td>
                 <td>
