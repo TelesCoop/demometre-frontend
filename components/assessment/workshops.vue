@@ -5,7 +5,7 @@
       :buttons="[{text: 'Ajouter un atelier', icon: 'add-line'}]"
       @button-click="showAddWorkshopModal = true"
     >
-      <div>
+      <div v-if="workshops.length">
         <table class="table is-striped is-fullwidth">
           <thead>
             <tr>
@@ -95,6 +95,14 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <div
+        v-else
+        class="message"
+      >
+        <div class="message-body">
+          Il n'y a pas encore d'atelier dans cette évaluation.
+        </div>
       </div>
     </PageSection>
   </div>
