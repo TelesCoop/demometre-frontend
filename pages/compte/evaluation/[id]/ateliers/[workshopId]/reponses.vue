@@ -2,7 +2,7 @@
   <div class="container">
     <NuxtLink
       class="button is-white is-rounded"
-      to=".."
+      to="."
     >
       <span class="icon">
         <icon
@@ -104,7 +104,7 @@ const onSelectPillar = (pillar: PillarType) => {
   markers.value = activePillar.value?.markerIds.map(
     (markerId) => questionnaireStore.markerById[markerId]
   )
-  router.push({ query: { pillar: pillar.name } })
+  router.replace({ path: "reponses", query: { pillar: pillar.name } })
 }
 </script>
 

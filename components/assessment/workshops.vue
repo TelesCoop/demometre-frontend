@@ -2,7 +2,7 @@
   <div>
     <PageSection
       title="Mes ateliers"
-      :buttons="[{text: 'Ajouter un atelier', icon: 'add-line'}]"
+      :buttons="assessment.isCurrent ? [{text: 'Ajouter un atelier', icon: 'add-line'}] : []"
       @button-click="showAddWorkshopModal = true"
     >
       <div v-if="workshops.length">

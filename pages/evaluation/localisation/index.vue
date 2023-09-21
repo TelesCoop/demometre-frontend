@@ -154,7 +154,6 @@ import { useAssessmentStore } from "~/stores/assessmentStore"
 import { Localities, LocalityType } from "~/composables/types"
 import { usePageStore } from "~/stores/pageStore"
 import { usePressEnter } from "~/composables/pressEnter"
-import { useUserStore } from "~/stores/userStore"
 
 definePageMeta({
   title: "Localisation",
@@ -163,7 +162,6 @@ definePageMeta({
 })
 
 const pageStore = usePageStore()
-const userStore = useUserStore()
 const router = useRouter()
 
 if (!pageStore.evaluationInitiationPage.searchAssessmentTitle) {

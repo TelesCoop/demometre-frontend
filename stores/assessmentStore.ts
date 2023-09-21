@@ -14,7 +14,7 @@ import { useParticipationStore } from "./participationStore"
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
     assessmentById: <Record<number, Assessment>>{},
-    currentAssessmentId: <number>undefined,
+    currentAssessmentId: <number | undefined>undefined,
     representativityCriterias: <RepresentativityCriteria[]>[],
     assessmentsWithResultsLoaded: <boolean>false,
     scoresByAssessmentId: <Record<number, Scores>>{},
@@ -23,7 +23,9 @@ export const useAssessmentStore = defineStore("assessment", {
         [key: number]: any
       }
       >{},
-    expertById: <{ [key: number]: User }>{},
+    expertById: <{
+      [key: number]: User
+    }>{},
     addingExpert: <boolean>false,
     newAssessment: <Assessment>{}
   }),

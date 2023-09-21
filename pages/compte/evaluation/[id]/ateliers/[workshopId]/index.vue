@@ -40,10 +40,6 @@
             title="lieu"
             :value="workshop?.place"
           />
-          <InformationDetail
-            title="public ciblé"
-            value="??"
-          />
         </div>
         <div class="mt-3">
           <div class="columns">
@@ -79,7 +75,7 @@
       <hr>
       <PageSection
         title="Participants"
-        :buttons="[{text: 'Ajouter un participant', icon: 'add-line'}, {text: 'Saisir les réponses papier', link: `/compte/evaluation/${workshop?.assessmentId}/ateliers/${workshopId}/reponses/`, icon: 'file-paper'}]"
+        :buttons="[{text: 'Ajouter un participant', icon: 'add-line'}, {text: 'Saisir les réponses papier', link: `/compte/evaluation/${workshop?.assessmentId}/ateliers/${workshopId}/reponses`, icon: 'file-paper'}]"
         @button-click="onParticipantsButtonClick"
       >
         <div>
@@ -206,7 +202,6 @@ const pageStore = usePageStore()
 const userStore = useUserStore()
 const confirm = useConfirm()
 const route = useRoute()
-const router = useRouter()
 const workshopId: Ref<number> = ref(+route.params.workshopId)
 
 const showInformationsEditModal = ref(false)

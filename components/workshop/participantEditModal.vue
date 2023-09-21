@@ -158,7 +158,7 @@ const props = defineProps({
 const workshopId: number = +route.params.workshopId
 const assessmentId: number = +route.params.id
 const emit = defineEmits(["close"])
-const isNew = computed(() => props.participant == null)
+const isNew = computed(() => Object.keys(props.participant).length == 0)
 const participation = ref<WorkshopParticipation>({ ...props.participant })
 console.log("### edit modal with", participation)
 if (participation.value.responseByQuestionId == null) {
@@ -176,13 +176,6 @@ const title = computed<string>(() => {
 const canValidate = computed<boolean>(() => {
   for (const field of ["participantEmail", "participantName", "roleId"]) {
     if (participation.value[field] == null) {
-      console.log("### cant validate", field)
-      return false
-    }
-  }
-  for (const questionId of profilingStore.orderedQuestionId) {
-    if (!participation.value.responseByQuestionId[questionId]) {
-      console.log("### cant validate", questionId)
       return false
     }
   }

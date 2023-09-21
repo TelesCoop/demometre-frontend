@@ -134,14 +134,14 @@ export async function useAPIwithCsrfToken<Type>(
   return { data, error }
 }
 
-export async function useApiPost<Type>(path: string, payload: any = {}, onErrorMessage: string) {
+export async function useApiPost<Type>(path: string, payload: any = {}, onErrorMessage: string = "") {
   return useAPIwithCsrfToken<Type>(path, "POST", payload, onErrorMessage)
 }
 
-export async function useApiPatch<Type>(path: string, payload: any = {}, onErrorMessage: string) {
+export async function useApiPatch<Type>(path: string, payload: any = {}, onErrorMessage: string = "") {
   return useAPIwithCsrfToken<Type>(path, "PATCH", payload, onErrorMessage)
 }
 
-export async function useApiDelete<Type>(path: string, onErrorMessage: string) {
+export async function useApiDelete<Type>(path: string, onErrorMessage: string = "") {
   return useAPIwithCsrfToken<Type>(path, "DELETE", {}, onErrorMessage)
 }

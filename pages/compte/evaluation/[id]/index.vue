@@ -210,7 +210,7 @@
               /></span>
             </NuxtLink>
             <NuxtLink
-              v-if="participationStore.status.participated"
+              v-if="participationStore.status.participated && !assessment.isCurrent"
               :to="userStep.url"
               class="button is-rounded is-dark"
             >
@@ -246,7 +246,10 @@
 
     <hr>
 
-    <AssessmentWorkshops :assessment="assessment" />
+    <AssessmentWorkshops
+      v-if="assessment.details.hasDetailAccess"
+      :assessment="assessment"
+    />
 
     <div v-if="assessment.details.hasDetailAccess">
       <hr>

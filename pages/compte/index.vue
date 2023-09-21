@@ -61,7 +61,8 @@
       <PageSection
         title="Mes évaluations"
         intro="Toutes mes évaluations en cours et terminées"
-        :buttons="[{text: 'Lancer une évaluation', link: `/evaluation/localisation`, icon: 'arrow-right-line'}]"
+        :buttons="[{text: 'Lancer une évaluation', icon: 'arrow-right-line'}]"
+        @button-click="newAssessment"
       >
         <div class="tabs is-fullwidth">
           <ul>
@@ -123,7 +124,7 @@
                 <td>{{ assessment.name }}</td>
                 <td>{{ new Date(assessment.created).toLocaleDateString() }}</td>
                 <td>
-                  {{ PARTICIPANT_TYPE[assessment.details.role] || "inconnu" }}
+                  {{ PARTICIPANT_TYPE[assessment.details.role] || "participant - non encore rempli" }}
                   <template v-if="assessment.details.hasDetailAccess">
                     <span
                       v-if="assessment.details.paymentAmount"
@@ -179,6 +180,11 @@ const selectedAssessments = computed(() => isCurrentAssessmentsTab.value ? curre
 
 const selectAssessment = (assessmentId: number) => {
   router.push(`/compte/evaluation/${assessmentId}`)
+}
+
+const newAssessment = () => {
+  assessmentStore.currentAssessmentId = undefined
+  router.push("/evaluation/localisation")
 }
 
 const logout = () => {

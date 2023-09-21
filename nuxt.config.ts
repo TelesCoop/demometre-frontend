@@ -8,13 +8,12 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         sass: {
-          additionalData: `@import "@/css/tools.sass" \n`,
-        },
-      },
-    },
+          additionalData: `@import "@/css/tools.sass" \n`
+        }
+      }
+    }
   },
   runtimeConfig: {
-    backendPort: process.env.NUXT_BACKEND_PORT || process.env.VITE_BACKEND_PORT,
-  },
-  // head: {},
+    backendPort: process.env.NUXT_BACKEND_PORT || process.env.VITE_BACKEND_PORT
+  }
 })

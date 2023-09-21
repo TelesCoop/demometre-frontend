@@ -34,7 +34,14 @@ export const useUserStore = defineStore("user", {
       this.user = data.value
     },
     async editUser(user: User) {
-      const { data, error } = await useApiPatch<User>("auth/edit", user, "Impossible d'enregistrer les informations")
+      const {
+        data,
+        error
+      } = await useApiPatch<User>(
+        "auth/edit",
+        user,
+        "Impossible d'enregistrer les informations, les noms d'utilisateur et adresse mail doivent être uniques"
+      )
       if (!error.value) {
         this.user = data.value
         return true
@@ -48,7 +55,7 @@ export const useUserStore = defineStore("user", {
         password
       })
       if (!error.value) {
-        this.user = data.value
+        this.user = data.value!
         await getUserData()
         useRouter().go(this.afterLoginRouterGoStep)
       }
