@@ -256,6 +256,9 @@ export const useAssessmentStore = defineStore("assessment", {
       useParticipationStore().newParticipation.consent = true
       return true
     },
+    newAssessment() {
+      this.currentAssessmentId = undefined
+    },
     onUserLogout(onlyResponses = false) {
       this.representativityCriterias = []
       this.assessmentsWithResultsLoaded = false

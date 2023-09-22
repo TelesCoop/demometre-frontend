@@ -39,12 +39,18 @@
       :is-first-element="true"
     >
       <div class="buttons mb-0_5">
-        <NuxtLink class="button is-shade-600 is-rounded" to="/signup"
-          >Créer un compte</NuxtLink
+        <NuxtLink
+          class="button is-shade-600 is-rounded"
+          to="/signup"
         >
-        <NuxtLink class="button is-shade-600 is-rounded" to="/login"
-          >Se connecter</NuxtLink
+          Créer un compte
+        </NuxtLink>
+        <NuxtLink
+          class="button is-shade-600 is-rounded"
+          to="/login"
         >
+          Se connecter
+        </NuxtLink>
       </div>
     </PageSection>
 
@@ -61,7 +67,7 @@
         <div
           v-if="
             assessmentStore.newAssessment.assessmentType ===
-            AssessmentType.WITH_EXPERT.key
+              AssessmentType.WITH_EXPERT.key
           "
         >
           <AssessmentAddExpert
@@ -69,7 +75,11 @@
             :initiation-page="pageStore.evaluationInitiationPage"
           />
         </div>
-        <ParticipationConsent class="mt-1_5" type="cgu" :initiator="true" />
+        <ParticipationConsent
+          class="mt-1_5"
+          type="cgu"
+          :initiator="true"
+        />
         <ButtonsArrowButton
           color="no-pillar"
           class="arrow-button-fixed is-left"
@@ -94,7 +104,10 @@
       :is-first-element="true"
       :intro-is-rich-text="true"
     >
-      <form class="nav-questionnaire-container" @submit.prevent="goToNextStep">
+      <form
+        class="nav-questionnaire-container"
+        @submit.prevent="goToNextStep"
+      >
         <div class="field mb-2">
           <label class="label">{{
             pageStore.evaluationInitiationPage.initiatorNameQuestion
@@ -108,12 +121,10 @@
               class="input is-normal-width"
               type="text"
               placeholder="Mairie de ..."
-            />
+            >
           </div>
         </div>
-        <label class="label"
-          >Au nom de qui lancez-vous cette évaluation &nbsp;?</label
-        >
+        <label class="label">Au nom de qui lancez-vous cette évaluation &nbsp;?</label>
         <div class="buttons mt-1">
           <div
             v-for="initiatorType of InitiatorType"
@@ -128,24 +139,32 @@
               class="custom-hidden white-on-black-input-checked"
               name="initiationType"
               required
-            />
+            >
             <label
               :for="initiatorType.key"
               class="button is-shade-600 is-outlined locality"
-              >{{ initiatorType.value }}</label
-            >
+            >{{ initiatorType.value }}</label>
           </div>
         </div>
         <div class="buttons mt-4">
-          <button class="button is-shade-600 is-rounded" :disabled="disabled">
+          <button
+            class="button is-shade-600 is-rounded"
+            :disabled="disabled"
+          >
             <span>Valider</span>
             <span class="icon">
-              <icon size="20" name="check" />
+              <icon
+                size="20"
+                name="check"
+              />
             </span>
           </button>
 
           <!-- Permet d'appuyer sur entrer -->
-          <input type="submit" hidden />
+          <input
+            type="submit"
+            hidden
+          >
         </div>
 
         <ButtonsArrowButton
@@ -165,7 +184,10 @@
       :is-first-element="true"
       :intro-is-rich-text="true"
     >
-      <form class="nav-questionnaire-container" @submit.prevent="onSubmit">
+      <form
+        class="nav-questionnaire-container"
+        @submit.prevent="onSubmit"
+      >
         <div
           v-for="representativityCriteria of assessmentStore.representativityCriterias"
           :key="representativityCriteria.id"
@@ -176,7 +198,7 @@
           <RichText
             class="is-family-secondary is-size-6"
             :rich-text="representativityCriteria.explanation"
-          ></RichText>
+          />
           <ResponseInputPercentage
             v-model="representativityCriteria.acceptabilityThreshold"
             class="mt-1"
@@ -185,15 +207,24 @@
           />
         </div>
         <div class="buttons mt-1_5">
-          <button class="button is-shade-600 is-rounded" :disabled="disabled">
+          <button
+            class="button is-shade-600 is-rounded"
+            :disabled="disabled"
+          >
             <span>Valider</span>
             <span class="icon">
-              <icon size="20" name="check" />
+              <icon
+                size="20"
+                name="check"
+              />
             </span>
           </button>
 
           <!-- Permet d'appuyer sur entrer -->
-          <input type="submit" hidden />
+          <input
+            type="submit"
+            hidden
+          >
         </div>
 
         <ButtonsArrowButton
@@ -215,7 +246,7 @@ import { useUserStore } from "~/stores/userStore"
 definePageMeta({
   title: "Initialisation",
   step: "initialization",
-  middleware: ["assessment"],
+  middleware: ["assessment"]
 })
 
 const router = useRouter()
@@ -242,10 +273,11 @@ enum steps {
   INITIATOR = "initiator",
   REPRESENTATIVITY = "representativity",
 }
+
 const initializationSteps = [
   steps.ASSESSMENT_TYPE,
   steps.START,
-  steps.INITIATOR,
+  steps.INITIATOR
   // At the last moment it was decided not to give the possibility to customize the representativity in order not to confuse the user
   // steps.REPRESENTATIVITY,
 ]
@@ -270,40 +302,41 @@ watch(
 
 const disabled = computed(() => {
   switch (initializationSteps[currentStep.value]) {
-    case steps.START:
-      const cguConsent = assessmentStore.newAssessment.initiatorUsageConsent
-      const cgvConsent =
+  case steps.START: {
+    const cguConsent = assessmentStore.newAssessment.initiatorUsageConsent
+    const cgvConsent =
         assessmentStore.newAssessment.assessmentType ===
         AssessmentType.WITH_EXPERT.key
           ? assessmentStore.newAssessment.conditionsOfSaleConsent
           : true
-      return !(cguConsent && cgvConsent)
-    case steps.INITIATOR:
-      return initiatorTypeSelected.value && initiatorName.value ? false : true
-    default:
-      return false
+    return !(cguConsent && cgvConsent)
+  }
+  case steps.INITIATOR:
+    return !(initiatorTypeSelected.value && initiatorName.value)
+  default:
+    return false
   }
 })
 
 const startInitializationTitleAndDesc = computed(() => {
   switch (assessmentStore.newAssessment.assessmentType) {
-    case AssessmentType.QUICK.key:
-      return [
-        pageStore.evaluationInitiationPage.createQuickAssessmentTitle,
-        pageStore.evaluationInitiationPage.createQuickAssessmentDescription,
-      ]
-    case AssessmentType.PARTICIPATIVE.key:
-      return [
-        pageStore.evaluationInitiationPage.createParticipationAssessmentTitle,
-        pageStore.evaluationInitiationPage
-          .createParticipationAssessmentDescription,
-      ]
-    case AssessmentType.WITH_EXPERT.key:
-      return [
-        pageStore.evaluationInitiationPage.createAssessmentWithExpertTitle,
-        pageStore.evaluationInitiationPage
-          .createAssessmentWithExpertDescription,
-      ]
+  case AssessmentType.QUICK.key:
+    return [
+      pageStore.evaluationInitiationPage.createQuickAssessmentTitle,
+      pageStore.evaluationInitiationPage.createQuickAssessmentDescription
+    ]
+  case AssessmentType.PARTICIPATIVE.key:
+    return [
+      pageStore.evaluationInitiationPage.createParticipationAssessmentTitle,
+      pageStore.evaluationInitiationPage
+        .createParticipationAssessmentDescription
+    ]
+  case AssessmentType.WITH_EXPERT.key:
+    return [
+      pageStore.evaluationInitiationPage.createAssessmentWithExpertTitle,
+      pageStore.evaluationInitiationPage
+        .createAssessmentWithExpertDescription
+    ]
   }
 })
 
@@ -346,7 +379,7 @@ function goToNextStep() {
 async function onSubmit() {
   const isSuccess = await assessmentStore.initializeAssessment({
     initiatorType: initiatorTypeSelected.value,
-    initiatorName: initiatorName.value,
+    initiatorName: initiatorName.value
   })
   if (isSuccess) {
     useRouter().push(

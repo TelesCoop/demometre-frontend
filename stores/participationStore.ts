@@ -152,7 +152,11 @@ export const useParticipationStore = defineStore("participation", {
       })
       return true
     },
-
+    newAssessment() {
+      this.responseByProfilingQuestionId = {}
+      this.responseByQuestionnaireQuestionId = {}
+      this.totalAndAnsweredQuestionsByPillarName = {}
+    },
     async saveResponse(question: Question, response: any, isAnswered: boolean) {
       const questionResponse = getQuestionResponseStructure(
         question,

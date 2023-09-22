@@ -24,7 +24,7 @@ export function useUserStep() {
       }
     }
     if (!assessmentStore.currentAssessment?.initializationDate) {
-      // The locality has been chosen but the assessment is not initialize
+      // The locality has been chosen but the assessment is not initialized
       return {
         step: "initialization",
         url: `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`,

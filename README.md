@@ -1,36 +1,20 @@
-# Nuxt 3 Minimal Starter
+# Démomètre - code frontend
 
-We recommend to look at the [documentation](https://v3.nuxtjs.org).
+## Notes pour les développeurs
 
-## Setup
+### Ordre d'une évaluation
 
-Make sure to install the dependencies
+Cf `userStep.ts` :
 
-```bash
-yarn install
-```
-
-## Development
-
-Start the development server on http://localhost:3000
-
-```bash
-yarn dev
-```
-
-
-## Production
-
-Build the application for production:
-
-```bash
-yarn build
-```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/docs/deployment).
-
-
-
-## Commit de suppression des questions avec classement
-
-https://gitlab.com/telescoop/democratie-ouverte/frontend/-/commit/ea3cc159d104f772467cab574387b10063881ab4
+1. localisation pour trouver s'il existe déjà une évalution pour cette
+   localité (commune ou EPCI) -> appelle `assessments/by-locality/`
+   pour avoir la réponse. Si une évalution (autre que diagnostic rapide)
+   a déja été créée pour cette localité, on rejoint cette évalution. Sinon,
+   une nouvelle évaluation est créée.
+2. si c'est une nouvelle évaluation, (sinon, on passe à l'étape suivante),
+   sur `/evaluation/initialisation`
+    - on choisit le type d'évaluation
+    - on confirme qu'on accepte les conditions
+    - on choisit le nom à afficher publiquement comme porteur et
+      au nom de qui on évalue (asso / mairie)
+3. sur `/evaluation/initialisation/[id]/question-objectives` on répond aux questions objectives

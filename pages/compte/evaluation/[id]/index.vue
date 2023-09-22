@@ -210,11 +210,10 @@
               /></span>
             </NuxtLink>
             <NuxtLink
-              v-if="participationStore.status.participated && !assessment.isCurrent"
               :to="userStep.url"
               class="button is-rounded is-dark"
             >
-              <span>Reprendre l'évaluation</span>
+              <span>{{ participationStore.status.participated ? "Reprendre l'évaluation" : "Participer à l'évaluation" }}</span>
               <span class="icon"><icon
                 size="20"
                 name="arrow-right-line"

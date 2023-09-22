@@ -161,6 +161,7 @@
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useUserStore } from "~/stores/userStore"
 import { PARTICIPANT_TYPE } from "~/utils/constants"
+import { useParticipationStore } from "~/stores/participationStore"
 
 definePageMeta({
   title: "Mon compte",
@@ -168,6 +169,7 @@ definePageMeta({
 })
 
 const assessmentStore = useAssessmentStore()
+const participationStore = useParticipationStore()
 const userStore = useUserStore()
 const router = useRouter()
 
@@ -183,7 +185,8 @@ const selectAssessment = (assessmentId: number) => {
 }
 
 const newAssessment = () => {
-  assessmentStore.currentAssessmentId = undefined
+  assessmentStore.newAssessment()
+  participationStore.newAssessment()
   router.push("/evaluation/localisation")
 }
 
