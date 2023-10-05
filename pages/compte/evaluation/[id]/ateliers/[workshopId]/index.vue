@@ -224,15 +224,12 @@ if (
   workshop.value.participationIds.length !==
   workshopStore.workshopParticipations(workshopId.value).length
 ) {
-  console.log("### refresh workshop")
+  console.log("### refresh workshop because of participations number mismatch")
   workshopStore.getWorkshop(workshopId.value)
 }
 
 if (!userStore.isLoggedIn) {
   navigateTo(`/login`)
-}
-if (!userStore.isExpertUser) {
-  navigateTo(`/`)
 }
 
 const onParticipantsButtonClick = (buttonIx: number) => {

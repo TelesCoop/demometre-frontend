@@ -18,3 +18,4 @@ Cf `userStep.ts` :
     - on choisit le nom à afficher publiquement comme porteur et
       au nom de qui on évalue (asso / mairie)
 3. sur `/evaluation/initialisation/[id]/question-objectives` on répond aux questions objectives
+4. sur `/evaluation/initialisation/[id]/validation`, on valide les réponses aux questions objectives

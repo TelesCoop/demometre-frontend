@@ -54,7 +54,10 @@
                 @click="$emit('buttonClick', buttonIx)"
               >
                 <span v-if="!button.leftIcon">{{ button.text }}</span>
-                <span class="icon">
+                <span
+                  v-if="icon"
+                  class="icon"
+                >
                   <icon
                     size="20"
                     :name="button.icon"
@@ -85,7 +88,7 @@ defineProps({
     }
   },
   leftIcon: { type: Boolean, default: false },
-  icon: { type: String, default: "arrow-right-line" },
+  icon: { type: String, required: false },
   isInsideBigSection: { type: Boolean, default: false },
   isFirstElement: { type: Boolean, default: false },
   introIsRichText: { type: Boolean, default: false }

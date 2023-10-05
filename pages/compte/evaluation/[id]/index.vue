@@ -213,7 +213,8 @@
               :to="userStep.url"
               class="button is-rounded is-dark"
             >
-              <span>{{ participationStore.status.participated ? "Reprendre l'évaluation" : "Participer à l'évaluation" }}</span>
+              <span>{{ participationStore.status.participated ? "Reprendre l'évaluation" : "Participer à l'évaluation"
+              }}</span>
               <span class="icon"><icon
                 size="20"
                 name="arrow-right-line"
@@ -368,7 +369,10 @@ const informationsButtons = computed(() => {
   }
   const toReturn = [{ text: "Modifier les informations", icon: "list-settings-line" }]
   if (assessment.value.details.role === "initiator") {
-    toReturn.push({ text: "Changer d'expert", icon: "user-2-line" })
+    toReturn.push({
+      text: assessment.value.experts?.length ? "Changer d'expert" : "Ajouter un expert",
+      icon: "user-2-line"
+    })
   }
   return toReturn
 })
