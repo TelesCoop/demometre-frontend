@@ -10,39 +10,6 @@
       class="pt-2"
     />
 
-    <!-- Connected section -->
-
-    <template v-if="participationStore.participation.id">
-      <QuestionnaireProgressBars class="mb-2" />
-
-      <div class="container mb-4">
-        <div class="buttons">
-          <router-link
-            class="button is-shade-600 is-rounded"
-            :to="userStep.url"
-          >
-            Reprendre mon évaluation
-          </router-link>
-          <button
-            v-if="userStore.isUnknownUser"
-            class="button is-rounded is-shade-600 is-outlined"
-            @click="participationStore.setShowCancelParticipationModal(true)"
-          >
-            Réinitialiser
-          </button>
-        </div>
-      </div>
-    </template>
-
-    <PageSection
-      v-if="assessmentStore.currentAssessment"
-      :title="'Tableau de bord ' + assessmentStore.assessmentTypeTitle"
-    >
-      <ParticipationBoard
-        :assessment="assessmentStore.currentAssessment"
-      />
-    </PageSection>
-
     <!-- Feedbacks -->
     <div class="has-background-shade-250">
       <PageSection
