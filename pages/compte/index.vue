@@ -185,7 +185,7 @@ const selectAssessment = (assessmentId: number) => {
 }
 
 const newAssessment = () => {
-  assessmentStore.newAssessment()
+  assessmentStore.createNewAssessment()
   participationStore.newAssessment()
   router.push("/evaluation/localisation")
 }
