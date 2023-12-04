@@ -64,7 +64,7 @@ export const useAssessmentStore = defineStore("assessment", {
       )
     },
     userHasSingleAssessment() {
-      return Object.values(this.assessmentById).length === 1
+      return Object.values(this.assessmentById).length < 2
     },
     municipalityAssessments() {
       return this.assessments.find(
@@ -168,6 +168,15 @@ export const useAssessmentStore = defineStore("assessment", {
       }
       for (const assessment of response.data.value!) {
         this.assessmentById[assessment.id] = assessment
+      }
+      if (Object.keys(this.assessmentById).length === 1) {
+        const assessmentId: number = Object.keys(this.assessmentById)[0]
+        this.currentAssessmentId = assessmentId
+        const participationStore = useParticipationStore()
+        if (await participationStore.getParticipationForAssessment(assessmentId)) {
+          await participationStore.loadAssessment(assessmentId)
+        }
+
       }
       return true
     },

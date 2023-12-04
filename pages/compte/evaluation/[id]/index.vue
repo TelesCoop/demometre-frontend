@@ -360,8 +360,7 @@ if (!profilingStore.roles.length) {
 }
 if (participationStore.currentlyLoadedResponsesAssessmentId !== assessmentId) {
   participationStore.getParticipationForAssessment(assessmentId)
-  participationStore.getProfilingQuestionResponsesForAssessment(assessmentId)
-  await participationStore.getQuestionnaireSubjectiveQuestionResponsesForAssessment(assessmentId)
+  await participationStore.loadAssessment(assessmentId)
 }
 if (participationStore.status.total == 0) {
   await participationStore.getParticipationForAssessment(assessmentId)

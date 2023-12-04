@@ -17,9 +17,9 @@
             class="button is-outlined"
             :class="
               `has-border-${color}-dark ` +
-              (isRoleActive(roleId)
-                ? `has-background-${rolesGradiants[index][0]} has-text-${rolesGradiants[index][1]}`
-                : `has-text-${color}-dark`)
+                (isRoleActive(roleId)
+                  ? `has-background-${rolesGradiants[index][0]} has-text-${rolesGradiants[index][1]}`
+                  : `has-text-${color}-dark`)
             "
             @click.prevent="onRoleClick(roleId)"
           >
@@ -30,7 +30,10 @@
       <div>Totaux</div>
     </div>
     <div class="choice-question-chart-grid">
-      <template v-for="(choice, key) in data.value" :key="key">
+      <template
+        v-for="(choice, key) in data.value"
+        :key="key"
+      >
         <div
           :class="`has-background-${color}-light`"
           class="choice-question-chart-cell"
@@ -55,7 +58,7 @@
                 getValueByRoleId(choice, roleId),
                 data.count
               )}%`"
-            ></div>
+            />
           </div>
         </div>
         <div
@@ -65,11 +68,13 @@
           <strong>
             {{
               getPercentage(getTotalValueOfRolesSelected(choice), data.count)
-            }} </strong
-          >%
+            }} </strong>% ; {{ data.count }}
         </div>
       </template>
-      <template v-for="index in totalSeparator" :key="index">
+      <template
+        v-for="index in totalSeparator"
+        :key="index"
+      >
         <AnalyticsChoiceQuestionChartLine
           class="choice-question-chart-line"
           :class="`is-${color}`"
@@ -80,7 +85,7 @@
           :percentage-of-space-already-taken="percentageOfSpaceAlreadyTaken"
           :gap-size="gapSize"
           :percentage-size="percentageSize"
-        ></AnalyticsChoiceQuestionChartLine>
+        />
         <div
           v-if="(index - 1) % fullLineModulo === 0"
           class="choice-question-chart-line-number"
@@ -106,14 +111,14 @@
 import { getPercentage } from "assets/utils/percentage"
 import {
   getLeftStyle,
-  getColorGradients,
+  getColorGradients
 } from "assets/utils/choice-question-chart"
 import { useProfilingStore } from "~/stores/profilingStore"
 
 const props = defineProps({
   data: { type: Object, required: true },
   color: { type: String, required: true },
-  question: { type: Object, required: true },
+  question: { type: Object, required: true }
 })
 const profilingStore = useProfilingStore()
 const totalSeparator = 11
@@ -125,6 +130,8 @@ const percentageSize = 80
 const rolesGradiants = computed(
   () => getColorGradients(props.color)[props.question.roleIds.length]
 )
+
+console.log("### init with data", props.data)
 
 const roleIdsSelected = ref<number[]>([])
 
@@ -143,6 +150,7 @@ const getValueByRoleId = (choice, roleId) => {
   return choice[roleName] ? choice[roleName].value : 0
 }
 const getTotalValueOfRolesSelected = (choice) => {
+  console.log("### getTotalValueOfRolesSelected", choice, roleIdsSelected)
   return roleIdsSelected.value.reduce(
     (value, roleId) => value + getValueByRoleId(choice, roleId),
     0

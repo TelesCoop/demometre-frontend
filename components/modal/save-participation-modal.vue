@@ -13,6 +13,9 @@
           Souhaitez-vous enregistrer vos réponses pour pouvoir y revenir et
           contribuer à l’évaluation&nbsp;?
         </h2>
+        <p>
+          Vous pourrez ensuite y revenir via l'onglet "Mon compte".
+        </p>
         <div class="buttons">
           <button
             class="button is-shade-600 is-outlined"

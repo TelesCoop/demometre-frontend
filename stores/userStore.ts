@@ -53,7 +53,7 @@ export const useUserStore = defineStore("user", {
       const { data, error } = await useApiPost<User>("auth/login", {
         email,
         password
-      })
+      }, "Impossible de se connecter, vérifiez vos identifiants")
       if (!error.value) {
         this.user = data.value!
         await getUserData()
@@ -73,7 +73,7 @@ export const useUserStore = defineStore("user", {
       this.user = data.value
       await getUserData()
 
-      useRouter().go(this.afterLoginRouterGoStep)
+      useRouter().push("/")
     },
     async logout() {
       const { error } = await useApiPost<User>("auth/logout")

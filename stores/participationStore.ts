@@ -17,7 +17,12 @@ import { useUserStore } from "./userStore"
 import { useMessageStore } from "./messageStore"
 import { useQuestionnaireStore } from "./questionnaireStore"
 
-type Status = { total: number; answered: number; completed: boolean; participated?: boolean }
+type Status = {
+  total: number;
+  answered: number;
+  completed: boolean;
+  participated?: boolean
+}
 
 export const useParticipationStore = defineStore("participation", {
   state: () => ({
@@ -25,10 +30,16 @@ export const useParticipationStore = defineStore("participation", {
     currentlyLoadedSubjectiveResponsesAssessmentId: -1,
     currentlyLoadedProfilingResponsesAssessmentId: -1,
     profilingCurrent: <number[]>[],
-    responseByProfilingQuestionId: <{ [key: number]: QuestionResponse }>{},
-    responseByQuestionnaireQuestionId: <{ [key: number]: QuestionResponse }>{},
+    responseByProfilingQuestionId: <{
+      [key: number]: QuestionResponse
+    }>{},
+    responseByQuestionnaireQuestionId: <{
+      [key: number]: QuestionResponse
+    }>{},
     newParticipation: <Participation>{},
-    participations: <{ [key: number]: Participation }>{},
+    participations: <{
+      [key: number]: Participation
+    }>{},
     showCancelParticipationModal: <boolean>false,
     showSaveParticipationModal: <boolean>false,
     totalAndAnsweredQuestionsByPillarName: <
@@ -151,6 +162,13 @@ export const useParticipationStore = defineStore("participation", {
         this.responseByQuestionnaireQuestionId[item.questionId] = item
       })
       return true
+    },
+    async loadAssessment(assessmentId: number) {
+      await Promise.all([
+        this.getProfilingQuestionResponsesForAssessment(assessmentId),
+        this.getQuestionnaireSubjectiveQuestionResponsesForAssessment(assessmentId),
+        this.getQuestionnaireObjectiveQuestionResponsesForAssessment(assessmentId)
+      ])
     },
     newAssessment() {
       this.responseByProfilingQuestionId = {}
