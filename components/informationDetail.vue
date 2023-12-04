@@ -3,7 +3,10 @@
     <p class="has-text-shade-400 is-uppercase is-size-6 mb-0_5">
       {{ title }}
     </p>
-    <p class="has-text-shade-600 is-size-5">
+    <p
+      class="has-text-shade-600 is-size-5"
+      style="white-space: pre-line"
+    >
       {{ value }}
     </p>
   </div>

@@ -65,7 +65,7 @@
           <div class="navbar-item">
             <div class="buttons">
               <NuxtLink
-                v-if="!isEvaluationRoute"
+                v-if="!isEvaluationRoute && assessmentStore.userHasSingleAssessment"
                 :to="userStep.url"
                 class="button evaluation is-rounded has-border-cooperation has-text-cooperation-dark"
                 @click="closeMenu"
@@ -142,6 +142,7 @@
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
 import { useParticipationStore } from "~/stores/participationStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 const emit = defineEmits<{
   (e: "change-header-height", value: number): void
@@ -150,6 +151,7 @@ const emit = defineEmits<{
 const userStore = useUserStore()
 const userStep = useUserStep()
 const participationStore = useParticipationStore()
+const assessmentStore = useAssessmentStore()
 const route = useRoute()
 const isBurgerOpen = ref(false)
 

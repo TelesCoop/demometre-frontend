@@ -3,12 +3,17 @@
     <div class="scale-question-chart-grid mb-1">
       <div>
         <label class="checkbox is-size-7">
-          <input v-model="simplifyChart" type="checkbox" />
+          <input
+            v-model="simplifyChart"
+            type="checkbox"
+          >
           {{ simplifyChart ? "Désactiver" : "Activer" }} la vue simplifiée
         </label>
       </div>
       <div>
-        <p :class="`has-text-${color}-hover`">Personne(s) concernée(s)</p>
+        <p :class="`has-text-${color}-hover`">
+          Personne(s) concernée(s)
+        </p>
         <p :class="`has-text-${color}-dark mt-0_5`">
           Sélectionner ci-dessous un ou plusieurs acteurs
         </p>
@@ -19,9 +24,9 @@
             class="button is-outlined"
             :class="
               `has-border-${color}-dark ` +
-              (isRoleActive(roleId)
-                ? `has-background-${rolesGradiants[index][0]} has-text-${rolesGradiants[index][1]}`
-                : `has-text-${color}-dark`)
+                (isRoleActive(roleId)
+                  ? `has-background-${rolesGradiants[index][0]} has-text-${rolesGradiants[index][1]}`
+                  : `has-text-${color}-dark`)
             "
             @click.prevent="onRoleClick(roleId)"
           >
@@ -34,7 +39,7 @@
       class="scale-question-chart-grid mb-1"
       :class="`has-text-${color}-hover`"
     >
-      <div>Caractéristique(s)</div>
+      <div>Réponses</div>
       <div class="scale-question-chart-sub-grid">
         <div
           v-for="(choice, choiceKey) in data.choices"
@@ -70,7 +75,7 @@ import { useProfilingStore } from "~/stores/profilingStore"
 const props = defineProps({
   data: { type: Object, required: true },
   color: { type: String, required: true },
-  question: { type: Object, required: true },
+  question: { type: Object, required: true }
 })
 const profilingStore = useProfilingStore()
 

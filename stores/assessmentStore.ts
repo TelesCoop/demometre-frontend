@@ -63,6 +63,9 @@ export const useAssessmentStore = defineStore("assessment", {
           assessment.localityType === "intercommunality"
       )
     },
+    userHasSingleAssessment() {
+      return Object.values(this.assessmentById).length === 1
+    },
     municipalityAssessments() {
       return this.assessments.find(
         (assessment: Assessment) => assessment.localityType === "municipality"

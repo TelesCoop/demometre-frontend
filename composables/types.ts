@@ -212,6 +212,13 @@ export type AssessmentDetails = {
   role: "initiator" | "expert" | "participant" | "" | null
   stakeholders: string
 }
+export type Expert = {
+  email: string
+  firstName: string
+  lastName: string
+  name: string
+  username: string
+}
 export type Assessment = {
   assessmentType: string
   conditionsOfSaleConsent: boolean
@@ -222,7 +229,7 @@ export type Assessment = {
   documents: AssessmentDocumentType[]
   endDate: string
   epci: Locality | null
-  experts?: number[]
+  experts?: Expert[]
   id: number
   initializationDate: string
   initializedToTheNameOf: string

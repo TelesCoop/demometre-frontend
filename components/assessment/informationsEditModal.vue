@@ -33,6 +33,17 @@
               >
             </div>
           </div>
+          <div class="field">
+            <label class="label">Nom du porteur de l'évaluation</label>
+            <div class="control">
+              <input
+                v-model="initializedToTheNameOf"
+                class="input"
+                type="text"
+                placeholder="Text input"
+              >
+            </div>
+          </div>
           <div
             v-for="field of contextFields"
             :key="field.field"
@@ -109,8 +120,12 @@ for (const field of contextFields) {
   contextValues.value[field.field] = props.assessment[field.field]  // eslint-disable-line vue/no-setup-props-destructure
 }
 const assessmentName = ref(props.assessment?.name)
+const initializedToTheNameOf = ref(props.assessment?.initializedToTheNameOf)
 const saveEdits = async () => {
-  const data: any = { name: assessmentName.value }
+  const data: any = {
+    name: assessmentName.value,
+    initializedToTheNameOf: initializedToTheNameOf.value
+  }
   for (const field of contextFields) {
     data[field.field] = contextValues.value[field.field]
   }

@@ -100,6 +100,11 @@
             title="ateliers"
             :value="assessment.workshopCount"
           />
+          <InformationDetail
+            v-if="assessment.assessmentType === AssessmentType.WITH_EXPERT.key"
+            :title="(assessment.experts || []).length > 1 ? 'Experts' : 'Expert'"
+            :value="withExpertValue"
+          />
         </div>
         <div
           v-if="assessment.details.hasDetailAccess"
@@ -210,8 +215,9 @@
               /></span>
             </NuxtLink>
             <NuxtLink
+              v-if="!assessment.endDate"
               :to="userStep.url"
-              class="button is-rounded is-dark"
+              class="button is-rounded is-dark ml-1"
             >
               <span>{{ participationStore.status.participated ? "Reprendre l'évaluation" : "Participer à l'évaluation"
               }}</span>
@@ -340,6 +346,15 @@ const assessmentId = parseInt(route.params.id as string)
 assessmentStore.currentAssessmentId = assessmentId
 const assessment = computed<Assessment>(() => assessmentStore.assessmentById[assessmentId])
 
+const withExpertValue = computed(() => {
+  const experts = assessment.value.experts || []
+  if (!experts.length) {
+    return "Aucun expert pour le moment"
+  } else {
+    return experts.map(expert => `${expert.firstName} ${expert.lastName}`).join("\n")
+  }
+})
+
 if (!profilingStore.roles.length) {
   profilingStore.getRoles()
 }
@@ -368,7 +383,7 @@ const informationsButtons = computed(() => {
     return []
   }
   const toReturn = [{ text: "Modifier les informations", icon: "list-settings-line" }]
-  if (assessment.value.details.role === "initiator") {
+  if (assessment.value.details.role === "initiator" && assessment.value.assessmentType === AssessmentType.WITH_EXPERT.key) {
     toReturn.push({
       text: assessment.value.experts?.length ? "Changer d'expert" : "Ajouter un expert",
       icon: "user-2-line"
