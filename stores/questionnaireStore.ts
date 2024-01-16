@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { Criteria, Marker, PillarType, Question } from "~/composables/types"
-import { useToastStore } from "./toastStore"
+import { useMessageStore } from "./messageStore"
 import { useApiGet } from "~/composables/api"
 
 type FullMarkers = Marker & { criterias: Criteria[] }
@@ -21,13 +21,12 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
   }),
   getters: {
     getPillarByName(this) {
-      return (pillarName) => this.pillarByName[pillarName]
+      return (pillarName: string) => this.pillarByName[pillarName]
     },
-
-    pillars() {
+    pillars(): PillarType[] {
       return Object.values(this.pillarByName)
     },
-    questions() {
+    questions(): Question[] {
       return this.orderedQuestionIds.map(
         (questionId) => this.questionById[questionId]
       )
@@ -39,7 +38,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         }) as Question[]
     },
     getQuestionnaireQuestionByPillarName() {
-      return (pillarName): Question[] => {
+      return (pillarName: string): Question[] => {
         return this.questions.filter((question: Question) => {
           return pillarName === question.pillarName
         }) as Question[]
@@ -73,8 +72,8 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
           }
         }
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getQuestionnaireQuestions() {
@@ -82,8 +81,8 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         `questionnaire-questions/`
       )
       if (error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       this.orderedQuestionIds = []

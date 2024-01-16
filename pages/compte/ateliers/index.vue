@@ -19,13 +19,13 @@
                 <td class="has-text-shade-400 is-uppercase is-size-6">
                   Evaluation*
                 </td>
-                <td></td>
+                <td />
               </tr>
             </thead>
             <tbody>
               <tr
                 v-for="workshop of [
-                  ...animatorStore.workshops,
+                  ...workshopStore.workshops,
                   ...newWorkshops,
                 ]"
                 :key="workshop.id"
@@ -36,7 +36,7 @@
                     :class="`input is-shade-300`"
                     type="text"
                     placeholder="écrire ici ..."
-                  />
+                  >
                 </td>
                 <td>
                   <input
@@ -45,13 +45,13 @@
                     type="date"
                     :timezone="true"
                     lang="fr-FR"
-                  />
+                  >
                 </td>
                 <td>
                   <div class="select">
                     <select v-model="workshop.assessmentId">
                       <option
-                        v-for="assessment of animatorStore.assessments"
+                        v-for="assessment of workshopStore.assessments"
                         :key="assessment.id"
                         :value="assessment.id"
                       >
@@ -79,7 +79,10 @@
                     >
                       <span>Saisir les participant·e·s</span>
                       <span class="icon">
-                        <icon size="16" name="user-add-line" />
+                        <icon
+                          size="16"
+                          name="user-add-line"
+                        />
                       </span>
                     </button>
                     <button
@@ -93,7 +96,10 @@
                   <div v-else>
                     <span class="tag is-shade-500">
                       Atelier clôturé
-                      <icon size="16" name="check" />
+                      <icon
+                        size="16"
+                        name="check"
+                      />
                     </span>
                   </div>
                 </td>
@@ -112,7 +118,10 @@
                 @click.prevent="addWorkshop()"
               >
                 <span class="icon">
-                  <icon size="16" name="add-line" />
+                  <icon
+                    size="16"
+                    name="add-line"
+                  />
                 </span>
                 <span>Ajouter un atelier</span>
               </button>
@@ -123,7 +132,10 @@
                 @click.prevent="removeWorkshop()"
               >
                 <span class="icon">
-                  <icon size="16" name="delete-bin-line" />
+                  <icon
+                    size="16"
+                    name="delete-bin-line"
+                  />
                 </span>
                 <span>Retirer un atelier</span>
               </button>
@@ -137,7 +149,10 @@
             >
               <span>Valider</span>
               <span class="icon">
-                <icon size="16" name="check" />
+                <icon
+                  size="16"
+                  name="check"
+                />
               </span>
             </button>
           </div>
@@ -149,21 +164,29 @@
       class="modal"
       :class="closeWorkshopIdModal && `is-active`"
     >
-      <div class="modal-background" @click.prevent="closeModal()"></div>
+      <div
+        class="modal-background"
+        @click.prevent="closeModal()"
+      />
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Clôturer l'atelier</p>
+          <p class="modal-card-title">
+            Clôturer l'atelier
+          </p>
           <button
             class="button is-ghost is-rounded is-outlined"
             @click.prevent="closeModal()"
           >
-            <icon size="20" name="close" />
+            <icon
+              size="20"
+              name="close"
+            />
           </button>
         </header>
         <section class="modal-card-body">
           <RichText
             :rich-text="pageStore.animatorPage.closeWorkshopValidation"
-          ></RichText>
+          />
         </section>
         <footer class="modal-card-foot">
           <button
@@ -172,7 +195,12 @@
           >
             Clôturer
           </button>
-          <button class="button" @click.prevent="closeModal()">Annuler</button>
+          <button
+            class="button"
+            @click.prevent="closeModal()"
+          >
+            Annuler
+          </button>
         </footer>
       </div>
     </div>
@@ -180,17 +208,17 @@
 </template>
 
 <script setup lang="ts">
-import { useAnimatorStore } from "~/stores/animatorStore"
+import { useWorkshopStore } from "~/stores/workshopStore"
 import { Workshop } from "~/composables/types"
 import { useUserStore } from "~/stores/userStore"
 import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({
   title: "Ateliers",
-  breadcrumb: "Ateliers",
+  breadcrumb: "Ateliers"
 })
 
-const animatorStore = useAnimatorStore()
+const workshopStore = useWorkshopStore()
 const userStore = useUserStore()
 const pageStore = usePageStore()
 const router = useRouter()
@@ -198,11 +226,11 @@ const router = useRouter()
 if (!pageStore.animatorPage.listWorkshopsTitle) {
   pageStore.getAnimatorPage()
 }
-if (!animatorStore.allAssessmentsLoaded) {
-  animatorStore.getAnimatorAssessments()
+if (!workshopStore.allAssessmentsLoaded) {
+  workshopStore.getAnimatorAssessments()
 }
-if (!animatorStore.allWorkshopsLoaded) {
-  animatorStore.getWorkshops()
+if (!workshopStore.allWorkshopsLoaded) {
+  workshopStore.getWorkshops()
 }
 
 if (!userStore.isLoggedIn) {
@@ -215,7 +243,7 @@ if (!userStore.isExpertUser) {
 const closeWorkshopIdModal = ref<number>(undefined)
 const newWorkshops = ref<Workshop[]>([])
 const validateDisabled = computed(() =>
-  [...newWorkshops.value, ...animatorStore.workshops].some(
+  [...newWorkshops.value, ...workshopStore.workshops].some(
     (workshop) => !(workshop.assessmentId && workshop.date && workshop.name)
   )
 )
@@ -235,7 +263,7 @@ function addWorkshop() {
     animatorId: userStore.user.id,
     participationIds: [],
     changed: true,
-    closed: false,
+    closed: false
   })
 }
 
@@ -251,28 +279,28 @@ async function saveAndGoToParticipants(workshop) {
   if (!workshop.id) {
     newWorkshops.value.shift()
   }
-  const workshopResponse = await animatorStore.createOrUpdateWorkshop(workshop)
+  const workshopResponse = await workshopStore.createOrUpdateWorkshop(workshop)
 
   if (workshopResponse) {
-    await animatorStore.getWorkshop(workshopResponse.id)
-    router.push(`/profil/ateliers/${workshopResponse.id}/participants`)
+    await workshopStore.getWorkshop(workshopResponse.id)
+    router.push(`/compte/ateliers/${workshopResponse.id}/participants`)
   }
 }
 
 async function onSubmit() {
   const newWorkshopsTmp = newWorkshops.value
-  for (const workshop of [...animatorStore.workshops, ...newWorkshopsTmp]) {
+  for (const workshop of [...workshopStore.workshops, ...newWorkshopsTmp]) {
     if (!workshop.id) {
       newWorkshops.value.shift()
     }
     if (workshop.changed) {
-      await animatorStore.createOrUpdateWorkshop(workshop)
+      await workshopStore.createOrUpdateWorkshop(workshop)
     }
   }
 }
 
 async function closeWorkshop() {
-  await animatorStore.closeWorkshop(closeWorkshopIdModal.value)
+  await workshopStore.closeWorkshop(closeWorkshopIdModal.value)
   closeModal()
 }
 </script>

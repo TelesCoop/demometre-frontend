@@ -10,13 +10,15 @@
             <a
               :class="`has-text-${color}-dark`"
               :style="`border-bottom-color: currentColor`"
-              >Questions</a
-            >
+            >Questions</a>
           </li>
         </ul>
       </div>
       <ul class="menu-list">
-        <li v-for="question of questions" :key="question.id">
+        <li
+          v-for="question of questions"
+          :key="question.id"
+        >
           <a
             :class="[
               `has-text-${props.color}-dark `,
@@ -37,10 +39,16 @@
       </ul>
     </aside>
     <div class="content column is-7 mb-1_5">
-      <h2 class="title is-4 mb-0_75" :class="`has-text-${props.color}-dark`">
+      <h2
+        class="title is-4 mb-0_75"
+        :class="`has-text-${props.color}-dark`"
+      >
         {{ wordTitleCase(props.pillar.name) }}
       </h2>
-      <hr class="my-0_75" :class="`has-background-${props.color}`" />
+      <hr
+        class="my-0_75"
+        :class="`has-background-${props.color}`"
+      >
       <div v-if="activeQuestion">
         <QuestionnaireQuestionStatement
           :color="props.color"
@@ -51,12 +59,16 @@
             class="is-fullwidth"
           >
             <tr :class="`is-uppercase is-size-6bis pb-0_5`">
-              <td class="pb-0_5">Participant·e·s</td>
-              <td class="pb-0_5">Réponses</td>
+              <td class="pb-0_5">
+                Participant·e·s
+              </td>
+              <td class="pb-0_5">
+                Réponses
+              </td>
             </tr>
             <tr
-              v-for="participation of animatorStore.workshopParticipations(
-                props.workshopId
+              v-for="participation of workshopStore.workshopParticipations(
+                props.workshopId, 'paper'
               )"
               :key="participation.id"
             >
@@ -86,13 +98,13 @@
             </p>
             <ResponseAnimator
               v-model="
-                animatorStore.assessmentResponseByQuestionIdByWorkshopId[
+                workshopStore.assessmentResponseByQuestionIdByWorkshopId[
                   props.workshopId
                 ][activeQuestion.id]
               "
               :question="activeQuestion"
               :assessment-id="
-                animatorStore.workshopById[props.workshopId].assessmentId
+                workshopStore.workshopById[props.workshopId].assessmentId
               "
               :color="props.color"
             />
@@ -110,7 +122,10 @@
           @click.prevent="nextQuestion()"
         >
           <span class="icon">
-            <icon size="16" name="arrow-right-line" />
+            <icon
+              size="16"
+              name="arrow-right-line"
+            />
           </span>
           <span>Question suivante</span>
         </button>
@@ -119,12 +134,15 @@
           v-if="activeQuestion"
           :class="`button is-rounded is-${color} ml-auto`"
           type="button"
-          :disabled="animatorStore.workshopById[workshopId].closed"
+          :disabled="workshopStore.workshopById[workshopId].closed"
           @click.prevent="onSubmit"
         >
           <span>Valider les réponses</span>
           <span class="icon">
-            <icon size="16" name="check" />
+            <icon
+              size="16"
+              name="check"
+            />
           </span>
         </button>
       </div>
@@ -137,15 +155,17 @@ import { computed } from "vue"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Question, Objectivity } from "~/composables/types"
 import { wordTitleCase } from "~/utils/util"
-import { useAnimatorStore } from "~/stores/animatorStore"
+import { useWorkshopStore } from "~/stores/workshopStore"
+import { useConfirm } from "~/composables/useConfirm"
 
 const questionnaireStore = useQuestionnaireStore()
-const animatorStore = useAnimatorStore()
+const workshopStore = useWorkshopStore()
+const confirm = useConfirm()
 
 const props = defineProps({
   pillar: { type: Object, required: true },
   color: { type: String, required: true },
-  workshopId: { type: Number, required: true },
+  workshopId: { type: Number, required: true }
 })
 
 const questions = computed<Question[]>(() =>
@@ -158,11 +178,23 @@ const activeQuestionIndex = computed(() =>
   questions.value.indexOf(activeQuestion.value)
 )
 
-const onSelectQuestion = (question) => {
+const onSelectQuestion = (question: Question) => {
   activeQuestion.value = question
 }
 
 const nextQuestion = () => {
+  if (isDirty.value) {
+    confirm(
+      "Des réponses ont été rentrées mais non sauvegardées. Pour les enregistrer, annulez et cliquez sur le bouton Valider les réponses.",
+      "Ignorer les réponses rentrées ?",
+      "Ignorer et aller à la question suivante",
+      goNextQuestion
+    )
+    return
+  }
+  goNextQuestion()
+}
+const goNextQuestion = () => {
   activeQuestion.value = questions.value[activeQuestionIndex.value + 1]
 }
 
@@ -173,11 +205,30 @@ watch(
   }
 )
 
+const isDirty = computed(() => {
+  for (const participation of workshopStore.workshopParticipations(
+    props.workshopId
+  )) {
+    if (workshopStore.isDirty(participation.id, activeQuestion.value?.id)) {
+      return true
+    }
+  }
+  return false
+})
+
 async function onSubmit() {
-  await animatorStore.createOrUpdateQuestionnaireResponses(
+  const isSuccessful = await workshopStore.createOrUpdateQuestionnaireResponses(
     props.workshopId,
     activeQuestion.value
   )
+  if (isSuccessful) {
+    // mark answers clean (not dirty anymore, selected choices have been answered)
+    for (const participation of workshopStore.workshopParticipations(
+      props.workshopId
+    )) {
+      workshopStore.markDirty(participation.id, activeQuestion.value?.id, false)
+    }
+  }
 }
 </script>
 

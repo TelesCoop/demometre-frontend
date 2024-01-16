@@ -1,8 +1,13 @@
 <template>
   <div class="is-flex flex-center">
     <div class="sm-container">
-      <form class="my-8" @submit.prevent="onSubmit">
-        <h1 class="title is-1 has-text-shade-800">{{ text.title }}</h1>
+      <form
+        class="my-8"
+        @submit.prevent="onSubmit"
+      >
+        <h1 class="title is-1 has-text-shade-800">
+          {{ text.title }}
+        </h1>
 
         <!-- email -->
         <div class="field">
@@ -16,15 +21,24 @@
               :class="isMailValid ? '' : 'is-danger'"
               required
               @change="onEmailUpdate"
-            />
+            >
             <span class="icon is-small is-left has-text-shade-600">
-              <icon size="24" name="mail-line" />
+              <icon
+                size="24"
+                name="mail-line"
+              />
             </span>
-            <span v-if="!isMailValid" class="icon is-small is-right">
-              <i class="fas fa-exclamation-triangle"></i>
+            <span
+              v-if="!isMailValid"
+              class="icon is-small is-right"
+            >
+              <i class="fas fa-exclamation-triangle" />
             </span>
           </div>
-          <p v-if="!isMailValid" class="help is-danger width-fit-content">
+          <p
+            v-if="!isMailValid"
+            class="help is-danger width-fit-content"
+          >
             {{ emailErrorMessage }}
           </p>
         </div>
@@ -41,15 +55,24 @@
               :class="isPasswordValid ? '' : 'is-danger'"
               required
               @change="onPasswordUpdate"
-            />
+            >
             <span class="icon is-small is-left has-text-shade-600">
-              <icon size="24" name="lock-line" />
+              <icon
+                size="24"
+                name="lock-line"
+              />
             </span>
-            <span v-if="!isPasswordValid" class="icon is-small is-right">
-              <i class="fas fa-exclamation-triangle"></i>
+            <span
+              v-if="!isPasswordValid"
+              class="icon is-small is-right"
+            >
+              <i class="fas fa-exclamation-triangle" />
             </span>
           </div>
-          <p v-if="!isPasswordValid" class="help is-danger width-fit-content">
+          <p
+            v-if="!isPasswordValid"
+            class="help is-danger width-fit-content"
+          >
             {{ passwordErrorMessage }}
           </p>
         </div>
@@ -66,30 +89,51 @@
               :class="isSamePassword ? '' : 'is-danger'"
               required
               @change="onPasswordUpdate"
-            />
+            >
             <span class="icon is-small is-left has-text-shade-600">
-              <icon size="24" name="lock-line" />
+              <icon
+                size="24"
+                name="lock-line"
+              />
             </span>
-            <span v-if="!isSamePassword" class="icon is-small is-right">
-              <i class="fas fa-exclamation-triangle"></i>
+            <span
+              v-if="!isSamePassword"
+              class="icon is-small is-right"
+            >
+              <i class="fas fa-exclamation-triangle" />
             </span>
           </div>
-          <p v-if="!isSamePassword" class="help is-danger width-fit-content">
+          <p
+            v-if="!isSamePassword"
+            class="help is-danger width-fit-content"
+          >
             {{ confirmPasswordErrorMessage }}
           </p>
         </div>
 
         <!-- submit -->
-        <div class="mt-1" style="text-align: end">
-          <button class="button is-shade-600 is-small" :disabled="disabled">
+        <div
+          class="mt-1"
+          style="text-align: end"
+        >
+          <button
+            class="button is-shade-600 is-small"
+            :disabled="disabled"
+          >
             <span>{{ text.button }}</span>
             <span class="icon">
-              <icon size="16" name="check" />
+              <icon
+                size="16"
+                name="check"
+              />
             </span>
           </button>
 
           <!-- Permet d'appuyer sur entrer -->
-          <input type="submit" hidden />
+          <input
+            type="submit"
+            hidden
+          >
         </div>
         <div class="mt-1">
           <span class="is-size-7 has-text-shade-800">
@@ -100,11 +144,10 @@
               style="text-decoration-line: revert"
               @click="
                 () => {
-                  userStore.nbreCallback -= 1
+                  userStore.afterLoginRouterGoStep -= 1
                 }
               "
-              >Connectez-vous</NuxtLink
-            >
+            >Connectez-vous</NuxtLink>
           </span>
         </div>
       </form>

@@ -1,69 +1,35 @@
 import { defineStore } from "pinia"
 import {
-  Assessment,
+  Assessment, AssessmentDocumentType,
   Localities,
   RepresentativityCriteria,
   Scores,
-  User,
+  User
 } from "~/composables/types"
-import { useApiGet, useApiPost } from "~/composables/api"
-import { useToastStore } from "./toastStore"
+import { useApiDelete, useApiGet, useApiPost } from "~/composables/api"
+import { useMessageStore } from "./messageStore"
 import { useUserStore } from "./userStore"
 import { useParticipationStore } from "./participationStore"
 
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
-    assessmentById: <{ [key: number]: Assessment }>{},
-    currentAssessmentId: <number>undefined,
+    assessmentById: <Record<number, Assessment>>{},
+    currentAssessmentId: <number | undefined>undefined,
     representativityCriterias: <RepresentativityCriteria[]>[],
     assessmentsWithResultsLoaded: <boolean>false,
-    scoresByAssessmentId: <{ [key: number]: Scores }>{},
+    scoresByAssessmentId: <Record<number, Scores>>{},
     chartDataByAssessmentIdAndQuestionId: <
       {
         [key: number]: any
       }
-    >{},
-    expertById: <{ [key: number]: User }>{},
+      >{},
+    expertById: <{
+      [key: number]: User
+    }>{},
     addingExpert: <boolean>false,
-    newAssessment: <Assessment>{},
+    newAssessment: <Assessment>{}
   }),
   getters: {
-    assessments: (state) => {
-      return Object.values(state.assessmentById)
-    },
-    municipalityAssessments() {
-      return this.assessments.find(
-        (assessment: Assessment) => assessment.localityType === "municipality"
-      )
-    },
-    intercommunalityAssessments() {
-      return this.assessments.find(
-        (assessment: Assessment) =>
-          assessment.localityType === "intercommunality"
-      )
-    },
-    currentAssessment() {
-      return this.assessmentById[this.currentAssessmentId]
-    },
-    canSeeResultsAssessments() {
-      return this.assessments.filter(
-        (assessment: Assessment) =>
-          assessment.publishedResults === true ||
-          assessment.id === this.currentAssessmentId
-      )
-    },
-    userIsAssessmentInitiator() {
-      return (
-        this.currentAssessment?.initiatedByUser?.id === useUserStore().user.id
-      )
-    },
-    assessmentName: () => {
-      return (assessment): string => {
-        return assessment.municipality
-          ? assessment.municipality.name
-          : assessment.epci.name
-      }
-    },
     assessmentTypeTitle() {
       return (
         "de " +
@@ -72,18 +38,187 @@ export const useAssessmentStore = defineStore("assessment", {
           : "mon inter-communalité")
       )
     },
-    experts: (state) => {
+    assessments: (state) => {
+      return Object.values(state.assessmentById)
+    },
+    assessmentsWithDetails: (state): Assessment[] => {
+      return Object.values(state.assessmentById).filter((ass: Assessment) => ass.details.hasDetailAccess)
+    },
+    canSeeResultsAssessments() {
+      return this.assessments.filter(
+        (assessment: Assessment) =>
+          assessment.publishedResults === true ||
+          assessment.id === this.currentAssessmentId
+      )
+    },
+    currentAssessment() {
+      return this.assessmentById[this.currentAssessmentId]
+    },
+    experts: (state): User[] => {
       return Object.values(state.expertById)
     },
+    intercommunalityAssessments() {
+      return this.assessments.find(
+        (assessment: Assessment) =>
+          assessment.localityType === "intercommunality"
+      )
+    },
+    userHasSingleAssessment() {
+      return Object.values(this.assessmentById).length < 2
+    },
+    municipalityAssessments() {
+      return this.assessments.find(
+        (assessment: Assessment) => assessment.localityType === "municipality"
+      )
+    },
+    userIsAssessmentInitiator() {
+      return (
+        this.currentAssessment?.initiatedByUser?.id === useUserStore().user.id
+      )
+    }
   },
   actions: {
+    addAssessment(assessment) {
+      this.assessmentById[assessment.id] = assessment
+    },
+    async addExpert(assessmentId, expertId) {
+      const { data, error } = await useApiPatch<Scores>(
+        `assessments/${assessmentId}/add-expert/`,
+        {
+          expertId,
+          conditionsOfSaleConsent: this.newAssessment.conditionsOfSaleConsent
+        }
+      )
+      if (error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+        return false
+      }
+      this.assessmentById[assessmentId] = data.value
+      return true
+    },
+    async addDocument(payload: any, assessmentId: number) {
+      const { data, error } = await useApiPost<AssessmentDocumentType>(
+        `assessment-documents/`,
+        payload,
+        "Impossible de téléverser le document"
+      )
+      if (!error.value) {
+        this.assessmentById[assessmentId].documents.push(data.value)
+      }
+    },
+    async deleteDocument(assessmentId, assessmentDocumentId: number) {
+      const { error } = await useApiDelete<Scores>(
+        `assessment-documents/${assessmentDocumentId}/`
+      )
+      if (error.value) {
+        return false
+      } else {
+        console.log("### remove document", assessmentId, this.assessmentById[assessmentId])
+        this.assessmentById[assessmentId].documents = this.assessmentById[assessmentId].documents.filter(
+          doc => doc.id != assessmentDocumentId
+        )
+        return true
+      }
+    },
+    async getAssesmentsWithPublicatedResults() {
+      const { data, error } = await useApiGet<Assessment[]>(
+        `assessments/published/`
+      )
+      if (error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+        return false
+      }
+      for (const assessment of data.value) {
+        this.assessmentById[assessment.id] = assessment
+      }
+      this.assessmentsWithResultsLoaded = true
+      return true
+    },
+    async getAssessment(id) {
+      const response = await useApiGet<Assessment>(`assessments/${id}/`)
+
+      if (response.error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(response.error.value.data?.messageCode)
+        return false
+      }
+
+      this.assessmentById[response.data.value.id] = response.data.value
+      this.currentAssessmentId = response.data.value.id
+      return true
+    },
+    async getAssessmentScores(assessmentId) {
+      const { data, error } = await useApiGet<Scores>(
+        `assessments/${assessmentId}/scores/`
+      )
+      if (error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+        return false
+      }
+      this.scoresByAssessmentId[assessmentId] = data.value
+      return true
+    },
+    async getAssessmentsForUser() {
+      const response = await useApiGet<Assessment[]>(`assessments/mine/`)
+      if (response.error.value) {
+        return false
+      }
+      for (const assessment of response.data.value!) {
+        this.assessmentById[assessment.id] = assessment
+      }
+      if (Object.keys(this.assessmentById).length === 1) {
+        const assessmentId: number = Object.keys(this.assessmentById)[0]
+        this.currentAssessmentId = assessmentId
+        const participationStore = useParticipationStore()
+        if (await participationStore.getParticipationForAssessment(assessmentId)) {
+          await participationStore.loadAssessment(assessmentId)
+        }
+
+      }
+      return true
+    },
+    async getChartDataByAssessmentIdAndQuestionId(
+      assessmentId: number,
+      questionId: number
+    ): Promise<boolean> {
+      const { data, error } = await useApiGet<any>(
+        `assessments/${assessmentId}/questions/${questionId}/chart-data/`
+      )
+      if (error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+        return false
+      }
+      if (!this.chartDataByAssessmentIdAndQuestionId[assessmentId]) {
+        this.chartDataByAssessmentIdAndQuestionId[assessmentId] = {}
+      }
+      this.chartDataByAssessmentIdAndQuestionId[assessmentId][questionId] =
+        data.value
+      return true
+    },
+    async getExperts() {
+      const { data, error } = await useApiGet<User[]>(`experts/`)
+      if (error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+        return false
+      }
+      for (const expert of data.value) {
+        this.expertById[expert.id] = expert
+        this.expertById[expert.id].name = this.expertById[expert.id].username
+      }
+      return true
+    },
     async getLocalities(zipCode) {
       const { data, error } = await useApiGet<Localities>(
         `localites/by-zip-code/${parseInt(zipCode.replace(" ", ""))}/`
       )
       if (error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
       return data.value
     },
@@ -92,65 +227,12 @@ export const useAssessmentStore = defineStore("assessment", {
         `assessments/by-locality/?locality_id=${localityId}&locality_type=${localityType}`
       )
       if (error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       this.assessmentById[data.value.id] = data.value
-      this.assessmentById[data.value.id].name = this.assessmentName(data.value)
       this.currentAssessmentId = data.value.id
-      return true
-    },
-    async getCurrentAssessment() {
-      const response = await useApiGet<Assessment>(`assessments/current/`)
-
-      if (response.error.value) {
-        return false
-      }
-      if (response.data.value.id) {
-        this.assessmentById[response.data.value.id] = response.data.value
-        this.assessmentById[response.data.value.id].name = this.assessmentName(
-          response.data.value
-        )
-        this.currentAssessmentId = response.data.value.id
-      }
-      return true
-    },
-
-    async getAssessment(id) {
-      const response = await useApiGet<Assessment>(`assessments/${id}/`)
-
-      if (response.error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(response.error.value.data.messageCode)
-        return false
-      }
-
-      this.assessmentById[response.data.value.id] = response.data.value
-      this.assessmentById[response.data.value.id].name = this.assessmentName(
-        response.data.value
-      )
-      this.currentAssessmentId = response.data.value.id
-      return true
-    },
-    addAssessment(assessment) {
-      this.assessmentById[assessment.id] = assessment
-    },
-    async getAssesmentsWithPublicatedResults() {
-      const { data, error } = await useApiGet<Assessment[]>(
-        `assessments/published/`
-      )
-      if (error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
-        return false
-      }
-      for (const assessment of data.value) {
-        this.assessmentById[assessment.id] = assessment
-        this.assessmentById[assessment.id].name =
-          this.assessmentName(assessment)
-      }
-      this.assessmentsWithResultsLoaded = true
       return true
     },
     async getRepresentativityCriterias() {
@@ -160,7 +242,7 @@ export const useAssessmentStore = defineStore("assessment", {
       if (!error.value) {
         this.representativityCriterias = data.value
       } else {
-        const errorStore = useToastStore()
+        const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
@@ -174,16 +256,51 @@ export const useAssessmentStore = defineStore("assessment", {
             }
           ),
           ...this.newAssessment,
-          ...payload,
+          ...payload
         }
       )
       if (error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       this.assessmentById[data.value.id] = data.value
       useParticipationStore().newParticipation.consent = true
+      return true
+    },
+    createNewAssessment() {
+      this.currentAssessmentId = undefined
+    },
+    onUserLogout(onlyResponses = false) {
+      this.representativityCriterias = []
+      this.assessmentsWithResultsLoaded = false
+      this.scoresByAssessmentId = {}
+      this.chartDataByAssessmentIdAndQuestionId = {}
+      this.expertById = {}
+      this.addingExpert = false
+      if (!onlyResponses) {
+        this.currentAssessmentId = undefined
+        this.assessmentById = {}
+        this.newAssessment = {}
+      }
+    },
+    async saveAssessment(assessmentId: number, payload: any) {
+      const { data, error } = await useApiPatch<Assessment>(
+        `assessments/${assessmentId}/`, payload
+      )
+      if (error.value) {
+        return false
+      }
+      // after an update, experts might be a list of Ids
+      let experts = data.value.experts || []
+      experts = experts.map((expert: any) => {
+        if (typeof expert === "number") {
+          return this.expertById[expert]
+        }
+        return expert
+      })
+      data.value.experts = experts
+      this.assessmentById[assessmentId] = data.value
       return true
     },
     async saveEndInitializationQuestions() {
@@ -195,77 +312,6 @@ export const useAssessmentStore = defineStore("assessment", {
       }
       this.assessmentById[this.currentAssessmentId] = data.value
       return true
-    },
-    logoutUser() {
-      this.currentAssessmentId = undefined
-      this.assessmentById = {}
-      this.representativityCriterias = []
-      this.assessmentsWithResultsLoaded = false
-      this.scoresByAssessmentId = {}
-      this.chartDataByAssessmentIdAndQuestionId = {}
-      this.expertById = {}
-      this.addingExpert = false
-      this.newAssessment = {}
-    },
-    async getAssessmentScores(assessmentId) {
-      const { data, error } = await useApiGet<Scores>(
-        `assessments/${assessmentId}/scores/`
-      )
-      if (error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
-        return false
-      }
-      this.scoresByAssessmentId[assessmentId] = data.value
-      return true
-    },
-    async getExperts() {
-      const { data, error } = await useApiGet<User[]>(`experts/`)
-      if (error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
-        return false
-      }
-      for (const expert of data.value) {
-        this.expertById[expert.id] = expert
-        this.expertById[expert.id].name = this.expertById[expert.id].username
-      }
-      return true
-    },
-    async addExpert(assessmentId, expertId) {
-      const { data, error } = await useApiPatch<Scores>(
-        `assessments/${assessmentId}/add-expert/`,
-        {
-          expertId,
-          conditionsOfSaleConsent: this.newAssessment.conditionsOfSaleConsent,
-        }
-      )
-      if (error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
-        return false
-      }
-      this.assessmentById[assessmentId] = data.value
-      return true
-    },
-    async getChartDataByAssessmentIdAndQuestionId(
-      assessmentId,
-      questionId
-    ): boolean {
-      const { data, error } = await useApiGet<any>(
-        `assessments/${assessmentId}/questions/${questionId}/chart-data/`
-      )
-      if (error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
-        return false
-      }
-      if (!this.chartDataByAssessmentIdAndQuestionId[assessmentId]) {
-        this.chartDataByAssessmentIdAndQuestionId[assessmentId] = {}
-      }
-      this.chartDataByAssessmentIdAndQuestionId[assessmentId][questionId] =
-        data.value
-      return true
-    },
-  },
+    }
+  }
 })

@@ -3,7 +3,7 @@
     <div class="card-image">
       <figure class="image">
         <img
-          :src="MADIA_BASE_URL + props.persons.imageUrl"
+          :src="MEDIA_BASE_URL + props.persons.imageUrl"
           :alt="props.persons.personName"
           class="fit-without-distortion"
         />
@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 
 const props = defineProps({
   persons: { type: Object, required: true },

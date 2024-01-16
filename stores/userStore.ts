@@ -1,19 +1,19 @@
 import { defineStore } from "pinia"
 import { User } from "~/composables/types"
 import { useApiGet, useApiPost } from "~/composables/api"
-import { useToastStore } from "./toastStore"
+import { useMessageStore } from "./messageStore"
 import { cleanUserData, getUserData } from "~/composables/actions"
 
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: <User>{},
-    nbreCallback: <number>-1,
+    afterLoginRouterGoStep: <number>-1
   }),
   getters: {
-    isLoggedOut() {
+    isLoggedOut(): boolean {
       return !this.user.email
     },
-    isLoggedIn() {
+    isLoggedIn(): boolean {
       return !!this.user.email && !this.user.isUnknownUser
     },
     isUnknownUser() {
@@ -21,36 +21,51 @@ export const useUserStore = defineStore("user", {
     },
     isExpertUser() {
       return this.user?.isExpert
-    },
+    }
   },
   actions: {
     async createUnknownUser() {
       const { data, error } = await useApiPost<User>("auth/unknown-user")
       if (error.value) {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
         return false
       }
       this.user = data.value
     },
-    async login(email: string, password: string) {
-      cleanUserData()
-      const { data, error } = await useApiPost<User>("auth/login", {
-        email,
-        password,
-      })
+    async editUser(user: User) {
+      const {
+        data,
+        error
+      } = await useApiPatch<User>(
+        "auth/edit",
+        user,
+        "Impossible d'enregistrer les informations, les noms d'utilisateur et adresse mail doivent être uniques"
+      )
       if (!error.value) {
         this.user = data.value
+        return true
+      }
+      return false
+    },
+    async login(email: string, password: string) {
+      cleanUserData(true)
+      const { data, error } = await useApiPost<User>("auth/login", {
+        email,
+        password
+      }, "Impossible de se connecter, vérifiez vos identifiants")
+      if (!error.value) {
+        this.user = data.value!
         await getUserData()
-        useRouter().go(this.nbreCallback)
+        useRouter().go(this.afterLoginRouterGoStep)
       }
     },
     async signup(email: string, password: string) {
       // clean user data to reload journey after unkown user create account
-      cleanUserData()
+      cleanUserData(true)
       const { data, error } = await useApiPost<User>("auth/signup", {
         email,
-        password,
+        password
       })
       if (error.value) {
         return { error: error.value.data }
@@ -58,7 +73,7 @@ export const useUserStore = defineStore("user", {
       this.user = data.value
       await getUserData()
 
-      useRouter().go(this.nbreCallback)
+      useRouter().push("/")
     },
     async logout() {
       const { error } = await useApiPost<User>("auth/logout")
@@ -68,16 +83,16 @@ export const useUserStore = defineStore("user", {
         const router = useRouter()
         router.push("/login")
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async refreshProfile(showError = true) {
       const response = await useApiGet<User>(`auth/profile`)
       if (response.error.value) {
         if (showError) {
-          const errorStore = useToastStore()
-          errorStore.setError(response.error.value.data.messageCode)
+          const errorStore = useMessageStore()
+          errorStore.setError(response.error.value.data?.messageCode)
         }
         return false
       }
@@ -88,30 +103,30 @@ export const useUserStore = defineStore("user", {
       const { error } = await useApiPost<User>(
         "auth/user/reset-password-link",
         {
-          email,
+          email
         }
       )
       if (!error.value) {
         const router = useRouter()
         router.push("/nouveau-mdp-confirmation")
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async resetPassword(resetKey: string, password: string) {
       const { error } = await useApiPost<User>("auth/user/reset-password", {
         password,
-        resetKey,
+        resetKey
       })
       if (!error.value) {
         const router = useRouter()
         router.replace({ query: { reset_key: null } })
         router.push("/login")
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
-    },
-  },
+    }
+  }
 })

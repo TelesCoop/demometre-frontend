@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { Question, Role } from "~/composables/types"
-import { useToastStore } from "./toastStore"
+import { useMessageStore } from "./messageStore"
 import { useApiGet } from "~~/composables/api"
 
 export const useProfilingStore = defineStore("profiling", {
@@ -22,8 +22,8 @@ export const useProfilingStore = defineStore("profiling", {
           this.roleById[role.id] = role
         }
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getProfilingQuestions() {

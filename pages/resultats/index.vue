@@ -20,7 +20,7 @@
               v-model="assessmentSelected"
               label="name"
               :options="assessmentStore.canSeeResultsAssessments"
-            ></v-select>
+            />
             <button
               class="button is-rounded is-shade-600 is-outlined mt-2"
               type="button"
@@ -28,10 +28,19 @@
               @click.prevent="seeResults()"
             >
               <span class="icon">
-                <icon size="16" name="bar-chart-box-line" />
+                <icon
+                  size="16"
+                  name="bar-chart-box-line"
+                />
               </span>
               <span>Voir les résultats</span>
             </button>
+          </div>
+          <div
+            v-else
+            class="notification"
+          >
+            Aucun résultat n'est actuellement visible
           </div>
         </div>
       </section>
@@ -40,22 +49,22 @@
       v-if="pageStore.resultsPage.introImageUrl"
       class="result-image is-hidden-mobile"
       :style="`background-image: url(${
-        MADIA_BASE_URL + pageStore.resultsPage.introImageUrl
+        MEDIA_BASE_URL + pageStore.resultsPage.introImageUrl
       })`"
-    ></div>
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { Assessment } from "~/composables/types"
 import vSelect from "vue-select"
 
 definePageMeta({
   title: "Résultats",
-  breadcrumb: "Résultats",
+  breadcrumb: "Résultats"
 })
 
 const pageStore = usePageStore()
@@ -79,6 +88,7 @@ const seeResults = () => {
 <style scoped lang="sass">
 .page-height
   min-height: 580px
+
 @include touch
   .page-height
     min-height: fit-content
@@ -91,6 +101,7 @@ const seeResults = () => {
   height: 150%
   background-repeat: repeat
   z-index: -1
+
   &-container
     position: relative
 </style>

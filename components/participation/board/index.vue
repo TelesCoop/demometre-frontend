@@ -1,18 +1,28 @@
 <template>
   <div class="has-background-shade-100 board-container">
-    <p class="title has-text-shade-900 is-4">
-      {{ pageStore.participationBoardPage.title }}
+    <p
+      v-if="pageStore.participationBoardPage?.title"
+      class="title has-text-shade-900 is-4"
+    >
+      {{ pageStore.participationBoardPage?.title }}
     </p>
     <div class="columns">
-      <div class="column is-one-third">
-        <h3 class="has-text-weight-bold mb-2">Évaluation</h3>
+      <div
+        v-if="showAssessmentInfo"
+        class="column is-one-third"
+      >
+        <h3 class="has-text-weight-bold mb-2">
+          Évaluation
+        </h3>
 
         <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
           Territoire
         </div>
-        <div class="mb-1_5">{{ assessmentStore.currentAssessment.name }}</div>
+        <div class="mb-1_5">
+          {{ assessmentStore.currentAssessment?.name }}
+        </div>
 
-        <template v-if="assessment.initiatedBy">
+        <template v-if="assessment?.initiatedBy">
           <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
             Portée par
           </div>
@@ -26,22 +36,30 @@
           <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
             Initiateur
           </div>
-          <div class="mb-1_5">{{ assessment.initializedToTheNameOf }}</div>
+          <div class="mb-1_5">
+            {{ assessment.initializedToTheNameOf }}
+          </div>
         </template>
 
         <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
           Date de lancement
         </div>
-        <div class="mb-1_5">{{ initializationDate }}</div>
+        <div class="mb-1_5">
+          {{ initializationDate }}
+        </div>
 
         <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
           Nombre de participants
         </div>
-        <div class="mb-1">{{ assessment.participationNb }}</div>
+        <div class="mb-1">
+          {{ assessment.participationCount }}
+        </div>
       </div>
 
       <div class="column">
-        <h3 class="has-text-weight-bold mb-0_5">Représentativité</h3>
+        <h3 class="has-text-weight-bold mb-0_5">
+          Représentativité des participants
+        </h3>
         <p class="mb-2 is-size-7">
           Survoler les barres pour afficher les statistiques.
         </p>
@@ -53,7 +71,7 @@
           >
             <ParticipationBoardRepresentativity
               :representativity="representativity"
-            ></ParticipationBoardRepresentativity>
+            />
           </div>
         </div>
       </div>
@@ -69,6 +87,7 @@ import { usePageStore } from "~/stores/pageStore"
 
 const props = defineProps({
   assessment: { type: Object as PropType<Assessment>, required: true },
+  showAssessmentInfo: { type: Boolean, default: false }
 })
 
 const assessmentStore = useAssessmentStore()
@@ -81,7 +100,7 @@ const initializationDate = computed(() =>
   new Date(props.assessment.initializationDate).toLocaleString("fr-FR", {
     year: "numeric",
     month: "long",
-    day: "numeric",
+    day: "numeric"
   })
 )
 </script>
@@ -90,10 +109,7 @@ const initializationDate = computed(() =>
 img
   width: 100%
   object-fit: cover
+
 .board-container
   padding: 1.5rem
-@include tablet
-  .board-container
-    padding: 2.5rem
-    padding-bottom: 1.5rem
 </style>

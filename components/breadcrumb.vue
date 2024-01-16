@@ -1,5 +1,8 @@
 <template>
-  <div v-if="items.length > 1" class="container mt-1 mb-2">
+  <div
+    v-if="items.length > 1"
+    class="container mt-1 mb-2"
+  >
     <nav
       role="navigation"
       class="breadcrumb is-small"
@@ -11,7 +14,9 @@
           :key="item.path"
           :class="{ 'is-active': item.path === route.path }"
         >
-          <router-link :to="item.path">{{ item.meta?.breadcrumb }}</router-link>
+          <router-link :to="item.path">
+            {{ item.meta?.breadcrumb }}
+          </router-link>
         </li>
       </ul>
     </nav>
@@ -21,6 +26,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router"
 import { computed } from "vue"
+
 const route = useRoute()
 const router = useRouter()
 const ROOT_PATH = router.resolve("/")
@@ -46,5 +52,5 @@ const items = computed(() => {
 
 <style lang="sass">
 .breadcrumb li:not(.is-active) a
-  text-decoration: underline
+    text-decoration: underline
 </style>

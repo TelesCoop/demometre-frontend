@@ -8,7 +8,7 @@
           >
           <a
             class="has-text-shade-350"
-            :href="MADIA_BASE_URL + settingStore.rgpdSettings.contentLicenseUrl"
+            :href="MEDIA_BASE_URL + settingStore.rgpdSettings.contentLicenseUrl"
             target="_blank"
           >
             <!-- TODO : Put the right year automaticaly -->
@@ -16,14 +16,14 @@
           </a>
           <a
             class="has-text-shade-350"
-            :href="MADIA_BASE_URL + settingStore.rgpdSettings.legalMentionUrl"
+            :href="MEDIA_BASE_URL + settingStore.rgpdSettings.legalMentionUrl"
             target="_blank"
             >Mentions légales</a
           >
           <a
             class="has-text-shade-350"
             :href="
-              MADIA_BASE_URL +
+              MEDIA_BASE_URL +
               settingStore.rgpdSettings.confidentialityPolicyUrl
             "
             target="_blank"
@@ -89,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 import { useSettingStore } from "~~/stores/settingStore"
 
 // const email = ref("")

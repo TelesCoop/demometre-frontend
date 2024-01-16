@@ -4,7 +4,7 @@ import { useAssessmentStore } from "~~/stores/assessmentStore"
 import { useDefinitionStore } from "~~/stores/definitionStore"
 import { useSettingStore } from "~~/stores/settingStore"
 import { useUserStore } from "~/stores/userStore"
-import { useParticipationStore } from "~/stores/participationStore"
+import { usePageStore } from "~/stores/pageStore"
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook("app:mounted", () => {
@@ -12,41 +12,19 @@ export default defineNuxtPlugin((nuxtApp) => {
     // but if it's missing, we try again from the client
 
     const userStore = useUserStore()
-    const participationStore = useParticipationStore()
     const assessmentStore = useAssessmentStore()
     const profilingStore = useProfilingStore()
     const questionnaireStore = useQuestionnaireStore()
     const definitionStore = useDefinitionStore()
     const settingStore = useSettingStore()
+    const pageStore = usePageStore()
 
     if (!userStore.user) {
       userStore.refreshProfile(false)
     }
 
-    if (!participationStore.participation) {
-      participationStore.getCurrentParticipation()
-    }
-
     if (!assessmentStore.currentAssessment) {
-      assessmentStore.getCurrentAssessment()
-    }
-
-    if (!assessmentStore.currentAssessment) {
-      participationStore.getCurrentParticipation()
-    }
-
-    if (
-      Object.keys(participationStore.responseByProfilingQuestionId).length === 0
-    ) {
-      participationStore.getCurrentProfilingQuestionResponses()
-    }
-
-    if (
-      Object.keys(participationStore.responseByQuestionnaireQuestionId)
-        .length === 0
-    ) {
-      participationStore.getCurrentQuestionnaireSubjectiveQuestionResponses()
-      participationStore.getCurrentQuestionnaireObjectiveQuestionResponses()
+      assessmentStore.getAssessmentsForUser()
     }
 
     if (!profilingStore.orderedQuestionId.length) {
@@ -69,6 +47,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
     if (!settingStore.structureSettings.email) {
       settingStore.getStructureSettings()
+    }
+
+    if (!pageStore.homePage.title) {
+      pageStore.getHomePage()
     }
   })
 })

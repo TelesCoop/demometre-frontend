@@ -23,7 +23,10 @@
               <span>Comment on a construit le référentiel</span>
 
               <span class="icon">
-                <icon name="arrow-right-line" size="20" />
+                <icon
+                  name="arrow-right-line"
+                  size="20"
+                />
               </span>
             </nuxt-link>
           </div>
@@ -44,7 +47,10 @@
       </section>
     </div>
 
-    <div ref="explicationRef" class="has-background-shade-100 scroll">
+    <div
+      ref="explicationRef"
+      class="has-background-shade-100 scroll"
+    >
       <PageSection
         v-if="pageStore.referentialPage.pillarBlockTitle"
         :title="pageStore.referentialPage.pillarBlockTitle"
@@ -62,11 +68,11 @@
             <img
               v-if="pageStore.referentialPage.pillarBlockImageUrl"
               :src="
-                MADIA_BASE_URL + pageStore.referentialPage.pillarBlockImageUrl
+                MEDIA_BASE_URL + pageStore.referentialPage.pillarBlockImageUrl
               "
               alt="image des piliers"
               :style="`max-height: 250px`"
-            />
+            >
           </div>
         </div>
       </PageSection>
@@ -108,7 +114,10 @@
       />
     </div>
     <div class="container mobile-mode">
-      <section ref="pillarsRef" class="columns is-multiline mt-2">
+      <section
+        ref="pillarsRef"
+        class="columns is-multiline mt-2"
+      >
         <div
           v-for="pillar of questionnaireStore.pillars"
           :key="pillar.name"
@@ -201,14 +210,21 @@
               :color="colorClass"
             />
             <div class="score">
-              <div v-for="i in 4" :key="i" class="is-flex mb-1">
+              <div
+                v-for="i in 4"
+                :key="i"
+                class="is-flex mb-1"
+              >
                 <div class="is-flex">
                   <AnalyticsScore
                     :score="i"
                     :color="colorClass"
                     class="mr-1_5"
                   />
-                  <p class="is-family-secondary" style="margin-top: 2px">
+                  <p
+                    class="is-family-secondary"
+                    style="margin-top: 2px"
+                  >
                     {{ markerProps.marker["score" + i] }}
                   </p>
                 </div>
@@ -228,7 +244,7 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useDefinitionStore } from "~~/stores/definitionStore"
 import { Marker, PillarType } from "~/composables/types"
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 
 definePageMeta({
   title: "DémoMètre",
@@ -302,13 +318,15 @@ if (activeQuestionId.value) {
 
 <style scoped lang="sass">
 .buttons .button
-  height: fit-content
+    height: fit-content
+
 img
-  width: 100%
-  object-fit: cover
+    width: 100%
+    object-fit: cover
+
 @include touch
-  .rosette-menu
-    display: none
-  .rosette-legend
-    display: none
+    .rosette-menu
+        display: none
+    .rosette-legend
+        display: none
 </style>

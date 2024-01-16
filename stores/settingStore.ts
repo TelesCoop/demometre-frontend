@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { RgpdSettings, StructureSettings } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
-import { useToastStore } from "./toastStore"
+import { useMessageStore } from "./messageStore"
 
 export const useSettingStore = defineStore("setting", {
   state: () => ({
@@ -20,8 +20,8 @@ export const useSettingStore = defineStore("setting", {
         }
         this.rgpdSettingsLoaded = true
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getStructureSettings() {
@@ -35,8 +35,8 @@ export const useSettingStore = defineStore("setting", {
           console.error("Impossible to retrieve settings")
         }
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
   },

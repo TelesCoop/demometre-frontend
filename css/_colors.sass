@@ -6,6 +6,9 @@
   $color: nth($pair, 1)
   .has-border-#{$name}
     border: 1px solid $color !important
+  .has-svg-path-fill-#{$name} path:not(.no-fill)
+    fill: $color !important
+
   @if length($pair) >= 4
     $color-light: nth($pair, 3)
     $color-dark: nth($pair, 4)
@@ -16,56 +19,20 @@
     .has-border-#{$name}-dark
       border: 1px solid $color-dark !important
 
+
 @each $name, $pair in $custom-colors
   @if length($pair) >= 4
-    $color-active: nth($pair, 2)
-    $color-light: nth($pair, 3)
-    $color-dark: nth($pair, 4)
-    $color-hover: nth($pair, 5)
-    $color-light-active: nth($pair, 6)
-    $color-light-hover: nth($pair, 7)
-    // active
-    .has-border-#{$name}-active
-      border: 1px solid $color-active !important
-    .has-background-#{$name}-active
-      background-color: $color-active !important
-    .has-text-#{$name}-active
-      color: $color-active !important
-    // Light
-    .has-border-#{$name}-light
-      border: 1px solid $color-light !important
-    .has-background-#{$name}-light
-      background-color: $color-light !important
-    .has-text-#{$name}-light
-      color: $color-light !important
-    // Dark
-    .has-border-#{$name}-dark
-      border: 1px solid $color-dark !important
-    .has-background-#{$name}-dark
-      background-color: $color-dark !important
-    .has-text-#{$name}-dark
-      color: $color-dark !important
-    // Hover
-    .has-border-#{$name}-hover
-      border: 1px solid $color-hover !important
-    .has-background-#{$name}-hover
-      background-color: $color-hover !important
-    .has-text-#{$name}-hover
-      color: $color-hover !important
-    // Light active
-    .has-border-#{$name}-light-active
-      border: 1px solid $color-light-active !important
-    .has-background-#{$name}-light-active
-      background-color: $color-light-active !important
-    .has-text-#{$name}-light-active
-      color: $color-light-active !important
-    // Light active
-    .has-border-#{$name}-light-hover
-      border: 1px solid $color-light-hover !important
-    .has-background-#{$name}-light-hover
-      background-color: $color-light-hover !important
-    .has-text-#{$name}-light-hover
-      color: $color-light-hover !important
+    $variants: ("active": nth($pair, 2), "light": nth($pair, 3), "dark": nth($pair, 4), "hover": nth($pair, 5), "light-active": nth($pair, 6), "light-hover": nth($pair, 7))
+
+    @each $variant, $variant-color in $variants
+      .has-border-#{$name}-#{$variant}
+        border: 1px solid $variant-color !important
+      .has-background-#{$name}-#{$variant}
+        background-color: $variant-color !important
+      .has-text-#{$name}-#{$variant}
+        color: $variant-color !important
+      .has-svg-path-fill-#{$name}-#{$variant} path:not(.no-fill)
+        fill: $variant-color !important
 
 .is-representation
   --color-active: #{$representation-active}

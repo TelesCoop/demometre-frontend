@@ -10,7 +10,7 @@ import {
   ProjectPage,
   ReferentialPage,
   ResultsPage,
-  UsagePage,
+  UsagePage
 } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 import {
@@ -18,14 +18,14 @@ import {
   getStreamFieldMediaWithUrl,
   getStreamFieldStructMediaWithUrl,
   getStreamFieldStructWithLinkedObject,
-  getStreamFieldStructWithListLinkedObjects,
+  getStreamFieldStructWithListLinkedObjects
 } from "~/utils/streamFields"
-import { useToastStore } from "./toastStore"
+import { useMessageStore } from "./messageStore"
 
 export const usePageStore = defineStore("page", {
   state: () => ({
     homePage: <HomePage>{},
-    blogPosts: <Article[]>[],
+    blogPostsBySlug: <Record<string, Article>>{},
     resources: <Article[]>[],
     blogLoaded: <boolean>false,
     resourcesLoaded: <boolean>false,
@@ -37,39 +37,57 @@ export const usePageStore = defineStore("page", {
     evaluationInitiationPage: <EvaluationInitiationPage>{},
     evaluationQuestionnairePage: <EvaluationQuestionnairePage>{},
     animatorPage: <AnimatorPage>{},
-    importantPages: <ImportantPages>{},
+    importantPages: <ImportantPages>{}
   }),
   getters: {
     projectPageMember: (state) => {
       return (memberId: number) =>
         state.projectPage.persons.find((person) => person.id === memberId)
     },
+    blogPosts: (state) => Object.values(state.blogPostsBySlug)
   },
   actions: {
+    setBlogPosts(blogPostsList: Article[]) {
+      const blogPosts: Record<string, Article> = {}
+      for (const post: Article of blogPostsList) {
+        blogPosts[post.slug] = post
+      }
+      this.blogPostsBySlug = blogPosts
+    },
     async getHomePage() {
       const { data, error } = await useApiGet<HomePage[]>("home-pages/")
       if (!error.value) {
-        if (data.value.length) {
+        if (data.value?.length) {
           const homePageData = data.value[0]
-          this.blogPosts = homePageData.blogPosts
+          this.setBlogPosts(homePageData.blogPosts)
           this.resources = homePageData.resources
           this.homePage = homePageData
         } else {
           console.error("Impossible to retrieve home page")
         }
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getBlogPosts() {
       const { data, error } = await useApiGet<Article[]>("blog-posts/")
-      if (!error.value) {
-        this.blogPosts = data.value
+      if (!error.value && data.value) {
+        this.setBlogPosts(data.value)
         this.blogLoaded = true
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error!.value.data?.messageCode)
+      }
+    },
+    async getBlogPost(slug: string) {
+      const { data, error } = await useApiGet<Article>(`blog-posts/by-slug/${slug}`)
+      if (!error.value && data.value) {
+        const post: Article = data.value
+        this.blogPostsBySlug[post.slug] = slug
+      } else {
+        const errorStore = useMessageStore()
+        errorStore.setError(error!.value.data?.messageCode)
       }
     },
     async getResources() {
@@ -78,8 +96,8 @@ export const usePageStore = defineStore("page", {
         this.resources = data.value
         this.resourcesLoaded = true
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getReferentialPage() {
@@ -93,8 +111,8 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve referential page")
         }
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getParticipationBoardPage() {
@@ -108,8 +126,8 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve participation board page")
         }
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getResultsPage() {
@@ -121,8 +139,8 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve results page")
         }
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getUsagePage() {
@@ -148,8 +166,8 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve usage page")
         }
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getProjectPage() {
@@ -193,8 +211,8 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve usage page")
         }
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getEvaluationInitiationPage() {
@@ -208,8 +226,8 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve evaluation initiation page")
         }
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getEvaluationQuestionnairePage() {
@@ -223,8 +241,8 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve evaluation questionnaire page")
         }
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getAnimatorPage() {
@@ -236,8 +254,8 @@ export const usePageStore = defineStore("page", {
           console.error("Impossible to retrieve animator page")
         }
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getImportantPages() {
@@ -247,9 +265,9 @@ export const usePageStore = defineStore("page", {
       if (!error.value) {
         this.importantPages = data.value[0]
       } else {
-        const errorStore = useToastStore()
-        errorStore.setError(error.value.data.messageCode)
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
       }
-    },
-  },
+    }
+  }
 })
