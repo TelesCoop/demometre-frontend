@@ -68,7 +68,7 @@
                   <div class="card-image">
                     <figure class="image is-4by3 has-text-centered">
                       <img
-                        :src="MADIA_BASE_URL + objective.svgUrl"
+                        :src="MEDIA_BASE_URL + objective.svgUrl"
                         :alt="objective.title"
                         :style="`height: 100px; width: 100px`"
                         class="mt-2"
@@ -100,7 +100,7 @@
                   <div class="card-image">
                     <figure class="image has-text-centered">
                       <img
-                        :src="MADIA_BASE_URL + impact.imageUrl"
+                        :src="MEDIA_BASE_URL + impact.imageUrl"
                         :alt="impact.title"
                         class="fit-without-distortion"
                       />
@@ -134,7 +134,7 @@
           <figure class="image">
             <img
               :src="
-                MADIA_BASE_URL + pageStore.projectPage.whoCrewSubBlockImageUrl
+                MEDIA_BASE_URL + pageStore.projectPage.whoCrewSubBlockImageUrl
               "
               :alt="pageStore.projectPage.whoCrewSubBlockTitle"
               class="logo-open-democracy is-hidden-mobile"
@@ -264,7 +264,7 @@
 
 <script setup lang="ts">
 import { CommitteeSubBlock } from "~/composables/types"
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({

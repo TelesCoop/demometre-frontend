@@ -1,15 +1,21 @@
-import { Question, QuestionResponse } from "~/composables/types"
+import {
+  Question,
+  QuestionResponse,
+  QuestionType,
+  SurveyType,
+} from "~/composables/types"
 
 export const QUESTION_RESPONSE_VALUE_BY_TYPE = {
-  unique_choice: "uniqueChoiceResponseId",
-  multiple_choice: "multipleChoiceResponseIds",
-  boolean: "booleanResponse",
-  percentage: "percentageResponse",
-  closed_with_scale: "closedWithScaleResponseCategories",
+  [QuestionType.UNIQUE_CHOICE]: "uniqueChoiceResponseId",
+  [QuestionType.MULTIPLE_CHOICE]: "multipleChoiceResponseIds",
+  [QuestionType.BOOLEAN]: "booleanResponse",
+  [QuestionType.PERCENTAGE]: "percentageResponse",
+  [QuestionType.NUMBER]: "numberResponse",
+  [QuestionType.CLOSED_WITH_SCALE]: "closedWithScaleResponseCategories",
 }
 export const QUESTION_RESPONSES_BY_TYPE = {
-  questionnaire: "responseByQuestionnaireQuestionId",
-  profiling: "responseByProfilingQuestionId",
+  [SurveyType.QUESTIONNAIRE]: "responseByQuestionnaireQuestionId",
+  [SurveyType.PROFILING]: "responseByProfilingQuestionId",
 }
 
 export const getQuestionResponseValue = (

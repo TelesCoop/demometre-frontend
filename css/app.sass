@@ -4,6 +4,9 @@
 
 @import "colors"
 
+// Custom sass
+@import "inputs"
+
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/base/_all.sass"
 @import "../node_modules/bulma/sass/helpers/color.sass"
@@ -17,6 +20,9 @@
 @import "../node_modules/bulma/sass/elements/container.sass"
 @import "../node_modules/bulma/sass/elements/title.sass"
 @import "../node_modules/bulma/sass/elements/table.sass"
+@import "../node_modules/bulma/sass/elements/content.sass"
+@import "../node_modules/bulma/sass/elements/image.sass"
+@import "../node_modules/bulma/sass/elements/notification.sass"
 @import "../node_modules/bulma/sass/form/_all.sass"
 @import "../node_modules/bulma/sass/components/breadcrumb.sass"
 @import "../node_modules/bulma/sass/components/navbar.sass"
@@ -28,6 +34,7 @@
 @import "../node_modules/bulma/sass/components/card.sass"
 @import "../node_modules/bulma/sass/components/pagination.sass"
 @import "../node_modules/bulma/sass/components/modal.sass"
+@import "../node_modules/bulma/sass/components/message.sass"
 
 @import '../node_modules/vue-select/dist/vue-select.css'
 
@@ -53,6 +60,7 @@ hr
 
 .is-fullheight
   height: 100%
+
 .is-fullwidth
   width: 100%
 
@@ -66,14 +74,13 @@ hr
   &.has-icons-right
     .icon
       top: 8px
+
   &.has-icons-left
     .icon.is-left
       left: 8px
+
   &.has-icons-right
     right: 8px
-
-// Custom sass
-@import "inputs"
 
 .container.is-tight
   @include tablet
@@ -105,6 +112,7 @@ hr
 .column-2
   column-count: 2
   column-gap: 4rem
+
 @include touch
   .column-2
     column-count: 1
@@ -127,18 +135,28 @@ hr
 .button
   &.text-color-dark
     color: var(--color-dark) !important
+
   &.text-color-hover
     color: var(--color-hover) !important
 
-// Buttons previous and next
+// Buttons previous and nexta
 .nav-questionnaire
   &-container
     position: relative
+
 @include tablet-only
   .questionnaire-container
     margin-left: 5rem
     margin-right: 5rem
+
 @include mobile
   .questionnaire-container
     margin-left: 1rem
     margin-right: 1rem
+
+.background-center
+  background-position: center
+  background-size: cover
+
+.has-cursor-pointer
+  cursor: pointer

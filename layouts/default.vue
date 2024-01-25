@@ -1,7 +1,7 @@
 <template>
   <div>
-    <ModalCancelParticipationModal></ModalCancelParticipationModal>
-    <ModalSaveParticipationModal></ModalSaveParticipationModal>
+    <ModalCancelParticipationModal />
+    <ModalSaveParticipationModal />
     <div
       class="has-navbar-fixed-top default-page"
       :style="`padding-top: ${height}px;`"
@@ -9,18 +9,64 @@
       <HeaderNavbar @change-header-height="onChangeHeaderHight($event)" />
       <div class="default-page-content">
         <Breadcrumb />
-        <slot></slot>
+        <slot />
       </div>
       <Footer v-if="showFooter" />
-      <Toast v-if="toastStore.message" :message="toastStore.message" />
+      <Toast
+        v-if="messageStore.message"
+        :message="messageStore.message"
+      />
+    </div>
+
+    <!-- confirmation modal -->
+    <div
+      v-if="mainStore.confirmation.title"
+      class="modal is-active"
+    >
+      <div
+        class="modal-background"
+        @click="emit('close')"
+      />
+      <div class="modal-content">
+        <div class="modal-card-head">
+          <h2>
+            {{ mainStore.confirmation.title }}
+          </h2>
+        </div>
+        <div class="modal-card-body">
+          {{ mainStore.confirmation.text }}
+        </div>
+        <footer class="modal-card-foot">
+          <button
+            class="button is-rounded is-dark"
+            @click="mainStore.confirmation.onConfirm"
+          >
+            <span>{{ mainStore.confirmation.confirmationLabel }}</span>
+            <!--            <span class="icon">-->
+            <!--              <icon-->
+            <!--                size="16"-->
+            <!--                name="check"-->
+            <!--              />-->
+            <!--            </span>-->
+          </button>
+          <button
+            class="button is-rounded is-outlined is-dark"
+            @click="mainStore.confirmation.onCancel"
+          >
+            Annuler
+          </button>
+        </footer>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useToastStore } from "~/stores/toastStore"
+import { useMessageStore } from "~/stores/messageStore"
+import { useMainStore } from "~/stores/mainStore"
 
-const toastStore = useToastStore()
+const messageStore = useMessageStore()
+const mainStore = useMainStore()
 const route = useRoute()
 
 const height = ref<number>(75)

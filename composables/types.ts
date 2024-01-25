@@ -1,9 +1,9 @@
 export type User = {
-  id: number | null
   email: string
-  username: string
+  id: number | null
   isExpert: boolean
   isUnknownUser: boolean
+  username: string
 }
 
 // Questionnaire and profiling
@@ -11,10 +11,12 @@ export enum Objectivity {
   OBJECTIVE = "objective",
   SUBJECTIVE = "subjective",
 }
+
 export enum Method {
   QUANTITATIVE = "quantitative",
   QUALITATIVE = "qualitative",
 }
+
 export enum QuestionType {
   OPEN = "open",
   UNIQUE_CHOICE = "unique_choice",
@@ -22,12 +24,15 @@ export enum QuestionType {
   CLOSED_WITH_SCALE = "closed_with_scale",
   BOOLEAN = "boolean",
   PERCENTAGE = "percentage",
+  NUMBER = "number",
 }
+
 export enum SurveyType {
   PROFILING = "profiling",
   QUESTIONNAIRE = "questionnaire",
   INITILIZATION = "initilization",
 }
+
 export enum PillarName {
   REPRESENTATION = "représentation",
   TRANSPARENCY = "transparence",
@@ -38,20 +43,20 @@ export enum PillarName {
 export const PillarParams = {
   [PillarName.REPRESENTATION]: {
     key: "representation",
-    color: "representation",
+    color: "representation"
   },
   [PillarName.TRANSPARENCY]: {
     key: "transparency",
-    color: "transparency",
+    color: "transparency"
   },
   [PillarName.PARTICIPATION]: {
     key: "participation",
-    color: "participation",
+    color: "participation"
   },
   [PillarName.COOPERATION]: {
     key: "cooperation",
-    color: "cooperation",
-  },
+    color: "cooperation"
+  }
 }
 export type PillarType = {
   id: number
@@ -129,6 +134,9 @@ export type Question = {
   profileIds: number[]
   allowsToExplain: number
   explainsByQuestionIds: number[]
+  minNumberValue: number | null
+  maxNumberValue: number | null
+  stepNumberValue: number | null
 }
 
 export type QuestionBounds = { min: number; max: number }
@@ -151,12 +159,13 @@ export type Definition = {
 // Assessment
 export const LocalityType = {
   MUNICIPALITY: { key: "municipality", value: "Commune" },
-  INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" },
+  INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" }
 }
 export const AssessmentType = {
   QUICK: { key: "quick", value: "Diagnostic rapide" },
   PARTICIPATIVE: { key: "participative", value: "Evaluation participative" },
   WITH_EXPERT: { key: "with_expert", value: "Evaluation avec expert" },
+  "": { key: "", value: "Non renseigné" }
 }
 type Locality = {
   id: number
@@ -192,31 +201,57 @@ export type AssessmentRepresentativity = {
   acceptabilityThresholdConsidered: number
   respected: boolean
 }
+export type AssessmentDetails = {
+  calendar: string
+  context: string
+  hasDetailAccess: boolean
+  objectives: string
+  paymentAmount: number
+  paymentAuthor: string
+  paymentDate: string
+  role: "initiator" | "expert" | "participant" | "" | null
+  stakeholders: string
+}
+export type Expert = {
+  email: string
+  firstName: string
+  lastName: string
+  name: string
+  username: string
+}
 export type Assessment = {
-  id: number
   assessmentType: string
   conditionsOfSaleConsent: boolean
-  initiatorUsageConsent: boolean
-  localityType: string
+  created: string
+  code: string
+  collectivityName: string
+  details: AssessmentDetails
+  documents: AssessmentDocumentType[]
+  endDate: string
+  epci: Locality | null
+  experts?: Expert[]
+  id: number
+  initializationDate: string
+  initializedToTheNameOf: string
   initiatedByUser: User
   initiatorType: string
-  initializedToTheNameOf: string
-  publicInitiator: boolean
-  initializationDate: string
+  initiatorUsageConsent: boolean
+  isCurrent: boolean
   isInitializationQuestionsCompleted: boolean
-  endDate: string
+  localityType: string
   municipality: Locality | null
-  epci: Locality | null
-  participationNb: number
-  representativities: AssessmentRepresentativity[]
   name: string
+  participationCount: number
+  publicInitiator: boolean
   publishedResults: boolean
+  representativities: AssessmentRepresentativity[]
+  workshopCount: number
 }
 export const InitiatorType = {
   COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
   ASSOCIATION: { key: "association", value: "Une association" },
   INDIVIDUAL: { key: "individual", value: "Un particulier" },
-  OTHER: { key: "other", value: "Autre" },
+  OTHER: { key: "other", value: "Autre" }
 }
 export type Scores = {
   byQuestionId: { [key: number]: number }
@@ -255,6 +290,7 @@ export type ClosedWithScaleResponse = {
 }
 export type QuestionResponse = {
   id: number
+  isDirty?: boolean
   participationId: number | null
   assessmentId: number | null
   questionId: number
@@ -263,29 +299,34 @@ export type QuestionResponse = {
   multipleChoiceResponseIds: number[]
   booleanResponse: boolean | null
   percentageResponse: number | null
+  numberResponse: number | null
   closedWithScaleResponseCategories: ClosedWithScaleResponse[]
 }
 
 // Workshops
 export type Workshop = {
-  id: number
+  animatorId?: number
   assessmentId: number
+  changed?: boolean
+  closed?: boolean
   date: string
+  id?: number
   name: string
-  animatorId: number
-  participationIds: number[]
-  changed: boolean
-  closed: boolean
+  participationIds?: number[]
+  place: string
+  type: "assessment" | "results"
 }
 export type WorkshopParticipation = {
+  assessmentId: number
+  changed: boolean
   id: number
+  medium: "paper" | "online"
   participantEmail: string
   participantName: string
-  assessmentId: number
-  roleId: number
-  responses: QuestionResponse[]
   responseByQuestionId: { [key: number]: QuestionResponse }
-  changed: boolean
+  responses: QuestionResponse[]
+  roleId: number
+  workshopId?: number
 }
 
 // Pages
@@ -298,9 +339,16 @@ type Feedback = {
   externalLink: string
   publish: boolean
 }
+export type Block = {
+  type: string
+  id: string
+  value: any
+}
 export type Article = {
   id: number
   title: string
+  slug: string
+  content: Block[]
   shortDescription: string
   publicationDate: string
   imageUrl: string
@@ -390,22 +438,24 @@ export type SimpleBlock = {
   description: string
 }
 export type UsagePage = {
-  title: string
-  introduction: string
-  tagLine: string
+  assessmentTypesDetails: AssessmentTypeDetails[]
   introImageUrl: string
-  stepOfUseTitle: string
-  stepOfUseIntro: string
-  stepsOfUse: string | SimpleBlockWithImage[]
-  stepsImagesUrl: ImageUrl[]
-  participateBlockTitle: string
+  introduction: string
   participateBlockIntro: string
+  participateBlockTitle: string
   participateLeftParagraph: string
   participateRightParagraph: string
-  startAssessmentBlockTitle: string
-  startAssessmentBlockIntro: string
   startAssessmentBlockData: string | AssessmentTypeDetails[]
-  assessmentTypesDetails: AssessmentTypeDetails[]
+  startAssessmentBlockIntro: string
+  startAssessmentBlockTitle: string
+  stepOfUseIntro: string
+  stepOfUseTitle: string
+  stepsImagesUrl: ImageUrl[]
+  stepsOfUse: string | SimpleBlockWithImage[]
+  tagLine: string
+  title: string
+  trainingBlockIntro: string
+  trainingBlockTitle: string
 }
 type ObjectiveBlock = {
   svg: number
@@ -558,4 +608,73 @@ export type RgpdSettings = {
 
 export type StructureSettings = {
   email: string
+}
+export type SectionButton = {
+  icon: string
+  iconLeft?: boolean
+  link?: string
+  text: string
+}
+
+
+// rich text (TipTap)
+export enum HeadingType {
+  H1 = "h1",
+  H2 = "h2",
+  H3 = "h3",
+  H4 = "h4",
+  H5 = "h5",
+  H6 = "h6",
+}
+
+export enum OtherRichTextActions {
+  BOLD = "bold",
+  ITALIC = "italic",
+  LIST_ORDERED = "list-ordered",
+  LIST_UNORDERED = "list-unordered",
+  LINK = "link",
+  LINK_UNLINK = "link",
+}
+
+type RichTextToolbarActions = HeadingType | OtherRichTextActions
+export type RichTextToolbarHeadingSwitch = {
+  [key in HeadingType]?: Level
+}
+export type RichTextToolbarOptions = {
+  show?: RichTextToolbarActions[]
+  headingSwitch?: RichTextToolbarHeadingSwitch
+}
+export type RichTextToolbarItem = {
+  name: RichTextToolbarActions
+  testActive: () => boolean
+  onClick: () => void
+  icon?: string
+  disabled: () => boolean
+  text?: string
+  title: string
+}
+export type RichTextToolbar = RichTextToolbarItem[]
+export type AssessmentDocumentCategory = "assessment_reports" | "other" | "invoices"
+export type AssessmentDocumentTypeFile = {
+  link: string,
+  mimetype: string,
+  name: string,
+  size: string,
+}
+export type AssessmentDocumentType = {
+  assessment: number,
+  category: AssessmentDocumentCategory,
+  created: string,
+  file: AssessmentDocumentTypeFile,
+  id: number,
+  name: string,
+}
+export type Training = {
+  audience: string
+  description: string
+  duration: string
+  id: number
+  isAvailableSoon: boolean
+  name: string
+  url: string
 }

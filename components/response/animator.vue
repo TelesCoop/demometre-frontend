@@ -7,7 +7,7 @@
       rows="3"
       placeholder="écrire ici ..."
       @change="adaptQuestionResponse()"
-    />
+    >
     <ResponseInputPercentage
       v-else-if="question.type === QuestionType.PERCENTAGE"
       v-model="answer"
@@ -15,12 +15,26 @@
       :question-id="question.id"
       @change="adaptQuestionResponse()"
     />
+    <ResponseInputNumber
+      v-else-if="question.type === QuestionType.NUMBER"
+      v-model="answer"
+      :color="props.color"
+      :question-id="question.id"
+      :min="question.minNumberValue"
+      :max="question.maxNumberValue"
+      :step="question.stepNumberValue"
+      @change="adaptQuestionResponse()"
+    />
     <div
       v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
       class="select"
     >
-      <select v-model="answer" @change="adaptQuestionResponse()">
-        <option :value="null"></option>
+      <select
+        v-model="answer"
+        style="max-width: 400px"
+        @change="adaptQuestionResponse()"
+      >
+        <option :value="null" />
         <option
           v-for="responseChoice of question.responseChoices"
           :key="responseChoice.id"
@@ -34,7 +48,11 @@
       v-else-if="question.type === QuestionType.MULTIPLE_CHOICE"
       class="select is-multiple"
     >
-      <select v-model="answer" multiple @change="adaptQuestionResponse()">
+      <select
+        v-model="answer"
+        multiple
+        @change="adaptQuestionResponse()"
+      >
         <option
           v-for="responseChoice of question.responseChoices"
           :key="responseChoice.id"
@@ -47,9 +65,15 @@
         Ctrl + click pour selectionner plusieurs options
       </p>
     </div>
-    <div v-else-if="question.type === QuestionType.BOOLEAN" class="select">
-      <select v-model="answer" @change="adaptQuestionResponse()">
-        <option :value="null"></option>
+    <div
+      v-else-if="question.type === QuestionType.BOOLEAN"
+      class="select"
+    >
+      <select
+        v-model="answer"
+        @change="adaptQuestionResponse()"
+      >
+        <option :value="null" />
         <option
           v-for="response of [
             { id: 1, value: 'Oui' },
@@ -63,15 +87,20 @@
       </select>
     </div>
     <div v-else-if="question.type === QuestionType.CLOSED_WITH_SCALE">
-      <div v-for="category of question.categories" :key="category.id">
+      <div
+        v-for="category of question.categories"
+        :key="category.id"
+      >
         <div class="is-flex is-align-items-center mb-0_5">
-          <p class="mr-1">{{ category.category }}</p>
+          <p class="mr-1">
+            {{ category.category }}
+          </p>
           <div class="select">
             <select
               v-model="answer[category.id]"
               @change="adaptQuestionResponseForCloseWithScaleType()"
             >
-              <option :value="null"></option>
+              <option :value="null" />
               <option
                 v-for="responseChoice of question.responseChoices"
                 :key="responseChoice.id"
@@ -92,19 +121,19 @@ import {
   QuestionType,
   Question,
   QuestionResponse,
-  WorkshopParticipation,
+  WorkshopParticipation
 } from "~/composables/types"
 import { computed, PropType, watch } from "vue"
-import { ref } from "@vue/reactivity"
 import {
   getQuestionResponseStructure,
-  getQuestionResponseValue,
+  getQuestionResponseValue
 } from "~/utils/question-response"
+import { useWorkshopStore } from "~/stores/workshopStore"
 
 const props = defineProps({
   question: {
     type: Object as PropType<Question>,
-    required: true,
+    required: true
   },
   color: { type: String, required: true },
   participation: {
@@ -112,17 +141,18 @@ const props = defineProps({
     required: false,
     default() {
       return {}
-    },
+    }
   },
   assessmentId: { type: Number, required: true },
   modelValue: {
     type: Object as PropType<QuestionResponse>,
     required: false,
-    default: null,
-  },
+    default: null
+  }
 })
 
 const questionResponse = useModel<QuestionResponse>("modelValue")
+const workshopStore = useWorkshopStore()
 
 const isAnswered = computed(() => {
   if (Array.isArray(answer.value)) return !!answer.value.length
@@ -148,20 +178,23 @@ function adaptQuestionResponse() {
     props.participation.id,
     props.assessmentId
   )
+  workshopStore.markDirty(props.participation.id, props.question.id)
 }
+
 function adaptQuestionResponseForCloseWithScaleType() {
   questionResponse.value = getQuestionResponseStructure(
     props.question,
     props.question.categories.map((category) => {
       return {
         categoryId: category.id,
-        responseChoiceId: answer.value[category.id],
+        responseChoiceId: answer.value[category.id]
       }
     }),
     isAnswered.value,
     props.participation.id,
     props.assessmentId
   )
+  workshopStore.markDirty(props.participation.id, props.question.id)
 }
 
 function getAnswerInitialValue() {

@@ -14,7 +14,7 @@ export const getStreamFieldStructMediaWithUrl = (
       ...item.value,
       [objectType + "Url"]: listObjectWithUrl.filter(
         (object) => object.id === item.value[objectType]
-      )[0].url,
+      )[0].url
     })
   }
   return dataToReturn
@@ -37,11 +37,11 @@ export const getStreamFieldMediaWithUrl = (
         ...item,
         [objectType + "Url"]: listObjectWithUrl.filter(
           (object) => object.id === item.value
-        )[0].url,
+        )[0].url
       })
     } else {
       dataToReturn.push({
-        ...item,
+        ...item
       })
     }
   }
@@ -64,7 +64,7 @@ export const getStreamFieldStructWithLinkedObject = (
       ...item.value,
       ...listObject.filter(
         (object) => object[objectAttribut] === item.value[streamFieldAtribut]
-      )[0],
+      )[0]
     })
   }
   return dataToReturn
@@ -88,12 +88,12 @@ export const getStreamFieldStructWithListLinkedObjects = (
         ...secondLevelItem.value,
         ...listObject.filter(
           (object) => object[objectAttribut] === secondLevelItem.value
-        )[0],
+        )[0]
       })
     }
     dataToReturn.push({
       ...firstLevelItem.value,
-      [streamFieldListName]: secondLevelItemToReturn,
+      [streamFieldListName]: secondLevelItemToReturn
     })
   }
   return dataToReturn
@@ -114,20 +114,22 @@ export const getStreamFieldListStructMediaWithUrl = (
     const secondLevelItemToReturn = []
     if (firstLevelItem.type === streamFieldListName) {
       for (const secondLevelItem of firstLevelItem.value) {
+        const correspondingItems = listObjectWithUrl.filter(
+          (object) => object.id === secondLevelItem.value[objectType]
+        )
+        const url = correspondingItems.length ? correspondingItems[0].url : null
         secondLevelItemToReturn.push({
           ...secondLevelItem.value,
-          [objectType + "Url"]: listObjectWithUrl.filter(
-            (object) => object.id === secondLevelItem.value[objectType]
-          )[0].url,
+          [objectType + "Url"]: url
         })
       }
       dataToReturn.push({
         ...firstLevelItem,
-        value: secondLevelItemToReturn,
+        value: secondLevelItemToReturn
       })
     } else {
       dataToReturn.push({
-        ...firstLevelItem,
+        ...firstLevelItem
       })
     }
   }

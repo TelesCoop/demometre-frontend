@@ -13,6 +13,7 @@ async function verifyAssessment(to) {
     !assessmentStore.currentAssessment?.initializationDate &&
     to.path !== "/evaluation/initialisation"
   ) {
+    console.log("### verifyAssessment navigation add assessment")
     navigateTo(
       `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`
     )

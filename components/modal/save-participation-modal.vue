@@ -4,12 +4,18 @@
       class="modal"
       :class="{ 'is-active': participationStore.showSaveParticipationModal }"
     >
-      <div class="modal-background"></div>
+      <div
+        class="modal-background"
+        @click="emit('close')"
+      />
       <div class="modal-content has-background-shade-100 p-2">
         <h2 class="is-size-4 has-text-weight-bold pb-0_5">
           Souhaitez-vous enregistrer vos réponses pour pouvoir y revenir et
           contribuer à l’évaluation&nbsp;?
         </h2>
+        <p>
+          Vous pourrez ensuite y revenir via l'onglet "Mon compte".
+        </p>
         <div class="buttons">
           <button
             class="button is-shade-600 is-outlined"
@@ -17,7 +23,10 @@
           >
             Oui, créer un compte
           </button>
-          <button class="button is-shade-600 is-outlined" @click="closeModal">
+          <button
+            class="button is-shade-600 is-outlined"
+            @click="closeModal"
+          >
             Non, ne rien enregistrer
           </button>
         </div>
@@ -26,7 +35,7 @@
         class="modal-close is-large"
         aria-label="close"
         @click="closeModal()"
-      ></button>
+      />
     </div>
   </Teleport>
 </template>

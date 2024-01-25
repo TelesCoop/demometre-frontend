@@ -1,21 +1,31 @@
 import { useLoadingStore } from "~/stores/loadingStore"
-import { useFetch, useRequestHeaders } from "#app"
+import { useMessageStore } from "~/stores/messageStore"
 
-let base_url = ""
 let media_base_url
 type MyHeaders = { [key: string]: string }
 
 // local
-if (process.env.NODE_ENV !== "production") {
-  base_url = "http://localhost:8000"
-  media_base_url = "http://localhost:8000"
-} else {
-  // production server
-  media_base_url = ""
-  if (process.server) {
-    // server-side rendering
-    base_url = `http://127.0.0.1:${process.env.NUXT_BACKEND_PORT}`
+
+export const useBackendUrl = (api = true) => {
+  let backendUrl = ""
+  if (process.env.NODE_ENV !== "production") {
+    backendUrl = "http://localhost:8000"
+  } else {
+    // production server
+    if (process.server) {
+      const config = useRuntimeConfig()
+
+      // server-side rendering
+      backendUrl = `http://127.0.0.1:${config.backendPort}`
+      console.log("### API backend port", config.backendPort)
+    }
   }
+
+  if (!api) {
+    return backendUrl
+  }
+
+  return `${backendUrl}/api/`
 }
 
 const makeLoadingKey = (path: string) => {
@@ -36,8 +46,10 @@ const makeLoadingKey = (path: string) => {
 }
 
 function getCookie() {
-  let cookie = useRequestHeaders(["cookie"])["cookie"] || ""
-  if (!cookie && process.client) {
+  let cookie: string
+  if (process.server) {
+    cookie = useRequestHeaders(["cookie"])["cookie"] || ""
+  } else {
     cookie = document.cookie
   }
   return cookie
@@ -66,21 +78,29 @@ function getHeaders(withCsrfCookie = false): MyHeaders {
   return headers
 }
 
-export const MADIA_BASE_URL = media_base_url
-export const BASE_URL = base_url
-export const BASE_API_URL = BASE_URL + "/api/"
+if (process.env.NODE_ENV !== "production") {
+  media_base_url = "http://localhost:8000"
+} else {
+  // production server
+  media_base_url = ""
+}
+export const MEDIA_BASE_URL = media_base_url
 
-export async function useApiGet<Type>(path: string) {
+export async function useApiGet<Type>(path: string, onErrorMessage: string = "") {
   const loadingStore = useLoadingStore()
+  const messageStore = useMessageStore()
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
-  const { data, error } = await useFetch<Type>(`${BASE_API_URL}${path}`, {
+  const { data, error } = await useFetch<Type>(`${useBackendUrl()}${path}`, {
     method: "GET",
     credentials: "include",
-    headers: getHeaders(),
+    headers: getHeaders()
   })
   if (error.value) {
     loadingStore.markError(key)
+    if (onErrorMessage) {
+      messageStore.setError(onErrorMessage)
+    }
   } else {
     loadingStore.markDone(key)
   }
@@ -90,29 +110,38 @@ export async function useApiGet<Type>(path: string) {
 export async function useAPIwithCsrfToken<Type>(
   path: string,
   method: string,
-  payload: any = {}
+  payload: any = {},
+  onErrorMessage: string = ""
 ) {
   const loadingStore = useLoadingStore()
-
+  const messageStore = useMessageStore()
   const key = makeLoadingKey(path)
   loadingStore.markLoading(key)
-  const { data, error } = await useFetch<Type>(`${BASE_API_URL}${path}`, {
+  const { data, error } = await useFetch<Type>(`${useBackendUrl()}${path}`, {
     method,
     body: payload,
     credentials: "include",
-    headers: getHeaders(true),
+    headers: getHeaders(true)
   })
   if (error.value) {
     loadingStore.markError(key)
+    if (onErrorMessage) {
+      messageStore.setMessage(onErrorMessage, "error")
+    }
   } else {
     loadingStore.markDone(key)
   }
   return { data, error }
 }
-export async function useApiPost<Type>(path: string, payload: any = {}) {
-  return useAPIwithCsrfToken(path, "POST", payload)
+
+export async function useApiPost<Type>(path: string, payload: any = {}, onErrorMessage: string = "") {
+  return useAPIwithCsrfToken<Type>(path, "POST", payload, onErrorMessage)
 }
 
-export async function useApiPatch<Type>(path: string, payload: any = {}) {
-  return useAPIwithCsrfToken(path, "PATCH", payload)
+export async function useApiPatch<Type>(path: string, payload: any = {}, onErrorMessage: string = "") {
+  return useAPIwithCsrfToken<Type>(path, "PATCH", payload, onErrorMessage)
+}
+
+export async function useApiDelete<Type>(path: string, onErrorMessage: string = "") {
+  return useAPIwithCsrfToken<Type>(path, "DELETE", {}, onErrorMessage)
 }

@@ -90,6 +90,15 @@
                     :color="props.color"
                     :question-id="questionId"
                   />
+                  <ResponseInputNumber
+                    v-if="question.type === QuestionType.NUMBER"
+                    v-model="answer"
+                    :color="props.color"
+                    :question-id="questionId"
+                    :min="question.minNumberValue"
+                    :max="question.maxNumberValue"
+                    :step="question.stepNumberValue"
+                  />
                   <ResponseInputUniqueChoice
                     v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
                     v-model="answer"

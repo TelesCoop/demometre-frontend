@@ -5,7 +5,7 @@
   >
     <figure v-for="partner of props.partners" :key="partner.id" class="image">
       <img
-        :src="MADIA_BASE_URL + partner.logoImageUrl"
+        :src="MEDIA_BASE_URL + partner.logoImageUrl"
         :alt="partner.name"
         :style="`height: ${partner.height}px`"
       />
@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { MADIA_BASE_URL } from "~/composables/api"
+import { MEDIA_BASE_URL } from "~/composables/api"
 
 const props = defineProps({
   partners: { type: Array, required: true },
