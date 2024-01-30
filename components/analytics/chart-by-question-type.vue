@@ -5,15 +5,15 @@
       :data="assessmentChartData"
       :question="question"
       :color="color"
-    ></AnalyticsBooleanQuestionChart>
+    />
     <AnalyticsObjectiveChoiceQuestionChart
       v-if="
         question.type === QuestionType.UNIQUE_CHOICE &&
-        question.objectivity === Objectivity.OBJECTIVE
+          question.objectivity === Objectivity.OBJECTIVE
       "
       :data="assessmentChartData"
       :color="color"
-    ></AnalyticsObjectiveChoiceQuestionChart>
+    />
     <AnalyticsChoiceQuestionChart
       v-else-if="
         [QuestionType.UNIQUE_CHOICE, QuestionType.MULTIPLE_CHOICE].includes(
@@ -23,23 +23,21 @@
       :data="assessmentChartData"
       :color="color"
       :question="question"
-    ></AnalyticsChoiceQuestionChart>
-    <AnalyticsPercentageQuestionChart
+    />
+    <AnalyticsIntervalQuestionChart
       v-else-if="question.type === QuestionType.PERCENTAGE"
       :data="assessmentChartData"
       :color="color"
-    ></AnalyticsPercentageQuestionChart>
+      unit="%"
+    />
     <AnalyticsScaleQuestionChart
       v-else-if="question.type === QuestionType.CLOSED_WITH_SCALE"
       :data="assessmentChartData"
       :color="color"
       :question="question"
-    ></AnalyticsScaleQuestionChart>
-    <AnalyticsObjectiveNumberQuestion
-      v-if="
-        question.type === QuestionType.NUMBER &&
-        question.objectivity === Objectivity.OBJECTIVE
-      "
+    />
+    <AnalyticsIntervalQuestionChart
+      v-else-if="question.type=== QuestionType.NUMBER"
       :question="question"
       :data="assessmentChartData"
       :color="color"
