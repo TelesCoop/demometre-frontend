@@ -15,7 +15,7 @@
             target="_blank"
           >
             <!-- TODO : Put the right year automaticaly -->
-            2022 - licence contenu
+            License
           </a>
           <a
             class="has-text-shade-350"
