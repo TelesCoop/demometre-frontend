@@ -1,42 +1,52 @@
 <template>
-  <div v-if="data.ranges.length" class="percentage-chart">
-    <div class="percentage-chart-bar" :class="`has-background-${color}-hover`">
+  <div
+    v-if="data.ranges.length"
+    class="interval-chart"
+  >
+    <div
+      class="interval-chart-bar"
+      :class="`has-background-${color}-hover`"
+    >
       <span>
         <span
-          class="percentage-chart-bar-line"
+          class="interval-chart-bar-line"
           :class="`has-background-${color}-hover`"
           style="left: 0%"
-        ></span>
+        />
         <span
           v-for="index in data.ranges.length"
           :key="`line_${index}`"
-          class="percentage-chart-bar-line"
+          class="interval-chart-bar-line"
           :class="`has-background-${color}-hover`"
           :style="`left: ${getXPosition(index, data.ranges.length)}%`"
-        ></span>
+        />
       </span>
 
       <span>
         <span
-          class="percentage-chart-bar-line-value"
+          class="interval-chart-bar-line-value"
           :class="`has-text-${color}-hover`"
           style="left: 0%"
-          >{{ data.ranges[0].lowerBound }}%</span
+        >{{ data.ranges[0].lowerBound || "-∞" }}{{ unit }}</span>
+        <template
+          v-for="(range, index) in data.ranges"
+          :key="range.id"
         >
-        <template v-for="(range, index) in data.ranges" :key="range.id">
           <span
-            class="percentage-chart-bar-line-value"
+            class="interval-chart-bar-line-value"
             :class="`has-text-${color}-hover`"
             :style="`left: ${getXPosition(index + 1, data.ranges.length)}%`"
-            >{{ range.upperBound }}%</span
-          >
+          >{{ range.upperBound || "+∞" }}{{ unit }}</span>
         </template>
       </span>
 
       <span>
-        <template v-for="(range, index) in data.ranges" :key="index">
+        <template
+          v-for="(range, index) in data.ranges"
+          :key="index"
+        >
           <span
-            class="percentage-chart-bar-interval-score"
+            class="interval-chart-bar-interval-score"
             :class="`has-text-${color}-hover`"
             :style="`left: ${
               getXPosition(index + 1, data.ranges.length) -
@@ -50,24 +60,23 @@
               :color="color"
               :size-circles="9"
               size-number-class="is-size-6"
-            ></AnalyticsScore>
+            />
           </span>
         </template>
       </span>
       <span
-        class="percentage-chart-bar-result-line"
+        class="interval-chart-bar-result-line"
         :class="`has-background-${color}-dark`"
         :style="`left: ${valuePosition}%`"
-      ></span>
+      />
       <span
-        class="percentage-chart-bar-result-value"
+        class="interval-chart-bar-result-value"
         :class="`has-text-${color}-dark is-size-4${
           valuePosition < 20 ? ' has-text-right' : ''
         }`"
         :style="`left: ${valuePosition}%`"
       >
-        <strong>{{ data.value.value }}</strong
-        >%
+        <strong>{{ data.value.value }}</strong>{{ unit }}
       </span>
     </div>
   </div>
@@ -79,7 +88,12 @@ import { computed } from "vue"
 const props = defineProps({
   data: { type: Object, required: true },
   color: { type: String, required: true },
+  unit: {
+    type: String,
+    default: '',
+  }
 })
+
 const getXPosition = (index: number, length: number): number => {
   return (index / length) * 100
 }
@@ -90,22 +104,31 @@ const valuePosition = computed(() => {
   const value = props.data.value.value
 
   const rangeIndex = props.data.ranges?.findIndex(
-    (range) => value >= range.lowerBound && value <= range.upperBound
+    (range) => value >= (range.lowerBound ?? -Infinity) && value <= (range.upperBound ?? Infinity)
   )
   const currentRange = props.data.ranges?.[rangeIndex]
-  const percentageBetweenBound =
-    (value - currentRange.lowerBound) /
-    (currentRange.upperBound - currentRange.lowerBound)
 
+  let intervalBetweenBound
+  if (!currentRange.lowerBound) {
+    // if lower bound is not defined, we assume that the value is upper bound or have an offset of 0.05
+    intervalBetweenBound = currentRange.upperBound === value ? 1 : 0.95
+  } else if (!currentRange.upperBound) {
+    // if upper bound is not defined, we assume that the value is lower bound or have an offset of 0.05
+    intervalBetweenBound = currentRange.lowerBound === value ? 0 : 0.05
+  } else {
+    intervalBetweenBound =
+      (value - currentRange.lowerBound) /
+      (currentRange.upperBound - currentRange.lowerBound)
+  }
   return (
     getXPosition(rangeIndex, props.data.ranges.length) +
-    percentageBetweenBound * getXPosition(1, props.data.ranges.length)
+    intervalBetweenBound * getXPosition(1, props.data.ranges.length)
   )
 })
 </script>
 
 <style scoped lang="sass">
-.percentage-chart
+.interval-chart
   $result-line-size: 66px
   $result-line-offset: 15px
   $chart-size: 24px
