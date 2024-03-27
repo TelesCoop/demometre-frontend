@@ -3,47 +3,89 @@
     <div class="container">
       <div class="columns">
         <div class="column footer-column is-3">
-          <NuxtLink to="/" class="has-text-weight-bold has-text-shade-200"
-            >DémoMètre</NuxtLink
+          <NuxtLink
+            to="/"
+            class="has-text-weight-bold has-text-shade-200"
           >
+            DémoMètre
+          </NuxtLink>
           <a
             class="has-text-shade-350"
             :href="MEDIA_BASE_URL + settingStore.rgpdSettings.contentLicenseUrl"
             target="_blank"
           >
             <!-- TODO : Put the right year automaticaly -->
-            2022 - licence contenu
+            License
           </a>
+          <a
+            class="has-text-shade-350"
+            :href="MEDIA_BASE_URL + settingStore.rgpdSettings.termsOfUseUrl"
+            target="_blank"
+          >Conditions générales d'utilisation</a>
+          <a
+            class="has-text-shade-350"
+            :href="MEDIA_BASE_URL + settingStore.rgpdSettings.termsOfSaleUrl"
+            target="_blank"
+          >Conditions générales de vente</a>
           <a
             class="has-text-shade-350"
             :href="MEDIA_BASE_URL + settingStore.rgpdSettings.legalMentionUrl"
             target="_blank"
-            >Mentions légales</a
-          >
+          >Mentions légales</a>
           <a
             class="has-text-shade-350"
             :href="
               MEDIA_BASE_URL +
-              settingStore.rgpdSettings.confidentialityPolicyUrl
+                settingStore.rgpdSettings.confidentialityPolicyUrl
             "
             target="_blank"
-            >Politique de confidentialité</a
-          >
+          >Politique de confidentialité</a>
         </div>
         <div class="column footer-column is-3">
-          <NuxtLink to="/demometre" class="has-text-white">DémoMètre</NuxtLink>
-          <NuxtLink to="/utilisations-possibles" class="has-text-white"
-            >Utilisations possibles</NuxtLink
+          <NuxtLink
+            to="/demometre"
+            class="has-text-white"
           >
-          <NuxtLink to="/resultats" class="has-text-white">Résultats</NuxtLink>
-          <NuxtLink to="/projet" class="has-text-white">Le projet</NuxtLink>
+            DémoMètre
+          </NuxtLink>
+          <NuxtLink
+            to="/utilisations-possibles"
+            class="has-text-white"
+          >
+            Utilisations possibles
+          </NuxtLink>
+          <NuxtLink
+            to="/resultats"
+            class="has-text-white"
+          >
+            Résultats
+          </NuxtLink>
+          <NuxtLink
+            to="/projet"
+            class="has-text-white"
+          >
+            Le projet
+          </NuxtLink>
         </div>
         <div class="column footer-column is-3">
-          <NuxtLink to="/blog" class="has-text-white">Blog</NuxtLink>
-          <NuxtLink to="/ressources" class="has-text-white"
-            >Ressources</NuxtLink
+          <NuxtLink
+            to="/blog"
+            class="has-text-white"
           >
-          <NuxtLink to="/faq" class="has-text-white">FAQ</NuxtLink>
+            Blog
+          </NuxtLink>
+          <NuxtLink
+            to="/ressources"
+            class="has-text-white"
+          >
+            Ressources
+          </NuxtLink>
+          <NuxtLink
+            to="/faq"
+            class="has-text-white"
+          >
+            FAQ
+          </NuxtLink>
         </div>
         <div class="column footer-column is-3">
           <a
@@ -100,12 +142,15 @@ const settingStore = useSettingStore()
 .footer-column
   display: flex
   flex-direction: column
+
   & a
     color: black
     font-weight: 400
     font-size: 0.75rem !important
+
   & a + a
     margin-top: 8px
+
 .footer
   padding: 4rem
   margin-top: 4rem
