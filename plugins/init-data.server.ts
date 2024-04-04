@@ -19,7 +19,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     assessmentStore.getAssessmentsForUser()
     profilingStore.getProfilingQuestions()
     questionnaireStore.getQuestionnaireQuestions()
-    questionnaireStore.getQuestionnaireStructure()
+    questionnaireStore.getSurveys()
     assessmentStore.getRepresentativityCriterias()
     definitionStore.getDefinitions()
     settingStore.getRgpdSettings()

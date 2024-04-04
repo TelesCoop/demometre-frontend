@@ -114,10 +114,6 @@ import { Carousel, Slide } from "vue3-carousel"
 
 import "vue3-carousel/dist/carousel.css"
 import { usePageStore } from "~/stores/pageStore"
-import { useParticipationStore } from "~/stores/participationStore"
-import { useAssessmentStore } from "~/stores/assessmentStore"
-import { useUserStep } from "~/composables/userStep"
-import { useUserStore } from "~/stores/userStore"
 
 definePageMeta({
   title: "Accueil",
@@ -125,10 +121,6 @@ definePageMeta({
 })
 
 const pageStore = usePageStore()
-const assessmentStore = useAssessmentStore()
-const participationStore = useParticipationStore()
-const userStep = useUserStep()
-const userStore = useUserStore()
 
 const settings = {
   itemsToShow: 1.05,

@@ -1,12 +1,6 @@
 import { computed, getCurrentInstance } from "vue"
 import { useProfilingStore } from "~/stores/profilingStore"
-import {
-  Assessment,
-  Objectivity,
-  Participation,
-  Question,
-  SurveyType
-} from "~/composables/types"
+import { Assessment, Objectivity, Participation, Question, SurveyType } from "~/composables/types"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
@@ -113,8 +107,9 @@ function isRelevant(question: Question, data) {
   })
 }
 
-export function useProfilingJourney() {
+export async function useProfilingJourney() {
   const vm = getCurrentInstance()
+
   const journey = computed(() => {
     const profilingStore = useProfilingStore()
     const participationStore = useParticipationStore()
@@ -187,7 +182,8 @@ export function useProfilingJourney() {
   }
 }
 
-export function useQuestionnaireJourney(pillarName: string) {
+export async function useQuestionnaireJourney(pillarName: string) {
+
   const journey = computed(() => {
     const questionnaireStore = useQuestionnaireStore()
     const participationStore = useParticipationStore()
@@ -197,8 +193,9 @@ export function useQuestionnaireJourney(pillarName: string) {
     const participation = participationStore.participation
     const assessment = assessmentStore.currentAssessment
 
+
     const questionIds = questionnaireStore
-      .getQuestionnaireQuestionByPillarName(pillarName)
+      .getQuestionnaireQuestionByPillarName(assessment.surveyId, pillarName)
       .filter((question: Question) => {
         return (
           QUESTION_FILTERS_VALUES.every((test) =>
@@ -270,11 +267,13 @@ export function useQuestionnaireJourney(pillarName: string) {
   }
 }
 
-export function useInitializationJourney() {
+export async function useInitializationJourney() {
+  const questionnaireStore = useQuestionnaireStore()
+  const assessmentStore = useAssessmentStore()
+
   const journey = computed(() => {
-    const questionnaireStore = useQuestionnaireStore()
-    const assessmentStore = useAssessmentStore()
-    const questionIds = questionnaireStore.questions
+    // returns a list of question IDs for current assessment, in the right order
+    return questionnaireStore.questionsForSurvey(assessmentStore.currentAssessment.surveyId, "useInitializationJourney")
       .filter((question: Question) => {
         const assessment = assessmentStore.currentAssessment
         const participation = undefined
@@ -293,7 +292,6 @@ export function useInitializationJourney() {
         )
       })
       .map((question: Question) => question.id)
-    return questionIds
   })
   const nextQuestionId = (
     currentQuestionId: number,

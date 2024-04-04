@@ -189,7 +189,7 @@
         @submit.prevent="onSubmit"
       >
         <div
-          v-for="representativityCriteria of assessmentStore.representativityCriterias"
+          v-for="representativityCriteria of assessmentStore.representativityCriteriasForSurveyLocality(assessmentStore.currentAssessment.surveyLocality)"
           :key="representativityCriteria.id"
         >
           <label class="label is-size-5">{{

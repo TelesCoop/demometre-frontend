@@ -31,7 +31,6 @@
     <PageSection
       :title="pageStore.usagePage.participateBlockTitle"
       :intro="pageStore.usagePage.participateBlockIntro"
-      :buttons="[{text: 'Lancer l\'évaluation', link: userStep.url}]"
     >
       <div class="columns mb-2">
         <RichText
@@ -91,7 +90,6 @@ definePageMeta({
   breadcrumb: "Utilisations possibles"
 })
 
-const userStep = useUserStep()
 const pageStore = usePageStore()
 const trainingStore = useTrainingStore()
 

@@ -58,13 +58,23 @@ export const PillarParams = {
     color: "cooperation"
   }
 }
+export type Survey = {
+  id: number
+  name: string
+  surveyType: SurveyType
+  localityType: SurveyLocality
+  pillars: FullPillar[]
+  questions: number[]
+}
 export type PillarType = {
   id: number
   code: string
   name: PillarName
   description: string
   markerIds: number[]
+  surveyId: number
 }
+export type FullPillar = PillarType & { markers: FullMarkers[] }
 export type Marker = {
   id: number
   pillarId: number
@@ -78,6 +88,7 @@ export type Marker = {
   score3: string
   score4: string
 }
+export type FullMarkers = Marker & { criterias: Criteria[] }
 export type Criteria = {
   id: number
   markerId: number
@@ -109,34 +120,36 @@ export type Rule = {
 }
 
 export type Question = {
-  id: number
+  allowsToExplain: number
+  assessmentTypes: string[]
+  categories: Category[]
+  concatenatedCode: string
   criteriaId: number | null
+  description: string
+  explainsByQuestionIds: number[]
+  id: number
+  mandatory: boolean
+  maxMultipleChoices: number | null
+  maxNumberValue: number | null
+  method: Method
+  minNumberValue: number | null
+  name: string
+  objectivity: Objectivity
   pillarId: number | null
   pillarName: PillarName | null
-  concatenatedCode: string
-  name: string
-  questionStatement: string
-  mandatory: boolean
-  objectivity: Objectivity
-  method: Method
-  description: string
-  type: QuestionType
-  responseChoices: ResponseChoice[]
-  categories: Category[]
-  rulesIntersectionOperator: string
-  rules: Rule[]
-  surveyType: SurveyType
-  maxMultipleChoices: number | null
-  roleIds: number[]
-  assessmentTypes: string[]
   populationLowerBound: number | null
   populationUpperBound: number | null
   profileIds: number[]
-  allowsToExplain: number
-  explainsByQuestionIds: number[]
-  minNumberValue: number | null
-  maxNumberValue: number | null
+  questionStatement: string
+  responseChoices: ResponseChoice[]
+  roleIds: number[]
+  rules: Rule[]
+  rulesIntersectionOperator: string
   stepNumberValue: number | null
+  surveyId: number
+  surveyLocality: SurveyLocality
+  surveyType: SurveyType
+  type: QuestionType
 }
 
 export type QuestionBounds = { min: number; max: number }
@@ -159,24 +172,31 @@ export type Definition = {
 // Assessment
 export const LocalityType = {
   MUNICIPALITY: { key: "municipality", value: "Commune" },
-  INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" }
+  INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" },
+  REGION: { key: "region", value: "Région" }
 }
+type localityTypes = "municipality" | "intercommunality" | "region" | "department"
+export type SurveyLocality = "city" | "region" | "department"
 export const AssessmentType = {
   QUICK: { key: "quick", value: "Diagnostic rapide" },
   PARTICIPATIVE: { key: "participative", value: "Evaluation participative" },
   WITH_EXPERT: { key: "with_expert", value: "Evaluation avec expert" },
   "": { key: "", value: "Non renseigné" }
 }
-type Locality = {
+export type Locality = {
   id: number
   name: string
   population: number
   zip_codes: number[]
-  localityType: string
+  localityType: localityTypes
 }
 export type Localities = {
   municipality: Locality[]
   intercommunality: Locality[]
+}
+export type SurveysResult = {
+  city: Localities,
+  region: Locality[],
 }
 type CountByResponseChoice = {
   responseChoiceName: string
@@ -184,7 +204,6 @@ type CountByResponseChoice = {
   total: number
   ignoreForAcceptabilityThreshold: boolean
 }
-
 export type RepresentativityCriteria = {
   id: number
   name: string
@@ -192,6 +211,7 @@ export type RepresentativityCriteria = {
   acceptabilityThreshold: number
   minRate: number
   explanation: string
+  surveyLocality: SurveyLocality
 }
 export type AssessmentRepresentativity = {
   id: number
@@ -238,13 +258,15 @@ export type Assessment = {
   initiatorUsageConsent: boolean
   isCurrent: boolean
   isInitializationQuestionsCompleted: boolean
-  localityType: string
   municipality: Locality | null
   name: string
   participationCount: number
   publicInitiator: boolean
   publishedResults: boolean
   representativities: AssessmentRepresentativity[]
+  surveyId: number
+  surveyLocality: SurveyLocality
+  surveyName: string
   workshopCount: number
 }
 export const InitiatorType = {

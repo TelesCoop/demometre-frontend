@@ -1,5 +1,7 @@
 import { useLoadingStore } from "~/stores/loadingStore"
 import { useMessageStore } from "~/stores/messageStore"
+import { AsyncData } from "#app"
+import { FetchError } from "ofetch"
 
 let media_base_url
 type MyHeaders = { [key: string]: string }
@@ -55,7 +57,7 @@ function getCookie() {
   return cookie
 }
 
-function getCsrfCookie(cookie) {
+function getCsrfCookie(cookie: string) {
   if (!cookie) {
     return null
   }
@@ -86,7 +88,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 export const MEDIA_BASE_URL = media_base_url
 
-export async function useApiGet<Type>(path: string, onErrorMessage: string = "") {
+export async function useApiGet<Type>(path: string, onErrorMessage: string = "", forceKey: undefined | string = undefined) {
   const loadingStore = useLoadingStore()
   const messageStore = useMessageStore()
   const key = makeLoadingKey(path)
@@ -94,8 +96,10 @@ export async function useApiGet<Type>(path: string, onErrorMessage: string = "")
   const { data, error } = await useFetch<Type>(`${useBackendUrl()}${path}`, {
     method: "GET",
     credentials: "include",
-    headers: getHeaders()
-  })
+    headers: getHeaders(),
+    key: forceKey,
+    dedupe: "defer"
+  }) as AsyncData<Type, FetchError>
   if (error.value) {
     loadingStore.markError(key)
     if (onErrorMessage) {
@@ -122,7 +126,7 @@ export async function useAPIwithCsrfToken<Type>(
     body: payload,
     credentials: "include",
     headers: getHeaders(true)
-  })
+  }) as AsyncData<Type, FetchError>
   if (error.value) {
     loadingStore.markError(key)
     if (onErrorMessage) {

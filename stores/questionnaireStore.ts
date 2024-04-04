@@ -1,35 +1,41 @@
 import { defineStore } from "pinia"
-import { Criteria, Marker, PillarType, Question } from "~/composables/types"
+import { Criteria, Marker, PillarType, Question, Survey } from "~/composables/types"
 import { useMessageStore } from "./messageStore"
 import { useApiGet } from "~/composables/api"
 
-type FullMarkers = Marker & { criterias: Criteria[] }
-type FullPillar = PillarType & { markers: FullMarkers[] }
 type HierarchicalQuestionStructure = {
   criteriaId: number
   markerId: number
   pillarId: number
   pillarName: string
+  surveyName: string
 }
 export const useQuestionnaireStore = defineStore("questionnaire", {
   state: () => ({
-    pillarByName: <{ [key: string]: PillarType }>{},
-    markerById: <{ [key: number]: Marker }>{},
     criteriaById: <{ [key: number]: Criteria }>{},
-    questionById: <{ [key: number]: Question }>{},
+    isSurveyLoading: false,
+    markerById: <{ [key: number]: Marker }>{},
     orderedQuestionIds: <number[]>[],
+    pillarById: <{ [key: string]: PillarType }>{},
+    questionById: <{ [key: number]: Question }>{},
+    surveyById: <{ [key: number]: Survey }>{}
   }),
   getters: {
     getPillarByName(this) {
-      return (pillarName: string) => this.pillarByName[pillarName]
+      return (pillarName: string) => Object.values(this.pillarById).find(
+        (pillar) => pillar.name === pillarName
+      )
     },
     pillars(): PillarType[] {
-      return Object.values(this.pillarByName)
+      return Object.values(this.pillarById)
     },
-    questions(): Question[] {
-      return this.orderedQuestionIds.map(
-        (questionId) => this.questionById[questionId]
-      )
+    questionsForSurvey() {
+      return (surveyId: number, source: string): Question[] => {
+        console.log("### questions for survey", { surveyId, source })
+        return this.surveyById[surveyId].questions.map(
+          (questionId) => this.questionById[questionId]
+        )
+      }
     },
     getQuestionsFromIdList() {
       return (questionIds: number[]) =>
@@ -38,39 +44,63 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         }) as Question[]
     },
     getQuestionnaireQuestionByPillarName() {
-      return (pillarName: string): Question[] => {
-        return this.questions.filter((question: Question) => {
+      return (surveyId: number, pillarName: string): Question[] => {
+        return this.questionsForSurvey(surveyId, "getQuestionnaireQuestionByPillarName").filter((question: Question) => {
           return pillarName === question.pillarName
         }) as Question[]
       }
-    },
+    }
   },
   actions: {
-    getPillarNameById(pillarId) {
-      return Object.keys(this.pillarByName).find(
-        (key) => this.pillarByName[key].id === pillarId
-      )
+    getPillarNameById(pillarId: number) {
+      return this.pillarById[pillarId].name
     },
-    async getQuestionnaireStructure() {
-      const { data, error } = await useApiGet<FullPillar[]>(
-        "questionnaire-structure/"
+    async getSurvey(surveyId: number) {
+      const { data, error } = await useApiGet<Survey[]>(
+        `surveys/${surveyId}/`, "", `survey-${surveyId}`
       )
       if (!error.value) {
-        this.pillarByName = {}
-        this.markerById = {}
-        this.criteriaById = {}
-        for (const pillar of data.value) {
-          this.pillarByName[pillar.name] = pillar
+        const survey: Survey = data.value!
+        for (const pillar of survey.pillars) {
+          this.pillarById[pillar.id] = pillar
           for (const marker of pillar.markers) {
             this.markerById[marker.id] = marker
             for (const criteria of marker.criterias) {
               this.criteriaById[criteria.id] = criteria
-              this.criteriaById[criteria.id].explanatory = JSON.parse(
-                criteria.explanatory as string
-              ).map((obj) => obj.value)
             }
           }
         }
+        this.surveyById[survey.id] = survey
+
+      } else {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+      }
+    },
+    async getSurveys() {
+      const { data, error } = await useApiGet<Survey[]>(
+        "surveys/"
+      )
+      if (!error.value) {
+        this.surveyById = {}
+        this.pillarById = {}
+        this.markerById = {}
+        this.criteriaById = {}
+        for (const survey of data.value) {
+          for (const pillar of survey.pillars) {
+            this.pillarById[pillar.id] = pillar
+            for (const marker of pillar.markers) {
+              this.markerById[marker.id] = marker
+              for (const criteria of marker.criterias) {
+                this.criteriaById[criteria.id] = criteria
+              }
+            }
+          }
+          this.surveyById[survey.id] = survey
+        }
+        console.log("### got surveys")
+        await this.getQuestionnaireQuestions()
+        console.log("### got questions")
       } else {
         const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
@@ -85,17 +115,37 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         errorStore.setError(error.value.data?.messageCode)
         return false
       }
-      this.orderedQuestionIds = []
-
-      for (const question of data.value) {
-        this.questionById[question.id] = question
-        this.orderedQuestionIds.push(question.id)
+      for (const surveyId of Object.keys(this.surveyById)) {
+        this.surveyById[+surveyId].questions = []
       }
+
+      for (const question of data.value!) {
+        this.questionById[question.id] = question
+        this.surveyById[question.surveyId].questions.push(question.id)
+      }
+      return true
+    },
+    async getQuestionsForSurvey(surveyId: number) {
+      const { data, error } = await useApiGet<Question[]>(
+        `surveys/${surveyId}/questions/`
+      )
+      if (error.value) {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+        return false
+      }
+      const orderedQuestionIds = []
+
+      for (const question of data.value!) {
+        this.questionById[question.id] = question
+        orderedQuestionIds.push(question.id)
+      }
+      this.surveyById[surveyId].questions = orderedQuestionIds
       return true
     },
     getHierarchicalQuestionStructure({
       question,
-      questionId,
+      questionId
     }: {
       question?: Question
       questionId?: number
@@ -108,13 +158,16 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
 
       const criteria = this.criteriaById[currentQuestion.criteriaId]
       const marker = this.markerById[criteria.markerId]
-      const hierarchicalQuestionStructure: HierarchicalQuestionStructure = {
+      const pillar = this.pillarById[marker.pillarId]
+      const survey = this.surveyById[pillar.surveyId]
+      return {
         criteriaId: criteria.id,
         markerId: marker.id,
         pillarId: marker.pillarId,
         pillarName: marker.pillarName,
+        surveyName: survey.name,
+        surveyId: survey.id
       }
-      return hierarchicalQuestionStructure
-    },
-  },
+    }
+  }
 })

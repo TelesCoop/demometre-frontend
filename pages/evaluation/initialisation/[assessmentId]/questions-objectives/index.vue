@@ -15,13 +15,22 @@
           pageStore.evaluationInitiationPage.objectiveQuestionsCallToAction
         }}</span>
         <span class="icon">
-          <icon v-if="isLoading" size="20" name="loader-2-line" />
-          <icon v-else size="20" name="arrow-right-line" />
+          <icon
+            v-if="isLoading"
+            size="20"
+            name="loader-2-line"
+          />
+          <icon
+            v-else
+            size="20"
+            name="arrow-right-line"
+          />
         </span>
       </button>
-      <span v-if="isLoading" class="is-size-7 has-text-shade-600"
-        >en cours de chargement</span
-      >
+      <span
+        v-if="isLoading"
+        class="is-size-7 has-text-shade-600"
+      >en cours de chargement</span>
       <!-- <ButtonsArrowButton class="arrow-button-fixed is-left" @click.prevent="goBack" color="no-pillar" /> -->
     </div>
   </PageSection>
@@ -34,7 +43,7 @@ import { usePageStore } from "~/stores/pageStore"
 definePageMeta({
   title: "Initialisation",
   step: "initialization-objectives-questions",
-  middleware: ["assessment", "user-step"],
+  middleware: ["assessment", "user-step"]
 })
 
 const pageStore = usePageStore()
@@ -51,8 +60,9 @@ const isLoading = ref(false)
 //   // )
 // }
 
-const goToFirstObjectiveQuestion = () => {
+const goToFirstObjectiveQuestion = async () => {
   isLoading.value = true
-  useInitializationJourney().goToNextQuestion(undefined)
+  const journey = await useInitializationJourney()
+  journey.goToNextQuestion(undefined)
 }
 </script>

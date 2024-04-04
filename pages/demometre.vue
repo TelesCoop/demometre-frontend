@@ -180,8 +180,8 @@
             <template v-if="criteriaProps.criteria.explanatory">
               <Accordion
                 v-for="explanatory of criteriaProps.criteria.explanatory"
-                :id="explanatory.title"
-                :key="explanatory.title"
+                :id="explanatory.value.title"
+                :key="explanatory.value.title"
                 :initially-open="true"
               >
                 <template #title>
@@ -189,7 +189,7 @@
                     class="subtitle has-text-weight-bold mb-1"
                     :class="`has-text-${colorClass}-dark`"
                   >
-                    {{ explanatory.title }}
+                    {{ explanatory.value.title }}
                   </h3>
                 </template>
                 <template #content>
@@ -248,7 +248,7 @@ import { MEDIA_BASE_URL } from "~/composables/api"
 
 definePageMeta({
   title: "DémoMètre",
-  breadcrumb: "DémoMètre",
+  breadcrumb: "DémoMètre"
 })
 
 const router = useRouter()
@@ -271,8 +271,8 @@ const activeQuestionId = computed<number>(() => {
 
 watch(activeQuestionId, () => {
   const pillar =
-    questionnaireStore.pillarByName[
-      questionnaireStore.questionById[activeQuestionId.value]?.pillarName
+    questionnaireStore.pillarById[
+      questionnaireStore.questionById[activeQuestionId.value]?.pillarId
     ]
   onSelectPillar(pillar)
 })
@@ -309,8 +309,8 @@ const onRosetteMarkerClicked = (markerId) => {
 
 if (activeQuestionId.value) {
   const pillar =
-    questionnaireStore.pillarByName[
-      questionnaireStore.questionById[activeQuestionId.value]?.pillarName
+    questionnaireStore.pillarById[
+      questionnaireStore.questionById[activeQuestionId.value]?.pillarId
     ]
   onSelectPillar(pillar)
 }
@@ -318,15 +318,15 @@ if (activeQuestionId.value) {
 
 <style scoped lang="sass">
 .buttons .button
-    height: fit-content
+  height: fit-content
 
 img
-    width: 100%
-    object-fit: cover
+  width: 100%
+  object-fit: cover
 
 @include touch
-    .rosette-menu
-        display: none
-    .rosette-legend
-        display: none
+  .rosette-menu
+    display: none
+  .rosette-legend
+    display: none
 </style>

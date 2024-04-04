@@ -104,6 +104,7 @@
             <thead>
               <tr>
                 <th>Nom</th>
+                <th>Questionnaire</th>
                 <th>Date de création</th>
                 <th>Rôle</th>
                 <th>Échelon</th>
@@ -122,6 +123,7 @@
                 @click="selectAssessment(assessment.id)"
               >
                 <td>{{ assessment.name }}</td>
+                <td>{{ assessment.surveyName }}</td>
                 <td>{{ new Date(assessment.created).toLocaleDateString() }}</td>
                 <td>
                   {{ PARTICIPANT_TYPE[assessment.details.role] || "participant - non encore rempli" }}
@@ -136,7 +138,7 @@
                     >Redevance impayée</span>
                   </template>
                 </td>
-                <td>{{ assessment.localityType === "intercommunality" ? "EPCI" : "Commune" }}</td>
+                <td>{{ LOCALITY_TYPE[assessment.localityType] }}</td>
                 <td>{{ assessment.collectivityName }}</td>
                 <td>France</td>
                 <td>
@@ -160,8 +162,9 @@
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useUserStore } from "~/stores/userStore"
-import { PARTICIPANT_TYPE } from "~/utils/constants"
+import { LOCALITY_TYPE, PARTICIPANT_TYPE } from "~/utils/constants"
 import { useParticipationStore } from "~/stores/participationStore"
+import { Assessment } from "~/composables/types"
 
 definePageMeta({
   title: "Mon compte",
@@ -178,7 +181,7 @@ const showEditUserInfoModal = ref(false)
 
 const currentAssessments = computed(() => assessmentStore.assessments.filter(ass => ass.isCurrent))
 const finishedAssessments = computed(() => assessmentStore.assessments.filter(ass => !ass.isCurrent))
-const selectedAssessments = computed(() => isCurrentAssessmentsTab.value ? currentAssessments.value : finishedAssessments.value)
+const selectedAssessments = computed<Assessment[]>(() => isCurrentAssessmentsTab.value ? currentAssessments.value : finishedAssessments.value)
 
 const selectAssessment = (assessmentId: number) => {
   router.push(`/compte/evaluation/${assessmentId}`)

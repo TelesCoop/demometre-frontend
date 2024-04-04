@@ -17,16 +17,23 @@
           class="is-family-secondary"
           :rich-text="question.description"
           :color="props.color"
-        ></RichText>
+        />
         <section
           id="menu"
           class="section container is-tight pb-0 pt-0 mt-1"
           :class="`menu is-${color}`"
           style="width: 100%"
         >
-          <div v-if="tabs.length > 1" class="tabs" style="width: 100%">
+          <div
+            v-if="tabs.length > 1"
+            class="tabs"
+            style="width: 100%"
+          >
             <ul>
-              <li v-for="tab of tabs" :key="tab.id">
+              <li
+                v-for="tab of tabs"
+                :key="tab.id"
+              >
                 <a
                   class="tab is-size-6"
                   :class="[
@@ -34,14 +41,16 @@
                     tab.id === currentTabId ? `is-active` : ``,
                   ]"
                   @click="setTab(tab.id)"
-                  >{{ tab.label }}</a
-                >
+                >{{ tab.label }}</a>
               </li>
             </ul>
           </div>
           <div>
             <!-- TAB : definitions -->
-            <div v-show="currentTabId === 'definitions'" v-if="definitions">
+            <div
+              v-show="currentTabId === 'definitions'"
+              v-if="definitions"
+            >
               <div
                 v-for="definition of definitions"
                 :key="definition.id"
@@ -59,9 +68,9 @@
             <!-- TAB : explanations -->
             <div
               v-for="element of explanatory"
-              :key="element.title.replace(/\s+/g, '')"
+              :key="element.value.title.replace(/\s+/g, '')"
             >
-              <div v-show="currentTabId === element.title.replace(/\s+/g, '')">
+              <div v-show="currentTabId === element.value.title.replace(/\s+/g, '')">
                 <RichText
                   :rich-text="element.description"
                   :color="props.color"
@@ -112,7 +121,7 @@
                     :response-choices="question.responseChoices"
                     :max-multiple-choices="
                       question.maxMultipleChoices ||
-                      question.responseChoices.length
+                        question.responseChoices.length
                     "
                     :color="props.color"
                     :question-id="questionId"
@@ -148,8 +157,16 @@
                     >
                       <span>Valider</span>
                       <i class="icon">
-                        <Icon v-if="isLoading" size="20" name="loader-2-line" />
-                        <Icon v-else size="20" name="check" />
+                        <Icon
+                          v-if="isLoading"
+                          size="20"
+                          name="loader-2-line"
+                        />
+                        <Icon
+                          v-else
+                          size="20"
+                          name="check"
+                        />
                       </i>
                     </button>
                     <button
@@ -162,18 +179,25 @@
                       class="button is-outlined is-rounded mr-0_75"
                       type="submit"
                     >
-                      <span class="is-hidden-mobile"
-                        >Je ne sais pas / Je passe</span
-                      >
+                      <span class="is-hidden-mobile">Je ne sais pas / Je passe</span>
                       <span class="is-hidden-tablet">Je passe</span>
                       <i class="icon">
-                        <Icon v-if="isLoading" size="20" name="loader-2-line" />
-                        <Icon v-else size="20" name="arrow-right-line" />
+                        <Icon
+                          v-if="isLoading"
+                          size="20"
+                          name="loader-2-line"
+                        />
+                        <Icon
+                          v-else
+                          size="20"
+                          name="arrow-right-line"
+                        />
                       </i>
                     </button>
-                    <span v-if="isLoading" class="is-size-7 has-text-shade-600"
-                      >en cours de chargement</span
-                    >
+                    <span
+                      v-if="isLoading"
+                      class="is-size-7 has-text-shade-600"
+                    >en cours de chargement</span>
                     <span
                       v-else-if="canPressEnter()"
                       class="is-size-7 is-hidden-mobile"
@@ -187,7 +211,10 @@
                       <span class="has-text-weight-bold">Entrer ⏎</span>
                     </span>
                   </div>
-                  <div v-if="props.isQuestionnaire" class="is-flex buttons">
+                  <div
+                    v-if="props.isQuestionnaire"
+                    class="is-flex buttons"
+                  >
                     <NuxtLink
                       :to="`/resultats/${assessmentStore.currentAssessmentId}?question=${question.id}`"
                       :class="`is-${props.color}`"
@@ -198,7 +225,10 @@
                       <span class="is-hidden-mobile">Voir les résultats</span>
                       <span class="is-hidden-tablet">Résultats</span>
                       <span class="icon">
-                        <Icon size="20" name="bar-chart-line" />
+                        <Icon
+                          size="20"
+                          name="bar-chart-line"
+                        />
                       </span>
                     </NuxtLink>
                     <NuxtLink
@@ -209,7 +239,10 @@
                       target="_blank"
                     >
                       <i class="icon">
-                        <Icon size="16" name="question-mark" />
+                        <Icon
+                          size="16"
+                          name="question-mark"
+                        />
                       </i>
                     </NuxtLink>
                   </div>
@@ -220,7 +253,7 @@
             <ButtonsArrowButton
               v-if="
                 !props.context.journey.isFirstQuestion(question.id) ||
-                props.context.hasPreviousStep
+                  props.context.hasPreviousStep
               "
               class="arrow-button-fixed is-left"
               :color="props.color"
@@ -237,7 +270,10 @@
       </form>
     </section>
   </div>
-  <div v-else style="text-align: center">
+  <div
+    v-else
+    style="text-align: center"
+  >
     <Loader :color="props.color" />
   </div>
 </template>
@@ -248,10 +284,10 @@ import {
   Definition,
   QuestionContextProps,
   SurveyType,
-  SimpleBlock,
+  SimpleBlock
 } from "~/composables/types"
 import { computed, PropType, watch } from "vue"
-import { ref } from "@vue/reactivity"
+import { ref } from "vue"
 import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getQuestionResponseValue } from "~/utils/question-response"
@@ -264,8 +300,10 @@ const props = defineProps({
   questionId: { type: Number, required: true },
   context: { type: Object as PropType<QuestionContextProps>, required: true },
   color: { type: String, required: true },
-  isQuestionnaire: { type: Boolean, required: true },
+  isQuestionnaire: { type: Boolean, required: true }
 })
+
+console.log("### question setup", { questionId: props.questionId, context: props.context })
 
 const participationStore = useParticipationStore()
 const assessmentStore = useAssessmentStore()
@@ -318,20 +356,21 @@ const definitions = computed<{ [key: number]: Definition }>(() =>
 const tabs = ref<tabDef[]>([])
 tabs.value.push({
   label: "Réponses",
-  id: "responses",
+  id: "responses"
 })
 if (criteria.value?.definitionIds.length > 0) {
   tabs.value.push({
     label: "Définitions",
-    id: "definitions",
+    id: "definitions"
   })
 }
 const explanatory = (criteria.value?.explanatory || []) as SimpleBlock[]
 if (explanatory.length) {
+  console.log("### explanatory", { explanatory })
   explanatory.forEach((element) => {
     tabs.value.push({
-      label: `${element.title}`,
-      id: `${element.title.replace(/\s+/g, "")}`,
+      label: `${element.value.title}`,
+      id: `${element.value.title?.replace(/\s+/g, "")}`
     })
   })
 }
@@ -385,11 +424,13 @@ usePressEnter(submit, canPressEnter)
   position: relative
   flex-wrap: wrap
   row-gap: 1rem
+
   .absolute-centered
     position: absolute
     top: 50%
     left: 50%
     transform: translate(-50%, -50%)
+
 .buttons .round, .button.round
   height: 40px
   width: 40px
@@ -399,13 +440,16 @@ usePressEnter(submit, canPressEnter)
 .tabs
   ul
     border-bottom-color: var(--color)
+
   .tab
     color: var(--color-hover)
     border-bottom-color: var(--color)
     padding: 0.5em 1.5em 0.5em 0em
+
     &.is-active
       color: var(--color-dark)
       border-bottom-color: var(--color-dark)
+
     &:hover
       color: var(--color-active)
       border-bottom-color: var(--color-active)

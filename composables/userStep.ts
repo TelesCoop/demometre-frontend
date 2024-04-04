@@ -12,7 +12,6 @@ const RESUME_EVALUATION_TEXT = "Reprendre l'évaluation"
 export function useUserStep() {
   const assessmentStore = useAssessmentStore()
   const participationStore = useParticipationStore()
-  const profilingJourney = useProfilingJourney()
 
   const state = computed(() => {
     if (!assessmentStore.currentAssessmentId) {
@@ -76,6 +75,7 @@ export function useUserStep() {
       const lastAnsweredQuestionId = getLastAnsweredProfilingQuestionId()
 
       // If there is a participation but the profiling is not completed
+      const profilingJourney = useProfilingJourney()
       const questionId = profilingJourney.nextQuestionId(
         lastAnsweredQuestionId,
         true

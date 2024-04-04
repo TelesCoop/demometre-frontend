@@ -151,7 +151,7 @@
 
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
-import { Localities, LocalityType } from "~/composables/types"
+import { Localities, Locality, LocalityType, SurveysResult } from "~/composables/types"
 import { usePageStore } from "~/stores/pageStore"
 import { usePressEnter } from "~/composables/pressEnter"
 
@@ -169,24 +169,36 @@ if (!pageStore.evaluationInitiationPage.searchAssessmentTitle) {
 }
 
 const zipCode = ref("")
-const localityTypeSelected = ref<string>()
+const localityTypeSelected = ref<"region" | "municipality" | "intercommunality">()
 const localityId = ref<number>()
 const localities = ref<Localities>({
   municipality: [],
   intercommunality: []
 })
+const regions = ref<Locality[]>([])
 const searched = ref<number>(0)
-const localitiesToShow = computed(() =>
-  localityTypeSelected.value
-    ? localities.value[localityTypeSelected.value]
-    : Object.values(localities.value).flat()
-)
-const disabled = computed(() => (localityId.value ? false : true))
+const localitiesToShow = computed(() => {
+  if (!localityTypeSelected.value) {
+    console.log("###", Object.values(localities.value), [...Object.values(localities.value), regions.value])
+    return [...Object.values(localities.value), regions.value].flat()
+  }
+  if (localityTypeSelected.value === "region") {
+    return regions.value
+  } else {
+    return localities.value[localityTypeSelected.value]
+  }
+})
+const disabled = computed(() => (!localityId.value))
 
 const assessmentStore = useAssessmentStore()
 
 async function searchLocalities() {
-  localities.value = await assessmentStore.getLocalities(zipCode.value)
+  const res: SurveysResult | null = await assessmentStore.getSurveysForZipCode(zipCode.value)
+  if (!res) {
+    return
+  }
+  localities.value = res.city
+  regions.value = res.region
   searched.value = 1
   localityId.value = undefined
 }

@@ -3,7 +3,7 @@ import {
   Assessment, AssessmentDocumentType,
   Localities,
   RepresentativityCriteria,
-  Scores,
+  Scores, SurveyLocality, SurveysResult,
   User
 } from "~/composables/types"
 import { useApiDelete, useApiGet, useApiPost } from "~/composables/api"
@@ -30,7 +30,7 @@ export const useAssessmentStore = defineStore("assessment", {
     newAssessment: <Assessment>{}
   }),
   getters: {
-    assessmentTypeTitle() {
+    assessmentTypeTitle(): string {
       return (
         "de " +
         (this.currentAssessment?.municipality
@@ -64,12 +64,19 @@ export const useAssessmentStore = defineStore("assessment", {
       )
     },
     userHasSingleAssessment() {
-      return Object.values(this.assessmentById).length < 2
+      return Object.values(this.assessmentById).length == 1
     },
     municipalityAssessments() {
       return this.assessments.find(
         (assessment: Assessment) => assessment.localityType === "municipality"
       )
+    },
+    representativityCriteriasForSurveyLocality() {
+      return (surveyLocality: SurveyLocality) => {
+        return this.representativityCriterias.filter(
+          (criteria) => criteria.surveyLocality === surveyLocality
+        )
+      }
     },
     userIsAssessmentInitiator() {
       return (
@@ -212,13 +219,14 @@ export const useAssessmentStore = defineStore("assessment", {
       }
       return true
     },
-    async getLocalities(zipCode) {
-      const { data, error } = await useApiGet<Localities>(
-        `localites/by-zip-code/${parseInt(zipCode.replace(" ", ""))}/`
+    async getSurveysForZipCode(zipCode: string) {
+      const { data, error } = await useApiGet<SurveysResult>(
+        `surveys/by-zip-code/${parseInt(zipCode.replace(" ", ""))}/`
       )
       if (error.value) {
         const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
+        return null
       }
       return data.value
     },

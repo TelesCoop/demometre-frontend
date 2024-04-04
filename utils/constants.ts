@@ -44,3 +44,9 @@ export const WORKSHOP_MEDIUM = {
   "online": "En ligne",
   "paper": "Sur papier"
 }
+export const LOCALITY_TYPE = {
+  municipality: "Commune",
+  intercommunality: "Intercommunalité",
+  department: "Département",
+  region: "Région"
+}
