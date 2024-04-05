@@ -14,7 +14,7 @@
 import { useQuestionnaireJourney } from "~/composables/journey"
 import { useParticipationStore } from "~/stores/participationStore"
 import { QuestionContextProps, PillarParams } from "~/composables/types"
-import { Ref, ref } from "@vue/reactivity"
+import { Ref, ref } from "vue"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 
 definePageMeta({
@@ -30,10 +30,10 @@ const participationStore = useParticipationStore()
 
 const questionId: Ref<number> = ref(+route.params.questionId)
 let pillarName = questionnaireStore.questionById[questionId.value].pillarName
-let journey = useQuestionnaireJourney(pillarName)
+let journey = await useQuestionnaireJourney(pillarName)
 const color = computed<string>(() => PillarParams[pillarName].color)
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
   // This function is call each time the url change and this page is loaded in the client side
   if (
     +to.params.questionId &&
@@ -41,7 +41,7 @@ router.beforeEach((to) => {
   ) {
     questionId.value = +to.params.questionId
     pillarName = questionnaireStore.questionById[questionId.value].pillarName
-    journey = useQuestionnaireJourney(pillarName)
+    journey = await useQuestionnaireJourney(pillarName)
   }
 })
 

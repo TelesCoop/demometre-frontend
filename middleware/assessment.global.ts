@@ -1,7 +1,9 @@
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { useParticipationStore } from "~/stores/participationStore"
 
 async function verifyAssessment(to) {
   const assessmentStore = useAssessmentStore()
+  const participationStore = useParticipationStore()
   const assessmentId = to.params.assessmentId || to.query.assessment
   if (assessmentId) {
     assessmentStore.currentAssessmentId = parseInt(assessmentId)
@@ -9,12 +11,19 @@ async function verifyAssessment(to) {
     if (!assessmentStore.currentAssessment) {
       await assessmentStore.getAssessment(assessmentId)
     }
+    if (!participationStore.currentParticipationId || participationStore.currentParticipationId === -1) {
+      console.log("### set participation from assessment and load assessment responses")
+      await Promise.all([
+        participationStore.getParticipationForAssessment(assessmentId),
+        participationStore.loadAssessment(assessmentId),
+      ])
+    }
   }
 
   // Load data if f5
-  if (process.server) {
-    await assessmentStore.getAssessment(assessmentId)
-  }
+  // if (process.server) {
+  //   await assessmentStore.getAssessment(assessmentId)
+  // }
   // if (
   //   !assessmentStore.currentAssessment?.initializationDate &&
   //   to.path !== "/evaluation/initialisation"

@@ -143,6 +143,7 @@
 import { useUserStore } from "~/stores/userStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { isQuestionnaireRouteFromPath } from "~/utils/util"
 
 const emit = defineEmits<{
   (e: "change-header-height", value: number): void
@@ -164,7 +165,7 @@ const isEvaluationRoute = computed(() => {
 })
 
 const isQuestionnaireRoute = computed(() => {
-  const isQuestionnaireRoute = route.path.includes("evaluation/questionnaire")
+  const isQuestionnaireRoute = isQuestionnaireRouteFromPath(route.path)
   emit("change-header-height", isQuestionnaireRoute ? 125 : 75)
   return isQuestionnaireRoute
 })
@@ -176,24 +177,24 @@ const activePillar = computed(() => {
 const navItems = [
   {
     name: "Accueil",
-    to: "/"
+    to: "/",
   },
   {
     name: "DémoMètre",
-    to: "/demometre"
+    to: "/demometre",
   },
   {
     name: "Utilisations possibles",
-    to: "/utilisations-possibles"
+    to: "/utilisations-possibles",
   },
   {
     name: "Résultats",
-    to: "/resultats"
+    to: "/resultats",
   },
   {
     name: "Le projet",
-    to: "/projet"
-  }
+    to: "/projet",
+  },
 ]
 
 function closeMenu() {

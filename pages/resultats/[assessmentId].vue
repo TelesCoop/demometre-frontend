@@ -19,7 +19,10 @@
           >
             <span>En savoir plus sur le DémoMètre</span>
             <span class="icon">
-              <icon size="20" name="arrow-right-line" />
+              <icon
+                size="20"
+                name="arrow-right-line"
+              />
             </span>
           </nuxt-link>
         </div>
@@ -117,12 +120,14 @@
                   </span>
                 </a>
               </div>
-              <p class="is-uppercase is-size-6bis mb-0_5 mt-2">Résultat</p>
+              <p class="is-uppercase is-size-6bis mb-0_5 mt-2">
+                Résultat
+              </p>
               <AnalyticsChartByQuestionType
                 :color="colorClass"
                 :assessment-id="assessmentId"
                 :question="questionnaireStore.questionById[questionId]"
-              ></AnalyticsChartByQuestionType>
+              />
             </QuestionnaireQuestionStatement>
           </template>
           <template #marker="markerProps">
@@ -159,7 +164,7 @@
     <div class="container">
       <ParticipationBoard
         :assessment="assessmentStore.assessmentById[assessmentId]"
-      ></ParticipationBoard>
+      />
     </div>
   </div>
 </template>
@@ -191,7 +196,7 @@ const route = useRoute()
 const assessmentId: Ref<number> = ref(+route.params.assessmentId)
 const changeSelectedQuestion = ref<number>(0)
 const activeQuestionId: Ref<number> = ref(
-  parseInt(route.query.question as string)
+  parseInt(route.query.question as string),
 )
 
 if (!assessmentStore.assessmentById[assessmentId.value]?.name) {
@@ -204,9 +209,9 @@ if (!profilingStore.roles.length) {
   profilingStore.getRoles()
 }
 
-const pillarOfQuestionId = (questionId) => {
-  return questionnaireStore.pillarByName[
-    questionnaireStore.questionById[questionId].pillarName
+const pillarOfQuestionId = (questionId: number) => {
+  return questionnaireStore.pillarById[
+    questionnaireStore.questionById[questionId].pillarId
   ]
 }
 const changeActiveQuestionId = () => {
@@ -221,20 +226,20 @@ watch(
   () => {
     activeQuestionId.value = parseInt(route.query.question as string)
     changeActiveQuestionId()
-  }
+  },
 )
 watch(changeSelectedQuestion, () => {
   changeActiveQuestionId()
 })
 
 const colorClass = computed(() =>
-  activePillar.value ? PillarParams[activePillar.value.name].color : ""
+  activePillar.value ? PillarParams[activePillar.value.name].color : "",
 )
 
 const onSelectPillar = (pillar, cleanUrl = false) => {
   activePillar.value = pillar
   markers.value = activePillar.value?.markerIds.map(
-    (markerId) => questionnaireStore.markerById[markerId]
+    (markerId) => questionnaireStore.markerById[markerId],
   )
   const query = cleanUrl
     ? { pillar: pillar.name }

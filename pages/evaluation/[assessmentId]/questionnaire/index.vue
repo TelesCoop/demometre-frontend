@@ -22,9 +22,9 @@
           :subtitle="
             userStore.isLoggedIn
               ? pageStore.evaluationQuestionnairePage
-                  .intermediateStepTextLoggedIn
+                .intermediateStepTextLoggedIn
               : pageStore.evaluationQuestionnairePage
-                  .intermediateStepTextLoggedOut
+                .intermediateStepTextLoggedOut
           "
         />
         <div class="buttons">
@@ -35,7 +35,10 @@
           >
             <span>Enregistrer</span>
             <span class="icon">
-              <icon size="20" name="save" />
+              <icon
+                size="20"
+                name="save"
+              />
             </span>
           </button>
           <nuxt-link
@@ -45,7 +48,10 @@
           >
             <span>Voir les résultats</span>
             <span class="icon">
-              <icon size="20" name="bar-chart-box-line" />
+              <icon
+                size="20"
+                name="bar-chart-box-line"
+              />
             </span>
           </nuxt-link>
         </div>
@@ -62,7 +68,10 @@
           @marker-click="onRosetteMarkerClicked($event)"
         />
         <!-- Pillar navigation for mobile  -->
-        <section ref="pillarsRef" class="columns is-multiline mt-4 list-menu">
+        <section
+          ref="pillarsRef"
+          class="columns is-multiline mt-4 list-menu"
+        >
           <div
             v-for="pillar of questionnaireStore.pillars"
             :key="pillar.name"
@@ -111,14 +120,14 @@ if (!pageStore.evaluationQuestionnairePage.startTitle) {
 }
 const rosetteButtonText = computed(() => {
   const total = Object.values(
-    participationStore.totalAndAnsweredQuestionsByPillarName
+    participationStore.totalAndAnsweredQuestionsByPillarName,
   ).reduce(
     (accum: any, total: any) => {
       accum.completed += total.completed ? 1 : 0
       accum.hasStarted = accum.hasStarted || total.answered > 0
       return accum
     },
-    { completed: 0, hasStarted: false }
+    { completed: 0, hasStarted: false },
   )
 
   if (total.completed === 4) {
@@ -131,8 +140,8 @@ const pillarsCompleted = computed(() =>
   Object.keys(participationStore.totalAndAnsweredQuestionsByPillarName).filter(
     (pillarName) =>
       participationStore.totalAndAnsweredQuestionsByPillarName[pillarName]
-        .completed
-  )
+        .completed,
+  ),
 )
 const pillarsWithoutQuestions = computed(() =>
   Object.keys(participationStore.totalAndAnsweredQuestionsByPillarName).filter(
@@ -140,8 +149,8 @@ const pillarsWithoutQuestions = computed(() =>
       participationStore.totalAndAnsweredQuestionsByPillarName[pillarName]
         .completed &&
       participationStore.totalAndAnsweredQuestionsByPillarName[pillarName]
-        .answered === 0
-  )
+        .answered === 0,
+  ),
 )
 
 const intermediateStepTitle = computed(() => {
@@ -152,16 +161,15 @@ const intermediateStepTitle = computed(() => {
   return `${pageStore.evaluationQuestionnairePage.intermediateStepTitle} ${pillarNames}`
 })
 
-const startPillar = (pillarName) => {
-  const { lastQuestionId, isLast } = getLastQuestionOfPillar(pillarName)
-  useQuestionnaireJourney(pillarName).goToNextQuestion(
-    isLast ? undefined : lastQuestionId
-  )
+const startPillar = async (pillarName: string) => {
+  const { lastQuestionId, isLast } = await getLastQuestionOfPillar(pillarName)
+  const journey = await useQuestionnaireJourney(pillarName)
+  journey.goToNextQuestion(isLast ? undefined : lastQuestionId)
 }
 
 const onStartQuestionnaire = () => {
   const pillarName = Object.keys(questionnaireStore.pillarByName).find(
-    (name) => !pillarsCompleted.value.includes(name)
+    (name) => !pillarsCompleted.value.includes(name),
   )
   startPillar(pillarName)
 }
@@ -176,8 +184,10 @@ const onRosetteMarkerClicked = (markerId) => {
 <style scoped lang="sass">
 .buttons .button
   height: fit-content
+
 .list-menu
   display: none
+
 @include mobile
   .rosette-menu
     display: none

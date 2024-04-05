@@ -15,7 +15,7 @@ import { useProfilingJourney } from "~/composables/journey"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { QuestionContextProps } from "~/composables/types"
-import { ref } from "@vue/reactivity"
+import { ref } from "vue"
 
 definePageMeta({
   title: "Affinage",
@@ -29,7 +29,7 @@ const router = useRouter()
 const questionId = ref(+route.params.questionId)
 
 router.beforeEach((to) => {
-  if (+to.params.questionId && route.path.includes("evaluation/affinage")) {
+  if (+to.params.questionId && route.path.includes("evaluation") && route.path.includes("affinage")) {
     questionId.value = +to.params.questionId
   }
 })

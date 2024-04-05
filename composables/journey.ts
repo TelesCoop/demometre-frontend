@@ -29,7 +29,7 @@ const QUESTION_FILTERS = {
     return (
       !question.profileIds?.length ||
       question.profileIds.some((profileId) =>
-        participation.profileIds.includes(profileId)
+        participation.profileIds.includes(profileId),
       )
     )
   },
@@ -38,14 +38,14 @@ const QUESTION_FILTERS = {
       !question.assessmentTypes ||
       question.assessmentTypes?.includes(assessment?.assessmentType)
     )
-  }
+  },
 }
 
 const QUESTION_FILTERS_VALUES = Object.values(QUESTION_FILTERS)
 
 const OPERATORS_STRATEGY = {
   or: "some",
-  and: "every"
+  and: "every",
 }
 
 const NUMERICAL_OPERATOR_STRATEGY = {
@@ -66,20 +66,20 @@ const NUMERICAL_OPERATOR_STRATEGY = {
   },
   "=": (x, y) => {
     return x === y
-  }
+  },
 }
 
 const RULES_STRATEGY = {
   unique_choice: ({ response }): boolean => {
     return Boolean(
-      rule.responseChoiceIds?.includes(response?.uniqueChoiceResponseId)
+      rule.responseChoiceIds?.includes(response?.uniqueChoiceResponseId),
     )
   },
   multiple_choice: ({ rule, response }): boolean => {
     return Boolean(
       rule.responseChoiceIds?.some((item) =>
-        response?.multipleChoiceResponseIds?.includes(item)
-      )
+        response?.multipleChoiceResponseIds?.includes(item),
+      ),
     )
   },
   boolean: ({ rule, response }): boolean => {
@@ -89,13 +89,13 @@ const RULES_STRATEGY = {
     return Boolean(
       NUMERICAL_OPERATOR_STRATEGY[rule.numericalOperator]?.(
         response.percentageResponse,
-        rule.numericalValue
-      )
+        rule.numericalValue,
+      ),
     )
   },
   closed_with_scale: (): boolean => {
     return true
-  }
+  },
 }
 
 function isRelevant(question: Question, data) {
@@ -109,11 +109,11 @@ function isRelevant(question: Question, data) {
 
 export async function useProfilingJourney() {
   const vm = getCurrentInstance()
+  const assessmentStore = useAssessmentStore()
 
   const journey = computed(() => {
     const profilingStore = useProfilingStore()
     const participationStore = useParticipationStore()
-    const assessmentStore = useAssessmentStore()
     const participation = participationStore.participation
     const assessment = assessmentStore.currentAssessment
     const responseByQuestionId =
@@ -122,7 +122,7 @@ export async function useProfilingJourney() {
       .filter((questionId) => {
         const question = profilingStore.questionById[questionId]
         return QUESTION_FILTERS_VALUES.every((test) =>
-          test({ question, participation, assessment })
+          test({ question, participation, assessment }),
         )
       })
       .filter((questionId) => {
@@ -133,7 +133,7 @@ export async function useProfilingJourney() {
   })
   const nextQuestionId = (
     currentQuestionId: number,
-    nextQuestion: boolean
+    nextQuestion: boolean,
   ): number => {
     const myJourney = journey.value
     const index = myJourney.indexOf(currentQuestionId)
@@ -142,17 +142,17 @@ export async function useProfilingJourney() {
 
   const goToNextQuestion = (currentQuestionId: number) => {
     if (isLastQuestion(currentQuestionId)) {
-      useRouter().push("/evaluation/affinage/validation")
+      useRouter().push(`/evaluation/${assessmentStore.currentAssessmentId}/affinage/validation`)
     } else {
       const questionId = nextQuestionId(currentQuestionId, true)
-      useRouter().push(`/evaluation/affinage/${questionId}`)
+      useRouter().push(`/evaluation/${assessmentStore.currentAssessmentId}/affinage/${questionId}`)
     }
   }
 
   const goToPreviousQuestion = (currentQuestionId: number) => {
     if (!isFirstQuestion(currentQuestionId)) {
       const questionId = nextQuestionId(currentQuestionId, false)
-      useRouter().push(`/evaluation/affinage/${questionId}`)
+      useRouter().push(`/evaluation/${assessmentStore.currentAssessmentId}/affinage/${questionId}`)
     }
   }
 
@@ -178,28 +178,27 @@ export async function useProfilingJourney() {
     goToPreviousQuestion,
     isLastQuestion,
     isFirstQuestion,
-    surveyType
+    surveyType,
   }
 }
 
 export async function useQuestionnaireJourney(pillarName: string) {
+  const assessmentStore = useAssessmentStore()
 
   const journey = computed(() => {
     const questionnaireStore = useQuestionnaireStore()
     const participationStore = useParticipationStore()
-    const assessmentStore = useAssessmentStore()
     const userStore = useUserStore()
 
     const participation = participationStore.participation
     const assessment = assessmentStore.currentAssessment
-
 
     const questionIds = questionnaireStore
       .getQuestionnaireQuestionByPillarName(assessment.surveyId, pillarName)
       .filter((question: Question) => {
         return (
           QUESTION_FILTERS_VALUES.every((test) =>
-            test({ question, participation, assessment })
+            test({ question, participation, assessment }),
           ) &&
           (question.objectivity === Objectivity.SUBJECTIVE ||
             userStore.isLoggedIn)
@@ -210,7 +209,7 @@ export async function useQuestionnaireJourney(pillarName: string) {
   })
   const nextQuestionId = (
     currentQuestionId: number,
-    nextQuestion: boolean
+    nextQuestion: boolean,
   ): number => {
     const myJourney = journey.value
     const index = myJourney.indexOf(currentQuestionId)
@@ -219,24 +218,24 @@ export async function useQuestionnaireJourney(pillarName: string) {
 
   const goToNextQuestion = (currentQuestionId: number) => {
     if (isLastQuestion(currentQuestionId)) {
-      useRouter().push("/evaluation/questionnaire")
+      useRouter().push(`/evaluation/${assessmentStore.currentAssessmentId}/questionnaire`)
     } else {
       const questionId = nextQuestionId(currentQuestionId, true)
       useRouter().push({
-        path: `/evaluation/questionnaire/${questionId}`,
-        query: { pillar: pillarName }
+        path: `/evaluation/${assessmentStore.currentAssessmentId}/questionnaire/${questionId}`,
+        query: { pillar: pillarName },
       })
     }
   }
 
   const goToPreviousQuestion = (currentQuestionId: number) => {
     if (isFirstQuestion(currentQuestionId)) {
-      useRouter().push("/evaluation/questionnaire")
+      useRouter().push(`/evaluation/${assessmentStore.currentAssessmentId}/questionnaire`)
     } else {
       const questionId = nextQuestionId(currentQuestionId, false)
       useRouter().push({
-        path: `/evaluation/questionnaire/${questionId}`,
-        query: { pillar: pillarName }
+        path: `/evaluation/${assessmentStore.currentAssessmentId}/questionnaire/${questionId}`,
+        query: { pillar: pillarName },
       })
     }
   }
@@ -263,7 +262,7 @@ export async function useQuestionnaireJourney(pillarName: string) {
     goToPreviousQuestion,
     isLastQuestion,
     isFirstQuestion,
-    surveyType
+    surveyType,
   }
 }
 
@@ -281,12 +280,12 @@ export async function useInitializationJourney() {
           QUESTION_FILTERS.population({
             question,
             participation,
-            assessment
+            assessment,
           }) &&
           QUESTION_FILTERS.assessmentType({
             question,
             participation,
-            assessment
+            assessment,
           }) &&
           question.objectivity === Objectivity.OBJECTIVE
         )
@@ -295,7 +294,7 @@ export async function useInitializationJourney() {
   })
   const nextQuestionId = (
     currentQuestionId: number,
-    nextQuestion: boolean
+    nextQuestion: boolean,
   ): number => {
     const myJourney = journey.value
     const index = myJourney.indexOf(currentQuestionId)
@@ -306,12 +305,12 @@ export async function useInitializationJourney() {
     const assessmentStore = useAssessmentStore()
     if (isLastQuestion(currentQuestionId)) {
       useRouter().push({
-        path: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/validation`
+        path: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/validation`,
       })
     } else {
       const questionId = nextQuestionId(currentQuestionId, true)
       useRouter().push({
-        path: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives/${questionId}`
+        path: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives/${questionId}`,
       })
     }
   }
@@ -320,12 +319,12 @@ export async function useInitializationJourney() {
     const assessmentStore = useAssessmentStore()
     if (isFirstQuestion(currentQuestionId)) {
       useRouter().push(
-        `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives`
+        `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives`,
       )
     } else {
       const questionId = nextQuestionId(currentQuestionId, false)
       useRouter().push({
-        path: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives/${questionId}`
+        path: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives/${questionId}`,
       })
     }
   }
@@ -352,21 +351,21 @@ export async function useInitializationJourney() {
     goToPreviousQuestion,
     isLastQuestion,
     isFirstQuestion,
-    surveyType
+    surveyType,
   }
 }
 
 export const getLastQuestionIdOfJourney = (responses, journey) => {
   const answeredQuestionIds = Object.keys(responses)
   const index = journey.findIndex(
-    (questionId) => !answeredQuestionIds.includes(questionId.toString())
+    (questionId) => !answeredQuestionIds.includes(questionId.toString()),
   )
 
   const isLast = index === -1
 
   return {
     lastQuestionId: isLast ? journey[journey.length] : journey[index - 1],
-    isLast: isLast
+    isLast: isLast,
   }
 }
 
@@ -376,16 +375,16 @@ export const getLastAnsweredProfilingQuestionId = () => {
 
   return getLastQuestionIdOfJourney(
     participationStore.responseByProfilingQuestionId,
-    profilingJourney.journey.value
+    profilingJourney.journey.value,
   ).lastQuestionId
 }
 
-export const getLastQuestionOfPillar = (pillarName: string) => {
+export const getLastQuestionOfPillar = async (pillarName: string) => {
   const participationStore = useParticipationStore()
-  const questionnaireJourney = useQuestionnaireJourney(pillarName)
+  const questionnaireJourney = await useQuestionnaireJourney(pillarName)
 
   return getLastQuestionIdOfJourney(
     participationStore.responseByQuestionnaireQuestionId,
-    questionnaireJourney.journey.value
+    questionnaireJourney.journey.value,
   )
 }

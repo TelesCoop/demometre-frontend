@@ -18,22 +18,21 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     orderedQuestionIds: <number[]>[],
     pillarById: <{ [key: string]: PillarType }>{},
     questionById: <{ [key: number]: Question }>{},
-    surveyById: <{ [key: number]: Survey }>{}
+    surveyById: <{ [key: number]: Survey }>{},
   }),
   getters: {
     getPillarByName(this) {
       return (pillarName: string) => Object.values(this.pillarById).find(
-        (pillar) => pillar.name === pillarName
+        (pillar) => pillar.name === pillarName,
       )
     },
     pillars(): PillarType[] {
       return Object.values(this.pillarById)
     },
     questionsForSurvey() {
-      return (surveyId: number, source: string): Question[] => {
-        console.log("### questions for survey", { surveyId, source })
+      return (surveyId: number): Question[] => {
         return this.surveyById[surveyId].questions.map(
-          (questionId) => this.questionById[questionId]
+          (questionId) => this.questionById[questionId],
         )
       }
     },
@@ -45,11 +44,11 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     },
     getQuestionnaireQuestionByPillarName() {
       return (surveyId: number, pillarName: string): Question[] => {
-        return this.questionsForSurvey(surveyId, "getQuestionnaireQuestionByPillarName").filter((question: Question) => {
+        return this.questionsForSurvey(surveyId).filter((question: Question) => {
           return pillarName === question.pillarName
         }) as Question[]
       }
-    }
+    },
   },
   actions: {
     getPillarNameById(pillarId: number) {
@@ -57,7 +56,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     },
     async getSurvey(surveyId: number) {
       const { data, error } = await useApiGet<Survey[]>(
-        `surveys/${surveyId}/`, "", `survey-${surveyId}`
+        `surveys/${surveyId}/`, "", `survey-${surveyId}`,
       )
       if (!error.value) {
         const survey: Survey = data.value!
@@ -79,7 +78,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     },
     async getSurveys() {
       const { data, error } = await useApiGet<Survey[]>(
-        "surveys/"
+        "surveys/",
       )
       if (!error.value) {
         this.surveyById = {}
@@ -108,7 +107,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     },
     async getQuestionnaireQuestions() {
       const { data, error } = await useApiGet<Question[]>(
-        `questionnaire-questions/`
+        `questionnaire-questions/`,
       )
       if (error.value) {
         const errorStore = useMessageStore()
@@ -127,7 +126,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     },
     async getQuestionsForSurvey(surveyId: number) {
       const { data, error } = await useApiGet<Question[]>(
-        `surveys/${surveyId}/questions/`
+        `surveys/${surveyId}/questions/`,
       )
       if (error.value) {
         const errorStore = useMessageStore()
@@ -145,7 +144,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     },
     getHierarchicalQuestionStructure({
       question,
-      questionId
+      questionId,
     }: {
       question?: Question
       questionId?: number
@@ -166,8 +165,8 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         pillarId: marker.pillarId,
         pillarName: marker.pillarName,
         surveyName: survey.name,
-        surveyId: survey.id
+        surveyId: survey.id,
       }
-    }
-  }
+    },
+  },
 })

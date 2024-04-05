@@ -26,7 +26,10 @@
             pageStore.evaluationQuestionnairePage.endOfProfilingCallToAction
           }}</span>
           <span class="icon">
-            <icon size="16" name="check" />
+            <icon
+              size="16"
+              name="check"
+            />
           </span>
         </button>
       </div>
@@ -37,6 +40,7 @@
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
 import { useParticipationStore } from "~/stores/participationStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 definePageMeta({
   title: "Affinage",
@@ -46,6 +50,7 @@ definePageMeta({
 
 const router = useRouter()
 const participationStore = useParticipationStore()
+const assessmentStore = useAssessmentStore()
 const pageStore = usePageStore()
 if (!pageStore.evaluationQuestionnairePage.endOfProfilingTitle) {
   pageStore.getEvaluationQuestionnairePage()
@@ -57,6 +62,6 @@ function goBack() {
 
 async function submit() {
   await participationStore.saveEndQuestionnaire(true)
-  useRouter().push("/evaluation/questionnaire")
+  useRouter().push(`/evaluation/${assessmentStore.currentAssessmentId}/questionnaire`)
 }
 </script>

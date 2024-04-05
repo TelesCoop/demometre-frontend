@@ -10,6 +10,8 @@ module.exports = {
     "vue/script-setup-no-uses-vars": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "indent": ["error", 2],
+    "comma-dangle": ["error", "always-multiline"],
+    // "@stylistic/js/comma-dangle": ["error", "always-multiline"],
     semi: [2, "never"],
   },
 }

@@ -24,3 +24,7 @@ export const getBase64 = (file: File) => {
     reader.onerror = error => reject(error)
   })
 }
+export const isQuestionnaireRouteFromPath = (routePath: string): boolean => {
+  const regex = /evaluation\/\d+\/questionnaire/gm
+  return regex.test(routePath)
+}
