@@ -76,16 +76,18 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         errorStore.setError(error.value.data?.messageCode)
       }
     },
-    async getSurveys() {
-      const { data, error } = await useApiGet<Survey[]>(
-        "surveys/",
+    async getSurveysSetup() {
+      const { data, error } = await useApiGet<{ surveys: Survey[], questions: Question[] }>(
+        "surveys/all/",
       )
       if (!error.value) {
+        const surveys = data.value.surveys
         this.surveyById = {}
         this.pillarById = {}
         this.markerById = {}
         this.criteriaById = {}
-        for (const survey of data.value) {
+        for (const survey of surveys) {
+          survey.questions = []
           for (const pillar of survey.pillars) {
             this.pillarById[pillar.id] = pillar
             for (const marker of pillar.markers) {
@@ -98,32 +100,30 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
           this.surveyById[survey.id] = survey
         }
         console.log("### got surveys")
-        await this.getQuestionnaireQuestions()
-        console.log("### got questions")
+
+        const questions = data.value.questions
+        for (const question of questions) {
+          this.questionById[question.id] = question
+          this.surveyById[question.surveyId].questions.push(question.id)
+        }
       } else {
         const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
-    async getQuestionnaireQuestions() {
-      const { data, error } = await useApiGet<Question[]>(
-        `questionnaire-questions/`,
-      )
-      if (error.value) {
-        const errorStore = useMessageStore()
-        errorStore.setError(error.value.data?.messageCode)
-        return false
-      }
-      for (const surveyId of Object.keys(this.surveyById)) {
-        this.surveyById[+surveyId].questions = []
-      }
-
-      for (const question of data.value!) {
-        this.questionById[question.id] = question
-        this.surveyById[question.surveyId].questions.push(question.id)
-      }
-      return true
-    },
+    // async getQuestionnaireQuestions() {
+    //   console.log("### getQuestionnaireQuestions")
+    //   const { data, error } = await useApiGet<Question[]>(
+    //     `questionnaire-questions/`,
+    //   )
+    //   if (error.value) {
+    //     const errorStore = useMessageStore()
+    //     errorStore.setError(error.value.data?.messageCode)
+    //     return false
+    //   }
+    //
+    //   return true
+    // },
     async getQuestionsForSurvey(surveyId: number) {
       const { data, error } = await useApiGet<Question[]>(
         `surveys/${surveyId}/questions/`,

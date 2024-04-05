@@ -34,7 +34,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       toAwaitFor.push(profilingStore.getProfilingQuestions())
     }
     if (!Object.keys(questionnaireStore.surveyById).length) {
-      toAwaitFor.push(questionnaireStore.getSurveys())
+      toAwaitFor.push(questionnaireStore.getSurveysSetup())
     }
     // if (!Object.keys(questionnaireStore.questionById).length) {
     //   toAwaitFor.push(questionnaireStore.getQuestionnaireQuestions())

@@ -284,7 +284,7 @@ import {
   Definition,
   QuestionContextProps,
   SurveyType,
-  SimpleBlock
+  SimpleBlock,
 } from "~/composables/types"
 import { computed, PropType, watch } from "vue"
 import { ref } from "vue"
@@ -300,7 +300,7 @@ const props = defineProps({
   questionId: { type: Number, required: true },
   context: { type: Object as PropType<QuestionContextProps>, required: true },
   color: { type: String, required: true },
-  isQuestionnaire: { type: Boolean, required: true }
+  isQuestionnaire: { type: Boolean, required: true },
 })
 
 console.log("### question setup", { questionId: props.questionId, context: props.context })
@@ -325,7 +325,7 @@ const criteria = computed(() => {
 
 const initialValue = getQuestionResponseValue(
   props.context.responseByQuestionId[props.questionId],
-  question.value.type
+  question.value.type,
 )
 
 const answer = ref(initialValue)
@@ -334,7 +334,7 @@ const isLoading = ref(false)
 watch(question, () => {
   answer.value = getQuestionResponseValue(
     props.context.responseByQuestionId[props.questionId],
-    question.value.type
+    question.value.type,
   )
 })
 
@@ -344,24 +344,24 @@ const nextQuestionDisabled = computed(() =>
   initialValue !== undefined ||
   props.context.responseByQuestionId[props.questionId]?.hasPassed
     ? false
-    : true
+    : true,
 )
 
 const definitions = computed<{ [key: number]: Definition }>(() =>
   criteria.value?.definitionIds.length > 0
     ? definitionStore.definitionsByIdArray(criteria.value.definitionIds)
-    : []
+    : [],
 )
 
 const tabs = ref<tabDef[]>([])
 tabs.value.push({
   label: "Réponses",
-  id: "responses"
+  id: "responses",
 })
 if (criteria.value?.definitionIds.length > 0) {
   tabs.value.push({
     label: "Définitions",
-    id: "definitions"
+    id: "definitions",
   })
 }
 const explanatory = (criteria.value?.explanatory || []) as SimpleBlock[]
@@ -370,7 +370,7 @@ if (explanatory.length) {
   explanatory.forEach((element) => {
     tabs.value.push({
       label: `${element.value.title}`,
-      id: `${element.value.title?.replace(/\s+/g, "")}`
+      id: `${element.value.title?.replace(/\s+/g, "")}`,
     })
   })
 }
@@ -395,7 +395,7 @@ const submit = async () => {
   const result = await participationStore.saveResponse(
     question.value,
     answer.value,
-    isAnswered.value
+    isAnswered.value,
   )
   if (result) {
     if (props.context.journey.isLastQuestion(question.value.id)) {
@@ -406,7 +406,7 @@ const submit = async () => {
       ) {
         await participationStore.saveEndQuestionnaire(
           false,
-          question.value.pillarId
+          question.value.pillarId,
         )
       }
     }

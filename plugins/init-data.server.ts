@@ -7,7 +7,7 @@ import { useUserStore } from "~/stores/userStore"
 import { usePageStore } from "~/stores/pageStore"
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.hook("vue:setup", () => {
+  nuxtApp.hook("vue:setup", async () => {
     const userStore = useUserStore()
     const assessmentStore = useAssessmentStore()
     const profilingStore = useProfilingStore()
@@ -15,15 +15,18 @@ export default defineNuxtPlugin((nuxtApp) => {
     const definitionStore = useDefinitionStore()
     const settingStore = useSettingStore()
     const pageStore = usePageStore()
-    userStore.refreshProfile(false)
-    assessmentStore.getAssessmentsForUser()
-    profilingStore.getProfilingQuestions()
-    questionnaireStore.getQuestionnaireQuestions()
-    questionnaireStore.getSurveys()
-    assessmentStore.getRepresentativityCriterias()
-    definitionStore.getDefinitions()
-    settingStore.getRgpdSettings()
-    settingStore.getStructureSettings()
-    pageStore.getHomePage()
+    console.log("### init data server")
+
+    await Promise.all([
+      userStore.refreshProfile(false),
+      assessmentStore.getAssessmentsForUser(),
+      profilingStore.getProfilingQuestions(),
+      questionnaireStore.getSurveysSetup(),
+      assessmentStore.getRepresentativityCriterias(),
+      definitionStore.getDefinitions(),
+      settingStore.getRgpdSettings(),
+      settingStore.getStructureSettings(),
+      pageStore.getHomePage(),
+    ])
   })
 })
