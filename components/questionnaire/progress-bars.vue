@@ -169,8 +169,6 @@ if (
   participationStore.setTotalAndAnsweredQuestionsByPillarName()
 }
 
-console.log("### bars setup", participationStore.totalAndAnsweredQuestionsByPillarName)
-
 const hoverPillarName = ref<string>()
 const isLoadingPillarName = ref<string>("")
 

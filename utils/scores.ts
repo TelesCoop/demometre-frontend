@@ -17,7 +17,7 @@ const QUESTIONNAIRE_STORE_SUB_LEVEL = {
   marker: "criteriaById",
 }
 
-export const getScoreToDisplay = (score) => {
+export const getScoreToDisplay = (score: number | null) => {
   if (isNullOrUndefined(score)) {
     return null
   }
@@ -38,17 +38,17 @@ export const getScoreToDisplay = (score) => {
 export const getStrenghtAndImprovements = (
   assessmentScores: Scores,
   listIds: number[],
-  level: string
+  level: string,
 ) => {
   const questionnaireStore = useQuestionnaireStore()
   const strenghtsAndImprovements = { strengths: [], improvements: [] }
   for (const itemId of listIds) {
     if (assessmentScores[ASSESSMENT_SCORE_BY_SUB_LEVEL[level]][itemId]) {
       const scoreToDisplay = getScoreToDisplay(
-        assessmentScores[ASSESSMENT_SCORE_BY_SUB_LEVEL[level]][itemId]
+        assessmentScores[ASSESSMENT_SCORE_BY_SUB_LEVEL[level]][itemId],
       )
       strenghtsAndImprovements[IS_STRENGHT_OR_IMPROVEMENT[scoreToDisplay]].push(
-        questionnaireStore[QUESTIONNAIRE_STORE_SUB_LEVEL[level]][itemId].name
+        questionnaireStore[QUESTIONNAIRE_STORE_SUB_LEVEL[level]][itemId].name,
       )
     }
   }

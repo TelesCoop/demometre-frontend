@@ -11,7 +11,9 @@
         />
       </div>
     </template>
-    <template #fallback />
+    <template #fallback>
+      <p>...</p>
+    </template>
   </Suspense>
 </template>
 

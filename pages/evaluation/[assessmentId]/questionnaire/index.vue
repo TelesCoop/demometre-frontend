@@ -168,7 +168,7 @@ const startPillar = async (pillarName: string) => {
 }
 
 const onStartQuestionnaire = () => {
-  const pillarName = Object.keys(questionnaireStore.pillarByName).find(
+  const pillarName = Object.keys(questionnaireStore.pillarById).find(
     (name) => !pillarsCompleted.value.includes(name),
   )
   startPillar(pillarName)

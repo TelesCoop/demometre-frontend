@@ -255,7 +255,6 @@ export const useParticipationStore = defineStore("participation", {
           totalAnswered + this.hasAnsweredQuestionnaireQuestion(question.id),
         0,
       )
-      console.log("### setTotalAndAnsweredQuestionsByPillarName", { pillarName, questions, answered })
 
       this.totalAndAnsweredQuestionsByPillarName[pillarName] = {
         total: questions.length,

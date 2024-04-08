@@ -28,7 +28,7 @@
         </div>
         <div class="columns is-multiline mt-4">
           <div
-            v-for="pillar of questionnaireStore.pillars"
+            v-for="pillar of pillars"
             :key="pillar.name"
             class="column"
           >
@@ -198,6 +198,9 @@ const changeSelectedQuestion = ref<number>(0)
 const activeQuestionId: Ref<number> = ref(
   parseInt(route.query.question as string),
 )
+const pillars = computed(() => {
+  return questionnaireStore.surveyById[assessmentStore.currentAssessment.surveyId].pillars
+})
 
 if (!assessmentStore.assessmentById[assessmentId.value]?.name) {
   assessmentStore.getAssessment(assessmentId.value)

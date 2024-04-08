@@ -15,6 +15,6 @@
 
 defineProps({
   title: { type: String, required: true },
-  value: { type: [String, Number], required: true }
+  value: { type: [String, Number], required: false, default: "" },
 })
 </script>
