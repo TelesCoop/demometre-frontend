@@ -43,26 +43,26 @@ export enum PillarName {
 export const PillarParams = {
   [PillarName.REPRESENTATION]: {
     key: "representation",
-    color: "representation"
+    color: "representation",
   },
   [PillarName.TRANSPARENCY]: {
     key: "transparency",
-    color: "transparency"
+    color: "transparency",
   },
   [PillarName.PARTICIPATION]: {
     key: "participation",
-    color: "participation"
+    color: "participation",
   },
   [PillarName.COOPERATION]: {
     key: "cooperation",
-    color: "cooperation"
-  }
+    color: "cooperation",
+  },
 }
 export type Survey = {
   id: number
   name: string
   surveyType: SurveyType
-  localityType: SurveyLocality
+  surveyLocality: SurveyLocality
   pillars: FullPillar[]
   questions: number[]
 }
@@ -173,7 +173,7 @@ export type Definition = {
 export const LocalityType = {
   MUNICIPALITY: { key: "municipality", value: "Commune" },
   INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" },
-  REGION: { key: "region", value: "Région" }
+  REGION: { key: "region", value: "Région" },
 }
 type localityTypes = "municipality" | "intercommunality" | "region" | "department"
 export type SurveyLocality = "city" | "region" | "department"
@@ -181,7 +181,7 @@ export const AssessmentType = {
   QUICK: { key: "quick", value: "Diagnostic rapide" },
   PARTICIPATIVE: { key: "participative", value: "Evaluation participative" },
   WITH_EXPERT: { key: "with_expert", value: "Evaluation avec expert" },
-  "": { key: "", value: "Non renseigné" }
+  "": { key: "", value: "Non renseigné" },
 }
 export type Locality = {
   id: number
@@ -273,7 +273,7 @@ export const InitiatorType = {
   COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
   ASSOCIATION: { key: "association", value: "Une association" },
   INDIVIDUAL: { key: "individual", value: "Un particulier" },
-  OTHER: { key: "other", value: "Autre" }
+  OTHER: { key: "other", value: "Autre" },
 }
 export type Scores = {
   byQuestionId: { [key: number]: number }

@@ -12,7 +12,7 @@
           </button>
         </div>
         <div
-          v-for="pillar in questionnaireStore.pillars"
+          v-for="pillar in questionnaireStore.pillarsOfMainSurvey"
           :key="pillar.name"
           :class="`pillar-container-${PillarParams[pillar.name].key} has-text-${
             PillarParams[pillar.name].color
@@ -23,11 +23,11 @@
               `pillar-circle-${PillarParams[pillar.name].key}
                     has-border-${PillarParams[pillar.name].color}
               ` +
-              (pillar.id === hoverPillarId ||
-              pillar.markerIds.includes(hoverMarkerId) ||
-              props.pillarsCompleted.includes(pillar.name)
-                ? `has-background-${PillarParams[pillar.name].color}`
-                : `has-background-${PillarParams[pillar.name].color}-light`)
+                (pillar.id === hoverPillarId ||
+                  pillar.markerIds.includes(hoverMarkerId) ||
+                  props.pillarsCompleted.includes(pillar.name)
+                  ? `has-background-${PillarParams[pillar.name].color}`
+                  : `has-background-${PillarParams[pillar.name].color}-light`)
             "
             @mouseenter="hoverPillarId = pillar.id"
             @mouseleave="hoverPillarId = null"
@@ -51,8 +51,7 @@
               />
               <span
                 class="pillar-title is-size-7 has-text-weight-bold is-capitalized"
-                >{{ pillar.name }}</span
-              >
+              >{{ pillar.name }}</span>
             </div>
           </div>
 
@@ -63,9 +62,9 @@
               `
             marker-circle-${PillarParams[pillar.name].key}
             has-border-${PillarParams[pillar.name].color} ` +
-              (markerId === hoverMarkerId
-                ? `has-background-${PillarParams[pillar.name].color}`
-                : ``)
+                (markerId === hoverMarkerId
+                  ? `has-background-${PillarParams[pillar.name].color}`
+                  : ``)
             "
             @mouseenter="hoverMarkerId = markerId"
             @mouseleave="hoverMarkerId = null"
@@ -109,9 +108,11 @@ const hoverPillarId = ref<number>()
 function onCenterButtonClick() {
   emit("center-button-click")
 }
+
 function onPillarClick(pillarName) {
   emit("pillar-click", pillarName)
 }
+
 function onMarkerClick(markerId) {
   emit("marker-click", markerId)
 }
@@ -122,13 +123,14 @@ function onMarkerClick(markerId) {
   position: relative
   width: 600px
   height: 500px
+
 .center-button
   position: absolute
   top: 50%
   left: 50%
   transform: translate(-50%, -50%)
 
-$pillars: ("representation": (translateX(-170px), 5, translateX(-90px)), "transparency": (translateY(-125px), 4, translateY(-90px)), "participation": (translateX(170px), 5, translateX(90px)), "cooperation": (translateY(125px), 4,translateY(90px)))
+$pillars: ("representation": (translateX(-170px), 5, translateX(-90px)), "transparency": (translateY(-125px), 4, translateY(-90px)), "participation": (translateX(170px), 5, translateX(90px)), "cooperation": (translateY(125px), 4, translateY(90px)))
 @each $name, $pair in $pillars
   $translate: nth($pair, 1)
   $nb-markers: nth($pair, 2)
@@ -142,6 +144,7 @@ $pillars: ("representation": (translateX(-170px), 5, translateX(-90px)), "transp
       top: 50%
       left: 50%
       transform: translate(-50%, -50%) $translate
+
     &-circle-#{$name}
       position: absolute
       top: 50%
@@ -152,6 +155,7 @@ $pillars: ("representation": (translateX(-170px), 5, translateX(-90px)), "transp
       height: 120px
       border-radius: 50%
       cursor: pointer
+
     &-icon-#{$name}
       position: absolute
       bottom: 50%
@@ -184,6 +188,7 @@ $pillars: ("representation": (translateX(-170px), 5, translateX(-90px)), "transp
     transform: translateY(9px)
     width: 100%
     text-align: center
+
   &-marker-title
     justify-content: center
     align-items: center

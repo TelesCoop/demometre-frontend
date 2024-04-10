@@ -119,7 +119,7 @@
         class="columns is-multiline mt-2"
       >
         <div
-          v-for="pillar of questionnaireStore.pillars"
+          v-for="pillar of questionnaireStore.pillarsOfMainSurvey"
           :key="pillar.name"
           class="column"
         >
@@ -248,7 +248,7 @@ import { MEDIA_BASE_URL } from "~/composables/api"
 
 definePageMeta({
   title: "DémoMètre",
-  breadcrumb: "DémoMètre"
+  breadcrumb: "DémoMètre",
 })
 
 const router = useRouter()
@@ -278,7 +278,7 @@ watch(activeQuestionId, () => {
 })
 
 const colorClass = computed(() =>
-  activePillar.value ? PillarParams[activePillar.value.name].color : ""
+  activePillar.value ? PillarParams[activePillar.value.name].color : "",
 )
 
 const pillarsRef = ref(null)
@@ -291,7 +291,7 @@ onMounted(() => {
 const onSelectPillar = (pillar) => {
   activePillar.value = pillar
   markers.value = activePillar.value?.markerIds.map(
-    (markerId) => questionnaireStore.markerById[markerId]
+    (markerId) => questionnaireStore.markerById[markerId],
   )
   router.push({ query: { ...route.query, pillar: pillar.name } })
 }

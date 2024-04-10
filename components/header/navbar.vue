@@ -65,6 +65,14 @@
           <div class="navbar-item">
             <div class="buttons">
               <NuxtLink
+                v-if="!isEvaluationRoute && assessmentStore.userHasNoAssessment"
+                to="/evaluation/localisation"
+                class="button evaluation is-rounded has-border-cooperation has-text-cooperation-dark"
+                @click="closeMenu"
+              >
+                Lancer une évaluation
+              </NuxtLink>
+              <NuxtLink
                 v-if="!isEvaluationRoute && assessmentStore.userHasSingleAssessment"
                 :to="userStep.url"
                 class="button evaluation is-rounded has-border-cooperation has-text-cooperation-dark"
@@ -72,6 +80,7 @@
               >
                 {{ userStep.text }}
               </NuxtLink>
+
               <button
                 v-if="isEvaluationRoute && userStore.isUnknownUser"
                 class="button save is-rounded is-shade-600 is-outlined"

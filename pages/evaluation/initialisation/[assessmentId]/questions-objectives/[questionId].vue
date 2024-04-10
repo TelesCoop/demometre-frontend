@@ -20,7 +20,7 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 definePageMeta({
   title: "Questions objectives",
   step: "initialization-objectives-questions",
-  middleware: ["assessment", "user-step"]
+  middleware: ["user-step"],
 })
 
 const route = useRoute()
@@ -49,7 +49,7 @@ const context: QuestionContextProps = {
   journey,
   questionById: questionnaireStore.questionById,
   responseByQuestionId: participationStore.responseByQuestionnaireQuestionId,
-  hasPreviousStep: true
+  hasPreviousStep: true,
 }
 console.log("### questionId setup 3")
 </script>

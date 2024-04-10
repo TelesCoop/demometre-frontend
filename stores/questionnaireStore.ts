@@ -26,8 +26,16 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         (pillar) => pillar.name === pillarName,
       )
     },
-    pillars(): PillarType[] {
-      return Object.values(this.pillarById)
+    pillarsOfSurvey() {
+      return (surveyId: number) => {
+        this.surveyById[surveyId].pillars.map((pillar) => this.pillarById[pillar.id])
+      }
+    },
+    pillarsOfMainSurvey(): PillarType[] {
+      const mainSurveyId = Object.values(this.surveyById).find(
+        (survey) => survey.surveyLocality === "city",
+      )?.id!
+      return this.surveyById[mainSurveyId].pillars.map((pillar) => this.pillarById[pillar.id])
     },
     questionsForSurvey() {
       return (surveyId: number): Question[] => {

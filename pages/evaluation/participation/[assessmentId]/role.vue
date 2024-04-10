@@ -74,7 +74,7 @@ import { usePressEnter } from "~/composables/pressEnter"
 definePageMeta({
   title: "Question sur le role",
   step: "role",
-  middleware: ["assessment", "user-step"]
+  middleware: ["user-step"],
 })
 
 const router = useRouter()
@@ -99,9 +99,9 @@ const responseChoices = computed(() =>
     return {
       id: role.id,
       responseChoice: role.name,
-      description: role.description
+      description: role.description,
     }
-  })
+  }),
 )
 
 const disabled = computed(() => {
@@ -110,7 +110,7 @@ const disabled = computed(() => {
 
 function goBack() {
   router.push(
-    `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`
+    `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`,
   )
 }
 

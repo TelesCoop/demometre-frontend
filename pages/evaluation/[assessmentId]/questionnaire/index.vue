@@ -73,7 +73,7 @@
           class="columns is-multiline mt-4 list-menu"
         >
           <div
-            v-for="pillar of questionnaireStore.pillars"
+            v-for="pillar of questionnaireStore.pillarsOfSurvey(assessment.surveyId)"
             :key="pillar.name"
             class="column"
           >
@@ -96,6 +96,7 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useUserStore } from "~/stores/userStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 definePageMeta({
   title: "Questionnaire",
@@ -103,10 +104,13 @@ definePageMeta({
   middleware: ["user-step"],
 })
 
+const assessmentStore = useAssessmentStore()
 const questionnaireStore = useQuestionnaireStore()
 const participationStore = useParticipationStore()
 const pageStore = usePageStore()
 const userStore = useUserStore()
+
+const assessment = assessmentStore.currentAssessment
 
 if (
   Object.keys(participationStore.totalAndAnsweredQuestionsByPillarName)

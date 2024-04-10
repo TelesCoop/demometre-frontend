@@ -8,10 +8,10 @@
         v-if="pageStore.evaluationInitiationPage.dashboardDescription"
         class="is-family-secondary mb-2"
         :rich-text="pageStore.evaluationInitiationPage.dashboardDescription"
-      ></RichText>
+      />
       <ParticipationBoard
         :assessment="assessmentStore.currentAssessment"
-      ></ParticipationBoard>
+      />
       <div class="buttons mt-4">
         <NuxtLink
           :to="`/evaluation/participation/${assessmentStore.currentAssessmentId}/role`"
@@ -19,7 +19,10 @@
         >
           <span>Poursuivre l'évaluation</span>
           <span class="icon">
-            <icon size="16" name="arrow-right-line" />
+            <icon
+              size="16"
+              name="arrow-right-line"
+            />
           </span>
         </NuxtLink>
       </div>
@@ -34,7 +37,7 @@ import { usePageStore } from "~/stores/pageStore"
 definePageMeta({
   title: "Localisation",
   step: "role",
-  middleware: ["assessment", "user-step"],
+  middleware: ["user-step"],
 })
 
 const pageStore = usePageStore()

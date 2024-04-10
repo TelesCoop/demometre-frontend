@@ -6,12 +6,18 @@
     :intro-is-rich-text="true"
     class="column is-8 questionnaire-container"
   >
-    <form class="nav-questionnaire-container" @submit.prevent="onSubmit">
-      <ParticipationConsent class="mt-1_5" type="cgu" />
+    <form
+      class="nav-questionnaire-container"
+      @submit.prevent="onSubmit"
+    >
+      <ParticipationConsent
+        class="mt-1_5"
+        type="cgu"
+      />
       <div
         v-if="
           assessmentStore.currentAssessment.assessmentType ===
-          AssessmentType.PARTICIPATIVE.key
+            AssessmentType.PARTICIPATIVE.key
         "
       >
         <label class="label has-text-shade-800">{{
@@ -39,7 +45,10 @@
             </label>
           </div>-->
           <label class="checkbox is-size-7">
-            <input v-model="assessmentStore.addingExpert" type="checkbox" />
+            <input
+              v-model="assessmentStore.addingExpert"
+              type="checkbox"
+            >
             {{ pageStore.evaluationInitiationPage.addExpertButtonYes }}
           </label>
         </div>
@@ -51,12 +60,18 @@
       />
 
       <div class="buttons mt-4">
-        <button class="button is-shade-600 is-rounded" :disabled="disabled">
+        <button
+          class="button is-shade-600 is-rounded"
+          :disabled="disabled"
+        >
           <span>C'est parti !</span>
         </button>
 
         <!-- Permet d'appuyer sur entrer -->
-        <input type="submit" hidden />
+        <input
+          type="submit"
+          hidden
+        >
       </div>
     </form>
   </PageSection>
@@ -70,7 +85,7 @@ import { useParticipationStore } from "~~/stores/participationStore"
 definePageMeta({
   title: "Consentement",
   step: "participation",
-  middleware: ["assessment", "user-step"],
+  middleware: ["user-step"],
 })
 
 const router = useRouter()
@@ -83,27 +98,27 @@ if (!pageStore.evaluationInitiationPage.searchAssessmentTitle) {
 }
 
 const disabled = computed(() =>
-  participationStore.newParticipation.consent ? false : true
+  participationStore.newParticipation.consent ? false : true,
 )
 
 const startParticipationTitleAndDesc = computed(() => {
   switch (assessmentStore.currentAssessment.assessmentType) {
-    case AssessmentType.QUICK.key:
-      return [
-        pageStore.evaluationInitiationPage.oneQuickAssessmentTitle,
-        pageStore.evaluationInitiationPage.oneQuickAssessmentDescription,
-      ]
-    case AssessmentType.PARTICIPATIVE.key:
-      return [
-        pageStore.evaluationInitiationPage.oneParticipationAssessmentTitle,
-        pageStore.evaluationInitiationPage
-          .oneParticipationAssessmentDescription,
-      ]
-    case AssessmentType.WITH_EXPERT.key:
-      return [
-        pageStore.evaluationInitiationPage.oneAssessmentWithExpertTitle,
-        pageStore.evaluationInitiationPage.oneAssessmentWithExpertDescription,
-      ]
+  case AssessmentType.QUICK.key:
+    return [
+      pageStore.evaluationInitiationPage.oneQuickAssessmentTitle,
+      pageStore.evaluationInitiationPage.oneQuickAssessmentDescription,
+    ]
+  case AssessmentType.PARTICIPATIVE.key:
+    return [
+      pageStore.evaluationInitiationPage.oneParticipationAssessmentTitle,
+      pageStore.evaluationInitiationPage
+        .oneParticipationAssessmentDescription,
+    ]
+  case AssessmentType.WITH_EXPERT.key:
+    return [
+      pageStore.evaluationInitiationPage.oneAssessmentWithExpertTitle,
+      pageStore.evaluationInitiationPage.oneAssessmentWithExpertDescription,
+    ]
   }
 })
 
@@ -116,15 +131,15 @@ function goBack() {
 async function onSubmit() {
   if (
     assessmentStore.currentAssessment.assessmentType ===
-      AssessmentType.PARTICIPATIVE.key &&
+    AssessmentType.PARTICIPATIVE.key &&
     assessmentStore.addingExpert
   ) {
     useRouter().push(
-      `/evaluation/participation/${assessmentStore.currentAssessmentId}/ajout-expert`
+      `/evaluation/participation/${assessmentStore.currentAssessmentId}/ajout-expert`,
     )
   }
   useRouter().push(
-    `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`
+    `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`,
   )
 }
 </script>
