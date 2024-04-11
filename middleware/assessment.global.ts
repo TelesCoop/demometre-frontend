@@ -9,6 +9,7 @@ async function verifyAssessment(to) {
     assessmentStore.currentAssessmentId = parseInt(assessmentId)
     console.log("### set assessment from query", assessmentStore.currentAssessmentId)
     if (!assessmentStore.currentAssessment) {
+      console.log("### no current assessment, fetch it get assessment from query")
       await assessmentStore.getAssessment(assessmentId)
     }
     if (!participationStore.currentParticipationId || participationStore.currentParticipationId === -1) {

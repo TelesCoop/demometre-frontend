@@ -62,6 +62,6 @@ function goBack() {
 
 async function submit() {
   await assessmentStore.saveEndInitializationQuestions()
-  useRouter().push("/evaluation")
+  useRouter().push(`/evaluation/participation/${assessmentStore.currentAssessmentId}`)
 }
 </script>
