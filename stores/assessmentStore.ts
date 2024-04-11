@@ -51,7 +51,7 @@ export const useAssessmentStore = defineStore("assessment", {
           assessment.id === this.currentAssessmentId,
       )
     },
-    currentAssessment() {
+    currentAssessment(): Assessment {
       return this.assessmentById[this.currentAssessmentId]
     },
     experts: (state): User[] => {

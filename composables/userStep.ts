@@ -87,10 +87,18 @@ export function useUserStep() {
       }
     }
 
-    return {
-      step: "questionnaire",
-      url: `/evaluation/${assessmentStore.currentAssessmentId}/questionnaire`,
-      text: RESUME_EVALUATION_TEXT,
+    if (assessmentStore.currentAssessmentId) {
+      return {
+        step: "questionnaire",
+        url: `/evaluation/${assessmentStore.currentAssessmentId}/questionnaire`,
+        text: RESUME_EVALUATION_TEXT,
+      }
+    } else {
+      return {
+        step: "localisation",
+        url: `/evaluation/localisation`,
+        text: START_EVALUATION_TEXT,
+      }
     }
   })
   return state
