@@ -53,16 +53,9 @@ if (!pageStore.evaluationInitiationPage.objectiveQuestionsTitle) {
 
 const isLoading = ref(false)
 
-// TODO : allow to reset initialization of an assessment, rigth now the back does not allow it
-// function goBack() {
-//   // router.push(
-//   //   `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`
-//   // )
-// }
-
-const goToFirstObjectiveQuestion = async () => {
+const goToFirstObjectiveQuestion = () => {
   isLoading.value = true
-  const journey = await useInitializationJourney()
+  const journey = useInitializationJourney()
   journey.goToNextQuestion(undefined)
 }
 </script>

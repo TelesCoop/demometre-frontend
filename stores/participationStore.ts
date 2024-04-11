@@ -245,8 +245,8 @@ export const useParticipationStore = defineStore("participation", {
       this.currentParticipationId = undefined
       this.totalAndAnsweredQuestionsByPillarName = {}
     },
-    async setTotalAndAnsweredQuestionsInPillar(pillarName: string) {
-      const journey = await useQuestionnaireJourney(pillarName)
+    setTotalAndAnsweredQuestionsInPillar(pillarName: string) {
+      const journey = useQuestionnaireJourney(pillarName)
       const questions = useQuestionnaireStore().getQuestionsFromIdList(
         journey.journey.value,
       )

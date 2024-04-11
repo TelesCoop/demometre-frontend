@@ -121,7 +121,7 @@ async function onSubmit() {
 
   if (isSuccess) {
     await participationStore.getQuestionnaireObjectiveQuestionResponsesForAssessment(assessmentStore.currentAssessmentId)
-    const journey = await useProfilingJourney()
+    const journey = useProfilingJourney()
     journey.goToNextQuestion(undefined)
   }
 }

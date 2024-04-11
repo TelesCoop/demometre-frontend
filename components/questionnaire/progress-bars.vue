@@ -172,10 +172,10 @@ if (
 const hoverPillarName = ref<string>()
 const isLoadingPillarName = ref<string>("")
 
-const goToFirstQuestionPillar = async (pillarName: string) => {
+const goToFirstQuestionPillar = (pillarName: string) => {
   isLoadingPillarName.value = pillarName
-  const { lastQuestionId, isLast } = await getLastQuestionOfPillar(pillarName)
-  const journey = await useQuestionnaireJourney(pillarName)
+  const { lastQuestionId, isLast } = getLastQuestionOfPillar(pillarName)
+  const journey = useQuestionnaireJourney(pillarName)
   journey.goToNextQuestion(
     isLast ? undefined : lastQuestionId,
   )

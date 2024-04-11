@@ -36,8 +36,9 @@ router.beforeEach((to) => {
 
 const profilingStore = useProfilingStore()
 const participationStore = useParticipationStore()
+const journey = useProfilingJourney()
 const context: QuestionContextProps = {
-  journey: useProfilingJourney(),
+  journey,
   questionById: profilingStore.questionById,
   responseByQuestionId: participationStore.responseByProfilingQuestionId,
   hasPreviousStep: false,

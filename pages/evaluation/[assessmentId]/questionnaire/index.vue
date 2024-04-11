@@ -165,9 +165,9 @@ const intermediateStepTitle = computed(() => {
   return `${pageStore.evaluationQuestionnairePage.intermediateStepTitle} ${pillarNames}`
 })
 
-const startPillar = async (pillarName: string) => {
-  const { lastQuestionId, isLast } = await getLastQuestionOfPillar(pillarName)
-  const journey = await useQuestionnaireJourney(pillarName)
+const startPillar = (pillarName: string) => {
+  const { lastQuestionId, isLast } = getLastQuestionOfPillar(pillarName)
+  const journey = useQuestionnaireJourney(pillarName)
   journey.goToNextQuestion(isLast ? undefined : lastQuestionId)
 }
 

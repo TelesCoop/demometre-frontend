@@ -29,7 +29,7 @@ const questionnaireStore = useQuestionnaireStore()
 const participationStore = useParticipationStore()
 
 console.log("### questionId setup 0")
-const journey = await useInitializationJourney()
+const journey = useInitializationJourney()
 console.log("### questionId setup 0.5", { journey })
 const questionId: Ref<number> = ref(+route.params.questionId)
 console.log("### questionId setup", { questionId: questionId.value })

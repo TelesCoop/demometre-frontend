@@ -13,7 +13,7 @@ export function useUserStep() {
   const assessmentStore = useAssessmentStore()
   const participationStore = useParticipationStore()
 
-  const state = computed(() => {
+  const state = computed(async () => {
     if (!assessmentStore.currentAssessmentId) {
       // No locality chosen, when a locality is chosen we get or create assessment
       return {
@@ -72,7 +72,7 @@ export function useUserStep() {
     }
 
     if (!participationStore.participation.isProfilingQuestionsCompleted) {
-      const lastAnsweredQuestionId = getLastAnsweredProfilingQuestionId()
+      const lastAnsweredQuestionId = await getLastAnsweredProfilingQuestionId()
 
       // If there is a participation but the profiling is not completed
       const profilingJourney = useProfilingJourney()

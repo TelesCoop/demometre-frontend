@@ -107,7 +107,7 @@ function isRelevant(question: Question, data) {
   })
 }
 
-export async function useProfilingJourney() {
+export function useProfilingJourney() {
   const vm = getCurrentInstance()
   const assessmentStore = useAssessmentStore()
 
@@ -182,7 +182,7 @@ export async function useProfilingJourney() {
   }
 }
 
-export async function useQuestionnaireJourney(pillarName: string) {
+export function useQuestionnaireJourney(pillarName: string) {
   const assessmentStore = useAssessmentStore()
 
   const journey = computed(() => {
@@ -266,7 +266,7 @@ export async function useQuestionnaireJourney(pillarName: string) {
   }
 }
 
-export async function useInitializationJourney() {
+export function useInitializationJourney() {
   const questionnaireStore = useQuestionnaireStore()
   const assessmentStore = useAssessmentStore()
 
@@ -379,9 +379,9 @@ export const getLastAnsweredProfilingQuestionId = () => {
   ).lastQuestionId
 }
 
-export const getLastQuestionOfPillar = async (pillarName: string) => {
+export const getLastQuestionOfPillar = (pillarName: string) => {
   const participationStore = useParticipationStore()
-  const questionnaireJourney = await useQuestionnaireJourney(pillarName)
+  const questionnaireJourney = useQuestionnaireJourney(pillarName)
 
   return getLastQuestionIdOfJourney(
     participationStore.responseByQuestionnaireQuestionId,
