@@ -15,25 +15,11 @@ async function verifyAssessment(to) {
     if (!participationStore.currentParticipationId || participationStore.currentParticipationId === -1) {
       console.log("### set participation from assessment and load assessment responses")
       await Promise.all([
-        participationStore.getParticipationForAssessment(assessmentId),
-        participationStore.loadAssessment(assessmentId),
+        participationStore.getParticipationForAssessmentOnce(assessmentId),
+        participationStore.loadAssessmentOnce(assessmentId),
       ])
     }
   }
-
-  // Load data if f5
-  // if (process.server) {
-  //   await assessmentStore.getAssessment(assessmentId)
-  // }
-  // if (
-  //   !assessmentStore.currentAssessment?.initializationDate &&
-  //   to.path !== "/evaluation/initialisation"
-  // ) {
-  //   console.log("### verifyAssessment navigation add assessment")
-  //   navigateTo(
-  //     `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`
-  //   )
-  // }
 }
 
 export default defineNuxtRouteMiddleware(verifyAssessment)

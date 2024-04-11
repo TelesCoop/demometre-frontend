@@ -29,6 +29,8 @@ export const useParticipationStore = defineStore("participation", {
     currentParticipationId: -1,
     currentlyLoadedSubjectiveResponsesAssessmentId: -1,
     currentlyLoadedProfilingResponsesAssessmentId: -1,
+    fetchedParticipations: <Record<number, boolean>>{},
+    loadedParticipations: <Record<number, boolean>>{},
     profilingCurrent: <number[]>[],
     responseByProfilingQuestionId: <{
       [key: number]: QuestionResponse
@@ -110,6 +112,13 @@ export const useParticipationStore = defineStore("participation", {
 
       return true
     },
+    async getParticipationForAssessmentOnce(assessmentId: number): Promise<boolean> {
+      if (this.fetchedParticipations[assessmentId]) {
+        return true
+      }
+      this.fetchedParticipations[assessmentId] = true
+      return await this.getParticipationForAssessment(assessmentId)
+    },
     async getParticipations(): Promise<boolean> {
       const response = await useApiGet<Participation[]>("participations")
       if (response.error.value) {
@@ -170,6 +179,13 @@ export const useParticipationStore = defineStore("participation", {
         this.getQuestionnaireSubjectiveQuestionResponsesForAssessment(assessmentId),
         this.getQuestionnaireObjectiveQuestionResponsesForAssessment(assessmentId),
       ])
+    },
+    async loadAssessmentOnce(assessmentId: number) {
+      if (this.loadedParticipations[assessmentId]) {
+        return
+      }
+      this.loadedParticipations[assessmentId] = true
+      await this.loadAssessment(assessmentId)
     },
     newAssessment() {
       this.responseByProfilingQuestionId = {}
