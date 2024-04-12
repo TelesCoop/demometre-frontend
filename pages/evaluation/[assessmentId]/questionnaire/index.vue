@@ -172,9 +172,11 @@ const startPillar = (pillarName: string) => {
 }
 
 const onStartQuestionnaire = () => {
-  const pillarName = Object.keys(questionnaireStore.pillarById).find(
+  const pillarId = Object.keys(questionnaireStore.pillarById).find(
     (name) => !pillarsCompleted.value.includes(name),
   )
+
+  const pillarName = questionnaireStore.pillarById[pillarId].name
   startPillar(pillarName)
 }
 const onRosettePillarClicked = (pillarName) => {
