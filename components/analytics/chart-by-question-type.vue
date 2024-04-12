@@ -6,24 +6,26 @@
       :question="question"
       :color="color"
     />
-    <AnalyticsObjectiveChoiceQuestionChart
-      v-if="
-        question.type === QuestionType.UNIQUE_CHOICE &&
+    <template
+      v-else-if="[QuestionType.UNIQUE_CHOICE, QuestionType.MULTIPLE_CHOICE].includes(
+        question.type
+      )"
+    >
+      <AnalyticsObjectiveChoiceQuestionChart
+        v-if="
           question.objectivity === Objectivity.OBJECTIVE
-      "
-      :data="assessmentChartData"
-      :color="color"
-    />
-    <AnalyticsChoiceQuestionChart
-      v-else-if="
-        [QuestionType.UNIQUE_CHOICE, QuestionType.MULTIPLE_CHOICE].includes(
-          question.type
-        )
-      "
-      :data="assessmentChartData"
-      :color="color"
-      :question="question"
-    />
+        "
+        :data="assessmentChartData"
+        :color="color"
+      />
+      <AnalyticsChoiceQuestionChart
+        v-else
+        :data="assessmentChartData"
+        :color="color"
+        :question="question"
+      />
+    </template>
+
     <AnalyticsIntervalQuestionChart
       v-else-if="question.type === QuestionType.PERCENTAGE"
       :data="assessmentChartData"
@@ -61,12 +63,12 @@ const assessmentChartData = computed(
   () =>
     assessmentStore.chartDataByAssessmentIdAndQuestionId[props.assessmentId]?.[
       props.question.id
-    ]?.data
+    ]?.data,
 )
 if (!assessmentChartData.value) {
   assessmentStore.getChartDataByAssessmentIdAndQuestionId(
     props.assessmentId,
-    props.question.id
+    props.question.id,
   )
 }
 </script>
