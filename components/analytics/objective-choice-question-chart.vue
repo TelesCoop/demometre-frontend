@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-for="(responseChoice, responseChoiceIndex) of data.value"
+      v-for="(responseChoice, responseChoiceIndex, index) of data.value"
       :key="responseChoiceIndex"
       class="mb-1"
     >
@@ -11,7 +11,7 @@
           responseChoice: responseChoice.label,
           description: '',
         }"
-        :response-choice-index="parseInt(responseChoiceIndex)"
+        :response-choice-index="index"
         :selected="responseChoice.value === 1"
         :color="color"
         response-choice-size="is-size-6"
