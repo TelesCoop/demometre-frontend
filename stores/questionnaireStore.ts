@@ -107,7 +107,6 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
           }
           this.surveyById[survey.id] = survey
         }
-        console.log("### got surveys")
 
         const questions = data.value.questions
         for (const question of questions) {
