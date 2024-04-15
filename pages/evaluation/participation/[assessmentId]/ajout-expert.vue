@@ -64,7 +64,6 @@ definePageMeta({
   title: "Ajout d'un expert",
   breadcrumb: "Ajout d'un expert",
   step: "participation",
-  middleware: ["user-step"],
 })
 
 const router = useRouter()

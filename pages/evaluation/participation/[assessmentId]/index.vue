@@ -85,7 +85,6 @@ import { useParticipationStore } from "~~/stores/participationStore"
 definePageMeta({
   title: "Consentement",
   step: "participation",
-  middleware: ["user-step"],
 })
 
 const router = useRouter()

@@ -74,7 +74,6 @@ import { usePressEnter } from "~/composables/pressEnter"
 definePageMeta({
   title: "Question sur le role",
   step: "role",
-  middleware: ["user-step"],
 })
 
 const router = useRouter()

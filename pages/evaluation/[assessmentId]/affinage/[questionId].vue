@@ -20,7 +20,6 @@ import { ref } from "vue"
 definePageMeta({
   title: "Affinage",
   step: "profiling",
-  middleware: ["user-step"],
 })
 
 const route = useRoute()

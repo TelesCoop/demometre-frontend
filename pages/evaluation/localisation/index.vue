@@ -158,7 +158,6 @@ import { usePressEnter } from "~/composables/pressEnter"
 definePageMeta({
   title: "Localisation",
   step: "localisation",
-  middleware: ["user-step"]
 })
 
 const pageStore = usePageStore()
@@ -173,7 +172,7 @@ const localityTypeSelected = ref<"region" | "municipality" | "intercommunality">
 const localityId = ref<number>()
 const localities = ref<Localities>({
   municipality: [],
-  intercommunality: []
+  intercommunality: [],
 })
 const regions = ref<Locality[]>([])
 const searched = ref<number>(0)
@@ -206,16 +205,16 @@ async function searchLocalities() {
 async function onSubmit() {
   const isSuccess = await assessmentStore.getOrCreateAssessment({
     localityId: localityId.value,
-    localityType: localityTypeSelected.value
+    localityType: localityTypeSelected.value,
   })
   if (isSuccess) {
     if (!assessmentStore.currentAssessment?.initializationDate) {
       router.push(
-        `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`
+        `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`,
       )
     } else {
       router.push(
-        `/evaluation/participation/${assessmentStore.currentAssessmentId}`
+        `/evaluation/participation/${assessmentStore.currentAssessmentId}`,
       )
     }
   }

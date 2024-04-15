@@ -20,7 +20,6 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 definePageMeta({
   title: "Questions objectives",
   step: "initialization-objectives-questions",
-  middleware: ["user-step"],
 })
 
 const route = useRoute()

@@ -119,19 +119,6 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
         errorStore.setError(error.value.data?.messageCode)
       }
     },
-    // async getQuestionnaireQuestions() {
-    //   console.log("### getQuestionnaireQuestions")
-    //   const { data, error } = await useApiGet<Question[]>(
-    //     `questionnaire-questions/`,
-    //   )
-    //   if (error.value) {
-    //     const errorStore = useMessageStore()
-    //     errorStore.setError(error.value.data?.messageCode)
-    //     return false
-    //   }
-    //
-    //   return true
-    // },
     async getQuestionsForSurvey(surveyId: number) {
       const { data, error } = await useApiGet<Question[]>(
         `surveys/${surveyId}/questions/`,

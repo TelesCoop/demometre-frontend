@@ -46,7 +46,6 @@ import { useAssessmentStore } from "~/stores/assessmentStore"
 definePageMeta({
   title: "Initialisation",
   step: "initialization-objectives-questions",
-  middleware: ["user-step"],
 })
 
 const router = useRouter()

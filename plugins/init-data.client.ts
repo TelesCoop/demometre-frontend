@@ -36,9 +36,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     if (!Object.keys(questionnaireStore.surveyById).length) {
       toAwaitFor.push(questionnaireStore.getSurveysSetup())
     }
-    // if (!Object.keys(questionnaireStore.questionById).length) {
-    //   toAwaitFor.push(questionnaireStore.getQuestionnaireQuestions())
-    // }
     if (!assessmentStore.representativityCriterias.length) {
       toAwaitFor.push(assessmentStore.getRepresentativityCriterias())
     }

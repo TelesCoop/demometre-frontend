@@ -101,7 +101,6 @@ import { useAssessmentStore } from "~/stores/assessmentStore"
 definePageMeta({
   title: "Questionnaire",
   step: "questionnaire",
-  middleware: ["user-step"],
 })
 
 const assessmentStore = useAssessmentStore()

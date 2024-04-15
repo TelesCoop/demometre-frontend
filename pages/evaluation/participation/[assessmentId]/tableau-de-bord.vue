@@ -37,7 +37,6 @@ import { usePageStore } from "~/stores/pageStore"
 definePageMeta({
   title: "Localisation",
   step: "role",
-  middleware: ["user-step"],
 })
 
 const pageStore = usePageStore()

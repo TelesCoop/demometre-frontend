@@ -27,7 +27,6 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 definePageMeta({
   title: "Questionnaire",
   step: "questionnaire",
-  middleware: ["user-step"],
 })
 
 const route = useRoute()

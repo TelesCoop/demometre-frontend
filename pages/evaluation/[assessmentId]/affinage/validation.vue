@@ -45,7 +45,6 @@ import { useAssessmentStore } from "~/stores/assessmentStore"
 definePageMeta({
   title: "Affinage",
   step: "profiling",
-  middleware: ["user-step"],
 })
 
 const router = useRouter()
