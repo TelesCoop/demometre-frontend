@@ -30,5 +30,6 @@
     "vue-select": "^4.0.0-beta.3",
     "vue3-carousel": "^0.3.1",
     "vuedraggable": "^4.1.0"
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }
