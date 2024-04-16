@@ -7,7 +7,7 @@ import { useUserStore } from "~/stores/userStore"
 import { usePageStore } from "~/stores/pageStore"
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.hook("app:mounted", () => {
+  nuxtApp.hook("app:created", async () => {
     // the data should already be fetched from SSR
     // but if it's missing, we try again from the client
 
@@ -19,38 +19,41 @@ export default defineNuxtPlugin((nuxtApp) => {
     const settingStore = useSettingStore()
     const pageStore = usePageStore()
 
-    if (!userStore.user) {
-      userStore.refreshProfile(false)
+    const toAwaitFor = []
+
+    if (!Object.keys(userStore.user).length) {
+      toAwaitFor.push(userStore.refreshProfile(false))
     }
 
     if (!assessmentStore.currentAssessment) {
-      assessmentStore.getAssessmentsForUser()
+      toAwaitFor.push(assessmentStore.getAssessmentsForUser())
     }
 
     if (!profilingStore.orderedQuestionId.length) {
       profilingStore.getProfilingQuestions()
+      toAwaitFor.push(profilingStore.getProfilingQuestions())
     }
-    if (!questionnaireStore.pillars.length) {
-      questionnaireStore.getQuestionnaireStructure()
-    }
-    if (!questionnaireStore.questions.length) {
-      questionnaireStore.getQuestionnaireQuestions()
+    if (!Object.keys(questionnaireStore.surveyById).length) {
+      toAwaitFor.push(questionnaireStore.getSurveysSetup())
     }
     if (!assessmentStore.representativityCriterias.length) {
-      assessmentStore.getRepresentativityCriterias()
+      toAwaitFor.push(assessmentStore.getRepresentativityCriterias())
     }
     if (!definitionStore.definitionLoaded) {
-      definitionStore.getDefinitions()
+      toAwaitFor.push(definitionStore.getDefinitions())
     }
     if (!settingStore.rgpdSettingsLoaded) {
-      settingStore.getRgpdSettings()
+      toAwaitFor.push(settingStore.getRgpdSettings())
     }
     if (!settingStore.structureSettings.email) {
-      settingStore.getStructureSettings()
+      toAwaitFor.push(settingStore.getStructureSettings())
     }
 
     if (!pageStore.homePage.title) {
-      pageStore.getHomePage()
+      toAwaitFor.push(pageStore.getHomePage())
     }
+
+    await Promise.all(toAwaitFor)
+    console.log("### client init done")
   })
 })

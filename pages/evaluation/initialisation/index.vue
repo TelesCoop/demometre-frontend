@@ -189,7 +189,7 @@
         @submit.prevent="onSubmit"
       >
         <div
-          v-for="representativityCriteria of assessmentStore.representativityCriterias"
+          v-for="representativityCriteria of assessmentStore.representativityCriteriasForSurveyLocality(assessmentStore.currentAssessment.surveyLocality)"
           :key="representativityCriteria.id"
         >
           <label class="label is-size-5">{{
@@ -246,7 +246,6 @@ import { useUserStore } from "~/stores/userStore"
 definePageMeta({
   title: "Initialisation",
   step: "initialization",
-  middleware: ["assessment"]
 })
 
 const router = useRouter()
@@ -277,12 +276,12 @@ enum steps {
 const initializationSteps = [
   steps.ASSESSMENT_TYPE,
   steps.START,
-  steps.INITIATOR
+  steps.INITIATOR,
   // At the last moment it was decided not to give the possibility to customize the representativity in order not to confuse the user
   // steps.REPRESENTATIVITY,
 ]
 const currentStep = ref<number>(
-  assessmentStore.newAssessment.assessmentType ? 1 : 0
+  assessmentStore.newAssessment.assessmentType ? 1 : 0,
 )
 
 const initiatorTypeSelected = ref<string>()
@@ -297,7 +296,7 @@ watch(
     ) {
       currentStep.value = 1
     }
-  }
+  },
 )
 
 const disabled = computed(() => {
@@ -323,19 +322,19 @@ const startInitializationTitleAndDesc = computed(() => {
   case AssessmentType.QUICK.key:
     return [
       pageStore.evaluationInitiationPage.createQuickAssessmentTitle,
-      pageStore.evaluationInitiationPage.createQuickAssessmentDescription
+      pageStore.evaluationInitiationPage.createQuickAssessmentDescription,
     ]
   case AssessmentType.PARTICIPATIVE.key:
     return [
       pageStore.evaluationInitiationPage.createParticipationAssessmentTitle,
       pageStore.evaluationInitiationPage
-        .createParticipationAssessmentDescription
+        .createParticipationAssessmentDescription,
     ]
   case AssessmentType.WITH_EXPERT.key:
     return [
       pageStore.evaluationInitiationPage.createAssessmentWithExpertTitle,
       pageStore.evaluationInitiationPage
-        .createAssessmentWithExpertDescription
+        .createAssessmentWithExpertDescription,
     ]
   }
 })
@@ -379,11 +378,11 @@ function goToNextStep() {
 async function onSubmit() {
   const isSuccess = await assessmentStore.initializeAssessment({
     initiatorType: initiatorTypeSelected.value,
-    initiatorName: initiatorName.value
+    initiatorName: initiatorName.value,
   })
   if (isSuccess) {
     useRouter().push(
-      `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives`
+      `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives`,
     )
   }
 }

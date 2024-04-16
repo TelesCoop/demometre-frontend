@@ -65,6 +65,14 @@
           <div class="navbar-item">
             <div class="buttons">
               <NuxtLink
+                v-if="!isEvaluationRoute && assessmentStore.userHasNoAssessment"
+                to="/evaluation/localisation"
+                class="button evaluation is-rounded has-border-cooperation has-text-cooperation-dark"
+                @click="closeMenu"
+              >
+                Lancer une évaluation
+              </NuxtLink>
+              <NuxtLink
                 v-if="!isEvaluationRoute && assessmentStore.userHasSingleAssessment"
                 :to="userStep.url"
                 class="button evaluation is-rounded has-border-cooperation has-text-cooperation-dark"
@@ -72,6 +80,7 @@
               >
                 {{ userStep.text }}
               </NuxtLink>
+
               <button
                 v-if="isEvaluationRoute && userStore.isUnknownUser"
                 class="button save is-rounded is-shade-600 is-outlined"
@@ -143,6 +152,7 @@
 import { useUserStore } from "~/stores/userStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { isQuestionnaireRouteFromPath } from "~/utils/util"
 
 const emit = defineEmits<{
   (e: "change-header-height", value: number): void
@@ -164,7 +174,7 @@ const isEvaluationRoute = computed(() => {
 })
 
 const isQuestionnaireRoute = computed(() => {
-  const isQuestionnaireRoute = route.path.includes("evaluation/questionnaire")
+  const isQuestionnaireRoute = isQuestionnaireRouteFromPath(route.path)
   emit("change-header-height", isQuestionnaireRoute ? 125 : 75)
   return isQuestionnaireRoute
 })
@@ -176,24 +186,24 @@ const activePillar = computed(() => {
 const navItems = [
   {
     name: "Accueil",
-    to: "/"
+    to: "/",
   },
   {
     name: "DémoMètre",
-    to: "/demometre"
+    to: "/demometre",
   },
   {
     name: "Utilisations possibles",
-    to: "/utilisations-possibles"
+    to: "/utilisations-possibles",
   },
   {
     name: "Résultats",
-    to: "/resultats"
+    to: "/resultats",
   },
   {
     name: "Le projet",
-    to: "/projet"
-  }
+    to: "/projet",
+  },
 ]
 
 function closeMenu() {

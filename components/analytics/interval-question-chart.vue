@@ -27,7 +27,7 @@
           class="interval-chart-bar-line-value"
           :class="`has-text-${color}-hover`"
           style="left: 0%"
-        >{{ data.ranges[0].lowerBound || "-∞" }}{{ unit }}</span>
+        >{{ data.ranges[0].lowerBound ?? "-∞" }}{{ unit }}</span>
         <template
           v-for="(range, index) in data.ranges"
           :key="range.id"
@@ -36,7 +36,7 @@
             class="interval-chart-bar-line-value"
             :class="`has-text-${color}-hover`"
             :style="`left: ${getXPosition(index + 1, data.ranges.length)}%`"
-          >{{ range.upperBound || "+∞" }}{{ unit }}</span>
+          >{{ range.upperBound ?? "+∞" }}{{ unit }}</span>
         </template>
       </span>
 
@@ -91,7 +91,7 @@ const props = defineProps({
   unit: {
     type: String,
     default: '',
-  }
+  },
 })
 
 const getXPosition = (index: number, length: number): number => {
@@ -104,7 +104,7 @@ const valuePosition = computed(() => {
   const value = props.data.value.value
 
   const rangeIndex = props.data.ranges?.findIndex(
-    (range) => value >= (range.lowerBound ?? -Infinity) && value <= (range.upperBound ?? Infinity)
+    (range) => value >= (range.lowerBound ?? -Infinity) && value <= (range.upperBound ?? Infinity),
   )
   const currentRange = props.data.ranges?.[rangeIndex]
 

@@ -15,13 +15,22 @@
           pageStore.evaluationInitiationPage.objectiveQuestionsCallToAction
         }}</span>
         <span class="icon">
-          <icon v-if="isLoading" size="20" name="loader-2-line" />
-          <icon v-else size="20" name="arrow-right-line" />
+          <icon
+            v-if="isLoading"
+            size="20"
+            name="loader-2-line"
+          />
+          <icon
+            v-else
+            size="20"
+            name="arrow-right-line"
+          />
         </span>
       </button>
-      <span v-if="isLoading" class="is-size-7 has-text-shade-600"
-        >en cours de chargement</span
-      >
+      <span
+        v-if="isLoading"
+        class="is-size-7 has-text-shade-600"
+      >en cours de chargement</span>
       <!-- <ButtonsArrowButton class="arrow-button-fixed is-left" @click.prevent="goBack" color="no-pillar" /> -->
     </div>
   </PageSection>
@@ -34,7 +43,6 @@ import { usePageStore } from "~/stores/pageStore"
 definePageMeta({
   title: "Initialisation",
   step: "initialization-objectives-questions",
-  middleware: ["assessment", "user-step"],
 })
 
 const pageStore = usePageStore()
@@ -44,15 +52,9 @@ if (!pageStore.evaluationInitiationPage.objectiveQuestionsTitle) {
 
 const isLoading = ref(false)
 
-// TODO : allow to reset initialization of an assessment, rigth now the back does not allow it
-// function goBack() {
-//   // router.push(
-//   //   `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`
-//   // )
-// }
-
 const goToFirstObjectiveQuestion = () => {
   isLoading.value = true
-  useInitializationJourney().goToNextQuestion(undefined)
+  const journey = useInitializationJourney()
+  journey.goToNextQuestion(undefined)
 }
 </script>

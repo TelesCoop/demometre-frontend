@@ -32,7 +32,7 @@
           class="columns is-multiline mt-4"
         >
           <div
-            v-for="pillar of questionnaireStore.pillars"
+            v-for="pillar of questionnaireStore.pillarsOfMainSurvey(assessment.surveyId)"
             :key="pillar.name"
             class="column"
           >
@@ -63,12 +63,14 @@ import { useWorkshopStore } from "~/stores/workshopStore"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useUserStore } from "~/stores/userStore"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 definePageMeta({
   title: "Réponses",
-  breadcrumb: "Réponses"
+  breadcrumb: "Réponses",
 })
 
+const assessmentStore = useAssessmentStore()
 const questionnaireStore = useQuestionnaireStore()
 const profilingStore = useProfilingStore()
 const pageStore = usePageStore()
@@ -79,6 +81,7 @@ const workshopId: number = +route.params.workshopId
 const workshopStore = useWorkshopStore()
 
 const workshop = computed<Workshop>(() => workshopStore.workshopById[workshopId])
+const assessment = assessmentStore.currentAssessment
 if (!pageStore.animatorPage.listWorkshopsTitle) {
   pageStore.getAnimatorPage()
 }
@@ -97,12 +100,12 @@ const activePillar = ref<PillarType>()
 const markers = ref<Marker[]>()
 
 const colorClass = computed(() =>
-  activePillar.value ? PillarParams[activePillar.value.name].color : ""
+  activePillar.value ? PillarParams[activePillar.value.name].color : "",
 )
 const onSelectPillar = (pillar: PillarType) => {
   activePillar.value = pillar
   markers.value = activePillar.value?.markerIds.map(
-    (markerId) => questionnaireStore.markerById[markerId]
+    (markerId) => questionnaireStore.markerById[markerId],
   )
   router.replace({ path: "reponses", query: { pillar: pillar.name } })
 }

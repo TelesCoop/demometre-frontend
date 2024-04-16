@@ -3,8 +3,8 @@ import {
   Assessment, AssessmentDocumentType,
   Localities,
   RepresentativityCriteria,
-  Scores,
-  User
+  Scores, SurveyLocality, SurveysResult,
+  User,
 } from "~/composables/types"
 import { useApiDelete, useApiGet, useApiPost } from "~/composables/api"
 import { useMessageStore } from "./messageStore"
@@ -27,10 +27,10 @@ export const useAssessmentStore = defineStore("assessment", {
       [key: number]: User
     }>{},
     addingExpert: <boolean>false,
-    newAssessment: <Assessment>{}
+    newAssessment: <Assessment>{},
   }),
   getters: {
-    assessmentTypeTitle() {
+    assessmentTypeTitle(): string {
       return (
         "de " +
         (this.currentAssessment?.municipality
@@ -48,10 +48,10 @@ export const useAssessmentStore = defineStore("assessment", {
       return this.assessments.filter(
         (assessment: Assessment) =>
           assessment.publishedResults === true ||
-          assessment.id === this.currentAssessmentId
+          assessment.id === this.currentAssessmentId,
       )
     },
-    currentAssessment() {
+    currentAssessment(): Assessment {
       return this.assessmentById[this.currentAssessmentId]
     },
     experts: (state): User[] => {
@@ -60,22 +60,32 @@ export const useAssessmentStore = defineStore("assessment", {
     intercommunalityAssessments() {
       return this.assessments.find(
         (assessment: Assessment) =>
-          assessment.localityType === "intercommunality"
+          assessment.localityType === "intercommunality",
       )
     },
+    userHasNoAssessment() {
+      return Object.values(this.assessmentById).length == 0
+    },
     userHasSingleAssessment() {
-      return Object.values(this.assessmentById).length < 2
+      return Object.values(this.assessmentById).length == 1
     },
     municipalityAssessments() {
       return this.assessments.find(
-        (assessment: Assessment) => assessment.localityType === "municipality"
+        (assessment: Assessment) => assessment.localityType === "municipality",
       )
+    },
+    representativityCriteriasForSurveyLocality() {
+      return (surveyLocality: SurveyLocality) => {
+        return this.representativityCriterias.filter(
+          (criteria) => criteria.surveyLocality === surveyLocality,
+        )
+      }
     },
     userIsAssessmentInitiator() {
       return (
         this.currentAssessment?.initiatedByUser?.id === useUserStore().user.id
       )
-    }
+    },
   },
   actions: {
     addAssessment(assessment) {
@@ -86,8 +96,8 @@ export const useAssessmentStore = defineStore("assessment", {
         `assessments/${assessmentId}/add-expert/`,
         {
           expertId,
-          conditionsOfSaleConsent: this.newAssessment.conditionsOfSaleConsent
-        }
+          conditionsOfSaleConsent: this.newAssessment.conditionsOfSaleConsent,
+        },
       )
       if (error.value) {
         const errorStore = useMessageStore()
@@ -101,7 +111,7 @@ export const useAssessmentStore = defineStore("assessment", {
       const { data, error } = await useApiPost<AssessmentDocumentType>(
         `assessment-documents/`,
         payload,
-        "Impossible de téléverser le document"
+        "Impossible de téléverser le document",
       )
       if (!error.value) {
         this.assessmentById[assessmentId].documents.push(data.value)
@@ -109,21 +119,21 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     async deleteDocument(assessmentId, assessmentDocumentId: number) {
       const { error } = await useApiDelete<Scores>(
-        `assessment-documents/${assessmentDocumentId}/`
+        `assessment-documents/${assessmentDocumentId}/`,
       )
       if (error.value) {
         return false
       } else {
         console.log("### remove document", assessmentId, this.assessmentById[assessmentId])
         this.assessmentById[assessmentId].documents = this.assessmentById[assessmentId].documents.filter(
-          doc => doc.id != assessmentDocumentId
+          doc => doc.id != assessmentDocumentId,
         )
         return true
       }
     },
     async getAssesmentsWithPublicatedResults() {
       const { data, error } = await useApiGet<Assessment[]>(
-        `assessments/published/`
+        `assessments/published/`,
       )
       if (error.value) {
         const errorStore = useMessageStore()
@@ -151,7 +161,7 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     async getAssessmentScores(assessmentId) {
       const { data, error } = await useApiGet<Scores>(
-        `assessments/${assessmentId}/scores/`
+        `assessments/${assessmentId}/scores/`,
       )
       if (error.value) {
         const errorStore = useMessageStore()
@@ -182,10 +192,10 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     async getChartDataByAssessmentIdAndQuestionId(
       assessmentId: number,
-      questionId: number
+      questionId: number,
     ): Promise<boolean> {
       const { data, error } = await useApiGet<any>(
-        `assessments/${assessmentId}/questions/${questionId}/chart-data/`
+        `assessments/${assessmentId}/questions/${questionId}/chart-data/`,
       )
       if (error.value) {
         const errorStore = useMessageStore()
@@ -212,19 +222,20 @@ export const useAssessmentStore = defineStore("assessment", {
       }
       return true
     },
-    async getLocalities(zipCode) {
-      const { data, error } = await useApiGet<Localities>(
-        `localites/by-zip-code/${parseInt(zipCode.replace(" ", ""))}/`
+    async getSurveysForZipCode(zipCode: string) {
+      const { data, error } = await useApiGet<SurveysResult>(
+        `surveys/by-zip-code/${parseInt(zipCode.replace(" ", ""))}/`,
       )
       if (error.value) {
         const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
+        return null
       }
       return data.value
     },
     async getOrCreateAssessment({ localityId, localityType }) {
       const { data, error } = await useApiGet<Assessment>(
-        `assessments/by-locality/?locality_id=${localityId}&locality_type=${localityType}`
+        `assessments/by-locality/?locality_id=${localityId}&locality_type=${localityType}`,
       )
       if (error.value) {
         const errorStore = useMessageStore()
@@ -237,7 +248,7 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     async getRepresentativityCriterias() {
       const { data, error } = await useApiGet<RepresentativityCriteria>(
-        "representativity-criterias/"
+        "representativity-criterias/",
       )
       if (!error.value) {
         this.representativityCriterias = data.value
@@ -253,11 +264,11 @@ export const useAssessmentStore = defineStore("assessment", {
           representativityThresholds: this.representativityCriterias.map(
             (item) => {
               return { id: item.id, value: item.acceptabilityThreshold || null }
-            }
+            },
           ),
           ...this.newAssessment,
-          ...payload
-        }
+          ...payload,
+        },
       )
       if (error.value) {
         const errorStore = useMessageStore()
@@ -286,7 +297,7 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     async saveAssessment(assessmentId: number, payload: any) {
       const { data, error } = await useApiPatch<Assessment>(
-        `assessments/${assessmentId}/`, payload
+        `assessments/${assessmentId}/`, payload,
       )
       if (error.value) {
         return false
@@ -305,13 +316,13 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     async saveEndInitializationQuestions() {
       const { data, error } = await useApiPatch<Assessment>(
-        `assessments/${this.currentAssessmentId}/questions/completed/`
+        `assessments/${this.currentAssessmentId}/questions/completed/`,
       )
       if (error.value) {
         return false
       }
       this.assessmentById[this.currentAssessmentId] = data.value
       return true
-    }
-  }
+    },
+  },
 })

@@ -6,12 +6,12 @@ import {
   PillarName,
   Question,
   QuestionResponse,
-  SurveyType
+  SurveyType,
 } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
 import {
   QUESTION_RESPONSES_BY_TYPE,
-  getQuestionResponseStructure
+  getQuestionResponseStructure,
 } from "~/utils/question-response"
 import { useUserStore } from "./userStore"
 import { useMessageStore } from "./messageStore"
@@ -29,6 +29,8 @@ export const useParticipationStore = defineStore("participation", {
     currentParticipationId: -1,
     currentlyLoadedSubjectiveResponsesAssessmentId: -1,
     currentlyLoadedProfilingResponsesAssessmentId: -1,
+    fetchedParticipations: <Record<number, boolean>>{},
+    loadedParticipations: <Record<number, boolean>>{},
     profilingCurrent: <number[]>[],
     responseByProfilingQuestionId: <{
       [key: number]: QuestionResponse
@@ -44,7 +46,7 @@ export const useParticipationStore = defineStore("participation", {
     showSaveParticipationModal: <boolean>false,
     totalAndAnsweredQuestionsByPillarName: <
       Record<string, Status>
-      >{}
+      >{},
   }),
   getters: {
     participation() {
@@ -54,8 +56,9 @@ export const useParticipationStore = defineStore("participation", {
       return this.participation?.id
     },
     hasAnsweredQuestionnaireQuestion: (state) => {
-      return (questionId: number) =>
-        state.responseByQuestionnaireQuestionId[questionId] ? true : false
+      return (questionId: number) => {
+        return state.responseByQuestionnaireQuestionId[questionId] ? true : false
+      }
     },
     status(): Status {
       let total = 0
@@ -68,9 +71,9 @@ export const useParticipationStore = defineStore("participation", {
         total,
         answered,
         completed: total === answered,
-        participated: answered > 0
+        participated: answered > 0,
       }
-    }
+    },
   },
   actions: {
     // Create participation only one time
@@ -85,8 +88,8 @@ export const useParticipationStore = defineStore("participation", {
         {
           assessmentId: useAssessmentStore().currentAssessmentId,
           roleId: this.newParticipation.roleId,
-          consent: this.newParticipation.consent
-        }
+          consent: this.newParticipation.consent,
+        },
       )
       if (!error.value) {
         this.currentParticipationId = data.value.id
@@ -109,6 +112,13 @@ export const useParticipationStore = defineStore("participation", {
 
       return true
     },
+    async getParticipationForAssessmentOnce(assessmentId: number): Promise<boolean> {
+      if (this.fetchedParticipations[assessmentId]) {
+        return true
+      }
+      this.fetchedParticipations[assessmentId] = true
+      return await this.getParticipationForAssessment(assessmentId)
+    },
     async getParticipations(): Promise<boolean> {
       const response = await useApiGet<Participation[]>("participations")
       if (response.error.value) {
@@ -125,7 +135,7 @@ export const useParticipationStore = defineStore("participation", {
     },
     async getProfilingQuestionResponsesForAssessment(assessmentId: number) {
       const response = await useApiGet<QuestionResponse[]>(
-        `participation-responses/by-assessment/${assessmentId}/?context=profiling`
+        `participation-responses/by-assessment/${assessmentId}/?context=profiling`,
       )
       if (response.error.value) {
         return false
@@ -139,7 +149,7 @@ export const useParticipationStore = defineStore("participation", {
     },
     async getQuestionnaireSubjectiveQuestionResponsesForAssessment(assessmentId: number) {
       const participationResponses = await useApiGet<QuestionResponse[]>(
-        `participation-responses/by-assessment/${assessmentId}/?context=questionnaire`
+        `participation-responses/by-assessment/${assessmentId}/?context=questionnaire`,
       )
       if (participationResponses.error.value || !participationResponses.data.value) {
         return false
@@ -152,7 +162,7 @@ export const useParticipationStore = defineStore("participation", {
     },
     async getQuestionnaireObjectiveQuestionResponsesForAssessment(assessmentId: number) {
       const assessmentResponses = await useApiGet<QuestionResponse[]>(
-        `assessment-responses/by-assessment/${assessmentId}/`
+        `assessment-responses/by-assessment/${assessmentId}/`,
       )
       if (assessmentResponses.error.value) {
         return false
@@ -167,8 +177,15 @@ export const useParticipationStore = defineStore("participation", {
       await Promise.all([
         this.getProfilingQuestionResponsesForAssessment(assessmentId),
         this.getQuestionnaireSubjectiveQuestionResponsesForAssessment(assessmentId),
-        this.getQuestionnaireObjectiveQuestionResponsesForAssessment(assessmentId)
+        this.getQuestionnaireObjectiveQuestionResponsesForAssessment(assessmentId),
       ])
+    },
+    async loadAssessmentOnce(assessmentId: number) {
+      if (this.loadedParticipations[assessmentId]) {
+        return
+      }
+      this.loadedParticipations[assessmentId] = true
+      await this.loadAssessment(assessmentId)
     },
     newAssessment() {
       this.responseByProfilingQuestionId = {}
@@ -181,7 +198,7 @@ export const useParticipationStore = defineStore("participation", {
         response,
         isAnswered,
         this.id,
-        useAssessmentStore().currentAssessmentId
+        useAssessmentStore().currentAssessmentId,
       )
 
       let apiResponse
@@ -191,12 +208,12 @@ export const useParticipationStore = defineStore("participation", {
       ) {
         apiResponse = await useApiPost<QuestionResponse>(
           `assessment-responses/`,
-          questionResponse
+          questionResponse,
         )
       } else {
         apiResponse = await useApiPost<QuestionResponse>(
           "participation-responses/",
-          questionResponse
+          questionResponse,
         )
       }
       const { data, error } = apiResponse
@@ -219,15 +236,15 @@ export const useParticipationStore = defineStore("participation", {
 
     async saveEndQuestionnaire(
       isProfilingQuestion: boolean,
-      pillarId?: number
+      pillarId?: number,
     ) {
       const payload = {
         profilingQuestion: isProfilingQuestion,
-        pillarId: pillarId
+        pillarId: pillarId,
       }
       const { data, error } = await useApiPatch<Participation>(
         `participations/${this.id}/questions/completed/`,
-        payload
+        payload,
       )
       if (error.value) {
         return false
@@ -245,20 +262,21 @@ export const useParticipationStore = defineStore("participation", {
       this.totalAndAnsweredQuestionsByPillarName = {}
     },
     setTotalAndAnsweredQuestionsInPillar(pillarName: string) {
+      const journey = useQuestionnaireJourney(pillarName)
       const questions = useQuestionnaireStore().getQuestionsFromIdList(
-        useQuestionnaireJourney(pillarName).journey.value
+        journey.journey.value,
       )
       const answered = questions.reduce(
         (totalAnswered, question: Question) =>
           totalAnswered + this.hasAnsweredQuestionnaireQuestion(question.id),
-        0
+        0,
       )
 
       this.totalAndAnsweredQuestionsByPillarName[pillarName] = {
         total: questions.length,
         answered: answered,
         completed:
-          questions.length === 0 ? true : answered / questions.length === 1
+          questions.length === 0 ? true : answered / questions.length === 1,
       }
     },
     setTotalAndAnsweredQuestionsByPillarName() {
@@ -272,6 +290,6 @@ export const useParticipationStore = defineStore("participation", {
     },
     setShowSaveParticipationModal(show) {
       this.showSaveParticipationModal = show
-    }
-  }
+    },
+  },
 })

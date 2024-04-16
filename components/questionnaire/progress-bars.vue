@@ -13,7 +13,7 @@
           (!props.header && pillarName === hoverPillarName
             ? `has-background-${PillarParams[pillarName].color}-light-hover`
             : `has-background-${PillarParams[pillarName].color}-light`) +
-          (props.header ? '' : ' m-0_75 box-rounded')
+            (props.header ? '' : ' m-0_75 box-rounded')
         "
         style="flex: 1"
         @click.prevent="goToFirstQuestionPillar(pillarName)"
@@ -44,7 +44,7 @@
             v-if="pillarName === hoverPillarName || !props.header"
             :class="
               `progress-bar-hover has-text-${PillarParams[pillarName].color}-dark column ` +
-              (props.header ? 'p-0' : '')
+                (props.header ? 'p-0' : '')
             "
           >
             <span>{{ wordTitleCase(pillarName) }}</span>
@@ -58,7 +58,10 @@
             v-if="pillarName !== hoverPillarName || !props.header"
             style="width: 100%"
           >
-            <div v-if="getTotalQuestions(pillarName)" class="progress-bar">
+            <div
+              v-if="getTotalQuestions(pillarName)"
+              class="progress-bar"
+            >
               <div
                 v-for="index in getTotalQuestions(pillarName)"
                 :key="index"
@@ -70,19 +73,22 @@
                     : `has-background-${PillarParams[pillarName].color}-light-active`,
                   index === getNbAnsweredQuestions(pillarName) &&
                     getNbAnsweredQuestions(pillarName) !==
-                      getTotalQuestions(pillarName) &&
+                    getTotalQuestions(pillarName) &&
                     ' last-complete',
                   index === getTotalQuestions(pillarName) && ' all-completed',
                   index === 1 && ' one-completed',
                 ]"
-              ></div>
+              />
             </div>
-            <div v-else class="progress-bar">
+            <div
+              v-else
+              class="progress-bar"
+            >
               <div
                 class="progress-bar-link last-complete one-completed all-completed"
                 style="width: 100%"
                 :class="`has-background-${PillarParams[pillarName].color}`"
-              ></div>
+              />
             </div>
           </div>
         </div>
@@ -101,7 +107,7 @@
           class="is-clickable p-0"
           :class="
             `has-background-${PillarParams[pillarName].color}-light` +
-            (props.header ? '' : ' m-0_75 box-rounded')
+              (props.header ? '' : ' m-0_75 box-rounded')
           "
           style="flex: 1"
           @click.prevent="goToFirstQuestionPillar(pillarName)"
@@ -166,23 +172,24 @@ if (
 const hoverPillarName = ref<string>()
 const isLoadingPillarName = ref<string>("")
 
-const goToFirstQuestionPillar = (pillarName) => {
+const goToFirstQuestionPillar = (pillarName: string) => {
   isLoadingPillarName.value = pillarName
   const { lastQuestionId, isLast } = getLastQuestionOfPillar(pillarName)
-  useQuestionnaireJourney(pillarName).goToNextQuestion(
-    isLast ? undefined : lastQuestionId
+  const journey = useQuestionnaireJourney(pillarName)
+  journey.goToNextQuestion(
+    isLast ? undefined : lastQuestionId,
   )
   isLoadingPillarName.value = ""
 }
 
-function getTotalQuestions(pillarName) {
+function getTotalQuestions(pillarName: string) {
   return participationStore.totalAndAnsweredQuestionsByPillarName[pillarName]
-    .total
+    ?.total || 0
 }
 
-function getNbAnsweredQuestions(pillarName) {
+function getNbAnsweredQuestions(pillarName: string) {
   return participationStore.totalAndAnsweredQuestionsByPillarName[pillarName]
-    .answered
+    ?.answered || 0
 }
 
 function getWidth(pillarName) {
@@ -196,10 +203,12 @@ function getWidth(pillarName) {
 .progress
   &-bar-container
     align-items: center
+
   &-bar-hover
     display: flex
     justify-content: space-between
     width: 100%
+
   &-bar
     display: flex
     height: 12px
@@ -214,12 +223,15 @@ function getWidth(pillarName) {
 
     .last-complete
       border-right: 1px solid $shade-600
+
     .one-completed
       border-top-left-radius: 20px
       border-bottom-left-radius: 20px
+
     .all-completed
       border-top-right-radius: 20px
       border-bottom-right-radius: 20px
+
 .box-rounded
   border-radius: 6px
 

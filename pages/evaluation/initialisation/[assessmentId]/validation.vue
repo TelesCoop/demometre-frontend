@@ -28,7 +28,10 @@
               .initializationValidationCallToAction
           }}</span>
           <span class="icon">
-            <icon size="20" name="arrow-right-line" />
+            <icon
+              size="20"
+              name="arrow-right-line"
+            />
           </span>
         </button>
       </div>
@@ -43,7 +46,6 @@ import { useAssessmentStore } from "~/stores/assessmentStore"
 definePageMeta({
   title: "Initialisation",
   step: "initialization-objectives-questions",
-  middleware: ["assessment", "user-step"],
 })
 
 const router = useRouter()
@@ -59,6 +61,6 @@ function goBack() {
 
 async function submit() {
   await assessmentStore.saveEndInitializationQuestions()
-  useRouter().push("/evaluation")
+  useRouter().push(`/evaluation/participation/${assessmentStore.currentAssessmentId}`)
 }
 </script>

@@ -5,7 +5,9 @@
       action="/evaluation/localisation"
       @submit.prevent="onSubmit"
     >
-      <h1 class="title is-3 has-text-black">Commencer une évaluation</h1>
+      <h1 class="title is-3 has-text-black">
+        Commencer une évaluation
+      </h1>
       <div class="buttons mt-4">
         <button class="button is-normal is-rounded">
           <span>Commencer</span>
@@ -16,7 +18,10 @@
         </span>
 
         <!-- Permet d'appuyer sur entrer -->
-        <input type="submit" hidden />
+        <input
+          type="submit"
+          hidden
+        >
       </div>
     </form>
   </div>
@@ -27,7 +32,6 @@ definePageMeta({
   title: "Évaluation",
   breadcrumb: "Évaluation",
   step: "localisation",
-  middleware: ["user-step"],
 })
 
 function onSubmit() {

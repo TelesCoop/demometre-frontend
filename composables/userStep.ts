@@ -3,7 +3,7 @@ import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import {
   useProfilingJourney,
-  getLastAnsweredProfilingQuestionId
+  getLastAnsweredProfilingQuestionId,
 } from "~/composables/journey"
 
 const START_EVALUATION_TEXT = "Commencer l'évaluation"
@@ -12,7 +12,6 @@ const RESUME_EVALUATION_TEXT = "Reprendre l'évaluation"
 export function useUserStep() {
   const assessmentStore = useAssessmentStore()
   const participationStore = useParticipationStore()
-  const profilingJourney = useProfilingJourney()
 
   const state = computed(() => {
     if (!assessmentStore.currentAssessmentId) {
@@ -20,7 +19,7 @@ export function useUserStep() {
       return {
         step: "localisation",
         url: `/evaluation/localisation`,
-        text: START_EVALUATION_TEXT
+        text: START_EVALUATION_TEXT,
       }
     }
     if (!assessmentStore.currentAssessment?.initializationDate) {
@@ -28,7 +27,7 @@ export function useUserStep() {
       return {
         step: "initialization",
         url: `/evaluation/initialisation?assessment=${assessmentStore.currentAssessmentId}`,
-        text: START_EVALUATION_TEXT
+        text: START_EVALUATION_TEXT,
       }
     }
     if (
@@ -39,7 +38,7 @@ export function useUserStep() {
       return {
         step: "initialization-objectives-questions",
         url: `/evaluation/initialisation/${assessmentStore.currentAssessmentId}/questions-objectives`,
-        text: START_EVALUATION_TEXT
+        text: START_EVALUATION_TEXT,
       }
     }
     if (!participationStore.id) {
@@ -55,20 +54,20 @@ export function useUserStep() {
         return {
           step: "participation",
           url: `/evaluation/participation/${assessmentStore.currentAssessmentId}`,
-          text: RESUME_EVALUATION_TEXT
+          text: RESUME_EVALUATION_TEXT,
         }
       }
       if (assessmentStore.addingExpert) {
         return {
           step: "participation",
           url: `/evaluation/participation/${assessmentStore.currentAssessmentId}/ajout-expert`,
-          text: RESUME_EVALUATION_TEXT
+          text: RESUME_EVALUATION_TEXT,
         }
       }
       return {
         step: "role",
         url: `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`,
-        text: RESUME_EVALUATION_TEXT
+        text: RESUME_EVALUATION_TEXT,
       }
     }
 
@@ -76,21 +75,30 @@ export function useUserStep() {
       const lastAnsweredQuestionId = getLastAnsweredProfilingQuestionId()
 
       // If there is a participation but the profiling is not completed
+      const profilingJourney = useProfilingJourney()
       const questionId = profilingJourney.nextQuestionId(
         lastAnsweredQuestionId,
-        true
+        true,
       )
       return {
         step: "profiling",
-        url: `/evaluation/affinage/${questionId}`,
-        text: RESUME_EVALUATION_TEXT
+        url: `/evaluation/${assessmentStore.currentAssessmentId}/affinage/${questionId}`,
+        text: RESUME_EVALUATION_TEXT,
       }
     }
 
-    return {
-      step: "questionnaire",
-      url: "/evaluation/questionnaire",
-      text: RESUME_EVALUATION_TEXT
+    if (assessmentStore.currentAssessmentId) {
+      return {
+        step: "questionnaire",
+        url: `/evaluation/${assessmentStore.currentAssessmentId}/questionnaire`,
+        text: RESUME_EVALUATION_TEXT,
+      }
+    } else {
+      return {
+        step: "localisation",
+        url: `/evaluation/localisation`,
+        text: START_EVALUATION_TEXT,
+      }
     }
   })
   return state

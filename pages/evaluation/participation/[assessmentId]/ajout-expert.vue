@@ -14,14 +14,22 @@
       <div class="nav-questionnaire-container">
         <div v-if="!userStore.isLoggedIn">
           <!-- User not logged in -->
-          <p class="mb-1">Vous devez être connecté pour ajouter un expert</p>
+          <p class="mb-1">
+            Vous devez être connecté pour ajouter un expert
+          </p>
           <div class="buttons mb-0_5">
-            <NuxtLink class="button is-shade-600 is-rounded" to="/signup"
-              >Créer un compte</NuxtLink
+            <NuxtLink
+              class="button is-shade-600 is-rounded"
+              to="/signup"
             >
-            <NuxtLink class="button is-shade-600 is-rounded" to="/login"
-              >Se connecter</NuxtLink
+              Créer un compte
+            </NuxtLink>
+            <NuxtLink
+              class="button is-shade-600 is-rounded"
+              to="/login"
             >
+              Se connecter
+            </NuxtLink>
           </div>
         </div>
         <AssessmentAddExpert
@@ -56,14 +64,13 @@ definePageMeta({
   title: "Ajout d'un expert",
   breadcrumb: "Ajout d'un expert",
   step: "participation",
-  middleware: ["assessment", "user-step"],
 })
 
 const router = useRouter()
 const assessmentStore = useAssessmentStore()
 
 const disabled = computed(() =>
-  assessmentStore.newAssessment.conditionsOfSaleConsent ? false : true
+  assessmentStore.newAssessment.conditionsOfSaleConsent ? false : true,
 )
 
 const route = useRoute()
@@ -77,19 +84,19 @@ const expertSelected = ref<User>()
 
 function goBack() {
   router.push(
-    `/evaluation/participation/${assessmentStore.currentAssessmentId}`
+    `/evaluation/participation/${assessmentStore.currentAssessmentId}`,
   )
 }
 
 async function onSubmit() {
   const isSuccess = await assessmentStore.addExpert(
     +route.params.assessmentId,
-    expertSelected.value.id
+    expertSelected.value.id,
   )
   if (isSuccess) {
     assessmentStore.addingExpert = false
     useRouter().push(
-      `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`
+      `/evaluation/participation/${assessmentStore.currentAssessmentId}/tableau-de-bord`,
     )
   }
 }

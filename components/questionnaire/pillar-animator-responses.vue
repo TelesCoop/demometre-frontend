@@ -157,10 +157,12 @@ import { Question, Objectivity } from "~/composables/types"
 import { wordTitleCase } from "~/utils/util"
 import { useWorkshopStore } from "~/stores/workshopStore"
 import { useConfirm } from "~/composables/useConfirm"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 const questionnaireStore = useQuestionnaireStore()
 const workshopStore = useWorkshopStore()
 const confirm = useConfirm()
+const assessmentStore = useAssessmentStore()
 
 const props = defineProps({
   pillar: { type: Object, required: true },
@@ -169,7 +171,7 @@ const props = defineProps({
 })
 
 const questions = computed<Question[]>(() =>
-  questionnaireStore.getQuestionnaireQuestionByPillarName(props.pillar.name)
+  questionnaireStore.getQuestionnaireQuestionByPillarName(assessmentStore.currentAssessment.surveyId, props.pillar.name)
 )
 const activeQuestion = ref<Question>()
 const hoverQuestionId = ref<number>()
