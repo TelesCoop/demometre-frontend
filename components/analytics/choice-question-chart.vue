@@ -111,14 +111,14 @@
 import { getPercentage } from "assets/utils/percentage"
 import {
   getLeftStyle,
-  getColorGradients
+  getColorGradients,
 } from "assets/utils/choice-question-chart"
 import { useProfilingStore } from "~/stores/profilingStore"
 
 const props = defineProps({
   data: { type: Object, required: true },
   color: { type: String, required: true },
-  question: { type: Object, required: true }
+  question: { type: Object, required: true },
 })
 const profilingStore = useProfilingStore()
 const totalSeparator = 11
@@ -128,10 +128,8 @@ const gapSize = 2
 const percentageSize = 80
 
 const rolesGradiants = computed(
-  () => getColorGradients(props.color)[props.question.roleIds.length]
+  () => getColorGradients(props.color)[props.question.roleIds.length],
 )
-
-console.log("### init with data", props.data)
 
 const roleIdsSelected = ref<number[]>([])
 
@@ -150,10 +148,9 @@ const getValueByRoleId = (choice, roleId) => {
   return choice[roleName] ? choice[roleName].value : 0
 }
 const getTotalValueOfRolesSelected = (choice) => {
-  console.log("### getTotalValueOfRolesSelected", choice, roleIdsSelected)
   return roleIdsSelected.value.reduce(
     (value, roleId) => value + getValueByRoleId(choice, roleId),
-    0
+    0,
   )
 }
 </script>
