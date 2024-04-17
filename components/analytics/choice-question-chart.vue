@@ -58,6 +58,7 @@
                 getValueByRoleId(choice, roleId),
                 data.count
               )}%`"
+              :title="`${getPercentage(getValueByRoleId(choice, roleId), data.count)}% pour le rôle ${profilingStore.roleById[roleId].name}`"
             />
           </div>
         </div>
