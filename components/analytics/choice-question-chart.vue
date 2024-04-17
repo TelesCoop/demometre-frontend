@@ -68,7 +68,7 @@
           <strong>
             {{
               getPercentage(getTotalValueOfRolesSelected(choice), data.count)
-            }} </strong>% ; {{ data.count }}
+            }} </strong>%
         </div>
       </template>
       <template
