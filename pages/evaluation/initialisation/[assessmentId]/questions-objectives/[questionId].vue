@@ -27,13 +27,9 @@ const router = useRouter()
 const questionnaireStore = useQuestionnaireStore()
 const participationStore = useParticipationStore()
 
-console.log("### questionId setup 0")
 const journey = useInitializationJourney()
-console.log("### questionId setup 0.5", { journey })
 const questionId: Ref<number> = ref(+route.params.questionId)
-console.log("### questionId setup", { questionId: questionId.value })
 let pillarName = questionnaireStore.questionById[questionId.value].pillarName
-console.log("### questionId setup 1.01")
 const color = computed<string>(() => PillarParams[pillarName].color)
 
 router.beforeEach((to) => {
@@ -42,13 +38,10 @@ router.beforeEach((to) => {
     pillarName = questionnaireStore.questionById[questionId.value]?.pillarName
   }
 })
-console.log("### questionId setup 1.1")
-console.log("### questionId setup 2", { journey })
 const context: QuestionContextProps = {
   journey,
   questionById: questionnaireStore.questionById,
   responseByQuestionId: participationStore.responseByQuestionnaireQuestionId,
   hasPreviousStep: true,
 }
-console.log("### questionId setup 3")
 </script>
