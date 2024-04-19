@@ -149,6 +149,7 @@ export type Question = {
   surveyId: number
   surveyLocality: SurveyLocality
   surveyType: SurveyType
+  surveys: number[]
   type: QuestionType
 }
 

@@ -28,7 +28,7 @@ export const useProfilingStore = defineStore("profiling", {
     },
     async getProfilingQuestions() {
       const { data, error } = await useApiGet<Question[]>(
-        `profiling-questions/`
+        `profiling-questions/`,
       )
       if (error.value) {
         return false

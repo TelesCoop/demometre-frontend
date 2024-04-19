@@ -121,6 +121,11 @@ export function useProfilingJourney() {
     const questionIds = profilingStore.orderedQuestionId
       .filter((questionId) => {
         const question = profilingStore.questionById[questionId]
+        // this test is here instead of QUESTION_FILTERS_VALUES because it only
+        // applies to profiling questions
+        if (!question.surveys.includes(assessment.surveyId)) {
+          return false
+        }
         return QUESTION_FILTERS_VALUES.every((test) =>
           test({ question, participation, assessment }),
         )
