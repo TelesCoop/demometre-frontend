@@ -20,7 +20,7 @@ export const QUESTION_RESPONSES_BY_TYPE = {
 
 export const getQuestionResponseValue = (
   questionResponse: QuestionResponse,
-  type: string
+  type: string,
 ) => {
   const valueName = QUESTION_RESPONSE_VALUE_BY_TYPE[type]
   const responseValue = questionResponse?.[valueName]
@@ -35,11 +35,11 @@ export const getQuestionResponseValue = (
 
 export const getQuestionResponseString = (
   question: Question,
-  questionResponse: QuestionResponse
+  questionResponse: QuestionResponse,
 ) => {
   const responseValue = getQuestionResponseValue(
     questionResponse,
-    question.type
+    question.type,
   )
   let responseString = responseValue
   if (
@@ -69,7 +69,7 @@ export const getQuestionResponseStructure = (
   response: any,
   isAnswered: boolean,
   participationId: number,
-  assessmentId: number
+  assessmentId: number,
 ) => {
   const questionResponse = {
     questionId: question.id,

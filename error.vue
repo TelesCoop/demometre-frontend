@@ -2,9 +2,11 @@
   <NuxtLayout name="default">
     <div class="container mt-3">
       <h1 class="title">
-        Erreur : la page n'existe pas
+        Erreur
       </h1>
-      <div>
+      <p>Nous sommes désolés, une erreur est survenue.</p>
+      <p>Utilisez le menu du haut pour naviguer, ou pour des évaluations passez par Mon compte.</p>
+      <div class="mt-2">
         <NuxtLink
           to="/compte"
           class="button is-dark is-rounded"

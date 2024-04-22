@@ -197,7 +197,7 @@ export const useAssessmentStore = defineStore("assessment", {
       const { data, error } = await useApiGet<any>(
         `assessments/${assessmentId}/questions/${questionId}/chart-data/`,
       )
-      if (error.value) {
+      if (error.value && error.value.data?.statusCode !== 404) {
         const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
         return false
