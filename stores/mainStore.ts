@@ -2,15 +2,19 @@ import { defineStore } from "pinia"
 import { doNothing } from "~/utils/util"
 
 export const useMainStore = defineStore("main", {
-  state: () => ({
-    confirmation: {
-      confirmationLabel: "",
-      onCancel: process.server ? null : doNothing,
-      onConfirm: process.server ? null : doNothing,
-      text: "",
-      title: ""
+  state: () => {
+    return {
+      firstLoading: true,
+      confirmation: {
+        confirmationLabel: "",
+        onCancel: process.server ? null : doNothing,
+        onConfirm: process.server ? null : doNothing,
+        text: "",
+        title: "",
+      },
     }
-  }),
+  },
+
   actions: {
     resetConfirm() {
       this.confirmation = {
@@ -18,8 +22,8 @@ export const useMainStore = defineStore("main", {
         onCancel: doNothing,
         onConfirm: doNothing,
         text: "",
-        title: ""
+        title: "",
       }
-    }
-  }
+    },
+  },
 })

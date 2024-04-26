@@ -1,3 +1,4 @@
+import { useMainStore } from "~/stores/mainStore"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { useAssessmentStore } from "~~/stores/assessmentStore"
@@ -7,10 +8,9 @@ import { useUserStore } from "~/stores/userStore"
 import { usePageStore } from "~/stores/pageStore"
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.hook("app:created", async () => {
+  nuxtApp.hook("vue:setup", () => {
     // the data should already be fetched from SSR
     // but if it's missing, we try again from the client
-
     const userStore = useUserStore()
     const assessmentStore = useAssessmentStore()
     const profilingStore = useProfilingStore()
@@ -24,7 +24,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     if (!Object.keys(userStore.user).length) {
       toAwaitFor.push(userStore.refreshProfile(false))
     }
-
     if (!assessmentStore.currentAssessment) {
       toAwaitFor.push(assessmentStore.getAssessmentsForUser())
     }
@@ -53,7 +52,9 @@ export default defineNuxtPlugin((nuxtApp) => {
       toAwaitFor.push(pageStore.getHomePage())
     }
 
-    await Promise.all(toAwaitFor)
+    Promise.all(toAwaitFor).then(() => {
+      useMainStore().firstLoading = false
+    })
     console.log("### client init done")
   })
 })
