@@ -1,15 +1,21 @@
 import { defineStore } from "pinia"
-import { Criteria, Marker, PillarType, Question, Survey } from "~/composables/types"
+import {
+  Criteria,
+  Marker,
+  PillarType,
+  Question,
+  Survey,
+} from "~/composables/types"
 import { useMessageStore } from "./messageStore"
 import { useApiGet } from "~/composables/api"
 
 type HierarchicalQuestionStructure = {
-  criteriaId: number
-  markerId: number
-  pillarId: number
-  pillarName: string
-  surveyName: string
-}
+  criteriaId: number;
+  markerId: number;
+  pillarId: number;
+  pillarName: string;
+  surveyName: string;
+};
 export const useQuestionnaireStore = defineStore("questionnaire", {
   state: () => ({
     criteriaById: <{ [key: number]: Criteria }>{},
@@ -22,20 +28,25 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
   }),
   getters: {
     getPillarByName(this) {
-      return (pillarName: string) => Object.values(this.pillarById).find(
-        (pillar) => pillar.name === pillarName,
-      )
+      return (pillarName: string) =>
+        Object.values(this.pillarById).find(
+          (pillar) => pillar.name === pillarName,
+        )
     },
     pillarsOfSurvey() {
       return (surveyId: number) => {
-        this.surveyById[surveyId].pillars.map((pillar) => this.pillarById[pillar.id])
+        this.surveyById[surveyId].pillars.map(
+          (pillar) => this.pillarById[pillar.id],
+        )
       }
     },
     pillarsOfMainSurvey(): PillarType[] {
       const mainSurveyId = Object.values(this.surveyById).find(
         (survey) => survey.surveyLocality === "city",
       )?.id!
-      return this.surveyById[mainSurveyId].pillars.map((pillar) => this.pillarById[pillar.id])
+      return this.surveyById[mainSurveyId].pillars.map(
+        (pillar) => this.pillarById[pillar.id],
+      )
     },
     questionsForSurvey() {
       return (surveyId: number): Question[] => {
@@ -52,9 +63,11 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     },
     getQuestionnaireQuestionByPillarName() {
       return (surveyId: number, pillarName: string): Question[] => {
-        return this.questionsForSurvey(surveyId).filter((question: Question) => {
-          return pillarName === question.pillarName
-        }) as Question[]
+        return this.questionsForSurvey(surveyId).filter(
+          (question: Question) => {
+            return pillarName === question.pillarName
+          },
+        ) as Question[]
       }
     },
   },
@@ -64,7 +77,9 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     },
     async getSurvey(surveyId: number) {
       const { data, error } = await useApiGet<Survey[]>(
-        `surveys/${surveyId}/`, "", `survey-${surveyId}`,
+        `surveys/${surveyId}/`,
+        "",
+        `survey-${surveyId}`,
       )
       if (!error.value) {
         const survey: Survey = data.value!
@@ -78,16 +93,16 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
           }
         }
         this.surveyById[survey.id] = survey
-
       } else {
         const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
     },
     async getSurveysSetup() {
-      const { data, error } = await useApiGet<{ surveys: Survey[], questions: Question[] }>(
-        "surveys/all/",
-      )
+      const { data, error } = await useApiGet<{
+        surveys: Survey[];
+        questions: Question[];
+      }>("surveys/all/")
       if (!error.value) {
         const surveys = data.value.surveys
         this.surveyById = {}
@@ -140,8 +155,8 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
       question,
       questionId,
     }: {
-      question?: Question
-      questionId?: number
+      question?: Question;
+      questionId?: number;
     }): HierarchicalQuestionStructure | undefined {
       const currentQuestion = question || this.questionById[questionId]
 

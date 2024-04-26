@@ -18,7 +18,6 @@ export enum Method {
 }
 
 export enum QuestionType {
-  OPEN = "open",
   UNIQUE_CHOICE = "unique_choice",
   MULTIPLE_CHOICE = "multiple_choice",
   CLOSED_WITH_SCALE = "closed_with_scale",
@@ -58,6 +57,10 @@ export const PillarParams = {
     color: "cooperation",
   },
 }
+export const PILLARS_KEYS = Object.values(PillarParams).map(
+  (pillar) => pillar.key,
+)
+
 export type Survey = {
   id: number
   name: string
@@ -176,7 +179,11 @@ export const LocalityType = {
   INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" },
   REGION: { key: "region", value: "Région" },
 }
-type localityTypes = "municipality" | "intercommunality" | "region" | "department"
+type localityTypes =
+  | "municipality"
+  | "intercommunality"
+  | "region"
+  | "department"
 export type SurveyLocality = "city" | "region" | "department"
 export const AssessmentType = {
   QUICK: { key: "quick", value: "Diagnostic rapide" },
@@ -196,8 +203,8 @@ export type Localities = {
   intercommunality: Locality[]
 }
 export type SurveysResult = {
-  city: Localities,
-  region: Locality[],
+  city: Localities
+  region: Locality[]
 }
 type CountByResponseChoice = {
   responseChoiceName: string
@@ -311,6 +318,15 @@ export type ClosedWithScaleResponse = {
   participationResponseId: number | null
   assessmentResponseId: number | null
 }
+
+export type QuestionResponseValue = Partial<{
+  uniqueChoiceResponseId: number | null
+  multipleChoiceResponseIds: number[]
+  booleanResponse: boolean | null
+  percentageResponse: number | null
+  numberResponse: number | null
+  closedWithScaleResponseCategories: ClosedWithScaleResponse[]
+}>
 export type QuestionResponse = {
   id: number
   isDirty?: boolean
@@ -318,13 +334,7 @@ export type QuestionResponse = {
   assessmentId: number | null
   questionId: number
   hasPassed: boolean
-  uniqueChoiceResponseId: number | null
-  multipleChoiceResponseIds: number[]
-  booleanResponse: boolean | null
-  percentageResponse: number | null
-  numberResponse: number | null
-  closedWithScaleResponseCategories: ClosedWithScaleResponse[]
-}
+} & QuestionResponseValue
 
 // Workshops
 export type Workshop = {
@@ -639,7 +649,6 @@ export type SectionButton = {
   text: string
 }
 
-
 // rich text (TipTap)
 export enum HeadingType {
   H1 = "h1",
@@ -677,20 +686,23 @@ export type RichTextToolbarItem = {
   title: string
 }
 export type RichTextToolbar = RichTextToolbarItem[]
-export type AssessmentDocumentCategory = "assessment_reports" | "other" | "invoices"
+export type AssessmentDocumentCategory =
+  | "assessment_reports"
+  | "other"
+  | "invoices"
 export type AssessmentDocumentTypeFile = {
-  link: string,
-  mimetype: string,
-  name: string,
-  size: string,
+  link: string
+  mimetype: string
+  name: string
+  size: string
 }
 export type AssessmentDocumentType = {
-  assessment: number,
-  category: AssessmentDocumentCategory,
-  created: string,
-  file: AssessmentDocumentTypeFile,
-  id: number,
-  name: string,
+  assessment: number
+  category: AssessmentDocumentCategory
+  created: string
+  file: AssessmentDocumentTypeFile
+  id: number
+  name: string
 }
 export type Training = {
   audience: string
