@@ -174,12 +174,12 @@ export type Definition = {
 }
 
 // Assessment
-export const LocalityType = {
+export const LOCALITY_TYPE: Record<string, { key: string; value: string }> = {
   MUNICIPALITY: { key: "municipality", value: "Commune" },
   INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" },
   REGION: { key: "region", value: "Région" },
 }
-type localityTypes =
+export type LocalityTypes =
   | "municipality"
   | "intercommunality"
   | "region"
@@ -196,15 +196,13 @@ export type Locality = {
   name: string
   population: number
   zip_codes: number[]
-  localityType: localityTypes
+  localityType: LocalityTypes
 }
 export type Localities = {
   municipality: Locality[]
   intercommunality: Locality[]
-}
-export type SurveysResult = {
-  city: Localities
   region: Locality[]
+  department: Locality[]
 }
 type CountByResponseChoice = {
   responseChoiceName: string

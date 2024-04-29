@@ -120,20 +120,20 @@ const answer = defineModel("modelValue", {
 const tabs = computed(() => {
   const tabs: tabDef[] = [
     {
-      label: "Réponses",
+      divisionLabel: "Réponses",
       id: "responses",
     },
   ]
   if (props.definitions && Object.keys(props.definitions).length) {
     tabs.push({
-      label: "Définitions",
+      divisionLabel: "Définitions",
       id: "definitions",
     })
   }
   if (props.explanatory.length) {
     props.explanatory.forEach((element) => {
       tabs.push({
-        label: `${element.title}`,
+        divisionLabel: `${element.title}`,
         id: `${element.title?.replace(/\s+/g, "")}`,
       })
     })

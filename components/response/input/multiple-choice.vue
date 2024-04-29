@@ -20,9 +20,9 @@
         class="custom-hidden"
         :disabled="
           answer.length >= maxMultipleChoices &&
-          answer.indexOf(responseChoice.id) === -1
+            answer.indexOf(responseChoice.id) === -1
         "
-      />
+      >
       <label :for="genInputId(responseChoiceIndex)">
         <ResponseChoice
           :for="genInputId(responseChoiceIndex)"
@@ -46,19 +46,17 @@ const props = defineProps({
     required: true,
   },
   maxMultipleChoices: { type: Number, required: true },
-  modelValue: {
-    type: Array as PropType<number[]>,
-    required: false,
-    default: () => [],
-  },
   color: { type: String, required: true },
   questionId: { type: Number, required: true },
 })
 
-const answer = useModel("modelValue")
+const answer = defineModel("modelValue", {
+  type: Array as PropType<number[]>,
+  default: [],
+})
 
 const isResponseChoiceSelected = computed(
-  () => (responseChoiceId) => props.modelValue.includes(responseChoiceId)
+  () => (responseChoiceId: number) => answer.value?.includes(responseChoiceId),
 )
 
 function genInputId(responseChoiceIndex = null) {

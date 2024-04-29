@@ -15,7 +15,7 @@
         </div>
       </div>
       <div>
-        <router-link to="/">
+        <router-link to="/export/questionnaire">
           <button class="button is-rounded">
             Générer un questionnaire papier en fonction d'un profil
           </button>
