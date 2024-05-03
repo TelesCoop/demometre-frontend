@@ -25,13 +25,10 @@
       :key="categoryIndex"
       class="mb-1"
     >
-      <ResponseNumberChoice
-        :model-value="getAnswerSliderValue(category.id)"
-        :category="category"
-        :color="props.color"
+      <ResponsePaperNumberChoice
         :bounds="bounds"
-        :selected="hasAnsweredCategory(category.id)"
-        @update:model-value="(val) => updateOne(val, category.id)"
+        :color="color"
+        :category="category"
       />
     </div>
   </fieldset>
@@ -75,48 +72,9 @@ const bounds = computed<QuestionBounds>(() => {
   }
 })
 
-const answer = defineModel("modelValue", {
-  type: Array as PropType<ClosedWithScaleResponse[]>,
-  default: [],
+const answer = useModel<ClosedWithScaleResponse[]>("modelValue", {
+  type: "array",
 })
-
-function updateOne(value, categoryId) {
-  // If object is empty because user pass the question in first time
-  // generate default answer to fix bug
-  const myValue = Object.keys(answer.value).length
-    ? answer.value
-    : getDefaultAnswerValue(props.categories)
-  const newAnswer = myValue.map((categoryResponse) => {
-    if (categoryResponse.categoryId === categoryId) {
-      return {
-        ...categoryResponse,
-        responseChoiceId:
-          value === 0 ? null : props.responseChoices[value - 1].id,
-      }
-    } else {
-      return categoryResponse
-    }
-  })
-  answer.value = newAnswer
-}
-
-function getResponseChoiceIdByCategoryId(categoryId) {
-  return answer.value.filter(
-    (categoryResponse) => categoryResponse.categoryId === categoryId,
-  )[0]?.responseChoiceId
-}
-
-function getAnswerSliderValue(categoryId) {
-  return (
-    props.responseChoices
-      .map((responseChoice) => responseChoice.id)
-      .indexOf(getResponseChoiceIdByCategoryId(categoryId)) + 1 || 0
-  )
-}
-
-function hasAnsweredCategory(categoryId) {
-  return getResponseChoiceIdByCategoryId(categoryId) !== null
-}
 </script>
 
 <style lang="sass" scoped>

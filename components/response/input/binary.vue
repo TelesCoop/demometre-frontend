@@ -5,7 +5,9 @@
     :color="props.color"
     :question-id="questionId"
   >
-    <template #legend>Choisissez oui ou non.</template>
+    <template #legend>
+      Choisissez oui ou non.
+    </template>
   </ResponseInputUniqueChoice>
 </template>
 
@@ -13,9 +15,14 @@
 import { ResponseChoice as ResponseChoiceType } from "~/composables/types"
 
 const props = defineProps({
-  modelValue: { type: Number, required: false, default: null },
   color: { type: String, required: true },
   questionId: { type: Number, required: true },
+})
+
+const answer = defineModel("modelValue", {
+  type: Number,
+  default: null,
+  required: false,
 })
 
 const responseChoices = ref<ResponseChoiceType[]>([
@@ -30,8 +37,6 @@ const responseChoices = ref<ResponseChoiceType[]>([
     description: "",
   },
 ])
-
-const answer = useModel("modelValue")
 </script>
 
 <style scoped lang="sass"></style>

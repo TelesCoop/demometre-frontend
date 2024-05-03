@@ -20,6 +20,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     userStore.refreshProfile(false)
     assessmentStore.getAssessmentsForUser()
     profilingStore.getProfilingQuestions()
+    profilingStore.getRoles()
     questionnaireStore.getSurveysSetup()
     assessmentStore.getRepresentativityCriterias()
     definitionStore.getDefinitions()

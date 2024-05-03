@@ -1,3 +1,5 @@
+import { Question } from "~/composables/types"
+
 export const wordTitleCase = (input: string): string => {
   if (!input.length) {
     return input
@@ -21,10 +23,17 @@ export const getBase64 = (file: File) => {
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onload = () => resolve(reader.result)
-    reader.onerror = error => reject(error)
+    reader.onerror = (error) => reject(error)
   })
 }
 export const isQuestionnaireRouteFromPath = (routePath: string): boolean => {
   const regex = /evaluation\/\d+\/questionnaire/gm
   return regex.test(routePath)
+}
+
+export const filterQuestionsByRoleId = (
+  questions: Question[],
+  roleId: number,
+): Question[] => {
+  return questions.filter((question) => question.roleIds.includes(roleId))
 }

@@ -54,6 +54,7 @@
 
 <script setup lang="ts">
 import { isNullOrUndefined } from "assets/utils"
+import { useQuestionHandler } from "~/composables/questionHandler"
 import {
   Definition,
   QuestionContextProps,
@@ -85,21 +86,18 @@ console.log("### question setup", {
 
 const participationStore = useParticipationStore()
 const assessmentStore = useAssessmentStore()
-const questionnaireStore = useQuestionnaireStore()
-const definitionStore = useDefinitionStore()
+
+const question = computed(() => {
+  return props.context.questionById[props.questionId]
+})
+const { criteria, explanatory, definitions } = useQuestionHandler(
+  question.value,
+)
 
 const isAnswered = computed(() => {
   const value = getQuestionResponseValue(answer.value, question.value.type)
   if (Array.isArray(value)) return value.length > 0
   return !isNullOrUndefined(value)
-})
-
-const question = computed(() => {
-  return props.context.questionById[props.questionId]
-})
-
-const criteria = computed(() => {
-  return questionnaireStore.criteriaById[question.value.criteriaId]
 })
 
 const answer = ref<QuestionResponse | QuestionResponseValue | undefined>(
@@ -117,19 +115,6 @@ const nextQuestionDisabled = computed(
       isAnswered.value ||
       props.context.responseByQuestionId[props.questionId]?.hasPassed
     ),
-)
-
-const definitions = computed<{ [key: number]: Definition }>(() =>
-  criteria.value?.definitionIds.length > 0
-    ? definitionStore.definitionsByIdArray(criteria.value.definitionIds)
-    : [],
-)
-
-const explanatory = computed<SimpleBlock[]>(
-  () =>
-    criteria.value?.explanatory.map(
-      (item: { value: SimpleBlock[] }) => item.value,
-    ) || [],
 )
 
 const goToPreviousQuestion = () => {

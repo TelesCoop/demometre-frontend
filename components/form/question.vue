@@ -104,7 +104,7 @@ import { computed, PropType } from "vue"
 type tabDef = { label: string; id: string }
 const props = defineProps({
   question: { type: Object as PropType<Question>, required: true },
-  explanatory: { type: Array as PropType<SimpleBlock[]>, required: true },
+  explanatory: { type: Array as PropType<SimpleBlock[]>, default: () => [] },
   definitions: {
     type: Object as PropType<{ [key: number]: Definition }>,
     required: false,
@@ -130,7 +130,7 @@ const tabs = computed(() => {
       id: "definitions",
     })
   }
-  if (props.explanatory.length) {
+  if (props.explanatory?.length) {
     props.explanatory.forEach((element) => {
       tabs.push({
         divisionLabel: `${element.title}`,

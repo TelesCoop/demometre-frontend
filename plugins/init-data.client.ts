@@ -30,8 +30,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
 
     if (!profilingStore.orderedQuestionId.length) {
-      profilingStore.getProfilingQuestions()
       toAwaitFor.push(profilingStore.getProfilingQuestions())
+    }
+    if (!profilingStore.roles.length) {
+      toAwaitFor.push(profilingStore.getRoles())
     }
     if (!Object.keys(questionnaireStore.surveyById).length) {
       toAwaitFor.push(questionnaireStore.getSurveysSetup())

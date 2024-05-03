@@ -10,12 +10,12 @@ import { useMessageStore } from "./messageStore"
 import { useApiGet } from "~/composables/api"
 
 type HierarchicalQuestionStructure = {
-  criteriaId: number;
-  markerId: number;
-  pillarId: number;
-  pillarName: string;
-  surveyName: string;
-};
+  criteriaId: number
+  markerId: number
+  pillarId: number
+  pillarName: string
+  surveyName: string
+}
 export const useQuestionnaireStore = defineStore("questionnaire", {
   state: () => ({
     criteriaById: <{ [key: number]: Criteria }>{},
@@ -33,6 +33,11 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
           (pillar) => pillar.name === pillarName,
         )
     },
+    mainSurveyId(this) {
+      return Object.values(this.surveyById).find(
+        (survey) => survey.surveyLocality === "city",
+      )?.id!
+    },
     pillarsOfSurvey() {
       return (surveyId: number) => {
         this.surveyById[surveyId].pillars.map(
@@ -41,10 +46,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
       }
     },
     pillarsOfMainSurvey(): PillarType[] {
-      const mainSurveyId = Object.values(this.surveyById).find(
-        (survey) => survey.surveyLocality === "city",
-      )?.id!
-      return this.surveyById[mainSurveyId].pillars.map(
+      return this.surveyById[this.mainSurveyId].pillars.map(
         (pillar) => this.pillarById[pillar.id],
       )
     },
@@ -100,8 +102,8 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     },
     async getSurveysSetup() {
       const { data, error } = await useApiGet<{
-        surveys: Survey[];
-        questions: Question[];
+        surveys: Survey[]
+        questions: Question[]
       }>("surveys/all/")
       if (!error.value) {
         const surveys = data.value.surveys
@@ -155,8 +157,8 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
       question,
       questionId,
     }: {
-      question?: Question;
-      questionId?: number;
+      question?: Question
+      questionId?: number
     }): HierarchicalQuestionStructure | undefined {
       const currentQuestion = question || this.questionById[questionId]
 

@@ -44,7 +44,6 @@ const props = defineProps({
     type: Array as PropType<ResponseChoiceType[]>,
     required: true,
   },
-  modelValue: { type: Number, required: false, default: null },
   color: { type: String, required: true },
   questionId: { type: [Number, String], required: true },
 })
@@ -53,9 +52,11 @@ const previousAnswer = ref()
 const answer = defineModel("modelValue", {
   type: Number,
   default: null,
+  required: false,
 })
 const isResponseChoiceSelected = computed(
-  () => (responseChoiceId) => responseChoiceId === props.modelValue,
+  () => (responseChoiceId: ResponseChoiceType) =>
+    responseChoiceId.id === answer.value,
 )
 
 function genInputId(responseChoiceIndex = null) {

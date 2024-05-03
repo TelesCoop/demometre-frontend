@@ -2,7 +2,7 @@
   <div class="button-bar my-1_5">
     <div class="is-flex is-align-items-center">
       <button
-        v-if="canSubmit"
+        v-if="canSubmit || required"
         :class="
           props.color === 'no-pillar'
             ? `is-shade-600`
@@ -108,7 +108,8 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  questionId: { type: Number, required: true },
+  questionId: { type: Number, required: false },
+  required: { type: Boolean, required: false },
   isLoading: { type: Boolean, required: true },
   color: { type: String, required: true },
   isQuestionnaire: { type: Boolean, required: false },
