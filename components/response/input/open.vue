@@ -4,8 +4,7 @@
       class="is-size-6bis mb-0_75 is-block"
       :class="`has-text-${props.color}-dark`"
       :for="`$question-${props.questionId}-open`"
-      >Réponse ouverte</label
-    >
+    >Réponse ouverte</label>
     <textarea
       :id="`$question-${props.questionId}-open`"
       v-model="answer"
@@ -18,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { useModel } from "~/composables/modelWrapper"
+import { useLegacyModel } from "~/composables/modelWrapper"
 
 const props = defineProps({
   color: { type: String, required: true },
@@ -26,7 +25,7 @@ const props = defineProps({
   questionId: { required: true, type: Number },
 })
 
-const answer = useModel("modelValue")
+const answer = useLegacyModel("modelValue")
 </script>
 
 <style scoped lang="sass">

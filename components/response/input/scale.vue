@@ -45,7 +45,6 @@ import {
   QuestionBounds,
   ResponseChoice as ResponseChoiceType,
 } from "~/composables/types"
-import { useModel } from "~/composables/modelWrapper"
 import { getDefaultAnswerValue } from "assets/utils/close-with-scale"
 
 const props = defineProps({

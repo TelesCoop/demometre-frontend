@@ -20,8 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { useModel } from "~/composables/modelWrapper"
-
 const props = defineProps({
   color: { type: String, required: true },
   questionId: { required: true, type: Number },

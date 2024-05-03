@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import { useModel } from "~/composables/modelWrapper"
 import { PropType } from "vue"
 
 const props = defineProps({
