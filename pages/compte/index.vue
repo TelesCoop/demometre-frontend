@@ -153,7 +153,7 @@
                     >Redevance impayée</span>
                   </template>
                 </td>
-                <td>{{ LOCALITY_TYPE[assessment.localityType] }}</td>
+                <td>{{ LOCALITY_TYPE_NAME[assessment.localityType] }}</td>
                 <td>{{ assessment.collectivityName }}</td>
                 <td>France</td>
                 <td>
@@ -177,7 +177,7 @@
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useUserStore } from "~/stores/userStore"
-import { LOCALITY_TYPE, PARTICIPANT_TYPE } from "~/utils/constants"
+import { LOCALITY_TYPE_NAME, PARTICIPANT_TYPE } from "~/utils/constants"
 import { useParticipationStore } from "~/stores/participationStore"
 import { Assessment } from "~/composables/types"
 
