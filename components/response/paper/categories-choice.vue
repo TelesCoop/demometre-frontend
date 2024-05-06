@@ -67,4 +67,5 @@ const possibleAnwers = computed(() => {
 <style lang="sass" scoped>
 .input-cell
   width: 30px
+  text-align: center
 </style>
