@@ -122,10 +122,18 @@ export type Rule = {
   booleanResponse: boolean
 }
 
+export type ProfileType = {
+  id: number
+  name: string
+  rulesIntersectionOperator: "and" | "or"
+  rules: Rule[]
+}
+
 export type Question = {
   allowsToExplain: number
   assessmentTypes: string[]
   categories: Category[]
+  code: string
   concatenatedCode: string
   criteriaId: number | null
   description: string

@@ -19,6 +19,10 @@
       </div>
       <ExportSurveyQuestions :role-id="roleId" />
     </div>
+    <div class="title is-4 page-break">
+      Profils
+    </div>
+    <ExportProfileTypes class="is-size-7" />
     <div
       class="print-button"
       @click="print"
@@ -46,6 +50,7 @@ const role = computed(() => {
   LOCALITY_TYPE
   return profilingStore.roleById[route.params.roleId as string]?.name
 })
+profilingStore.getProfileTypes()
 
 const print = () => {
   window.print()

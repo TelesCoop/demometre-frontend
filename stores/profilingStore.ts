@@ -1,20 +1,41 @@
 import { defineStore } from "pinia"
-import { Question, Role } from "~/composables/types"
+import { ProfileType, Question, Role } from "~/composables/types"
 import { useMessageStore } from "./messageStore"
 import { useApiGet } from "~~/composables/api"
+import ProfileTypes from "~/components/export/profile-types.vue"
 
 export const useProfilingStore = defineStore("profiling", {
   state: () => ({
     roleById: <{ [key: string]: Role }>{},
     questionById: <{ [key: number]: Question }>{},
     orderedQuestionId: <number[]>[],
+    profileTypeById: <{ [key: number]: ProfileType }>{},
+    profileTypeIds: <number[]>[],
   }),
   getters: {
     roles: (state) => {
       return Object.values(state.roleById)
     },
+    profileTypes: (state) => {
+      return state.profileTypeIds.map((id) => state.profileTypeById[id])
+    },
   },
   actions: {
+    async getProfileTypes() {
+      const { data, error } = await useApiGet<ProfileType[]>("profile-types/")
+
+      if (!error.value) {
+        this.profileTypeIds = []
+
+        for (const profileType of data.value) {
+          this.profileTypeById[profileType.id] = profileType
+          this.profileTypeIds.push(profileType.id)
+        }
+      } else {
+        const errorStore = useMessageStore()
+        errorStore.setError(error.value.data?.messageCode)
+      }
+    },
     async getRoles() {
       const { data, error } = await useApiGet<Role[]>("roles/")
       if (!error.value) {

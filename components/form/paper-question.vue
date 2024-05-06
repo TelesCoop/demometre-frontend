@@ -4,9 +4,8 @@
       class="title is-size-6"
       :class="`has-text-${props.color}-dark`"
     >
-      <template v-if="question.concatenatedCode">
-        {{ question.concatenatedCode }} -
-      </template>{{ question.questionStatement }}
+      {{ question.concatenatedCode || question.code }} -
+      {{ question.questionStatement }}
     </div>
     <RichText
       v-if="question.description"
@@ -14,6 +13,12 @@
       :rich-text="question.description"
       :color="props.color"
     />
+    <div
+      v-if="question.profileIds?.length"
+      class="is-size-7"
+    >
+      <FormQuestionProfileTypes :profile-types-ids="question.profileIds" />
+    </div>
     <section :class="`is-${color}`">
       <div>
         <!-- all possible inputs -->
