@@ -14,13 +14,13 @@
       :max="question.maxNumberValue"
       :step="question.stepNumberValue"
     />
-    <ResponseInputUniqueChoice
+    <ResponsePaperInputUniqueChoice
       v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
       :response-choices="question.responseChoices"
       :color="props.color"
       :question-id="question.id"
     />
-    <ResponseInputMultipleChoice
+    <ResponsePaperInputMultipleChoice
       v-else-if="question.type === QuestionType.MULTIPLE_CHOICE"
       :response-choices="question.responseChoices"
       :max-multiple-choices="
@@ -29,7 +29,7 @@
       :color="props.color"
       :question-id="question.id"
     />
-    <ResponseInputBinary
+    <ResponsePaperInputBinary
       v-else-if="question.type === QuestionType.BOOLEAN"
       :color="props.color"
       :question-id="question.id"

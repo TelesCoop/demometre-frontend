@@ -1,20 +1,20 @@
 <template>
   <div class="container">
-    <div class="section">
-      <h1 class="title is-1 has-text-black">
+    <div class="mb-2">
+      <h1 class="title is-3 has-text-black">
         Questionnaire "{{ role }}"
       </h1>
     </div>
 
     <div>
-      <div class="title is-3">
+      <div class="title is-4">
         Question d'affinage
       </div>
       <ExportProfilingQuestions :role-id="roleId" />
     </div>
 
     <div>
-      <div class="title is-3">
+      <div class="title is-4 page-break">
         Questionnaire
       </div>
       <ExportSurveyQuestions :role-id="roleId" />
@@ -57,7 +57,7 @@ const print = () => {
   bottom: 0
   right: 0
   padding: 1rem
-  background-color: $primary
+  background-color: $shade-600
   color: white
   cursor: pointer
   border-radius: 0.5rem
@@ -65,7 +65,7 @@ const print = () => {
   box-shadow: 0 0 1rem rgba(black, 0.1)
   z-index: 1000
   &:hover
-    background-color: $primary-dark
+    background-color: $shade-500
 
 @media print
   .print-button

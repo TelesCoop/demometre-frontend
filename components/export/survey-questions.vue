@@ -1,9 +1,9 @@
 <template>
-  <div class="">
+  <div>
     <div
-      v-for="pillar in questionnaireStore.pillarsOfMainSurvey"
+      v-for="(pillar, index) in questionnaireStore.pillarsOfMainSurvey"
       :key="pillar.id"
-      class=""
+      :class="{ 'page-break': index > 0 }"
     >
       <div class="title is-5">
         Pillier {{ pillar.name }}

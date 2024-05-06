@@ -1,7 +1,7 @@
 <template>
   <div class="no-page-break-inside paper-question">
     <div
-      class="title is-size-5"
+      class="title is-size-6"
       :class="`has-text-${props.color}-dark`"
     >
       <template v-if="question.concatenatedCode">
@@ -10,7 +10,7 @@
     </div>
     <RichText
       v-if="question.description"
-      class="is-family-secondary"
+      class="is-family-secondary is-size-7"
       :rich-text="question.description"
       :color="props.color"
     />
@@ -20,6 +20,7 @@
         <FormPaperQuestionInput
           :color="color"
           :question="question"
+          class="is-size-7"
         />
       </div>
     </section>
@@ -41,8 +42,4 @@ const props = defineProps({
 })
 </script>
 
-<style scoped lang="sass">
-.paper-question
-  max-width: 50%
-  transform: scale(0.8)
-</style>
+<style scoped lang="sass"></style>
