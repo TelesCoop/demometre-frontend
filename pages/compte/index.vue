@@ -14,7 +14,7 @@
           </button>
         </div>
       </div>
-      <div>
+      <div v-if="userStore.isAdminOrExpertUser">
         <router-link to="/export/questionnaire">
           <button class="button is-rounded">
             Générer un questionnaire papier en fonction d'un profil

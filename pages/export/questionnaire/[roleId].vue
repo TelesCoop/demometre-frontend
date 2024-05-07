@@ -38,6 +38,7 @@ definePageMeta({
   breadcrumb: "Impression",
   layout: "empty",
   title: "Questionnaire papier - Impression",
+  middleware: ["admin-or-expert"],
 })
 
 const profilingStore = useProfilingStore()

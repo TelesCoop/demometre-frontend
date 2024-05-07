@@ -37,3 +37,7 @@ export const filterQuestionsByRoleId = (
 ): Question[] => {
   return questions.filter((question) => question.roleIds.includes(roleId))
 }
+
+export const isAdminOrExpert = (user: User): boolean => {
+  return user.isAdmin || user.isExpert
+}

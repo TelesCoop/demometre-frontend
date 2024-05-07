@@ -23,6 +23,7 @@ import { Localities } from "~/composables/types"
 definePageMeta({
   title: "Questionnaire papier",
   breadcrumb: "Questionnaire papier",
+  middleware: ["admin-or-expert"],
 })
 
 const router = useRouter()

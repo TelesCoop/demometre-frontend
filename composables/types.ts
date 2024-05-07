@@ -2,6 +2,7 @@ export type User = {
   email: string
   id: number | null
   isExpert: boolean
+  isAdmin: boolean
   isUnknownUser: boolean
   username: string
 }
