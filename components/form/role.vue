@@ -30,7 +30,7 @@ import { usePressEnter } from "~/composables/pressEnter"
 const props = defineProps({
   modelValue: {
     type: Number as PropType<number | undefined>,
-    required: true,
+    default: () => undefined,
   },
   isLoading: {
     type: Boolean,
