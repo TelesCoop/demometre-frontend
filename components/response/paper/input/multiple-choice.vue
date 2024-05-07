@@ -13,7 +13,7 @@
         v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
         :key="responseChoiceIndex"
         class="mb-1"
-        :name="questionId"
+        :name="questionId.toString()"
         :response-choice="responseChoice"
       />
     </div>

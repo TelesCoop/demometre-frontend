@@ -55,8 +55,7 @@ const answer = defineModel("modelValue", {
   required: false,
 })
 const isResponseChoiceSelected = computed(
-  () => (responseChoiceId: ResponseChoiceType) =>
-    responseChoiceId.id === answer.value,
+  () => (responseChoiceId: number) => responseChoiceId === answer.value,
 )
 
 function genInputId(responseChoiceIndex = null) {

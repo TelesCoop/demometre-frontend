@@ -15,7 +15,7 @@
         v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
         :key="responseChoiceIndex"
         :response-choice="responseChoice"
-        :name="questionId"
+        :name="questionId.toString()"
       />
     </div>
   </fieldset>

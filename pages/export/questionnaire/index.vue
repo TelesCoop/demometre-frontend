@@ -19,19 +19,18 @@
 </template>
 <script lang="ts" setup>
 import { Localities } from "~/composables/types"
-import { useExportStore } from "~/stores/exportStore"
 
 definePageMeta({
   title: "Questionnaire papier",
   breadcrumb: "Questionnaire papier",
 })
 
-const exportStore = useExportStore()
 const router = useRouter()
-
+const answer = ref<number | undefined>(undefined)
+const isLoading = ref(false)
 const onSubmit = (value?: Localities) => {
   if (!value) return
-  console.log(value)
+  isLoading.value = true
   router.push(`/export/questionnaire/${value}`)
 }
 </script>
