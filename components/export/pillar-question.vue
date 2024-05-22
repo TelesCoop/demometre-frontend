@@ -8,14 +8,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, PropType } from "vue"
-import {
-  PillarParams,
-  type PillarType,
-  type Question,
-} from "~/composables/types"
+import { PropType } from "vue"
+import { type PillarType, type Question } from "~/composables/types"
 
-const props = defineProps({
+defineProps({
   pillar: {
     type: Object as PropType<PillarType>,
     required: true,
