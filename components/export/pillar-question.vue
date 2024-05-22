@@ -2,7 +2,7 @@
   <div>
     <FormPaperQuestion
       :question="question"
-      :color="color"
+      color="no-pillar"
     />
   </div>
 </template>
@@ -25,6 +25,4 @@ const props = defineProps({
     required: true,
   },
 })
-
-const color = computed<string>(() => PillarParams[props.pillar.name].color)
 </script>
