@@ -40,7 +40,7 @@ export const useQuestionnaireStore = defineStore("questionnaire", {
     },
     pillarsOfSurvey() {
       return (surveyId: number) => {
-        this.surveyById[surveyId].pillars.map(
+        return this.surveyById[surveyId].pillars.map(
           (pillar) => this.pillarById[pillar.id],
         )
       }

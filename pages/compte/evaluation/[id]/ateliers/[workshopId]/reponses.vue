@@ -18,7 +18,9 @@
       <div class="container">
         <section ref="pillarsRef" class="columns is-multiline mt-4">
           <div
-            v-for="pillar of questionnaireStore.pillarsOfMainSurvey"
+            v-for="pillar of questionnaireStore.pillarsOfSurvey(
+              assessment.surveyId,
+            )"
             :key="pillar.name"
             class="column"
           >
