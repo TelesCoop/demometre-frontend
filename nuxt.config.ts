@@ -16,5 +16,5 @@ export default defineNuxtConfig({
   runtimeConfig: {
     backendPort: process.env.NUXT_BACKEND_PORT || process.env.VITE_BACKEND_PORT,
   },
-  ssr: false,
+  ssr: true,
 })
