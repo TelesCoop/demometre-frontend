@@ -113,7 +113,7 @@ const addWorkshop = async () => {
     date: date.value,
     place: place.value,
     assessmentId: props.assessmentId,
-    type: workshopType.value
+    type: workshopType.value,
   })
   if (res) {
     emit("close")

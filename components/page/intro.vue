@@ -4,7 +4,10 @@
       class="intro columns section is-variable"
       :class="`is-${props.columnGap}`"
     >
-      <div class="column" :class="`is-${props.columnDistribution[0]}`">
+      <div
+        class="column"
+        :class="`is-${props.columnDistribution[0]}`"
+      >
         <PageTitle
           :title="props.title"
           :subtitle="props.subtitle"
@@ -15,14 +18,17 @@
           :rich-text="props.introduction"
           class="is-family-secondary"
         />
-        <slot></slot>
+        <slot />
       </div>
       <div
         class="column"
         :class="`is-offset-${props.columnDistribution[1]} is-${props.columnDistribution[2]}`"
         style="text-align: end"
       >
-        <div v-if="props.youtubeVideoId" class="video-container">
+        <div
+          v-if="props.youtubeVideoId"
+          class="video-container"
+        >
           <iframe
             width="100%"
             height="100%"
@@ -31,14 +37,17 @@
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
-          ></iframe>
+          />
         </div>
-        <figure v-else-if="props.imageUrl" class="image is-128x128">
+        <figure
+          v-else-if="props.imageUrl"
+          class="image is-128x128"
+        >
           <img
             :src="MEDIA_BASE_URL + props.imageUrl"
             alt
             style="border-radius: 6px"
-          />
+          >
         </figure>
       </div>
     </section>

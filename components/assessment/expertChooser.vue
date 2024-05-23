@@ -30,9 +30,9 @@
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
 
-const props = defineProps({
+defineProps({
   modelValue: { type: Number, required: true },
-  expertIx: { type: Number, default: 0 }
+  expertIx: { type: Number, default: 0 },
 })
 defineEmits(["remove", "update:modelValue"])
 

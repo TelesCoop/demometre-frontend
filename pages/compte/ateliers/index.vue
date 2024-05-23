@@ -215,7 +215,7 @@ import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({
   title: "Ateliers",
-  breadcrumb: "Ateliers"
+  breadcrumb: "Ateliers",
 })
 
 const workshopStore = useWorkshopStore()
@@ -244,8 +244,8 @@ const closeWorkshopIdModal = ref<number>(undefined)
 const newWorkshops = ref<Workshop[]>([])
 const validateDisabled = computed(() =>
   [...newWorkshops.value, ...workshopStore.workshops].some(
-    (workshop) => !(workshop.assessmentId && workshop.date && workshop.name)
-  )
+    (workshop) => !(workshop.assessmentId && workshop.date && workshop.name),
+  ),
 )
 
 function assessmentTitle(assessment) {
@@ -263,7 +263,7 @@ function addWorkshop() {
     animatorId: userStore.user.id,
     participationIds: [],
     changed: true,
-    closed: false
+    closed: false,
   })
 }
 

@@ -105,7 +105,7 @@
 <script setup lang="ts">
 import { AssessmentDocumentCategory } from "~/composables/types"
 import {
-  ASSESSMENT_DOCUMENT_CATEGORIES
+  ASSESSMENT_DOCUMENT_CATEGORIES,
 } from "~/utils/constants"
 import { useLoadingStore } from "~/stores/loadingStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
@@ -132,7 +132,7 @@ const saveEdits = async () => {
     assessment: props.assessmentId,
     category: category.value,
     file: selectedFileParams.value,
-    name: name.value
+    name: name.value,
   }
   await assessmentStore.addDocument(data, props.assessmentId)
   emit("close")

@@ -4,7 +4,7 @@ import { Training } from "~/composables/types"
 export const useTrainingStore = defineStore("training", {
   state: () => ({
     loaded: <boolean>false,
-    trainings: <Training[]>[]
+    trainings: <Training[]>[],
   }),
   actions: {
     async getTrainings() {
@@ -13,6 +13,6 @@ export const useTrainingStore = defineStore("training", {
         this.trainings = data.value!
         this.loaded = true
       }
-    }
-  }
+    },
+  },
 })

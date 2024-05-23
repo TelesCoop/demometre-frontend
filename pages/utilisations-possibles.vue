@@ -87,7 +87,7 @@ import { useTrainingStore } from "~/stores/traningStore"
 
 definePageMeta({
   title: "Utilisations possibles",
-  breadcrumb: "Utilisations possibles"
+  breadcrumb: "Utilisations possibles",
 })
 
 const pageStore = usePageStore()

@@ -98,7 +98,7 @@ export async function useApiGet<Type>(path: string, onErrorMessage: string = "",
     credentials: "include",
     headers: getHeaders(),
     key: forceKey,
-    dedupe: "defer"
+    dedupe: "defer",
   }) as AsyncData<Type, FetchError>
   if (error.value) {
     loadingStore.markError(key)
@@ -115,7 +115,7 @@ export async function useAPIwithCsrfToken<Type>(
   path: string,
   method: string,
   payload: any = {},
-  onErrorMessage: string = ""
+  onErrorMessage: string = "",
 ) {
   const loadingStore = useLoadingStore()
   const messageStore = useMessageStore()
@@ -125,7 +125,7 @@ export async function useAPIwithCsrfToken<Type>(
     method,
     body: payload,
     credentials: "include",
-    headers: getHeaders(true)
+    headers: getHeaders(true),
   }) as AsyncData<Type, FetchError>
   if (error.value) {
     loadingStore.markError(key)

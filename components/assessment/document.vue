@@ -34,7 +34,7 @@ const confirm = useConfirm()
 
 const props = defineProps({
   document: { type: Object as PropType<AssessmentDocumentType>, required: true },
-  assessmentId: { type: Number, required: true }
+  assessmentId: { type: Number, required: true },
 })
 const extension = computed(() => {
   return props.document?.file?.mimeType
@@ -46,7 +46,7 @@ const confirmDeletion = () => {
     `Voulez-vous supprimer ${props.document?.name} ?`,
     "Supprimer le document",
     "Supprimer",
-    () => assessmentStore.deleteDocument(props.assessmentId, props.document.id)
+    () => assessmentStore.deleteDocument(props.assessmentId, props.document.id),
   )
 }
 </script>

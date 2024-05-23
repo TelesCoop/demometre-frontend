@@ -68,19 +68,18 @@
 </template>
 
 <script setup lang="ts">
-import { getPercentage } from "assets/utils/percentage"
 import { getColorGradients } from "assets/utils/choice-question-chart"
 import { useProfilingStore } from "~/stores/profilingStore"
 
 const props = defineProps({
   data: { type: Object, required: true },
   color: { type: String, required: true },
-  question: { type: Object, required: true }
+  question: { type: Object, required: true },
 })
 const profilingStore = useProfilingStore()
 
 const rolesGradiants = computed(
-  () => getColorGradients(props.color)[props.question.roleIds.length]
+  () => getColorGradients(props.color)[props.question.roleIds.length],
 )
 const simplifyChart = ref(false)
 

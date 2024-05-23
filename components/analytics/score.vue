@@ -4,8 +4,7 @@
       v-if="props.showNumber"
       class="score-number"
       :class="props.sizeNumberClass"
-      >{{ score }}</b
-    >
+    >{{ score }}</b>
     <span
       v-for="i in maxScore"
       :key="i"

@@ -56,19 +56,15 @@
 import { isNullOrUndefined } from "assets/utils"
 import { useQuestionHandler } from "~/composables/questionHandler"
 import {
-  Definition,
   QuestionContextProps,
   SurveyType,
-  SimpleBlock,
   QuestionResponse,
   QuestionResponseValue,
 } from "~/composables/types"
 import { computed, PropType, watch } from "vue"
 import { ref } from "vue"
-import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getQuestionResponseValue } from "~/utils/question-response"
-import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { usePressEnter } from "~/composables/pressEnter"
 
@@ -90,9 +86,7 @@ const assessmentStore = useAssessmentStore()
 const question = computed(() => {
   return props.context.questionById[props.questionId]
 })
-const { criteria, explanatory, definitions } = useQuestionHandler(
-  question.value,
-)
+const { explanatory, definitions } = useQuestionHandler(question.value)
 
 const isAnswered = computed(() => {
   const value = getQuestionResponseValue(answer.value, question.value.type)

@@ -1,26 +1,31 @@
 <template>
   <div class="columns">
     <aside class="menu column is-5 mr-2">
-      <div class="tabs" style="margin-top: 6px">
+      <div
+        class="tabs"
+        style="margin-top: 6px"
+      >
         <ul :class="`is-${color}`">
           <li class="is-active">
             <a
               :class="`has-text-${color}-dark`"
               style="border-bottom-color: currentColor"
-              >Marqueurs</a
-            >
+            >Marqueurs</a>
           </li>
         </ul>
       </div>
       <ul class="menu-list">
-        <li v-for="marker of markers" :key="marker.id">
+        <li
+          v-for="marker of markers"
+          :key="marker.id"
+        >
           <a
             :class="
               marker === activeMarker && !activeCriteria
                 ? activeClass
                 : marker.id === hoverMarkerId
-                ? hoverMarkerClass
-                : `has-text-${color}-dark`
+                  ? hoverMarkerClass
+                  : `has-text-${color}-dark`
             "
             @click="onSelectMarker(marker)"
             @mouseenter="hoverMarkerId = marker.id"
@@ -44,7 +49,7 @@
               <AnalyticsScore
                 v-if="
                   props.showScores &&
-                  !isNullOrUndefined(props.scores?.byMarkerId[marker.id])
+                    !isNullOrUndefined(props.scores?.byMarkerId[marker.id])
                 "
                 :score="getScoreToDisplay(props.scores?.byMarkerId[marker.id])"
                 :color="
@@ -59,14 +64,17 @@
           </a>
           <div v-if="marker.name === activeMarker?.name">
             <ul :class="`is-${color}`">
-              <li v-for="criteria of criterias" :key="criteria.id">
+              <li
+                v-for="criteria of criterias"
+                :key="criteria.id"
+              >
                 <a
                   :class="
                     criteria === activeCriteria
                       ? activeClass
                       : criteria.id === hoverCriteriaId
-                      ? hoverCriteriaClass
-                      : ''
+                        ? hoverCriteriaClass
+                        : ''
                   "
                   @click="onSelectCriteria(criteria)"
                   @mouseenter="hoverCriteriaId = criteria.id"
@@ -94,9 +102,9 @@
                     <AnalyticsScore
                       v-if="
                         props.showScores &&
-                        !isNullOrUndefined(
-                          props.scores?.byCriteriaId[criteria.id]
-                        )
+                          !isNullOrUndefined(
+                            props.scores?.byCriteriaId[criteria.id]
+                          )
                       "
                       :score="
                         getScoreToDisplay(
@@ -129,7 +137,10 @@
             getScoreToDisplay(props.scores?.byCriteriaId[activeCriteria.id])
           "
         />
-        <slot name="criteria" :criteria="activeCriteria"></slot>
+        <slot
+          name="criteria"
+          :criteria="activeCriteria"
+        />
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive`"
@@ -146,7 +157,10 @@
           :show-score="props.showScores"
           :score="getScoreToDisplay(props.scores?.byMarkerId[activeMarker.id])"
         />
-        <slot name="marker" :marker="activeMarker"></slot>
+        <slot
+          name="marker"
+          :marker="activeMarker"
+        />
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive mt-2 mr-1`"
@@ -160,7 +174,11 @@
           >
             <span>Premier critère</span>
             <span class="icon">
-              <icon name="arrow-right-line" size="10" class="icon" />
+              <icon
+                name="arrow-right-line"
+                size="10"
+                class="icon"
+              />
             </span>
           </button>
         </div>
@@ -178,7 +196,10 @@
           class="is-family-secondary subtitle mb-2"
           :color="props.color"
         />
-        <slot name="pillar" :pillar="pillar"></slot>
+        <slot
+          name="pillar"
+          :pillar="pillar"
+        />
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive is-outlined has-text-${color}-dark`"
@@ -186,7 +207,11 @@
           >
             <span>Premier marqueur</span>
             <span class="icon">
-              <icon name="arrow-right-line" size="10" class="icon" />
+              <icon
+                name="arrow-right-line"
+                size="10"
+                class="icon"
+              />
             </span>
           </button>
         </div>
@@ -231,7 +256,7 @@ const props = defineProps({
 })
 const getCriteriasOfActiveMarker = () => {
   return activeMarker.value?.criteriaIds.map(
-    (criteriaId) => questionnaireStore.criteriaById[criteriaId]
+    (criteriaId) => questionnaireStore.criteriaById[criteriaId],
   )
 }
 
@@ -243,17 +268,17 @@ const getCriteriaOfQuestionId = () => {
 
 const activeCriteria = ref<Criteria>(getCriteriaOfQuestionId())
 const activeMarker = ref<Marker>(
-  questionnaireStore.markerById[activeCriteria.value?.markerId]
+  questionnaireStore.markerById[activeCriteria.value?.markerId],
 )
 const criterias = ref<Criteria[]>(getCriteriasOfActiveMarker())
 const hoverMarkerId = ref<number>()
 const hoverCriteriaId = ref<number>()
 
 const markerTitle = computed<string>(() =>
-  activeMarker.value ? wordTitleCase(activeMarker.value.name) : ""
+  activeMarker.value ? wordTitleCase(activeMarker.value.name) : "",
 )
 const criteriaTitle = computed<string>(() =>
-  activeCriteria.value ? wordTitleCase(activeCriteria.value.name) : ""
+  activeCriteria.value ? wordTitleCase(activeCriteria.value.name) : "",
 )
 
 watch(
@@ -261,7 +286,7 @@ watch(
   () => {
     activeMarker.value = null
     activeCriteria.value = null
-  }
+  },
 )
 
 watch(
@@ -271,7 +296,7 @@ watch(
     activeMarker.value =
       questionnaireStore.markerById[activeCriteria.value?.markerId]
     criterias.value = getCriteriasOfActiveMarker()
-  }
+  },
 )
 
 const onSelectMarker = (marker) => {

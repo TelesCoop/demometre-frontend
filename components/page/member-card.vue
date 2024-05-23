@@ -6,7 +6,7 @@
           :src="MEDIA_BASE_URL + props.persons.imageUrl"
           :alt="props.persons.personName"
           class="fit-without-distortion"
-        />
+        >
       </figure>
     </div>
     <div class="card-content">

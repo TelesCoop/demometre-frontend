@@ -4,10 +4,10 @@
     class="response-choice"
     :class="
       `is-${color} has-border-transparent ` +
-      (props.selected || props.dragging
-        ? `has-background-${props.color}-light-active`
-        : `has-background-${props.color}-light`) +
-      (props.dragging ? ` dragging` : '')
+        (props.selected || props.dragging
+          ? `has-background-${props.color}-light-active`
+          : `has-background-${props.color}-light`) +
+        (props.dragging ? ` dragging` : '')
     "
   >
     <div
@@ -21,7 +21,9 @@
           : `has-border-${props.color} has-background-white`
       "
     >
-      <slot name="left-symbol">{{ letter }}</slot>
+      <slot name="left-symbol">
+        {{ letter }}
+      </slot>
     </div>
     <div class="response-choice-content">
       <p

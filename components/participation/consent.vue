@@ -10,22 +10,26 @@
         v-model="assessmentStore.newAssessment.conditionsOfSaleConsent"
         type="checkbox"
         required
-      />
+      >
       <input
         v-else-if="props.initiator === true"
         v-model="assessmentStore.newAssessment.initiatorUsageConsent"
         type="checkbox"
         required
-      />
+      >
       <input
         v-else
         v-model="participationStore.newParticipation.consent"
         type="checkbox"
         required
-      />
+      >
       {{ consentData.checkboxIntro }}
       Vous pouvez consulter ici nos
-      <a :href="consentData.url" target="_blank" class="is-underlined">{{
+      <a
+        :href="consentData.url"
+        target="_blank"
+        class="is-underlined"
+      >{{
         consentData.urlText
       }}</a>
       et
@@ -35,8 +39,7 @@
         "
         target="_blank"
         class="is-underlined"
-        >Charte relative à la protection des données à caractère personnel</a
-      >
+      >Charte relative à la protection des données à caractère personnel</a>
       .
     </label>
     <p class="is-family-secondary is-size-6 has-text-shade-600 mt-2">
@@ -66,31 +69,31 @@ const userStore = useUserStore()
 
 const consentData = computed(() => {
   switch (props.type) {
-    case "cgu":
-      return {
-        title: pageStore.evaluationInitiationPage.cguConsentTitle,
-        desc: userStore.isLoggedIn
-          ? pageStore.evaluationInitiationPage.cguConsentDescriptionLoggedin
-          : pageStore.evaluationInitiationPage.cguConsentDescriptionLoggedout,
-        checkboxIntro:
+  case "cgu":
+    return {
+      title: pageStore.evaluationInitiationPage.cguConsentTitle,
+      desc: userStore.isLoggedIn
+        ? pageStore.evaluationInitiationPage.cguConsentDescriptionLoggedin
+        : pageStore.evaluationInitiationPage.cguConsentDescriptionLoggedout,
+      checkboxIntro:
           "J’accepte les conditions générales d’utilisation de la plateforme.",
-        url: MEDIA_BASE_URL + settingStore.rgpdSettings.termsOfUseUrl,
-        urlText: "CGU",
-        linkedState: props.initiator
-          ? assessmentStore.newAssessment.initiatorUsageConsent
-          : participationStore.newParticipation.consent,
-      }
-    case "cgv":
-      return {
-        title: pageStore.evaluationInitiationPage.cgvConsentTitle,
-        desc: pageStore.evaluationInitiationPage.cgvConsentDescription,
-        checkboxIntro:
+      url: MEDIA_BASE_URL + settingStore.rgpdSettings.termsOfUseUrl,
+      urlText: "CGU",
+      linkedState: props.initiator
+        ? assessmentStore.newAssessment.initiatorUsageConsent
+        : participationStore.newParticipation.consent,
+    }
+  case "cgv":
+    return {
+      title: pageStore.evaluationInitiationPage.cgvConsentTitle,
+      desc: pageStore.evaluationInitiationPage.cgvConsentDescription,
+      checkboxIntro:
           "J’accepte les conditions générales de vente de la plateforme.",
-        url: MEDIA_BASE_URL + settingStore.rgpdSettings.termsOfSaleUrl,
-        urlText: "CGV",
-        linkedState: assessmentStore.newAssessment.conditionsOfSaleConsent,
-        additionalText: pageStore.evaluationInitiationPage.royaltyDescription,
-      }
+      url: MEDIA_BASE_URL + settingStore.rgpdSettings.termsOfSaleUrl,
+      urlText: "CGV",
+      linkedState: assessmentStore.newAssessment.conditionsOfSaleConsent,
+      additionalText: pageStore.evaluationInitiationPage.royaltyDescription,
+    }
   }
 })
 </script>

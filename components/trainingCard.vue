@@ -78,7 +78,7 @@ import { Training } from "~/composables/types"
 
 defineProps(
   {
-    training: { type: Object as PropType<Training>, required: true }
+    training: { type: Object as PropType<Training>, required: true },
   })
 </script>
 

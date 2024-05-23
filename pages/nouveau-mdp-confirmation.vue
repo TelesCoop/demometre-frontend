@@ -7,9 +7,12 @@
         </h1>
         <p>Veuillez vérifier votre boîte mail et suivre les instructions.</p>
 
-        <NuxtLink to="/login" class="button is-shade-600"
-          >Retourner à la connexion</NuxtLink
+        <NuxtLink
+          to="/login"
+          class="button is-shade-600"
         >
+          Retourner à la connexion
+        </NuxtLink>
       </div>
     </div>
   </div>

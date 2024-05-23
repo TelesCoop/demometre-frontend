@@ -1,7 +1,7 @@
 function getLeftValue(
   index: number,
   percentageOfSpaceAlreadyTaken: number,
-  totalLine: number
+  totalLine: number,
 ): number {
   return (
     percentageOfSpaceAlreadyTaken +
@@ -14,12 +14,12 @@ export function getLeftStyle(
   totalLine: number,
   gapSize: number,
   percentageSize: number,
-  leftBaseMargin = 1
+  leftBaseMargin = 1,
 ): string {
   const leftValue = getLeftValue(
     index,
     percentageOfSpaceAlreadyTaken,
-    totalLine
+    totalLine,
   )
   return `left: calc((100% - ${gapSize}rem - ${percentageSize}px) * ${leftValue} + ${leftBaseMargin}rem)`
 }

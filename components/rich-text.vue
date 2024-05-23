@@ -1,6 +1,10 @@
 <template>
   <div :class="`is-${color} has-text-${color}-dark`">
-    <span v-links-in-new-window class="rich-text" v-html="richText"></span>
+    <span
+      v-links-in-new-window
+      class="rich-text"
+      v-html="richText"
+    />
   </div>
 </template>
 

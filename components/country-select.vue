@@ -1,6 +1,6 @@
 <template>
   <select>
-    <slot></slot>
+    <slot />
     <option
       v-for="country in COUNTRIES"
       :key="country.code"

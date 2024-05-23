@@ -64,7 +64,7 @@ import vSelect from "vue-select"
 
 definePageMeta({
   title: "Résultats",
-  breadcrumb: "Résultats"
+  breadcrumb: "Résultats",
 })
 
 const pageStore = usePageStore()

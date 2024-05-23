@@ -33,13 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  Definition,
-  QuestionResponse,
-  SimpleBlock,
-  Question,
-} from "~/composables/types"
-import { computed, PropType } from "vue"
+import type { Question } from "~/composables/types"
+import { PropType } from "vue"
 
 const props = defineProps({
   question: { type: Object as PropType<Question>, required: true },

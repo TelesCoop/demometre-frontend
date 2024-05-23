@@ -3,7 +3,7 @@ import { useAssessmentStore } from "~/stores/assessmentStore"
 
 export async function getUserData() {
   return Promise.all([
-    await useAssessmentStore().getAssessmentsForUser()
+    await useAssessmentStore().getAssessmentsForUser(),
   ])
 }
 

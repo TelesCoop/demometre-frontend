@@ -1,8 +1,14 @@
 <template>
   <div class="container">
-    <NuxtLink class="button is-white is-rounded" to=".">
+    <NuxtLink
+      class="button is-white is-rounded"
+      to="."
+    >
       <span class="icon">
-        <icon size="20" name="arrow-left-line" />
+        <icon
+          size="20"
+          name="arrow-left-line"
+        />
       </span>
       <span> Revenir à l'atelier </span>
     </NuxtLink>
@@ -11,12 +17,18 @@
       <p class="is-size-4">
         Saisissez les réponses des participants aux évaluations papier.
       </p>
-      <p v-if="!activePillar" class="is-size-4">
+      <p
+        v-if="!activePillar"
+        class="is-size-4"
+      >
         Choisissez un pillier pour commencer.
       </p>
 
       <div class="container">
-        <section ref="pillarsRef" class="columns is-multiline mt-4">
+        <section
+          ref="pillarsRef"
+          class="columns is-multiline mt-4"
+        >
           <div
             v-for="pillar of questionnaireStore.pillarsOfSurvey(
               assessment.surveyId,
@@ -48,7 +60,6 @@
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType, Workshop } from "~/composables/types"
 import { useWorkshopStore } from "~/stores/workshopStore"
-import { useProfilingStore } from "~/stores/profilingStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useUserStore } from "~/stores/userStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
@@ -60,7 +71,6 @@ definePageMeta({
 
 const assessmentStore = useAssessmentStore()
 const questionnaireStore = useQuestionnaireStore()
-const profilingStore = useProfilingStore()
 const pageStore = usePageStore()
 const userStore = useUserStore()
 const router = useRouter()

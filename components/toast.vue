@@ -11,7 +11,7 @@
 <script setup lang="ts">
 // TODO : manage type, warning, error, info ...
 defineProps({
-  message: { type: String, required: true }
+  message: { type: String, required: true },
 })
 </script>
 

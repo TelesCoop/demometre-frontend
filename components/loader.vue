@@ -1,9 +1,9 @@
 <template>
   <div :class="`is-${color} lds-ring`">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
+    <div />
+    <div />
+    <div />
+    <div />
   </div>
 </template>
 

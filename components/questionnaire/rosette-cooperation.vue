@@ -7,9 +7,9 @@
             `pillar-circle-${key}
                     has-border-${color}
               ` +
-            (isHovered
-              ? `has-background-${color}`
-              : `has-background-${color}-light`)
+              (isHovered
+                ? `has-background-${color}`
+                : `has-background-${color}-light`)
           "
           @mouseenter="isHovered = true"
           @mouseleave="isHovered = false"
@@ -29,8 +29,7 @@
             />
             <span
               class="pillar-title is-size-7 has-text-weight-bold is-capitalized"
-              >{{ pillar.name }}</span
-            >
+            >{{ pillar.name }}</span>
           </div>
         </div>
 
@@ -41,7 +40,7 @@
             `
             marker-circle-${key}
             has-border-${color} ` +
-            (markerId === hoverMarkerId ? `has-background-${color}` : ``)
+              (markerId === hoverMarkerId ? `has-background-${color}` : ``)
           "
           @mouseenter="hoverMarkerId = markerId"
           @mouseleave="hoverMarkerId = null"

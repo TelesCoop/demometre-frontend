@@ -107,7 +107,7 @@ const loadingStore = useLoadingStore()
 
 const props = defineProps({
   workshop: { type: Object as PropType<Workshop>, required: true },
-  bottomFields: { type: Boolean, default: false }
+  bottomFields: { type: Boolean, default: false },
 })
 console.log("### edit modal", props.workshop)
 const emit = defineEmits(["close"])
@@ -128,38 +128,38 @@ const contextFields = computed<{
     props.workshop.type === "assessment" ? [
       {
         label: WORKSHOP_CONTEXT_FIELDS.demometreSuggestions,
-        field: "demometreSuggestions"
+        field: "demometreSuggestions",
       },
       {
         label: WORKSHOP_CONTEXT_FIELDS.platformSuggestions,
-        field: "platformSuggestions"
-      }
+        field: "platformSuggestions",
+      },
     ] : [
       {
         label: WORKSHOP_CONTEXT_FIELDS.improvementObservations,
-        field: "improvementObservations"
+        field: "improvementObservations",
       },
       {
         label: WORKSHOP_CONTEXT_FIELDS.resultObservations,
-        field: "resultObservations"
-      }
+        field: "resultObservations",
+      },
     ]) : [
     {
       label: WORKSHOP_CONTEXT_FIELDS.context,
-      field: "context"
+      field: "context",
     },
     {
       label: WORKSHOP_CONTEXT_FIELDS.objectives,
-      field: "objectives"
+      field: "objectives",
     },
     {
       label: WORKSHOP_CONTEXT_FIELDS.course,
-      field: "course"
+      field: "course",
     },
     {
       label: WORKSHOP_CONTEXT_FIELDS.comments,
-      field: "comments"
-    }
+      field: "comments",
+    },
   ])
 const contextValues = ref<Record<WORKSHOP_CONTEXT_FIELD_TYPE, string>>({})
 for (const field of contextFields.value) {
