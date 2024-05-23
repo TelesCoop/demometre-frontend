@@ -33,7 +33,7 @@ import {
   QuestionBounds,
   ResponseChoice as ResponseChoiceType,
 } from "~/composables/types"
-import { useModel } from "~/composables/modelWrapper"
+import { useLegacyModel } from "~/composables/modelWrapper"
 import Slider from "@vueform/slider"
 
 const props = defineProps({
@@ -47,7 +47,7 @@ const props = defineProps({
   selected: { type: Boolean, default: false },
 })
 
-const answer = useModel<number>("modelValue")
+const answer = useLegacyModel<number>("modelValue")
 const responseChoice = computed<ResponseChoiceType>(() => {
   return {
     id: props.category.id,

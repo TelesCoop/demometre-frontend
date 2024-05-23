@@ -7,7 +7,7 @@ import { cleanUserData, getUserData } from "~/composables/actions"
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: <User>{},
-    afterLoginRouterGoStep: <number>-1
+    afterLoginRouterGoStep: <number>-1,
   }),
   getters: {
     isLoggedOut(): boolean {
@@ -21,7 +21,10 @@ export const useUserStore = defineStore("user", {
     },
     isExpertUser() {
       return this.user?.isExpert
-    }
+    },
+    isAdminOrExpertUser() {
+      return this.user?.isAdmin || this.user?.isExpert
+    },
   },
   actions: {
     async createUnknownUser() {
@@ -34,13 +37,10 @@ export const useUserStore = defineStore("user", {
       this.user = data.value
     },
     async editUser(user: User) {
-      const {
-        data,
-        error
-      } = await useApiPatch<User>(
+      const { data, error } = await useApiPatch<User>(
         "auth/edit",
         user,
-        "Impossible d'enregistrer les informations, les noms d'utilisateur et adresse mail doivent être uniques"
+        "Impossible d'enregistrer les informations, les noms d'utilisateur et adresse mail doivent être uniques",
       )
       if (!error.value) {
         this.user = data.value
@@ -50,10 +50,14 @@ export const useUserStore = defineStore("user", {
     },
     async login(email: string, password: string) {
       cleanUserData(true)
-      const { data, error } = await useApiPost<User>("auth/login", {
-        email,
-        password
-      }, "Impossible de se connecter, vérifiez vos identifiants")
+      const { data, error } = await useApiPost<User>(
+        "auth/login",
+        {
+          email,
+          password,
+        },
+        "Impossible de se connecter, vérifiez vos identifiants",
+      )
       if (!error.value) {
         this.user = data.value!
         await getUserData()
@@ -65,7 +69,7 @@ export const useUserStore = defineStore("user", {
       cleanUserData(true)
       const { data, error } = await useApiPost<User>("auth/signup", {
         email,
-        password
+        password,
       })
       if (error.value) {
         return { error: error.value.data }
@@ -103,8 +107,8 @@ export const useUserStore = defineStore("user", {
       const { error } = await useApiPost<User>(
         "auth/user/reset-password-link",
         {
-          email
-        }
+          email,
+        },
       )
       if (!error.value) {
         const router = useRouter()
@@ -117,7 +121,7 @@ export const useUserStore = defineStore("user", {
     async resetPassword(resetKey: string, password: string) {
       const { error } = await useApiPost<User>("auth/user/reset-password", {
         password,
-        resetKey
+        resetKey,
       })
       if (!error.value) {
         const router = useRouter()
@@ -127,6 +131,6 @@ export const useUserStore = defineStore("user", {
         const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
-    }
-  }
+    },
+  },
 })

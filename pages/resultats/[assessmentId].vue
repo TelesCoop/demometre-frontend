@@ -38,7 +38,7 @@
               :score="
                 getScoreToDisplay(
                   assessmentStore.scoresByAssessmentId[assessmentId]
-                    ?.byPillarId[pillar.id]
+                    ?.byPillarId[pillar.id],
                 )
               "
               class="is-clickable"
@@ -106,7 +106,7 @@
                   @click="
                     onSelectQuestion(
                       questionnaireStore.questionById[questionId]
-                        .allowsToExplain
+                        .allowsToExplain,
                     )
                   "
                 >
@@ -141,7 +141,7 @@
                 getStrenghtAndImprovements(
                   assessmentStore.scoresByAssessmentId[assessmentId],
                   markerProps.marker.criteriaIds,
-                  'marker'
+                  'marker',
                 )
               "
             />
@@ -152,7 +152,7 @@
                 getStrenghtAndImprovements(
                   assessmentStore.scoresByAssessmentId[assessmentId],
                   pillarProps.pillar.markerIds,
-                  'pillar'
+                  'pillar',
                 )
               "
             />
@@ -199,7 +199,9 @@ const activeQuestionId: Ref<number> = ref(
   parseInt(route.query.question as string),
 )
 const pillars = computed(() => {
-  return questionnaireStore.surveyById[assessmentStore.currentAssessment.surveyId].pillars
+  return questionnaireStore.surveyById[
+    assessmentStore.currentAssessment.surveyId
+  ].pillars
 })
 
 if (!assessmentStore.assessmentById[assessmentId.value]?.name) {
@@ -207,9 +209,6 @@ if (!assessmentStore.assessmentById[assessmentId.value]?.name) {
 }
 if (!assessmentStore.scoresByAssessmentId[assessmentId.value]) {
   assessmentStore.getAssessmentScores(assessmentId.value)
-}
-if (!profilingStore.roles.length) {
-  profilingStore.getRoles()
 }
 
 const pillarOfQuestionId = (questionId: number) => {

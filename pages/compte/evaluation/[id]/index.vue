@@ -14,9 +14,7 @@
             name="arrow-left-line"
           />
         </span>
-        <span>
-          Revenir à mon compte
-        </span>
+        <span> Revenir à mon compte </span>
       </NuxtLink>
     </div>
     <div class="is-flex is-justify-content-space-between is-align-items-center">
@@ -58,12 +56,10 @@
       >
         <div
           v-if="assessment.details.hasDetailAccess"
-          style="margin-top: -32px;margin-bottom: 32px;"
+          style="margin-top: -32px; margin-bottom: 32px"
         >
           <span class="tag is-light is-medium">
-            <template
-              v-if="assessment.details.role! === 'initiator'"
-            >Vous êtes à l'intiative de cette évaluation</template>
+            <template v-if="assessment.details.role! === 'initiator'">Vous êtes à l'intiative de cette évaluation</template>
             <template v-if="assessment.details.role === 'expert'">Vous êtes l'expert de cette évaluation</template>
           </span>
         </div>
@@ -73,7 +69,10 @@
         >
           <InformationDetail
             title="type d'évaluation"
-            :value="AssessmentType[assessment.assessmentType?.toUpperCase() || ''].value"
+            :value="
+              AssessmentType[assessment.assessmentType?.toUpperCase() || '']
+                .value
+            "
           />
           <InformationDetail
             title="lancée le"
@@ -102,7 +101,9 @@
           />
           <InformationDetail
             v-if="assessment.assessmentType === AssessmentType.WITH_EXPERT.key"
-            :title="(assessment.experts || []).length > 1 ? 'Experts' : 'Expert'"
+            :title="
+              (assessment.experts || []).length > 1 ? 'Experts' : 'Expert'
+            "
             :value="withExpertValue"
           />
         </div>
@@ -145,7 +146,7 @@
         <hr>
         <PageSection
           title="Documents"
-          :buttons="[{text: 'Ajouter un document', icon: 'add-line'}]"
+          :buttons="[{ text: 'Ajouter un document', icon: 'add-line' }]"
           @button-click="showAddDocumentModal = true"
         >
           <div class="columns is-tablet is-variable is-6">
@@ -169,9 +170,7 @@
                 class="message is-small"
               >
                 <div class="message-body">
-                  <p>
-                    Aucun document dans cette catégorie.
-                  </p>
+                  <p>Aucun document dans cette catégorie.</p>
                 </div>
               </div>
             </div>
@@ -190,7 +189,8 @@
               v-if="participationStore.status.participated"
               class="is-size-5"
             >
-              Nombre de questions répondues : {{ participationStore.status.answered }} /
+              Nombre de questions répondues :
+              {{ participationStore.status.answered }} /
               {{ participationStore.status.total }}
             </p>
             <div
@@ -219,7 +219,10 @@
               :to="userStep.url"
               class="button is-rounded is-dark ml-1"
             >
-              <span>{{ participationStore.status.participated ? "Reprendre l'évaluation" : "Participer à l'évaluation"
+              <span>{{
+                participationStore.status.participated
+                  ? "Reprendre l'évaluation"
+                  : "Participer à l'évaluation"
               }}</span>
               <span class="icon"><icon
                 size="20"
@@ -243,9 +246,7 @@
             v-if="participationStore.status.participated"
             class="mb-3"
           />
-          <ParticipationBoard
-            :assessment="assessmentStore.currentAssessment"
-          />
+          <ParticipationBoard :assessment="assessmentStore.currentAssessment" />
         </div>
       </section>
     </div>
@@ -259,13 +260,9 @@
 
     <div v-if="assessment.details.hasDetailAccess">
       <hr>
-      <PageSection
-        title="État de paiement de la redevance"
-      >
+      <PageSection title="État de paiement de la redevance">
         <template v-if="assessment.details.paymentDate">
-          <div
-            class="message"
-          >
+          <div class="message">
             <div class="message-body p-3">
               <div class="columns is-tablet">
                 <div class="column is-8">
@@ -273,8 +270,8 @@
                     Paiement effectué
                   </p>
                   <p>
-                    L’expert a bien réglé le paiement de la commission d’utilisation du
-                    DémoMètre.
+                    L’expert a bien réglé le paiement de la commission
+                    d’utilisation du DémoMètre.
                   </p>
                 </div>
                 <div class="column is-4">
@@ -322,13 +319,21 @@
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
-import { Assessment, AssessmentDocumentCategory, AssessmentDocumentType, AssessmentType } from "~/composables/types"
-import { ASSESSMENT_DOCUMENT_CATEGORIES, PARTICIPANT_TYPE } from "~/utils/constants"
+import {
+  Assessment,
+  AssessmentDocumentCategory,
+  AssessmentDocumentType,
+  AssessmentType,
+} from "~/composables/types"
+import {
+  ASSESSMENT_DOCUMENT_CATEGORIES,
+  PARTICIPANT_TYPE,
+} from "~/utils/constants"
 import { useConfirm } from "~/composables/useConfirm"
 
 definePageMeta({
   title: "Évaluation",
-  breadcrumb: "Évaluation"
+  breadcrumb: "Évaluation",
 })
 
 const assessmentStore = useAssessmentStore()
@@ -344,20 +349,21 @@ const showAddDocumentModal = ref(false)
 
 const assessmentId = parseInt(route.params.id as string)
 assessmentStore.currentAssessmentId = assessmentId
-const assessment = computed<Assessment>(() => assessmentStore.assessmentById[assessmentId])
+const assessment = computed<Assessment>(
+  () => assessmentStore.assessmentById[assessmentId],
+)
 
 const withExpertValue = computed(() => {
   const experts = assessment.value.experts || []
   if (!experts.length) {
     return "Aucun expert pour le moment"
   } else {
-    return experts.map(expert => `${expert.firstName} ${expert.lastName}`).join("\n")
+    return experts
+      .map((expert) => `${expert.firstName} ${expert.lastName}`)
+      .join("\n")
   }
 })
 
-if (!profilingStore.roles.length) {
-  profilingStore.getRoles()
-}
 if (participationStore.currentlyLoadedResponsesAssessmentId !== assessmentId) {
   participationStore.getParticipationForAssessment(assessmentId)
   await participationStore.loadAssessment(assessmentId)
@@ -366,9 +372,13 @@ if (participationStore.status.total == 0) {
   await participationStore.getParticipationForAssessment(assessmentId)
   await participationStore.setTotalAndAnsweredQuestionsByPillarName()
 }
-const documentsForCategory = computed(() => (category: AssessmentDocumentCategory) => {
-  return assessment.value.documents.filter((document: AssessmentDocumentType) => document.category === category)
-})
+const documentsForCategory = computed(
+  () => (category: AssessmentDocumentCategory) => {
+    return assessment.value.documents.filter(
+      (document: AssessmentDocumentType) => document.category === category,
+    )
+  },
+)
 
 const onInformationButtonClick = (buttonIx: number) => {
   if (buttonIx === 0) {
@@ -381,11 +391,18 @@ const informationsButtons = computed(() => {
   if (!assessment.value.details.hasDetailAccess) {
     return []
   }
-  const toReturn = [{ text: "Modifier les informations", icon: "list-settings-line" }]
-  if (assessment.value.details.role === "initiator" && assessment.value.assessmentType === AssessmentType.WITH_EXPERT.key) {
+  const toReturn = [
+    { text: "Modifier les informations", icon: "list-settings-line" },
+  ]
+  if (
+    assessment.value.details.role === "initiator" &&
+    assessment.value.assessmentType === AssessmentType.WITH_EXPERT.key
+  ) {
     toReturn.push({
-      text: assessment.value.experts?.length ? "Changer d'expert" : "Ajouter un expert",
-      icon: "user-2-line"
+      text: assessment.value.experts?.length
+        ? "Changer d'expert"
+        : "Ajouter un expert",
+      icon: "user-2-line",
     })
   }
   return toReturn
@@ -395,7 +412,10 @@ const confirmCloseAssessment = () => {
     "En clôturant l’évaluation, vous mettez fin à l’évaluation et n’autorisez plus de participation. Cette action est irréversible, n’oubliez pas de bien vérifier avant.",
     `Souhaitez-vous clôturer l'évaluation ${assessment.value.name} ?`,
     "Oui, clôturer l'évaluation",
-    () => assessmentStore.saveAssessment(assessmentId, { endDate: (new Date()).toISOString().split("T")[0] })
+    () =>
+      assessmentStore.saveAssessment(assessmentId, {
+        endDate: new Date().toISOString().split("T")[0],
+      }),
   )
 }
 </script>

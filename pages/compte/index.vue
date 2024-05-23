@@ -14,6 +14,13 @@
           </button>
         </div>
       </div>
+      <div v-if="userStore.isAdminOrExpertUser">
+        <router-link to="/export/questionnaire">
+          <button class="button is-rounded">
+            Générer un questionnaire papier en fonction d'un profil
+          </button>
+        </router-link>
+      </div>
     </div>
     <div
       v-if="userStore.isUnknownUser"
@@ -28,7 +35,6 @@
       </div>
       <div class="buttons is-flex-direction-column is-align-items-flex-start">
         <router-link
-
           class="button is-rounded is-primary mr-1 mb-1"
           to="/signup"
         >
@@ -40,7 +46,9 @@
       <hr>
       <PageSection
         title="Mes informations"
-        :buttons="[{text: 'Modifier les informations', icon: 'list-settings-line'}]"
+        :buttons="[
+          { text: 'Modifier les informations', icon: 'list-settings-line' },
+        ]"
         @button-click="showEditUserInfoModal = true"
       >
         <div
@@ -61,7 +69,7 @@
       <PageSection
         title="Mes évaluations"
         intro="Toutes mes évaluations en cours et terminées"
-        :buttons="[{text: 'Lancer une évaluation', icon: 'arrow-right-line'}]"
+        :buttons="[{ text: 'Lancer une évaluation', icon: 'arrow-right-line' }]"
         @button-click="newAssessment"
       >
         <div class="tabs is-fullwidth">
@@ -87,13 +95,17 @@
           >
             <div class="message-body">
               <p class="title is-5">
-                Aucune évaluation {{ isCurrentAssessmentsTab ? "en cours" : "terminée" }}
+                Aucune évaluation
+                {{ isCurrentAssessmentsTab ? "en cours" : "terminée" }}
               </p>
               <p>
-                Vous n’avez aucune évaluation {{ isCurrentAssessmentsTab ? "en cours" : "terminée" }} avec le DémoMètre.
+                Vous n’avez aucune évaluation
+                {{ isCurrentAssessmentsTab ? "en cours" : "terminée" }} avec le
+                DémoMètre.
               </p>
               <p>
-                Pour démarrer une évaluation, cliquer sur le bouton « Lancer une évaluation ».
+                Pour démarrer une évaluation, cliquer sur le bouton « Lancer une
+                évaluation ».
               </p>
             </div>
           </article>
@@ -126,7 +138,10 @@
                 <td>{{ assessment.surveyName }}</td>
                 <td>{{ new Date(assessment.created).toLocaleDateString() }}</td>
                 <td>
-                  {{ PARTICIPANT_TYPE[assessment.details.role] || "participant - non encore rempli" }}
+                  {{
+                    PARTICIPANT_TYPE[assessment.details.role] ||
+                      "participant - non encore rempli"
+                  }}
                   <template v-if="assessment.details.hasDetailAccess">
                     <span
                       v-if="assessment.details.paymentAmount"
@@ -138,7 +153,7 @@
                     >Redevance impayée</span>
                   </template>
                 </td>
-                <td>{{ LOCALITY_TYPE[assessment.localityType] }}</td>
+                <td>{{ LOCALITY_TYPE_NAME[assessment.localityType] }}</td>
                 <td>{{ assessment.collectivityName }}</td>
                 <td>France</td>
                 <td>
@@ -162,13 +177,13 @@
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useUserStore } from "~/stores/userStore"
-import { LOCALITY_TYPE, PARTICIPANT_TYPE } from "~/utils/constants"
+import { LOCALITY_TYPE_NAME, PARTICIPANT_TYPE } from "~/utils/constants"
 import { useParticipationStore } from "~/stores/participationStore"
 import { Assessment } from "~/composables/types"
 
 definePageMeta({
   title: "Mon compte",
-  breadcrumb: "Mon compte"
+  breadcrumb: "Mon compte",
 })
 
 const assessmentStore = useAssessmentStore()
@@ -179,9 +194,17 @@ const router = useRouter()
 const isCurrentAssessmentsTab = ref(true)
 const showEditUserInfoModal = ref(false)
 
-const currentAssessments = computed(() => assessmentStore.assessments.filter(ass => ass.isCurrent))
-const finishedAssessments = computed(() => assessmentStore.assessments.filter(ass => !ass.isCurrent))
-const selectedAssessments = computed<Assessment[]>(() => isCurrentAssessmentsTab.value ? currentAssessments.value : finishedAssessments.value)
+const currentAssessments = computed(() =>
+  assessmentStore.assessments.filter((ass) => ass.isCurrent),
+)
+const finishedAssessments = computed(() =>
+  assessmentStore.assessments.filter((ass) => !ass.isCurrent),
+)
+const selectedAssessments = computed<Assessment[]>(() =>
+  isCurrentAssessmentsTab.value
+    ? currentAssessments.value
+    : finishedAssessments.value,
+)
 
 const selectAssessment = (assessmentId: number) => {
   router.push(`/compte/evaluation/${assessmentId}`)
