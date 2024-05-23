@@ -3,15 +3,24 @@
     class="pillar-card"
     :class="
       (isHovered && `has-background-${colorClass}-light`) +
-      (props.isCompleted && ` has-background-${colorClass}-light-active`) +
-      ` is-${colorClass}`
+        (props.isCompleted && ` has-background-${colorClass}-light-active`) +
+        ` is-${colorClass}`
     "
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <div :class="circleClass" class="pillar-circle">
-      <Picto :name="`${props.name}-big`" class="picto big" />
-      <Picto :name="`${props.name}-mini`" class="picto little" />
+    <div
+      :class="circleClass"
+      class="pillar-circle"
+    >
+      <Picto
+        :name="`${props.name}-big`"
+        class="picto big"
+      />
+      <Picto
+        :name="`${props.name}-mini`"
+        class="picto little"
+      />
     </div>
     <p :class="`has-text-${colorClass}-dark is-size-4-tablet is-size-5-mobile`">
       {{ textTitle }}
@@ -29,7 +38,10 @@
         (!isNullOrUndefined(score) && `with-score `) + `has-text-${colorClass}`
       "
     >
-      <icon size="24" name="arrow-right-line" />
+      <icon
+        size="24"
+        name="arrow-right-line"
+      />
     </span>
   </div>
 </template>
@@ -49,12 +61,12 @@ const isHovered = ref(false)
 
 const colorClass = computed(() => PillarParams[props.name].color)
 const textTitle = computed(
-  () => props.name[0].toUpperCase() + props.name.slice(1)
+  () => props.name[0].toUpperCase() + props.name.slice(1),
 )
 const circleClass = computed(() => {
-  let toReturn = `pillar-circle has-border-${colorClass.value} `
+  const toReturn = `pillar-circle has-border-${colorClass.value} `
 
-  let other = props.active
+  const other = props.active
     ? `has-background-${colorClass.value} has-text-white`
     : `has-background-${colorClass.value}-light has-text-${colorClass.value}`
   return `${toReturn} ${other}`

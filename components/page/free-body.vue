@@ -1,5 +1,8 @@
 <template>
-  <div v-for="item in freeBody" :key="item.id">
+  <div
+    v-for="item in freeBody"
+    :key="item.id"
+  >
     <RichText
       v-if="item.type === 'richtext'"
       :rich-text="item.value"
@@ -12,17 +15,23 @@
       alt="img"
       class="mb-1"
       style="border-radius: 6px"
-    />
+    >
     <h3
       v-else-if="item.type === 'title' && props.hTitle === 'h3'"
       :class="titleClasses"
     >
       {{ item.value }}
     </h3>
-    <h2 v-else-if="item.type === 'title'" :class="titleClasses">
+    <h2
+      v-else-if="item.type === 'title'"
+      :class="titleClasses"
+    >
       {{ item.value }}
     </h2>
-    <div v-else-if="item.type === 'step'" class="columns mb-2 is-variable is-6">
+    <div
+      v-else-if="item.type === 'step'"
+      class="columns mb-2 is-variable is-6"
+    >
       <div
         v-for="(step, index) in item.value"
         :key="index"

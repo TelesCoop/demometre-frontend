@@ -2,7 +2,6 @@ import { defineStore } from "pinia"
 import { ProfileType, Question, Role } from "~/composables/types"
 import { useMessageStore } from "./messageStore"
 import { useApiGet } from "~~/composables/api"
-import ProfileTypes from "~/components/export/profile-types.vue"
 
 export const useProfilingStore = defineStore("profiling", {
   state: () => ({

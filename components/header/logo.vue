@@ -7,11 +7,11 @@
         `pillar-circle-${PillarParams[pillarName].key}
                     has-border-${PillarParams[pillarName].color}
               ` +
-        (props.activePillarName === pillarName || props.activePillarName === ''
-          ? ` has-background-${PillarParams[pillarName].color}`
-          : ``)
+          (props.activePillarName === pillarName || props.activePillarName === ''
+            ? ` has-background-${PillarParams[pillarName].color}`
+            : ``)
       "
-    ></div>
+    />
   </div>
 </template>
 

@@ -38,11 +38,7 @@
 
 <script lang="ts" setup>
 import { PropType } from "vue"
-import {
-  Category,
-  QuestionBounds,
-  ResponseChoice as ResponseChoiceType,
-} from "~/composables/types"
+import { Category, QuestionBounds } from "~/composables/types"
 
 const props = defineProps({
   categories: {

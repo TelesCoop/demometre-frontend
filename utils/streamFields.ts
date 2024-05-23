@@ -1,7 +1,7 @@
 export const getStreamFieldStructMediaWithUrl = (
   initialData,
   objectType,
-  listObjectWithUrl
+  listObjectWithUrl,
 ) => {
   /**
    * StreamFieldStructure : StreamField(StructBlock({.., objectType: id}))
@@ -13,8 +13,8 @@ export const getStreamFieldStructMediaWithUrl = (
     dataToReturn.push({
       ...item.value,
       [objectType + "Url"]: listObjectWithUrl.filter(
-        (object) => object.id === item.value[objectType]
-      )[0].url
+        (object) => object.id === item.value[objectType],
+      )[0].url,
     })
   }
   return dataToReturn
@@ -23,7 +23,7 @@ export const getStreamFieldStructMediaWithUrl = (
 export const getStreamFieldMediaWithUrl = (
   initialData,
   objectType,
-  listObjectWithUrl
+  listObjectWithUrl,
 ) => {
   /**
    * StreamFieldStructure : StreamField({..}, {type: objectType, value: id})
@@ -36,12 +36,12 @@ export const getStreamFieldMediaWithUrl = (
       dataToReturn.push({
         ...item,
         [objectType + "Url"]: listObjectWithUrl.filter(
-          (object) => object.id === item.value
-        )[0].url
+          (object) => object.id === item.value,
+        )[0].url,
       })
     } else {
       dataToReturn.push({
-        ...item
+        ...item,
       })
     }
   }
@@ -52,7 +52,7 @@ export const getStreamFieldStructWithLinkedObject = (
   initialData,
   streamFieldAtribut,
   listObject,
-  objectAttribut
+  objectAttribut,
 ) => {
   /**
    * StreamFieldStructure : StreamField(StructBlock({.., streamFieldAtribut: id | string}))
@@ -63,8 +63,8 @@ export const getStreamFieldStructWithLinkedObject = (
     dataToReturn.push({
       ...item.value,
       ...listObject.filter(
-        (object) => object[objectAttribut] === item.value[streamFieldAtribut]
-      )[0]
+        (object) => object[objectAttribut] === item.value[streamFieldAtribut],
+      )[0],
     })
   }
   return dataToReturn
@@ -74,7 +74,7 @@ export const getStreamFieldStructWithListLinkedObjects = (
   initialData,
   streamFieldListName,
   listObject,
-  objectAttribut
+  objectAttribut,
 ) => {
   /**
    * StreamFieldStructure : StreamField(StructBlock(ListBlock(ObjectToLinked: {value: id})))
@@ -87,13 +87,13 @@ export const getStreamFieldStructWithListLinkedObjects = (
       secondLevelItemToReturn.push({
         ...secondLevelItem.value,
         ...listObject.filter(
-          (object) => object[objectAttribut] === secondLevelItem.value
-        )[0]
+          (object) => object[objectAttribut] === secondLevelItem.value,
+        )[0],
       })
     }
     dataToReturn.push({
       ...firstLevelItem.value,
-      [streamFieldListName]: secondLevelItemToReturn
+      [streamFieldListName]: secondLevelItemToReturn,
     })
   }
   return dataToReturn
@@ -103,7 +103,7 @@ export const getStreamFieldListStructMediaWithUrl = (
   initialData,
   streamFieldListName,
   objectType,
-  listObjectWithUrl
+  listObjectWithUrl,
 ) => {
   /**
    * StreamFieldStructure : StreamField({..}, {type: streamFieldListName, value: listBlock(StructBlock({.., objectType: id}))})
@@ -115,21 +115,21 @@ export const getStreamFieldListStructMediaWithUrl = (
     if (firstLevelItem.type === streamFieldListName) {
       for (const secondLevelItem of firstLevelItem.value) {
         const correspondingItems = listObjectWithUrl.filter(
-          (object) => object.id === secondLevelItem.value[objectType]
+          (object) => object.id === secondLevelItem.value[objectType],
         )
         const url = correspondingItems.length ? correspondingItems[0].url : null
         secondLevelItemToReturn.push({
           ...secondLevelItem.value,
-          [objectType + "Url"]: url
+          [objectType + "Url"]: url,
         })
       }
       dataToReturn.push({
         ...firstLevelItem,
-        value: secondLevelItemToReturn
+        value: secondLevelItemToReturn,
       })
     } else {
       dataToReturn.push({
-        ...firstLevelItem
+        ...firstLevelItem,
       })
     }
   }

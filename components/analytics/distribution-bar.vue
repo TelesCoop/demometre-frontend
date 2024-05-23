@@ -7,7 +7,7 @@
       :style="`width: ${item.widthValue}%;`"
       @mouseenter="onMouseEnter(item)"
       @mouseleave="onMouseLeave()"
-    ></div>
+    />
   </div>
 </template>
 
@@ -36,7 +36,7 @@ watch(
   (newData) => {
     total.value = getTotal(newData)
     items.value = getItemValues(newData)
-  }
+  },
 )
 
 function getTotal(data) {

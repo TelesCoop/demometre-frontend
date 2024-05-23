@@ -88,7 +88,7 @@ const publicationDate = computed(() =>
     year: "numeric",
     month: "long",
     day: "numeric",
-  })
+  }),
 )
 const isExternal = !!props.article?.externalLink
 const href = isExternal

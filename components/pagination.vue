@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <section class="section">
-      <slot :page-list="pageList"></slot>
+      <slot :page-list="pageList" />
       <nav
         v-if="numberOfPages > 1"
         class="pagination is-centered"
@@ -14,7 +14,10 @@
           @click.prevent="previousPage"
         >
           <span class="icon">
-            <icon size="20" name="arrow-left-line" />
+            <icon
+              size="20"
+              name="arrow-left-line"
+            />
           </span>
         </button>
         <button
@@ -23,7 +26,10 @@
           @click.prevent="nextPage"
         >
           <span class="icon">
-            <icon size="20" name="arrow-right-line" />
+            <icon
+              size="20"
+              name="arrow-right-line"
+            />
           </span>
         </button>
         <ul class="pagination-list">
@@ -93,10 +99,10 @@ const currentPage = ref<number>(1)
 const pagination = reactive({ begin: 0, end: props.numberPerPage })
 
 const numberOfPages = computed<number>(() =>
-  Math.ceil(props.list.length / props.numberPerPage)
+  Math.ceil(props.list.length / props.numberPerPage),
 )
 const pageList = computed(() =>
-  props.list.slice(pagination.begin, pagination.end)
+  props.list.slice(pagination.begin, pagination.end),
 )
 
 const nextDisabled = computed(() => currentPage.value === numberOfPages.value)

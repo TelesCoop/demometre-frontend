@@ -153,7 +153,7 @@ const route = useRoute()
 
 const props = defineProps({
   workshop: { type: Object as PropType<Workshop>, required: true },
-  participant: { type: Object as PropType<WorkshopParticipation>, default: () => ({}) }
+  participant: { type: Object as PropType<WorkshopParticipation>, default: () => ({}) },
 })
 const workshopId: number = +route.params.workshopId
 const assessmentId: number = +route.params.id

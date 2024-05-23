@@ -7,7 +7,10 @@
     type="button"
   >
     <i class="icon">
-      <Icon size="16" name="arrow-left-line" />
+      <Icon
+        size="16"
+        name="arrow-left-line"
+      />
     </i>
   </button>
 </template>

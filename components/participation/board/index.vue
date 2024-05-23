@@ -87,7 +87,7 @@ import { usePageStore } from "~/stores/pageStore"
 
 const props = defineProps({
   assessment: { type: Object as PropType<Assessment>, required: true },
-  showAssessmentInfo: { type: Boolean, default: false }
+  showAssessmentInfo: { type: Boolean, default: false },
 })
 
 const assessmentStore = useAssessmentStore()
@@ -100,8 +100,8 @@ const initializationDate = computed(() =>
   new Date(props.assessment.initializationDate).toLocaleString("fr-FR", {
     year: "numeric",
     month: "long",
-    day: "numeric"
-  })
+    day: "numeric",
+  }),
 )
 </script>
 

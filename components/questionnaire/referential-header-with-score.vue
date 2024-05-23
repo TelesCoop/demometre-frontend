@@ -1,7 +1,10 @@
 <template>
   <header>
     <div class="is-flex is-justify-content-space-between">
-      <h2 class="title is-4 mb-0_5" :class="`has-text-${color}-dark`">
+      <h2
+        class="title is-4 mb-0_5"
+        :class="`has-text-${color}-dark`"
+      >
         {{ props.title }}
       </h2>
       <AnalyticsScore
@@ -12,7 +15,10 @@
         size-number-class="is-size-4"
       />
     </div>
-    <hr class="my-0_75" :class="`has-background-${color}`" />
+    <hr
+      class="my-0_75"
+      :class="`has-background-${color}`"
+    >
   </header>
 </template>
 

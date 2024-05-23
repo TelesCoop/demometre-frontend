@@ -16,13 +16,16 @@
       <div
         class="media is-flex is-flex-direction-row is-align-items-center mb-1_5"
       >
-        <div v-if="props.feedback.pictureUrl" class="media-left mr-1">
+        <div
+          v-if="props.feedback.pictureUrl"
+          class="media-left mr-1"
+        >
           <div
             class="image-profile"
             :style="`background-image: url(${
               MEDIA_BASE_URL + props.feedback.pictureUrl
             })`"
-          ></div>
+          />
         </div>
         <div class="media-content">
           <p class="has-text-shade-600 has-text-weight-bold">

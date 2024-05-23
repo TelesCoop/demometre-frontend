@@ -14,7 +14,11 @@
         >
           <span>Pourquoi</span>
           <span class="icon">
-            <icon name="arrow-right-line" size="16" class="icon" />
+            <icon
+              name="arrow-right-line"
+              size="16"
+              class="icon"
+            />
           </span>
         </button>
         <button
@@ -23,7 +27,11 @@
         >
           <span>Avec qui</span>
           <span class="icon">
-            <icon name="arrow-right-line" size="16" class="icon" />
+            <icon
+              name="arrow-right-line"
+              size="16"
+              class="icon"
+            />
           </span>
         </button>
         <button
@@ -32,14 +40,21 @@
         >
           <span>Méthode</span>
           <span class="icon">
-            <icon name="arrow-right-line" size="16" class="icon" />
+            <icon
+              name="arrow-right-line"
+              size="16"
+              class="icon"
+            />
           </span>
         </button>
       </div>
     </PageIntro>
 
     <!-- Why block -->
-    <div ref="whyBlockRef" class="scroll-margin-top_5">
+    <div
+      ref="whyBlockRef"
+      class="scroll-margin-top_5"
+    >
       <PageBigSection
         :title="pageStore.projectPage.whyBlockTitle"
         label="Pourquoi"
@@ -72,7 +87,7 @@
                         :alt="objective.title"
                         :style="`height: 100px; width: 100px`"
                         class="mt-2"
-                      />
+                      >
                     </figure>
                   </div>
                   <div class="card-content px-2 pb-2">
@@ -103,7 +118,7 @@
                         :src="MEDIA_BASE_URL + impact.imageUrl"
                         :alt="impact.title"
                         class="fit-without-distortion"
-                      />
+                      >
                     </figure>
                   </div>
                   <div class="card-content px-2 pb-2">
@@ -122,7 +137,10 @@
     </div>
 
     <!-- Who block -->
-    <div ref="whoBlockRef" class="scroll-margin-top_5">
+    <div
+      ref="whoBlockRef"
+      class="scroll-margin-top_5"
+    >
       <PageBigSection
         :title="pageStore.projectPage.whoBlockTitle"
         label="Avec qui"
@@ -138,7 +156,7 @@
               "
               :alt="pageStore.projectPage.whoCrewSubBlockTitle"
               class="logo-open-democracy is-hidden-mobile"
-            />
+            >
           </figure>
           <div class="columns is-mobile is-multiline">
             <div
@@ -160,7 +178,7 @@
             <RichText
               class="is-family-secondary column-2 mb-2"
               :rich-text="pageStore.projectPage.whoCommitteeSubBlockDescription"
-            ></RichText>
+            />
             <div>
               <div class="tabs">
                 <ul>
@@ -176,8 +194,7 @@
                     <a
                       class="tab is-size-6 has-text-weight-bold has-text-shade-500"
                       @click="setTab(tab.id)"
-                      >{{ tab.label }}</a
-                    >
+                    >{{ tab.label }}</a>
                   </li>
                 </ul>
               </div>
@@ -189,7 +206,7 @@
                 <div
                   v-show="
                     currentTabId ===
-                    group_committees.value.committee.replace(/\s+/g, '')
+                      group_committees.value.committee.replace(/\s+/g, '')
                   "
                   class="columns is-mobile is-multiline"
                 >
@@ -245,7 +262,10 @@
     </div>
 
     <!-- How block -->
-    <div ref="howBlockRef" class="scroll-margin-top_5">
+    <div
+      ref="howBlockRef"
+      class="scroll-margin-top_5"
+    >
       <PageBigSection
         :title="pageStore.projectPage.howBlockTitle"
         label="Comment"

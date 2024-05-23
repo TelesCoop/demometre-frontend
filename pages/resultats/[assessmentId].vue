@@ -176,7 +176,6 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { getStrenghtAndImprovements, getScoreToDisplay } from "~/utils/scores"
-import { useProfilingStore } from "~/stores/profilingStore"
 
 definePageMeta({
   title: "Résultats",
@@ -187,7 +186,6 @@ const router = useRouter()
 
 const questionnaireStore = useQuestionnaireStore()
 const assessmentStore = useAssessmentStore()
-const profilingStore = useProfilingStore()
 
 const activePillar = ref<PillarType>()
 const markers = ref<Marker[]>()

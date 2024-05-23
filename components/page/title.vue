@@ -1,6 +1,11 @@
 <template>
-  <section class="intro-text" :class="`mb-${marginBottom}`">
-    <h1 class="title is-size-1-desktop is-2 has-text-black">{{ title }}</h1>
+  <section
+    class="intro-text"
+    :class="`mb-${marginBottom}`"
+  >
+    <h1 class="title is-size-1-desktop is-2 has-text-black">
+      {{ title }}
+    </h1>
     <div
       v-if="subtitle"
       class="is-family-secondary is-size-5 is-size-4-desktop"

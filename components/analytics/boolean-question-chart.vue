@@ -3,25 +3,26 @@
     <div class="boolean-chart-title is-size-5 mb-0_5">
       <span :class="`has-text-${color}-hover`">
         {{ data.true.label }}
-        <strong :class="`has-text-${color}-hover`"
-          >{{ truePercentage }}%</strong
-        >
+        <strong :class="`has-text-${color}-hover`">{{ truePercentage }}%</strong>
       </span>
       <span :class="`has-text-${color}`">
         <strong :class="`has-text-${color}`">{{ falsePercentage }}%</strong>
         {{ data.false.label }}
       </span>
     </div>
-    <div class="boolean-chart-bar" :class="`has-background-${color}`">
+    <div
+      class="boolean-chart-bar"
+      :class="`has-background-${color}`"
+    >
       <span
         class="boolean-chart-bar-load"
         :class="`has-background-${color}-hover`"
         :style="`width: ${truePercentage}%;`"
-      ></span>
+      />
       <span
         class="boolean-chart-bar-center-line"
         :class="`has-background-${color}-dark`"
-      ></span>
+      />
     </div>
   </div>
 </template>

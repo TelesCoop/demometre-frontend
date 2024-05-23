@@ -185,7 +185,7 @@ const emailErrorMessage = computed(() => {
     return confirmSignupErrorMessage.email.join(", ")
 })
 const isMailValid = computed(
-  () => isEmailUntouched.value || !emailErrorMessage.value
+  () => isEmailUntouched.value || !emailErrorMessage.value,
 )
 const passwordErrorMessage = computed(() => {
   if (isPasswordUntouched.value) {
@@ -198,7 +198,7 @@ const passwordErrorMessage = computed(() => {
     return confirmSignupErrorMessage.password.join(", ")
 })
 const isPasswordValid = computed(
-  () => isPasswordUntouched.value || !passwordErrorMessage.value
+  () => isPasswordUntouched.value || !passwordErrorMessage.value,
 )
 const isSamePassword = computed(() => {
   if (isPasswordUntouched.value) {
@@ -219,7 +219,7 @@ const disabled = computed(
       isSamePassword &&
       password.value &&
       email.value
-    )
+    ),
 )
 
 const text = computed(() => {

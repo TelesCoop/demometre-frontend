@@ -194,7 +194,7 @@ import { useConfirm } from "~/composables/useConfirm"
 
 definePageMeta({
   title: "Atelier",
-  breadcrumb: "Atelier"
+  breadcrumb: "Atelier",
 })
 const profilingStore = useProfilingStore()
 const workshopStore = useWorkshopStore()
@@ -243,7 +243,7 @@ const confirmDeletion = (participant: WorkshopParticipation) => {
     "En supprimant ce participant, vous supprimez également les évaluations du participant. Cette action est irréversible.",
     `Supprimer le participant ${participant.participantName}`,
     "Oui, supprimer",
-    () => workshopStore.deleteParticipation(participant.id)
+    () => workshopStore.deleteParticipation(participant.id),
   )
 }
 </script>

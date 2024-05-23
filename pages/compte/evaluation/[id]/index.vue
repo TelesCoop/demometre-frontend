@@ -317,7 +317,6 @@
 
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
-import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import {
   Assessment,
@@ -337,7 +336,6 @@ definePageMeta({
 })
 
 const assessmentStore = useAssessmentStore()
-const profilingStore = useProfilingStore()
 const participationStore = useParticipationStore()
 const route = useRoute()
 const userStep = useUserStep()

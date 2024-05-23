@@ -44,20 +44,12 @@
 </template>
 
 <script setup lang="ts">
-import {
-  Question,
-  QuestionResponseValue,
-  QuestionType,
-} from "~/composables/types"
-import { computed, PropType } from "vue"
+import { Question, QuestionType } from "~/composables/types"
+import { PropType } from "vue"
 
 const props = defineProps({
   question: { type: Object as PropType<Question>, required: true },
   color: { type: String, required: true },
-})
-
-const value = defineModel("modelValue", {
-  type: Object as PropType<QuestionResponseValue | undefined>,
 })
 </script>
 

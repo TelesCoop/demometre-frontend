@@ -10,7 +10,7 @@ import {
   ProjectPage,
   ReferentialPage,
   ResultsPage,
-  UsagePage
+  UsagePage,
 } from "~/composables/types"
 import { useApiGet } from "~~/composables/api"
 import {
@@ -18,7 +18,7 @@ import {
   getStreamFieldMediaWithUrl,
   getStreamFieldStructMediaWithUrl,
   getStreamFieldStructWithLinkedObject,
-  getStreamFieldStructWithListLinkedObjects
+  getStreamFieldStructWithListLinkedObjects,
 } from "~/utils/streamFields"
 import { useMessageStore } from "./messageStore"
 
@@ -37,14 +37,14 @@ export const usePageStore = defineStore("page", {
     evaluationInitiationPage: <EvaluationInitiationPage>{},
     evaluationQuestionnairePage: <EvaluationQuestionnairePage>{},
     animatorPage: <AnimatorPage>{},
-    importantPages: <ImportantPages>{}
+    importantPages: <ImportantPages>{},
   }),
   getters: {
     projectPageMember: (state) => {
       return (memberId: number) =>
         state.projectPage.persons.find((person) => person.id === memberId)
     },
-    blogPosts: (state) => Object.values(state.blogPostsBySlug)
+    blogPosts: (state) => Object.values(state.blogPostsBySlug),
   },
   actions: {
     setBlogPosts(blogPostsList: Article[]) {
@@ -102,7 +102,7 @@ export const usePageStore = defineStore("page", {
     },
     async getReferentialPage() {
       const { data, error } = await useApiGet<ReferentialPage[]>(
-        "referential-pages/"
+        "referential-pages/",
       )
       if (!error.value) {
         if (data.value.length) {
@@ -117,7 +117,7 @@ export const usePageStore = defineStore("page", {
     },
     async getParticipationBoardPage() {
       const { data, error } = await useApiGet<ParticipationBoardPage[]>(
-        "participation-board-pages/"
+        "participation-board-pages/",
       )
       if (!error.value) {
         if (data.value.length) {
@@ -152,14 +152,14 @@ export const usePageStore = defineStore("page", {
           this.usagePage.stepsOfUse = getStreamFieldStructMediaWithUrl(
             this.usagePage.stepsOfUse,
             "image",
-            this.usagePage.stepsImagesUrl
+            this.usagePage.stepsImagesUrl,
           )
           this.usagePage.startAssessmentBlockData =
             getStreamFieldStructWithLinkedObject(
               this.usagePage.startAssessmentBlockData,
               "type",
               this.usagePage.assessmentTypesDetails,
-              "assessmentType"
+              "assessmentType",
             )
           // NB : to improve (fine enough for now) : eval function do not transform to camelCase, so we have pdf_button instead of pdfButton
         } else {
@@ -178,34 +178,34 @@ export const usePageStore = defineStore("page", {
           this.projectPage.whyBlockData = getStreamFieldMediaWithUrl(
             this.projectPage.whyBlockData,
             "image",
-            this.projectPage.imagesUrl
+            this.projectPage.imagesUrl,
           )
           this.projectPage.objectiveBlockData =
             getStreamFieldStructMediaWithUrl(
               this.projectPage.objectiveBlockData,
               "svg",
-              this.projectPage.svgsUrl
+              this.projectPage.svgsUrl,
             )
           this.projectPage.impactBlockData = getStreamFieldStructMediaWithUrl(
             this.projectPage.impactBlockData,
             "image",
-            this.projectPage.imagesUrl
+            this.projectPage.imagesUrl,
           )
           this.projectPage.whoCommitteeSubBlockData = JSON.parse(
-            this.projectPage.whoCommitteeSubBlockData
+            this.projectPage.whoCommitteeSubBlockData,
           )
           this.projectPage.whoPartnerSubBlockData =
             getStreamFieldStructWithListLinkedObjects(
               this.projectPage.whoPartnerSubBlockData,
               "partners",
               this.projectPage.partners,
-              "id"
+              "id",
             )
           this.projectPage.howBlockData = getStreamFieldListStructMediaWithUrl(
             this.projectPage.howBlockData,
             "step",
             "svg",
-            this.projectPage.svgsUrl
+            this.projectPage.svgsUrl,
           )
         } else {
           console.error("Impossible to retrieve usage page")
@@ -217,7 +217,7 @@ export const usePageStore = defineStore("page", {
     },
     async getEvaluationInitiationPage() {
       const { data, error } = await useApiGet<EvaluationInitiationPage[]>(
-        "evaluation-initiation-pages/"
+        "evaluation-initiation-pages/",
       )
       if (!error.value) {
         if (data.value.length) {
@@ -232,7 +232,7 @@ export const usePageStore = defineStore("page", {
     },
     async getEvaluationQuestionnairePage() {
       const { data, error } = await useApiGet<EvaluationQuestionnairePage[]>(
-        "evaluation-questionnaire-pages/"
+        "evaluation-questionnaire-pages/",
       )
       if (!error.value) {
         if (data.value.length) {
@@ -260,7 +260,7 @@ export const usePageStore = defineStore("page", {
     },
     async getImportantPages() {
       const { data, error } = await useApiGet<ImportantPages[]>(
-        "important-pages-settings/"
+        "important-pages-settings/",
       )
       if (!error.value) {
         this.importantPages = data.value[0]
@@ -268,6 +268,6 @@ export const usePageStore = defineStore("page", {
         const errorStore = useMessageStore()
         errorStore.setError(error.value.data?.messageCode)
       }
-    }
-  }
+    },
+  },
 })
