@@ -1,9 +1,11 @@
 import { defineStore } from "pinia"
 import {
-  Assessment, AssessmentDocumentType,
+  Assessment,
+  AssessmentDocumentType,
   Localities,
   RepresentativityCriteria,
-  Scores, SurveyLocality, SurveysResult,
+  Scores,
+  SurveyLocality,
   User,
 } from "~/composables/types"
 import { useApiDelete, useApiGet, useApiPost } from "~/composables/api"
@@ -22,10 +24,12 @@ export const useAssessmentStore = defineStore("assessment", {
       {
         [key: number]: any
       }
-      >{},
-    expertById: <{
-      [key: number]: User
-    }>{},
+    >{},
+    expertById: <
+      {
+        [key: number]: User
+      }
+    >{},
     addingExpert: <boolean>false,
     newAssessment: <Assessment>{},
   }),
@@ -42,7 +46,9 @@ export const useAssessmentStore = defineStore("assessment", {
       return Object.values(state.assessmentById)
     },
     assessmentsWithDetails: (state): Assessment[] => {
-      return Object.values(state.assessmentById).filter((ass: Assessment) => ass.details.hasDetailAccess)
+      return Object.values(state.assessmentById).filter(
+        (ass: Assessment) => ass.details.hasDetailAccess,
+      )
     },
     canSeeResultsAssessments() {
       return this.assessments.filter(
@@ -124,10 +130,14 @@ export const useAssessmentStore = defineStore("assessment", {
       if (error.value) {
         return false
       } else {
-        console.log("### remove document", assessmentId, this.assessmentById[assessmentId])
-        this.assessmentById[assessmentId].documents = this.assessmentById[assessmentId].documents.filter(
-          doc => doc.id != assessmentDocumentId,
+        console.log(
+          "### remove document",
+          assessmentId,
+          this.assessmentById[assessmentId],
         )
+        this.assessmentById[assessmentId].documents = this.assessmentById[
+          assessmentId
+        ].documents.filter((doc) => doc.id != assessmentDocumentId)
         return true
       }
     },
@@ -183,10 +193,11 @@ export const useAssessmentStore = defineStore("assessment", {
         const assessmentId: number = Object.keys(this.assessmentById)[0]
         this.currentAssessmentId = assessmentId
         const participationStore = useParticipationStore()
-        if (await participationStore.getParticipationForAssessment(assessmentId)) {
+        if (
+          await participationStore.getParticipationForAssessment(assessmentId)
+        ) {
           await participationStore.loadAssessment(assessmentId)
         }
-
       }
       return true
     },
@@ -223,7 +234,7 @@ export const useAssessmentStore = defineStore("assessment", {
       return true
     },
     async getSurveysForZipCode(zipCode: string) {
-      const { data, error } = await useApiGet<SurveysResult>(
+      const { data, error } = await useApiGet<Localities>(
         `surveys/by-zip-code/${parseInt(zipCode.replace(" ", ""))}/`,
       )
       if (error.value) {
@@ -297,7 +308,8 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     async saveAssessment(assessmentId: number, payload: any) {
       const { data, error } = await useApiPatch<Assessment>(
-        `assessments/${assessmentId}/`, payload,
+        `assessments/${assessmentId}/`,
+        payload,
       )
       if (error.value) {
         return false

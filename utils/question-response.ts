@@ -1,11 +1,15 @@
 import {
   Question,
   QuestionResponse,
+  QuestionResponseValue,
   QuestionType,
   SurveyType,
 } from "~/composables/types"
 
-export const QUESTION_RESPONSE_VALUE_BY_TYPE = {
+export const QUESTION_RESPONSE_VALUE_BY_TYPE: Record<
+  QuestionType,
+  keyof QuestionResponseValue
+> = {
   [QuestionType.UNIQUE_CHOICE]: "uniqueChoiceResponseId",
   [QuestionType.MULTIPLE_CHOICE]: "multipleChoiceResponseIds",
   [QuestionType.BOOLEAN]: "booleanResponse",
@@ -19,8 +23,8 @@ export const QUESTION_RESPONSES_BY_TYPE = {
 }
 
 export const getQuestionResponseValue = (
-  questionResponse: QuestionResponse,
-  type: string,
+  questionResponse: QuestionResponseValue | undefined,
+  type: QuestionType,
 ) => {
   const valueName = QUESTION_RESPONSE_VALUE_BY_TYPE[type]
   const responseValue = questionResponse?.[valueName]
@@ -31,6 +35,17 @@ export const getQuestionResponseValue = (
     return 0
   }
   return questionResponse?.[valueName]
+}
+
+export const toQuestionResponseValue = (
+  value: any,
+  type: QuestionType,
+): QuestionResponseValue => {
+  const valueName = QUESTION_RESPONSE_VALUE_BY_TYPE[type]
+
+  return {
+    [valueName]: value,
+  }
 }
 
 export const getQuestionResponseString = (
@@ -62,6 +77,22 @@ export const getQuestionResponseString = (
     }
   }
   return responseString
+}
+
+export const toQuestionResponse = (
+  questionId: number,
+  participationId: number,
+  assessmentId: number,
+  hasPassed: boolean,
+  response: QuestionResponseValue,
+) => {
+  return {
+    questionId,
+    participationId,
+    assessmentId,
+    hasPassed,
+    ...response,
+  }
 }
 
 export const getQuestionResponseStructure = (

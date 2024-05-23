@@ -4,7 +4,9 @@
       class="is-size-6bis mb-0_75 is-block"
       :class="`has-text-${props.color}-dark`"
     >
-      <slot name="legend">Choisissez une réponse.</slot>
+      <slot name="legend">
+        Choisissez une réponse.
+      </slot>
     </legend>
     <div
       v-for="(responseChoice, responseChoiceIndex) of props.responseChoices"
@@ -19,7 +21,7 @@
         :value="responseChoice.id"
         class="custom-hidden"
         @click="unCheck(responseChoice.id)"
-      />
+      >
       <label :for="genInputId(responseChoiceIndex)">
         <ResponseChoice
           :for="genInputId(responseChoiceIndex)"
@@ -42,16 +44,18 @@ const props = defineProps({
     type: Array as PropType<ResponseChoiceType[]>,
     required: true,
   },
-  modelValue: { type: Number, required: false, default: null },
   color: { type: String, required: true },
   questionId: { type: [Number, String], required: true },
 })
 
 const previousAnswer = ref()
-const answer = useModel("modelValue")
-
+const answer = defineModel("modelValue", {
+  type: Number,
+  default: null,
+  required: false,
+})
 const isResponseChoiceSelected = computed(
-  () => (responseChoiceId) => responseChoiceId === props.modelValue
+  () => (responseChoiceId: number) => responseChoiceId === answer.value,
 )
 
 function genInputId(responseChoiceIndex = null) {
@@ -61,10 +65,10 @@ function genInputId(responseChoiceIndex = null) {
   return `question-${props.questionId}-unique-choice-${responseChoiceIndex}`
 }
 
-function unCheck(responseChoiceId) {
+function unCheck(responseChoiceId: number) {
   if (responseChoiceId === previousAnswer.value) {
-    answer.value = null
+    answer.value = undefined
   }
-  previousAnswer.value = props.modelValue
+  previousAnswer.value = responseChoiceId
 }
 </script>

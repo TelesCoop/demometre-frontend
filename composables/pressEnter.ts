@@ -1,7 +1,7 @@
 import { onBeforeUnmount, onMounted } from "vue"
 
 export function usePressEnter(submit: () => void, canSubmit?: () => boolean) {
-  const onPressEnter = (event) => {
+  const onPressEnter = (event: any) => {
     // If the user presses the "Enter" key on the keyboard
     if (event.key === "Enter" && (!canSubmit || canSubmit())) {
       // Cancel the default action, if needed

@@ -77,7 +77,10 @@
             <footer class="modal-card-foot">
               <button
                 class="button is-rounded is-dark"
-                @click="setLink(); closeLinkModal()"
+                @click="
+                  setLink()
+                  closeLinkModal()
+                "
               >
                 <span>Valider</span>
                 <span class="icon">
@@ -119,9 +122,9 @@ import {
   OtherRichTextActions,
   RichTextToolbar,
   RichTextToolbarItem,
-  RichTextToolbarOptions
+  RichTextToolbarOptions,
 } from "~/composables/types"
-import { useModel } from "~/composables/modelWrapper"
+import { useLegacyModel } from "~/composables/modelWrapper"
 import { generateRandomId } from "~/utils/util"
 
 const props = defineProps({
@@ -129,36 +132,36 @@ const props = defineProps({
     type: String,
     default() {
       return generateRandomId()
-    }
+    },
   },
   modelValue: { type: String, required: true },
   toolbarOptions: {
     type: Object as PropType<RichTextToolbarOptions>,
     default: () => {
       return {}
-    }
+    },
   },
   isInvalid: Boolean,
   label: {
     type: String,
-    default: ""
+    default: "",
   },
   labelClass: {
     type: String,
-    default: ""
+    default: "",
   },
   hint: {
     type: String,
-    default: ""
-  }
+    default: "",
+  },
 })
 
-const modelValueRef = useModel<string>("modelValue")
+const modelValueRef = useLegacyModel<string>("modelValue")
 const editor = useEditor({
   content: modelValueRef.value,
   extensions: [
     StarterKit.configure({
-      heading: false
+      heading: false,
     }),
     Heading.configure({ levels: [1, 2, 3] }).extend({
       levels: [1, 2, 3],
@@ -169,26 +172,26 @@ const editor = useEditor({
         const classes = {
           1: "title is-2",
           2: "title is-3",
-          3: "title is-4"
+          3: "title is-4",
         }
         return [
           `h${level + 1}`,
           mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
-            class: `${classes[level]}`
+            class: `${classes[level]}`,
           }),
-          0
+          0,
         ]
-      }
+      },
     }),
     Link.configure({
       HTMLAttributes: {
-        class: "no-append-ico"
-      }
-    })
+        class: "no-append-ico",
+      },
+    }),
   ],
   onUpdate() {
     modelValueRef.value = editor.value!.getHTML()
-  }
+  },
 })
 const testActiveHeading = (level: Level): boolean =>
   Boolean(editor.value?.isActive("heading", { level }))
@@ -203,7 +206,7 @@ const defaultToolbar = (): RichTextToolbar => [
     icon: "",
     disabled: () => false,
     text: "titre 1",
-    title: "Titre de niveau 1"
+    title: "Titre de niveau 1",
   },
   {
     name: HeadingType.H2,
@@ -212,7 +215,7 @@ const defaultToolbar = (): RichTextToolbar => [
     icon: "",
     disabled: () => false,
     text: "titre 2",
-    title: "Titre de niveau 2"
+    title: "Titre de niveau 2",
   },
   {
     name: HeadingType.H3,
@@ -221,7 +224,7 @@ const defaultToolbar = (): RichTextToolbar => [
     icon: "",
     disabled: () => false,
     text: "titre 3",
-    title: "Titre de niveau 3"
+    title: "Titre de niveau 3",
   },
   {
     name: OtherRichTextActions.BOLD,
@@ -229,7 +232,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value!.chain().focus().toggleBold().run(),
     icon: "bold",
     disabled: () => false,
-    title: "Text gras"
+    title: "Text gras",
   },
   {
     name: OtherRichTextActions.ITALIC,
@@ -237,7 +240,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value?.chain().focus().toggleItalic().run(),
     icon: "italic",
     disabled: () => false,
-    title: "Texte italique"
+    title: "Texte italique",
   },
   {
     name: OtherRichTextActions.LIST_ORDERED,
@@ -245,7 +248,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value?.chain().focus().toggleOrderedList().run(),
     icon: "list-ordered",
     disabled: () => false,
-    title: "List numérotée"
+    title: "List numérotée",
   },
   {
     name: OtherRichTextActions.LIST_UNORDERED,
@@ -253,7 +256,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value?.chain().focus().toggleBulletList().run(),
     icon: "list-unordered",
     disabled: () => false,
-    title: "Liste à puce"
+    title: "Liste à puce",
   },
   {
     name: OtherRichTextActions.LINK,
@@ -261,7 +264,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => openLinkModal(),
     icon: "link",
     disabled: () => false,
-    title: "Créer un hyperlien"
+    title: "Créer un hyperlien",
   },
   {
     name: OtherRichTextActions.LINK_UNLINK,
@@ -269,8 +272,8 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value?.chain().focus().unsetLink().run(),
     icon: "link-unlink",
     disabled: () => !editor.value?.isActive("link"),
-    title: "Retirer l'hyperlien"
-  }
+    title: "Retirer l'hyperlien",
+  },
 ]
 
 const toolbarOptionsStrategy = {
@@ -280,9 +283,9 @@ const toolbarOptionsStrategy = {
     },
     run(toolbar: RichTextToolbar, toolbarOptions: RichTextToolbarOptions) {
       return toolbar.filter((toolbarItem: any) =>
-        toolbarOptions.show!.includes(toolbarItem.name)
+        toolbarOptions.show!.includes(toolbarItem.name),
       )
-    }
+    },
   },
   headingSwitch: {
     test(toolbarOptions: RichTextToolbarOptions): boolean {
@@ -297,16 +300,16 @@ const toolbarOptionsStrategy = {
           ...toolbarItem,
           testActive: () =>
             testActiveHeading(
-              toolbarOptions.headingSwitch![toolbarItem.name as HeadingType]!
+              toolbarOptions.headingSwitch![toolbarItem.name as HeadingType]!,
             ),
           onClick: () =>
             onClickHeading(
-              toolbarOptions.headingSwitch![toolbarItem.name as HeadingType]!
-            )
+              toolbarOptions.headingSwitch![toolbarItem.name as HeadingType]!,
+            ),
         }
       })
-    }
-  }
+    },
+  },
 }
 
 const getToolbar = (toolbarOptions: RichTextToolbarOptions) => {
@@ -327,12 +330,12 @@ watch(
     const isSame = editor.value!.getHTML() === value
     if (isSame) return
     editor.value!.commands.setContent(value, false)
-  }
+  },
 )
 
 watch(
   () => props.toolbarOptions,
-  (value) => (toolbar.value = getToolbar(value))
+  (value) => (toolbar.value = getToolbar(value)),
 )
 
 const isAddingLink = ref<boolean>(false)
@@ -344,7 +347,7 @@ const correctedLink = computed<string>({
   set(value) {
     if (/^https?:\/\/.*/.test(linkToAdd.value)) return (linkToAdd.value = value)
     linkToAdd.value = `http://${value || ""}`
-  }
+  },
 })
 
 function openLinkModal() {

@@ -9,8 +9,13 @@
         :key="responseChoiceIndex"
         class="legend has-text-centered mb-0_5"
       >
-        <div class="number mr-0_5" :class="`has-background-${props.color}`">
-          <slot name="left-symbol">{{ responseChoiceIndex + 1 }}</slot>
+        <div
+          class="number mr-0_5"
+          :class="`has-background-${props.color}`"
+        >
+          <slot name="left-symbol">
+            {{ responseChoiceIndex + 1 }}
+          </slot>
         </div>
         <span class="legend-text">{{ responseChoice.responseChoice }}</span>
       </div>
@@ -40,7 +45,6 @@ import {
   QuestionBounds,
   ResponseChoice as ResponseChoiceType,
 } from "~/composables/types"
-import { useModel } from "~/composables/modelWrapper"
 import { getDefaultAnswerValue } from "assets/utils/close-with-scale"
 
 const props = defineProps({
@@ -70,8 +74,9 @@ const bounds = computed<QuestionBounds>(() => {
   }
 })
 
-const answer = useModel<ClosedWithScaleResponse[]>("modelValue", {
-  type: "array",
+const answer = defineModel("modelValue", {
+  type: Array as PropType<ClosedWithScaleResponse[]>,
+  default: [],
 })
 
 function updateOne(value, categoryId) {
@@ -96,7 +101,7 @@ function updateOne(value, categoryId) {
 
 function getResponseChoiceIdByCategoryId(categoryId) {
   return answer.value.filter(
-    (categoryResponse) => categoryResponse.categoryId === categoryId
+    (categoryResponse) => categoryResponse.categoryId === categoryId,
   )[0]?.responseChoiceId
 }
 

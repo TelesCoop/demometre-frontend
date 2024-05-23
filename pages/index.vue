@@ -42,7 +42,7 @@
     <PageSection
       :title="pageStore.homePage.blogBlockTitle"
       :intro="pageStore.homePage.blogBlockIntro"
-      :buttons="[{text: 'Explorer les articles', link: `/blog`}]"
+      :buttons="[{ text: 'Explorer les articles', link: `/blog` }]"
     >
       <div class="mb-2">
         <Carousel
@@ -71,7 +71,7 @@
       <PageSection
         :title="pageStore.homePage.resourcesBlockTitle"
         :intro="pageStore.homePage.resourcesBlockTitle"
-        :buttons="[{text: 'Explorer les ressources', link: `/ressources`}]"
+        :buttons="[{ text: 'Explorer les ressources', link: `/ressources` }]"
       >
         <div
           class="mb-2"
@@ -117,34 +117,34 @@ import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({
   title: "Accueil",
-  breadcrumb: "Accueil"
+  breadcrumb: "Accueil",
 })
 
 const pageStore = usePageStore()
 
 const settings = {
   itemsToShow: 1.05,
-  snapAlign: "start"
+  snapAlign: "start",
 }
 const breakpointsLargeElements = {
   1024: {
     itemsToShow: 3.1,
-    snapAlign: "start"
+    snapAlign: "start",
   },
   768: {
     itemsToShow: 1.1,
-    snapAlign: "start"
-  }
+    snapAlign: "start",
+  },
 }
 const breakpointsSmallElements = {
   1024: {
     itemsToShow: 3.1,
-    snapAlign: "start"
+    snapAlign: "start",
   },
   768: {
     itemsToShow: 1.1,
-    snapAlign: "start"
-  }
+    snapAlign: "start",
+  },
 }
 </script>
 
