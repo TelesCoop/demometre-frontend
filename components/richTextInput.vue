@@ -1,19 +1,12 @@
 <template>
   <div class="field">
-    <label
-      v-if="label"
-      class="label"
-      @click="editor.default.focus()"
-    >
+    <label v-if="label" class="label" @click="editor.default.focus()">
       <!-- @slot Slot pour personnaliser tout le contenu de la balise <label> -->
       <slot name="label">
         {{ label }}
         <!-- @slot Slot pour indiquer que le champ est obligatoire. Par défaut, met une astérisque si `required` est à true (dans un `<span class="required">`) -->
         <slot name="required-tip">
-          <span
-            v-if="$attrs.required"
-            class="required"
-          >&nbsp;*</span>
+          <span v-if="$attrs.required" class="required">&nbsp;*</span>
         </slot>
       </slot>
     </label>
@@ -36,30 +29,18 @@
             :title="button.title"
             @click="button.onClick"
           >
-            <icon
-              v-if="button.icon"
-              :name="button.icon"
-              size="16"
-            />
+            <icon v-if="button.icon" :name="button.icon" size="16" />
             <span v-else>{{ button.text }}</span>
           </button>
         </div>
         <editor-content :editor="editor" />
       </client-only>
       <Teleport to="body">
-        <div
-          class="modal"
-          :class="{ 'is-active': isAddingLink }"
-        >
-          <div
-            class="modal-background"
-            @click="emit('close')"
-          />
+        <div class="modal" :class="{ 'is-active': isAddingLink }">
+          <div class="modal-background" @click="emit('close')" />
           <div class="modal-content">
             <div class="modal-card-head">
-              <h2 class="title is-2">
-                Ajouter un lien
-              </h2>
+              <h2 class="title is-2">Ajouter un lien</h2>
             </div>
             <div class="modal-card-body">
               <div class="field">
@@ -70,24 +51,15 @@
                     class="input"
                     type="url"
                     placeholder="https://"
-                  >
+                  />
                 </div>
               </div>
             </div>
             <footer class="modal-card-foot">
-              <button
-                class="button is-rounded is-dark"
-                @click="
-                  setLink()
-                  closeLinkModal()
-                "
-              >
+              <button class="button is-rounded is-dark" @click="onClick">
                 <span>Valider</span>
                 <span class="icon">
-                  <icon
-                    size="16"
-                    name="check"
-                  />
+                  <icon size="16" name="check" />
                 </span>
               </button>
               <button
@@ -101,10 +73,7 @@
         </div>
       </Teleport>
     </div>
-    <p
-      v-if="hint"
-      class="help"
-    >
+    <p v-if="hint" class="help">
       {{ hint }}
     </p>
   </div>
@@ -379,6 +348,11 @@ function setLink() {
     .extendMarkRange("link")
     .setLink({ href: correctedLink.value })
     .run()
+}
+
+const onClick = () => {
+  setLink()
+  closeLinkModal()
 }
 
 onBeforeUnmount(() => editor.value!.destroy())
