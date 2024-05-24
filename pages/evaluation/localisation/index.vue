@@ -151,7 +151,12 @@
 
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
-import { Localities, Locality, LocalityType, SurveysResult } from "~/composables/types"
+import {
+  Localities,
+  Locality,
+  LocalityType,
+  SurveysResult,
+} from "~/composables/types"
 import { usePageStore } from "~/stores/pageStore"
 import { usePressEnter } from "~/composables/pressEnter"
 
@@ -168,7 +173,9 @@ if (!pageStore.evaluationInitiationPage.searchAssessmentTitle) {
 }
 
 const zipCode = ref("")
-const localityTypeSelected = ref<"region" | "municipality" | "intercommunality">()
+const localityTypeSelected = ref<
+  "region" | "municipality" | "intercommunality"
+>()
 const localityId = ref<number>()
 const localities = ref<Localities>({
   municipality: [],
@@ -178,7 +185,10 @@ const regions = ref<Locality[]>([])
 const searched = ref<number>(0)
 const localitiesToShow = computed(() => {
   if (!localityTypeSelected.value) {
-    console.log("###", Object.values(localities.value), [...Object.values(localities.value), regions.value])
+    console.log("###", Object.values(localities.value), [
+      ...Object.values(localities.value),
+      regions.value,
+    ])
     return [...Object.values(localities.value), regions.value].flat()
   }
   if (localityTypeSelected.value === "region") {
@@ -187,12 +197,14 @@ const localitiesToShow = computed(() => {
     return localities.value[localityTypeSelected.value]
   }
 })
-const disabled = computed(() => (!localityId.value))
+const disabled = computed(() => !localityId.value)
 
 const assessmentStore = useAssessmentStore()
 
 async function searchLocalities() {
-  const res: SurveysResult | null = await assessmentStore.getSurveysForZipCode(zipCode.value)
+  const res: SurveysResult | null = await assessmentStore.getSurveysForZipCode(
+    zipCode.value,
+  )
   if (!res) {
     return
   }
@@ -203,6 +215,10 @@ async function searchLocalities() {
 }
 
 async function onSubmit() {
+  // avoid submit
+  if (disabled.value) {
+    return
+  }
   const isSuccess = await assessmentStore.getOrCreateAssessment({
     localityId: localityId.value,
     localityType: localityTypeSelected.value,
