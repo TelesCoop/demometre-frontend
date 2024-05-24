@@ -83,11 +83,13 @@
         <ButtonsArrowButton
           color="no-pillar"
           class="arrow-button-fixed is-left"
+          type="button"
           @click.prevent="goBack"
         />
         <button
           class="button is-shade-600 is-rounded mt-4"
           :disabled="disabled"
+          type="button"
           @click.prevent="goToNextStep"
         >
           <span>Valider</span>
@@ -189,7 +191,9 @@
         @submit.prevent="onSubmit"
       >
         <div
-          v-for="representativityCriteria of assessmentStore.representativityCriteriasForSurveyLocality(assessmentStore.currentAssessment.surveyLocality)"
+          v-for="representativityCriteria of assessmentStore.representativityCriteriasForSurveyLocality(
+            assessmentStore.currentAssessment.surveyLocality,
+          )"
           :key="representativityCriteria.id"
         >
           <label class="label is-size-5">{{
@@ -301,41 +305,41 @@ watch(
 
 const disabled = computed(() => {
   switch (initializationSteps[currentStep.value]) {
-  case steps.START: {
-    const cguConsent = assessmentStore.newAssessment.initiatorUsageConsent
-    const cgvConsent =
+    case steps.START: {
+      const cguConsent = assessmentStore.newAssessment.initiatorUsageConsent
+      const cgvConsent =
         assessmentStore.newAssessment.assessmentType ===
         AssessmentType.WITH_EXPERT.key
           ? assessmentStore.newAssessment.conditionsOfSaleConsent
           : true
-    return !(cguConsent && cgvConsent)
-  }
-  case steps.INITIATOR:
-    return !(initiatorTypeSelected.value && initiatorName.value)
-  default:
-    return false
+      return !(cguConsent && cgvConsent)
+    }
+    case steps.INITIATOR:
+      return !(initiatorTypeSelected.value && initiatorName.value)
+    default:
+      return false
   }
 })
 
 const startInitializationTitleAndDesc = computed(() => {
   switch (assessmentStore.newAssessment.assessmentType) {
-  case AssessmentType.QUICK.key:
-    return [
-      pageStore.evaluationInitiationPage.createQuickAssessmentTitle,
-      pageStore.evaluationInitiationPage.createQuickAssessmentDescription,
-    ]
-  case AssessmentType.PARTICIPATIVE.key:
-    return [
-      pageStore.evaluationInitiationPage.createParticipationAssessmentTitle,
-      pageStore.evaluationInitiationPage
-        .createParticipationAssessmentDescription,
-    ]
-  case AssessmentType.WITH_EXPERT.key:
-    return [
-      pageStore.evaluationInitiationPage.createAssessmentWithExpertTitle,
-      pageStore.evaluationInitiationPage
-        .createAssessmentWithExpertDescription,
-    ]
+    case AssessmentType.QUICK.key:
+      return [
+        pageStore.evaluationInitiationPage.createQuickAssessmentTitle,
+        pageStore.evaluationInitiationPage.createQuickAssessmentDescription,
+      ]
+    case AssessmentType.PARTICIPATIVE.key:
+      return [
+        pageStore.evaluationInitiationPage.createParticipationAssessmentTitle,
+        pageStore.evaluationInitiationPage
+          .createParticipationAssessmentDescription,
+      ]
+    case AssessmentType.WITH_EXPERT.key:
+      return [
+        pageStore.evaluationInitiationPage.createAssessmentWithExpertTitle,
+        pageStore.evaluationInitiationPage
+          .createAssessmentWithExpertDescription,
+      ]
   }
 })
 
@@ -360,6 +364,9 @@ function goBack() {
 }
 
 function goToNextStep() {
+  if (disabled.value) {
+    return
+  }
   if (initializationSteps.length - 1 > currentStep.value) {
     if (
       initializationSteps[currentStep.value + 1] === steps.REPRESENTATIVITY &&

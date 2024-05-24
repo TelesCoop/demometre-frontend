@@ -9,7 +9,7 @@ module.exports = {
     "vue/multi-word-component-names": "off",
     "vue/script-setup-no-uses-vars": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "indent": ["error", 2],
+    indent: ["error", 2, { SwitchCase: 1 }],
     "comma-dangle": ["error", "always-multiline"],
     // "@stylistic/js/comma-dangle": ["error", "always-multiline"],
     semi: [2, "never"],
