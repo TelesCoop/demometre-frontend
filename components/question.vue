@@ -68,11 +68,11 @@
             <!-- TAB : explanations -->
             <div
               v-for="element of explanatory"
-              :key="element.value.title.replace(/\s+/g, '')"
+              :key="element.value.id"
             >
-              <div v-show="currentTabId === element.value.title.replace(/\s+/g, '')">
+              <div v-if="currentTabId === element.value.id">
                 <RichText
-                  :rich-text="element.description"
+                  :rich-text="element.value.description"
                   :color="props.color"
                 />
               </div>
@@ -303,7 +303,10 @@ const props = defineProps({
   isQuestionnaire: { type: Boolean, required: true },
 })
 
-console.log("### question setup", { questionId: props.questionId, context: props.context })
+console.log("### question setup", {
+  questionId: props.questionId,
+  context: props.context,
+})
 
 const participationStore = useParticipationStore()
 const assessmentStore = useAssessmentStore()
@@ -368,15 +371,16 @@ const explanatory = (criteria.value?.explanatory || []) as SimpleBlock[]
 if (explanatory.length) {
   console.log("### explanatory", { explanatory })
   explanatory.forEach((element) => {
+    element.value.id = `${element.value.title?.replace(/\s+/g, "")}`
     tabs.value.push({
       label: `${element.value.title}`,
-      id: `${element.value.title?.replace(/\s+/g, "")}`,
+      id: element.value.id,
     })
   })
 }
 const currentTabId = ref<string>(tabs.value[0]?.id)
 
-function setTab(tabId) {
+function setTab(tabId: string) {
   currentTabId.value = tabId
 }
 
