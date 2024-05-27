@@ -73,7 +73,9 @@
           class="columns is-multiline mt-4 list-menu"
         >
           <div
-            v-for="pillar of questionnaireStore.pillarsOfSurvey(assessment.surveyId)"
+            v-for="pillar of questionnaireStore.pillarsOfSurvey(
+              assessment.surveyId,
+            )"
             :key="pillar.name"
             class="column"
           >
@@ -171,11 +173,15 @@ const startPillar = (pillarName: string) => {
 }
 
 const onStartQuestionnaire = () => {
-  const pillarId = Object.keys(questionnaireStore.pillarById).find(
-    (name) => !pillarsCompleted.value.includes(name),
+  const pillarsOfSurvey = questionnaireStore.pillarsOfSurvey(
+    assessment.surveyId,
   )
+  const pillar =
+    pillarsOfSurvey.find(
+      (pillar) => !pillarsCompleted.value.includes(pillar.name),
+    ) || pillarsOfSurvey[0]
 
-  const pillarName = questionnaireStore.pillarById[pillarId].name
+  const pillarName = questionnaireStore.pillarById[pillar?.id].name
   startPillar(pillarName)
 }
 const onRosettePillarClicked = (pillarName) => {

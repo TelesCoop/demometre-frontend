@@ -61,10 +61,10 @@
 
         <!-- TAB : explanations -->
         <template
-          v-for="element of explanatory"
-          :key="element.title.replace(/\s+/g, '')"
+          v-for="element of explanatoryWithId"
+          :key="element.id"
         >
-          <div v-show="currentTabId === element.title.replace(/\s+/g, '')">
+          <div v-show="currentTabId === element.id">
             <RichText
               :rich-text="element.description"
               :color="props.color"
@@ -116,25 +116,31 @@ const props = defineProps({
 const answer = defineModel("modelValue", {
   type: Object as PropType<QuestionResponse | undefined>,
 })
+type SimpleBlockWithId = SimpleBlock & { id: string }
+const explanatoryWithId = computed<SimpleBlockWithId[]>(() => {
+  return props.explanatory.map((element) => {
+    return { id: element.title?.replace(/\s+/g, ""), ...element }
+  })
+})
 
 const tabs = computed(() => {
   const tabs: tabDef[] = [
     {
-      divisionLabel: "Réponses",
+      label: "Réponses",
       id: "responses",
     },
   ]
   if (props.definitions && Object.keys(props.definitions).length) {
     tabs.push({
-      divisionLabel: "Définitions",
+      label: "Définitions",
       id: "definitions",
     })
   }
   if (props.explanatory?.length) {
-    props.explanatory.forEach((element) => {
+    explanatoryWithId.value.forEach((element) => {
       tabs.push({
-        divisionLabel: `${element.title}`,
-        id: `${element.title?.replace(/\s+/g, "")}`,
+        label: `${element.title}`,
+        id: element.id,
       })
     })
   }
