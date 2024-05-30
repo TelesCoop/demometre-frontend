@@ -23,10 +23,7 @@
               <span>Comment on a construit le référentiel</span>
 
               <span class="icon">
-                <icon
-                  name="arrow-right-line"
-                  size="20"
-                />
+                <icon name="arrow-right-line" size="20" />
               </span>
             </nuxt-link>
           </div>
@@ -47,10 +44,7 @@
       </section>
     </div>
 
-    <div
-      ref="explicationRef"
-      class="has-background-shade-100 scroll"
-    >
+    <div ref="explicationRef" class="has-background-shade-100 scroll">
       <PageSection
         v-if="pageStore.referentialPage.pillarBlockTitle"
         :title="pageStore.referentialPage.pillarBlockTitle"
@@ -72,7 +66,7 @@
               "
               alt="image des piliers"
               :style="`max-height: 250px`"
-            >
+            />
           </div>
         </div>
       </PageSection>
@@ -114,10 +108,7 @@
       />
     </div>
     <div class="container mobile-mode">
-      <section
-        ref="pillarsRef"
-        class="columns is-multiline mt-2"
-      >
+      <section ref="pillarsRef" class="columns is-multiline mt-2">
         <div
           v-for="pillar of questionnaireStore.pillarsOfMainSurvey"
           :key="pillar.name"
@@ -194,7 +185,7 @@
                 </template>
                 <template #content>
                   <RichText
-                    :rich-text="explanatory.description"
+                    :rich-text="explanatory.value.description"
                     class="is-family-secondary"
                     :color="colorClass"
                   />
@@ -210,21 +201,14 @@
               :color="colorClass"
             />
             <div class="score">
-              <div
-                v-for="i in 4"
-                :key="i"
-                class="is-flex mb-1"
-              >
+              <div v-for="i in 4" :key="i" class="is-flex mb-1">
                 <div class="is-flex">
                   <AnalyticsScore
                     :score="i"
                     :color="colorClass"
                     class="mr-1_5"
                   />
-                  <p
-                    class="is-family-secondary"
-                    style="margin-top: 2px"
-                  >
+                  <p class="is-family-secondary" style="margin-top: 2px">
                     {{ markerProps.marker["score" + i] }}
                   </p>
                 </div>
@@ -278,7 +262,7 @@ watch(activeQuestionId, () => {
 })
 
 const colorClass = computed(() =>
-  activePillar.value ? PillarParams[activePillar.value.name].color : "",
+  activePillar.value ? PillarParams[activePillar.value.name].color : ""
 )
 
 const pillarsRef = ref(null)
@@ -291,7 +275,7 @@ onMounted(() => {
 const onSelectPillar = (pillar) => {
   activePillar.value = pillar
   markers.value = activePillar.value?.markerIds.map(
-    (markerId) => questionnaireStore.markerById[markerId],
+    (markerId) => questionnaireStore.markerById[markerId]
   )
   router.push({ query: { ...route.query, pillar: pillar.name } })
 }
