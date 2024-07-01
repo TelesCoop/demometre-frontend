@@ -9,10 +9,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+#: components/header/navbar.vue:192
+msgid "Accueil"
+msgstr ""
+
+#: components/header/navbar.vue:196
+msgid "DémoMètre"
+msgstr ""
+
 #: components/header/navbar.vue:95
 msgid "Enregistrer"
 msgstr ""
 
 #: components/header/navbar.vue:75
 msgid "Lancer une évaluation"
+msgstr ""
+
+#: components/header/navbar.vue:208
+msgid "Le projet"
+msgstr ""
+
+#: components/header/navbar.vue:103
+msgid "Mon compte"
+msgstr ""
+
+#: components/header/navbar.vue:135
+msgid "Réinitialiser"
+msgstr ""
+
+#: components/header/navbar.vue:204
+msgid "Résultats"
+msgstr ""
+
+#: components/header/navbar.vue:111
+msgid "Se connecter"
+msgstr ""
+
+#: components/header/navbar.vue:200
+msgid "Utilisations possibles"
 msgstr ""

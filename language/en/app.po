@@ -1,11 +1,19 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: démomètre\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Project-Id-Version: démomètre\n"
-"Language: en\n"
+
+#: components/header/navbar.vue:192
+msgid "Accueil"
+msgstr ""
+
+#: components/header/navbar.vue:196
+msgid "DémoMètre"
+msgstr ""
 
 #: components/header/navbar.vue:95
 msgid "Enregistrer"
@@ -15,3 +23,26 @@ msgstr "Save"
 msgid "Lancer une évaluation"
 msgstr "Launch evaluation"
 
+#: components/header/navbar.vue:208
+msgid "Le projet"
+msgstr ""
+
+#: components/header/navbar.vue:103
+msgid "Mon compte"
+msgstr ""
+
+#: components/header/navbar.vue:135
+msgid "Réinitialiser"
+msgstr ""
+
+#: components/header/navbar.vue:204
+msgid "Résultats"
+msgstr ""
+
+#: components/header/navbar.vue:111
+msgid "Se connecter"
+msgstr ""
+
+#: components/header/navbar.vue:200
+msgid "Utilisations possibles"
+msgstr ""
