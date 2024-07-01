@@ -1,0 +1,11 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+#: components/header/navbar.vue:95
+msgid "Enregistrer"
+msgstr ""
+
+#: components/header/navbar.vue:75
+msgid "Lancer une évaluation"
+msgstr ""
