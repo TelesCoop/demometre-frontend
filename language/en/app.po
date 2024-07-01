@@ -1,18 +1,17 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: démomètre\n"
+"Language: en\n"
 
 #: components/header/navbar.vue:95
 msgid "Enregistrer"
-msgstr ""
+msgstr "Save"
 
 #: components/header/navbar.vue:75
 msgid "Lancer une évaluation"
 msgstr "Launch evaluation"
+
