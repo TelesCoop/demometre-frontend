@@ -8,10 +8,10 @@
       >
         "{{ profileType.name }}",
         <template v-if="profileType.rulesIntersectionOperator == 'and'">
-          vous devez respecter toutes les conditions suivantes :
+          {{ $gettext("vous devez respecter toutes les conditions suivantes :") }}
         </template>
         <template v-else>
-          vous devez respecter au moins une des les conditions suivantes :
+          {{ $gettext("vous devez respecter au moins une des les conditions suivantes :") }}
         </template>
         <ul>
           <li

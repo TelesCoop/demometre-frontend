@@ -49,7 +49,7 @@ msgstr ""
 msgid "Ajouter un document"
 msgstr ""
 
-#: components/assessment/changeExpertModal.vue:38
+#: components/assessment/changeExpertModal.vue:39
 #: pages/compte/evaluation/[id]/index.vue:407
 msgid "Ajouter un expert"
 msgstr ""
@@ -61,7 +61,7 @@ msgstr ""
 #: components/account/editUserInfoModal.vue:54
 #: components/assessment/addDocumentModal.vue:98
 #: components/assessment/addWorkshopModal.vue:89
-#: components/assessment/changeExpertModal.vue:59
+#: components/assessment/changeExpertModal.vue:60
 #: components/assessment/informationsEditModal.vue:82
 #: components/assessment/workshops.vue:149
 #: components/richTextInput.vue:94
@@ -1120,7 +1120,7 @@ msgstr ""
 msgid "Seuil minimal de représentativité :"
 msgstr ""
 
-#: components/assessment/changeExpertModal.vue:22
+#: components/assessment/changeExpertModal.vue:23
 msgid "Si vous souhaitez changer, sélectionnez un expert dans la liste ci-dessous et cliquez sur valider. Si votre expert n’est pas enregistré (et/ou ne figure pas dans la liste), contactez nous."
 msgstr ""
 
@@ -1250,7 +1250,7 @@ msgstr ""
 #: components/account/editUserInfoModal.vue:42
 #: components/assessment/addDocumentModal.vue:86
 #: components/assessment/addWorkshopModal.vue:77
-#: components/assessment/changeExpertModal.vue:47
+#: components/assessment/changeExpertModal.vue:48
 #: components/assessment/informationsEditModal.vue:70
 #: components/form/buttons.vue:15
 #: components/form/localisation.vue:123
@@ -1293,6 +1293,14 @@ msgstr ""
 
 #: pages/evaluation/participation/[assessmentId]/ajout-expert.vue:18
 msgid "Vous devez être connecté pour ajouter un expert"
+msgstr ""
+
+#: components/export/profile-types.vue:14
+msgid "vous devez respecter au moins une des les conditions suivantes :"
+msgstr ""
+
+#: components/export/profile-types.vue:11
+msgid "vous devez respecter toutes les conditions suivantes :"
 msgstr ""
 
 #: pages/compte/evaluation/[id]/index.vue:64
