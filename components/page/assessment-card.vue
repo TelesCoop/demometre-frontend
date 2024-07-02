@@ -53,7 +53,7 @@
               name="arrow-right-line"
             />
           </span>
-          <span>C'est parti !</span>
+          <span>{{ $gettext("C'est parti !") }}</span>
         </button>
       </div>
     </div>
@@ -69,9 +69,9 @@ import { AssessmentTypeDetails } from "~~/composables/types"
 const props = defineProps({
   assessmentType: {
     type: Object as PropType<AssessmentTypeDetails>,
-    required: true
+    required: true,
   },
-  backgroundColor: { type: String, required: true }
+  backgroundColor: { type: String, required: true },
 })
 
 const router = useRouter()
@@ -81,30 +81,30 @@ const assessmentStore = useAssessmentStore()
 const caracteristics = [
   {
     textKey: "forWho",
-    icon: "user"
+    icon: "user",
   },
   {
     textKey: "what",
-    icon: "file-text-line"
+    icon: "file-text-line",
   },
   {
     textKey: "forWhat",
-    icon: "checkbox-line"
+    icon: "checkbox-line",
   },
   {
     textKey: "results",
-    icon: "bar-chart-box-line"
+    icon: "bar-chart-box-line",
   },
   {
     textKey: "price",
-    icon: "money-euro-circle-line"
-  }
+    icon: "money-euro-circle-line",
+  },
 ]
 
 function letsGo() {
   assessmentStore.newAssessment = {
     ...assessmentStore.newAssessment,
-    assessmentType: props.assessmentType.assessmentType
+    assessmentType: props.assessmentType.assessmentType,
   }
   router.push(userStep.value.url)
 }

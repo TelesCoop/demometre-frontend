@@ -13,6 +13,8 @@ import { useMessageStore } from "./messageStore"
 import { useUserStore } from "./userStore"
 import { useParticipationStore } from "./participationStore"
 
+const { $gettext } = useGettext()
+
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
     assessmentById: <Record<number, Assessment>>{},
@@ -24,22 +26,20 @@ export const useAssessmentStore = defineStore("assessment", {
       {
         [key: number]: any
       }
-    >{},
+      >{},
     expertById: <
       {
         [key: number]: User
       }
-    >{},
+      >{},
     addingExpert: <boolean>false,
     newAssessment: <Assessment>{},
   }),
   getters: {
     assessmentTypeTitle(): string {
-      return (
-        "de " +
-        (this.currentAssessment?.municipality
-          ? "ma ville"
-          : "mon inter-communalité")
+      return (this.currentAssessment?.municipality
+        ? $gettext("de ma ville")
+        : $gettext("de mon inter-communalité")
       )
     },
     assessments: (state) => {
@@ -117,7 +117,7 @@ export const useAssessmentStore = defineStore("assessment", {
       const { data, error } = await useApiPost<AssessmentDocumentType>(
         `assessment-documents/`,
         payload,
-        "Impossible de téléverser le document",
+        $gettext("Impossible de téléverser le document"),
       )
       if (!error.value) {
         this.assessmentById[assessmentId].documents.push(data.value)

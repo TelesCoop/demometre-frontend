@@ -7,7 +7,7 @@
             to="/"
             class="has-text-weight-bold has-text-shade-200"
           >
-            DémoMètre
+            {{ $gettext("DémoMètre") }}
           </NuxtLink>
           <a
             class="has-text-shade-350"
@@ -15,23 +15,23 @@
             target="_blank"
           >
             <!-- TODO : Put the right year automaticaly -->
-            License
+            {{ $gettext("License") }}
           </a>
           <a
             class="has-text-shade-350"
             :href="MEDIA_BASE_URL + settingStore.rgpdSettings.termsOfUseUrl"
             target="_blank"
-          >Conditions générales d'utilisation</a>
+          >{{ $gettext("Conditions générales d'utilisation") }}</a>
           <a
             class="has-text-shade-350"
             :href="MEDIA_BASE_URL + settingStore.rgpdSettings.termsOfSaleUrl"
             target="_blank"
-          >Conditions générales de vente</a>
+          >{{ $gettext("Conditions générales de vente") }}</a>
           <a
             class="has-text-shade-350"
             :href="MEDIA_BASE_URL + settingStore.rgpdSettings.legalMentionUrl"
             target="_blank"
-          >Mentions légales</a>
+          >{{ $gettext("Mentions légales") }}</a>
           <a
             class="has-text-shade-350"
             :href="
@@ -39,32 +39,32 @@
                 settingStore.rgpdSettings.confidentialityPolicyUrl
             "
             target="_blank"
-          >Politique de confidentialité</a>
+          >{{ $gettext("Politique de confidentialité") }}</a>
         </div>
         <div class="column footer-column is-3">
           <NuxtLink
             to="/demometre"
             class="has-text-white"
           >
-            DémoMètre
+            {{ $gettext("DémoMètre") }}
           </NuxtLink>
           <NuxtLink
             to="/utilisations-possibles"
             class="has-text-white"
           >
-            Utilisations possibles
+            {{ $gettext("Utilisations possibles") }}
           </NuxtLink>
           <NuxtLink
             to="/resultats"
             class="has-text-white"
           >
-            Résultats
+            {{ $gettext("Résultats") }}
           </NuxtLink>
           <NuxtLink
             to="/projet"
             class="has-text-white"
           >
-            Le projet
+            {{ $gettext("Le projet") }}
           </NuxtLink>
         </div>
         <div class="column footer-column is-3">
@@ -72,19 +72,19 @@
             to="/blog"
             class="has-text-white"
           >
-            Blog
+            {{ $gettext("Blog") }}
           </NuxtLink>
           <NuxtLink
             to="/ressources"
             class="has-text-white"
           >
-            Ressources
+            {{ $gettext("Ressources") }}
           </NuxtLink>
           <NuxtLink
             to="/faq"
             class="has-text-white"
           >
-            FAQ
+            {{ $gettext("FAQ") }}
           </NuxtLink>
         </div>
         <div class="column footer-column is-3">
@@ -93,16 +93,14 @@
             href="https://praticable.fr/"
             target="_blank"
           >
-            Designé par
-            <b>Praticable</b>
+            {{ $gettext("Designé par <b>Praticable</b>", {}, true) }}
           </a>
           <a
             class="has-text-shade-200"
             href="https://www.telescoop.fr/"
             target="_blank"
           >
-            Réalisé par
-            <b>TelesCoop</b>
+            {{ $gettext("Réalisé par <b>TelesCoop</b>", {}, true) }}
           </a>
 
           <!-- <label class="label is-size-7" for="email"

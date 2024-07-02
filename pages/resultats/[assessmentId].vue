@@ -11,13 +11,13 @@
       <section class="section">
         <div class="is-flex is-justify-content-space-between">
           <h2 class="title is-3 has-text-shade-700 mb-1">
-            Résultats par piliers
+            {{ $gettext("Résultats par piliers") }}
           </h2>
           <nuxt-link
             class="button is-rounded is-responsive is-shade-600"
             to="/demometre"
           >
-            <span>En savoir plus sur le DémoMètre</span>
+            <span>{{ $gettext("En savoir plus sur le DémoMètre") }}</span>
             <span class="icon">
               <icon
                 size="20"
@@ -76,7 +76,7 @@
                 "
               >
                 <p class="is-uppercase is-size-6bis mb-0_5 mt-1">
-                  Explicitée par :
+                  {{ $pgettext("Une question peut être explicitée par une autre", "Explicitée par :") }}
                 </p>
                 <a
                   v-for="explainsByQuestionId of questionnaireStore
@@ -99,7 +99,7 @@
                 "
               >
                 <p class="is-uppercase is-size-6bis mb-0_5 mt-1">
-                  Permet d'expliciter :
+                  {{ $pgettext("Une question peut être explicitée par une autre", "Permet d'expliciter :") }}
                 </p>
                 <a
                   class="is-underlined"
@@ -121,7 +121,7 @@
                 </a>
               </div>
               <p class="is-uppercase is-size-6bis mb-0_5 mt-2">
-                Résultat
+                {{ $gettext("Résultat") }}
               </p>
               <AnalyticsChartByQuestionType
                 :color="colorClass"
@@ -176,7 +176,6 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { getStrenghtAndImprovements, getScoreToDisplay } from "~/utils/scores"
-import { useProfilingStore } from "~/stores/profilingStore"
 
 definePageMeta({
   title: "Résultats",
@@ -187,7 +186,6 @@ const router = useRouter()
 
 const questionnaireStore = useQuestionnaireStore()
 const assessmentStore = useAssessmentStore()
-const profilingStore = useProfilingStore()
 
 const activePillar = ref<PillarType>()
 const markers = ref<Marker[]>()

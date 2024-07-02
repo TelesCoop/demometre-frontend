@@ -9,7 +9,7 @@
           v-if="training.isAvailableSoon"
           class="tag"
         >
-          Bientôt disponible !
+          {{ $gettext("Bientôt disponible !") }}
         </span>
       </div>
 
@@ -51,7 +51,7 @@
           disabled
           class="button is-dark is-rounded"
         >
-          Vous renseigner
+          {{ $gettext("Vous renseigner") }}
         </button>
         <a
           v-else
@@ -59,7 +59,7 @@
           target="_blank"
           class="button is-dark is-rounded"
         >
-          <span>Vous renseigner</span>
+          <span>{{ $gettext("Vous renseigner") }}</span>
           <span class="icon">
             <icon
               size="16"
@@ -78,7 +78,7 @@ import { Training } from "~/composables/types"
 
 defineProps(
   {
-    training: { type: Object as PropType<Training>, required: true }
+    training: { type: Object as PropType<Training>, required: true },
   })
 </script>
 

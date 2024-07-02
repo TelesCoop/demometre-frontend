@@ -17,7 +17,7 @@
           :to="`/evaluation/participation/${assessmentStore.currentAssessmentId}/role`"
           class="button is-shade-600 is-rounded"
         >
-          <span>Poursuivre l'évaluation</span>
+          <span>{{ $gettext("Poursuivre l'évaluation") }}</span>
           <span class="icon">
             <icon
               size="16"

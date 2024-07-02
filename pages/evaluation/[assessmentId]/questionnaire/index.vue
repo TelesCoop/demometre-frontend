@@ -33,7 +33,7 @@
             class="button is-normal is-rounded is-outlined is-responsive is-shade-600"
             @click="participationStore.setShowSaveParticipationModal(true)"
           >
-            <span>Enregistrer</span>
+            <span>{{ $gettext("Enregistrer") }}</span>
             <span class="icon">
               <icon
                 size="20"
@@ -46,7 +46,7 @@
             class="button is-normal is-rounded is-outlined is-responsive is-shade-600"
             to="/resultats"
           >
-            <span>Voir les résultats</span>
+            <span>{{ $gettext("Voir les résultats") }}</span>
             <span class="icon">
               <icon
                 size="20"

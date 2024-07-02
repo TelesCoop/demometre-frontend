@@ -12,7 +12,7 @@
           />
         </span>
         <span>
-          Revenir à mon compte
+          {{ $gettext("Revenir à mon compte") }}
         </span>
       </NuxtLink>
     </div>
@@ -86,13 +86,13 @@
             <thead>
               <tr>
                 <td class="has-text-shade-400 is-size-6">
-                  Prénom nom
+                  {{ $gettext("Prénom nom") }}
                 </td>
                 <td class="has-text-shade-400 is-size-6">
-                  Rôle
+                  {{ $gettext("Rôle") }}
                 </td>
                 <td class="has-text-shade-400 is-size-6">
-                  Mail
+                  {{ $gettext("Mail") }}
                 </td>
                 <td class="has-text-shade-400 is-size-6">
                   Réponses
@@ -124,13 +124,13 @@
                     class="button is-rounded is-small"
                     @click="confirmDeletion(participation)"
                   >
-                    supprimer
+                    {{ $gettext("supprimer") }}
                   </button>
                   <button
                     class="button is-rounded is-small ml-1"
                     @click="participationCurrentEdit = participation; showParticipantEditModal = true"
                   >
-                    modifier
+                    {{ $gettext("modifier") }}
                   </button>
                 </td>
               </tr>
@@ -141,7 +141,7 @@
             class="message"
           >
             <div class="message-body">
-              Aucun participant renseigné
+              {{ $gettext("Aucun participant renseigné") }}
             </div>
           </div>
         </div>
@@ -191,10 +191,11 @@ import { usePageStore } from "~/stores/pageStore"
 import { useUserStore } from "~/stores/userStore"
 import { WORKSHOP_CONTEXT_FIELDS, WORKSHOP_MEDIUM, WORKSHOP_TYPES } from "~/utils/constants"
 import { useConfirm } from "~/composables/useConfirm"
+import { useGettext } from "vue3-gettext"
 
 definePageMeta({
   title: "Atelier",
-  breadcrumb: "Atelier"
+  breadcrumb: "Atelier",
 })
 const profilingStore = useProfilingStore()
 const workshopStore = useWorkshopStore()
@@ -203,6 +204,7 @@ const userStore = useUserStore()
 const confirm = useConfirm()
 const route = useRoute()
 const workshopId: Ref<number> = ref(+route.params.workshopId)
+const { $gettext } = useGettext()
 
 const showInformationsEditModal = ref(false)
 const showParticipantEditModal = ref(false)
@@ -240,10 +242,10 @@ const onParticipantsButtonClick = (buttonIx: number) => {
 
 const confirmDeletion = (participant: WorkshopParticipation) => {
   confirm(
-    "En supprimant ce participant, vous supprimez également les évaluations du participant. Cette action est irréversible.",
-    `Supprimer le participant ${participant.participantName}`,
-    "Oui, supprimer",
-    () => workshopStore.deleteParticipation(participant.id)
+    $gettext("En supprimant ce participant, vous supprimez également les évaluations du participant. Cette action est irréversible."),
+    $gettext(`Supprimer le participant ${participant.participantName}`),
+    $gettext("Oui, supprimer"),
+    () => workshopStore.deleteParticipation(participant.id),
   )
 }
 </script>

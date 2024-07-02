@@ -72,7 +72,7 @@
                 class="button evaluation is-rounded has-border-cooperation has-text-cooperation-dark"
                 @click="closeMenu"
               >
-                Lancer une évaluation
+                {{ $gettext("Lancer une évaluation") }}
               </NuxtLink>
               <NuxtLink
                 v-if="!isEvaluationRoute && assessmentStore.userHasSingleAssessment"
@@ -92,7 +92,7 @@
                   }
                 "
               >
-                Enregistrer
+                {{ $gettext("Enregistrer") }}
               </button>
               <NuxtLink
                 v-if="userStore.isLoggedIn"
@@ -100,7 +100,7 @@
                 class="button is-white is-rounded"
                 @click="closeMenu"
               >
-                Mon compte
+                {{ $gettext("Mon compte") }}
               </NuxtLink>
               <NuxtLink
                 v-else
@@ -108,7 +108,7 @@
                 class="button is-white is-outlined is-rounded"
                 @click="closeMenu"
               >
-                Se connecter
+                {{ $gettext("Se connecter") }}
               </NuxtLink>
             </div>
           </div>
@@ -132,7 +132,7 @@
           class="column button is-shade-200 navbar-progress-bar-save-button"
           @click="participationStore.setShowCancelParticipationModal(true)"
         >
-          <span>Réinitialiser</span>
+          <span>{{ $gettext("Réinitialiser") }}</span>
           <span class="icon">
             <icon
               size="15"
@@ -154,10 +154,13 @@ import { useUserStore } from "~/stores/userStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { isQuestionnaireRouteFromPath } from "~/utils/util"
+import { useGettext } from "vue3-gettext"
 
 const emit = defineEmits<{
   (e: "change-header-height", value: number): void
 }>()
+
+const { $gettext } = useGettext()
 
 const userStore = useUserStore()
 const userStep = useUserStep()
@@ -186,23 +189,23 @@ const activePillar = computed(() => {
 
 const navItems = [
   {
-    name: "Accueil",
+    name: $gettext("Accueil"),
     to: "/",
   },
   {
-    name: "DémoMètre",
+    name: $gettext("DémoMètre"),
     to: "/demometre",
   },
   {
-    name: "Utilisations possibles",
+    name: $gettext("Utilisations possibles"),
     to: "/utilisations-possibles",
   },
   {
-    name: "Résultats",
+    name: $gettext("Résultats"),
     to: "/resultats",
   },
   {
-    name: "Le projet",
+    name: $gettext("Le projet"),
     to: "/projet",
   },
 ]

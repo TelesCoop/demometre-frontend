@@ -6,18 +6,21 @@
     :question-id="questionId"
   >
     <template #legend>
-      Choisissez oui ou non.
+      {{ $gettext("Choisissez oui ou non.") }}
     </template>
   </ResponseInputUniqueChoice>
 </template>
 
 <script setup lang="ts">
 import { ResponseChoice as ResponseChoiceType } from "~/composables/types"
+import { useGettext } from "vue3-gettext"
 
 const props = defineProps({
   color: { type: String, required: true },
   questionId: { type: Number, required: true },
 })
+
+const { $gettext } = useGettext()
 
 const answer = defineModel("modelValue", {
   type: Number,
@@ -28,12 +31,12 @@ const answer = defineModel("modelValue", {
 const responseChoices = ref<ResponseChoiceType[]>([
   {
     id: 1,
-    responseChoice: "Oui",
+    responseChoice: $gettext("Oui"),
     description: "",
   },
   {
     id: 0,
-    responseChoice: "Non",
+    responseChoice: $gettext("Non"),
     description: "",
   },
 ])

@@ -1,3 +1,7 @@
+import { useGettext } from "vue3-gettext"
+
+const { $gettext } = useGettext()
+
 export type User = {
   email: string
   id: number | null
@@ -184,9 +188,9 @@ export type Definition = {
 
 // Assessment
 export const LOCALITY_TYPE: Record<string, { key: string; value: string }> = {
-  MUNICIPALITY: { key: "municipality", value: "Commune" },
-  INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" },
-  REGION: { key: "region", value: "Région" },
+  MUNICIPALITY: { key: "municipality", value: $gettext("Commune") },
+  INTERCOMMUNALITY: { key: "intercommunality", value: $gettext("Intercommunalité") },
+  REGION: { key: "region", value: $gettext("Région") },
 }
 export type LocalityTypes =
   | "municipality"
@@ -195,10 +199,10 @@ export type LocalityTypes =
   | "department"
 export type SurveyLocality = "city" | "region" | "department"
 export const AssessmentType = {
-  QUICK: { key: "quick", value: "Diagnostic rapide" },
-  PARTICIPATIVE: { key: "participative", value: "Evaluation participative" },
-  WITH_EXPERT: { key: "with_expert", value: "Evaluation avec expert" },
-  "": { key: "", value: "Non renseigné" },
+  QUICK: { key: "quick", value: $gettext("Diagnostic rapide") },
+  PARTICIPATIVE: { key: "participative", value: $gettext("Evaluation participative") },
+  WITH_EXPERT: { key: "with_expert", value: $gettext("Evaluation avec expert") },
+  "": { key: "", value: $gettext("Non renseigné") },
 }
 export type Locality = {
   id: number
@@ -285,10 +289,10 @@ export type Assessment = {
   workshopCount: number
 }
 export const InitiatorType = {
-  COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
-  ASSOCIATION: { key: "association", value: "Une association" },
-  INDIVIDUAL: { key: "individual", value: "Un particulier" },
-  OTHER: { key: "other", value: "Autre" },
+  COLLECTIVITY: { key: "collectivity", value: $gettext("Ma collectivité") },
+  ASSOCIATION: { key: "association", value: $gettext("Une association") },
+  INDIVIDUAL: { key: "individual", value: $gettext("Un particulier") },
+  OTHER: { key: "other", value: $gettext("Autre") },
 }
 export type Scores = {
   byQuestionId: { [key: number]: number }

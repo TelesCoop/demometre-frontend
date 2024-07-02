@@ -4,7 +4,7 @@ import {
   Question,
   QuestionResponse,
   Workshop,
-  WorkshopParticipation
+  WorkshopParticipation,
 } from "~/composables/types"
 import { useMessageStore } from "./messageStore"
 
@@ -22,7 +22,7 @@ export const useWorkshopStore = defineStore("workshop", {
     isDirtyByParticipationIdByQuestionId: <Record<number, Record<number, boolean>>>{},
     participationById: <Record<number, WorkshopParticipation>>{},
     workshopById: <Record<number, Workshop>>{},
-    workshopsLoadedByAssessments: <Record<number, boolean>>{}
+    workshopsLoadedByAssessments: <Record<number, boolean>>{},
 
   }),
   getters: {
@@ -41,19 +41,19 @@ export const useWorkshopStore = defineStore("workshop", {
           return []
         }
         const toReturn: WorkshopParticipation[] = workshop.participationIds!.map(
-          (participationId) => state.participationById[participationId]
+          (participationId) => state.participationById[participationId],
         ).filter(el => el != null)
         if (filterMedium) {
           return toReturn.filter((participation: WorkshopParticipation) => participation.medium === filterMedium)
         }
         return toReturn
       }
-    }
+    },
   },
   actions: {
     async closeWorkshop(workshopId: number) {
       const { data, error } = await useApiPatch<Workshop>(
-        `workshops/${workshopId}/closed/`
+        `workshops/${workshopId}/closed/`,
       )
       const messageStore = useMessageStore()
       if (error.value) {
@@ -68,21 +68,21 @@ export const useWorkshopStore = defineStore("workshop", {
     async createOrUpdateParticipation(
       participation: WorkshopParticipation,
       workshopId: number,
-      assessmentId: number
+      assessmentId: number,
     ) {
       console.log("### createOrUpdateParticipation", participation, workshopId)
       participation.responses = Object.values(
-        { ...participation.responseByQuestionId }
+        { ...participation.responseByQuestionId },
       )
       const { data, error } = await useApiPost<WorkshopParticipation>(
         `workshops/${workshopId}/participation/`,
-        { ...participation, workshopId: workshopId, assessmentId: assessmentId }
+        { ...participation, workshopId: workshopId, assessmentId: assessmentId },
       )
       if (!error.value) {
         this.setParticipationtFromApiToStore(data.value)
         if (
           !this.workshopById[workshopId].participationIds.includes(
-            data.value.id
+            data.value.id,
           )
         ) {
           this.workshopById[workshopId].participationIds.push(data.value.id)
@@ -95,7 +95,7 @@ export const useWorkshopStore = defineStore("workshop", {
     },
     async createOrUpdateQuestionnaireResponses(
       workshopId: number,
-      question: Question
+      question: Question,
     ) {
       let errorOccured = false
       if (question.objectivity === Objectivity.OBJECTIVE) {
@@ -103,7 +103,7 @@ export const useWorkshopStore = defineStore("workshop", {
           `assessment-responses/`,
           this.assessmentResponseByQuestionIdByWorkshopId[workshopId][
             question.id
-          ]
+          ],
         )
         if (apiResponse.error.value) {
           errorOccured = true
@@ -119,7 +119,7 @@ export const useWorkshopStore = defineStore("workshop", {
           if (response && Object.entries(response).length !== 0) {
             const apiResponse = await useApiPost<QuestionResponse>(
               `workshops/${workshopId}/participation/${participationId}/response/`,
-              response
+              response,
             )
             if (apiResponse.error.value) {
               errorOccured = true
@@ -130,14 +130,17 @@ export const useWorkshopStore = defineStore("workshop", {
       const messageStore = useMessageStore()
 
       if (errorOccured) {
-        messageStore.setError("Une erreur s'est produite lors de la sauvegarde")
+        messageStore.setError($gettext("Une erreur s'est produite lors de la sauvegarde"))
         return false
       }
-      messageStore.setInfo("Sauvegarde réussie")
+      messageStore.setInfo($gettext("Sauvegarde réussie"))
       return true
     },
     async createOrUpdateWorkshop(workshop: Workshop) {
-      const { data, error } = await useApiPost<Workshop>(`workshops/`, workshop, "Impossible d'ajouter l'atelier")
+      const {
+        data,
+        error,
+      } = await useApiPost<Workshop>(`workshops/`, workshop, $gettext("Impossible d'ajouter l'atelier"))
       if (!error.value) {
         this.workshopById[data.value.id] = data.value
         return true
@@ -148,7 +151,7 @@ export const useWorkshopStore = defineStore("workshop", {
     },
     async getWorkshop(workshopId: number) {
       const { data, error } = await useApiGet<FullWorkshop>(
-        `full-workshops/${workshopId}/`
+        `full-workshops/${workshopId}/`,
       )
       if (!error.value) {
         this.setFullWorkshopFromApiToStore(data.value)
@@ -157,12 +160,12 @@ export const useWorkshopStore = defineStore("workshop", {
     async deleteParticipation(participationId: number) {
       const workshopId = this.participationById[participationId].workshopId
       if (!workshopId) {
-        useMessageStore().setMessage("Impossible de supprimer le participant (impossible de récupérer son atelier)", "error")
+        useMessageStore().setMessage($gettext("Impossible de supprimer le participant (impossible de récupérer son atelier)"), "error")
         return false
       }
       const { error } = await useApiDelete(
         `workshops/participation/${participationId}/`,
-        "Impossible de supprimer le participant"
+        $gettext("Impossible de supprimer le participant"),
       )
       if (error.value) {
         return false
@@ -184,7 +187,7 @@ export const useWorkshopStore = defineStore("workshop", {
     },
     async saveWorkshop(workshopId: number, payload: any) {
       const { data, error } = await useApiPatch<Workshop>(
-        `workshops/${workshopId}/`, payload
+        `workshops/${workshopId}/`, payload,
       )
       if (error.value) {
         return false
@@ -218,6 +221,6 @@ export const useWorkshopStore = defineStore("workshop", {
         participation.responseByQuestionId[response.questionId] = response
       })
       this.participationById[participation.id] = participation
-    }
-  }
+    },
+  },
 })

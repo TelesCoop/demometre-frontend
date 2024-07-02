@@ -3,7 +3,9 @@
     <div class="column">
       <div class="is-flex">
         <Picto name="strengths" />
-        <p class="is-uppercase ml-0_75">Points forts</p>
+        <p class="is-uppercase ml-0_75">
+          {{ $gettext("Points forts") }}
+        </p>
       </div>
       <li
         v-for="strength of props.strengthsAndImprovements.strengths"
@@ -16,7 +18,9 @@
     <div class="column">
       <div class="is-flex">
         <Picto name="weaknesses" />
-        <p class="is-uppercase ml-0_75">Points d'amélioration</p>
+        <p class="is-uppercase ml-0_75">
+          {{ $gettext("Points d'amélioration") }}
+        </p>
       </div>
       <li
         v-for="improvement of props.strengthsAndImprovements.improvements"

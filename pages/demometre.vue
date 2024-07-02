@@ -20,7 +20,7 @@
               class="button is-dark is-rounded is-responsive is-outlined is-shade-600"
               to="/projet?hash=howBlockRef"
             >
-              <span>Comment on a construit le référentiel</span>
+              <span>{{ $gettext("Comment on a construit le référentiel") }}</span>
 
               <span class="icon">
                 <icon
@@ -156,7 +156,7 @@
                   class="subtitle has-text-weight-bold mb-1"
                   :class="`has-text-${colorClass}-dark`"
                 >
-                  Definitions
+                  {{ $gettext("Definitions") }}
                 </h3>
               </template>
               <template #content>
@@ -245,10 +245,14 @@ import { usePageStore } from "~/stores/pageStore"
 import { useDefinitionStore } from "~~/stores/definitionStore"
 import { Marker, PillarType } from "~/composables/types"
 import { MEDIA_BASE_URL } from "~/composables/api"
+import { useGettext } from "vue3-gettext"
+
+const { $gettext } = useGettext()
+
 
 definePageMeta({
-  title: "DémoMètre",
-  breadcrumb: "DémoMètre",
+  title: $gettext("DémoMètre"),
+  breadcrumb: $gettext("DémoMètre"),
 })
 
 const router = useRouter()

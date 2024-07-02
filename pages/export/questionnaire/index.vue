@@ -2,11 +2,11 @@
   <div class="container">
     <div class="section">
       <h1 class="title is-1 has-text-black">
-        Générer un questionnaire papier
+        {{ $gettext("Générer un questionnaire papier") }}
       </h1>
       <div>
         <h2 class="title is-3">
-          Choisissez un role
+          {{ $gettext("Choisissez un role") }}
         </h2>
         <FormRole
           v-model="answer"
@@ -19,10 +19,13 @@
 </template>
 <script lang="ts" setup>
 import { Localities } from "~/composables/types"
+import { useGettext } from "vue3-gettext"
+
+const { $gettext } = useGettext()
 
 definePageMeta({
-  title: "Questionnaire papier",
-  breadcrumb: "Questionnaire papier",
+  title: $gettext("Questionnaire papier"),
+  breadcrumb: $gettext("Questionnaire papier"),
   middleware: ["admin-or-expert"],
 })
 

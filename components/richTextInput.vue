@@ -1,12 +1,19 @@
 <template>
   <div class="field">
-    <label v-if="label" class="label" @click="editor.default.focus()">
+    <label
+      v-if="label"
+      class="label"
+      @click="editor.default.focus()"
+    >
       <!-- @slot Slot pour personnaliser tout le contenu de la balise <label> -->
       <slot name="label">
         {{ label }}
         <!-- @slot Slot pour indiquer que le champ est obligatoire. Par défaut, met une astérisque si `required` est à true (dans un `<span class="required">`) -->
         <slot name="required-tip">
-          <span v-if="$attrs.required" class="required">&nbsp;*</span>
+          <span
+            v-if="$attrs.required"
+            class="required"
+          >&nbsp;*</span>
         </slot>
       </slot>
     </label>
@@ -29,51 +36,72 @@
             :title="button.title"
             @click="button.onClick"
           >
-            <icon v-if="button.icon" :name="button.icon" size="16" />
+            <icon
+              v-if="button.icon"
+              :name="button.icon"
+              size="16"
+            />
             <span v-else>{{ button.text }}</span>
           </button>
         </div>
         <editor-content :editor="editor" />
       </client-only>
       <Teleport to="body">
-        <div class="modal" :class="{ 'is-active': isAddingLink }">
-          <div class="modal-background" @click="emit('close')" />
+        <div
+          class="modal"
+          :class="{ 'is-active': isAddingLink }"
+        >
+          <div
+            class="modal-background"
+            @click="emit('close')"
+          />
           <div class="modal-content">
             <div class="modal-card-head">
-              <h2 class="title is-2">Ajouter un lien</h2>
+              <h2 class="title is-2">
+                {{ $gettext("Ajouter un lien") }}
+              </h2>
             </div>
             <div class="modal-card-body">
               <div class="field">
-                <label class="label">URL</label>
+                <label class="label">{{ $gettext("URL") }}</label>
                 <div class="control">
                   <input
                     v-model="correctedLink"
                     class="input"
                     type="url"
                     placeholder="https://"
-                  />
+                  >
                 </div>
               </div>
             </div>
             <footer class="modal-card-foot">
-              <button class="button is-rounded is-dark" @click="onClick">
-                <span>Valider</span>
+              <button
+                class="button is-rounded is-dark"
+                @click="onClick"
+              >
+                <span>{{ $gettext("Valider") }}</span>
                 <span class="icon">
-                  <icon size="16" name="check" />
+                  <icon
+                    size="16"
+                    name="check"
+                  />
                 </span>
               </button>
               <button
                 class="button is-rounded is-outlined is-dark"
                 @click="closeLinkModal"
               >
-                Annuler
+                {{ $gettext("Annuler") }}
               </button>
             </footer>
           </div>
         </div>
       </Teleport>
     </div>
-    <p v-if="hint" class="help">
+    <p
+      v-if="hint"
+      class="help"
+    >
       {{ hint }}
     </p>
   </div>
@@ -95,6 +123,9 @@ import {
 } from "~/composables/types"
 import { useLegacyModel } from "~/composables/modelWrapper"
 import { generateRandomId } from "~/utils/util"
+import { useGettext } from "vue3-gettext"
+
+const { $gettext } = useGettext()
 
 const props = defineProps({
   id: {
@@ -174,8 +205,8 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => onClickHeading(1),
     icon: "",
     disabled: () => false,
-    text: "titre 1",
-    title: "Titre de niveau 1",
+    text: $gettext("titre 1"),
+    title: $gettext("Titre de niveau 1"),
   },
   {
     name: HeadingType.H2,
@@ -183,8 +214,8 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => onClickHeading(2),
     icon: "",
     disabled: () => false,
-    text: "titre 2",
-    title: "Titre de niveau 2",
+    text: $gettext("titre 2"),
+    title: $gettext("Titre de niveau 2"),
   },
   {
     name: HeadingType.H3,
@@ -192,8 +223,8 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => onClickHeading(3),
     icon: "",
     disabled: () => false,
-    text: "titre 3",
-    title: "Titre de niveau 3",
+    text: $gettext("titre 3"),
+    title: $gettext("Titre de niveau 3"),
   },
   {
     name: OtherRichTextActions.BOLD,
@@ -201,7 +232,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value!.chain().focus().toggleBold().run(),
     icon: "bold",
     disabled: () => false,
-    title: "Text gras",
+    title: $gettext("Text gras"),
   },
   {
     name: OtherRichTextActions.ITALIC,
@@ -209,7 +240,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value?.chain().focus().toggleItalic().run(),
     icon: "italic",
     disabled: () => false,
-    title: "Texte italique",
+    title: $gettext("Texte italique"),
   },
   {
     name: OtherRichTextActions.LIST_ORDERED,
@@ -217,7 +248,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value?.chain().focus().toggleOrderedList().run(),
     icon: "list-ordered",
     disabled: () => false,
-    title: "List numérotée",
+    title: $gettext("Liste numérotée"),
   },
   {
     name: OtherRichTextActions.LIST_UNORDERED,
@@ -225,7 +256,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value?.chain().focus().toggleBulletList().run(),
     icon: "list-unordered",
     disabled: () => false,
-    title: "Liste à puce",
+    title: $gettext("Liste à puce"),
   },
   {
     name: OtherRichTextActions.LINK,
@@ -233,7 +264,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => openLinkModal(),
     icon: "link",
     disabled: () => false,
-    title: "Créer un hyperlien",
+    title: $gettext("Créer un hyperlien"),
   },
   {
     name: OtherRichTextActions.LINK_UNLINK,
@@ -241,7 +272,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value?.chain().focus().unsetLink().run(),
     icon: "link-unlink",
     disabled: () => !editor.value?.isActive("link"),
-    title: "Retirer l'hyperlien",
+    title: $gettext("Retirer l'hyperlien"),
   },
 ]
 

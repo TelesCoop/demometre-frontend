@@ -6,15 +6,14 @@
       @submit.prevent="onSubmit"
     >
       <h1 class="title is-3 has-text-black">
-        Commencer une évaluation
+        {{ $gettext("Commencer une évaluation") }}
       </h1>
       <div class="buttons mt-4">
         <button class="button is-normal is-rounded">
-          <span>Commencer</span>
+          <span>{{ $gettext("Commencer") }}</span>
         </button>
         <span class="is-size-7 is-hidden-mobile">
-          appuyez sur
-          <span class="has-text-weight-bold">Entrer ⏎</span>
+          {{ $gettext("appuyez sur <b>Entrer ⏎</b>", {}, true) }}
         </span>
 
         <!-- Permet d'appuyer sur entrer -->

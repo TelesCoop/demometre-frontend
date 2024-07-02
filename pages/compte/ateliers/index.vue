@@ -11,13 +11,13 @@
             <thead>
               <tr>
                 <td class="has-text-shade-400 is-uppercase is-size-6">
-                  Nom de l’atelier
+                  {{ $gettext("Nom de l’atelier") }}
                 </td>
                 <td class="has-text-shade-400 is-uppercase is-size-6">
-                  Date (MM/JJ/AAAA)
+                  {{ $gettext("Date (MM/JJ/AAAA)") }}
                 </td>
                 <td class="has-text-shade-400 is-uppercase is-size-6">
-                  Evaluation*
+                  {{ $gettext("Evaluation*") }}
                 </td>
                 <td />
               </tr>
@@ -77,7 +77,7 @@
                       "
                       @click.prevent="saveAndGoToParticipants(workshop)"
                     >
-                      <span>Saisir les participant·e·s</span>
+                      <span>{{ $gettext("Saisir les participant·e·s") }}</span>
                       <span class="icon">
                         <icon
                           size="16"
@@ -90,12 +90,12 @@
                       :disabled="!workshop.id"
                       @click.prevent="closeWorkshopIdModal = workshop.id"
                     >
-                      <span>Clôturer l'atelier</span>
+                      <span>{{ $gettext("Clôturer l'atelier") }}</span>
                     </button>
                   </div>
                   <div v-else>
                     <span class="tag is-shade-500">
-                      Atelier clôturé
+                      {{ $gettext("Atelier clôturé") }}
                       <icon
                         size="16"
                         name="check"
@@ -107,8 +107,7 @@
             </tbody>
           </table>
           <p class="mb-1 is-size-7 has-text-shade-400">
-            *Seulement les ateliers des évaluations dont la redevance à été
-            réglée sont visibles ici
+            {{ $gettext("*Seulement les ateliers des évaluations dont la redevance à été réglée sont visibles ici") }}
           </p>
           <div class="buttons is-justify-content-space-between">
             <div>
@@ -123,7 +122,7 @@
                     name="add-line"
                   />
                 </span>
-                <span>Ajouter un atelier</span>
+                <span>{{ $gettext("Ajouter un atelier") }}</span>
               </button>
               <button
                 v-if="newWorkshops.length"
@@ -137,7 +136,7 @@
                     name="delete-bin-line"
                   />
                 </span>
-                <span>Retirer un atelier</span>
+                <span>{{ $gettext("Retirer un atelier") }}</span>
               </button>
             </div>
 
@@ -147,7 +146,7 @@
               :disabled="validateDisabled"
               @click.prevent="onSubmit"
             >
-              <span>Valider</span>
+              <span>{{ $gettext("Valider") }}</span>
               <span class="icon">
                 <icon
                   size="16"
@@ -171,7 +170,7 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">
-            Clôturer l'atelier
+            {{ $gettext("Clôturer l'atelier") }}
           </p>
           <button
             class="button is-ghost is-rounded is-outlined"
@@ -193,13 +192,13 @@
             class="button is-success"
             @click.prevent="closeWorkshop(workshop)"
           >
-            Clôturer
+            {{ $gettext("Clôturer") }}
           </button>
           <button
             class="button"
             @click.prevent="closeModal()"
           >
-            Annuler
+            {{ $gettext("Annuler") }}
           </button>
         </footer>
       </div>
@@ -215,7 +214,7 @@ import { usePageStore } from "~/stores/pageStore"
 
 definePageMeta({
   title: "Ateliers",
-  breadcrumb: "Ateliers"
+  breadcrumb: "Ateliers",
 })
 
 const workshopStore = useWorkshopStore()
@@ -244,8 +243,8 @@ const closeWorkshopIdModal = ref<number>(undefined)
 const newWorkshops = ref<Workshop[]>([])
 const validateDisabled = computed(() =>
   [...newWorkshops.value, ...workshopStore.workshops].some(
-    (workshop) => !(workshop.assessmentId && workshop.date && workshop.name)
-  )
+    (workshop) => !(workshop.assessmentId && workshop.date && workshop.name),
+  ),
 )
 
 function assessmentTitle(assessment) {
@@ -263,7 +262,7 @@ function addWorkshop() {
     animatorId: userStore.user.id,
     participationIds: [],
     changed: true,
-    closed: false
+    closed: false,
   })
 }
 

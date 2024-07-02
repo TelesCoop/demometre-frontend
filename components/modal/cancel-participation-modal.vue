@@ -6,15 +6,14 @@
     >
       <div
         class="modal-background"
-        @click="emit('close')"
+        @click="$emit('close')"
       />
       <div class="modal-content has-background-shade-100 p-2">
         <h2 class="is-size-4 has-text-weight-bold pb-0_5">
-          Souhaitez-vous réinitialiser votre évaluation&nbsp;?
+          {{ $gettext("Souhaitez-vous réinitialiser votre évaluation ?") }}
         </h2>
         <p class="is-text-5 pb-1">
-          En réinitialisant l'évaluation, vous perdrez l'ensemble de vos
-          réponses.
+          {{ $gettext("En réinitialisant l'évaluation, vous perdrez l'ensemble de vos réponses.") }}
         </p>
         <div class="buttons">
           <button
@@ -22,13 +21,13 @@
             :class="{ 'is-loading': isLoading }"
             @click="cancelParticipation"
           >
-            Oui, reinitialiser
+            {{ $gettext("Oui, reinitialiser") }}
           </button>
           <button
             class="button is-shade-600 is-outlined"
             @click="closeModal()"
           >
-            Non
+            {{ $gettext("Non") }}
           </button>
         </div>
       </div>
@@ -47,6 +46,8 @@ import { useUserStep } from "~/composables/userStep"
 import { useRouter } from "vue-router"
 
 const isLoading = ref(false)
+
+defineEmits(["close"])
 
 const participationStore = useParticipationStore()
 const userStore = useUserStore()

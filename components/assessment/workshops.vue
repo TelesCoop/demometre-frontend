@@ -10,19 +10,19 @@
           <thead>
             <tr>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                Nom de l’atelier
+                {{ $gettext("Nom de l’atelier") }}
               </td>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                Type d'atelier
+                {{ $gettext("Type d'atelier") }}
               </td>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                Date (MM/JJ/AAAA)
+                {{ $gettext("Date (MM/JJ/AAAA)") }}
               </td>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                Lieu
+                {{ $gettext("Lieu") }}
               </td>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                Participants
+                {{ $gettext("Participants") }}
               </td>
               <td />
             </tr>
@@ -101,7 +101,7 @@
         class="message"
       >
         <div class="message-body">
-          Il n'y a pas encore d'atelier dans cette évaluation.
+          {{ $gettext("Il n'y a pas encore d'atelier dans cette évaluation.") }}
         </div>
       </div>
     </PageSection>
@@ -118,7 +118,7 @@
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">
-          Clôturer l'atelier
+          {{ $gettext("Clôturer l'atelier") }}
         </p>
         <button
           class="button is-ghost is-rounded is-outlined"
@@ -140,13 +140,13 @@
           class="button is-success"
           @click.prevent="closeWorkshop(workshop)"
         >
-          Clôturer
+          {{ $gettext("Clôturer") }}
         </button>
         <button
           class="button"
           @click.prevent="closeModal()"
         >
-          Annuler
+          {{ $gettext("Annuler") }}
         </button>
       </footer>
     </div>
