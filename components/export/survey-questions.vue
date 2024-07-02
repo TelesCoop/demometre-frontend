@@ -6,7 +6,7 @@
       :class="{ 'page-break': index > 0 }"
     >
       <div class="title is-5">
-        Pillier {{ pillar.name }}
+        {{ $gettext("Pillier %{ name }", { name: pillar.name }) }}
       </div>
       <div class="two-columns-grid">
         <template

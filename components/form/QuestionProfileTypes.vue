@@ -1,6 +1,6 @@
 <template>
   <div class="is-italic">
-    La question est à répondre uniquement si vous avez un des profils suivants :
+    {{ $gettext("La question est à répondre uniquement si vous avez un des profils suivants :") }}
     {{ profileTypesNames }}
   </div>
 </template>

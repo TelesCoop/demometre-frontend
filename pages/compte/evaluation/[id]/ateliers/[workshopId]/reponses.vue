@@ -1,22 +1,34 @@
 <template>
   <div class="container">
-    <NuxtLink class="button is-white is-rounded" to=".">
+    <NuxtLink
+      class="button is-white is-rounded"
+      to="."
+    >
       <span class="icon">
-        <icon size="20" name="arrow-left-line" />
+        <icon
+          size="20"
+          name="arrow-left-line"
+        />
       </span>
-      <span> Revenir à l'atelier </span>
+      <span> {{ $gettext("Revenir à l'atelier") }} </span>
     </NuxtLink>
     <div class="section">
       <PageTitle :title="`${workshop?.name} - réponses papier`" />
       <p class="is-size-4">
-        Saisissez les réponses des participants aux évaluations papier.
+        {{ $gettext("Saisissez les réponses des participants aux évaluations papier.") }}
       </p>
-      <p v-if="!activePillar" class="is-size-4">
-        Choisissez un pillier pour commencer.
+      <p
+        v-if="!activePillar"
+        class="is-size-4"
+      >
+        {{ $gettext("Choisissez un pillier pour commencer.") }}
       </p>
 
       <div class="container">
-        <section ref="pillarsRef" class="columns is-multiline mt-4">
+        <section
+          ref="pillarsRef"
+          class="columns is-multiline mt-4"
+        >
           <div
             v-for="pillar of questionnaireStore.pillarsOfSurvey(
               assessment.surveyId,

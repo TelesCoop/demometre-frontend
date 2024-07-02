@@ -7,7 +7,7 @@
     <div class="modal-card">
       <header class="modal-card-head">
         <h2 class="modal-card-title">
-          Changer d'expert
+          {{ $gettext("Changer d'expert") }}
         </h2>
         <icon
           tabindex="0"
@@ -19,8 +19,8 @@
       </header>
       <section class="modal-card-body">
         <p class="mb-2">
-          Si vous souhaitez changer, sélectionnez un expert dans la liste ci-dessous et cliquez sur valider. Si votre
-          expert n’est pas enregistré (et/ou ne figure pas dans la liste), contactez nous.
+          {{ $gettext("Si vous souhaitez changer, sélectionnez un expert dans la liste ci-dessous et cliquez sur valider. Si votre expert n’est pas enregistré (et/ou ne figure pas dans la liste), contactez nous.")
+          }}
         </p>
         <form @submit.prevent="">
           <AssessmentExpertChooser
@@ -35,7 +35,7 @@
           class="button is-rounded is-outlined is-dark mt-2"
           @click="selectedExperts.push(-1)"
         >
-          Ajouter un expert
+          {{ $gettext("Ajouter un expert") }}
         </button>
       </section>
       <footer class="modal-card-foot">
@@ -44,7 +44,7 @@
           :disabled="loadingStore.isLoading('assessments')"
           @click="saveEdits"
         >
-          <span>Valider</span>
+          <span>{{ $gettext("Valider") }}</span>
           <span class="icon">
             <icon
               size="16"
@@ -56,7 +56,7 @@
           class="button is-rounded is-outlined is-dark"
           @click="$emit('close')"
         >
-          Annuler
+          {{ $gettext("Annuler") }}
         </button>
       </footer>
     </div>
@@ -84,7 +84,7 @@ const selectedExperts = ref(props.assessment.experts.map(expert => expert.id))
 const saveEdits = async () => {
   await assessmentStore.saveAssessment(
     props.assessment.id,
-    { experts: selectedExperts.value.filter(expertId => expertId !== -1) }
+    { experts: selectedExperts.value.filter(expertId => expertId !== -1) },
   )
   emit("close")
 }

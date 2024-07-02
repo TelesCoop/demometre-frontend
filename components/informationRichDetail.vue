@@ -15,7 +15,7 @@
       v-else
       class="has-text-shade-600 is-size-5 is-italic"
     >
-      Cette section est pour l'instant vide
+      {{ $gettext("Cette section est pour l'instant vide") }}
     </p>
   </div>
 </template>
@@ -23,6 +23,6 @@
 
 defineProps({
   title: { type: String, required: true },
-  value: { type: String, required: true }
+  value: { type: String, required: true },
 })
 </script>

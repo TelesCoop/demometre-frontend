@@ -1,18 +1,18 @@
 <template>
   <div class="content">
-    Liste des profils et de leurs conditions :
+    {{ $gettext("Liste des profils et de leurs conditions :") }}
     <ul>
       <li
         v-for="profileType in profilingStore.profileTypes"
         :key="profileType.id"
       >
-        "{{ profileType.name }}", vous devez respecter
-        {{
-          profileType.rulesIntersectionOperator == "and"
-            ? "toutes les"
-            : "au moins une des"
-        }}
-        conditions suivantes :
+        "{{ profileType.name }}",
+        <template v-if="profileType.rulesIntersectionOperator == 'and'">
+          vous devez respecter toutes les conditions suivantes :
+        </template>
+        <template v-else>
+          vous devez respecter au moins une des les conditions suivantes :
+        </template>
         <ul>
           <li
             v-for="rule in profileType.rules"

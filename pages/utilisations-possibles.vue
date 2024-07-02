@@ -84,10 +84,13 @@
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
 import { useTrainingStore } from "~/stores/traningStore"
+import { useGettext } from "vue3-gettext"
+
+const { $gettext } = useGettext()
 
 definePageMeta({
-  title: "Utilisations possibles",
-  breadcrumb: "Utilisations possibles"
+  title: $gettext("Utilisations possibles"),
+  breadcrumb: "Utilisations possibles",
 })
 
 const pageStore = usePageStore()

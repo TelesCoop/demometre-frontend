@@ -10,18 +10,18 @@
       <div class="modal-content">
         <div class="modal-card-head">
           <h2 class="title is-2">
-            Ajouter un atelier
+            {{ $gettext("Ajouter un atelier") }}
           </h2>
         </div>
         <div class="modal-card-body">
           <div class="field">
-            <label class="label">Nom de l'atelier</label>
+            <label class="label">{{ $gettext("Nom de l'atelier") }}</label>
             <div class="control">
               <input
                 v-model="name"
                 class="input"
                 type="text"
-                placeholder="Présentation des résultats"
+                :placeholder="$gettext('Présentation des résultats')"
               >
             </div>
           </div>
@@ -29,7 +29,7 @@
             <label
               class="label"
               for="workshop_type"
-            >Type d'atelier</label>
+            >{{ $gettext("Type d'atelier") }}</label>
             <div class="select">
               <select
                 id="workshop_type"
@@ -37,33 +37,33 @@
                 name="workshop_type"
               >
                 <option value="assessment">
-                  Atelier d'évaluation
+                  {{ $gettext("Atelier d'évaluation") }}
                 </option>
                 <option value="results">
-                  Atelier sur les résultats
+                  {{ $gettext("Atelier sur les résultats") }}
                 </option>
               </select>
             </div>
           </div>
           <div class="field">
-            <label class="label">Lieu</label>
+            <label class="label">{{ $gettext("Lieu") }}</label>
             <div class="control">
               <input
                 v-model="place"
                 class="input"
                 type="text"
-                placeholder="Salle polyvalente de la ville de ..."
+                :placeholder="$gettext('Salle polyvalente de la ville de ...')"
               >
             </div>
           </div>
           <div class="field">
-            <label class="label">Date</label>
+            <label class="label">{{ $gettext("Date") }}</label>
             <div class="control">
               <input
                 v-model="date"
                 class="input"
                 type="date"
-                lang="fr-FR"
+                :lang="$pgettext('nom de la locale, en-UK en anglais', 'fr-FR')"
               >
             </div>
           </div>
@@ -74,7 +74,7 @@
             :disabled="!isFormValid"
             @click="addWorkshop"
           >
-            <span>Valider</span>
+            <span>{{ $gettext("Valider") }}</span>
             <span class="icon">
               <icon
                 size="16"
@@ -86,7 +86,7 @@
             class="button is-rounded is-outlined is-dark"
             @click="$emit('close')"
           >
-            Annuler
+            {{ $gettext("Annuler") }}
           </button>
         </div>
       </div>
@@ -113,7 +113,7 @@ const addWorkshop = async () => {
     date: date.value,
     place: place.value,
     assessmentId: props.assessmentId,
-    type: workshopType.value
+    type: workshopType.value,
   })
   if (res) {
     emit("close")

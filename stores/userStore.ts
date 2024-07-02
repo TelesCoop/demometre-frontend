@@ -40,7 +40,7 @@ export const useUserStore = defineStore("user", {
       const { data, error } = await useApiPatch<User>(
         "auth/edit",
         user,
-        "Impossible d'enregistrer les informations, les noms d'utilisateur et adresse mail doivent être uniques",
+        $gettext("Impossible d'enregistrer les informations, les noms d'utilisateur et adresse mail doivent être uniques"),
       )
       if (!error.value) {
         this.user = data.value
@@ -56,7 +56,7 @@ export const useUserStore = defineStore("user", {
           email,
           password,
         },
-        "Impossible de se connecter, vérifiez vos identifiants",
+        $gettext("Impossible de se connecter, vérifiez vos identifiants"),
       )
       if (!error.value) {
         this.user = data.value!

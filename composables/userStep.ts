@@ -5,9 +5,12 @@ import {
   useProfilingJourney,
   getLastAnsweredProfilingQuestionId,
 } from "~/composables/journey"
+import { useGettext } from "vue3-gettext"
 
-const START_EVALUATION_TEXT = "Commencer l'évaluation"
-const RESUME_EVALUATION_TEXT = "Reprendre l'évaluation"
+const { $gettext } = useGettext()
+
+const START_EVALUATION_TEXT = $gettext("Commencer l'évaluation")
+const RESUME_EVALUATION_TEXT = $gettext("Reprendre l'évaluation")
 
 export function useUserStep() {
   const assessmentStore = useAssessmentStore()

@@ -1,7 +1,10 @@
 module.exports = {
   input: {
     path: ".",
-    include: ["**/*.vue"],
+    include: [
+      "**/*.ts",
+      "**/*.vue",
+    ],
     exclude: ["**/icon.vue"],
   },
   output: {

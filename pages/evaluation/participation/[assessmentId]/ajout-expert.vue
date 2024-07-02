@@ -15,20 +15,20 @@
         <div v-if="!userStore.isLoggedIn">
           <!-- User not logged in -->
           <p class="mb-1">
-            Vous devez être connecté pour ajouter un expert
+            {{ $gettext("Vous devez être connecté pour ajouter un expert") }}
           </p>
           <div class="buttons mb-0_5">
             <NuxtLink
               class="button is-shade-600 is-rounded"
               to="/signup"
             >
-              Créer un compte
+              {{ $gettext("Créer un compte") }}
             </NuxtLink>
             <NuxtLink
               class="button is-shade-600 is-rounded"
               to="/login"
             >
-              Se connecter
+              {{ $gettext("Se connecter") }}
             </NuxtLink>
           </div>
         </div>
@@ -47,7 +47,7 @@
           :disabled="disabled"
           @click.prevent="onSubmit"
         >
-          <span>C’est parti !</span>
+          <span>{{ $gettext("C’est parti !") }}</span>
         </button>
       </div>
     </PageSection>
