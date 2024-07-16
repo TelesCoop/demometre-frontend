@@ -8,7 +8,7 @@
         :src="MEDIA_BASE_URL + partner.logoImageUrl"
         :alt="partner.name"
         :style="`height: ${partner.height}px`"
-      />
+      >
     </figure>
   </div>
 </template>

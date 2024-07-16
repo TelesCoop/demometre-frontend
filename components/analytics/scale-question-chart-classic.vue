@@ -32,7 +32,7 @@
                   getValueByRoleId(choice, roleId),
                   data.count
                 )}%`"
-              ></div>
+              />
             </div>
             <template v-for="index in totalSeparator" :key="index">
               <AnalyticsChoiceQuestionChartLine
@@ -48,7 +48,7 @@
                 :gap-size="gapSize"
                 :percentage-size="percentageSize"
                 :left-base-margin="leftBaseMargin"
-              ></AnalyticsChoiceQuestionChartLine>
+              />
             </template>
           </div>
         </div>
@@ -78,7 +78,7 @@ const percentageSize = 0
 const leftBaseMargin = 0
 
 const rolesGradiants = computed(
-  () => getColorGradients(props.color)[props.question.roleIds.length]
+  () => getColorGradients(props.color)[props.question.roleIds.length],
 )
 const getValueByRoleId = (choice, roleId) => {
   const roleName = profilingStore.roleById[roleId].name

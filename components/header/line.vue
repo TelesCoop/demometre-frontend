@@ -8,10 +8,10 @@
         props.activePillarName === ''
           ? `width: 25%`
           : props.activePillarName === pillarName
-          ? `width: 100%`
-          : `width: 0`
+            ? `width: 100%`
+            : `width: 0`
       "
-    ></div>
+    />
   </div>
 </template>
 

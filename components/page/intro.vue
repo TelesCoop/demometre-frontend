@@ -15,7 +15,7 @@
           :rich-text="props.introduction"
           class="is-family-secondary"
         />
-        <slot></slot>
+        <slot />
       </div>
       <div
         class="column"
@@ -31,14 +31,14 @@
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
-          ></iframe>
+          />
         </div>
         <figure v-else-if="props.imageUrl" class="image is-128x128">
           <img
             :src="MEDIA_BASE_URL + props.imageUrl"
             alt
             style="border-radius: 6px"
-          />
+          >
         </figure>
       </div>
     </section>

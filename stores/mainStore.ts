@@ -8,8 +8,8 @@ export const useMainStore = defineStore("main", {
       onCancel: process.server ? null : doNothing,
       onConfirm: process.server ? null : doNothing,
       text: "",
-      title: ""
-    }
+      title: "",
+    },
   }),
   actions: {
     resetConfirm() {
@@ -18,8 +18,8 @@ export const useMainStore = defineStore("main", {
         onCancel: doNothing,
         onConfirm: doNothing,
         text: "",
-        title: ""
+        title: "",
       }
-    }
-  }
+    },
+  },
 })

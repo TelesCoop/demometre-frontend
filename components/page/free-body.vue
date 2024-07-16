@@ -12,7 +12,7 @@
       alt="img"
       class="mb-1"
       style="border-radius: 6px"
-    />
+    >
     <h3
       v-else-if="item.type === 'title' && props.hTitle === 'h3'"
       :class="titleClasses"
