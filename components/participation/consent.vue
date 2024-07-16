@@ -25,7 +25,11 @@
       >
       {{ consentData.checkboxIntro }}
       Vous pouvez consulter ici nos
-      <a :href="consentData.url" target="_blank" class="is-underlined">{{
+      <a
+        :href="consentData.url"
+        target="_blank"
+        class="is-underlined"
+      >{{
         consentData.urlText
       }}</a>
       et
@@ -35,7 +39,7 @@
         "
         target="_blank"
         class="is-underlined"
-      >Charte relative à la protection des données à caractère personnel</a>
+      >{{ $gettext("Charte relative à la protection des données à caractère personnel") }}</a>
       .
     </label>
     <p class="is-family-secondary is-size-6 has-text-shade-600 mt-2">

@@ -1,54 +1,58 @@
+import { useGettext } from "vue3-gettext"
+
+const { $gettext } = useGettext()
+
 export const PARTICIPANT_TYPE = {
   initiator: "initiateur",
   expert: "expert",
   participant: "participant",
 }
-export const ASSESSMENT_CONTEXT_FIELD_TYPE =
+export type ASSESSMENT_CONTEXT_FIELD_TYPE =
   "context" | "objectives" | "stakeholders" | "calendar"
-export const WORKSHOP_CONTEXT_FIELD_TYPE =
+export type WORKSHOP_CONTEXT_FIELD_TYPE =
   "context" | "objectives" | "course" | "comments"
 export const ASSESSMENT_CONTEXT_FIELDS = {
-  context: "contexte",
-  objectives: "objectifs",
-  stakeholders: "parties prenantes",
-  calendar: "calendrier",
+  context: $gettext("contexte"),
+  objectives: $gettext("objectifs"),
+  stakeholders: $gettext("parties prenantes"),
+  calendar: $gettext("calendrier"),
 }
 export const WORKSHOP_CONTEXT_FIELDS = {
-  context: "contexte",
-  objectives: "objectifs",
-  course: "déroulé",
-  comments: "commentaires",
-  demometreSuggestions: "sur le démomètre",
-  platformSuggestions: "sur la plateforme",
-  resultObservations: "sur les résultats",
-  improvementObservations: "sur les mesures d'améliorations",
+  context: $gettext("contexte"),
+  objectives: $gettext("objectifs"),
+  course: $gettext("déroulé"),
+  comments: $gettext("commentaires"),
+  demometreSuggestions: $gettext("sur le démomètre"),
+  platformSuggestions: $gettext("sur la plateforme"),
+  resultObservations: $gettext("sur les résultats"),
+  improvementObservations: $gettext("sur les mesures d'améliorations"),
 }
 export const ASSESSMENT_DOCUMENT_CATEGORIES = [
-  { label: "Rapports d'évaluation", value: "assessment_reports" },
-  { label: "Autres documents", value: "other" },
-  { label: "Factures", value: "invoices" },
+  { label: $gettext("Rapports d'évaluation"), value: "assessment_reports" },
+  { label: $gettext("Autres documents"), value: "other" },
+  { label: $gettext("Factures"), value: "invoices" },
 ]
 export const WORKSHOP_TYPES = {
   assessment: {
-    label: "Évaluation",
+    label: $gettext("Évaluation"),
     bottomFields: ["demometreSuggestions", "platformSuggestions"],
-    bottomFieldsLabel: "Suggestions",
-    bottomFieldsButtonLabel: "Modifier les suggestions",
+    bottomFieldsLabel: $gettext("Suggestions"),
+    bottomFieldsButtonLabel: $gettext("Modifier les suggestions"),
   },
   results: {
-    label: "Résultats",
+    label: $gettext("Résultats"),
     bottomFields: ["resultObservations", "improvementObservations"],
-    bottomFieldsLabel: "Remarques",
-    bottomFieldsButtonLabel: "Modifier les remarques",
+    bottomFieldsLabel: $gettext("Remarques"),
+    bottomFieldsButtonLabel: $gettext("Modifier les remarques"),
   },
 }
 export const WORKSHOP_MEDIUM = {
-  online: "En ligne",
-  paper: "Sur papier",
+  online: $gettext("En ligne"),
+  paper: $gettext("Sur papier"),
 }
 export const LOCALITY_TYPE_NAME = {
-  municipality: "Commune",
-  intercommunality: "Intercommunalité",
-  department: "Département",
-  region: "Région",
+  municipality: $gettext("Commune"),
+  intercommunality: $gettext("Intercommunalité"),
+  department: $gettext("Département"),
+  region: $gettext("Région"),
 }

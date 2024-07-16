@@ -35,6 +35,7 @@ watch(
   () => props.data,
   (newData) => {
     total.value = getTotal(newData)
+    items.value = getItemValues(newData)
     items.value = getItemValues()
   },
 )

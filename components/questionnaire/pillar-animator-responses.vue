@@ -10,7 +10,7 @@
             <a
               :class="`has-text-${color}-dark`"
               :style="`border-bottom-color: currentColor`"
-            >Questions</a>
+            >{{ $gettext("Questions") }}</a>
           </li>
         </ul>
       </div>
@@ -60,10 +60,10 @@
           >
             <tr :class="`is-uppercase is-size-6bis pb-0_5`">
               <td class="pb-0_5">
-                Participant·e·s
+                {{ $gettext("Participant·e·s") }}
               </td>
               <td class="pb-0_5">
-                Réponses
+                {{ $gettext("Réponses") }}
               </td>
             </tr>
             <tr
@@ -94,7 +94,7 @@
           </table>
           <div v-else>
             <p class="is-size-7 is-family-secondary mb-1">
-              Réponse unique car question objective
+              {{ $gettext("Réponse unique car question objective") }}
             </p>
             <ResponseAnimator
               v-model="
@@ -112,7 +112,7 @@
         </QuestionnaireQuestionStatement>
       </div>
       <div v-else>
-        <p>Selectionner une question</p>
+        <p>{{ $gettext("Selectionner une question") }}</p>
       </div>
       <div class="buttons mt-2">
         <button
@@ -127,7 +127,7 @@
               name="arrow-right-line"
             />
           </span>
-          <span>Question suivante</span>
+          <span>{{ $gettext("Question suivante") }}</span>
         </button>
 
         <button
@@ -137,7 +137,7 @@
           :disabled="workshopStore.workshopById[workshopId].closed"
           @click.prevent="onSubmit"
         >
-          <span>Valider les réponses</span>
+          <span>{{ $gettext("Valider les réponses") }}</span>
           <span class="icon">
             <icon
               size="16"
@@ -159,6 +159,7 @@ import { useWorkshopStore } from "~/stores/workshopStore"
 import { useConfirm } from "~/composables/useConfirm"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 
+const { $gettext } = useGettext()
 const questionnaireStore = useQuestionnaireStore()
 const workshopStore = useWorkshopStore()
 const confirm = useConfirm()
@@ -187,9 +188,9 @@ const onSelectQuestion = (question: Question) => {
 const nextQuestion = () => {
   if (isDirty.value) {
     confirm(
-      "Des réponses ont été rentrées mais non sauvegardées. Pour les enregistrer, annulez et cliquez sur le bouton Valider les réponses.",
-      "Ignorer les réponses rentrées ?",
-      "Ignorer et aller à la question suivante",
+      $gettext("Des réponses ont été rentrées mais non sauvegardées. Pour les enregistrer, annulez et cliquez sur le bouton Valider les réponses."),
+      $gettext("Ignorer les réponses rentrées ?"),
+      $gettext("Ignorer et aller à la question suivante"),
       goNextQuestion,
     )
     return

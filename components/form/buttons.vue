@@ -12,7 +12,7 @@
         :disabled="!isAnswered"
         type="submit"
       >
-        <span>Valider</span>
+        <span>{{ $gettext("Valider") }}</span>
         <i class="icon">
           <Icon
             v-if="isLoading"
@@ -36,8 +36,8 @@
         class="button is-outlined is-rounded mr-0_75"
         type="submit"
       >
-        <span class="is-hidden-mobile">Je ne sais pas / Je passe</span>
-        <span class="is-hidden-tablet">Je passe</span>
+        <span class="is-hidden-mobile">{{ $gettext("Je ne sais pas / Je passe") }}</span>
+        <span class="is-hidden-tablet">{{ $gettext("Je passe") }}</span>
         <i class="icon">
           <Icon
             v-if="isLoading"
@@ -54,7 +54,7 @@
       <span
         v-if="isLoading"
         class="is-size-7 has-text-shade-600"
-      >en cours de chargement</span>
+      >{{ $gettext("en cours de chargement") }}</span>
       <span
         v-else-if="canSubmit"
         class="is-size-7 is-hidden-mobile"
@@ -64,8 +64,7 @@
             : `has-text-${color}-dark`
         "
       >
-        appuyez sur
-        <span class="has-text-weight-bold">Entrer ⏎</span>
+        {{ $gettext("appuyez sur <b>Entrer ⏎</b>", {}, true) }}
       </span>
     </div>
     <div
@@ -79,7 +78,7 @@
         title="Voir les résultats"
         target="_blank"
       >
-        <span class="is-hidden-mobile">Voir les résultats</span>
+        <span class="is-hidden-mobile">{{ $gettext("Voir les résultats") }}</span>
         <span class="is-hidden-tablet">Résultats</span>
         <span class="icon">
           <Icon

@@ -2,20 +2,20 @@
   <div class="container">
     <div class="mb-2">
       <h1 class="title is-3 has-text-black">
-        Questionnaire "{{ role }}"
+        {{ $gettext("Questionnaire") }} "{{ role }}"
       </h1>
     </div>
 
     <div>
       <div class="title is-4">
-        Question d'affinage
+        {{ $gettext("Question d'affinage") }}
       </div>
       <ExportProfilingQuestions :role-id="roleId" />
     </div>
 
     <div>
       <div class="title is-4 page-break">
-        Questionnaire
+        {{ $gettext("Questionnaire") }}
       </div>
       <ExportSurveyQuestions :role-id="roleId" />
     </div>
@@ -27,7 +27,7 @@
       class="print-button"
       @click="print"
     >
-      imprimer
+      {{ $gettext("imprimer") }}
     </div>
   </div>
 </template>
@@ -70,6 +70,7 @@ const print = () => {
   margin: 1rem
   box-shadow: 0 0 1rem rgba(black, 0.1)
   z-index: 1000
+
   &:hover
     background-color: $shade-500
 

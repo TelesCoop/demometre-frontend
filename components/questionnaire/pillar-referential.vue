@@ -1,18 +1,24 @@
 <template>
   <div class="columns">
     <aside class="menu column is-5 mr-2">
-      <div class="tabs" style="margin-top: 6px">
+      <div
+        class="tabs"
+        style="margin-top: 6px"
+      >
         <ul :class="`is-${color}`">
           <li class="is-active">
             <a
               :class="`has-text-${color}-dark`"
               style="border-bottom-color: currentColor"
-            >Marqueurs</a>
+            >{{ $gettext("Marqueurs") }}</a>
           </li>
         </ul>
       </div>
       <ul class="menu-list">
-        <li v-for="marker of markers" :key="marker.id">
+        <li
+          v-for="marker of markers"
+          :key="marker.id"
+        >
           <a
             :class="
               marker === activeMarker && !activeCriteria
@@ -58,7 +64,10 @@
           </a>
           <div v-if="marker.name === activeMarker?.name">
             <ul :class="`is-${color}`">
-              <li v-for="criteria of criterias" :key="criteria.id">
+              <li
+                v-for="criteria of criterias"
+                :key="criteria.id"
+              >
                 <a
                   :class="
                     criteria === activeCriteria
@@ -134,7 +143,7 @@
             :class="`button is-${color} is-rounded is-responsive`"
             @click="onReturnToMarkerButtonClick()"
           >
-            <span>Revenir au marqueur</span>
+            <span>{{ $gettext("Revenir au marqueur") }}</span>
           </button>
         </div>
       </div>
@@ -151,15 +160,19 @@
             :class="`button is-${color} is-rounded is-responsive mt-2 mr-1`"
             @click="onReturnToPillarButtonClick()"
           >
-            <span>Revenir au pilier</span>
+            <span>{{ $gettext("Revenir au pilier") }}</span>
           </button>
           <button
             :class="`button is-${color} is-rounded is-responsive mt-2 mr-1 is-outlined has-text-${color}-dark`"
             @click="onFirstCriteriaButtonClick()"
           >
-            <span>Premier critère</span>
+            <span>{{ $gettext("Premier critère") }}</span>
             <span class="icon">
-              <icon name="arrow-right-line" size="10" class="icon" />
+              <icon
+                name="arrow-right-line"
+                size="10"
+                class="icon"
+              />
             </span>
           </button>
         </div>
@@ -183,9 +196,13 @@
             :class="`button is-${color} is-rounded is-responsive is-outlined has-text-${color}-dark`"
             @click="onFirstMarkerButtonClick()"
           >
-            <span>Premier marqueur</span>
+            <span>{{ $gettext("Premier marqueur") }}</span>
             <span class="icon">
-              <icon name="arrow-right-line" size="10" class="icon" />
+              <icon
+                name="arrow-right-line"
+                size="10"
+                class="icon"
+              />
             </span>
           </button>
         </div>
@@ -317,6 +334,7 @@ const onReturnToMarkerButtonClick = () => {
 <style scoped lang="sass">
 .tabs ul
   border-bottom-color: var(--color) !important
+
 .menu-list li ul
   border-left-color: var(--color) !important
 </style>

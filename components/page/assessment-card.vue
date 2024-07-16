@@ -53,7 +53,7 @@
               name="arrow-right-line"
             />
           </span>
-          <span>C'est parti !</span>
+          <span>{{ $gettext("C'est parti !") }}</span>
         </button>
       </div>
     </div>

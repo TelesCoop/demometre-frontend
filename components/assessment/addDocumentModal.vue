@@ -7,7 +7,7 @@
     <div class="modal-card">
       <header class="modal-card-head">
         <h2 class="modal-card-title">
-          Ajouter un document
+          {{ $gettext("Ajouter un document") }}
         </h2>
         <icon
           tabindex="0"
@@ -20,7 +20,7 @@
       <section class="modal-card-body">
         <form @submit.prevent="">
           <div class="field">
-            <label class="label">Nom du document</label>
+            <label class="label">{{ $gettext("Nom du document") }}</label>
             <div class="control">
               <input
                 v-model="name"
@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="field">
-            <label class="label">Catégorie</label>
+            <label class="label">{{ $gettext("Catégorie") }}</label>
             <div class="control">
               <div class="select">
                 <select v-model="category">
@@ -47,7 +47,7 @@
             </div>
           </div>
           <div class="field">
-            <label class="label">Fichier</label>
+            <label class="label">{{ $gettext("Fichier") }}</label>
             <div class="control">
               <div class="file has-name is-boxed">
                 <label class="file-label">
@@ -62,7 +62,7 @@
                       <icon name="file-upload-line" />
                     </span>
                     <span class="file-label is-size-7">
-                      Choisissez un fichier...
+                      {{ $gettext("Choisissez un fichier...") }}
                     </span>
                   </span>
                   <span
@@ -83,7 +83,7 @@
           :disabled="loadingStore.isLoading('assessments')"
           @click="saveEdits"
         >
-          <span>Valider</span>
+          <span>{{ $gettext("Valider") }}</span>
           <span class="icon">
             <icon
               size="16"
@@ -95,7 +95,7 @@
           class="button is-rounded is-outlined is-dark"
           @click="$emit('close')"
         >
-          Annuler
+          {{ $gettext("Annuler") }}
         </button>
       </footer>
     </div>

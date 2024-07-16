@@ -1,11 +1,14 @@
 import { useMainStore } from "~/stores/mainStore"
+import { useGettext } from "vue3-gettext"
+
+const { $gettext } = useGettext()
 
 export const useConfirm = () => {
   const mainStore = useMainStore()
   return (
     text: string,
-    title = "Confirmation",
-    confirmationLabel = "Confirmer",
+    title = $gettext("Confirmation"),
+    confirmationLabel = $gettext("Confirmer"),
     onConfirm: () => void,
     onCancel: () => void = () => {
     },

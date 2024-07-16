@@ -33,14 +33,14 @@
                   name="bar-chart-box-line"
                 />
               </span>
-              <span>Voir les résultats</span>
+              <span>{{ $gettext("Voir les résultats") }}</span>
             </button>
           </div>
           <div
             v-else
             class="notification"
           >
-            Aucun résultat n'est actuellement visible
+            {{ $gettext("Aucun résultat n'est actuellement visible") }}
           </div>
         </div>
       </section>

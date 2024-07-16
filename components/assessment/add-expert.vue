@@ -21,14 +21,20 @@
           :href="`mailto:${settingsStore.structureSettings.email}`"
           target="_blank"
         >
-          <span>Nous contactez</span>
+          <span>{{ $gettext("Nous contactez") }}</span>
           <span class="icon">
-            <icon size="20" name="mail-line" />
+            <icon
+              size="20"
+              name="mail-line"
+            />
           </span>
         </a>
       </div>
     </div>
-    <ParticipationConsent class="mt-1_5" type="cgv" />
+    <ParticipationConsent
+      class="mt-1_5"
+      type="cgv"
+    />
   </div>
 </template>
 

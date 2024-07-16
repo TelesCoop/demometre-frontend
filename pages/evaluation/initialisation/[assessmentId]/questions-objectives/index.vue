@@ -30,7 +30,7 @@
       <span
         v-if="isLoading"
         class="is-size-7 has-text-shade-600"
-      >en cours de chargement</span>
+      >{{ $gettext("en cours de chargement") }}</span>
       <!-- <ButtonsArrowButton class="arrow-button-fixed is-left" @click.prevent="goBack" color="no-pillar" /> -->
     </div>
   </PageSection>
@@ -39,9 +39,12 @@
 <script setup lang="ts">
 import { useInitializationJourney } from "~/composables/journey"
 import { usePageStore } from "~/stores/pageStore"
+import { useGettext } from "vue3-gettext"
+
+const { $gettext } = useGettext()
 
 definePageMeta({
-  title: "Initialisation",
+  title: $gettext("Initialisation"),
   step: "initialization-objectives-questions",
 })
 

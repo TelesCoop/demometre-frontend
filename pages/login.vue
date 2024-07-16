@@ -6,12 +6,12 @@
         @submit.prevent="onSubmit"
       >
         <h1 class="title is-1 has-text-shade-800">
-          Connexion
+          {{ $gettext("Connexion") }}
         </h1>
 
         <!-- email -->
         <div class="field has-text-shade-800">
-          <label class="label">Courriel</label>
+          <label class="label">{{ $gettext("Courriel") }}</label>
           <div class="control has-icons-left has-icons-right">
             <input
               v-model="email"
@@ -44,13 +44,13 @@
 
         <!-- password -->
         <div class="field has-text-shade-800">
-          <label class="label">Mot de passe</label>
+          <label class="label">{{ $gettext("Mot de passe") }}</label>
           <div class="control has-icons-left has-icons-right">
             <input
               v-model="password"
               class="input"
               type="password"
-              placeholder="mot de passe"
+              :placeholder="$gettext('mot de passe')"
               :class="isPasswordValid ? '' : 'is-danger'"
               @change="onPasswordUpdate"
             >
@@ -83,14 +83,14 @@
               class="has-text-shade-500"
               style="text-decoration-line: revert"
             >
-              Mot de passe oublié ?
+              {{ $gettext("Mot de passe oublié ?") }}
             </NuxtLink>
           </div>
           <button
             class="button is-shade-600 is-small"
             :disabled="disabled"
           >
-            <span>Connexion</span>
+            <span>{{ $gettext("Connexion") }}</span>
             <span class="icon">
               <icon
                 size="16"
@@ -107,7 +107,7 @@
         </div>
         <div class="mt-1">
           <span class="is-size-7 has-text-shade-800">
-            Vous n'avez pas encore de compte ?
+            {{ $gettext("Vous n'avez pas encore de compte ?") }}
             <NuxtLink
               to="/signup"
               class="has-text-shade-500"
@@ -117,7 +117,7 @@
                   userStore.afterLoginRouterGoStep -= 1
                 }
               "
-            >Créez-en un</NuxtLink>
+            >{{ $gettext("Créez-en un") }}</NuxtLink>
           </span>
         </div>
       </form>
@@ -127,8 +127,12 @@
 
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
+import { useGettext } from "vue3-gettext"
+
+const { $gettext } = useGettext()
+
 definePageMeta({
-  title: "Connexion",
+  title: $gettext("Connexion"),
 })
 
 const email = ref("")
@@ -149,7 +153,7 @@ const emailErrorMessage = computed(() => {
     return ""
   }
   if (!email.value.includes("@")) {
-    return "Le courriel doit contenir @"
+    return $gettext("Le courriel doit contenir @")
   }
   return ""
 })
@@ -161,7 +165,7 @@ const isPasswordValid = computed(() => {
     return true
   }
   if (!password.value.length) {
-    passwordErrorMessage.value = "Le mot de passe ne peut pas être vide"
+    passwordErrorMessage.value = $gettext("Le mot de passe ne peut pas être vide")
     return false
   }
   passwordErrorMessage.value = ""
@@ -170,6 +174,7 @@ const isPasswordValid = computed(() => {
 const disabled = computed(
   () => !(isMailValid && isPasswordValid && password.value && email.value),
 )
+
 function onSubmit() {
   userStore.login(email.value, password.value)
 }

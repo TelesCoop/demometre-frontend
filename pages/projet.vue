@@ -12,37 +12,52 @@
           class="button is-rounded is-outlined is-shade-600 is-responsive"
           @click.prevent="scrollIntoWhyBlock"
         >
-          <span>Pourquoi</span>
+          <span>{{ $gettext("Pourquoi") }}</span>
           <span class="icon">
-            <icon name="arrow-right-line" size="16" class="icon" />
+            <icon
+              name="arrow-right-line"
+              size="16"
+              class="icon"
+            />
           </span>
         </button>
         <button
           class="button is-rounded is-outlined is-shade-600 is-responsive"
           @click.prevent="scrollIntoWhoBlock"
         >
-          <span>Avec qui</span>
+          <span>{{ $gettext("Avec qui") }}</span>
           <span class="icon">
-            <icon name="arrow-right-line" size="16" class="icon" />
+            <icon
+              name="arrow-right-line"
+              size="16"
+              class="icon"
+            />
           </span>
         </button>
         <button
           class="button is-rounded is-outlined is-shade-600 is-responsive"
           @click.prevent="scrollIntoHowBlock"
         >
-          <span>Méthode</span>
+          <span>{{ $gettext("Méthode") }}</span>
           <span class="icon">
-            <icon name="arrow-right-line" size="16" class="icon" />
+            <icon
+              name="arrow-right-line"
+              size="16"
+              class="icon"
+            />
           </span>
         </button>
       </div>
     </PageIntro>
 
     <!-- Why block -->
-    <div ref="whyBlockRef" class="scroll-margin-top_5">
+    <div
+      ref="whyBlockRef"
+      class="scroll-margin-top_5"
+    >
       <PageBigSection
         :title="pageStore.projectPage.whyBlockTitle"
-        label="Pourquoi"
+        :label="$gettext('Pourquoi')"
       >
         <div class="container">
           <section class="column-2 section">
@@ -122,10 +137,13 @@
     </div>
 
     <!-- Who block -->
-    <div ref="whoBlockRef" class="scroll-margin-top_5">
+    <div
+      ref="whoBlockRef"
+      class="scroll-margin-top_5"
+    >
       <PageBigSection
         :title="pageStore.projectPage.whoBlockTitle"
-        label="Avec qui"
+        :label="$gettext('Avec qui')"
       >
         <PageSection
           v-if="pageStore.projectPage.whoCrewSubBlockTitle"
@@ -244,10 +262,13 @@
     </div>
 
     <!-- How block -->
-    <div ref="howBlockRef" class="scroll-margin-top_5">
+    <div
+      ref="howBlockRef"
+      class="scroll-margin-top_5"
+    >
       <PageBigSection
         :title="pageStore.projectPage.howBlockTitle"
-        label="Comment"
+        :label="$gettext('Comment')"
       >
         <div class="container">
           <PageFreeBody
@@ -295,6 +316,7 @@ if (committeeData.length) {
   })
 }
 const currentTabId = ref<string>(tabs.value[0]?.id)
+
 function setTab(tabId) {
   currentTabId.value = tabId
 }
@@ -322,14 +344,17 @@ const scrollIntoWhyBlock = () => {
 <style scoped lang="sass">
 .buttons .button
   height: fit-content
+
 .impact
   .image
     height: 240px
     width: 100%
+
 @include mobile
   .impact
     .image
       height: 150px
+
 .logo-open-democracy
   position: absolute
   top: 3rem

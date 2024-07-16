@@ -4,7 +4,7 @@
       class="is-size-6bis mb-0_75 is-block"
       :class="`has-text-${props.color}-dark`"
     >
-      Choisissez entre 1 et {{ maxMultipleChoices }} réponses.
+      {{ $gettext("Choisissez entre 1 et %{ n_choices } réponses ", { n_choices: maxMultipleChoices }) }}
     </legend>
     <div
       class="is-flex is-flex-direction-column is-align-items-start is-justify-content-center"

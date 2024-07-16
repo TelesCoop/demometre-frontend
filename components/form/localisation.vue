@@ -72,7 +72,7 @@
           :disabled="!zipCode"
           @click="searchLocalities"
         >
-          <span>Rechercher</span>
+          <span>{{ $gettext("Rechercher") }}</span>
           <span class="icon">
             <icon size="20" name="search" />
           </span>
@@ -117,14 +117,16 @@
         :disabled="disabled"
         type="submit"
       >
-        <span>Valider</span>
+        <span>{{ $gettext("Valider") }}</span>
         <span class="icon">
           <icon size="20" name="check" />
         </span>
       </button>
-      <span v-if="canPressEnter()" class="is-size-7 is-hidden-mobile">
-        appuyez sur
-        <span class="has-text-weight-bold">Entrer ⏎</span>
+      <span
+        v-if="canPressEnter()"
+        class="is-size-7 is-hidden-mobile"
+      >
+        {{ $gettext("appuyez sur <b>Entrer ⏎</b>", {}, true) }}
       </span>
     </div>
   </form>
@@ -195,6 +197,7 @@ async function searchLocalities() {
   searched.value = 1
   localityId.value = undefined
 }
+
 const onClickLocality = (locality: Locality) => {
   localityTypeSelected.value = locality.localityType
 }

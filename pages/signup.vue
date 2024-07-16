@@ -45,13 +45,13 @@
 
         <!-- password -->
         <div class="field">
-          <label class="label">Mot de passe</label>
+          <label class="label">{{ $gettext("Mot de passe") }}</label>
           <div class="control has-icons-left has-icons-right">
             <input
               v-model="password"
               class="input"
               type="password"
-              placeholder="mot de passe"
+              :placeholder="$gettext('mot de passe')"
               :class="isPasswordValid ? '' : 'is-danger'"
               required
               @change="onPasswordUpdate"
@@ -79,7 +79,7 @@
 
         <!-- password confirmation-->
         <div class="field">
-          <label class="label">Confirmer le mot de passe</label>
+          <label class="label">{{ $gettext("Confirmer le mot de passe") }}</label>
           <div class="control has-icons-left has-icons-right">
             <input
               v-model="confirmPassword"
@@ -137,7 +137,7 @@
         </div>
         <div class="mt-1">
           <span class="is-size-7 has-text-shade-800">
-            Vous avez déjà un compte ?
+            {{ $gettext("Vous avez déjà un compte ?") }}
             <NuxtLink
               to="/login"
               class="has-text-shade-500"
@@ -147,7 +147,7 @@
                   userStore.afterLoginRouterGoStep -= 1
                 }
               "
-            >Connectez-vous</NuxtLink>
+            >{{ $gettext("Connectez-vous") }}</NuxtLink>
           </span>
         </div>
       </form>
@@ -158,6 +158,8 @@
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
 import { ErrorMessages } from "~/composables/errors"
+
+const { $gettext } = useGettext()
 
 const email = ref("")
 const isEmailUntouched = ref(true)
@@ -179,7 +181,7 @@ const emailErrorMessage = computed(() => {
     return ""
   }
   if (!email.value.includes("@")) {
-    return "Le courriel doit contenir @"
+    return $gettext("Le courriel doit contenir @")
   }
   if (confirmSignupErrorMessage.email.length)
     return confirmSignupErrorMessage.email.join(", ")
@@ -192,7 +194,7 @@ const passwordErrorMessage = computed(() => {
     return ""
   }
   if (!password.value.length) {
-    return "Le mot de passe ne peut pas être vide"
+    return $gettext("Le mot de passe ne peut pas être vide")
   }
   if (confirmSignupErrorMessage.password.length)
     return confirmSignupErrorMessage.password.join(", ")
@@ -208,7 +210,7 @@ const isSamePassword = computed(() => {
     confirmPasswordErrorMessage.value = ""
     return true
   }
-  confirmPasswordErrorMessage.value = "Les deux mots de passe sont différents"
+  confirmPasswordErrorMessage.value = $gettext("Les deux mots de passe sont différents")
   return false
 })
 const disabled = computed(
@@ -225,14 +227,14 @@ const disabled = computed(
 const text = computed(() => {
   if (userStore.isUnknownUser) {
     return {
-      title: "Enregistrer son compte",
-      button: "S'enregistrer",
+      title: $gettext("Enregistrer son compte"),
+      button: $gettext("S'enregistrer"),
     }
   }
 
   return {
-    title: "Création de compte",
-    button: "S'inscrire",
+    title: $gettext("Création de compte"),
+    button: $gettext("S'inscrire"),
   }
 })
 

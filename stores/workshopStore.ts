@@ -130,14 +130,17 @@ export const useWorkshopStore = defineStore("workshop", {
       const messageStore = useMessageStore()
 
       if (errorOccured) {
-        messageStore.setError("Une erreur s'est produite lors de la sauvegarde")
+        messageStore.setError($gettext("Une erreur s'est produite lors de la sauvegarde"))
         return false
       }
-      messageStore.setInfo("Sauvegarde réussie")
+      messageStore.setInfo($gettext("Sauvegarde réussie"))
       return true
     },
     async createOrUpdateWorkshop(workshop: Workshop) {
-      const { data, error } = await useApiPost<Workshop>(`workshops/`, workshop, "Impossible d'ajouter l'atelier")
+      const {
+        data,
+        error,
+      } = await useApiPost<Workshop>(`workshops/`, workshop, $gettext("Impossible d'ajouter l'atelier"))
       if (!error.value) {
         this.workshopById[data.value.id] = data.value
         return true
@@ -157,12 +160,12 @@ export const useWorkshopStore = defineStore("workshop", {
     async deleteParticipation(participationId: number) {
       const workshopId = this.participationById[participationId].workshopId
       if (!workshopId) {
-        useMessageStore().setMessage("Impossible de supprimer le participant (impossible de récupérer son atelier)", "error")
+        useMessageStore().setMessage($gettext("Impossible de supprimer le participant (impossible de récupérer son atelier)"), "error")
         return false
       }
       const { error } = await useApiDelete(
         `workshops/participation/${participationId}/`,
-        "Impossible de supprimer le participant",
+        $gettext("Impossible de supprimer le participant"),
       )
       if (error.value) {
         return false

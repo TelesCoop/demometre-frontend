@@ -16,9 +16,12 @@ import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { QuestionContextProps } from "~/composables/types"
 import { ref } from "vue"
+import { useGettext } from "vue3-gettext"
+
+const { $gettext } = useGettext()
 
 definePageMeta({
-  title: "Affinage",
+  title: $gettext("Affinage"),
   step: "profiling",
 })
 

@@ -16,13 +16,16 @@
         @mouseleave-item="hoverRepresentativity = null"
       />
     </div>
-    <div v-if="hoverRepresentativity" class="has-text-shade-500">
+    <div
+      v-if="hoverRepresentativity"
+      class="has-text-shade-500"
+    >
       <div class="has-text-weight-bold">
         {{ hoverRepresentativity?.name || "\u00a0" }}
       </div>
       <div class="is-size-7">
         <div>
-          Représentativité actuelle :
+          {{ $gettext("Représentativité actuelle :") }}
           {{ hoverRepresentativity?.displayValue }}%
         </div>
         <div v-if="!hoverRepresentativity?.ignoreThreshold">
@@ -31,14 +34,17 @@
         </div>
       </div>
     </div>
-    <div v-else class="has-text-shade-350">
+    <div
+      v-else
+      class="has-text-shade-350"
+    >
       <div class="has-text-weight-bold">
         {{ representativity.representativityCriteriaName }}
       </div>
       <div class="is-size-7">
-        <div>Représentativité actuelle : ...%</div>
+        <div>{{ $gettext("Représentativité actuelle :") }} ...%</div>
         <div v-if="!hoverRepresentativity?.ignoreThreshold">
-          Seuil minimal de représentativité : ...%
+          {{ $gettext("Seuil minimal de représentativité :") }} ...%
         </div>
       </div>
     </div>

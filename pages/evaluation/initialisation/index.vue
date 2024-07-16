@@ -43,13 +43,13 @@
           class="button is-shade-600 is-rounded"
           to="/signup"
         >
-          Créer un compte
+          {{ $gettext("Créer un compte") }}
         </NuxtLink>
         <NuxtLink
           class="button is-shade-600 is-rounded"
           to="/login"
         >
-          Se connecter
+          {{ $gettext("Se connecter") }}
         </NuxtLink>
       </div>
     </PageSection>
@@ -90,7 +90,7 @@
           :disabled="disabled"
           @click.prevent="goToNextStep"
         >
-          <span>Valider</span>
+          <span>{{ $gettext("Valider") }}</span>
         </button>
       </div>
     </PageSection>
@@ -124,7 +124,7 @@
             >
           </div>
         </div>
-        <label class="label">Au nom de qui lancez-vous cette évaluation &nbsp;?</label>
+        <label class="label">{{ $gettext("Au nom de qui lancez-vous cette évaluation &nbsp;?") }}</label>
         <div class="buttons mt-1">
           <div
             v-for="initiatorType of InitiatorType"
@@ -151,7 +151,7 @@
             class="button is-shade-600 is-rounded"
             :disabled="disabled"
           >
-            <span>Valider</span>
+            <span>{{ $gettext("Valider") }}</span>
             <span class="icon">
               <icon
                 size="20"
@@ -211,7 +211,7 @@
             class="button is-shade-600 is-rounded"
             :disabled="disabled"
           >
-            <span>Valider</span>
+            <span>{{ $gettext("Valider") }}</span>
             <span class="icon">
               <icon
                 size="20"

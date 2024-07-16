@@ -8,17 +8,10 @@
 </template>
 
 <script setup lang="ts">
+import { useLocale } from "~/composables/useLocale"
+
 const localeFromCookie = computed(() => {
-  let cookie: string
-  if (process.client) {
-    cookie = document.cookie
-  } else {
-    cookie = useRequestHeaders(["cookie"])["cookie"] || ""
-  }
-  cookie = cookie.split("; ")
-    .find((row) => row.startsWith("django_language="))
-  const locale = cookie ? cookie.split("=")[1] : "fr"
-  return locale
+  return useLocale()
 })
 const toggleLocale = async () => {
   const locale = localeFromCookie.value === "fr" ? "en" : "fr"

@@ -42,9 +42,12 @@
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { useGettext } from "vue3-gettext"
+
+const { $gettext } = useGettext()
 
 definePageMeta({
-  title: "Initialisation",
+  title: $gettext("Initialisation"),
   step: "initialization-objectives-questions",
 })
 

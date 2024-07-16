@@ -3,14 +3,17 @@
     <div class="sm-container">
       <div class="my-8">
         <h1 class="title is-1 has-text-shade-800">
-          <span v-if="!hasResetKey">Récupérer mon <br>mot de passe</span>
-          <span v-else>Changer mon <br>mot de passe</span>
+          <span v-if="!hasResetKey">Récupérer mon <br>{{ $gettext("mot de passe") }}</span>
+          <span v-else>{{ $gettext("Changer mon mot de passe") }}</span>
         </h1>
 
-        <div v-if="!hasResetKey" class="">
+        <div
+          v-if="!hasResetKey"
+          class=""
+        >
           <!-- email -->
           <div class="field has-text-shade-800">
-            <label class="label">Courriel</label>
+            <label class="label">{{ $gettext("Courriel") }}</label>
             <div class="control has-icons-left has-icons-right">
               <input
                 v-model="email"
@@ -21,32 +24,44 @@
                 @change="onEmailUpdate"
               >
               <span class="icon is-small is-left has-text-shade-600">
-                <icon size="24" name="mail-line" />
+                <icon
+                  size="24"
+                  name="mail-line"
+                />
               </span>
               <span v-if="!isMailValid" class="icon is-small is-right">
                 <i class="fas fa-exclamation-triangle" />
               </span>
             </div>
-            <p v-if="!isMailValid" class="help is-danger">
+            <p
+              v-if="!isMailValid"
+              class="help is-danger"
+            >
               {{ emailErrorMessage }}
             </p>
           </div>
 
-          <div class="mt-1" style="text-align: end">
+          <div
+            class="mt-1"
+            style="text-align: end"
+          >
             <button
               class="button is-shade-600 is-small"
               type="button"
               :disabled="emailDisabled"
               @click="sendResetLink"
             >
-              Envoyer un lien de récupération
+              {{ $gettext("Envoyer un lien de récupération") }}
             </button>
           </div>
         </div>
-        <div v-else class="mt-2">
+        <div
+          v-else
+          class="mt-2"
+        >
           <!-- password -->
           <div class="field has-text-shade-800">
-            <label class="label">Nouveau mot de passe</label>
+            <label class="label">{{ $gettext("Nouveau mot de passe") }}</label>
             <div class="control has-icons-left has-icons-right">
               <input
                 v-model="password"
@@ -58,20 +73,26 @@
                 @change="onPasswordUpdate"
               >
               <span class="icon is-small is-left has-text-shade-600">
-                <icon size="24" name="lock-line" />
+                <icon
+                  size="24"
+                  name="lock-line"
+                />
               </span>
               <span v-if="!isPasswordValid" class="icon is-small is-right">
                 <i class="fas fa-exclamation-triangle" />
               </span>
             </div>
-            <p v-if="!isPasswordValid" class="help is-danger">
+            <p
+              v-if="!isPasswordValid"
+              class="help is-danger"
+            >
               {{ passwordErrorMessage }}
             </p>
           </div>
 
           <!-- password confirmation-->
           <div class="field has-text-shade-800">
-            <label class="label">Confirmer le nouveau mot de passe</label>
+            <label class="label">{{ $gettext("Confirmer le nouveau mot de passe") }}</label>
             <div class="control has-icons-left has-icons-right">
               <input
                 v-model="confirmPassword"
@@ -83,17 +104,26 @@
                 @change="onPasswordUpdate"
               >
               <span class="icon is-small is-left has-text-shade-600">
-                <icon size="24" name="lock-line" />
+                <icon
+                  size="24"
+                  name="lock-line"
+                />
               </span>
               <span v-if="!isSamePassword" class="icon is-small is-right">
                 <i class="fas fa-exclamation-triangle" />
               </span>
             </div>
-            <p v-if="!isSamePassword" class="help is-danger">
+            <p
+              v-if="!isSamePassword"
+              class="help is-danger"
+            >
               {{ confirmPasswordErrorMessage }}
             </p>
           </div>
-          <div class="mt-1" style="text-align: end">
+          <div
+            class="mt-1"
+            style="text-align: end"
+          >
             <button
               class="button is-small is-shade-600"
               type="button"
@@ -101,9 +131,12 @@
               @click="resetPassword"
             >
               <span class="icon">
-                <icon size="16" name="mail-line" />
+                <icon
+                  size="16"
+                  name="mail-line"
+                />
               </span>
-              <span>Confirmer</span>
+              <span>{{ $gettext("Confirmer") }}</span>
             </button>
           </div>
         </div>
@@ -114,11 +147,15 @@
 
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
+import { useGettext } from "vue3-gettext"
+
+const { $gettext } = useGettext()
 
 definePageMeta({
-  title: "Nouveau mot de passe",
+  title: $gettext("Nouveau mot de passe"),
 })
 
+const route = useRoute()
 const email = ref("")
 const isEmailUntouched = ref(true)
 const isPasswordUntouched = ref(true)
@@ -127,7 +164,7 @@ const password = ref("")
 const confirmPassword = ref("")
 const confirmPasswordErrorMessage = ref("")
 const userStore = useUserStore()
-const hasResetKey = computed(() => !!useRoute().query.reset_key)
+const hasResetKey = computed(() => !!route.query.reset_key)
 
 const onEmailUpdate = () => {
   isEmailUntouched.value = false
@@ -141,7 +178,7 @@ const emailErrorMessage = computed(() => {
     return ""
   }
   if (!email.value.includes("@")) {
-    return "Le courriel doit contenir @"
+    return $gettext("Le courriel doit contenir @")
   }
   return ""
 })
@@ -154,7 +191,7 @@ const isPasswordValid = computed(() => {
     return true
   }
   if (!password.value.length) {
-    passwordErrorMessage.value = "Le mot de passe ne peut pas être vide"
+    passwordErrorMessage.value = $gettext("Le mot de passe ne peut pas être vide")
     return false
   }
   passwordErrorMessage.value = ""
@@ -168,7 +205,7 @@ const isSamePassword = computed(() => {
     confirmPasswordErrorMessage.value = ""
     return true
   }
-  confirmPasswordErrorMessage.value = "Les deux mots de passe sont différents"
+  confirmPasswordErrorMessage.value = $gettext("Les deux mots de passe sont différents")
   return false
 })
 const emailDisabled = computed(() => !(isMailValid && email.value))
