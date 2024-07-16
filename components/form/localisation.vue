@@ -26,7 +26,7 @@
       </span>
       <div class="buttons mt-1">
         <div
-          v-for="localityType of LOCALITY_TYPE"
+          v-for="localityType of localityTypeToShow"
           :key="localityType.key"
           class="margin-between"
         >
@@ -38,11 +38,12 @@
             class="custom-hidden white-on-black-input-checked"
             name="localityType"
             required
-          >
+          />
           <label
             :for="localityType.key"
             class="button is-shade-600 is-outlined locality"
-          >{{ localityType.value }}</label>
+            >{{ localityType.value }}</label
+          >
         </div>
       </div>
     </div>
@@ -64,7 +65,7 @@
           placeholder="Code postal"
           required
           @keyup.enter.stop="searchLocalities"
-        >
+        />
         <button
           type="button"
           class="pagination-next button is-outlined is-shade-600"
@@ -74,10 +75,7 @@
         >
           <span>Rechercher</span>
           <span class="icon">
-            <icon
-              size="20"
-              name="search"
-            />
+            <icon size="20" name="search" />
           </span>
         </button>
       </div>
@@ -105,11 +103,12 @@
             name="locality"
             required
             @click="onClickLocality(locality)"
-          >
+          />
           <label
             :for="locality.name"
             class="button is-shade-600 is-outlined locality"
-          >{{ locality.name }}</label>
+            >{{ locality.name }}</label
+          >
         </div>
       </div>
     </div>
@@ -122,16 +121,10 @@
       >
         <span>Valider</span>
         <span class="icon">
-          <icon
-            size="20"
-            name="check"
-          />
+          <icon size="20" name="check" />
         </span>
       </button>
-      <span
-        v-if="canPressEnter()"
-        class="is-size-7 is-hidden-mobile"
-      >
+      <span v-if="canPressEnter()" class="is-size-7 is-hidden-mobile">
         appuyez sur
         <span class="has-text-weight-bold">Entrer ⏎</span>
       </span>
@@ -149,6 +142,7 @@ import {
 } from "~/composables/types"
 import { usePageStore } from "~/stores/pageStore"
 import { usePressEnter } from "~/composables/pressEnter"
+import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 
 const emits = defineEmits(["submit"])
 
@@ -175,7 +169,24 @@ const localitiesToShow = computed(() => {
 })
 const disabled = computed(() => !localityId.value)
 
+const questionnaireStore = useQuestionnaireStore()
 const assessmentStore = useAssessmentStore()
+
+const localityOfSurveys = computed(() => {
+  return Object.values(questionnaireStore.surveyById).map(
+    (survey) => survey.surveyLocality,
+  )
+})
+
+const localityTypeToShow = computed(() => {
+  const valueToPick = [
+    "MUNICIPALITY",
+    "INTERCOMMUNALITY",
+    localityOfSurveys.value.includes("department") ? "DEPARTMENT" : "",
+    localityOfSurveys.value.includes("region") ? "REGION" : "",
+  ].filter(Boolean)
+  return pick(LOCALITY_TYPE, valueToPick)
+})
 
 async function searchLocalities() {
   const res = await assessmentStore.getSurveysForZipCode(zipCode.value)
