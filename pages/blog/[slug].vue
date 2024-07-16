@@ -29,7 +29,6 @@
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
-import { useMessageStore } from "~/stores/messageStore"
 
 definePageMeta({
   title: "title",
@@ -37,8 +36,6 @@ definePageMeta({
 })
 
 const route = useRoute()
-const router = useRouter()
-const messageStore = useMessageStore()
 const pageStore = usePageStore()
 const slug: string = route.params.slug as string
 if (!pageStore.blogPostsBySlug[slug]) {
@@ -65,9 +62,9 @@ if (post == null) {
 
 <style lang="sass" scoped>
 .main-image
-    width: 100%
-    height: 30vh
+  width: 100%
+  height: 30vh
 
 figcaption
-    text-align: center
+  text-align: center
 </style>

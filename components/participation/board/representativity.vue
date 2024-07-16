@@ -4,7 +4,7 @@
       <AnalyticsSemaphoreRate
         :score="score"
         class="mr-1_5"
-      ></AnalyticsSemaphoreRate>
+      />
       <span class="has-text-shade-500">
         {{ representativity.representativityCriteriaName }}
       </span>
@@ -14,7 +14,7 @@
         :data="distributionBarData()"
         @mouseenter-item="hoverRepresentativity = $event"
         @mouseleave-item="hoverRepresentativity = null"
-      ></AnalyticsDistributionBar>
+      />
     </div>
     <div v-if="hoverRepresentativity" class="has-text-shade-500">
       <div class="has-text-weight-bold">
@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
 import { PropType } from "vue"
-import { ref } from "@vue/reactivity"
+import { ref } from "vue"
 import { AssessmentRepresentativity } from "~/composables/types"
 
 const props = defineProps({

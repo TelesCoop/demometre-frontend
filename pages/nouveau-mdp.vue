@@ -3,8 +3,8 @@
     <div class="sm-container">
       <div class="my-8">
         <h1 class="title is-1 has-text-shade-800">
-          <span v-if="!hasResetKey">Récupérer mon <br />mot de passe</span>
-          <span v-else>Changer mon <br />mot de passe</span>
+          <span v-if="!hasResetKey">Récupérer mon <br>mot de passe</span>
+          <span v-else>Changer mon <br>mot de passe</span>
         </h1>
 
         <div v-if="!hasResetKey" class="">
@@ -19,12 +19,12 @@
                 placeholder="jean@laposte.fr"
                 :class="isMailValid ? '' : 'is-danger'"
                 @change="onEmailUpdate"
-              />
+              >
               <span class="icon is-small is-left has-text-shade-600">
                 <icon size="24" name="mail-line" />
               </span>
               <span v-if="!isMailValid" class="icon is-small is-right">
-                <i class="fas fa-exclamation-triangle"></i>
+                <i class="fas fa-exclamation-triangle" />
               </span>
             </div>
             <p v-if="!isMailValid" class="help is-danger">
@@ -56,12 +56,12 @@
                 :class="isPasswordValid ? '' : 'is-danger'"
                 required
                 @change="onPasswordUpdate"
-              />
+              >
               <span class="icon is-small is-left has-text-shade-600">
                 <icon size="24" name="lock-line" />
               </span>
               <span v-if="!isPasswordValid" class="icon is-small is-right">
-                <i class="fas fa-exclamation-triangle"></i>
+                <i class="fas fa-exclamation-triangle" />
               </span>
             </div>
             <p v-if="!isPasswordValid" class="help is-danger">
@@ -81,12 +81,12 @@
                 :class="isSamePassword ? '' : 'is-danger'"
                 required
                 @change="onPasswordUpdate"
-              />
+              >
               <span class="icon is-small is-left has-text-shade-600">
                 <icon size="24" name="lock-line" />
               </span>
               <span v-if="!isSamePassword" class="icon is-small is-right">
-                <i class="fas fa-exclamation-triangle"></i>
+                <i class="fas fa-exclamation-triangle" />
               </span>
             </div>
             <p v-if="!isSamePassword" class="help is-danger">
@@ -129,8 +129,6 @@ const confirmPasswordErrorMessage = ref("")
 const userStore = useUserStore()
 const hasResetKey = computed(() => !!useRoute().query.reset_key)
 
-const route = useRoute()
-
 const onEmailUpdate = () => {
   isEmailUntouched.value = false
 }
@@ -148,7 +146,7 @@ const emailErrorMessage = computed(() => {
   return ""
 })
 const isMailValid = computed(
-  () => isEmailUntouched.value || !emailErrorMessage.value
+  () => isEmailUntouched.value || !emailErrorMessage.value,
 )
 
 const isPasswordValid = computed(() => {
@@ -175,7 +173,7 @@ const isSamePassword = computed(() => {
 })
 const emailDisabled = computed(() => !(isMailValid && email.value))
 const passwordDisabled = computed(
-  () => !(isPasswordValid && isSamePassword && password.value)
+  () => !(isPasswordValid && isSamePassword && password.value),
 )
 const sendResetLink = () => {
   userStore.sendResetLink(email.value)

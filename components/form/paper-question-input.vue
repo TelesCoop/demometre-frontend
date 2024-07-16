@@ -49,14 +49,14 @@ import {
   QuestionResponseValue,
   QuestionType,
 } from "~/composables/types"
-import { computed, PropType } from "vue"
+import { PropType } from "vue"
 
 const props = defineProps({
   question: { type: Object as PropType<Question>, required: true },
   color: { type: String, required: true },
 })
 
-const value = defineModel("modelValue", {
+defineModel("modelValue", {
   type: Object as PropType<QuestionResponseValue | undefined>,
 })
 </script>

@@ -12,7 +12,7 @@
         size-number-class="is-size-4"
       />
     </div>
-    <hr class="my-0_75" :class="`has-background-${color}`" />
+    <hr class="my-0_75" :class="`has-background-${color}`">
   </header>
 </template>
 

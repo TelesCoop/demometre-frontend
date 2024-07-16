@@ -154,7 +154,7 @@ const emailErrorMessage = computed(() => {
   return ""
 })
 const isMailValid = computed(
-  () => isEmailUntouched.value || !emailErrorMessage.value
+  () => isEmailUntouched.value || !emailErrorMessage.value,
 )
 const isPasswordValid = computed(() => {
   if (isPasswordUntouched.value) {
@@ -168,7 +168,7 @@ const isPasswordValid = computed(() => {
   return true
 })
 const disabled = computed(
-  () => !(isMailValid && isPasswordValid && password.value && email.value)
+  () => !(isMailValid && isPasswordValid && password.value && email.value),
 )
 function onSubmit() {
   userStore.login(email.value, password.value)

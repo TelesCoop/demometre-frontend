@@ -297,7 +297,7 @@
 const props = defineProps({
   name: { type: String, required: true },
   size: { type: String, default: "1x" },
-  color: { type: String, default: "currentColor" }
+  color: { type: String, default: "currentColor" },
 })
 
 const size = computed(() => {

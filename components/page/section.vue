@@ -85,13 +85,13 @@ defineProps({
   buttons: {
     type: Array as PropType<SectionButton[]>, default() {
       return []
-    }
+    },
   },
   leftIcon: { type: Boolean, default: false },
-  icon: { type: String, required: false },
+  icon: { type: String, required: false, default: "" },
   isInsideBigSection: { type: Boolean, default: false },
   isFirstElement: { type: Boolean, default: false },
-  introIsRichText: { type: Boolean, default: false }
+  introIsRichText: { type: Boolean, default: false },
 })
 defineEmits(["buttonClick"])
 

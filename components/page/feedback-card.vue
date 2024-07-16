@@ -22,7 +22,7 @@
             :style="`background-image: url(${
               MEDIA_BASE_URL + props.feedback.pictureUrl
             })`"
-          ></div>
+          />
         </div>
         <div class="media-content">
           <p class="has-text-shade-600 has-text-weight-bold">

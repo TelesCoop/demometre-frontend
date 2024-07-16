@@ -167,17 +167,17 @@ const assessmentStore = useAssessmentStore()
 const props = defineProps({
   pillar: { type: Object, required: true },
   color: { type: String, required: true },
-  workshopId: { type: Number, required: true }
+  workshopId: { type: Number, required: true },
 })
 
 const questions = computed<Question[]>(() =>
-  questionnaireStore.getQuestionnaireQuestionByPillarName(assessmentStore.currentAssessment.surveyId, props.pillar.name)
+  questionnaireStore.getQuestionnaireQuestionByPillarName(assessmentStore.currentAssessment.surveyId, props.pillar.name),
 )
 const activeQuestion = ref<Question>()
 const hoverQuestionId = ref<number>()
 
 const activeQuestionIndex = computed(() =>
-  questions.value.indexOf(activeQuestion.value)
+  questions.value.indexOf(activeQuestion.value),
 )
 
 const onSelectQuestion = (question: Question) => {
@@ -190,7 +190,7 @@ const nextQuestion = () => {
       "Des réponses ont été rentrées mais non sauvegardées. Pour les enregistrer, annulez et cliquez sur le bouton Valider les réponses.",
       "Ignorer les réponses rentrées ?",
       "Ignorer et aller à la question suivante",
-      goNextQuestion
+      goNextQuestion,
     )
     return
   }
@@ -204,12 +204,12 @@ watch(
   () => props.pillar,
   () => {
     activeQuestion.value = null
-  }
+  },
 )
 
 const isDirty = computed(() => {
   for (const participation of workshopStore.workshopParticipations(
-    props.workshopId
+    props.workshopId,
   )) {
     if (workshopStore.isDirty(participation.id, activeQuestion.value?.id)) {
       return true
@@ -221,12 +221,12 @@ const isDirty = computed(() => {
 async function onSubmit() {
   const isSuccessful = await workshopStore.createOrUpdateQuestionnaireResponses(
     props.workshopId,
-    activeQuestion.value
+    activeQuestion.value,
   )
   if (isSuccessful) {
     // mark answers clean (not dirty anymore, selected choices have been answered)
     for (const participation of workshopStore.workshopParticipations(
-      props.workshopId
+      props.workshopId,
     )) {
       workshopStore.markDirty(participation.id, activeQuestion.value?.id, false)
     }

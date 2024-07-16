@@ -21,7 +21,7 @@ import { useLegacyModel } from "~/composables/modelWrapper"
 
 const props = defineProps({
   color: { type: String, required: true },
-  modelValue: { required: true },
+  modelValue: { type: Boolean, required: true },
   questionId: { required: true, type: Number },
 })
 

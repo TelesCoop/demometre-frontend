@@ -84,7 +84,7 @@ const selectedExperts = ref(props.assessment.experts.map(expert => expert.id))
 const saveEdits = async () => {
   await assessmentStore.saveAssessment(
     props.assessment.id,
-    { experts: selectedExperts.value.filter(expertId => expertId !== -1) }
+    { experts: selectedExperts.value.filter(expertId => expertId !== -1) },
   )
   emit("close")
 }

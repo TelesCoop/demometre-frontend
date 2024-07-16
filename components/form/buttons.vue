@@ -108,7 +108,7 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  questionId: { type: Number, required: false },
+  questionId: { type: Number, required: false, default: -1 },
   required: { type: Boolean, required: false },
   isLoading: { type: Boolean, required: true },
   color: { type: String, required: true },

@@ -7,7 +7,7 @@ const ERROR_DURATION = 10000
 export const useMessageStore = defineStore("toast", {
   state: () => ({
     type: <string>"",
-    message: <string>""
+    message: <string>"",
   }),
   actions: {
     setMessage(message: string, type: string, duration: number = 0) {
@@ -25,7 +25,7 @@ export const useMessageStore = defineStore("toast", {
       this.setMessage(
         ErrorMessages[messageCode] || ErrorMessages.default,
         "error",
-        DEFAULT_DURATION
+        DEFAULT_DURATION,
       )
     },
     setWarning(message: string) {
@@ -33,6 +33,6 @@ export const useMessageStore = defineStore("toast", {
     },
     setInfo(message: string) {
       this.setMessage(message, "info", DEFAULT_DURATION)
-    }
-  }
+    },
+  },
 })

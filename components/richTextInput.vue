@@ -40,7 +40,9 @@
           <div class="modal-background" @click="emit('close')" />
           <div class="modal-content">
             <div class="modal-card-head">
-              <h2 class="title is-2">Ajouter un lien</h2>
+              <h2 class="title is-2">
+                Ajouter un lien
+              </h2>
             </div>
             <div class="modal-card-body">
               <div class="field">
@@ -51,7 +53,7 @@
                     class="input"
                     type="url"
                     placeholder="https://"
-                  />
+                  >
                 </div>
               </div>
             </div>

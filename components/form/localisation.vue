@@ -38,12 +38,11 @@
             class="custom-hidden white-on-black-input-checked"
             name="localityType"
             required
-          />
+          >
           <label
             :for="localityType.key"
             class="button is-shade-600 is-outlined locality"
-            >{{ localityType.value }}</label
-          >
+          >{{ localityType.value }}</label>
         </div>
       </div>
     </div>
@@ -65,7 +64,7 @@
           placeholder="Code postal"
           required
           @keyup.enter.stop="searchLocalities"
-        />
+        >
         <button
           type="button"
           class="pagination-next button is-outlined is-shade-600"
@@ -103,12 +102,11 @@
             name="locality"
             required
             @click="onClickLocality(locality)"
-          />
+          >
           <label
             :for="locality.name"
             class="button is-shade-600 is-outlined locality"
-            >{{ locality.name }}</label
-          >
+          >{{ locality.name }}</label>
         </div>
       </div>
     </div>

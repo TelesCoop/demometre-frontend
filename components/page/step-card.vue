@@ -3,7 +3,7 @@
     class="card is-fullheight"
     :class="
       `has-background-${backgroundColor} ` +
-      (props.svgMode ? `svg-mode` : `image-mode`)
+        (props.svgMode ? `svg-mode` : `image-mode`)
     "
   >
     <div class="card-image">
@@ -12,14 +12,13 @@
           :src="imageUrl"
           :alt="props.step.title"
           class="fit-without-distortion"
-        />
+        >
       </figure>
       <div class="step-number-container is-flex flex-center">
         <span
           class="has-background-shade-800 has-text-white is-flex flex-center step-number"
           :class="props.svgMode ? 'is-size-6' : 'is-size-5'"
-          >{{ props.index + 1 }}</span
-        >
+        >{{ props.index + 1 }}</span>
       </div>
     </div>
     <div class="card-content px-2 pb-2">
@@ -74,7 +73,7 @@ const props = defineProps({
 const imageUrl = computed(
   () =>
     MEDIA_BASE_URL +
-    (props.step.imageUrl ? props.step.imageUrl : props.step.svgUrl)
+    (props.step.imageUrl ? props.step.imageUrl : props.step.svgUrl),
 )
 </script>
 

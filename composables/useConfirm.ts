@@ -8,7 +8,7 @@ export const useConfirm = () => {
     confirmationLabel = "Confirmer",
     onConfirm: () => void,
     onCancel: () => void = () => {
-    }
+    },
   ) => {
     const newOnCancel = () => {
       onCancel()
@@ -23,7 +23,7 @@ export const useConfirm = () => {
       title,
       onConfirm: newOnConfirm,
       onCancel: newOnCancel,
-      confirmationLabel
+      confirmationLabel,
     }
   }
 }

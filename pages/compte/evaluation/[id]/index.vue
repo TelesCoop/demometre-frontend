@@ -59,7 +59,9 @@
           style="margin-top: -32px; margin-bottom: 32px"
         >
           <span class="tag is-light is-medium">
-            <template v-if="assessment.details.role! === 'initiator'">Vous êtes à l'intiative de cette évaluation</template>
+            <template
+              v-if="assessment.details.role! === 'initiator'"
+            >Vous êtes à l'intiative de cette évaluation</template>
             <template v-if="assessment.details.role === 'expert'">Vous êtes l'expert de cette évaluation</template>
           </span>
         </div>
@@ -317,7 +319,6 @@
 
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
-import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import {
   Assessment,
@@ -337,7 +338,6 @@ definePageMeta({
 })
 
 const assessmentStore = useAssessmentStore()
-const profilingStore = useProfilingStore()
 const participationStore = useParticipationStore()
 const route = useRoute()
 const userStep = useUserStep()
