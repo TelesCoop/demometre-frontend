@@ -137,10 +137,7 @@
             getScoreToDisplay(props.scores?.byCriteriaId[activeCriteria.id])
           "
         />
-        <slot
-          name="criteria"
-          :criteria="activeCriteria"
-        />
+        <slot name="criteria" :criteria="activeCriteria" />
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive`"
@@ -157,10 +154,7 @@
           :show-score="props.showScores"
           :score="getScoreToDisplay(props.scores?.byMarkerId[activeMarker.id])"
         />
-        <slot
-          name="marker"
-          :marker="activeMarker"
-        />
+        <slot name="marker" :marker="activeMarker" />
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive mt-2 mr-1`"
@@ -196,10 +190,7 @@
           class="is-family-secondary subtitle mb-2"
           :color="props.color"
         />
-        <slot
-          name="pillar"
-          :pillar="pillar"
-        />
+        <slot name="pillar" :pillar="pillar" />
         <div>
           <button
             :class="`button is-${color} is-rounded is-responsive is-outlined has-text-${color}-dark`"

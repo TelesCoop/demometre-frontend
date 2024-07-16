@@ -13,7 +13,7 @@
 <script setup lang="ts">
 const COLORS = ["warning-main", "primary-main"]
 
-const props = defineProps({
+defineProps({
   score: { type: Number, required: true },
 })
 </script>

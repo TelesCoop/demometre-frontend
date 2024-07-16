@@ -190,6 +190,7 @@ export type Definition = {
 export const LOCALITY_TYPE: Record<string, { key: string; value: string }> = {
   MUNICIPALITY: { key: "municipality", value: $gettext("Commune") },
   INTERCOMMUNALITY: { key: "intercommunality", value: $gettext("Intercommunalité") },
+  DEPARTMENT: { key: "department", value: $gettext("Département") },
   REGION: { key: "region", value: $gettext("Région") },
 }
 export type LocalityTypes =
@@ -197,6 +198,7 @@ export type LocalityTypes =
   | "intercommunality"
   | "region"
   | "department"
+export const LOCALITY_TYPES = Object.values(LOCALITY_TYPE).map((localityType) => localityType.key)
 export type SurveyLocality = "city" | "region" | "department"
 export const AssessmentType = {
   QUICK: { key: "quick", value: $gettext("Diagnostic rapide") },

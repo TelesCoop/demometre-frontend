@@ -29,23 +29,26 @@ const emit = defineEmits<{
 
 const total = ref<number>(getTotal(props.data))
 const nbValue0 = ref<number>(getNbValue0(props.data))
-const items = ref(getItemValues(props.data))
+const items = ref(getItemValues())
 
 watch(
   () => props.data,
   (newData) => {
     total.value = getTotal(newData)
     items.value = getItemValues(newData)
+    items.value = getItemValues()
   },
 )
 
 function getTotal(data) {
   return data.reduce((value, item) => value + item.value, 0)
 }
+
 function getNbValue0(data) {
   return data.reduce((value, item) => value + (item.value ? 0 : 1), 0)
 }
-function getItemValues(data) {
+
+function getItemValues() {
   return props.data.map((item) => {
     return {
       ...item,

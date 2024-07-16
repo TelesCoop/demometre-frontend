@@ -20,8 +20,8 @@ import { PropType } from "vue"
 const props = defineProps({
   color: { type: String, required: true },
   questionId: { required: true, type: Number },
-  min: { type: Number as PropType<number | null> },
-  max: { type: Number as PropType<number | null> },
+  min: { type: Number as PropType<number | null>, default: null },
+  max: { type: Number as PropType<number | null>, default: null },
   step: { type: Number as PropType<number | null>, required: true },
   readOnly: { type: Boolean, default: false },
 })

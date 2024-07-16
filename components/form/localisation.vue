@@ -26,7 +26,7 @@
       </span>
       <div class="buttons mt-1">
         <div
-          v-for="localityType of LOCALITY_TYPE"
+          v-for="localityType of localityTypeToShow"
           :key="localityType.key"
           class="margin-between"
         >
@@ -74,10 +74,7 @@
         >
           <span>{{ $gettext("Rechercher") }}</span>
           <span class="icon">
-            <icon
-              size="20"
-              name="search"
-            />
+            <icon size="20" name="search" />
           </span>
         </button>
       </div>
@@ -122,10 +119,7 @@
       >
         <span>{{ $gettext("Valider") }}</span>
         <span class="icon">
-          <icon
-            size="20"
-            name="check"
-          />
+          <icon size="20" name="check" />
         </span>
       </button>
       <span
@@ -148,6 +142,7 @@ import {
 } from "~/composables/types"
 import { usePageStore } from "~/stores/pageStore"
 import { usePressEnter } from "~/composables/pressEnter"
+import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 
 const emits = defineEmits(["submit"])
 
@@ -174,7 +169,24 @@ const localitiesToShow = computed(() => {
 })
 const disabled = computed(() => !localityId.value)
 
+const questionnaireStore = useQuestionnaireStore()
 const assessmentStore = useAssessmentStore()
+
+const localityOfSurveys = computed(() => {
+  return Object.values(questionnaireStore.surveyById).map(
+    (survey) => survey.surveyLocality,
+  )
+})
+
+const localityTypeToShow = computed(() => {
+  const valueToPick = [
+    "MUNICIPALITY",
+    "INTERCOMMUNALITY",
+    localityOfSurveys.value.includes("department") ? "DEPARTMENT" : "",
+    localityOfSurveys.value.includes("region") ? "REGION" : "",
+  ].filter(Boolean)
+  return pick(LOCALITY_TYPE, valueToPick)
+})
 
 async function searchLocalities() {
   const res = await assessmentStore.getSurveysForZipCode(zipCode.value)

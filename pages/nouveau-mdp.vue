@@ -29,10 +29,7 @@
                   name="mail-line"
                 />
               </span>
-              <span
-                v-if="!isMailValid"
-                class="icon is-small is-right"
-              >
+              <span v-if="!isMailValid" class="icon is-small is-right">
                 <i class="fas fa-exclamation-triangle" />
               </span>
             </div>
@@ -81,10 +78,7 @@
                   name="lock-line"
                 />
               </span>
-              <span
-                v-if="!isPasswordValid"
-                class="icon is-small is-right"
-              >
+              <span v-if="!isPasswordValid" class="icon is-small is-right">
                 <i class="fas fa-exclamation-triangle" />
               </span>
             </div>
@@ -115,10 +109,7 @@
                   name="lock-line"
                 />
               </span>
-              <span
-                v-if="!isSamePassword"
-                class="icon is-small is-right"
-              >
+              <span v-if="!isSamePassword" class="icon is-small is-right">
                 <i class="fas fa-exclamation-triangle" />
               </span>
             </div>
@@ -174,7 +165,6 @@ const confirmPassword = ref("")
 const confirmPasswordErrorMessage = ref("")
 const userStore = useUserStore()
 const hasResetKey = computed(() => !!route.query.reset_key)
-
 
 const onEmailUpdate = () => {
   isEmailUntouched.value = false

@@ -41,7 +41,6 @@ import { PropType } from "vue"
 import {
   Category,
   QuestionBounds,
-  ResponseChoice as ResponseChoiceType,
 } from "~/composables/types"
 
 const props = defineProps({

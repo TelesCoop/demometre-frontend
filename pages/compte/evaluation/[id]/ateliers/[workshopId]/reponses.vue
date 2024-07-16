@@ -60,7 +60,6 @@
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType, Workshop } from "~/composables/types"
 import { useWorkshopStore } from "~/stores/workshopStore"
-import { useProfilingStore } from "~/stores/profilingStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useUserStore } from "~/stores/userStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
@@ -72,7 +71,6 @@ definePageMeta({
 
 const assessmentStore = useAssessmentStore()
 const questionnaireStore = useQuestionnaireStore()
-const profilingStore = useProfilingStore()
 const pageStore = usePageStore()
 const userStore = useUserStore()
 const router = useRouter()

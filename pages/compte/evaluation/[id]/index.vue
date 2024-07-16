@@ -367,10 +367,8 @@ const withExpertValue = computed(() => {
   }
 })
 
-if (participationStore.currentlyLoadedResponsesAssessmentId !== assessmentId) {
-  participationStore.getParticipationForAssessment(assessmentId)
-  await participationStore.loadAssessment(assessmentId)
-}
+participationStore.getParticipationForAssessmentOnce(assessmentId)
+await participationStore.loadAssessment(assessmentId)
 if (participationStore.status.total == 0) {
   await participationStore.getParticipationForAssessment(assessmentId)
   await participationStore.setTotalAndAnsweredQuestionsByPillarName()
