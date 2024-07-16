@@ -13,5 +13,13 @@ module.exports = {
     "comma-dangle": ["error", "always-multiline"],
     // "@stylistic/js/comma-dangle": ["error", "always-multiline"],
     semi: [2, "never"],
+    "vue/max-attributes-per-line": ["error", {
+      "singleline": {
+        "max": 10,
+      },
+      "multiline": {
+        "max": 1,
+      },
+    }],
   },
 }
