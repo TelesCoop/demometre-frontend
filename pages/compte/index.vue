@@ -168,7 +168,7 @@ import { Assessment } from "~/composables/types"
 
 definePageMeta({
   title: "Mon compte",
-  breadcrumb: "Mon compte"
+  breadcrumb: "Mon compte",
 })
 
 const assessmentStore = useAssessmentStore()
@@ -179,8 +179,8 @@ const router = useRouter()
 const isCurrentAssessmentsTab = ref(true)
 const showEditUserInfoModal = ref(false)
 
-const currentAssessments = computed(() => assessmentStore.assessments.filter(ass => ass.isCurrent))
-const finishedAssessments = computed(() => assessmentStore.assessments.filter(ass => !ass.isCurrent))
+const currentAssessments = computed(() => assessmentStore.myAssessments.filter(ass => ass.isCurrent))
+const finishedAssessments = computed(() => assessmentStore.myAssessments.filter(ass => !ass.isCurrent))
 const selectedAssessments = computed<Assessment[]>(() => isCurrentAssessmentsTab.value ? currentAssessments.value : finishedAssessments.value)
 
 const selectAssessment = (assessmentId: number) => {
