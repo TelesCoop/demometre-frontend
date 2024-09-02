@@ -40,7 +40,12 @@
             v-else
             class="notification"
           >
-            {{ $gettext("Aucun résultat n'est actuellement visible") }}
+            <template v-if="assessmentStore.assessmentsLoaded">
+              {{ $gettext("Aucun résultat n'est actuellement visible") }}
+            </template>
+            <template v-else>
+              {{ $gettext("chargement...") }}
+            </template>
           </div>
         </div>
       </section>

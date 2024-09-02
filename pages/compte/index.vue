@@ -197,10 +197,10 @@ const isCurrentAssessmentsTab = ref(true)
 const showEditUserInfoModal = ref(false)
 
 const currentAssessments = computed(() =>
-  assessmentStore.assessments.filter((ass) => ass.isCurrent),
+  assessmentStore.myAssessments.filter((ass) => ass.isCurrent),
 )
 const finishedAssessments = computed(() =>
-  assessmentStore.assessments.filter((ass) => !ass.isCurrent),
+  assessmentStore.myAssessments.filter((ass) => !ass.isCurrent),
 )
 const selectedAssessments = computed<Assessment[]>(() =>
   isCurrentAssessmentsTab.value

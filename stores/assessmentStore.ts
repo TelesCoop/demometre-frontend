@@ -18,6 +18,7 @@ const { $gettext } = useGettext()
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
     assessmentById: <Record<number, Assessment>>{},
+    assessmentsLoaded: <boolean>false,
     currentAssessmentId: <number | undefined>undefined,
     representativityCriterias: <RepresentativityCriteria[]>[],
     assessmentsWithResultsLoaded: <boolean>false,
@@ -69,6 +70,9 @@ export const useAssessmentStore = defineStore("assessment", {
           assessment.localityType === "intercommunality",
       )
     },
+    myAssessments: (state) => {
+      return this.assessments.filter(assessment => !!assessment.details.role)
+    },
     userHasNoAssessment() {
       return Object.values(this.assessmentById).length == 0
     },
@@ -94,9 +98,6 @@ export const useAssessmentStore = defineStore("assessment", {
     },
   },
   actions: {
-    addAssessment(assessment) {
-      this.assessmentById[assessment.id] = assessment
-    },
     async addExpert(assessmentId, expertId) {
       const { data, error } = await useApiPatch<Scores>(
         `assessments/${assessmentId}/add-expert/`,
@@ -150,6 +151,7 @@ export const useAssessmentStore = defineStore("assessment", {
         errorStore.setError(error.value.data?.messageCode)
         return false
       }
+      this.assessmentsLoaded = true
       for (const assessment of data.value) {
         this.assessmentById[assessment.id] = assessment
       }
@@ -165,6 +167,8 @@ export const useAssessmentStore = defineStore("assessment", {
         return false
       }
 
+
+      this.assessmentsLoaded = true
       this.assessmentById[response.data.value.id] = response.data.value
       this.currentAssessmentId = response.data.value.id
       return true
@@ -186,6 +190,7 @@ export const useAssessmentStore = defineStore("assessment", {
       if (response.error.value) {
         return false
       }
+      this.assessmentsLoaded = true
       for (const assessment of response.data.value!) {
         this.assessmentById[assessment.id] = assessment
       }
