@@ -70,7 +70,7 @@ export const useAssessmentStore = defineStore("assessment", {
           assessment.localityType === "intercommunality",
       )
     },
-    myAssessments: (state) => {
+    myAssessments() {
       return this.assessments.filter(assessment => !!assessment.details.role)
     },
     userHasNoAssessment() {
