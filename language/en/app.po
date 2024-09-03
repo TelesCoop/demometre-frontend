@@ -2984,4 +2984,3 @@ msgstr ""
 #: open_democracy_back/utils.py:105
 msgid "Commune/EPCI"
 msgstr ""
-

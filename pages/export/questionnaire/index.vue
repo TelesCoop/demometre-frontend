@@ -24,8 +24,8 @@ import { useGettext } from "vue3-gettext"
 const { $gettext } = useGettext()
 
 definePageMeta({
-  title: $gettext("Questionnaire papier"),
-  breadcrumb: $gettext("Questionnaire papier"),
+  // title: $gettext("Questionnaire papier"),
+  // breadcrumb: $gettext("Questionnaire papier"),
   middleware: ["admin-or-expert"],
 })
 

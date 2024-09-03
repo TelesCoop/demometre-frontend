@@ -21,7 +21,7 @@ import { useGettext } from "vue3-gettext"
 const { $gettext } = useGettext()
 
 definePageMeta({
-  title: $gettext("Affinage"),
+  // title: $gettext("Affinage"),
   step: "profiling",
 })
 

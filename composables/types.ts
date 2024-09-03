@@ -1,6 +1,6 @@
-import { useGettext } from "vue3-gettext"
+import gettext from "../utils/gettext-util"
 
-const { $gettext } = useGettext()
+const { $gettext } = gettext
 
 export type User = {
   email: string

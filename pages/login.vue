@@ -132,7 +132,7 @@ import { useGettext } from "vue3-gettext"
 const { $gettext } = useGettext()
 
 definePageMeta({
-  title: $gettext("Connexion"),
+  // title: $gettext("Connexion"),
 })
 
 const email = ref("")

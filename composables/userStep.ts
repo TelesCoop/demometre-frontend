@@ -7,14 +7,15 @@ import {
 } from "~/composables/journey"
 import { useGettext } from "vue3-gettext"
 
-const { $gettext } = useGettext()
-
-const START_EVALUATION_TEXT = $gettext("Commencer l'évaluation")
-const RESUME_EVALUATION_TEXT = $gettext("Reprendre l'évaluation")
 
 export function useUserStep() {
   const assessmentStore = useAssessmentStore()
   const participationStore = useParticipationStore()
+
+  const { $gettext } = useGettext()
+
+  const START_EVALUATION_TEXT = $gettext("Commencer l'évaluation")
+  const RESUME_EVALUATION_TEXT = $gettext("Reprendre l'évaluation")
 
   const state = computed(() => {
     if (!assessmentStore.currentAssessmentId) {

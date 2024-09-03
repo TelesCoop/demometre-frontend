@@ -12,8 +12,7 @@ import { useApiDelete, useApiGet, useApiPost } from "~/composables/api"
 import { useMessageStore } from "./messageStore"
 import { useUserStore } from "./userStore"
 import { useParticipationStore } from "./participationStore"
-
-const { $gettext } = useGettext()
+import { useGettext } from "vue3-gettext"
 
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
@@ -38,6 +37,8 @@ export const useAssessmentStore = defineStore("assessment", {
   }),
   getters: {
     assessmentTypeTitle(): string {
+      const { $gettext } = useGettext()
+
       return (this.currentAssessment?.municipality
         ? $gettext("de ma ville")
         : $gettext("de mon inter-communalité")
@@ -115,6 +116,8 @@ export const useAssessmentStore = defineStore("assessment", {
       return true
     },
     async addDocument(payload: any, assessmentId: number) {
+      const { $gettext } = useGettext()
+
       const { data, error } = await useApiPost<AssessmentDocumentType>(
         `assessment-documents/`,
         payload,
