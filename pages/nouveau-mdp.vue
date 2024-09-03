@@ -152,7 +152,7 @@ import { useGettext } from "vue3-gettext"
 const { $gettext } = useGettext()
 
 definePageMeta({
-  title: $gettext("Nouveau mot de passe"),
+  // title: $gettext("Nouveau mot de passe"),
 })
 
 const route = useRoute()

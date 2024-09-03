@@ -89,7 +89,7 @@ import { useGettext } from "vue3-gettext"
 const { $gettext } = useGettext()
 
 definePageMeta({
-  title: $gettext("Utilisations possibles"),
+  // title: $gettext("Utilisations possibles"),
   breadcrumb: "Utilisations possibles",
 })
 

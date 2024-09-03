@@ -47,7 +47,7 @@ import { useGettext } from "vue3-gettext"
 const { $gettext } = useGettext()
 
 definePageMeta({
-  title: $gettext("Initialisation"),
+  // title: $gettext("Initialisation"),
   step: "initialization-objectives-questions",
 })
 

@@ -247,13 +247,16 @@ import { Marker, PillarType } from "~/composables/types"
 import { MEDIA_BASE_URL } from "~/composables/api"
 import { useGettext } from "vue3-gettext"
 
+console.log("### demometre 0")
+
 const { $gettext } = useGettext()
 
+console.log("### demometre 1")
 
-definePageMeta({
-  title: $gettext("DémoMètre"),
-  breadcrumb: $gettext("DémoMètre"),
-})
+// definePageMeta({
+//   title: $gettext("DémoMètre"),
+//   breadcrumb: $gettext("DémoMètre"),
+// })
 
 const router = useRouter()
 

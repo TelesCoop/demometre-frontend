@@ -31,10 +31,6 @@ msgstr ""
 msgid "adresse@courriel.fr"
 msgstr ""
 
-#: pages/evaluation/[assessmentId]/affinage/[questionId].vue:24
-msgid "Affinage"
-msgstr ""
-
 #: components/workshop/participantEditModal.vue:171
 msgid "Ajout d'un participant"
 msgstr ""
@@ -50,7 +46,7 @@ msgid "Ajouter un document"
 msgstr ""
 
 #: components/assessment/changeExpertModal.vue:39
-#: pages/compte/evaluation/[id]/index.vue:407
+#: pages/compte/evaluation/[id]/index.vue:405
 msgid "Ajouter un expert"
 msgstr ""
 
@@ -72,7 +68,7 @@ msgid "Annuler"
 msgstr ""
 
 #: components/form/buttons.vue:67
-#: components/form/localisation.vue:135
+#: components/form/localisation.vue:129
 #: pages/evaluation/index.vue:16
 msgid "appuyez sur "
 msgstr ""
@@ -105,7 +101,7 @@ msgstr ""
 msgid "Aucun participant renseigné"
 msgstr ""
 
-#: pages/resultats/index.vue:43
+#: pages/resultats/index.vue:44
 msgid "Aucun résultat n'est actuellement visible"
 msgstr ""
 
@@ -121,7 +117,7 @@ msgstr ""
 msgid "Aucune intercommunalité ne correspond à ce code postal"
 msgstr ""
 
-#: composables/types.ts:295
+#: composables/types.ts:297
 msgid "Autre"
 msgstr ""
 
@@ -167,12 +163,16 @@ msgid "Cette section est pour l'instant vide"
 msgstr ""
 
 #: components/assessment/changeExpertModal.vue:10
-#: pages/compte/evaluation/[id]/index.vue:406
+#: pages/compte/evaluation/[id]/index.vue:404
 msgid "Changer d'expert"
 msgstr ""
 
 #: pages/nouveau-mdp.vue:7
 msgid "Changer mon mot de passe"
+msgstr ""
+
+#: pages/resultats/index.vue:47
+msgid "chargement..."
 msgstr ""
 
 #: components/participation/consent.vue:42
@@ -263,7 +263,7 @@ msgid "Confirmation"
 msgstr ""
 
 #: composables/useConfirm.ts:11
-#: pages/nouveau-mdp.vue:148
+#: pages/nouveau-mdp.vue:139
 msgid "Confirmer"
 msgstr ""
 
@@ -271,7 +271,7 @@ msgstr ""
 msgid "Confirmer le mot de passe"
 msgstr ""
 
-#: pages/nouveau-mdp.vue:101
+#: pages/nouveau-mdp.vue:95
 msgid "Confirmer le nouveau mot de passe"
 msgstr ""
 
@@ -279,7 +279,6 @@ msgstr ""
 msgid "Connectez-vous"
 msgstr ""
 
-#: pages/login.vue:135
 #: pages/login.vue:9
 #: pages/login.vue:93
 msgid "Connexion"
@@ -334,11 +333,11 @@ msgstr ""
 msgid "Date de lancement"
 msgstr ""
 
-#: stores/assessmentStore.ts:41
+#: stores/assessmentStore.ts:42
 msgid "de ma ville"
 msgstr ""
 
-#: stores/assessmentStore.ts:42
+#: stores/assessmentStore.ts:43
 msgid "de mon inter-communalité"
 msgstr ""
 
@@ -353,11 +352,10 @@ msgstr ""
 #: components/footer.vue:10
 #: components/footer.vue:49
 #: components/header/navbar.vue:196
-#: pages/demometre.vue:254
-#: pages/demometre.vue:255
 msgid "DémoMètre"
 msgstr ""
 
+#: composables/types.ts:193
 #: utils/constants.ts:56
 msgid "Département"
 msgstr ""
@@ -382,7 +380,7 @@ msgstr ""
 msgid "Détails"
 msgstr ""
 
-#: composables/types.ts:202
+#: composables/types.ts:204
 msgid "Diagnostic rapide"
 msgstr ""
 
@@ -394,7 +392,7 @@ msgstr ""
 msgid "Email et mot de passe ne correspondent pas"
 msgstr ""
 
-#: pages/compte/evaluation/[id]/index.vue:415
+#: pages/compte/evaluation/[id]/index.vue:413
 msgid "En clôturant l’évaluation, vous mettez fin à l’évaluation et n’autorisez plus de participation. Cette action est irréversible, n’oubliez pas de bien vérifier avant."
 msgstr ""
 
@@ -436,7 +434,7 @@ msgstr ""
 msgid "Enregistrer son compte"
 msgstr ""
 
-#: pages/nouveau-mdp.vue:57
+#: pages/nouveau-mdp.vue:54
 msgid "Envoyer un lien de récupération"
 msgstr ""
 
@@ -453,7 +451,7 @@ msgstr ""
 msgid "Évaluation"
 msgstr ""
 
-#: composables/types.ts:204
+#: composables/types.ts:206
 msgid "Evaluation avec expert"
 msgstr ""
 
@@ -461,7 +459,7 @@ msgstr ""
 msgid "Évaluation en cours"
 msgstr ""
 
-#: composables/types.ts:203
+#: composables/types.ts:205
 msgid "Evaluation participative"
 msgstr ""
 
@@ -545,7 +543,7 @@ msgstr ""
 msgid "Impossible de supprimer le participant (impossible de récupérer son atelier)"
 msgstr ""
 
-#: stores/assessmentStore.ts:120
+#: stores/assessmentStore.ts:121
 msgid "Impossible de téléverser le document"
 msgstr ""
 
@@ -559,11 +557,6 @@ msgstr ""
 
 #: components/assessment/informationsEditModal.vue:10
 msgid "Informations de l'évaluation"
-msgstr ""
-
-#: pages/evaluation/initialisation/[assessmentId]/questions-objectives/index.vue:47
-#: pages/evaluation/initialisation/[assessmentId]/validation.vue:50
-msgid "Initialisation"
 msgstr ""
 
 #: components/participation/board/index.vue:37
@@ -612,7 +605,7 @@ msgid "Lancer une évaluation"
 msgstr ""
 
 #: pages/login.vue:156
-#: pages/nouveau-mdp.vue:191
+#: pages/nouveau-mdp.vue:181
 #: pages/signup.vue:184
 msgid "Le courriel doit contenir @"
 msgstr ""
@@ -626,7 +619,7 @@ msgid "Le mail n'est pas valide"
 msgstr ""
 
 #: pages/login.vue:168
-#: pages/nouveau-mdp.vue:204
+#: pages/nouveau-mdp.vue:194
 #: pages/signup.vue:197
 msgid "Le mot de passe ne peut pas être vide"
 msgstr ""
@@ -644,7 +637,7 @@ msgstr ""
 msgid "Le type de l'initiateur est incorrect"
 msgstr ""
 
-#: pages/nouveau-mdp.vue:218
+#: pages/nouveau-mdp.vue:208
 #: pages/signup.vue:213
 msgid "Les deux mots de passe sont différents"
 msgstr ""
@@ -678,7 +671,7 @@ msgstr ""
 msgid "Localité"
 msgstr ""
 
-#: composables/types.ts:292
+#: composables/types.ts:294
 msgid "Ma collectivité"
 msgstr ""
 
@@ -710,7 +703,7 @@ msgstr ""
 msgid "modifier"
 msgstr ""
 
-#: pages/compte/evaluation/[id]/index.vue:398
+#: pages/compte/evaluation/[id]/index.vue:396
 #: pages/compte/index.vue:50
 msgid "Modifier les informations"
 msgstr ""
@@ -796,7 +789,7 @@ msgstr ""
 msgid "Non"
 msgstr ""
 
-#: composables/types.ts:205
+#: composables/types.ts:207
 msgid "Non renseigné"
 msgstr ""
 
@@ -808,12 +801,11 @@ msgstr ""
 msgid "Nous avons bien pris en compte votre demande"
 msgstr ""
 
-#: components/assessment/add-expert.vue:28
+#: components/assessment/add-expert.vue:24
 msgid "Nous contactez"
 msgstr ""
 
-#: pages/nouveau-mdp.vue:164
-#: pages/nouveau-mdp.vue:67
+#: pages/nouveau-mdp.vue:64
 msgid "Nouveau mot de passe"
 msgstr ""
 
@@ -826,7 +818,7 @@ msgstr ""
 msgid "Oui"
 msgstr ""
 
-#: pages/compte/evaluation/[id]/index.vue:417
+#: pages/compte/evaluation/[id]/index.vue:415
 msgid "Oui, clôturer l'évaluation"
 msgstr ""
 
@@ -904,11 +896,11 @@ msgstr ""
 msgid "Poursuivre l'évaluation"
 msgstr ""
 
-#: components/questionnaire/pillar-referential.vue:175
+#: components/questionnaire/pillar-referential.vue:169
 msgid "Premier critère"
 msgstr ""
 
-#: components/questionnaire/pillar-referential.vue:208
+#: components/questionnaire/pillar-referential.vue:199
 msgid "Premier marqueur"
 msgstr ""
 
@@ -938,11 +930,6 @@ msgstr ""
 msgid "Questionnaire"
 msgstr ""
 
-#: pages/export/questionnaire/index.vue:27
-#: pages/export/questionnaire/index.vue:28
-msgid "Questionnaire papier"
-msgstr ""
-
 #: components/questionnaire/pillar-animator-responses.vue:13
 msgid "Questions"
 msgstr ""
@@ -967,7 +954,7 @@ msgstr ""
 msgid "Redevance payée"
 msgstr ""
 
-#: composables/types.ts:193
+#: composables/types.ts:194
 #: utils/constants.ts:57
 msgid "Région"
 msgstr ""
@@ -1055,11 +1042,11 @@ msgstr ""
 msgid "Revenir à mon compte"
 msgstr ""
 
-#: components/questionnaire/pillar-referential.vue:149
+#: components/questionnaire/pillar-referential.vue:146
 msgid "Revenir au marqueur"
 msgstr ""
 
-#: components/questionnaire/pillar-referential.vue:169
+#: components/questionnaire/pillar-referential.vue:163
 msgid "Revenir au pilier"
 msgstr ""
 
@@ -1221,11 +1208,11 @@ msgstr ""
 msgid "type d'évaluation"
 msgstr ""
 
-#: composables/types.ts:294
+#: composables/types.ts:296
 msgid "Un particulier"
 msgstr ""
 
-#: composables/types.ts:293
+#: composables/types.ts:295
 msgid "Une association"
 msgstr ""
 
@@ -1243,7 +1230,6 @@ msgstr ""
 
 #: components/footer.vue:55
 #: components/header/navbar.vue:200
-#: pages/utilisations-possibles.vue:92
 msgid "Utilisations possibles"
 msgstr ""
 
@@ -1253,7 +1239,7 @@ msgstr ""
 #: components/assessment/changeExpertModal.vue:48
 #: components/assessment/informationsEditModal.vue:70
 #: components/form/buttons.vue:15
-#: components/form/localisation.vue:123
+#: components/form/localisation.vue:120
 #: components/richTextInput.vue:82
 #: components/workshop/informationsEditModal.vue:79
 #: components/workshop/participantEditModal.vue:120

@@ -1,18 +1,22 @@
 import { createGettext } from "vue3-gettext"
-import translations from "../language/translations.json"
-import { useLocale } from "~/composables/useLocale"
+// import translations from "../language/translations.json"
+// import { useLocale } from "~/composables/useLocale"
+
+console.log("### gettext plugin 0")
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook("app:created", async () => {
+    console.log("### gettext plugin 1")
     const gettext = createGettext({
       availableLanguages: {
         en: "English",
         fr: "Français",
       },
-      defaultLanguage: useLocale(),
-      translations: translations,
+      defaultLanguage: "fr",
+      translations: {},
     })
 
     nuxtApp.vueApp.use(gettext)
+    console.log("### gettext plugin 2")
   })
 })

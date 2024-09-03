@@ -31,7 +31,7 @@
     "typescript": "^5.0.4",
     "vue-select": "^4.0.0-beta.3",
     "vue3-carousel": "0.3.1",
-    "vue3-gettext": "^3.0.0-beta.6",
+    "vue3-gettext": "^4.0.0-alpha.8",
     "vuedraggable": "^4.1.0"
   },
   "resolutions": {
