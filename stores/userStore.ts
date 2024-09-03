@@ -3,6 +3,7 @@ import { User } from "~/composables/types"
 import { useApiGet, useApiPost } from "~/composables/api"
 import { useMessageStore } from "./messageStore"
 import { cleanUserData, getUserData } from "~/composables/actions"
+import { useGettext } from "vue3-gettext"
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -37,6 +38,8 @@ export const useUserStore = defineStore("user", {
       this.user = data.value
     },
     async editUser(user: User) {
+      const { $gettext } = useGettext()
+
       const { data, error } = await useApiPatch<User>(
         "auth/edit",
         user,
@@ -49,6 +52,8 @@ export const useUserStore = defineStore("user", {
       return false
     },
     async login(email: string, password: string) {
+      const { $gettext } = useGettext()
+
       cleanUserData(true)
       const { data, error } = await useApiPost<User>(
         "auth/login",

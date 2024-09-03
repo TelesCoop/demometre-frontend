@@ -7,6 +7,7 @@ import {
   WorkshopParticipation,
 } from "~/composables/types"
 import { useMessageStore } from "./messageStore"
+import { useGettext } from "vue3-gettext"
 
 type FullWorkshop = Workshop & {
   participations: WorkshopParticipation[]
@@ -97,6 +98,7 @@ export const useWorkshopStore = defineStore("workshop", {
       workshopId: number,
       question: Question,
     ) {
+      const { $gettext } = useGettext()
       let errorOccured = false
       if (question.objectivity === Objectivity.OBJECTIVE) {
         const apiResponse = await useApiPost<QuestionResponse>(
@@ -109,8 +111,7 @@ export const useWorkshopStore = defineStore("workshop", {
           errorOccured = true
         }
       } else {
-        for (const participationId of this.workshopById[workshopId]
-          .participationIds) {
+        for (const participationId of this.workshopById[workshopId].participationIds) {
           const response =
             this.participationById[participationId].responseByQuestionId[
               question.id
@@ -137,6 +138,7 @@ export const useWorkshopStore = defineStore("workshop", {
       return true
     },
     async createOrUpdateWorkshop(workshop: Workshop) {
+      const { $gettext } = useGettext()
       const {
         data,
         error,
@@ -158,6 +160,7 @@ export const useWorkshopStore = defineStore("workshop", {
       }
     },
     async deleteParticipation(participationId: number) {
+      const { $gettext } = useGettext()
       const workshopId = this.participationById[participationId].workshopId
       if (!workshopId) {
         useMessageStore().setMessage($gettext("Impossible de supprimer le participant (impossible de récupérer son atelier)"), "error")

@@ -1,10 +1,11 @@
 import { useMainStore } from "~/stores/mainStore"
 import { useGettext } from "vue3-gettext"
 
-const { $gettext } = useGettext()
 
 export const useConfirm = () => {
   const mainStore = useMainStore()
+  const { $gettext } = useGettext()
+
   return (
     text: string,
     title = $gettext("Confirmation"),
