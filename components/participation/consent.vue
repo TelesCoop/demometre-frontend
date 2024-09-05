@@ -39,7 +39,7 @@
         "
         target="_blank"
         class="is-underlined"
-      >{{ $gettext("Charte relative à la protection des données à caractère personnel") }}</a>
+      >{{ $t("Charte relative à la protection des données à caractère personnel") }}</a>
       .
     </label>
     <p class="is-family-secondary is-size-6 has-text-shade-600 mt-2">

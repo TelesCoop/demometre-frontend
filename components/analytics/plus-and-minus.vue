@@ -4,7 +4,7 @@
       <div class="is-flex">
         <Picto name="strengths" />
         <p class="is-uppercase ml-0_75">
-          {{ $gettext("Points forts") }}
+          {{ $t("Points forts") }}
         </p>
       </div>
       <li
@@ -19,7 +19,7 @@
       <div class="is-flex">
         <Picto name="weaknesses" />
         <p class="is-uppercase ml-0_75">
-          {{ $gettext("Points d'amélioration") }}
+          {{ $t("Points d'amélioration") }}
         </p>
       </div>
       <li

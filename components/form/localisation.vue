@@ -72,7 +72,7 @@
           :disabled="!zipCode"
           @click="searchLocalities"
         >
-          <span>{{ $gettext("Rechercher") }}</span>
+          <span>{{ $t("Rechercher") }}</span>
           <span class="icon">
             <icon size="20" name="search" />
           </span>
@@ -117,7 +117,7 @@
         :disabled="disabled"
         type="submit"
       >
-        <span>{{ $gettext("Valider") }}</span>
+        <span>{{ $t("Valider") }}</span>
         <span class="icon">
           <icon size="20" name="check" />
         </span>
@@ -126,7 +126,7 @@
         v-if="canPressEnter()"
         class="is-size-7 is-hidden-mobile"
       >
-        {{ $gettext("appuyez sur <b>Entrer ⏎</b>", {}, true) }}
+        <!--        {{ $gettext("appuyez sur <b>Entrer ⏎</b>", {}, true) }}-->
       </span>
     </div>
   </form>

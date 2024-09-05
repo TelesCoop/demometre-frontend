@@ -3,15 +3,15 @@
     <div class="sm-container">
       <div class="my-8 has-text-shade-800">
         <h1 class="title is-3 has-text-shade-600">
-          {{ $gettext("Nous avons bien pris en compte votre demande") }}
+          {{ $t("Nous avons bien pris en compte votre demande") }}
         </h1>
-        <p>{{ $gettext("Veuillez vérifier votre boîte mail et suivre les instructions.") }}</p>
+        <p>{{ $t("Veuillez vérifier votre boîte mail et suivre les instructions.") }}</p>
 
         <NuxtLink
           to="/login"
           class="button is-shade-600"
         >
-          {{ $gettext("Retourner à la connexion") }}
+          {{ $t("Retourner à la connexion") }}
         </NuxtLink>
       </div>
     </div>

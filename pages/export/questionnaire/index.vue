@@ -2,11 +2,11 @@
   <div class="container">
     <div class="section">
       <h1 class="title is-1 has-text-black">
-        {{ $gettext("Générer un questionnaire papier") }}
+        {{ $t("Générer un questionnaire papier") }}
       </h1>
       <div>
         <h2 class="title is-3">
-          {{ $gettext("Choisissez un role") }}
+          {{ $t("Choisissez un role") }}
         </h2>
         <FormRole
           v-model="answer"
@@ -19,13 +19,14 @@
 </template>
 <script lang="ts" setup>
 import { Localities } from "~/composables/types"
-import { useGettext } from "vue3-gettext"
+import { useI18n } from "vue-i18n"
 
-const { $gettext } = useGettext()
+const i18n = useI18n()
+const $t = i18n.t
 
 definePageMeta({
-  // title: $gettext("Questionnaire papier"),
-  // breadcrumb: $gettext("Questionnaire papier"),
+  // title: $t("Questionnaire papier"),
+  // breadcrumb: $t("Questionnaire papier"),
   middleware: ["admin-or-expert"],
 })
 

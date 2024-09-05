@@ -2,20 +2,20 @@
   <div class="container">
     <div class="mb-2">
       <h1 class="title is-3 has-text-black">
-        {{ $gettext("Questionnaire") }} "{{ role }}"
+        {{ $t("Questionnaire") }} "{{ role }}"
       </h1>
     </div>
 
     <div>
       <div class="title is-4">
-        {{ $gettext("Question d'affinage") }}
+        {{ $t("Question d'affinage") }}
       </div>
       <ExportProfilingQuestions :role-id="roleId" />
     </div>
 
     <div>
       <div class="title is-4 page-break">
-        {{ $gettext("Questionnaire") }}
+        {{ $t("Questionnaire") }}
       </div>
       <ExportSurveyQuestions :role-id="roleId" />
     </div>
@@ -27,7 +27,7 @@
       class="print-button"
       @click="print"
     >
-      {{ $gettext("imprimer") }}
+      {{ $t("imprimer") }}
     </div>
   </div>
 </template>

@@ -10,10 +10,10 @@
       />
       <div class="modal-content has-background-shade-100 p-2">
         <h2 class="is-size-4 has-text-weight-bold pb-0_5">
-          {{ $gettext("Souhaitez-vous réinitialiser votre évaluation ?") }}
+          {{ $t("Souhaitez-vous réinitialiser votre évaluation ?") }}
         </h2>
         <p class="is-text-5 pb-1">
-          {{ $gettext("En réinitialisant l'évaluation, vous perdrez l'ensemble de vos réponses.") }}
+          {{ $t("En réinitialisant l'évaluation, vous perdrez l'ensemble de vos réponses.") }}
         </p>
         <div class="buttons">
           <button
@@ -21,13 +21,13 @@
             :class="{ 'is-loading': isLoading }"
             @click="cancelParticipation"
           >
-            {{ $gettext("Oui, reinitialiser") }}
+            {{ $t("Oui, reinitialiser") }}
           </button>
           <button
             class="button is-shade-600 is-outlined"
             @click="closeModal()"
           >
-            {{ $gettext("Non") }}
+            {{ $t("Non") }}
           </button>
         </div>
       </div>

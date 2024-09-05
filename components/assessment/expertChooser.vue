@@ -1,6 +1,6 @@
 <template>
   <div class="field">
-    <label class="label">{{ $gettext("Expert") }} {{ expertIx + 1 }}</label>
+    <label class="label">{{ $t("Expert") }} {{ expertIx + 1 }}</label>
     <div class="select">
       <select
         id="workshop_type"
@@ -21,7 +21,7 @@
         class="button is-small is-rounded is-black is-outlined"
         @click="$emit('remove')"
       >
-        {{ $gettext("Retirer cet expert") }}
+        {{ $t("Retirer cet expert") }}
       </button>
     </div>
   </div>

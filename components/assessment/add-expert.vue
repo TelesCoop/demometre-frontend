@@ -21,7 +21,7 @@
           :href="`mailto:${settingsStore.structureSettings.email}`"
           target="_blank"
         >
-          <span>{{ $gettext("Nous contactez") }}</span>
+          <span>{{ $t("Nous contactez") }}</span>
           <span class="icon">
             <icon
               size="20"

@@ -5,7 +5,7 @@
     :question-id="questionId"
   >
     <template #legend>
-      {{ $gettext("Choisissez oui ou non.") }}
+      {{ $t("Choisissez oui ou non.") }}
     </template>
   </ResponsePaperInputUniqueChoice>
 </template>

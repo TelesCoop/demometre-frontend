@@ -25,7 +25,7 @@
       </div>
       <div class="is-size-7">
         <div>
-          {{ $gettext("Représentativité actuelle :") }}
+          {{ $t("Représentativité actuelle :") }}
           {{ hoverRepresentativity?.displayValue }}%
         </div>
         <div v-if="!hoverRepresentativity?.ignoreThreshold">
@@ -42,9 +42,9 @@
         {{ representativity.representativityCriteriaName }}
       </div>
       <div class="is-size-7">
-        <div>{{ $gettext("Représentativité actuelle :") }} ...%</div>
+        <div>{{ $t("Représentativité actuelle :") }} ...%</div>
         <div v-if="!hoverRepresentativity?.ignoreThreshold">
-          {{ $gettext("Seuil minimal de représentativité :") }} ...%
+          {{ $t("Seuil minimal de représentativité :") }} ...%
         </div>
       </div>
     </div>

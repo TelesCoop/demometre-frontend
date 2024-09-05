@@ -1,6 +1,6 @@
-import gettext from "../utils/gettext-util"
+import { i18n } from "~/utils/i18n-util"
 
-const { $gettext } = gettext
+const $t = i18n.global.t
 
 export type User = {
   email: string
@@ -188,10 +188,10 @@ export type Definition = {
 
 // Assessment
 export const LOCALITY_TYPE: Record<string, { key: string; value: string }> = {
-  MUNICIPALITY: { key: "municipality", value: $gettext("Commune") },
-  INTERCOMMUNALITY: { key: "intercommunality", value: $gettext("Intercommunalité") },
-  DEPARTMENT: { key: "department", value: $gettext("Département") },
-  REGION: { key: "region", value: $gettext("Région") },
+  MUNICIPALITY: { key: "municipality", value: $t("Commune") },
+  INTERCOMMUNALITY: { key: "intercommunality", value: $t("Intercommunalité") },
+  DEPARTMENT: { key: "department", value: $t("Département") },
+  REGION: { key: "region", value: $t("Région") },
 }
 export type LocalityTypes =
   | "municipality"
@@ -201,10 +201,10 @@ export type LocalityTypes =
 export const LOCALITY_TYPES = Object.values(LOCALITY_TYPE).map((localityType) => localityType.key)
 export type SurveyLocality = "city" | "region" | "department"
 export const AssessmentType = {
-  QUICK: { key: "quick", value: $gettext("Diagnostic rapide") },
-  PARTICIPATIVE: { key: "participative", value: $gettext("Evaluation participative") },
-  WITH_EXPERT: { key: "with_expert", value: $gettext("Evaluation avec expert") },
-  "": { key: "", value: $gettext("Non renseigné") },
+  QUICK: { key: "quick", value: $t("Diagnostic rapide") },
+  PARTICIPATIVE: { key: "participative", value: $t("Evaluation participative") },
+  WITH_EXPERT: { key: "with_expert", value: $t("Evaluation avec expert") },
+  "": { key: "", value: $t("Non renseigné") },
 }
 export type Locality = {
   id: number
@@ -291,10 +291,10 @@ export type Assessment = {
   workshopCount: number
 }
 export const InitiatorType = {
-  COLLECTIVITY: { key: "collectivity", value: $gettext("Ma collectivité") },
-  ASSOCIATION: { key: "association", value: $gettext("Une association") },
-  INDIVIDUAL: { key: "individual", value: $gettext("Un particulier") },
-  OTHER: { key: "other", value: $gettext("Autre") },
+  COLLECTIVITY: { key: "collectivity", value: $t("Ma collectivité") },
+  ASSOCIATION: { key: "association", value: $t("Une association") },
+  INDIVIDUAL: { key: "individual", value: $t("Un particulier") },
+  OTHER: { key: "other", value: $t("Autre") },
 }
 export type Scores = {
   byQuestionId: { [key: number]: number }

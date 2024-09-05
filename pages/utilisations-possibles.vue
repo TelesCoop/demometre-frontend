@@ -84,12 +84,13 @@
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
 import { useTrainingStore } from "~/stores/traningStore"
-import { useGettext } from "vue3-gettext"
+import { useI18n } from "vue-i18n"
 
-const { $gettext } = useGettext()
+const i18n = useI18n()
+const $t = i18n.t
 
 definePageMeta({
-  // title: $gettext("Utilisations possibles"),
+  // title: $t("Utilisations possibles"),
   breadcrumb: "Utilisations possibles",
 })
 

@@ -100,8 +100,10 @@ import type {
   Question,
 } from "~/composables/types"
 import { computed, PropType } from "vue"
+import { useI18n } from "vue-i18n"
 
-const { $gettext } = useGettext()
+const i18n = useI18n()
+const $t = i18n.t
 
 type tabDef = { label: string; id: string }
 const props = defineProps({
@@ -128,13 +130,13 @@ const explanatoryWithId = computed<SimpleBlockWithId[]>(() => {
 const tabs = computed(() => {
   const tabs: tabDef[] = [
     {
-      label: $gettext("Réponses"),
+      label: $t("Réponses"),
       id: "responses",
     },
   ]
   if (props.definitions && Object.keys(props.definitions).length) {
     tabs.push({
-      label: $gettext("Définitions"),
+      label: $t("Définitions"),
       id: "definitions",
     })
   }

@@ -5,7 +5,7 @@
       :class="`has-text-${props.color}-dark`"
     >
       <slot name="legend">
-        {{ $gettext("Choisissez une réponse.") }}
+        {{ $t("Choisissez une réponse.") }}
       </slot>
     </legend>
     <div

@@ -7,7 +7,7 @@
     <div class="modal-card">
       <header class="modal-card-head">
         <h2 class="modal-card-title">
-          {{ $gettext("Changer d'expert") }}
+          {{ $t("Changer d'expert") }}
         </h2>
         <icon
           tabindex="0"
@@ -20,7 +20,7 @@
       <section class="modal-card-body">
         <p class="mb-2">
           {{
-            $gettext("Si vous souhaitez changer, sélectionnez un expert dans la liste ci-dessous et cliquez sur valider. Si votre expert n’est pas enregistré (et/ou ne figure pas dans la liste), contactez nous.")
+            $t("Si vous souhaitez changer, sélectionnez un expert dans la liste ci-dessous et cliquez sur valider. Si votre expert n’est pas enregistré (et/ou ne figure pas dans la liste), contactez nous.")
           }}
         </p>
         <form @submit.prevent="">
@@ -36,7 +36,7 @@
           class="button is-rounded is-outlined is-dark mt-2"
           @click="selectedExperts.push(-1)"
         >
-          {{ $gettext("Ajouter un expert") }}
+          {{ $t("Ajouter un expert") }}
         </button>
       </section>
       <footer class="modal-card-foot">
@@ -45,7 +45,7 @@
           :disabled="loadingStore.isLoading('assessments')"
           @click="saveEdits"
         >
-          <span>{{ $gettext("Valider") }}</span>
+          <span>{{ $t("Valider") }}</span>
           <span class="icon">
             <icon
               size="16"
@@ -57,7 +57,7 @@
           class="button is-rounded is-outlined is-dark"
           @click="$emit('close')"
         >
-          {{ $gettext("Annuler") }}
+          {{ $t("Annuler") }}
         </button>
       </footer>
     </div>

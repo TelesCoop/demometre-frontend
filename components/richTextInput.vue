@@ -58,12 +58,12 @@
           <div class="modal-content">
             <div class="modal-card-head">
               <h2 class="title is-2">
-                {{ $gettext("Ajouter un lien") }}
+                {{ $t("Ajouter un lien") }}
               </h2>
             </div>
             <div class="modal-card-body">
               <div class="field">
-                <label class="label">{{ $gettext("URL") }}</label>
+                <label class="label">{{ $t("URL") }}</label>
                 <div class="control">
                   <input
                     v-model="correctedLink"
@@ -79,7 +79,7 @@
                 class="button is-rounded is-dark"
                 @click="onClick"
               >
-                <span>{{ $gettext("Valider") }}</span>
+                <span>{{ $t("Valider") }}</span>
                 <span class="icon">
                   <icon
                     size="16"
@@ -91,7 +91,7 @@
                 class="button is-rounded is-outlined is-dark"
                 @click="closeLinkModal"
               >
-                {{ $gettext("Annuler") }}
+                {{ $t("Annuler") }}
               </button>
             </footer>
           </div>
@@ -123,9 +123,10 @@ import {
 } from "~/composables/types"
 import { useLegacyModel } from "~/composables/modelWrapper"
 import { generateRandomId } from "~/utils/util"
-import { useGettext } from "vue3-gettext"
+import { useI18n } from "vue-i18n"
 
-const { $gettext } = useGettext()
+const i18n = useI18n()
+const $t = i18n.t
 
 const props = defineProps({
   id: {
@@ -205,8 +206,8 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => onClickHeading(1),
     icon: "",
     disabled: () => false,
-    text: $gettext("titre 1"),
-    title: $gettext("Titre de niveau 1"),
+    text: $t("titre 1"),
+    title: $t("Titre de niveau 1"),
   },
   {
     name: HeadingType.H2,
@@ -214,8 +215,8 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => onClickHeading(2),
     icon: "",
     disabled: () => false,
-    text: $gettext("titre 2"),
-    title: $gettext("Titre de niveau 2"),
+    text: $t("titre 2"),
+    title: $t("Titre de niveau 2"),
   },
   {
     name: HeadingType.H3,
@@ -223,8 +224,8 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => onClickHeading(3),
     icon: "",
     disabled: () => false,
-    text: $gettext("titre 3"),
-    title: $gettext("Titre de niveau 3"),
+    text: $t("titre 3"),
+    title: $t("Titre de niveau 3"),
   },
   {
     name: OtherRichTextActions.BOLD,
@@ -232,7 +233,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value!.chain().focus().toggleBold().run(),
     icon: "bold",
     disabled: () => false,
-    title: $gettext("Text gras"),
+    title: $t("Text gras"),
   },
   {
     name: OtherRichTextActions.ITALIC,
@@ -240,7 +241,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value?.chain().focus().toggleItalic().run(),
     icon: "italic",
     disabled: () => false,
-    title: $gettext("Texte italique"),
+    title: $t("Texte italique"),
   },
   {
     name: OtherRichTextActions.LIST_ORDERED,
@@ -248,7 +249,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value?.chain().focus().toggleOrderedList().run(),
     icon: "list-ordered",
     disabled: () => false,
-    title: $gettext("Liste numérotée"),
+    title: $t("Liste numérotée"),
   },
   {
     name: OtherRichTextActions.LIST_UNORDERED,
@@ -256,7 +257,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value?.chain().focus().toggleBulletList().run(),
     icon: "list-unordered",
     disabled: () => false,
-    title: $gettext("Liste à puce"),
+    title: $t("Liste à puce"),
   },
   {
     name: OtherRichTextActions.LINK,
@@ -264,7 +265,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => openLinkModal(),
     icon: "link",
     disabled: () => false,
-    title: $gettext("Créer un hyperlien"),
+    title: $t("Créer un hyperlien"),
   },
   {
     name: OtherRichTextActions.LINK_UNLINK,
@@ -272,7 +273,7 @@ const defaultToolbar = (): RichTextToolbar => [
     onClick: () => editor.value?.chain().focus().unsetLink().run(),
     icon: "link-unlink",
     disabled: () => !editor.value?.isActive("link"),
-    title: $gettext("Retirer l'hyperlien"),
+    title: $t("Retirer l'hyperlien"),
   },
 ]
 

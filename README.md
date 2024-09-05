@@ -2,6 +2,10 @@
 
 ## Notes pour les développeurs
 
+### Mettre à jour les traductions
+
+1. lancer `yarn do-vue-i18n-extract`
+
 ### Ordre d'une évaluation
 
 Cf `userStep.ts` :

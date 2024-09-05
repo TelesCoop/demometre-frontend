@@ -54,7 +54,7 @@
         </option>
       </select>
       <p class="is-size-7 has-text-shade-400">
-        {{ $gettext("Ctrl + clic pour selectionner plusieurs options") }}
+        {{ $t("Ctrl + clic pour selectionner plusieurs options") }}
       </p>
     </div>
     <div

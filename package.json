@@ -6,16 +6,18 @@
     "dev": "nuxi dev --mode=development",
     "build": "nuxi build",
     "start": "node .output/server/index.mjs",
-    "gettext:extract": "vue-gettext-extract",
-    "gettext:compile": "vue-gettext-compile"
+    "do-vue-i18n-extract": "yarn vue-i18n-extract report --vueFiles './?(composables|pages|components|utils)/**/*.?(ts|vue)' --languageFiles './language/empty.json' --separator ';;;;' > language/extraction.md"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.3.6",
+    "@nuxtjs/i18n": "^8.5.1",
     "bulma": "^0.9.3",
+    "easygettext": "^2.17.0",
     "eslint": "^8.44.0",
     "nuxt": "3.5.3",
     "sass": "^1.49.9",
-    "sass-loader": "^13.3.2"
+    "sass-loader": "^13.3.2",
+    "vue-i18n-extract": "^2.0.7"
   },
   "dependencies": {
     "@nuxtjs/plausible": "^0.2.4",
@@ -31,7 +33,6 @@
     "typescript": "^5.0.4",
     "vue-select": "^4.0.0-beta.3",
     "vue3-carousel": "0.3.1",
-    "vue3-gettext": "^3.0.0-beta.5",
     "vuedraggable": "^4.1.0"
   },
   "resolutions": {

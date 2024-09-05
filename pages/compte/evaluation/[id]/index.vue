@@ -14,7 +14,7 @@
             name="arrow-left-line"
           />
         </span>
-        <span> {{ $gettext("Revenir à mon compte") }} </span>
+        <span> {{ $t("Revenir à mon compte") }} </span>
       </NuxtLink>
     </div>
     <div class="is-flex is-justify-content-space-between is-align-items-center">
@@ -26,7 +26,7 @@
           v-if="assessment.isCurrent"
           class="tag is-light is-medium"
         >
-          <span>{{ $gettext("Évaluation en cours") }}</span>
+          <span>{{ $t("Évaluation en cours") }}</span>
           <icon
             size="20"
             name="loader-2-line"
@@ -36,7 +36,7 @@
         <span
           v-else
           class="tag is-light is-info is-medium"
-        ><span>{{ $gettext("Évaluation terminée") }}</span>
+        ><span>{{ $t("Évaluation terminée") }}</span>
           <icon
             size="20"
             name="check"
@@ -61,9 +61,9 @@
           <span class="tag is-light is-medium">
             <template
               v-if="assessment.details.role! === 'initiator'"
-            >{{ $gettext("Vous êtes à l'intiative de cette évaluation")
+            >{{ $t("Vous êtes à l'intiative de cette évaluation")
             }}</template>
-            <template v-if="assessment.details.role === 'expert'">{{ $gettext("Vous êtes l'expert de cette évaluation")
+            <template v-if="assessment.details.role === 'expert'">{{ $t("Vous êtes l'expert de cette évaluation")
             }}</template>
           </span>
         </div>
@@ -72,7 +72,7 @@
           style="row-gap: 3rem; column-gap: 3rem"
         >
           <InformationDetail
-            title="{{ $gettext('type d\'évaluation') }}"
+            title="{{ $t(`type d'évaluation`) }}"
             :value="
               AssessmentType[assessment.assessmentType?.toUpperCase() || '']
                 .value
@@ -105,11 +105,9 @@
           />
           <InformationDetail
             v-if="assessment.assessmentType === AssessmentType.WITH_EXPERT.key"
-            :title="
-              $ngettext('Expert', 'Experts', (assessment.experts || []).length)
-            "
             :value="withExpertValue"
           />
+          <!-- TODO above          :title="$ngettext('Expert', 'Experts', (assessment.experts || []).length)"-->
         </div>
         <div
           v-if="assessment.details.hasDetailAccess"
@@ -150,7 +148,7 @@
         <hr>
         <PageSection
           title="Documents"
-          :buttons="[{ text: $gettext('Ajouter un document'), icon: 'add-line' }]"
+          :buttons="[{ text: $t('Ajouter un document'), icon: 'add-line' }]"
           @button-click="showAddDocumentModal = true"
         >
           <div class="columns is-tablet is-variable is-6">
@@ -174,7 +172,7 @@
                 class="message is-small"
               >
                 <div class="message-body">
-                  <p>{{ $gettext("Aucun document dans cette catégorie.") }}</p>
+                  <p>{{ $t("Aucun document dans cette catégorie.") }}</p>
                 </div>
               </div>
             </div>
@@ -187,13 +185,13 @@
         <div class="is-flex is-justify-content-space-between">
           <div>
             <h2 class="title is-3 has-text-shade-900 mb-1">
-              {{ $gettext("État de l'évaluation") }}
+              {{ $t("État de l'évaluation") }}
             </h2>
             <p
               v-if="participationStore.status.participated"
               class="is-size-5"
             >
-              {{ $gettext("Nombre de questions répondues :") }}
+              {{ $t("Nombre de questions répondues :") }}
               {{ participationStore.status.answered }} /
               {{ participationStore.status.total }}
             </p>
@@ -202,7 +200,7 @@
               class="message mb-2"
             >
               <div class="message-body">
-                {{ $gettext("Vous n'avez pas participé à cette évaluation.") }}
+                {{ $t("Vous n'avez pas participé à cette évaluation.") }}
               </div>
             </div>
           </div>
@@ -212,7 +210,7 @@
               class="button is-rounded is-dark"
               @click="confirmCloseAssessment"
             >
-              <span>{{ $gettext("Clôturer l'évaluation") }}</span>
+              <span>{{ $t("Clôturer l'évaluation") }}</span>
               <span class="icon"><icon
                 size="20"
                 name="check"
@@ -237,7 +235,7 @@
               :to="`/resultats/${assessmentId}`"
               class="button is-rounded ml-1"
             >
-              <span>{{ $gettext("Voir les résultats") }}</span>
+              <span>{{ $t("Voir les résultats") }}</span>
               <span class="icon"><icon
                 size="20"
                 name="bar-chart-line"
@@ -264,22 +262,22 @@
 
     <div v-if="assessment.details.hasDetailAccess">
       <hr>
-      <PageSection :title="$gettext('État de paiement de la redevance')">
+      <PageSection :title="$t('État de paiement de la redevance')">
         <template v-if="assessment.details.paymentDate">
           <div class="message">
             <div class="message-body p-3">
               <div class="columns is-tablet">
                 <div class="column is-8">
                   <p class="title is-4 mb-0_5">
-                    {{ $gettext("Paiement effectué") }}
+                    {{ $t("Paiement effectué") }}
                   </p>
                   <p>
-                    {{ $gettext("L’expert a bien réglé le paiement de la commission d’utilisation du DémoMètre.") }}
+                    {{ $t("L’expert a bien réglé le paiement de la commission d’utilisation du DémoMètre.") }}
                   </p>
                 </div>
                 <div class="column is-4">
                   <InformationDetail
-                    :title="$gettext('Expert')"
+                    :title="$t('Expert')"
                     :value="assessment.details.paymentAuthor"
                   />
                 </div>
@@ -291,9 +289,9 @@
           <div class="message is-warning">
             <div class="message-body p-3">
               <p class="title is-4 mb-0_5">
-                {{ $gettext("Paiement en attente") }}
+                {{ $t("Paiement en attente") }}
               </p>
-              <p>{{ $gettext("Le paiement n'a pas encore été effectué.") }}</p>
+              <p>{{ $t("Le paiement n'a pas encore été effectué.") }}</p>
             </div>
           </div>
         </template>
@@ -332,7 +330,7 @@ import {
   PARTICIPANT_TYPE,
 } from "~/utils/constants"
 import { useConfirm } from "~/composables/useConfirm"
-import { useGettext } from "vue3-gettext"
+import { useI18n } from "vue-i18n"
 
 definePageMeta({
   title: "Évaluation",
@@ -345,7 +343,8 @@ const route = useRoute()
 const userStep = useUserStep()
 const confirm = useConfirm()
 
-const { $gettext } = useGettext()
+const i18n = useI18n()
+const $t = i18n.t
 const showInformationsEditModal = ref(false)
 const showExpertsEditModal = ref(false)
 const showAddDocumentModal = ref(false)
@@ -359,7 +358,7 @@ const assessment = computed<Assessment>(
 const withExpertValue = computed(() => {
   const experts = assessment.value.experts || []
   if (!experts.length) {
-    return $gettext("Aucun expert pour le moment")
+    return $t("Aucun expert pour le moment")
   } else {
     return experts
       .map((expert) => `${expert.firstName} ${expert.lastName}`)
@@ -393,7 +392,7 @@ const informationsButtons = computed(() => {
     return []
   }
   const toReturn = [
-    { text: $gettext("Modifier les informations"), icon: "list-settings-line" },
+    { text: $t("Modifier les informations"), icon: "list-settings-line" },
   ]
   if (
     assessment.value.details.role === "initiator" &&
@@ -401,8 +400,8 @@ const informationsButtons = computed(() => {
   ) {
     toReturn.push({
       text: assessment.value.experts?.length
-        ? $gettext("Changer d'expert")
-        : $gettext("Ajouter un expert"),
+        ? $t("Changer d'expert")
+        : $t("Ajouter un expert"),
       icon: "user-2-line",
     })
   }
@@ -410,9 +409,9 @@ const informationsButtons = computed(() => {
 })
 const confirmCloseAssessment = () => {
   confirm(
-    $gettext("En clôturant l’évaluation, vous mettez fin à l’évaluation et n’autorisez plus de participation. Cette action est irréversible, n’oubliez pas de bien vérifier avant."),
-    $gettext(`Souhaitez-vous clôturer l'évaluation ${assessment.value.name} ?`),
-    $gettext("Oui, clôturer l'évaluation"),
+    $t("En clôturant l’évaluation, vous mettez fin à l’évaluation et n’autorisez plus de participation. Cette action est irréversible, n’oubliez pas de bien vérifier avant."),
+    `${$t("Souhaitez-vous clôturer l'évaluation")} ${assessment.value.name} ?`,
+    $t("Oui, clôturer l'évaluation"),
     () =>
       assessmentStore.saveAssessment(assessmentId, {
         endDate: new Date().toISOString().split("T")[0],

@@ -10,19 +10,19 @@
           <thead>
             <tr>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                {{ $gettext("Nom de l’atelier") }}
+                {{ $t("Nom de l’atelier") }}
               </td>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                {{ $gettext("Type d'atelier") }}
+                {{ $t("Type d'atelier") }}
               </td>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                {{ $gettext("Date (MM/JJ/AAAA)") }}
+                {{ $t("Date (MM/JJ/AAAA)") }}
               </td>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                {{ $gettext("Lieu") }}
+                {{ $t("Lieu") }}
               </td>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                {{ $gettext("Participants") }}
+                {{ $t("Participants") }}
               </td>
               <td />
             </tr>
@@ -101,7 +101,7 @@
         class="message"
       >
         <div class="message-body">
-          {{ $gettext("Il n'y a pas encore d'atelier dans cette évaluation.") }}
+          {{ $t("Il n'y a pas encore d'atelier dans cette évaluation.") }}
         </div>
       </div>
     </PageSection>
@@ -118,7 +118,7 @@
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">
-          {{ $gettext("Clôturer l'atelier") }}
+          {{ $t("Clôturer l'atelier") }}
         </p>
         <button
           class="button is-ghost is-rounded is-outlined"
@@ -140,13 +140,13 @@
           class="button is-success"
           @click.prevent="closeWorkshop(workshop)"
         >
-          {{ $gettext("Clôturer") }}
+          {{ $t("Clôturer") }}
         </button>
         <button
           class="button"
           @click.prevent="closeModal()"
         >
-          {{ $gettext("Annuler") }}
+          {{ $t("Annuler") }}
         </button>
       </footer>
     </div>

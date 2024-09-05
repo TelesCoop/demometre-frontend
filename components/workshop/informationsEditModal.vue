@@ -21,7 +21,7 @@
         <form @submit.prevent="">
           <template v-if="!bottomFields">
             <div class="field">
-              <label class="label">{{ $gettext("Nom de l'atelier") }}</label>
+              <label class="label">{{ $t("Nom de l'atelier") }}</label>
               <div class="control">
                 <input
                   v-model="workshopName"
@@ -38,12 +38,12 @@
                   v-model="place"
                   class="input"
                   type="text"
-                  :placeholder="$gettext('Salle polyvalente de la ville de ...')"
+                  :placeholder="$t('Salle polyvalente de la ville de ...')"
                 >
               </div>
             </div>
             <div class="field">
-              <label class="label">{{ $gettext("Date") }}</label>
+              <label class="label">{{ $t("Date") }}</label>
               <div class="control">
                 <input
                   v-model="date"
@@ -76,7 +76,7 @@
           :disabled="loadingStore.isLoading('workshops')"
           @click="saveEdits"
         >
-          <span>{{ $gettext("Valider") }}</span>
+          <span>{{ $t("Valider") }}</span>
           <span class="icon">
             <icon
               size="16"
@@ -88,7 +88,7 @@
           class="button is-rounded is-outlined is-dark"
           @click="$emit('close')"
         >
-          {{ $gettext("Annuler") }}
+          {{ $t("Annuler") }}
         </button>
       </footer>
     </div>
@@ -101,12 +101,13 @@ import { Workshop } from "~/composables/types"
 import { WORKSHOP_CONTEXT_FIELDS } from "~/utils/constants"
 import { useLoadingStore } from "~/stores/loadingStore"
 import { useWorkshopStore } from "~/stores/workshopStore"
-import { useGettext } from "vue3-gettext"
+import { useI18n } from "vue-i18n"
 
 const workshopStore = useWorkshopStore()
 const loadingStore = useLoadingStore()
 
-const { $gettext } = useGettext()
+const i18n = useI18n()
+const $t = i18n.t
 
 const props = defineProps({
   workshop: { type: Object as PropType<Workshop>, required: true },
@@ -117,9 +118,9 @@ const emit = defineEmits(["close"])
 
 const title = computed<string>(() => {
   if (props.bottomFields) {
-    return props.workshop?.type === "assessment" ? $gettext("Modifier les suggestions") : $gettext("Modifier les remarques")
+    return props.workshop?.type === "assessment" ? $t("Modifier les suggestions") : $t("Modifier les remarques")
   } else {
-    return $gettext("Informations de l'atelier")
+    return $t("Informations de l'atelier")
   }
 })
 

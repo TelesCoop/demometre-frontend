@@ -12,7 +12,7 @@ import { useApiDelete, useApiGet, useApiPost } from "~/composables/api"
 import { useMessageStore } from "./messageStore"
 import { useUserStore } from "./userStore"
 import { useParticipationStore } from "./participationStore"
-import { useGettext } from "vue3-gettext"
+import { useI18n } from "vue-i18n"
 
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
@@ -37,11 +37,12 @@ export const useAssessmentStore = defineStore("assessment", {
   }),
   getters: {
     assessmentTypeTitle(): string {
-      const { $gettext } = useGettext()
+      const i18n = useI18n()
+      const $t = i18n.t
 
       return (this.currentAssessment?.municipality
-        ? $gettext("de ma ville")
-        : $gettext("de mon inter-communalité")
+        ? $t("de ma ville")
+        : $t("de mon inter-communalité")
       )
     },
     assessments: (state) => {
@@ -116,12 +117,13 @@ export const useAssessmentStore = defineStore("assessment", {
       return true
     },
     async addDocument(payload: any, assessmentId: number) {
-      const { $gettext } = useGettext()
+      const i18n = useI18n()
+      const $t = i18n.t
 
       const { data, error } = await useApiPost<AssessmentDocumentType>(
         `assessment-documents/`,
         payload,
-        $gettext("Impossible de téléverser le document"),
+        $t("Impossible de téléverser le document"),
       )
       if (!error.value) {
         this.assessmentById[assessmentId].documents.push(data.value)
