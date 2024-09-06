@@ -14,3 +14,4 @@ nuxt.d.ts
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+__pycache__

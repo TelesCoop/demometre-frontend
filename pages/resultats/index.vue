@@ -33,7 +33,7 @@
                   name="bar-chart-box-line"
                 />
               </span>
-              <span>{{ $gettext("Voir les résultats") }}</span>
+              <span>{{ $t("Voir les résultats") }}</span>
             </button>
           </div>
           <div
@@ -41,10 +41,10 @@
             class="notification"
           >
             <template v-if="assessmentStore.assessmentsLoaded">
-              {{ $gettext("Aucun résultat n'est actuellement visible") }}
+              {{ $t("Aucun résultat n'est actuellement visible") }}
             </template>
             <template v-else>
-              {{ $gettext("chargement...") }}
+              {{ $t("chargement...") }}
             </template>
           </div>
         </div>

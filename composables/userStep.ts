@@ -5,17 +5,18 @@ import {
   useProfilingJourney,
   getLastAnsweredProfilingQuestionId,
 } from "~/composables/journey"
-import { useGettext } from "vue3-gettext"
+import { useI18n } from "vue-i18n"
 
 
 export function useUserStep() {
   const assessmentStore = useAssessmentStore()
   const participationStore = useParticipationStore()
 
-  const { $gettext } = useGettext()
+  const i18n = useI18n()
+  const $t = i18n.t
 
-  const START_EVALUATION_TEXT = $gettext("Commencer l'évaluation")
-  const RESUME_EVALUATION_TEXT = $gettext("Reprendre l'évaluation")
+  const START_EVALUATION_TEXT = $t("Commencer l'évaluation")
+  const RESUME_EVALUATION_TEXT = $t("Reprendre l'évaluation")
 
   const state = computed(() => {
     if (!assessmentStore.currentAssessmentId) {

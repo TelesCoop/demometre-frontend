@@ -1,14 +1,14 @@
 <template>
   <div :class="`has-text-${props.color}-dark`">
     <p :class="`is-uppercase is-size-6bis mb-0_5`">
-      {{ $gettext("Question") }}
+      {{ $t("Question") }}
     </p>
     <p :class="`is-size-4 has-text-weight-bold mb-2`">
       {{ props.question.questionStatement }}
     </p>
     <slot />
     <p class="is-uppercase is-size-6bis mb-0_5 mt-2">
-      {{ $gettext("Acteur(s) concerné(s)") }}
+      {{ $t("Acteur(s) concerné(s)") }}
     </p>
     <div class="tags">
       <span
@@ -18,18 +18,21 @@
       >{{ profilingStore.roleById[roleId]?.name }}</span>
     </div>
     <p :class="`is-uppercase is-size-6bis mb-0_5`">
-      {{ $gettext("Villes concernées") }}
+      {{ $t("Villes concernées") }}
     </p>
     <div class="tags">
       <span
         v-if="props.question.populationLowerBound"
         :class="`tag is-${props.color}`"
-      >{{ $gettext("Plus de %{ inhabitants } habitants", { inhabitants: props.question.populationLowerBound }) }}</span>
+      >
+        <!--        {{ $gettext("Plus de %{ inhabitants } habitants", { inhabitants: props.question.populationLowerBound }) }}-->
+      </span>
       <span
         v-if="props.question.populationUpperBound"
         :class="`tag is-${props.color}`"
-      >{{ $gettext("Moins de %{ inhabitants } habitants", { inhabitants: props.question.populationUpperBound })
-      }}</span>
+      >
+        <!--        {{ $gettext("Moins de %{ inhabitants } habitants", { inhabitants: props.question.populationUpperBound }) }}-->
+      </span>
       <span
         v-if="
           !props.question.populationLowerBound &&

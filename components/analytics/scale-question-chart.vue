@@ -8,19 +8,19 @@
             type="checkbox"
           >
           <template v-if="simplifyChart">
-            {{ $gettext("Désactiver la vue simplifiée") }}
+            {{ $t("Désactiver la vue simplifiée") }}
           </template>
           <template v-else>
-            {{ $gettext("Activer la vue simplifiée") }}
+            {{ $t("Activer la vue simplifiée") }}
           </template>
         </label>
       </div>
       <div>
         <p :class="`has-text-${color}-hover`">
-          {{ $gettext("Personne(s) concernée(s)") }}
+          {{ $t("Personne(s) concernée(s)") }}
         </p>
         <p :class="`has-text-${color}-dark mt-0_5`">
-          {{ $gettext("Sélectionner ci-dessous un ou plusieurs acteurs") }}
+          {{ $t("Sélectionner ci-dessous un ou plusieurs acteurs") }}
         </p>
         <div class="buttons mt-0_5">
           <button
@@ -44,7 +44,7 @@
       class="scale-question-chart-grid mb-1"
       :class="`has-text-${color}-hover`"
     >
-      <div>{{ $gettext("Réponses") }}</div>
+      <div>{{ $t("Réponses") }}</div>
       <div class="scale-question-chart-sub-grid">
         <div
           v-for="(choice, choiceKey) in data.choices"

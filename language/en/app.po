@@ -1,12 +1,16 @@
+
 msgid ""
 msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-09-05 08:54+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: POEditor.com\n"
-"Project-Id-Version: démomètre\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: Babel 2.8.0\n"
 
 #: components/header/navbar.vue:95
 #: pages/evaluation/[assessmentId]/questionnaire/index.vue:36
@@ -17,17 +21,17 @@ msgstr "Save"
 msgid "Lancer une évaluation"
 msgstr "Start an evaluation"
 
-#: components/header/navbar.vue:192
+#: components/header/navbar.vue:193
 msgid "Accueil"
 msgstr "Home"
 
 #: components/footer.vue:10 components/footer.vue:49
-#: components/header/navbar.vue:196 pages/demometre.vue:254
-#: pages/demometre.vue:255
+#: components/header/navbar.vue:197 pages/demometre.vue:258
+#: pages/demometre.vue:259
 msgid "DémoMètre"
 msgstr "DémoMètre"
 
-#: components/footer.vue:67 components/header/navbar.vue:208
+#: components/footer.vue:67 components/header/navbar.vue:209
 msgid "Le projet"
 msgstr "The project"
 
@@ -39,7 +43,7 @@ msgstr "My account"
 msgid "Réinitialiser"
 msgstr "reset"
 
-#: components/footer.vue:61 components/header/navbar.vue:204
+#: components/footer.vue:61 components/header/navbar.vue:205
 #: utils/constants.ts:43
 msgid "Résultats"
 msgstr "Results"
@@ -50,8 +54,8 @@ msgstr "Results"
 msgid "Se connecter"
 msgstr "Log in"
 
-#: components/footer.vue:55 components/header/navbar.vue:200
-#: pages/utilisations-possibles.vue:92
+#: components/footer.vue:55 components/header/navbar.vue:201
+#: pages/utilisations-possibles.vue:93
 msgid "Utilisations possibles"
 msgstr "Possible uses"
 
@@ -63,7 +67,7 @@ msgstr ""
 msgid "Acteur(s) concerné(s)"
 msgstr ""
 
-#: pages/compte/index.vue:127
+#: pages/compte/index.vue:131
 msgid "Actions"
 msgstr "acts"
 
@@ -80,11 +84,11 @@ msgstr "email address"
 msgid "adresse@courriel.fr"
 msgstr "address@email.com"
 
-#: pages/evaluation/[assessmentId]/affinage/[questionId].vue:24
+#: pages/evaluation/[assessmentId]/affinage/[questionId].vue:25
 msgid "Affinage"
 msgstr "Refining"
 
-#: components/workshop/participantEditModal.vue:171
+#: components/workshop/participantEditModal.vue:172
 msgid "Ajout d'un participant"
 msgstr "Add a participant"
 
@@ -94,12 +98,12 @@ msgid "Ajouter un atelier"
 msgstr "Add a workshop"
 
 #: components/assessment/addDocumentModal.vue:10
-#: pages/compte/evaluation/[id]/index.vue:153
+#: pages/compte/evaluation/[id]/index.vue:151
 msgid "Ajouter un document"
 msgstr "Add a document"
 
-#: components/assessment/changeExpertModal.vue:39
-#: pages/compte/evaluation/[id]/index.vue:407
+#: components/assessment/changeExpertModal.vue:40
+#: pages/compte/evaluation/[id]/index.vue:404
 msgid "Ajouter un expert"
 msgstr "Add an expert"
 
@@ -110,7 +114,7 @@ msgstr "Add a link"
 #: components/account/editUserInfoModal.vue:54
 #: components/assessment/addDocumentModal.vue:98
 #: components/assessment/addWorkshopModal.vue:89
-#: components/assessment/changeExpertModal.vue:60
+#: components/assessment/changeExpertModal.vue:61
 #: components/assessment/informationsEditModal.vue:82
 #: components/assessment/workshops.vue:149 components/richTextInput.vue:94
 #: components/workshop/informationsEditModal.vue:91
@@ -140,11 +144,11 @@ msgstr "Results workshop"
 msgid "Au nom de qui lancez-vous cette évaluation  ?"
 msgstr ""
 
-#: pages/compte/evaluation/[id]/index.vue:177
+#: pages/compte/evaluation/[id]/index.vue:175
 msgid "Aucun document dans cette catégorie."
 msgstr "No document in this category"
 
-#: pages/compte/evaluation/[id]/index.vue:362
+#: pages/compte/evaluation/[id]/index.vue:361
 msgid "Aucun expert pour le moment"
 msgstr "No expert for the moment"
 
@@ -152,7 +156,7 @@ msgstr "No expert for the moment"
 msgid "Aucun participant renseigné"
 msgstr "No participant registered"
 
-#: pages/resultats/index.vue:43
+#: pages/resultats/index.vue:44
 msgid "Aucun résultat n'est actuellement visible"
 msgstr "No results found"
 
@@ -168,15 +172,15 @@ msgstr "No evaluation"
 msgid "Aucune intercommunalité ne correspond à ce code postal"
 msgstr ""
 
-#: open_democracy_back/utils.py:37
+#: composables/types.ts:297
 msgid "Autre"
 msgstr "Other"
 
-#: open_democracy_back/constants.py:5
+#: utils/constants.ts:32
 msgid "Autres documents"
 msgstr "Other documents"
 
-#: pages/projet.vue:146 pages/projet.vue:28
+#: pages/projet.vue:28 pages/projet.vue:146
 msgid "Avec qui"
 msgstr "With whom"
 
@@ -184,7 +188,7 @@ msgstr "With whom"
 msgid "Bientôt disponible !"
 msgstr "Soon available !"
 
-#: open_democracy_back/models/pages_models.py:125
+#: components/footer.vue:75
 msgid "Blog"
 msgstr "Blog"
 
@@ -196,11 +200,11 @@ msgstr "Let's get started!"
 msgid "C’est parti !"
 msgstr "Let's get started!"
 
-#: open_democracy_back/models/assessment_models.py:342
+#: utils/constants.ts:18
 msgid "calendrier"
 msgstr "timetable"
 
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:309
+#: components/assessment/addDocumentModal.vue:34
 msgid "Catégorie"
 msgstr "category"
 
@@ -213,7 +217,7 @@ msgid "Cette section est pour l'instant vide"
 msgstr "This section is empty for the moment"
 
 #: components/assessment/changeExpertModal.vue:10
-#: pages/compte/evaluation/[id]/index.vue:406
+#: pages/compte/evaluation/[id]/index.vue:403
 msgid "Changer d'expert"
 msgstr "Change the expert"
 
@@ -256,12 +260,12 @@ msgstr "Selec an answer"
 msgid "Clôturer"
 msgstr "Close"
 
-#: components/assessment/workshops.vue:121 pages/compte/ateliers/index.vue:173
-#: pages/compte/ateliers/index.vue:93
+#: components/assessment/workshops.vue:121 pages/compte/ateliers/index.vue:93
+#: pages/compte/ateliers/index.vue:173
 msgid "Clôturer l'atelier"
 msgstr "Close the workshop"
 
-#: pages/compte/evaluation/[id]/index.vue:215
+#: pages/compte/evaluation/[id]/index.vue:213
 msgid "Clôturer l'évaluation"
 msgstr "Complete the evaluation"
 
@@ -269,7 +273,7 @@ msgstr "Complete the evaluation"
 msgid "Commencer"
 msgstr "Start"
 
-#: open_democracy_back/models/pages_models.py:1089
+#: composables/userStep.ts:18
 msgid "Commencer l'évaluation"
 msgstr "Start the evaluation"
 
@@ -285,30 +289,27 @@ msgstr "Comment"
 msgid "Comment on a construit le référentiel"
 msgstr ""
 
-#: open_democracy_back/models/animator_models.py:36
+#: utils/constants.ts:24
 msgid "commentaires"
 msgstr "comments"
 
-#: open_democracy_back/models/assessment_models.py:117
-#: open_democracy_back/models/assessment_models.py:172
-#: open_democracy_back/models/assessment_models.py:318
-#: open_democracy_back/utils.py:27
+#: composables/types.ts:191 utils/constants.ts:54
 msgid "Commune"
 msgstr "Town"
 
-#: open_democracy_back/models/settings_models.py:32
+#: components/footer.vue:24
 msgid "Conditions générales d'utilisation"
 msgstr "Terms and conditions of use"
 
-#: open_democracy_back/models/settings_models.py:40
+#: components/footer.vue:29
 msgid "Conditions générales de vente"
 msgstr "Terms and conditions of sale"
 
-#: composables/useConfirm.ts:10
+#: composables/useConfirm.ts:12
 msgid "Confirmation"
 msgstr "Confirmation"
 
-#: composables/useConfirm.ts:11 pages/nouveau-mdp.vue:148
+#: composables/useConfirm.ts:13 pages/nouveau-mdp.vue:139
 msgid "Confirmer"
 msgstr "Confirmeur"
 
@@ -316,7 +317,7 @@ msgstr "Confirmeur"
 msgid "Confirmer le mot de passe"
 msgstr "Confirm password"
 
-#: pages/nouveau-mdp.vue:101
+#: pages/nouveau-mdp.vue:95
 msgid "Confirmer le nouveau mot de passe"
 msgstr "Confirm new password"
 
@@ -324,12 +325,11 @@ msgstr "Confirm new password"
 msgid "Connectez-vous"
 msgstr "Connect to"
 
-#: pages/login.vue:135 pages/login.vue:9 pages/login.vue:93
+#: pages/login.vue:9 pages/login.vue:93 pages/login.vue:136
 msgid "Connexion"
 msgstr "Report"
 
-#: open_democracy_back/models/animator_models.py:37
-#: open_democracy_back/models/assessment_models.py:337
+#: utils/constants.ts:15 utils/constants.ts:21
 msgid "contexte"
 msgstr "Context"
 
@@ -337,7 +337,7 @@ msgstr "Context"
 msgid "Courriel"
 msgstr "E-mail"
 
-#: pages/signup.vue:236
+#: pages/signup.vue:237
 msgid "Création de compte"
 msgstr "Account creation"
 
@@ -346,7 +346,7 @@ msgstr "Account creation"
 msgid "Créer un compte"
 msgstr "Create an account"
 
-#: components/richTextInput.vue:267
+#: components/richTextInput.vue:268
 msgid "Créer un hyperlien"
 msgstr "Create a hyperlink"
 
@@ -367,7 +367,7 @@ msgstr "Date"
 msgid "Date (MM/JJ/AAAA)"
 msgstr "Date (MM/DD/YYYY)"
 
-#: pages/compte/index.vue:122
+#: pages/compte/index.vue:124
 msgid "Date de création"
 msgstr "Creation date"
 
@@ -387,19 +387,15 @@ msgstr "of my intercommunality"
 msgid "Definitions"
 msgstr "Definitions"
 
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:380
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:426
+#: components/form/question.vue:139
 msgid "Définitions"
 msgstr "Definitions"
 
-#: open_democracy_back/models/assessment_models.py:72
-#: open_democracy_back/models/assessment_models.py:85
-#: open_democracy_back/models/assessment_models.py:332
-#: open_democracy_back/utils.py:29 open_democracy_back/utils.py:106
+#: composables/types.ts:193 utils/constants.ts:56
 msgid "Département"
 msgstr "Department"
 
-#: open_democracy_back/models/animator_models.py:38
+#: utils/constants.ts:23
 msgid "déroulé"
 msgstr ""
 
@@ -415,15 +411,15 @@ msgstr "Disable the simplified view"
 msgid "Designé par "
 msgstr "Designated by"
 
-#: pages/compte/index.vue:163
+#: pages/compte/index.vue:167
 msgid "Détails"
 msgstr "detail"
 
-#: open_democracy_back/utils.py:41
+#: composables/types.ts:204
 msgid "Diagnostic rapide"
 msgstr "Rapid assessment"
 
-#: pages/compte/index.vue:124
+#: pages/compte/index.vue:128
 msgid "Échelon"
 msgstr "Level"
 
@@ -431,7 +427,7 @@ msgstr "Level"
 msgid "Email et mot de passe ne correspondent pas"
 msgstr "Email and password do not match"
 
-#: pages/compte/evaluation/[id]/index.vue:415
+#: pages/compte/evaluation/[id]/index.vue:412
 msgid "En clôturant l’évaluation, vous mettez fin à l’évaluation et n’autorisez plus de participation. Cette action est irréversible, n’oubliez pas de bien vérifier avant."
 msgstr "In closing the évaluation, you end the evaluation and you no longer authorize participation. This action is irreversible, remember to check well before."
 
@@ -450,14 +446,15 @@ msgstr "Online"
 
 #: components/modal/cancel-participation-modal.vue:16
 msgid "En réinitialisant l'évaluation, vous perdrez l'ensemble de vos réponses."
-msgstr "By resetting the evaluation, \n"
+msgstr ""
+"By resetting the evaluation, \n"
 "you lose all of your answers"
 
 #: pages/resultats/[assessmentId].vue:20
 msgid "En savoir plus sur le DémoMètre"
 msgstr "Learn more about the DémoMètre"
 
-#: pages/compte/evaluation/[id]/ateliers/[workshopId]/index.vue:245
+#: pages/compte/evaluation/[id]/ateliers/[workshopId]/index.vue:246
 msgid "En supprimant ce participant, vous supprimez également les évaluations du participant. Cette action est irréversible."
 msgstr "By removing this participant, you also delete the participant’s evaluations. This action is irreversible."
 
@@ -465,27 +462,27 @@ msgstr "By removing this participant, you also delete the participant’s evalua
 msgid "En tant qu'initiateur ou expert de l'évaluation, pouvez modifier les informations."
 msgstr "As initiator or expert of the evaluation, you can change the information."
 
-#: pages/signup.vue:230
+#: pages/signup.vue:231
 msgid "Enregistrer son compte"
 msgstr "Register your account"
 
-#: pages/nouveau-mdp.vue:57
+#: pages/nouveau-mdp.vue:54
 msgid "Envoyer un lien de récupération"
 msgstr "Send recovery link"
 
-#: pages/compte/evaluation/[id]/index.vue:190
+#: pages/compte/evaluation/[id]/index.vue:188
 msgid "État de l'évaluation"
 msgstr "Evaluation's status"
 
-#: pages/compte/evaluation/[id]/index.vue:267
+#: pages/compte/evaluation/[id]/index.vue:265
 msgid "État de paiement de la redevance"
 msgstr "Payment of the fee"
 
-#: open_democracy_back/models/assessment_models.py:405
+#: components/participation/board/index.vue:15 utils/constants.ts:37
 msgid "Évaluation"
 msgstr "Evaluation"
 
-#: open_democracy_back/utils.py:43
+#: composables/types.ts:206
 msgid "Evaluation avec expert"
 msgstr "Evaluation with a professional expert"
 
@@ -493,7 +490,7 @@ msgstr "Evaluation with a professional expert"
 msgid "Évaluation en cours"
 msgstr "Evaluation in progress"
 
-#: open_democracy_back/utils.py:42
+#: composables/types.ts:205
 msgid "Evaluation participative"
 msgstr "Participatory evaluation"
 
@@ -521,11 +518,11 @@ msgid_plural "Experts"
 msgstr[0] "Expert"
 msgstr[1] ""
 
-#: open_democracy_back/constants.py:6
+#: utils/constants.ts:33
 msgid "Factures"
 msgstr "Invoices"
 
-#: open_democracy_back/models/settings_models.py:82
+#: components/footer.vue:87
 msgid "FAQ"
 msgstr "Frequently Asked Questions (FAQs)"
 
@@ -585,7 +582,7 @@ msgstr "Unable to unpload the document"
 msgid "imprimer"
 msgstr "Print"
 
-#: components/workshop/informationsEditModal.vue:122
+#: components/workshop/informationsEditModal.vue:123
 msgid "Informations de l'atelier"
 msgstr "Workshop's information"
 
@@ -593,8 +590,8 @@ msgstr "Workshop's information"
 msgid "Informations de l'évaluation"
 msgstr "Evaluation's information"
 
-#: pages/evaluation/initialisation/[assessmentId]/questions-objectives/index.vue:47
-#: pages/evaluation/initialisation/[assessmentId]/validation.vue:50
+#: pages/evaluation/initialisation/[assessmentId]/questions-objectives/index.vue:48
+#: pages/evaluation/initialisation/[assessmentId]/validation.vue:51
 msgid "Initialisation"
 msgstr "Initialisation"
 
@@ -602,9 +599,7 @@ msgstr "Initialisation"
 msgid "Initiateur"
 msgstr "Iniator"
 
-#: open_democracy_back/models/assessment_models.py:163
-#: open_democracy_back/models/assessment_models.py:311
-#: open_democracy_back/utils.py:28
+#: composables/types.ts:192 utils/constants.ts:55
 msgid "Intercommunalité"
 msgstr "Intercommunality"
 
@@ -624,7 +619,7 @@ msgstr "The email does not match the initiator instance"
 msgid "L'évaluation a déjà été initialisée"
 msgstr "Evaluation has already been initiated"
 
-#: pages/compte/evaluation/[id]/index.vue:277
+#: pages/compte/evaluation/[id]/index.vue:275
 msgid "L’expert a bien réglé le paiement de la commission d’utilisation du DémoMètre."
 msgstr "The expert has paid the commission for using the DemoMeter"
 
@@ -640,7 +635,7 @@ msgstr "The form of the email is not correct"
 msgid "La question est à répondre uniquement si vous avez un des profils suivants :"
 msgstr "The question is to be answered only if you have one of the following profiles :"
 
-#: pages/login.vue:156 pages/nouveau-mdp.vue:191 pages/signup.vue:184
+#: pages/login.vue:157 pages/nouveau-mdp.vue:182 pages/signup.vue:185
 msgid "Le courriel doit contenir @"
 msgstr "The email must contain @"
 
@@ -652,11 +647,11 @@ msgstr "The mail is already used"
 msgid "Le mail n'est pas valide"
 msgstr "The e-mail address is not valid"
 
-#: pages/login.vue:168 pages/nouveau-mdp.vue:204 pages/signup.vue:197
+#: pages/login.vue:169 pages/nouveau-mdp.vue:195 pages/signup.vue:198
 msgid "Le mot de passe ne peut pas être vide"
 msgstr "Password cannot be empty"
 
-#: pages/compte/evaluation/[id]/index.vue:296
+#: pages/compte/evaluation/[id]/index.vue:294
 msgid "Le paiement n'a pas encore été effectué."
 msgstr "Payment has not yet been made"
 
@@ -664,7 +659,7 @@ msgstr "Payment has not yet been made"
 msgid "Le type de l'initiateur est incorrect"
 msgstr "Initiator type is incorrect"
 
-#: pages/nouveau-mdp.vue:218 pages/signup.vue:213
+#: pages/nouveau-mdp.vue:209 pages/signup.vue:214
 msgid "Les deux mots de passe sont différents"
 msgstr "The two passwords are different"
 
@@ -681,7 +676,7 @@ msgstr "License"
 msgid "Lieu"
 msgstr "Place"
 
-#: components/richTextInput.vue:259
+#: components/richTextInput.vue:260
 msgid "Liste à puce"
 msgstr "Bullet list"
 
@@ -689,15 +684,15 @@ msgstr "Bullet list"
 msgid "Liste des profils et de leurs conditions :"
 msgstr "List of profiles and their conditions"
 
-#: components/richTextInput.vue:251
+#: components/richTextInput.vue:252
 msgid "Liste numérotée"
 msgstr "Numbered list"
 
-#: pages/compte/index.vue:125
+#: pages/compte/index.vue:129
 msgid "Localité"
 msgstr "Place"
 
-#: composables/types.ts:292
+#: composables/types.ts:294
 msgid "Ma collectivité"
 msgstr "Local authority"
 
@@ -709,7 +704,7 @@ msgstr "Email"
 msgid "Marqueurs"
 msgstr "Markers"
 
-#: open_democracy_back/models/settings_models.py:24
+#: components/footer.vue:34
 msgid "Mentions légales"
 msgstr "Legal information"
 
@@ -721,7 +716,7 @@ msgstr "My information"
 msgid "Méthode"
 msgstr "Method"
 
-#: components/workshop/participantEditModal.vue:173
+#: components/workshop/participantEditModal.vue:174
 msgid "Modification d'un participant"
 msgstr "Modification of a participant"
 
@@ -729,15 +724,15 @@ msgstr "Modification of a participant"
 msgid "modifier"
 msgstr " Modifier"
 
-#: pages/compte/evaluation/[id]/index.vue:398 pages/compte/index.vue:50
+#: pages/compte/evaluation/[id]/index.vue:395 pages/compte/index.vue:50
 msgid "Modifier les informations"
 msgstr "Modify the information"
 
-#: components/workshop/informationsEditModal.vue:120 utils/constants.ts:46
+#: components/workshop/informationsEditModal.vue:121 utils/constants.ts:46
 msgid "Modifier les remarques"
 msgstr "Edit remarks"
 
-#: components/workshop/informationsEditModal.vue:120 utils/constants.ts:40
+#: components/workshop/informationsEditModal.vue:121 utils/constants.ts:40
 msgid "Modifier les suggestions"
 msgstr "Edit suggestions"
 
@@ -794,15 +789,16 @@ msgstr ""
 msgid "Nombre de participants"
 msgstr "Number of participants"
 
-#: pages/compte/evaluation/[id]/index.vue:196
+#: pages/compte/evaluation/[id]/index.vue:194
 msgid "Nombre de questions répondues :"
 msgstr "Number of questions answered :"
 
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:1082
+#: components/modal/cancel-participation-modal.vue:30
+#: components/response/input/binary.vue:40
 msgid "Non"
 msgstr "No"
 
-#: composables/types.ts:205
+#: composables/types.ts:207
 msgid "Non renseigné"
 msgstr "Not specified"
 
@@ -814,24 +810,23 @@ msgstr "No, do not record"
 msgid "Nous avons bien pris en compte votre demande"
 msgstr "We took into account your request"
 
-#: components/assessment/add-expert.vue:28
+#: components/assessment/add-expert.vue:24
 msgid "Nous contactez"
 msgstr "Contact us"
 
-#: pages/nouveau-mdp.vue:164 pages/nouveau-mdp.vue:67
+#: pages/nouveau-mdp.vue:64 pages/nouveau-mdp.vue:156
 msgid "Nouveau mot de passe"
 msgstr "New password"
 
-#: open_democracy_back/models/animator_models.py:50
-#: open_democracy_back/models/assessment_models.py:338
+#: utils/constants.ts:16 utils/constants.ts:22
 msgid "objectifs"
 msgstr "objectives"
 
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:1082
+#: components/response/input/binary.vue:35
 msgid "Oui"
 msgstr "Yes"
 
-#: pages/compte/evaluation/[id]/index.vue:417
+#: pages/compte/evaluation/[id]/index.vue:414
 msgid "Oui, clôturer l'évaluation"
 msgstr "Yes, close the evaluation"
 
@@ -843,15 +838,15 @@ msgstr "Yes, create an account"
 msgid "Oui, reinitialiser"
 msgstr "Yes, reset"
 
-#: pages/compte/evaluation/[id]/ateliers/[workshopId]/index.vue:247
+#: pages/compte/evaluation/[id]/ateliers/[workshopId]/index.vue:248
 msgid "Oui, supprimer"
 msgstr "Yes, delete"
 
-#: pages/compte/evaluation/[id]/index.vue:274
+#: pages/compte/evaluation/[id]/index.vue:272
 msgid "Paiement effectué"
 msgstr "Payment made"
 
-#: pages/compte/evaluation/[id]/index.vue:294
+#: pages/compte/evaluation/[id]/index.vue:292
 msgid "Paiement en attente"
 msgstr "Pending payment"
 
@@ -863,11 +858,11 @@ msgstr "Participants"
 msgid "Participants"
 msgstr "Participants"
 
-#: open_democracy_back/models/assessment_models.py:340
+#: utils/constants.ts:17
 msgid "parties prenantes"
 msgstr "stakeholders"
 
-#: pages/compte/index.vue:126
+#: pages/compte/index.vue:130
 msgid "Pays"
 msgstr "Countries"
 
@@ -892,7 +887,7 @@ msgstr "Points of improvement"
 msgid "Points forts"
 msgstr "Strong points"
 
-#: open_democracy_back/models/settings_models.py:48
+#: components/footer.vue:42
 msgid "Politique de confidentialité"
 msgstr "Privacy policy"
 
@@ -908,11 +903,11 @@ msgstr "Why"
 msgid "Poursuivre l'évaluation"
 msgstr "Continue evaluation"
 
-#: components/questionnaire/pillar-referential.vue:175
+#: components/questionnaire/pillar-referential.vue:169
 msgid "Premier critère"
 msgstr "First criteria"
 
-#: components/questionnaire/pillar-referential.vue:208
+#: components/questionnaire/pillar-referential.vue:199
 msgid "Premier marqueur"
 msgstr "First marker"
 
@@ -936,13 +931,13 @@ msgstr "Question of refining"
 msgid "Question suivante"
 msgstr "Next question "
 
-#: open_democracy_back/models/assessment_models.py:248
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:166
+#: pages/compte/index.vue:123 pages/export/questionnaire/[roleId].vue:5
+#: pages/export/questionnaire/[roleId].vue:18
 msgid "Questionnaire"
 msgstr "Questionnaire"
 
-#: pages/export/questionnaire/index.vue:27
 #: pages/export/questionnaire/index.vue:28
+#: pages/export/questionnaire/index.vue:29
 msgid "Questionnaire papier"
 msgstr "Paper questionnaire"
 
@@ -950,7 +945,7 @@ msgstr "Paper questionnaire"
 msgid "Questions"
 msgstr "Questions"
 
-#: open_democracy_back/constants.py:4
+#: utils/constants.ts:31
 msgid "Rapports d'évaluation"
 msgstr "Evaluation reports"
 
@@ -962,18 +957,15 @@ msgstr "Produced by"
 msgid "Rechercher"
 msgstr "Search for"
 
-#: pages/compte/index.vue:155
+#: pages/compte/index.vue:159
 msgid "Redevance impayée"
 msgstr "Unpaid fee"
 
-#: pages/compte/index.vue:151
+#: pages/compte/index.vue:155
 msgid "Redevance payée"
 msgstr "Fee paid"
 
-#: open_democracy_back/models/assessment_models.py:44
-#: open_democracy_back/models/assessment_models.py:54
-#: open_democracy_back/models/assessment_models.py:325
-#: open_democracy_back/utils.py:30 open_democracy_back/utils.py:107
+#: composables/types.ts:194 utils/constants.ts:57
 msgid "Région"
 msgstr "Region"
 
@@ -994,13 +986,13 @@ msgid "Réponse(s)"
 msgstr "Response(s)"
 
 #: components/analytics/scale-question-chart.vue:47
-#: components/form/question.vue:131
+#: components/form/question.vue:133
 #: components/questionnaire/pillar-animator-responses.vue:66
 #: components/workshop/participantEditModal.vue:68
 msgid "Réponses"
 msgstr "Answers"
 
-#: composables/userStep.ts:13
+#: composables/userStep.ts:19
 msgid "Reprendre l'évaluation"
 msgstr "Resume the assessment "
 
@@ -1013,8 +1005,7 @@ msgstr "Current representation"
 msgid "Représentativité des participants"
 msgstr "The participants are representative."
 
-#: open_democracy_back/models/contents_models.py:153
-#: open_democracy_back/models/pages_models.py:132
+#: components/footer.vue:81
 msgid "Ressources"
 msgstr "Resources"
 
@@ -1030,7 +1021,7 @@ msgstr "Results by pillars"
 msgid "Retirer cet expert"
 msgstr "Remove this expert"
 
-#: components/richTextInput.vue:275
+#: components/richTextInput.vue:276
 msgid "Retirer l'hyperlien"
 msgstr "Remove the hyperlink"
 
@@ -1051,19 +1042,20 @@ msgstr "Return to the workshop"
 msgid "Revenir à mon compte"
 msgstr "Return to my account"
 
-#: components/questionnaire/pillar-referential.vue:149
+#: components/questionnaire/pillar-referential.vue:146
 msgid "Revenir au marqueur"
 msgstr "Return to the marker"
 
-#: components/questionnaire/pillar-referential.vue:169
+#: components/questionnaire/pillar-referential.vue:163
 msgid "Revenir au pilier"
 msgstr "Return to the pillar"
 
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:66
+#: components/workshop/participantEditModal.vue:48
+#: pages/compte/evaluation/[id]/ateliers/[workshopId]/index.vue:92
 msgid "Rôle"
 msgstr "Role"
 
-#: pages/signup.vue:231
+#: pages/signup.vue:232
 msgid "S'enregistrer"
 msgstr "To register"
 
@@ -1071,7 +1063,7 @@ msgstr "To register"
 msgid "S'enregistrer pour conserver vos résultats"
 msgstr "Register to save your results"
 
-#: pages/signup.vue:237
+#: pages/signup.vue:238
 msgid "S'inscrire"
 msgstr "Sign up"
 
@@ -1165,35 +1157,35 @@ msgstr "is complete"
 msgid "Territoire"
 msgstr "Territory"
 
-#: components/richTextInput.vue:235
+#: components/richTextInput.vue:236
 msgid "Text gras"
 msgstr "Bold text"
 
-#: components/richTextInput.vue:243
+#: components/richTextInput.vue:244
 msgid "Texte italique"
 msgstr "Italic text"
 
-#: components/richTextInput.vue:208
+#: components/richTextInput.vue:209
 msgid "titre 1"
 msgstr "Heading 1"
 
-#: components/richTextInput.vue:217
+#: components/richTextInput.vue:218
 msgid "titre 2"
 msgstr "Heading 2"
 
-#: components/richTextInput.vue:226
+#: components/richTextInput.vue:227
 msgid "titre 3"
 msgstr "Heading 3"
 
-#: components/richTextInput.vue:209
+#: components/richTextInput.vue:210
 msgid "Titre de niveau 1"
 msgstr "Level 1 heading"
 
-#: components/richTextInput.vue:218
+#: components/richTextInput.vue:219
 msgid "Titre de niveau 2"
 msgstr "Level 2 heading"
 
-#: components/richTextInput.vue:227
+#: components/richTextInput.vue:228
 msgid "Titre de niveau 3"
 msgstr "Level 3 heading"
 
@@ -1206,15 +1198,15 @@ msgstr "Totals"
 msgid "Type d'atelier"
 msgstr "Type of workshop"
 
-#: open_democracy_back/models/assessment_models.py:184
+#: pages/compte/evaluation/[id]/index.vue:75
 msgid "type d'évaluation"
 msgstr "Type of evaluation"
 
-#: open_democracy_back/utils.py:36
+#: composables/types.ts:296
 msgid "Un particulier"
 msgstr "An individual"
 
-#: open_democracy_back/utils.py:35
+#: composables/types.ts:295
 msgid "Une association"
 msgstr "An association"
 
@@ -1230,7 +1222,19 @@ msgstr "An error occurred while saving"
 msgid "URL"
 msgstr "URL"
 
-#: open_democracy_back/models/pages_models.py:1249
+#: components/account/editUserInfoModal.vue:42
+#: components/assessment/addDocumentModal.vue:86
+#: components/assessment/addWorkshopModal.vue:77
+#: components/assessment/changeExpertModal.vue:49
+#: components/assessment/informationsEditModal.vue:70
+#: components/form/buttons.vue:15 components/form/localisation.vue:120
+#: components/richTextInput.vue:82
+#: components/workshop/informationsEditModal.vue:79
+#: components/workshop/participantEditModal.vue:120
+#: pages/compte/ateliers/index.vue:149
+#: pages/evaluation/initialisation/index.vue:93
+#: pages/evaluation/initialisation/index.vue:154
+#: pages/evaluation/initialisation/index.vue:214
 msgid "Valider"
 msgstr "Submit"
 
@@ -1246,7 +1250,7 @@ msgstr "Please check your email and follow the instructions."
 msgid "Villes concernées"
 msgstr " Cities concerned"
 
-#: components/form/buttons.vue:81 pages/compte/evaluation/[id]/index.vue:240
+#: components/form/buttons.vue:81 pages/compte/evaluation/[id]/index.vue:238
 #: pages/evaluation/[assessmentId]/questionnaire/index.vue:49
 #: pages/resultats/index.vue:36
 msgid "Voir les résultats"
@@ -1296,7 +1300,7 @@ msgstr "You do not have to answer this question."
 msgid "Vous n'avez pas encore de compte ?"
 msgstr "You don’t have an account yet?"
 
-#: pages/compte/evaluation/[id]/index.vue:205
+#: pages/compte/evaluation/[id]/index.vue:203
 msgid "Vous n'avez pas participé à cette évaluation."
 msgstr "You did not participate in this assessment."
 
@@ -1308,45 +1312,35 @@ msgstr "You can then return to it via the \"My account\" tab."
 msgid "Vous renseigner"
 msgstr "Enquire"
 
-#: pages/compte/index.vue:145
-msgctxt "l'utilisateur est participant au questionnaire, mais n'a pas commencé à le remplir"
 msgid "participant - non encore rempli"
-msgstr "participant - not yet filled"
+msgstr ""
 
-#: pages/evaluation/participation/[assessmentId]/index.vue:67
-msgctxt "lancement d'une évaluation"
-msgid "C'est parti !"
-msgstr "Let's get started!"
-
-#: components/assessment/addWorkshopModal.vue:66
-msgctxt "nom de la locale, en-UK en anglais"
 msgid "fr-FR"
-msgstr "en-UK"
+msgstr ""
 
-#: components/participation/board/index.vue:27
-msgctxt "Qui a initié l'évaluation"
 msgid "Portée par"
-msgstr "Carried by"
+msgstr ""
 
-#: pages/compte/index.vue:120
-msgctxt "relatif à une évaluation"
+#: open_democracy_back/models/assessment_models.py:30
+#: open_democracy_back/models/assessment_models.py:51
+#: open_democracy_back/models/assessment_models.py:82
+#: open_democracy_back/models/assessment_models.py:141
+#: open_democracy_back/models/contents_models.py:159
+#: open_democracy_back/models/contents_models.py:206
+#: open_democracy_back/models/questionnaire_and_profiling_models.py:37
+#: open_democracy_back/models/questionnaire_and_profiling_models.py:126
+#: open_democracy_back/models/questionnaire_and_profiling_models.py:172
+#: open_democracy_back/models/questionnaire_and_profiling_models.py:227
+#: open_democracy_back/models/questionnaire_and_profiling_models.py:331
+#: open_democracy_back/models/questionnaire_and_profiling_models.py:484
 msgid "Nom"
-msgstr "Name"
+msgstr ""
 
-#: pages/compte/index.vue:123
-msgctxt "rôle de l'utilisateur dans l'évaluation"
-msgid "Rôle"
-msgstr "Role"
-
-#: pages/resultats/[assessmentId].vue:79
-msgctxt "Une question peut être explicitée par une autre"
 msgid "Explicitée par :"
-msgstr "Explained by"
+msgstr ""
 
-#: pages/resultats/[assessmentId].vue:102
-msgctxt "Une question peut être explicitée par une autre"
 msgid "Permet d'expliciter :"
-msgstr "Helps to clarify"
+msgstr ""
 
 #: my_auth/models.py:10 open_democracy_back/models/animator_models.py:10
 msgid "email address"
@@ -1390,21 +1384,6 @@ msgstr ""
 msgid "Code"
 msgstr ""
 
-#: open_democracy_back/models/assessment_models.py:30
-#: open_democracy_back/models/assessment_models.py:51
-#: open_democracy_back/models/assessment_models.py:82
-#: open_democracy_back/models/assessment_models.py:141
-#: open_democracy_back/models/contents_models.py:159
-#: open_democracy_back/models/contents_models.py:206
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:37
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:126
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:172
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:227
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:331
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:484
-msgid "Nom"
-msgstr ""
-
 #: open_democracy_back/models/assessment_models.py:45
 msgid "Régions"
 msgstr ""
@@ -1413,13 +1392,10 @@ msgstr ""
 msgid "Départements"
 msgstr ""
 
-#: open_democracy_back/models/assessment_models.py:80
-msgctxt "unique code for a city"
 msgid "Code insee"
 msgstr ""
 
-#: open_democracy_back/models/assessment_models.py:91
-msgctxt "number of inhabitants"
+#: open_democracy_back/models/assessment_models.py:142
 msgid "Population"
 msgstr ""
 
@@ -1442,10 +1418,6 @@ msgstr ""
 
 #: open_democracy_back/models/assessment_models.py:140
 msgid "Code siren"
-msgstr ""
-
-#: open_democracy_back/models/assessment_models.py:142
-msgid "Population"
 msgstr ""
 
 #: open_democracy_back/models/assessment_models.py:150
@@ -2810,10 +2782,12 @@ msgid "Filter by question"
 msgstr ""
 
 #: open_democracy_back/models/questionnaire_and_profiling_models.py:1063
+#, python-format
 msgid "La réponse de la question d'affinage %(question_code)s doit être %(response)s"
 msgstr ""
 
 #: open_democracy_back/models/questionnaire_and_profiling_models.py:1076
+#, python-format
 msgid "égale à %(response_choices)s"
 msgstr ""
 
@@ -2983,4 +2957,32 @@ msgstr ""
 
 #: open_democracy_back/utils.py:105
 msgid "Commune/EPCI"
+msgstr ""
+
+#: pages/evaluation/initialisation/index.vue:127
+msgid "Au nom de qui lancez-vous cette évaluation ?"
+msgstr ""
+
+#: pages/compte/evaluation/[id]/index.vue:413
+msgid "Souhaitez-vous clôturer l'évaluation"
+msgstr ""
+
+#: components/modal/save-participation-modal.vue:17
+msgid "Vous pourrez ensuite y revenir via l'onglet Mon compte."
+msgstr ""
+
+#: components/analytics/choice-question-chart.vue:61
+msgid "for the role"
+msgstr ""
+
+#: pages/index.vue:3
+msgid "Welcome"
+msgstr ""
+
+#: pages/resultats/index.vue:47
+msgid "chargement..."
+msgstr ""
+
+#: pages/compte/evaluation/[id]/ateliers/[workshopId]/index.vue:247
+msgid "Supprimer le participant :"
 msgstr ""

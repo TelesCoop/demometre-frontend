@@ -7,7 +7,7 @@ import {
   WorkshopParticipation,
 } from "~/composables/types"
 import { useMessageStore } from "./messageStore"
-import { useGettext } from "vue3-gettext"
+import { useI18n } from "vue-i18n"
 
 type FullWorkshop = Workshop & {
   participations: WorkshopParticipation[]
@@ -98,7 +98,8 @@ export const useWorkshopStore = defineStore("workshop", {
       workshopId: number,
       question: Question,
     ) {
-      const { $gettext } = useGettext()
+      const i18n = useI18n()
+      const $t = i18n.t
       let errorOccured = false
       if (question.objectivity === Objectivity.OBJECTIVE) {
         const apiResponse = await useApiPost<QuestionResponse>(
@@ -131,18 +132,19 @@ export const useWorkshopStore = defineStore("workshop", {
       const messageStore = useMessageStore()
 
       if (errorOccured) {
-        messageStore.setError($gettext("Une erreur s'est produite lors de la sauvegarde"))
+        messageStore.setError($t("Une erreur s'est produite lors de la sauvegarde"))
         return false
       }
-      messageStore.setInfo($gettext("Sauvegarde réussie"))
+      messageStore.setInfo($t("Sauvegarde réussie"))
       return true
     },
     async createOrUpdateWorkshop(workshop: Workshop) {
-      const { $gettext } = useGettext()
+      const i18n = useI18n()
+      const $t = i18n.t
       const {
         data,
         error,
-      } = await useApiPost<Workshop>(`workshops/`, workshop, $gettext("Impossible d'ajouter l'atelier"))
+      } = await useApiPost<Workshop>(`workshops/`, workshop, $t("Impossible d'ajouter l'atelier"))
       if (!error.value) {
         this.workshopById[data.value.id] = data.value
         return true
@@ -160,15 +162,16 @@ export const useWorkshopStore = defineStore("workshop", {
       }
     },
     async deleteParticipation(participationId: number) {
-      const { $gettext } = useGettext()
+      const i18n = useI18n()
+      const $t = i18n.t
       const workshopId = this.participationById[participationId].workshopId
       if (!workshopId) {
-        useMessageStore().setMessage($gettext("Impossible de supprimer le participant (impossible de récupérer son atelier)"), "error")
+        useMessageStore().setMessage($t("Impossible de supprimer le participant (impossible de récupérer son atelier)"), "error")
         return false
       }
       const { error } = await useApiDelete(
         `workshops/participation/${participationId}/`,
-        $gettext("Impossible de supprimer le participant"),
+        $t("Impossible de supprimer le participant"),
       )
       if (error.value) {
         return false

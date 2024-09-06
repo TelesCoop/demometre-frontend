@@ -4,11 +4,11 @@
       class="choice-question-chart-grid mb-1"
       :class="`has-text-${color}-hover`"
     >
-      <div>{{ $gettext("Réponse(s)") }}</div>
+      <div>{{ $t("Réponse(s)") }}</div>
       <div>
-        <p>{{ $gettext("Personne(s) concernée(s)") }}</p>
+        <p>{{ $t("Personne(s) concernée(s)") }}</p>
         <p :class="`has-text-${color}-dark mt-0_5`">
-          {{ $gettext("Sélectionner ci-dessous un ou plusieurs acteurs") }}
+          {{ $t("Sélectionner ci-dessous un ou plusieurs acteurs") }}
         </p>
         <div class="buttons mt-0_5">
           <button
@@ -27,7 +27,7 @@
           </button>
         </div>
       </div>
-      <div>{{ $gettext("Totaux") }}</div>
+      <div>{{ $t("Totaux") }}</div>
     </div>
     <div class="choice-question-chart-grid">
       <template
@@ -58,7 +58,7 @@
                 getValueByRoleId(choice, roleId),
                 data.count
               )}%`"
-              :title="`${getPercentage(getValueByRoleId(choice, roleId), data.count)}% ${gettext('for the role')} ${profilingStore.roleById[roleId].name}`"
+              :title="`${getPercentage(getValueByRoleId(choice, roleId), data.count)}% ${$t('for the role')} ${profilingStore.roleById[roleId].name}`"
             />
           </div>
         </div>

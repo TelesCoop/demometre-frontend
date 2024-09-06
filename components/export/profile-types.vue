@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    {{ $gettext("Liste des profils et de leurs conditions :") }}
+    {{ $t("Liste des profils et de leurs conditions :") }}
     <ul>
       <li
         v-for="profileType in profilingStore.profileTypes"
@@ -8,10 +8,10 @@
       >
         "{{ profileType.name }}",
         <template v-if="profileType.rulesIntersectionOperator == 'and'">
-          {{ $gettext("vous devez respecter toutes les conditions suivantes :") }}
+          {{ $t("vous devez respecter toutes les conditions suivantes :") }}
         </template>
         <template v-else>
-          {{ $gettext("vous devez respecter au moins une des les conditions suivantes :") }}
+          {{ $t("vous devez respecter au moins une des les conditions suivantes :") }}
         </template>
         <ul>
           <li

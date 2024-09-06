@@ -10,18 +10,18 @@
           name="arrow-left-line"
         />
       </span>
-      <span> {{ $gettext("Revenir à l'atelier") }} </span>
+      <span> {{ $t("Revenir à l'atelier") }} </span>
     </NuxtLink>
     <div class="section">
       <PageTitle :title="`${workshop?.name} - réponses papier`" />
       <p class="is-size-4">
-        {{ $gettext("Saisissez les réponses des participants aux évaluations papier.") }}
+        {{ $t("Saisissez les réponses des participants aux évaluations papier.") }}
       </p>
       <p
         v-if="!activePillar"
         class="is-size-4"
       >
-        {{ $gettext("Choisissez un pillier pour commencer.") }}
+        {{ $t("Choisissez un pillier pour commencer.") }}
       </p>
 
       <div class="container">

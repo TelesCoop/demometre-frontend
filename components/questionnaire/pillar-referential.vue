@@ -10,7 +10,7 @@
             <a
               :class="`has-text-${color}-dark`"
               style="border-bottom-color: currentColor"
-            >{{ $gettext("Marqueurs") }}</a>
+            >{{ $t("Marqueurs") }}</a>
           </li>
         </ul>
       </div>
@@ -143,7 +143,7 @@
             :class="`button is-${color} is-rounded is-responsive`"
             @click="onReturnToMarkerButtonClick()"
           >
-            <span>{{ $gettext("Revenir au marqueur") }}</span>
+            <span>{{ $t("Revenir au marqueur") }}</span>
           </button>
         </div>
       </div>
@@ -160,13 +160,13 @@
             :class="`button is-${color} is-rounded is-responsive mt-2 mr-1`"
             @click="onReturnToPillarButtonClick()"
           >
-            <span>{{ $gettext("Revenir au pilier") }}</span>
+            <span>{{ $t("Revenir au pilier") }}</span>
           </button>
           <button
             :class="`button is-${color} is-rounded is-responsive mt-2 mr-1 is-outlined has-text-${color}-dark`"
             @click="onFirstCriteriaButtonClick()"
           >
-            <span>{{ $gettext("Premier critère") }}</span>
+            <span>{{ $t("Premier critère") }}</span>
             <span class="icon">
               <icon
                 name="arrow-right-line"
@@ -196,7 +196,7 @@
             :class="`button is-${color} is-rounded is-responsive is-outlined has-text-${color}-dark`"
             @click="onFirstMarkerButtonClick()"
           >
-            <span>{{ $gettext("Premier marqueur") }}</span>
+            <span>{{ $t("Premier marqueur") }}</span>
             <span class="icon">
               <icon
                 name="arrow-right-line"

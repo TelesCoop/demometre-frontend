@@ -10,7 +10,7 @@
             <a
               :class="`has-text-${color}-dark`"
               :style="`border-bottom-color: currentColor`"
-            >{{ $gettext("Questions") }}</a>
+            >{{ $t("Questions") }}</a>
           </li>
         </ul>
       </div>
@@ -60,10 +60,10 @@
           >
             <tr :class="`is-uppercase is-size-6bis pb-0_5`">
               <td class="pb-0_5">
-                {{ $gettext("Participant·e·s") }}
+                {{ $t("Participant·e·s") }}
               </td>
               <td class="pb-0_5">
-                {{ $gettext("Réponses") }}
+                {{ $t("Réponses") }}
               </td>
             </tr>
             <tr
@@ -94,7 +94,7 @@
           </table>
           <div v-else>
             <p class="is-size-7 is-family-secondary mb-1">
-              {{ $gettext("Réponse unique car question objective") }}
+              {{ $t("Réponse unique car question objective") }}
             </p>
             <ResponseAnimator
               v-model="
@@ -112,7 +112,7 @@
         </QuestionnaireQuestionStatement>
       </div>
       <div v-else>
-        <p>{{ $gettext("Selectionner une question") }}</p>
+        <p>{{ $t("Selectionner une question") }}</p>
       </div>
       <div class="buttons mt-2">
         <button
@@ -127,7 +127,7 @@
               name="arrow-right-line"
             />
           </span>
-          <span>{{ $gettext("Question suivante") }}</span>
+          <span>{{ $t("Question suivante") }}</span>
         </button>
 
         <button
@@ -137,7 +137,7 @@
           :disabled="workshopStore.workshopById[workshopId].closed"
           @click.prevent="onSubmit"
         >
-          <span>{{ $gettext("Valider les réponses") }}</span>
+          <span>{{ $t("Valider les réponses") }}</span>
           <span class="icon">
             <icon
               size="16"
@@ -159,7 +159,8 @@ import { useWorkshopStore } from "~/stores/workshopStore"
 import { useConfirm } from "~/composables/useConfirm"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 
-const { $gettext } = useGettext()
+const i18n = useI18n()
+const $t = i18n.t
 const questionnaireStore = useQuestionnaireStore()
 const workshopStore = useWorkshopStore()
 const confirm = useConfirm()
@@ -188,9 +189,9 @@ const onSelectQuestion = (question: Question) => {
 const nextQuestion = () => {
   if (isDirty.value) {
     confirm(
-      $gettext("Des réponses ont été rentrées mais non sauvegardées. Pour les enregistrer, annulez et cliquez sur le bouton Valider les réponses."),
-      $gettext("Ignorer les réponses rentrées ?"),
-      $gettext("Ignorer et aller à la question suivante"),
+      $t("Des réponses ont été rentrées mais non sauvegardées. Pour les enregistrer, annulez et cliquez sur le bouton Valider les réponses."),
+      $t("Ignorer les réponses rentrées ?"),
+      $t("Ignorer et aller à la question suivante"),
       goNextQuestion,
     )
     return

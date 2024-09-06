@@ -3,21 +3,21 @@
     <div class="section">
       <div class="is-flex is-justify-content-space-between">
         <h1 class="title is-size-1-desktop is-2 has-text-black">
-          {{ $gettext("Mon compte") }}
+          {{ $t("Mon compte") }}
         </h1>
         <div>
           <button
             class="button is-rounded"
             @click.prevent="logout"
           >
-            {{ $gettext("Se déconnecter") }}
+            {{ $t("Se déconnecter") }}
           </button>
         </div>
       </div>
       <div v-if="userStore.isAdminOrExpertUser">
         <router-link to="/export/questionnaire">
           <button class="button is-rounded">
-            {{ $gettext("Générer un questionnaire papier en fonction d'un profil") }}
+            {{ $t("Générer un questionnaire papier en fonction d'un profil") }}
           </button>
         </router-link>
       </div>
@@ -29,7 +29,7 @@
     >
       <div class="message">
         <div class="message-body">
-          {{ $gettext("Votre participation ne sera pas comptabilisée tant que vous n'êtes pas enregistré. Elle sera supprimée au bout d'un mois.")
+          {{ $t("Votre participation ne sera pas comptabilisée tant que vous n'êtes pas enregistré. Elle sera supprimée au bout d'un mois.")
           }}
         </div>
       </div>
@@ -38,16 +38,16 @@
           class="button is-rounded is-primary mr-1 mb-1"
           to="/signup"
         >
-          {{ $gettext("S'enregistrer pour conserver vos résultats") }}
+          {{ $t("S'enregistrer pour conserver vos résultats") }}
         </router-link>
       </div>
     </div>
     <div>
       <hr>
       <PageSection
-        :title="$gettext('Mes informations')"
+        :title="$t('Mes informations')"
         :buttons="[
-          { text: $gettext('Modifier les informations'), icon: 'list-settings-line' },
+          { text: $t('Modifier les informations'), icon: 'list-settings-line' },
         ]"
         @button-click="showEditUserInfoModal = true"
       >
@@ -78,13 +78,13 @@
               :class="isCurrentAssessmentsTab ? 'is-active' : null"
               @click="isCurrentAssessmentsTab = true"
             >
-              <a>{{ $gettext("Évaluations en cours") }} ({{ currentAssessments.length }})</a>
+              <a>{{ $t("Évaluations en cours") }} ({{ currentAssessments.length }})</a>
             </li>
             <li
               :class="isCurrentAssessmentsTab ? null : 'is-active'"
               @click="isCurrentAssessmentsTab = false"
             >
-              <a>{{ $gettext("Évaluations terminées") }} ({{ finishedAssessments.length }})</a>
+              <a>{{ $t("Évaluations terminées") }} ({{ finishedAssessments.length }})</a>
             </li>
           </ul>
         </div>
@@ -95,19 +95,19 @@
           >
             <div class="message-body">
               <p class="title is-5">
-                {{ $gettext("Aucune évaluation") }}
-                {{ isCurrentAssessmentsTab ? $gettext("en cours") : $gettext("terminée") }}
+                {{ $t("Aucune évaluation") }}
+                {{ isCurrentAssessmentsTab ? $t("en cours") : $t("terminée") }}
               </p>
               <p>
                 <template v-if="isCurrentAssessmentsTab">
-                  {{ $gettext("Vous n’avez aucune évaluation en cours avec le DémoMètre.") }}
+                  {{ $t("Vous n’avez aucune évaluation en cours avec le DémoMètre.") }}
                 </template>
                 <template v-else>
-                  {{ $gettext("Vous n’avez aucune évaluation terminée avec le DémoMètre.") }}
+                  {{ $t("Vous n’avez aucune évaluation terminée avec le DémoMètre.") }}
                 </template>
               </p>
               <p>
-                {{ $gettext("Pour démarrer une évaluation, cliquer sur le bouton « Lancer une évaluation ».") }}
+                {{ $t("Pour démarrer une évaluation, cliquer sur le bouton « Lancer une évaluation ».") }}
               </p>
             </div>
           </article>
@@ -117,14 +117,18 @@
           >
             <thead>
               <tr>
-                <th>{{ $pgettext("relatif à une évaluation", "Nom") }}</th>
-                <th>{{ $gettext("Questionnaire") }}</th>
-                <th>{{ $gettext("Date de création") }}</th>
-                <th>{{ $pgettext("rôle de l'utilisateur dans l'évaluation", "Rôle") }}</th>
-                <th>{{ $gettext("Échelon") }}</th>
-                <th>{{ $gettext("Localité") }}</th>
-                <th>{{ $gettext("Pays") }}</th>
-                <th>{{ $gettext("Actions") }}</th>
+                <th>
+                <!--                  {{ $pgettext("relatif à une évaluation", "Nom") }}-->
+                </th>
+                <th>{{ $t("Questionnaire") }}</th>
+                <th>{{ $t("Date de création") }}</th>
+                <th>
+                <!--                  {{ $pgettext("rôle de l'utilisateur dans l'évaluation", "Rôle") }}-->
+                </th>
+                <th>{{ $t("Échelon") }}</th>
+                <th>{{ $t("Localité") }}</th>
+                <th>{{ $t("Pays") }}</th>
+                <th>{{ $t("Actions") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -140,19 +144,19 @@
                 <td>{{ assessment.surveyName }}</td>
                 <td>{{ new Date(assessment.created).toLocaleDateString() }}</td>
                 <td>
-                  {{
-                    PARTICIPANT_TYPE[assessment.details.role] ||
-                      $pgettext("l'utilisateur est participant au questionnaire, mais n'a pas commencé à le remplir", "participant - non encore rempli")
-                  }}
+                  <!--                  {{-->
+                  <!--                    PARTICIPANT_TYPE[assessment.details.role] ||-->
+                  <!--                      $pgettext("l'utilisateur est participant au questionnaire, mais n'a pas commencé à le remplir", "participant - non encore rempli")-->
+                  <!--                  }}-->
                   <template v-if="assessment.details.hasDetailAccess">
                     <span
                       v-if="assessment.details.paymentAmount"
                       class="tag"
-                    >{{ $gettext("Redevance payée") }}</span>
+                    >{{ $t("Redevance payée") }}</span>
                     <span
                       v-else
                       class="tag is-danger"
-                    >{{ $gettext("Redevance impayée") }}</span>
+                    >{{ $t("Redevance impayée") }}</span>
                   </template>
                 </td>
                 <td>{{ LOCALITY_TYPE_NAME[assessment.localityType] }}</td>
@@ -160,7 +164,7 @@
                 <td>France</td>
                 <td>
                   <button class="button is-small is-rounded">
-                    {{ $gettext("Détails") }}
+                    {{ $t("Détails") }}
                   </button>
                 </td>
               </tr>

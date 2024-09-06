@@ -3,8 +3,8 @@
     <div class="sm-container">
       <div class="my-8">
         <h1 class="title is-1 has-text-shade-800">
-          <span v-if="!hasResetKey">Récupérer mon <br>{{ $gettext("mot de passe") }}</span>
-          <span v-else>{{ $gettext("Changer mon mot de passe") }}</span>
+          <span v-if="!hasResetKey">Récupérer mon <br>{{ $t("mot de passe") }}</span>
+          <span v-else>{{ $t("Changer mon mot de passe") }}</span>
         </h1>
 
         <div
@@ -13,7 +13,7 @@
         >
           <!-- email -->
           <div class="field has-text-shade-800">
-            <label class="label">{{ $gettext("Courriel") }}</label>
+            <label class="label">{{ $t("Courriel") }}</label>
             <div class="control has-icons-left has-icons-right">
               <input
                 v-model="email"
@@ -51,7 +51,7 @@
               :disabled="emailDisabled"
               @click="sendResetLink"
             >
-              {{ $gettext("Envoyer un lien de récupération") }}
+              {{ $t("Envoyer un lien de récupération") }}
             </button>
           </div>
         </div>
@@ -61,7 +61,7 @@
         >
           <!-- password -->
           <div class="field has-text-shade-800">
-            <label class="label">{{ $gettext("Nouveau mot de passe") }}</label>
+            <label class="label">{{ $t("Nouveau mot de passe") }}</label>
             <div class="control has-icons-left has-icons-right">
               <input
                 v-model="password"
@@ -92,7 +92,7 @@
 
           <!-- password confirmation-->
           <div class="field has-text-shade-800">
-            <label class="label">{{ $gettext("Confirmer le nouveau mot de passe") }}</label>
+            <label class="label">{{ $t("Confirmer le nouveau mot de passe") }}</label>
             <div class="control has-icons-left has-icons-right">
               <input
                 v-model="confirmPassword"
@@ -136,7 +136,7 @@
                   name="mail-line"
                 />
               </span>
-              <span>{{ $gettext("Confirmer") }}</span>
+              <span>{{ $t("Confirmer") }}</span>
             </button>
           </div>
         </div>
@@ -147,12 +147,13 @@
 
 <script setup lang="ts">
 import { useUserStore } from "~/stores/userStore"
-import { useGettext } from "vue3-gettext"
+import { useI18n } from "vue-i18n"
 
-const { $gettext } = useGettext()
+const i18n = useI18n()
+const $t = i18n.t
 
 definePageMeta({
-  // title: $gettext("Nouveau mot de passe"),
+  // title: $t("Nouveau mot de passe"),
 })
 
 const route = useRoute()
@@ -178,7 +179,7 @@ const emailErrorMessage = computed(() => {
     return ""
   }
   if (!email.value.includes("@")) {
-    return $gettext("Le courriel doit contenir @")
+    return $t("Le courriel doit contenir @")
   }
   return ""
 })
@@ -191,7 +192,7 @@ const isPasswordValid = computed(() => {
     return true
   }
   if (!password.value.length) {
-    passwordErrorMessage.value = $gettext("Le mot de passe ne peut pas être vide")
+    passwordErrorMessage.value = $t("Le mot de passe ne peut pas être vide")
     return false
   }
   passwordErrorMessage.value = ""
@@ -205,7 +206,7 @@ const isSamePassword = computed(() => {
     confirmPasswordErrorMessage.value = ""
     return true
   }
-  confirmPasswordErrorMessage.value = $gettext("Les deux mots de passe sont différents")
+  confirmPasswordErrorMessage.value = $t("Les deux mots de passe sont différents")
   return false
 })
 const emailDisabled = computed(() => !(isMailValid && email.value))

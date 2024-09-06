@@ -7,7 +7,7 @@
     <div class="modal-card">
       <header class="modal-card-head">
         <h2 class="modal-card-title">
-          {{ $gettext("Informations de l'évaluation") }}
+          {{ $t("Informations de l'évaluation") }}
         </h2>
         <icon
           tabindex="0"
@@ -19,11 +19,11 @@
       </header>
       <section class="modal-card-body">
         <p class="mb-3">
-          {{ $gettext("En tant qu'initiateur ou expert de l'évaluation, pouvez modifier les informations.") }}
+          {{ $t("En tant qu'initiateur ou expert de l'évaluation, pouvez modifier les informations.") }}
         </p>
         <form @submit.prevent="">
           <div class="field">
-            <label class="label">{{ $gettext("Nom de l'évaluation") }}</label>
+            <label class="label">{{ $t("Nom de l'évaluation") }}</label>
             <div class="control">
               <input
                 v-model="assessmentName"
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="field">
-            <label class="label">{{ $gettext("Nom du porteur de l'évaluation") }}</label>
+            <label class="label">{{ $t("Nom du porteur de l'évaluation") }}</label>
             <div class="control">
               <input
                 v-model="initializedToTheNameOf"
@@ -67,7 +67,7 @@
           :disabled="loadingStore.isLoading('assessments')"
           @click="saveEdits"
         >
-          <span>{{ $gettext("Valider") }}</span>
+          <span>{{ $t("Valider") }}</span>
           <span class="icon">
             <icon
               size="16"
@@ -79,7 +79,7 @@
           class="button is-rounded is-outlined is-dark"
           @click="$emit('close')"
         >
-          {{ $gettext("Annuler") }}
+          {{ $t("Annuler") }}
         </button>
       </footer>
     </div>

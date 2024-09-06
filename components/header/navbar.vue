@@ -72,7 +72,7 @@
                 class="button evaluation is-rounded has-border-cooperation has-text-cooperation-dark"
                 @click="closeMenu"
               >
-                {{ $gettext("Lancer une évaluation") }}
+                {{ $t("Lancer une évaluation") }}
               </NuxtLink>
               <NuxtLink
                 v-if="!isEvaluationRoute && assessmentStore.userHasSingleAssessment"
@@ -92,7 +92,7 @@
                   }
                 "
               >
-                {{ $gettext("Enregistrer") }}
+                {{ $t("Enregistrer") }}
               </button>
               <NuxtLink
                 v-if="userStore.isLoggedIn"
@@ -100,7 +100,7 @@
                 class="button is-white is-rounded"
                 @click="closeMenu"
               >
-                {{ $gettext("Mon compte") }}
+                {{ $t("Mon compte") }}
               </NuxtLink>
               <NuxtLink
                 v-else
@@ -108,7 +108,7 @@
                 class="button is-white is-outlined is-rounded"
                 @click="closeMenu"
               >
-                {{ $gettext("Se connecter") }}
+                {{ $t("Se connecter") }}
               </NuxtLink>
             </div>
           </div>
@@ -132,7 +132,7 @@
           class="column button is-shade-200 navbar-progress-bar-save-button"
           @click="participationStore.setShowCancelParticipationModal(true)"
         >
-          <span>{{ $gettext("Réinitialiser") }}</span>
+          <span>{{ $t("Réinitialiser") }}</span>
           <span class="icon">
             <icon
               size="15"
@@ -154,13 +154,14 @@ import { useUserStore } from "~/stores/userStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { isQuestionnaireRouteFromPath } from "~/utils/util"
-import { useGettext } from "vue3-gettext"
+import { useI18n } from "vue-i18n"
 
 const emit = defineEmits<{
   (e: "change-header-height", value: number): void
 }>()
 
-const { $gettext } = useGettext()
+const i18n = useI18n()
+const $t = i18n.t
 
 const userStore = useUserStore()
 const userStep = useUserStep()
@@ -189,23 +190,23 @@ const activePillar = computed(() => {
 
 const navItems = [
   {
-    name: $gettext("Accueil"),
+    name: $t("Accueil"),
     to: "/",
   },
   {
-    name: $gettext("DémoMètre"),
+    name: $t("DémoMètre"),
     to: "/demometre",
   },
   {
-    name: $gettext("Utilisations possibles"),
+    name: $t("Utilisations possibles"),
     to: "/utilisations-possibles",
   },
   {
-    name: $gettext("Résultats"),
+    name: $t("Résultats"),
     to: "/resultats",
   },
   {
-    name: $gettext("Le projet"),
+    name: $t("Le projet"),
     to: "/projet",
   },
 ]

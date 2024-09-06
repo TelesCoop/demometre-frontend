@@ -9,7 +9,7 @@
           v-if="training.isAvailableSoon"
           class="tag"
         >
-          {{ $gettext("Bientôt disponible !") }}
+          {{ $t("Bientôt disponible !") }}
         </span>
       </div>
 
@@ -51,7 +51,7 @@
           disabled
           class="button is-dark is-rounded"
         >
-          {{ $gettext("Vous renseigner") }}
+          {{ $t("Vous renseigner") }}
         </button>
         <a
           v-else
@@ -59,7 +59,7 @@
           target="_blank"
           class="button is-dark is-rounded"
         >
-          <span>{{ $gettext("Vous renseigner") }}</span>
+          <span>{{ $t("Vous renseigner") }}</span>
           <span class="icon">
             <icon
               size="16"

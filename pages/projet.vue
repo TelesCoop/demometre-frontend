@@ -12,7 +12,7 @@
           class="button is-rounded is-outlined is-shade-600 is-responsive"
           @click.prevent="scrollIntoWhyBlock"
         >
-          <span>{{ $gettext("Pourquoi") }}</span>
+          <span>{{ $t("Pourquoi") }}</span>
           <span class="icon">
             <icon
               name="arrow-right-line"
@@ -25,7 +25,7 @@
           class="button is-rounded is-outlined is-shade-600 is-responsive"
           @click.prevent="scrollIntoWhoBlock"
         >
-          <span>{{ $gettext("Avec qui") }}</span>
+          <span>{{ $t("Avec qui") }}</span>
           <span class="icon">
             <icon
               name="arrow-right-line"
@@ -38,7 +38,7 @@
           class="button is-rounded is-outlined is-shade-600 is-responsive"
           @click.prevent="scrollIntoHowBlock"
         >
-          <span>{{ $gettext("Méthode") }}</span>
+          <span>{{ $t("Méthode") }}</span>
           <span class="icon">
             <icon
               name="arrow-right-line"
@@ -57,7 +57,7 @@
     >
       <PageBigSection
         :title="pageStore.projectPage.whyBlockTitle"
-        :label="$gettext('Pourquoi')"
+        :label="$t('Pourquoi')"
       >
         <div class="container">
           <section class="column-2 section">
@@ -143,7 +143,7 @@
     >
       <PageBigSection
         :title="pageStore.projectPage.whoBlockTitle"
-        :label="$gettext('Avec qui')"
+        :label="$t('Avec qui')"
       >
         <PageSection
           v-if="pageStore.projectPage.whoCrewSubBlockTitle"
@@ -268,7 +268,7 @@
     >
       <PageBigSection
         :title="pageStore.projectPage.howBlockTitle"
-        :label="$gettext('Comment')"
+        :label="$t('Comment')"
       >
         <div class="container">
           <PageFreeBody
