@@ -1,14 +1,14 @@
 <template>
   <div :class="`has-text-${props.color}-dark`">
     <p :class="`is-uppercase is-size-6bis mb-0_5`">
-      Question
+      {{ $t("Question") }}
     </p>
     <p :class="`is-size-4 has-text-weight-bold mb-2`">
       {{ props.question.questionStatement }}
     </p>
     <slot />
     <p class="is-uppercase is-size-6bis mb-0_5 mt-2">
-      Acteur(s) concerné(s)
+      {{ $t("Acteur(s) concerné(s)") }}
     </p>
     <div class="tags">
       <span
@@ -18,17 +18,21 @@
       >{{ profilingStore.roleById[roleId]?.name }}</span>
     </div>
     <p :class="`is-uppercase is-size-6bis mb-0_5`">
-      Villes concernées
+      {{ $t("Villes concernées") }}
     </p>
     <div class="tags">
       <span
         v-if="props.question.populationLowerBound"
         :class="`tag is-${props.color}`"
-      >Plus de {{ props.question.populationLowerBound }} habitants</span>
+      >
+        <!--        {{ $gettext("Plus de %{ inhabitants } habitants", { inhabitants: props.question.populationLowerBound }) }}-->
+      </span>
       <span
         v-if="props.question.populationUpperBound"
         :class="`tag is-${props.color}`"
-      >Moins de {{ props.question.populationUpperBound }} habitants</span>
+      >
+        <!--        {{ $gettext("Moins de %{ inhabitants } habitants", { inhabitants: props.question.populationUpperBound }) }}-->
+      </span>
       <span
         v-if="
           !props.question.populationLowerBound &&
@@ -53,5 +57,5 @@ const profilingStore = useProfilingStore()
 
 <style scoped lang="sass">
 .tag
-  background-color: var(--color-light)!important
+  background-color: var(--color-light) !important
 </style>

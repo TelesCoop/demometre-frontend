@@ -20,7 +20,7 @@
               class="button is-dark is-rounded is-responsive is-outlined is-shade-600"
               to="/projet?hash=howBlockRef"
             >
-              <span>Comment on a construit le référentiel</span>
+              <span>{{ $t("Comment on a construit le référentiel") }}</span>
 
               <span class="icon">
                 <icon name="arrow-right-line" size="20" />
@@ -147,7 +147,7 @@
                   class="subtitle has-text-weight-bold mb-1"
                   :class="`has-text-${colorClass}-dark`"
                 >
-                  Definitions
+                  {{ $t("Definitions") }}
                 </h3>
               </template>
               <template #content>
@@ -229,11 +229,19 @@ import { usePageStore } from "~/stores/pageStore"
 import { useDefinitionStore } from "~~/stores/definitionStore"
 import { Marker, PillarType } from "~/composables/types"
 import { MEDIA_BASE_URL } from "~/composables/api"
+import { useI18n } from "vue-i18n"
 
-definePageMeta({
-  title: "DémoMètre",
-  breadcrumb: "DémoMètre",
-})
+console.log("### demometre 0")
+
+const i18n = useI18n()
+const $t = i18n.t
+
+console.log("### demometre 1")
+
+// definePageMeta({
+//   title: $t("DémoMètre"),
+//   breadcrumb: $t("DémoMètre"),
+// })
 
 const router = useRouter()
 

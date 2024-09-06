@@ -6,28 +6,28 @@
     >
       <div
         class="modal-background"
-        @click="emit('close')"
+        @click="$emit('close')"
       />
       <div class="modal-content has-background-shade-100 p-2">
         <h2 class="is-size-4 has-text-weight-bold pb-0_5">
-          Souhaitez-vous enregistrer vos réponses pour pouvoir y revenir et
-          contribuer à l’évaluation&nbsp;?
+          {{ $t("Souhaitez-vous enregistrer vos réponses pour pouvoir y revenir et contribuer à l’évaluation ?")
+          }}
         </h2>
         <p>
-          Vous pourrez ensuite y revenir via l'onglet "Mon compte".
+          {{ $t(`Vous pourrez ensuite y revenir via l'onglet Mon compte.`) }}
         </p>
         <div class="buttons">
           <button
             class="button is-shade-600 is-outlined"
             @click="saveParticipation"
           >
-            Oui, créer un compte
+            {{ $t("Oui, créer un compte") }}
           </button>
           <button
             class="button is-shade-600 is-outlined"
             @click="closeModal"
           >
-            Non, ne rien enregistrer
+            {{ $t("Non, ne rien enregistrer") }}
           </button>
         </div>
       </div>

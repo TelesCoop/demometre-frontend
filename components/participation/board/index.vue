@@ -12,11 +12,11 @@
         class="column is-one-third"
       >
         <h3 class="has-text-weight-bold mb-2">
-          Évaluation
+          {{ $t("Évaluation") }}
         </h3>
 
         <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
-          Territoire
+          {{ $t("Territoire") }}
         </div>
         <div class="mb-1_5">
           {{ assessmentStore.currentAssessment?.name }}
@@ -24,7 +24,7 @@
 
         <template v-if="assessment?.initiatedBy">
           <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
-            Portée par
+            <!--            {{ $pgettext("Qui a initié l'évaluation", "Portée par") }}-->
           </div>
           <div class="mb-1_5">
             {{ assessment.initiatedBy?.firstName }}
@@ -34,7 +34,7 @@
 
         <template v-if="assessment.initializedToTheNameOf">
           <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
-            Initiateur
+            {{ $t("Initiateur") }}
           </div>
           <div class="mb-1_5">
             {{ assessment.initializedToTheNameOf }}
@@ -42,14 +42,14 @@
         </template>
 
         <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
-          Date de lancement
+          {{ $t("Date de lancement") }}
         </div>
         <div class="mb-1_5">
           {{ initializationDate }}
         </div>
 
         <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
-          Nombre de participants
+          {{ $t("Nombre de participants") }}
         </div>
         <div class="mb-1">
           {{ assessment.participationCount }}
@@ -58,10 +58,10 @@
 
       <div class="column">
         <h3 class="has-text-weight-bold mb-0_5">
-          Représentativité des participants
+          {{ $t("Représentativité des participants") }}
         </h3>
         <p class="mb-2 is-size-7">
-          Survoler les barres pour afficher les statistiques.
+          {{ $t("Survoler les barres pour afficher les statistiques.") }}
         </p>
         <div class="columns is-multiline">
           <div
@@ -87,7 +87,7 @@ import { usePageStore } from "~/stores/pageStore"
 
 const props = defineProps({
   assessment: { type: Object as PropType<Assessment>, required: true },
-  showAssessmentInfo: { type: Boolean, default: false }
+  showAssessmentInfo: { type: Boolean, default: false },
 })
 
 const assessmentStore = useAssessmentStore()
@@ -100,8 +100,8 @@ const initializationDate = computed(() =>
   new Date(props.assessment.initializationDate).toLocaleString("fr-FR", {
     year: "numeric",
     month: "long",
-    day: "numeric"
-  })
+    day: "numeric",
+  }),
 )
 </script>
 

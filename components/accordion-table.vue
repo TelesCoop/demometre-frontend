@@ -10,12 +10,12 @@
         <Icon v-else size="24" name="arrow-right-s-line" />
       </i>
     </td>
-    <slot name="title"></slot>
+    <slot name="title" />
   </tr>
   <tr v-show="isOpen" :id="`collapse${props.id}`">
     <td colspan="100%" class="px-3 py-0">
       <div class="has-background-shade-100 px-3 py-1_5">
-        <slot name="content"></slot>
+        <slot name="content" />
       </div>
     </td>
   </tr>

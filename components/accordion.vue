@@ -7,7 +7,7 @@
         class="is-flex is-clickable is-justify-content-space-between"
         @click.prevent="toggleAccordion()"
       >
-        <slot name="title"></slot>
+        <slot name="title" />
         <i class="icon">
           <Icon v-if="isOpen" size="24" name="arrow-down-s-line" />
           <Icon v-else size="24" name="arrow-right-s-line" />
@@ -16,7 +16,7 @@
     </div>
     <div v-show="isOpen" :id="`collapse${id}`">
       <div colspan="100%" class="mb-2">
-        <slot name="content"></slot>
+        <slot name="content" />
       </div>
     </div>
   </section>

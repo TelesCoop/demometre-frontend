@@ -6,267 +6,41 @@
         class="questionnaire-container"
         @submit.prevent="submit"
       >
-        <h1
-          class="title is-size-3-tablet is-size-4-mobile"
-          :class="`has-text-${props.color}-dark`"
-        >
-          {{ question.questionStatement }}
-        </h1>
-        <RichText
-          v-if="question.description"
-          class="is-family-secondary"
-          :rich-text="question.description"
+        <FormQuestion
+          v-model="answer"
           :color="props.color"
+          :question="question"
+          :explanatory="explanatory"
+          :definitions="definitions"
         />
-        <section
-          id="menu"
-          class="section container is-tight pb-0 pt-0 mt-1"
-          :class="`menu is-${color}`"
-          style="width: 100%"
-        >
-          <div
-            v-if="tabs.length > 1"
-            class="tabs"
-            style="width: 100%"
-          >
-            <ul>
-              <li
-                v-for="tab of tabs"
-                :key="tab.id"
-              >
-                <a
-                  class="tab is-size-6"
-                  :class="[
-                    `is-${color}`,
-                    tab.id === currentTabId ? `is-active` : ``,
-                  ]"
-                  @click="setTab(tab.id)"
-                >{{ tab.label }}</a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <!-- TAB : definitions -->
-            <div
-              v-show="currentTabId === 'definitions'"
-              v-if="definitions"
-            >
-              <div
-                v-for="definition of definitions"
-                :key="definition.id"
-                class="mt-2"
-              >
-                <span class="has-text-weight-bold">{{ definition.word }}</span>
-                <RichText
-                  class="mt-1 is-block is-family-secondary"
-                  :rich-text="definition.explanation"
-                  :color="props.color"
-                />
-              </div>
-            </div>
 
-            <!-- TAB : explanations -->
-            <div
-              v-for="element of explanatory"
-              :key="element.value.id"
-            >
-              <div v-if="currentTabId === element.value.id">
-                <RichText
-                  :rich-text="element.value.description"
-                  :color="props.color"
-                />
-              </div>
-            </div>
+        <FormButtons
+          :question-id="question.id"
+          :color="props.color"
+          :is-loading="isLoading"
+          :is-answered="isAnswered"
+          :can-submit="canSubmit()"
+          :is-questionnaire="props.isQuestionnaire"
+          :current-assessment-id="assessmentStore.currentAssessmentId"
+        />
 
-            <!-- TAB : responses -->
-            <div v-show="currentTabId === 'responses'">
-              <!-- Center bloc : question inputs + button previous and next -->
-              <div
-                class="nav-questionnaire-container"
-                style="position: relative"
-              >
-                <!-- all possible inputs -->
-                <div class="my-1_5">
-                  <ResponseInputOpen
-                    v-if="question.type === QuestionType.OPEN"
-                    v-model="answer"
-                    :color="props.color"
-                    :question-id="questionId"
-                  />
-                  <ResponseInputPercentage
-                    v-if="question.type === QuestionType.PERCENTAGE"
-                    v-model="answer"
-                    :color="props.color"
-                    :question-id="questionId"
-                  />
-                  <ResponseInputNumber
-                    v-if="question.type === QuestionType.NUMBER"
-                    v-model="answer"
-                    :color="props.color"
-                    :question-id="questionId"
-                    :min="question.minNumberValue"
-                    :max="question.maxNumberValue"
-                    :step="question.stepNumberValue"
-                  />
-                  <ResponseInputUniqueChoice
-                    v-else-if="question.type === QuestionType.UNIQUE_CHOICE"
-                    v-model="answer"
-                    :response-choices="question.responseChoices"
-                    :color="props.color"
-                    :question-id="questionId"
-                  />
-                  <ResponseInputMultipleChoice
-                    v-else-if="question.type === QuestionType.MULTIPLE_CHOICE"
-                    v-model="answer"
-                    :response-choices="question.responseChoices"
-                    :max-multiple-choices="
-                      question.maxMultipleChoices ||
-                        question.responseChoices.length
-                    "
-                    :color="props.color"
-                    :question-id="questionId"
-                  />
-                  <ResponseInputBinary
-                    v-else-if="question.type === QuestionType.BOOLEAN"
-                    v-model="answer"
-                    :color="props.color"
-                    :question-id="questionId"
-                  />
-                  <ResponseInputScale
-                    v-else-if="question.type === QuestionType.CLOSED_WITH_SCALE"
-                    v-model="answer"
-                    :categories="question.categories"
-                    :color="props.color"
-                    :response-choices="question.responseChoices"
-                  />
-                </div>
-
-                <!-- end inputs -->
-                <div class="button-bar my-1_5">
-                  <div class="is-flex is-align-items-center">
-                    <button
-                      v-if="isAnswered || question.mandatory"
-                      :class="
-                        props.color === 'no-pillar'
-                          ? `is-shade-600`
-                          : `is-${props.color} text-color-dark`
-                      "
-                      class="button is-rounded mr-0_75"
-                      :disabled="validationDisabled"
-                      type="submit"
-                    >
-                      <span>Valider</span>
-                      <i class="icon">
-                        <Icon
-                          v-if="isLoading"
-                          size="20"
-                          name="loader-2-line"
-                        />
-                        <Icon
-                          v-else
-                          size="20"
-                          name="check"
-                        />
-                      </i>
-                    </button>
-                    <button
-                      v-else
-                      :class="
-                        props.color === 'no-pillar'
-                          ? `is-shade-600`
-                          : `is-${props.color} text-color-dark`
-                      "
-                      class="button is-outlined is-rounded mr-0_75"
-                      type="submit"
-                    >
-                      <span class="is-hidden-mobile">Je ne sais pas / Je passe</span>
-                      <span class="is-hidden-tablet">Je passe</span>
-                      <i class="icon">
-                        <Icon
-                          v-if="isLoading"
-                          size="20"
-                          name="loader-2-line"
-                        />
-                        <Icon
-                          v-else
-                          size="20"
-                          name="arrow-right-line"
-                        />
-                      </i>
-                    </button>
-                    <span
-                      v-if="isLoading"
-                      class="is-size-7 has-text-shade-600"
-                    >en cours de chargement</span>
-                    <span
-                      v-else-if="canPressEnter()"
-                      class="is-size-7 is-hidden-mobile"
-                      :class="
-                        props.color === 'no-pillar'
-                          ? 'has-text-shade-600'
-                          : `has-text-${props.color}-dark`
-                      "
-                    >
-                      appuyez sur
-                      <span class="has-text-weight-bold">Entrer ⏎</span>
-                    </span>
-                  </div>
-                  <div
-                    v-if="props.isQuestionnaire"
-                    class="is-flex buttons"
-                  >
-                    <NuxtLink
-                      :to="`/resultats/${assessmentStore.currentAssessmentId}?question=${question.id}`"
-                      :class="`is-${props.color}`"
-                      class="button is-outlined text-color-hover is-rounded"
-                      title="Voir les résultats"
-                      target="_blank"
-                    >
-                      <span class="is-hidden-mobile">Voir les résultats</span>
-                      <span class="is-hidden-tablet">Résultats</span>
-                      <span class="icon">
-                        <Icon
-                          size="20"
-                          name="bar-chart-line"
-                        />
-                      </span>
-                    </NuxtLink>
-                    <NuxtLink
-                      :to="`/faq`"
-                      :class="`is-${props.color}`"
-                      class="button is-outlined text-color-hover round"
-                      title="FAQ"
-                      target="_blank"
-                    >
-                      <i class="icon">
-                        <Icon
-                          size="16"
-                          name="question-mark"
-                        />
-                      </i>
-                    </NuxtLink>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- button previous next -->
-            <ButtonsArrowButton
-              v-if="
-                !props.context.journey.isFirstQuestion(question.id) ||
-                  props.context.hasPreviousStep
-              "
-              class="arrow-button-fixed is-left"
-              :color="props.color"
-              @click.prevent="goToPreviousQuestion"
-            />
-            <ButtonsArrowButton
-              class="arrow-button-fixed is-right"
-              :disabled="nextQuestionDisabled"
-              :color="props.color"
-              @click.prevent="goToNextQuestion"
-            />
-          </div>
-        </section>
+        <!-- TAB : responses -->
+        <!-- button previous next -->
+        <ButtonsArrowButton
+          v-if="
+            !props.context.journey.isFirstQuestion(question.id) ||
+              props.context.hasPreviousStep
+          "
+          class="arrow-button-fixed is-left"
+          :color="props.color"
+          @click.prevent="goToPreviousQuestion"
+        />
+        <ButtonsArrowButton
+          class="arrow-button-fixed is-right"
+          :disabled="nextQuestionDisabled"
+          :color="props.color"
+          @click.prevent="goToNextQuestion"
+        />
       </form>
     </section>
   </div>
@@ -279,23 +53,21 @@
 </template>
 
 <script setup lang="ts">
+import { isNullOrUndefined } from "assets/utils"
+import { useQuestionHandler } from "~/composables/questionHandler"
 import {
-  QuestionType,
-  Definition,
   QuestionContextProps,
   SurveyType,
-  SimpleBlock,
+  QuestionResponse,
+  QuestionResponseValue,
 } from "~/composables/types"
 import { computed, PropType, watch } from "vue"
 import { ref } from "vue"
-import { useDefinitionStore } from "~/stores/definitionStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { getQuestionResponseValue } from "~/utils/question-response"
-import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { usePressEnter } from "~/composables/pressEnter"
 
-type tabDef = { label: string; id: string }
 const props = defineProps({
   questionId: { type: Number, required: true },
   context: { type: Object as PropType<QuestionContextProps>, required: true },
@@ -310,79 +82,34 @@ console.log("### question setup", {
 
 const participationStore = useParticipationStore()
 const assessmentStore = useAssessmentStore()
-const questionnaireStore = useQuestionnaireStore()
-const definitionStore = useDefinitionStore()
-
-const isAnswered = computed(() => {
-  if (Array.isArray(answer.value)) return !!answer.value.length
-  return !!answer.value || answer.value === 0 || answer.value === false
-})
 
 const question = computed(() => {
   return props.context.questionById[props.questionId]
 })
+const { explanatory, definitions } = useQuestionHandler(question.value)
 
-const criteria = computed(() => {
-  return questionnaireStore.criteriaById[question.value.criteriaId]
+const isAnswered = computed(() => {
+  const value = getQuestionResponseValue(answer.value, question.value.type)
+  if (Array.isArray(value)) return value.length > 0
+  return !isNullOrUndefined(value)
 })
 
-const initialValue = getQuestionResponseValue(
+const answer = ref<QuestionResponse | QuestionResponseValue | undefined>(
   props.context.responseByQuestionId[props.questionId],
-  question.value.type,
 )
-
-const answer = ref(initialValue)
 const isLoading = ref(false)
 
 watch(question, () => {
-  answer.value = getQuestionResponseValue(
-    props.context.responseByQuestionId[props.questionId],
-    question.value.type,
-  )
+  answer.value = props.context.responseByQuestionId[props.questionId]
 })
 
-const validationDisabled = computed(() => (isAnswered.value ? false : true))
-
-const nextQuestionDisabled = computed(() =>
-  initialValue !== undefined ||
-  props.context.responseByQuestionId[props.questionId]?.hasPassed
-    ? false
-    : true,
+const nextQuestionDisabled = computed(
+  () =>
+    !(
+      isAnswered.value ||
+      props.context.responseByQuestionId[props.questionId]?.hasPassed
+    ),
 )
-
-const definitions = computed<{ [key: number]: Definition }>(() =>
-  criteria.value?.definitionIds.length > 0
-    ? definitionStore.definitionsByIdArray(criteria.value.definitionIds)
-    : [],
-)
-
-const tabs = ref<tabDef[]>([])
-tabs.value.push({
-  label: "Réponses",
-  id: "responses",
-})
-if (criteria.value?.definitionIds.length > 0) {
-  tabs.value.push({
-    label: "Définitions",
-    id: "definitions",
-  })
-}
-const explanatory = (criteria.value?.explanatory || []) as SimpleBlock[]
-if (explanatory.length) {
-  console.log("### explanatory", { explanatory })
-  explanatory.forEach((element) => {
-    element.value.id = `${element.value.title?.replace(/\s+/g, "")}`
-    tabs.value.push({
-      label: `${element.value.title}`,
-      id: element.value.id,
-    })
-  })
-}
-const currentTabId = ref<string>(tabs.value[0]?.id)
-
-function setTab(tabId: string) {
-  currentTabId.value = tabId
-}
 
 const goToPreviousQuestion = () => {
   isLoading.value = true
@@ -417,8 +144,8 @@ const submit = async () => {
     goToNextQuestion()
   }
 }
-const canPressEnter = () => isAnswered.value || !question.value.mandatory
-usePressEnter(submit, canPressEnter)
+const canSubmit = () => isAnswered.value || !question.value.mandatory
+usePressEnter(submit, canSubmit)
 </script>
 
 <style scoped lang="sass">

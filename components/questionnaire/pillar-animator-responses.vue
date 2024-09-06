@@ -10,7 +10,7 @@
             <a
               :class="`has-text-${color}-dark`"
               :style="`border-bottom-color: currentColor`"
-            >Questions</a>
+            >{{ $t("Questions") }}</a>
           </li>
         </ul>
       </div>
@@ -60,10 +60,10 @@
           >
             <tr :class="`is-uppercase is-size-6bis pb-0_5`">
               <td class="pb-0_5">
-                Participant·e·s
+                {{ $t("Participant·e·s") }}
               </td>
               <td class="pb-0_5">
-                Réponses
+                {{ $t("Réponses") }}
               </td>
             </tr>
             <tr
@@ -94,7 +94,7 @@
           </table>
           <div v-else>
             <p class="is-size-7 is-family-secondary mb-1">
-              Réponse unique car question objective
+              {{ $t("Réponse unique car question objective") }}
             </p>
             <ResponseAnimator
               v-model="
@@ -112,7 +112,7 @@
         </QuestionnaireQuestionStatement>
       </div>
       <div v-else>
-        <p>Selectionner une question</p>
+        <p>{{ $t("Selectionner une question") }}</p>
       </div>
       <div class="buttons mt-2">
         <button
@@ -127,7 +127,7 @@
               name="arrow-right-line"
             />
           </span>
-          <span>Question suivante</span>
+          <span>{{ $t("Question suivante") }}</span>
         </button>
 
         <button
@@ -137,7 +137,7 @@
           :disabled="workshopStore.workshopById[workshopId].closed"
           @click.prevent="onSubmit"
         >
-          <span>Valider les réponses</span>
+          <span>{{ $t("Valider les réponses") }}</span>
           <span class="icon">
             <icon
               size="16"
@@ -159,6 +159,8 @@ import { useWorkshopStore } from "~/stores/workshopStore"
 import { useConfirm } from "~/composables/useConfirm"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 
+const i18n = useI18n()
+const $t = i18n.t
 const questionnaireStore = useQuestionnaireStore()
 const workshopStore = useWorkshopStore()
 const confirm = useConfirm()
@@ -167,17 +169,17 @@ const assessmentStore = useAssessmentStore()
 const props = defineProps({
   pillar: { type: Object, required: true },
   color: { type: String, required: true },
-  workshopId: { type: Number, required: true }
+  workshopId: { type: Number, required: true },
 })
 
 const questions = computed<Question[]>(() =>
-  questionnaireStore.getQuestionnaireQuestionByPillarName(assessmentStore.currentAssessment.surveyId, props.pillar.name)
+  questionnaireStore.getQuestionnaireQuestionByPillarName(assessmentStore.currentAssessment.surveyId, props.pillar.name),
 )
 const activeQuestion = ref<Question>()
 const hoverQuestionId = ref<number>()
 
 const activeQuestionIndex = computed(() =>
-  questions.value.indexOf(activeQuestion.value)
+  questions.value.indexOf(activeQuestion.value),
 )
 
 const onSelectQuestion = (question: Question) => {
@@ -187,10 +189,10 @@ const onSelectQuestion = (question: Question) => {
 const nextQuestion = () => {
   if (isDirty.value) {
     confirm(
-      "Des réponses ont été rentrées mais non sauvegardées. Pour les enregistrer, annulez et cliquez sur le bouton Valider les réponses.",
-      "Ignorer les réponses rentrées ?",
-      "Ignorer et aller à la question suivante",
-      goNextQuestion
+      $t("Des réponses ont été rentrées mais non sauvegardées. Pour les enregistrer, annulez et cliquez sur le bouton Valider les réponses."),
+      $t("Ignorer les réponses rentrées ?"),
+      $t("Ignorer et aller à la question suivante"),
+      goNextQuestion,
     )
     return
   }
@@ -204,12 +206,12 @@ watch(
   () => props.pillar,
   () => {
     activeQuestion.value = null
-  }
+  },
 )
 
 const isDirty = computed(() => {
   for (const participation of workshopStore.workshopParticipations(
-    props.workshopId
+    props.workshopId,
   )) {
     if (workshopStore.isDirty(participation.id, activeQuestion.value?.id)) {
       return true
@@ -221,12 +223,12 @@ const isDirty = computed(() => {
 async function onSubmit() {
   const isSuccessful = await workshopStore.createOrUpdateQuestionnaireResponses(
     props.workshopId,
-    activeQuestion.value
+    activeQuestion.value,
   )
   if (isSuccessful) {
     // mark answers clean (not dirty anymore, selected choices have been answered)
     for (const participation of workshopStore.workshopParticipations(
-      props.workshopId
+      props.workshopId,
     )) {
       workshopStore.markDirty(participation.id, activeQuestion.value?.id, false)
     }

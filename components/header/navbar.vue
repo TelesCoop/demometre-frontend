@@ -64,13 +64,15 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
+              <!-- button to toggle locale between fr and en -->
+              <HeaderLocaleSwitcher />
               <NuxtLink
                 v-if="!isEvaluationRoute && assessmentStore.userHasNoAssessment"
                 to="/evaluation/localisation"
                 class="button evaluation is-rounded has-border-cooperation has-text-cooperation-dark"
                 @click="closeMenu"
               >
-                Lancer une évaluation
+                {{ $t("Lancer une évaluation") }}
               </NuxtLink>
               <NuxtLink
                 v-if="!isEvaluationRoute && assessmentStore.userHasSingleAssessment"
@@ -80,7 +82,6 @@
               >
                 {{ userStep.text }}
               </NuxtLink>
-
               <button
                 v-if="isEvaluationRoute && userStore.isUnknownUser"
                 class="button save is-rounded is-shade-600 is-outlined"
@@ -91,7 +92,7 @@
                   }
                 "
               >
-                Enregistrer
+                {{ $t("Enregistrer") }}
               </button>
               <NuxtLink
                 v-if="userStore.isLoggedIn"
@@ -99,7 +100,7 @@
                 class="button is-white is-rounded"
                 @click="closeMenu"
               >
-                Mon compte
+                {{ $t("Mon compte") }}
               </NuxtLink>
               <NuxtLink
                 v-else
@@ -107,7 +108,7 @@
                 class="button is-white is-outlined is-rounded"
                 @click="closeMenu"
               >
-                Se connecter
+                {{ $t("Se connecter") }}
               </NuxtLink>
             </div>
           </div>
@@ -131,7 +132,7 @@
           class="column button is-shade-200 navbar-progress-bar-save-button"
           @click="participationStore.setShowCancelParticipationModal(true)"
         >
-          <span>Réinitialiser</span>
+          <span>{{ $t("Réinitialiser") }}</span>
           <span class="icon">
             <icon
               size="15"
@@ -153,10 +154,14 @@ import { useUserStore } from "~/stores/userStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { isQuestionnaireRouteFromPath } from "~/utils/util"
+import { useI18n } from "vue-i18n"
 
 const emit = defineEmits<{
   (e: "change-header-height", value: number): void
 }>()
+
+const i18n = useI18n()
+const $t = i18n.t
 
 const userStore = useUserStore()
 const userStep = useUserStep()
@@ -185,23 +190,23 @@ const activePillar = computed(() => {
 
 const navItems = [
   {
-    name: "Accueil",
+    name: $t("Accueil"),
     to: "/",
   },
   {
-    name: "DémoMètre",
+    name: $t("DémoMètre"),
     to: "/demometre",
   },
   {
-    name: "Utilisations possibles",
+    name: $t("Utilisations possibles"),
     to: "/utilisations-possibles",
   },
   {
-    name: "Résultats",
+    name: $t("Résultats"),
     to: "/resultats",
   },
   {
-    name: "Le projet",
+    name: $t("Le projet"),
     to: "/projet",
   },
 ]

@@ -42,9 +42,13 @@
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { useI18n } from "vue-i18n"
+
+const i18n = useI18n()
+const $t = i18n.t
 
 definePageMeta({
-  title: "Initialisation",
+  // title: $t("Initialisation"),
   step: "initialization-objectives-questions",
 })
 

@@ -3,8 +3,8 @@
     class="pillar-card"
     :class="
       (isHovered && `has-background-${colorClass}-light`) +
-      (props.isCompleted && ` has-background-${colorClass}-light-active`) +
-      ` is-${colorClass}`
+        (props.isCompleted && ` has-background-${colorClass}-light-active`) +
+        ` is-${colorClass}`
     "
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
@@ -49,12 +49,12 @@ const isHovered = ref(false)
 
 const colorClass = computed(() => PillarParams[props.name].color)
 const textTitle = computed(
-  () => props.name[0].toUpperCase() + props.name.slice(1)
+  () => props.name[0].toUpperCase() + props.name.slice(1),
 )
 const circleClass = computed(() => {
-  let toReturn = `pillar-circle has-border-${colorClass.value} `
+  const toReturn = `pillar-circle has-border-${colorClass.value} `
 
-  let other = props.active
+  const other = props.active
     ? `has-background-${colorClass.value} has-text-white`
     : `has-background-${colorClass.value}-light has-text-${colorClass.value}`
   return `${toReturn} ${other}`

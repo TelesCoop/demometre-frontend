@@ -1,6 +1,6 @@
 <template>
   <div class="field">
-    <label class="label">Expert {{ expertIx + 1 }}</label>
+    <label class="label">{{ $t("Expert") }} {{ expertIx + 1 }}</label>
     <div class="select">
       <select
         id="workshop_type"
@@ -21,7 +21,7 @@
         class="button is-small is-rounded is-black is-outlined"
         @click="$emit('remove')"
       >
-        Retirer cet expert
+        {{ $t("Retirer cet expert") }}
       </button>
     </div>
   </div>
@@ -30,9 +30,9 @@
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
 
-const props = defineProps({
+defineProps({
   modelValue: { type: Number, required: true },
-  expertIx: { type: Number, default: 0 }
+  expertIx: { type: Number, default: 0 },
 })
 defineEmits(["remove", "update:modelValue"])
 

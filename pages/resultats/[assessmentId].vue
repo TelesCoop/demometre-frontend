@@ -11,13 +11,13 @@
       <section class="section">
         <div class="is-flex is-justify-content-space-between">
           <h2 class="title is-3 has-text-shade-700 mb-1">
-            Résultats par piliers
+            {{ $t("Résultats par piliers") }}
           </h2>
           <nuxt-link
             class="button is-rounded is-responsive is-shade-600"
             to="/demometre"
           >
-            <span>En savoir plus sur le DémoMètre</span>
+            <span>{{ $t("En savoir plus sur le DémoMètre") }}</span>
             <span class="icon">
               <icon
                 size="20"
@@ -38,7 +38,7 @@
               :score="
                 getScoreToDisplay(
                   assessmentStore.scoresByAssessmentId[assessmentId]
-                    ?.byPillarId[pillar.id]
+                    ?.byPillarId[pillar.id],
                 )
               "
               class="is-clickable"
@@ -76,7 +76,7 @@
                 "
               >
                 <p class="is-uppercase is-size-6bis mb-0_5 mt-1">
-                  Explicitée par :
+                  <!--                  {{ $pgettext("Une question peut être explicitée par une autre", "Explicitée par :") }}-->
                 </p>
                 <a
                   v-for="explainsByQuestionId of questionnaireStore
@@ -99,14 +99,14 @@
                 "
               >
                 <p class="is-uppercase is-size-6bis mb-0_5 mt-1">
-                  Permet d'expliciter :
+                  <!--                  {{ $pgettext("Une question peut être explicitée par une autre", "Permet d'expliciter :") }}-->
                 </p>
                 <a
                   class="is-underlined"
                   @click="
                     onSelectQuestion(
                       questionnaireStore.questionById[questionId]
-                        .allowsToExplain
+                        .allowsToExplain,
                     )
                   "
                 >
@@ -121,7 +121,7 @@
                 </a>
               </div>
               <p class="is-uppercase is-size-6bis mb-0_5 mt-2">
-                Résultat
+                {{ $t("Résultat") }}
               </p>
               <AnalyticsChartByQuestionType
                 :color="colorClass"
@@ -141,7 +141,7 @@
                 getStrenghtAndImprovements(
                   assessmentStore.scoresByAssessmentId[assessmentId],
                   markerProps.marker.criteriaIds,
-                  'marker'
+                  'marker',
                 )
               "
             />
@@ -152,7 +152,7 @@
                 getStrenghtAndImprovements(
                   assessmentStore.scoresByAssessmentId[assessmentId],
                   pillarProps.pillar.markerIds,
-                  'pillar'
+                  'pillar',
                 )
               "
             />
@@ -176,7 +176,6 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { getStrenghtAndImprovements, getScoreToDisplay } from "~/utils/scores"
-import { useProfilingStore } from "~/stores/profilingStore"
 
 definePageMeta({
   title: "Résultats",
@@ -187,7 +186,6 @@ const router = useRouter()
 
 const questionnaireStore = useQuestionnaireStore()
 const assessmentStore = useAssessmentStore()
-const profilingStore = useProfilingStore()
 
 const activePillar = ref<PillarType>()
 const markers = ref<Marker[]>()
@@ -199,7 +197,9 @@ const activeQuestionId: Ref<number> = ref(
   parseInt(route.query.question as string),
 )
 const pillars = computed(() => {
-  return questionnaireStore.surveyById[assessmentStore.currentAssessment.surveyId].pillars
+  return questionnaireStore.surveyById[
+    assessmentStore.currentAssessment.surveyId
+  ].pillars
 })
 
 if (!assessmentStore.assessmentById[assessmentId.value]?.name) {
@@ -207,9 +207,6 @@ if (!assessmentStore.assessmentById[assessmentId.value]?.name) {
 }
 if (!assessmentStore.scoresByAssessmentId[assessmentId.value]) {
   assessmentStore.getAssessmentScores(assessmentId.value)
-}
-if (!profilingStore.roles.length) {
-  profilingStore.getRoles()
 }
 
 const pillarOfQuestionId = (questionId: number) => {

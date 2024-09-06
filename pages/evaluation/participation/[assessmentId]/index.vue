@@ -64,7 +64,9 @@
           class="button is-shade-600 is-rounded"
           :disabled="disabled"
         >
-          <span>C'est parti !</span>
+          <span>
+            <!--            {{ $pgettext("lancement d'une évaluation", "C'est parti !") }}-->
+          </span>
         </button>
 
         <!-- Permet d'appuyer sur entrer -->

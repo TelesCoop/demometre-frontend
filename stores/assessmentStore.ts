@@ -1,15 +1,18 @@
 import { defineStore } from "pinia"
 import {
-  Assessment, AssessmentDocumentType,
+  Assessment,
+  AssessmentDocumentType,
   Localities,
   RepresentativityCriteria,
-  Scores, SurveyLocality, SurveysResult,
+  Scores,
+  SurveyLocality,
   User,
 } from "~/composables/types"
 import { useApiDelete, useApiGet, useApiPost } from "~/composables/api"
 import { useMessageStore } from "./messageStore"
 import { useUserStore } from "./userStore"
 import { useParticipationStore } from "./participationStore"
+import { useI18n } from "vue-i18n"
 
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
@@ -24,26 +27,31 @@ export const useAssessmentStore = defineStore("assessment", {
         [key: number]: any
       }
       >{},
-    expertById: <{
-      [key: number]: User
-    }>{},
+    expertById: <
+      {
+        [key: number]: User
+      }
+      >{},
     addingExpert: <boolean>false,
     newAssessment: <Assessment>{},
   }),
   getters: {
     assessmentTypeTitle(): string {
-      return (
-        "de " +
-        (this.currentAssessment?.municipality
-          ? "ma ville"
-          : "mon inter-communalité")
+      const i18n = useI18n()
+      const $t = i18n.t
+
+      return (this.currentAssessment?.municipality
+        ? $t("de ma ville")
+        : $t("de mon inter-communalité")
       )
     },
     assessments: (state) => {
       return Object.values(state.assessmentById)
     },
     assessmentsWithDetails: (state): Assessment[] => {
-      return Object.values(state.assessmentById).filter((ass: Assessment) => ass.details.hasDetailAccess)
+      return Object.values(state.assessmentById).filter(
+        (ass: Assessment) => ass.details.hasDetailAccess,
+      )
     },
     canSeeResultsAssessments() {
       return this.assessments.filter(
@@ -109,10 +117,13 @@ export const useAssessmentStore = defineStore("assessment", {
       return true
     },
     async addDocument(payload: any, assessmentId: number) {
+      const i18n = useI18n()
+      const $t = i18n.t
+
       const { data, error } = await useApiPost<AssessmentDocumentType>(
         `assessment-documents/`,
         payload,
-        "Impossible de téléverser le document",
+        $t("Impossible de téléverser le document"),
       )
       if (!error.value) {
         this.assessmentById[assessmentId].documents.push(data.value)
@@ -125,10 +136,14 @@ export const useAssessmentStore = defineStore("assessment", {
       if (error.value) {
         return false
       } else {
-        console.log("### remove document", assessmentId, this.assessmentById[assessmentId])
-        this.assessmentById[assessmentId].documents = this.assessmentById[assessmentId].documents.filter(
-          doc => doc.id != assessmentDocumentId,
+        console.log(
+          "### remove document",
+          assessmentId,
+          this.assessmentById[assessmentId],
         )
+        this.assessmentById[assessmentId].documents = this.assessmentById[
+          assessmentId
+        ].documents.filter((doc) => doc.id != assessmentDocumentId)
         return true
       }
     },
@@ -188,10 +203,11 @@ export const useAssessmentStore = defineStore("assessment", {
         const assessmentId: number = Object.keys(this.assessmentById)[0]
         this.currentAssessmentId = assessmentId
         const participationStore = useParticipationStore()
-        if (await participationStore.getParticipationForAssessment(assessmentId)) {
+        if (
+          await participationStore.getParticipationForAssessment(assessmentId)
+        ) {
           await participationStore.loadAssessment(assessmentId)
         }
-
       }
       return true
     },
@@ -228,7 +244,7 @@ export const useAssessmentStore = defineStore("assessment", {
       return true
     },
     async getSurveysForZipCode(zipCode: string) {
-      const { data, error } = await useApiGet<SurveysResult>(
+      const { data, error } = await useApiGet<Localities>(
         `surveys/by-zip-code/${parseInt(zipCode.replace(" ", ""))}/`,
       )
       if (error.value) {
@@ -302,7 +318,8 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     async saveAssessment(assessmentId: number, payload: any) {
       const { data, error } = await useApiPatch<Assessment>(
-        `assessments/${assessmentId}/`, payload,
+        `assessments/${assessmentId}/`,
+        payload,
       )
       if (error.value) {
         return false

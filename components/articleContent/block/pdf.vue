@@ -10,7 +10,7 @@
         size="16"
         class="mr-0_5"
       />
-      Télécharger : {{ block.value.title }}
+      {{ $t("Télécharger :") }} {{ block.value.title }}
     </a>
   </div>
 </template>

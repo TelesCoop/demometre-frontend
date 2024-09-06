@@ -6,21 +6,22 @@ import {
   PillarName,
   Question,
   QuestionResponse,
+  QuestionResponseValue,
   SurveyType,
 } from "~/composables/types"
 import { useAssessmentStore } from "./assessmentStore"
 import {
   QUESTION_RESPONSES_BY_TYPE,
-  getQuestionResponseStructure,
+  toQuestionResponse,
 } from "~/utils/question-response"
 import { useUserStore } from "./userStore"
 import { useMessageStore } from "./messageStore"
 import { useQuestionnaireStore } from "./questionnaireStore"
 
 type Status = {
-  total: number;
-  answered: number;
-  completed: boolean;
+  total: number
+  answered: number
+  completed: boolean
   participated?: boolean
 }
 
@@ -32,38 +33,46 @@ export const useParticipationStore = defineStore("participation", {
     fetchedParticipations: <Record<number, boolean>>{},
     loadedParticipations: <Record<number, boolean>>{},
     profilingCurrent: <number[]>[],
-    responseByProfilingQuestionId: <{
-      [key: number]: QuestionResponse
-    }>{},
-    responseByQuestionnaireQuestionId: <{
-      [key: number]: QuestionResponse
-    }>{},
+    responseByProfilingQuestionId: <
+      {
+        [key: number]: QuestionResponse
+      }
+    >{},
+    responseByQuestionnaireQuestionId: <
+      {
+        [key: number]: QuestionResponse
+      }
+    >{},
     newParticipation: <Participation>{},
-    participations: <{
-      [key: number]: Participation
-    }>{},
+    participations: <
+      {
+        [key: number]: Participation
+      }
+    >{},
     showCancelParticipationModal: <boolean>false,
     showSaveParticipationModal: <boolean>false,
-    totalAndAnsweredQuestionsByPillarName: <
-      Record<string, Status>
-      >{},
+    totalAndAnsweredQuestionsByPillarName: <Record<string, Status>>{},
   }),
   getters: {
-    participation() {
-      return this.participations?.[this.currentParticipationId] || {}
+    participation: (state): Participation | {} => {
+      return state.participations?.[state.currentParticipationId] || {}
     },
-    id() {
-      return this.participation?.id
+    id(): Participation["id"] | undefined {
+      return "id" in this.participation ? this.participation.id : undefined
     },
     hasAnsweredQuestionnaireQuestion: (state) => {
       return (questionId: number) => {
-        return state.responseByQuestionnaireQuestionId[questionId] ? true : false
+        return state.responseByQuestionnaireQuestionId[questionId]
+          ? true
+          : false
       }
     },
     status(): Status {
       let total = 0
       let answered = 0
-      for (const st of Object.values(this.totalAndAnsweredQuestionsByPillarName)) {
+      for (const st of Object.values(
+        this.totalAndAnsweredQuestionsByPillarName,
+      )) {
         total += st.total
         answered += st.answered
       }
@@ -100,8 +109,12 @@ export const useParticipationStore = defineStore("participation", {
       errorStore.setError(error.value.data?.messageCode)
       return false
     },
-    async getParticipationForAssessment(assessmentId: number): Promise<boolean> {
-      const response = await useApiGet<Participation>(`participations/by-assessment/${assessmentId}/`)
+    async getParticipationForAssessment(
+      assessmentId: number,
+    ): Promise<boolean> {
+      const response = await useApiGet<Participation>(
+        `participations/by-assessment/${assessmentId}/`,
+      )
       if (response.error.value) {
         return false
       }
@@ -112,7 +125,9 @@ export const useParticipationStore = defineStore("participation", {
 
       return true
     },
-    async getParticipationForAssessmentOnce(assessmentId: number): Promise<boolean> {
+    async getParticipationForAssessmentOnce(
+      assessmentId: number,
+    ): Promise<boolean> {
       if (this.fetchedParticipations[assessmentId]) {
         return true
       }
@@ -147,11 +162,16 @@ export const useParticipationStore = defineStore("participation", {
       })
       return true
     },
-    async getQuestionnaireSubjectiveQuestionResponsesForAssessment(assessmentId: number) {
+    async getQuestionnaireSubjectiveQuestionResponsesForAssessment(
+      assessmentId: number,
+    ) {
       const participationResponses = await useApiGet<QuestionResponse[]>(
         `participation-responses/by-assessment/${assessmentId}/?context=questionnaire`,
       )
-      if (participationResponses.error.value || !participationResponses.data.value) {
+      if (
+        participationResponses.error.value ||
+        !participationResponses.data.value
+      ) {
         return false
       }
       participationResponses.data.value.forEach((item) => {
@@ -160,7 +180,9 @@ export const useParticipationStore = defineStore("participation", {
       })
       return true
     },
-    async getQuestionnaireObjectiveQuestionResponsesForAssessment(assessmentId: number) {
+    async getQuestionnaireObjectiveQuestionResponsesForAssessment(
+      assessmentId: number,
+    ) {
       const assessmentResponses = await useApiGet<QuestionResponse[]>(
         `assessment-responses/by-assessment/${assessmentId}/`,
       )
@@ -176,8 +198,12 @@ export const useParticipationStore = defineStore("participation", {
     async loadAssessment(assessmentId: number) {
       await Promise.all([
         this.getProfilingQuestionResponsesForAssessment(assessmentId),
-        this.getQuestionnaireSubjectiveQuestionResponsesForAssessment(assessmentId),
-        this.getQuestionnaireObjectiveQuestionResponsesForAssessment(assessmentId),
+        this.getQuestionnaireSubjectiveQuestionResponsesForAssessment(
+          assessmentId,
+        ),
+        this.getQuestionnaireObjectiveQuestionResponsesForAssessment(
+          assessmentId,
+        ),
       ])
     },
     async loadAssessmentOnce(assessmentId: number) {
@@ -192,13 +218,17 @@ export const useParticipationStore = defineStore("participation", {
       this.responseByQuestionnaireQuestionId = {}
       this.totalAndAnsweredQuestionsByPillarName = {}
     },
-    async saveResponse(question: Question, response: any, isAnswered: boolean) {
-      const questionResponse = getQuestionResponseStructure(
-        question,
-        response,
+    async saveResponse(
+      question: Question,
+      response: QuestionResponseValue,
+      isAnswered: boolean,
+    ) {
+      const questionResponse = toQuestionResponse(
+        question.id,
+        this.id!,
+        useAssessmentStore().currentAssessmentId!,
         isAnswered,
-        this.id,
-        useAssessmentStore().currentAssessmentId,
+        response,
       )
 
       let apiResponse

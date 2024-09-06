@@ -7,7 +7,8 @@ import { useUserStore } from "~/stores/userStore"
 import { usePageStore } from "~/stores/pageStore"
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.hook("app:created", async () => {
+  nuxtApp.hook("app:mounted", async () => {
+    console.log("### init data client 0")
     // the data should already be fetched from SSR
     // but if it's missing, we try again from the client
 
@@ -30,8 +31,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
 
     if (!profilingStore.orderedQuestionId.length) {
-      profilingStore.getProfilingQuestions()
       toAwaitFor.push(profilingStore.getProfilingQuestions())
+    }
+    if (!profilingStore.roles.length) {
+      toAwaitFor.push(profilingStore.getRoles())
     }
     if (!Object.keys(questionnaireStore.surveyById).length) {
       toAwaitFor.push(questionnaireStore.getSurveysSetup())

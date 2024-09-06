@@ -63,7 +63,7 @@ const props = defineProps({
 const profilingStore = useProfilingStore()
 
 const rolesGradiants = computed(
-  () => getColorGradients(props.color)[props.question.roleIds.length]
+  () => getColorGradients(props.color)[props.question.roleIds.length],
 )
 const getValueByRoleId = (choice, roleId) => {
   const roleName = profilingStore.roleById[roleId].name
@@ -90,7 +90,7 @@ const getSimplifyData = (): {
           }
           return acc
         },
-        { value: 0, choiceKey: null }
+        { value: 0, choiceKey: null },
       )
       categoryResult[roleId] = maxCategoryByRole
     }

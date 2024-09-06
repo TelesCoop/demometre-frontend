@@ -21,7 +21,7 @@
         <form @submit.prevent="">
           <template v-if="!bottomFields">
             <div class="field">
-              <label class="label">Nom de l'atelier</label>
+              <label class="label">{{ $t("Nom de l'atelier") }}</label>
               <div class="control">
                 <input
                   v-model="workshopName"
@@ -38,12 +38,12 @@
                   v-model="place"
                   class="input"
                   type="text"
-                  placeholder="Salle polyvalente de la ville de ..."
+                  :placeholder="$t('Salle polyvalente de la ville de ...')"
                 >
               </div>
             </div>
             <div class="field">
-              <label class="label">Date</label>
+              <label class="label">{{ $t("Date") }}</label>
               <div class="control">
                 <input
                   v-model="date"
@@ -76,7 +76,7 @@
           :disabled="loadingStore.isLoading('workshops')"
           @click="saveEdits"
         >
-          <span>Valider</span>
+          <span>{{ $t("Valider") }}</span>
           <span class="icon">
             <icon
               size="16"
@@ -88,7 +88,7 @@
           class="button is-rounded is-outlined is-dark"
           @click="$emit('close')"
         >
-          Annuler
+          {{ $t("Annuler") }}
         </button>
       </footer>
     </div>
@@ -98,25 +98,29 @@
 <script setup lang="ts">
 import { PropType } from "vue"
 import { Workshop } from "~/composables/types"
-import { WORKSHOP_CONTEXT_FIELD_TYPE, WORKSHOP_CONTEXT_FIELDS } from "~/utils/constants"
+import { WORKSHOP_CONTEXT_FIELDS } from "~/utils/constants"
 import { useLoadingStore } from "~/stores/loadingStore"
 import { useWorkshopStore } from "~/stores/workshopStore"
+import { useI18n } from "vue-i18n"
 
 const workshopStore = useWorkshopStore()
 const loadingStore = useLoadingStore()
 
+const i18n = useI18n()
+const $t = i18n.t
+
 const props = defineProps({
   workshop: { type: Object as PropType<Workshop>, required: true },
-  bottomFields: { type: Boolean, default: false }
+  bottomFields: { type: Boolean, default: false },
 })
 console.log("### edit modal", props.workshop)
 const emit = defineEmits(["close"])
 
 const title = computed<string>(() => {
   if (props.bottomFields) {
-    return props.workshop?.type === "assessment" ? "Modifier les suggestions" : "Modifier les remarques"
+    return props.workshop?.type === "assessment" ? $t("Modifier les suggestions") : $t("Modifier les remarques")
   } else {
-    return "Informations de l'atelier"
+    return $t("Informations de l'atelier")
   }
 })
 
@@ -128,38 +132,38 @@ const contextFields = computed<{
     props.workshop.type === "assessment" ? [
       {
         label: WORKSHOP_CONTEXT_FIELDS.demometreSuggestions,
-        field: "demometreSuggestions"
+        field: "demometreSuggestions",
       },
       {
         label: WORKSHOP_CONTEXT_FIELDS.platformSuggestions,
-        field: "platformSuggestions"
-      }
+        field: "platformSuggestions",
+      },
     ] : [
       {
         label: WORKSHOP_CONTEXT_FIELDS.improvementObservations,
-        field: "improvementObservations"
+        field: "improvementObservations",
       },
       {
         label: WORKSHOP_CONTEXT_FIELDS.resultObservations,
-        field: "resultObservations"
-      }
+        field: "resultObservations",
+      },
     ]) : [
     {
       label: WORKSHOP_CONTEXT_FIELDS.context,
-      field: "context"
+      field: "context",
     },
     {
       label: WORKSHOP_CONTEXT_FIELDS.objectives,
-      field: "objectives"
+      field: "objectives",
     },
     {
       label: WORKSHOP_CONTEXT_FIELDS.course,
-      field: "course"
+      field: "course",
     },
     {
       label: WORKSHOP_CONTEXT_FIELDS.comments,
-      field: "comments"
-    }
+      field: "comments",
+    },
   ])
 const contextValues = ref<Record<WORKSHOP_CONTEXT_FIELD_TYPE, string>>({})
 for (const field of contextFields.value) {

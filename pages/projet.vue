@@ -12,37 +12,52 @@
           class="button is-rounded is-outlined is-shade-600 is-responsive"
           @click.prevent="scrollIntoWhyBlock"
         >
-          <span>Pourquoi</span>
+          <span>{{ $t("Pourquoi") }}</span>
           <span class="icon">
-            <icon name="arrow-right-line" size="16" class="icon" />
+            <icon
+              name="arrow-right-line"
+              size="16"
+              class="icon"
+            />
           </span>
         </button>
         <button
           class="button is-rounded is-outlined is-shade-600 is-responsive"
           @click.prevent="scrollIntoWhoBlock"
         >
-          <span>Avec qui</span>
+          <span>{{ $t("Avec qui") }}</span>
           <span class="icon">
-            <icon name="arrow-right-line" size="16" class="icon" />
+            <icon
+              name="arrow-right-line"
+              size="16"
+              class="icon"
+            />
           </span>
         </button>
         <button
           class="button is-rounded is-outlined is-shade-600 is-responsive"
           @click.prevent="scrollIntoHowBlock"
         >
-          <span>Méthode</span>
+          <span>{{ $t("Méthode") }}</span>
           <span class="icon">
-            <icon name="arrow-right-line" size="16" class="icon" />
+            <icon
+              name="arrow-right-line"
+              size="16"
+              class="icon"
+            />
           </span>
         </button>
       </div>
     </PageIntro>
 
     <!-- Why block -->
-    <div ref="whyBlockRef" class="scroll-margin-top_5">
+    <div
+      ref="whyBlockRef"
+      class="scroll-margin-top_5"
+    >
       <PageBigSection
         :title="pageStore.projectPage.whyBlockTitle"
-        label="Pourquoi"
+        :label="$t('Pourquoi')"
       >
         <div class="container">
           <section class="column-2 section">
@@ -72,7 +87,7 @@
                         :alt="objective.title"
                         :style="`height: 100px; width: 100px`"
                         class="mt-2"
-                      />
+                      >
                     </figure>
                   </div>
                   <div class="card-content px-2 pb-2">
@@ -103,7 +118,7 @@
                         :src="MEDIA_BASE_URL + impact.imageUrl"
                         :alt="impact.title"
                         class="fit-without-distortion"
-                      />
+                      >
                     </figure>
                   </div>
                   <div class="card-content px-2 pb-2">
@@ -122,10 +137,13 @@
     </div>
 
     <!-- Who block -->
-    <div ref="whoBlockRef" class="scroll-margin-top_5">
+    <div
+      ref="whoBlockRef"
+      class="scroll-margin-top_5"
+    >
       <PageBigSection
         :title="pageStore.projectPage.whoBlockTitle"
-        label="Avec qui"
+        :label="$t('Avec qui')"
       >
         <PageSection
           v-if="pageStore.projectPage.whoCrewSubBlockTitle"
@@ -138,7 +156,7 @@
               "
               :alt="pageStore.projectPage.whoCrewSubBlockTitle"
               class="logo-open-democracy is-hidden-mobile"
-            />
+            >
           </figure>
           <div class="columns is-mobile is-multiline">
             <div
@@ -160,7 +178,7 @@
             <RichText
               class="is-family-secondary column-2 mb-2"
               :rich-text="pageStore.projectPage.whoCommitteeSubBlockDescription"
-            ></RichText>
+            />
             <div>
               <div class="tabs">
                 <ul>
@@ -176,8 +194,7 @@
                     <a
                       class="tab is-size-6 has-text-weight-bold has-text-shade-500"
                       @click="setTab(tab.id)"
-                      >{{ tab.label }}</a
-                    >
+                    >{{ tab.label }}</a>
                   </li>
                 </ul>
               </div>
@@ -189,7 +206,7 @@
                 <div
                   v-show="
                     currentTabId ===
-                    group_committees.value.committee.replace(/\s+/g, '')
+                      group_committees.value.committee.replace(/\s+/g, '')
                   "
                   class="columns is-mobile is-multiline"
                 >
@@ -245,10 +262,13 @@
     </div>
 
     <!-- How block -->
-    <div ref="howBlockRef" class="scroll-margin-top_5">
+    <div
+      ref="howBlockRef"
+      class="scroll-margin-top_5"
+    >
       <PageBigSection
         :title="pageStore.projectPage.howBlockTitle"
-        label="Comment"
+        :label="$t('Comment')"
       >
         <div class="container">
           <PageFreeBody
@@ -296,6 +316,7 @@ if (committeeData.length) {
   })
 }
 const currentTabId = ref<string>(tabs.value[0]?.id)
+
 function setTab(tabId) {
   currentTabId.value = tabId
 }
@@ -323,14 +344,17 @@ const scrollIntoWhyBlock = () => {
 <style scoped lang="sass">
 .buttons .button
   height: fit-content
+
 .impact
   .image
     height: 240px
     width: 100%
+
 @include mobile
   .impact
     .image
       height: 150px
+
 .logo-open-democracy
   position: absolute
   top: 3rem

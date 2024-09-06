@@ -18,8 +18,9 @@ export default defineNuxtPlugin((nuxtApp) => {
     console.log("### init data server")
 
     userStore.refreshProfile(false)
-    assessmentStore.getAssessmentsForUser()
+    // assessmentStore.getAssessmentsForUser()
     profilingStore.getProfilingQuestions()
+    profilingStore.getRoles()
     questionnaireStore.getSurveysSetup()
     assessmentStore.getRepresentativityCriterias()
     definitionStore.getDefinitions()

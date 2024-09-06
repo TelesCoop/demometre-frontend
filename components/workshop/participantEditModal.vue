@@ -20,7 +20,7 @@
       <section class="modal-card-body">
         <form @submit.prevent="">
           <div class="field">
-            <label class="label">Nom / pseudo</label>
+            <label class="label">{{ $t("Nom / pseudo") }}</label>
             <div class="control">
               <input
                 v-model="participation.participantName"
@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="field">
-            <label class="label">Adresse mail</label>
+            <label class="label">{{ $t("Adresse mail") }}</label>
             <div class="control">
               <input
                 v-model="participation.participantEmail"
@@ -45,7 +45,7 @@
             <label
               for="role"
               class="label"
-            >Rôle</label>
+            >{{ $t("Rôle") }}</label>
             <div class="select">
               <select
                 id="role"
@@ -65,7 +65,7 @@
             <label
               for="role"
               class="label"
-            >Réponses</label>
+            >{{ $t("Réponses") }}</label>
             <div class="select">
               <select
                 id="role"
@@ -80,10 +80,8 @@
               </select>
             </div>
             <p class="help">
-              Les participants peuvent répondre en ligne ou via questionnaire papier, dont les réponses peuvent être
-              saisies par vos soins avec la plateforme. Si vous souhaitez saisir des réponses papier, sélectionnez « Sur
-              papier », puis remplissez les questions de profilage, validez puis cliquez ensuite sur « Saisir les
-              réponses papier ».
+              {{ $t("Les participants peuvent répondre en ligne ou via questionnaire papier, dont les réponses peuvent être saisies par vos soins avec la plateforme. Si vous souhaitez saisir des réponses papier, sélectionnez « Sur papier », puis remplissez les questions de profilage, validez puis cliquez ensuite sur « Saisir les réponses papier ».")
+              }}
             </p>
           </div>
 
@@ -119,7 +117,7 @@
           :disabled="!canValidate || loadingStore.isLoading('workshopsParticipation')"
           @click="save"
         >
-          <span>Valider</span>
+          <span>{{ $t("Valider") }}</span>
           <span class="icon">
             <icon
               size="16"
@@ -131,7 +129,7 @@
           class="button is-rounded is-outlined is-dark"
           @click="$emit('close')"
         >
-          Annuler
+          {{ $t("Annuler") }}
         </button>
       </footer>
     </div>
@@ -145,15 +143,19 @@ import { useLoadingStore } from "~/stores/loadingStore"
 import { useWorkshopStore } from "~/stores/workshopStore"
 import { useProfilingStore } from "~/stores/profilingStore"
 import { WORKSHOP_MEDIUM } from "~/utils/constants"
+import { useI18n } from "vue-i18n"
 
 const workshopStore = useWorkshopStore()
 const loadingStore = useLoadingStore()
 const profilingStore = useProfilingStore()
 const route = useRoute()
 
+const i18n = useI18n()
+const $t = i18n.t
+
 const props = defineProps({
   workshop: { type: Object as PropType<Workshop>, required: true },
-  participant: { type: Object as PropType<WorkshopParticipation>, default: () => ({}) }
+  participant: { type: Object as PropType<WorkshopParticipation>, default: () => ({}) },
 })
 const workshopId: number = +route.params.workshopId
 const assessmentId: number = +route.params.id
@@ -167,9 +169,9 @@ if (participation.value.responseByQuestionId == null) {
 
 const title = computed<string>(() => {
   if (isNew.value) {
-    return "Ajout d'un participant"
+    return $t("Ajout d'un participant")
   } else {
-    return "Modification d'un participant"
+    return $t("Modification d'un participant")
   }
 })
 

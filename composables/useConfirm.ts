@@ -1,14 +1,19 @@
 import { useMainStore } from "~/stores/mainStore"
+import { useI18n } from "vue-i18n"
+
 
 export const useConfirm = () => {
   const mainStore = useMainStore()
+  const i18n = useI18n()
+  const $t = i18n.t
+
   return (
     text: string,
-    title = "Confirmation",
-    confirmationLabel = "Confirmer",
+    title = $t("Confirmation"),
+    confirmationLabel = $t("Confirmer"),
     onConfirm: () => void,
     onCancel: () => void = () => {
-    }
+    },
   ) => {
     const newOnCancel = () => {
       onCancel()
@@ -23,7 +28,7 @@ export const useConfirm = () => {
       title,
       onConfirm: newOnConfirm,
       onCancel: newOnCancel,
-      confirmationLabel
+      confirmationLabel,
     }
   }
 }

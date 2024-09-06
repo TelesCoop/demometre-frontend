@@ -10,19 +10,19 @@
           <thead>
             <tr>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                Nom de l’atelier
+                {{ $t("Nom de l’atelier") }}
               </td>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                Type d'atelier
+                {{ $t("Type d'atelier") }}
               </td>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                Date (MM/JJ/AAAA)
+                {{ $t("Date (MM/JJ/AAAA)") }}
               </td>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                Lieu
+                {{ $t("Lieu") }}
               </td>
               <td class="has-text-shade-400 is-uppercase is-size-6">
-                Participants
+                {{ $t("Participants") }}
               </td>
               <td />
             </tr>
@@ -101,7 +101,7 @@
         class="message"
       >
         <div class="message-body">
-          Il n'y a pas encore d'atelier dans cette évaluation.
+          {{ $t("Il n'y a pas encore d'atelier dans cette évaluation.") }}
         </div>
       </div>
     </PageSection>
@@ -118,7 +118,7 @@
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">
-          Clôturer l'atelier
+          {{ $t("Clôturer l'atelier") }}
         </p>
         <button
           class="button is-ghost is-rounded is-outlined"
@@ -140,13 +140,13 @@
           class="button is-success"
           @click.prevent="closeWorkshop(workshop)"
         >
-          Clôturer
+          {{ $t("Clôturer") }}
         </button>
         <button
           class="button"
           @click.prevent="closeModal()"
         >
-          Annuler
+          {{ $t("Annuler") }}
         </button>
       </footer>
     </div>

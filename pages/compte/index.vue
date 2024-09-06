@@ -3,16 +3,23 @@
     <div class="section">
       <div class="is-flex is-justify-content-space-between">
         <h1 class="title is-size-1-desktop is-2 has-text-black">
-          Mon compte
+          {{ $t("Mon compte") }}
         </h1>
         <div>
           <button
             class="button is-rounded"
             @click.prevent="logout"
           >
-            Se déconnecter
+            {{ $t("Se déconnecter") }}
           </button>
         </div>
+      </div>
+      <div v-if="userStore.isAdminOrExpertUser">
+        <router-link to="/export/questionnaire">
+          <button class="button is-rounded">
+            {{ $t("Générer un questionnaire papier en fonction d'un profil") }}
+          </button>
+        </router-link>
       </div>
     </div>
     <div
@@ -22,25 +29,26 @@
     >
       <div class="message">
         <div class="message-body">
-          Votre participation ne sera pas comptabilisée tant que vous n'êtes pas
-          enregistré. Elle sera supprimée au bout d'un mois.
+          {{ $t("Votre participation ne sera pas comptabilisée tant que vous n'êtes pas enregistré. Elle sera supprimée au bout d'un mois.")
+          }}
         </div>
       </div>
       <div class="buttons is-flex-direction-column is-align-items-flex-start">
         <router-link
-
           class="button is-rounded is-primary mr-1 mb-1"
           to="/signup"
         >
-          S'enregistrer pour conserver vos résultats
+          {{ $t("S'enregistrer pour conserver vos résultats") }}
         </router-link>
       </div>
     </div>
     <div>
       <hr>
       <PageSection
-        title="Mes informations"
-        :buttons="[{text: 'Modifier les informations', icon: 'list-settings-line'}]"
+        :title="$t('Mes informations')"
+        :buttons="[
+          { text: $t('Modifier les informations'), icon: 'list-settings-line' },
+        ]"
         @button-click="showEditUserInfoModal = true"
       >
         <div
@@ -61,7 +69,7 @@
       <PageSection
         title="Mes évaluations"
         intro="Toutes mes évaluations en cours et terminées"
-        :buttons="[{text: 'Lancer une évaluation', icon: 'arrow-right-line'}]"
+        :buttons="[{ text: 'Lancer une évaluation', icon: 'arrow-right-line' }]"
         @button-click="newAssessment"
       >
         <div class="tabs is-fullwidth">
@@ -70,13 +78,13 @@
               :class="isCurrentAssessmentsTab ? 'is-active' : null"
               @click="isCurrentAssessmentsTab = true"
             >
-              <a>Évaluations en cours ({{ currentAssessments.length }})</a>
+              <a>{{ $t("Évaluations en cours") }} ({{ currentAssessments.length }})</a>
             </li>
             <li
               :class="isCurrentAssessmentsTab ? null : 'is-active'"
               @click="isCurrentAssessmentsTab = false"
             >
-              <a>Évaluations terminées ({{ finishedAssessments.length }})</a>
+              <a>{{ $t("Évaluations terminées") }} ({{ finishedAssessments.length }})</a>
             </li>
           </ul>
         </div>
@@ -87,13 +95,19 @@
           >
             <div class="message-body">
               <p class="title is-5">
-                Aucune évaluation {{ isCurrentAssessmentsTab ? "en cours" : "terminée" }}
+                {{ $t("Aucune évaluation") }}
+                {{ isCurrentAssessmentsTab ? $t("en cours") : $t("terminée") }}
               </p>
               <p>
-                Vous n’avez aucune évaluation {{ isCurrentAssessmentsTab ? "en cours" : "terminée" }} avec le DémoMètre.
+                <template v-if="isCurrentAssessmentsTab">
+                  {{ $t("Vous n’avez aucune évaluation en cours avec le DémoMètre.") }}
+                </template>
+                <template v-else>
+                  {{ $t("Vous n’avez aucune évaluation terminée avec le DémoMètre.") }}
+                </template>
               </p>
               <p>
-                Pour démarrer une évaluation, cliquer sur le bouton « Lancer une évaluation ».
+                {{ $t("Pour démarrer une évaluation, cliquer sur le bouton « Lancer une évaluation ».") }}
               </p>
             </div>
           </article>
@@ -103,14 +117,18 @@
           >
             <thead>
               <tr>
-                <th>Nom</th>
-                <th>Questionnaire</th>
-                <th>Date de création</th>
-                <th>Rôle</th>
-                <th>Échelon</th>
-                <th>Localité</th>
-                <th>Pays</th>
-                <th>Actions</th>
+                <th>
+                <!--                  {{ $pgettext("relatif à une évaluation", "Nom") }}-->
+                </th>
+                <th>{{ $t("Questionnaire") }}</th>
+                <th>{{ $t("Date de création") }}</th>
+                <th>
+                <!--                  {{ $pgettext("rôle de l'utilisateur dans l'évaluation", "Rôle") }}-->
+                </th>
+                <th>{{ $t("Échelon") }}</th>
+                <th>{{ $t("Localité") }}</th>
+                <th>{{ $t("Pays") }}</th>
+                <th>{{ $t("Actions") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -126,24 +144,27 @@
                 <td>{{ assessment.surveyName }}</td>
                 <td>{{ new Date(assessment.created).toLocaleDateString() }}</td>
                 <td>
-                  {{ PARTICIPANT_TYPE[assessment.details.role] || "participant - non encore rempli" }}
+                  <!--                  {{-->
+                  <!--                    PARTICIPANT_TYPE[assessment.details.role] ||-->
+                  <!--                      $pgettext("l'utilisateur est participant au questionnaire, mais n'a pas commencé à le remplir", "participant - non encore rempli")-->
+                  <!--                  }}-->
                   <template v-if="assessment.details.hasDetailAccess">
                     <span
                       v-if="assessment.details.paymentAmount"
                       class="tag"
-                    >Redevance payée</span>
+                    >{{ $t("Redevance payée") }}</span>
                     <span
                       v-else
                       class="tag is-danger"
-                    >Redevance impayée</span>
+                    >{{ $t("Redevance impayée") }}</span>
                   </template>
                 </td>
-                <td>{{ LOCALITY_TYPE[assessment.localityType] }}</td>
+                <td>{{ LOCALITY_TYPE_NAME[assessment.localityType] }}</td>
                 <td>{{ assessment.collectivityName }}</td>
                 <td>France</td>
                 <td>
                   <button class="button is-small is-rounded">
-                    Détails
+                    {{ $t("Détails") }}
                   </button>
                 </td>
               </tr>
@@ -162,7 +183,7 @@
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useUserStore } from "~/stores/userStore"
-import { LOCALITY_TYPE, PARTICIPANT_TYPE } from "~/utils/constants"
+import { LOCALITY_TYPE_NAME, PARTICIPANT_TYPE } from "~/utils/constants"
 import { useParticipationStore } from "~/stores/participationStore"
 import { Assessment } from "~/composables/types"
 
@@ -179,9 +200,17 @@ const router = useRouter()
 const isCurrentAssessmentsTab = ref(true)
 const showEditUserInfoModal = ref(false)
 
-const currentAssessments = computed(() => assessmentStore.myAssessments.filter(ass => ass.isCurrent))
-const finishedAssessments = computed(() => assessmentStore.myAssessments.filter(ass => !ass.isCurrent))
-const selectedAssessments = computed<Assessment[]>(() => isCurrentAssessmentsTab.value ? currentAssessments.value : finishedAssessments.value)
+const currentAssessments = computed(() =>
+  assessmentStore.myAssessments.filter((ass) => ass.isCurrent),
+)
+const finishedAssessments = computed(() =>
+  assessmentStore.myAssessments.filter((ass) => !ass.isCurrent),
+)
+const selectedAssessments = computed<Assessment[]>(() =>
+  isCurrentAssessmentsTab.value
+    ? currentAssessments.value
+    : finishedAssessments.value,
+)
 
 const selectAssessment = (assessmentId: number) => {
   router.push(`/compte/evaluation/${assessmentId}`)

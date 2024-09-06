@@ -2,6 +2,24 @@
 
 ## Notes pour les développeurs
 
+### Mettre à jour les traductions
+
+#### Lorsqu'il y a des ajouts dans le code
+
+1. lancer `yarn do-vue-i18n-extract` pour repérer où les traductions sont utilisées
+   et d'éventuelles nouvelles chaînes à traduire
+2. lancer `python3 translations.py` pour
+    - mettre à jour les fichiers app.po avec les nouvelles chaines à traduire
+    - mettre à jour les fichiers [locale].json avec les traductions du fichier app.po
+3. commit et push
+4. sur le site de traduction (POEditor), importer les fichiers app.po avec l'intégration Github
+
+#### Lorsqu'il y a des mise à jour dans le site de traduction (POEditor)
+
+1. exporter les traductions depuis POEditor
+2. lancer `python3 translations.py`
+3. commit et push
+
 ### Ordre d'une évaluation
 
 Cf `userStep.ts` :

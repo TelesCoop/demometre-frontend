@@ -1,7 +1,12 @@
+import { i18n } from "~/utils/i18n-util"
+
+const $t = i18n.global.t
+
 export type User = {
   email: string
   id: number | null
   isExpert: boolean
+  isAdmin: boolean
   isUnknownUser: boolean
   username: string
 }
@@ -18,7 +23,6 @@ export enum Method {
 }
 
 export enum QuestionType {
-  OPEN = "open",
   UNIQUE_CHOICE = "unique_choice",
   MULTIPLE_CHOICE = "multiple_choice",
   CLOSED_WITH_SCALE = "closed_with_scale",
@@ -58,6 +62,10 @@ export const PillarParams = {
     color: "cooperation",
   },
 }
+export const PILLARS_KEYS = Object.values(PillarParams).map(
+  (pillar) => pillar.key,
+)
+
 export type Survey = {
   id: number
   name: string
@@ -119,10 +127,18 @@ export type Rule = {
   booleanResponse: boolean
 }
 
+export type ProfileType = {
+  id: number
+  name: string
+  rulesIntersectionOperator: "and" | "or"
+  rules: Rule[]
+}
+
 export type Question = {
   allowsToExplain: number
   assessmentTypes: string[]
   categories: Category[]
+  code: string
   concatenatedCode: string
   criteriaId: number | null
   description: string
@@ -171,33 +187,37 @@ export type Definition = {
 }
 
 // Assessment
-export const LocalityType = {
-  MUNICIPALITY: { key: "municipality", value: "Commune" },
-  INTERCOMMUNALITY: { key: "intercommunality", value: "Intercommunalité" },
-  REGION: { key: "region", value: "Région" },
+export const LOCALITY_TYPE: Record<string, { key: string; value: string }> = {
+  MUNICIPALITY: { key: "municipality", value: $t("Commune") },
+  INTERCOMMUNALITY: { key: "intercommunality", value: $t("Intercommunalité") },
+  DEPARTMENT: { key: "department", value: $t("Département") },
+  REGION: { key: "region", value: $t("Région") },
 }
-type localityTypes = "municipality" | "intercommunality" | "region" | "department"
+export type LocalityTypes =
+  | "municipality"
+  | "intercommunality"
+  | "region"
+  | "department"
+export const LOCALITY_TYPES = Object.values(LOCALITY_TYPE).map((localityType) => localityType.key)
 export type SurveyLocality = "city" | "region" | "department"
 export const AssessmentType = {
-  QUICK: { key: "quick", value: "Diagnostic rapide" },
-  PARTICIPATIVE: { key: "participative", value: "Evaluation participative" },
-  WITH_EXPERT: { key: "with_expert", value: "Evaluation avec expert" },
-  "": { key: "", value: "Non renseigné" },
+  QUICK: { key: "quick", value: $t("Diagnostic rapide") },
+  PARTICIPATIVE: { key: "participative", value: $t("Evaluation participative") },
+  WITH_EXPERT: { key: "with_expert", value: $t("Evaluation avec expert") },
+  "": { key: "", value: $t("Non renseigné") },
 }
 export type Locality = {
   id: number
   name: string
   population: number
   zip_codes: number[]
-  localityType: localityTypes
+  localityType: LocalityTypes
 }
 export type Localities = {
   municipality: Locality[]
   intercommunality: Locality[]
-}
-export type SurveysResult = {
-  city: Localities,
-  region: Locality[],
+  region: Locality[]
+  department: Locality[]
 }
 type CountByResponseChoice = {
   responseChoiceName: string
@@ -271,10 +291,10 @@ export type Assessment = {
   workshopCount: number
 }
 export const InitiatorType = {
-  COLLECTIVITY: { key: "collectivity", value: "Ma collectivité" },
-  ASSOCIATION: { key: "association", value: "Une association" },
-  INDIVIDUAL: { key: "individual", value: "Un particulier" },
-  OTHER: { key: "other", value: "Autre" },
+  COLLECTIVITY: { key: "collectivity", value: $t("Ma collectivité") },
+  ASSOCIATION: { key: "association", value: $t("Une association") },
+  INDIVIDUAL: { key: "individual", value: $t("Un particulier") },
+  OTHER: { key: "other", value: $t("Autre") },
 }
 export type Scores = {
   byQuestionId: { [key: number]: number }
@@ -311,6 +331,15 @@ export type ClosedWithScaleResponse = {
   participationResponseId: number | null
   assessmentResponseId: number | null
 }
+
+export type QuestionResponseValue = Partial<{
+  uniqueChoiceResponseId: number | null
+  multipleChoiceResponseIds: number[]
+  booleanResponse: boolean | null
+  percentageResponse: number | null
+  numberResponse: number | null
+  closedWithScaleResponseCategories: ClosedWithScaleResponse[]
+}>
 export type QuestionResponse = {
   id: number
   isDirty?: boolean
@@ -318,13 +347,7 @@ export type QuestionResponse = {
   assessmentId: number | null
   questionId: number
   hasPassed: boolean
-  uniqueChoiceResponseId: number | null
-  multipleChoiceResponseIds: number[]
-  booleanResponse: boolean | null
-  percentageResponse: number | null
-  numberResponse: number | null
-  closedWithScaleResponseCategories: ClosedWithScaleResponse[]
-}
+} & QuestionResponseValue
 
 // Workshops
 export type Workshop = {
@@ -639,7 +662,6 @@ export type SectionButton = {
   text: string
 }
 
-
 // rich text (TipTap)
 export enum HeadingType {
   H1 = "h1",
@@ -677,20 +699,23 @@ export type RichTextToolbarItem = {
   title: string
 }
 export type RichTextToolbar = RichTextToolbarItem[]
-export type AssessmentDocumentCategory = "assessment_reports" | "other" | "invoices"
+export type AssessmentDocumentCategory =
+  | "assessment_reports"
+  | "other"
+  | "invoices"
 export type AssessmentDocumentTypeFile = {
-  link: string,
-  mimetype: string,
-  name: string,
-  size: string,
+  link: string
+  mimetype: string
+  name: string
+  size: string
 }
 export type AssessmentDocumentType = {
-  assessment: number,
-  category: AssessmentDocumentCategory,
-  created: string,
-  file: AssessmentDocumentTypeFile,
-  id: number,
-  name: string,
+  assessment: number
+  category: AssessmentDocumentCategory
+  created: string
+  file: AssessmentDocumentTypeFile
+  id: number
+  name: string
 }
 export type Training = {
   audience: string

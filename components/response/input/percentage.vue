@@ -8,24 +8,27 @@
       max="100"
       class="input"
       :class="`has-background-${props.color}-light has-border-${props.color}-dark has-text-${props.color}-dark`"
-      placeholder="50"
-    />
-    <i class="icon is-small is-right" :class="`has-text-${props.color}-dark`">
+      :placeholder="placeholder"
+    >
+    <i
+      class="icon is-small is-right"
+      :class="`has-text-${props.color}-dark`"
+    >
       <span>%</span>
     </i>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useModel } from "~/composables/modelWrapper"
-
 const props = defineProps({
   color: { type: String, required: true },
-  modelValue: { required: true },
   questionId: { required: true, type: Number },
+  placeholder: { type: String, default: "50" },
 })
 
-const answer = useModel("modelValue")
+const answer = defineModel("modelValue", {
+  type: Number,
+})
 </script>
 
 <style scoped lang="sass">

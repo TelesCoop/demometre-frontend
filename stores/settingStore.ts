@@ -26,7 +26,7 @@ export const useSettingStore = defineStore("setting", {
     },
     async getStructureSettings() {
       const { data, error } = await useApiGet<StructureSettings[]>(
-        "structure-settings/"
+        "structure-settings/",
       )
       if (!error.value) {
         if (data.value.length) {

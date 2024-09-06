@@ -33,14 +33,19 @@
                   name="bar-chart-box-line"
                 />
               </span>
-              <span>Voir les résultats</span>
+              <span>{{ $t("Voir les résultats") }}</span>
             </button>
           </div>
           <div
             v-else
             class="notification"
           >
-            Aucun résultat n'est actuellement visible
+            <template v-if="assessmentStore.assessmentsLoaded">
+              {{ $t("Aucun résultat n'est actuellement visible") }}
+            </template>
+            <template v-else>
+              {{ $t("chargement...") }}
+            </template>
           </div>
         </div>
       </section>
@@ -64,7 +69,7 @@ import vSelect from "vue-select"
 
 definePageMeta({
   title: "Résultats",
-  breadcrumb: "Résultats"
+  breadcrumb: "Résultats",
 })
 
 const pageStore = usePageStore()

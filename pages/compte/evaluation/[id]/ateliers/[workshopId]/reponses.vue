@@ -10,20 +10,18 @@
           name="arrow-left-line"
         />
       </span>
-      <span>
-        Revenir à l'atelier
-      </span>
+      <span> {{ $t("Revenir à l'atelier") }} </span>
     </NuxtLink>
     <div class="section">
       <PageTitle :title="`${workshop?.name} - réponses papier`" />
       <p class="is-size-4">
-        Saisissez les réponses des participants aux évaluations papier.
+        {{ $t("Saisissez les réponses des participants aux évaluations papier.") }}
       </p>
       <p
         v-if="!activePillar"
         class="is-size-4"
       >
-        Choisissez un pillier pour commencer.
+        {{ $t("Choisissez un pillier pour commencer.") }}
       </p>
 
       <div class="container">
@@ -32,7 +30,9 @@
           class="columns is-multiline mt-4"
         >
           <div
-            v-for="pillar of questionnaireStore.pillarsOfMainSurvey(assessment.surveyId)"
+            v-for="pillar of questionnaireStore.pillarsOfSurvey(
+              assessment.surveyId,
+            )"
             :key="pillar.name"
             class="column"
           >
@@ -60,7 +60,6 @@
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType, Workshop } from "~/composables/types"
 import { useWorkshopStore } from "~/stores/workshopStore"
-import { useProfilingStore } from "~/stores/profilingStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useUserStore } from "~/stores/userStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
@@ -72,7 +71,6 @@ definePageMeta({
 
 const assessmentStore = useAssessmentStore()
 const questionnaireStore = useQuestionnaireStore()
-const profilingStore = useProfilingStore()
 const pageStore = usePageStore()
 const userStore = useUserStore()
 const router = useRouter()
@@ -80,16 +78,15 @@ const route = useRoute()
 const workshopId: number = +route.params.workshopId
 const workshopStore = useWorkshopStore()
 
-const workshop = computed<Workshop>(() => workshopStore.workshopById[workshopId])
+const workshop = computed<Workshop>(
+  () => workshopStore.workshopById[workshopId],
+)
 const assessment = assessmentStore.currentAssessment
 if (!pageStore.animatorPage.listWorkshopsTitle) {
   pageStore.getAnimatorPage()
 }
 if (!workshop.value) {
   workshopStore.getWorkshop(workshopId)
-}
-if (!profilingStore.roles.length) {
-  profilingStore.getRoles()
 }
 
 if (!userStore.isLoggedIn) {

@@ -1,8 +1,8 @@
 import { computed, getCurrentInstance } from "vue"
 
-export function useModel<Type>(
+export function useLegacyModel<Type>(
   propName,
-  options: { type?: "object" | "array" } = {}
+  options: { type?: "object" | "array" } = {},
 ) {
   const vm = getCurrentInstance().proxy
 

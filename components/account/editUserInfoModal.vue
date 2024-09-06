@@ -7,7 +7,7 @@
     <div class="modal-content">
       <div class="modal-card-head">
         <h2 class="title is-2">
-          Modifier mes informations
+          {{ $t("Modifier mes informations") }}
         </h2>
       </div>
       <div class="modal-card-body">
@@ -18,18 +18,18 @@
               v-model="username"
               class="input"
               type="text"
-              placeholder="Mon nom tel qu'affiché dans l'application"
+              :placeholder="$t(`Mon nom tel qu'affiché dans l'application`)"
             >
           </div>
         </div>
         <div class="field">
-          <label class="label">Adresse mail</label>
+          <label class="label">{{ $t("Adresse mail") }}</label>
           <div class="control">
             <input
               v-model="email"
               class="input"
               type="text"
-              placeholder="adresse@courriel.fr"
+              :placeholder="$t('adresse@courriel.fr')"
             >
           </div>
         </div>
@@ -39,7 +39,7 @@
           class="button is-rounded is-dark"
           @click="save"
         >
-          <span>Valider</span>
+          <span>{{ $t("Valider") }}</span>
           <span class="icon">
             <icon
               size="16"
@@ -51,7 +51,7 @@
           class="button is-rounded is-outlined is-dark"
           @click="$emit('close')"
         >
-          Annuler
+          {{ $t("Annuler") }}
         </button>
       </div>
     </div>

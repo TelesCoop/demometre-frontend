@@ -1,15 +1,7 @@
 <template>
   <div v-if="question">
-    <input
-      v-if="question.type === QuestionType.OPEN"
-      v-model="answer"
-      :class="`textarea is-shade-300`"
-      rows="3"
-      placeholder="écrire ici ..."
-      @change="adaptQuestionResponse()"
-    >
     <ResponseInputPercentage
-      v-else-if="question.type === QuestionType.PERCENTAGE"
+      v-if="question.type === QuestionType.PERCENTAGE"
       v-model="answer"
       :color="props.color"
       :question-id="question.id"
@@ -62,7 +54,7 @@
         </option>
       </select>
       <p class="is-size-7 has-text-shade-400">
-        Ctrl + click pour selectionner plusieurs options
+        {{ $t("Ctrl + clic pour selectionner plusieurs options") }}
       </p>
     </div>
     <div
@@ -121,19 +113,19 @@ import {
   QuestionType,
   Question,
   QuestionResponse,
-  WorkshopParticipation
+  WorkshopParticipation,
 } from "~/composables/types"
 import { computed, PropType, watch } from "vue"
 import {
   getQuestionResponseStructure,
-  getQuestionResponseValue
+  getQuestionResponseValue,
 } from "~/utils/question-response"
 import { useWorkshopStore } from "~/stores/workshopStore"
 
 const props = defineProps({
   question: {
     type: Object as PropType<Question>,
-    required: true
+    required: true,
   },
   color: { type: String, required: true },
   participation: {
@@ -141,14 +133,14 @@ const props = defineProps({
     required: false,
     default() {
       return {}
-    }
+    },
   },
   assessmentId: { type: Number, required: true },
   modelValue: {
     type: Object as PropType<QuestionResponse>,
     required: false,
-    default: null
-  }
+    default: null,
+  },
 })
 
 const questionResponse = useModel<QuestionResponse>("modelValue")
@@ -167,7 +159,7 @@ watch(
   () => props.question,
   () => {
     answer.value = getAnswerInitialValue()
-  }
+  },
 )
 
 function adaptQuestionResponse() {
@@ -176,7 +168,7 @@ function adaptQuestionResponse() {
     answer.value,
     isAnswered.value,
     props.participation.id,
-    props.assessmentId
+    props.assessmentId,
   )
   workshopStore.markDirty(props.participation.id, props.question.id)
 }
@@ -187,12 +179,12 @@ function adaptQuestionResponseForCloseWithScaleType() {
     props.question.categories.map((category) => {
       return {
         categoryId: category.id,
-        responseChoiceId: answer.value[category.id]
+        responseChoiceId: answer.value[category.id],
       }
     }),
     isAnswered.value,
     props.participation.id,
-    props.assessmentId
+    props.assessmentId,
   )
   workshopStore.markDirty(props.participation.id, props.question.id)
 }
@@ -200,20 +192,20 @@ function adaptQuestionResponseForCloseWithScaleType() {
 function getAnswerInitialValue() {
   let toReturn = getQuestionResponseValue(
     questionResponse.value,
-    props.question.type
+    props.question.type,
   )
   if (props.question.type === QuestionType.CLOSED_WITH_SCALE) {
     if (!toReturn) {
       toReturn = {}
       props.question.categories.forEach(
-        (category) => (toReturn[category.id] = null)
+        (category) => (toReturn[category.id] = null),
       )
     } else {
       const initResponses = JSON.parse(JSON.stringify(toReturn))
       toReturn = {}
       initResponses.forEach(
         (initResponse) =>
-          (toReturn[initResponse.categoryId] = initResponse.responseChoiceId)
+          (toReturn[initResponse.categoryId] = initResponse.responseChoiceId),
       )
     }
   }
