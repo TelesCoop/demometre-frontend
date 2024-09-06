@@ -65,7 +65,7 @@
           <div class="navbar-item">
             <div class="buttons">
               <!-- button to toggle locale between fr and en -->
-              <HeaderLocaleSwitcher />
+              <!--              <HeaderLocaleSwitcher />-->
               <NuxtLink
                 v-if="!isEvaluationRoute && assessmentStore.userHasNoAssessment"
                 to="/evaluation/localisation"
