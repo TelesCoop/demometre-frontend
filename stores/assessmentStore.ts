@@ -73,7 +73,7 @@ export const useAssessmentStore = defineStore("assessment", {
       )
     },
     myAssessments() {
-      return this.assessments.filter(assessment => !!assessment.details.role)
+      return this.assessments.filter(assessment => !!assessment?.details?.role)
     },
     userHasNoAssessment() {
       return Object.values(this.assessmentById).length == 0
