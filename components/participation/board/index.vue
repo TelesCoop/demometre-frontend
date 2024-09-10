@@ -24,7 +24,7 @@
 
         <template v-if="assessment?.initiatedBy">
           <div class="mb-0_5 has-text-shade-400 is-uppercase is-size-7">
-            <!--            {{ $pgettext("Qui a initié l'évaluation", "Portée par") }}-->
+            {{ $t("Portée par") }}
           </div>
           <div class="mb-1_5">
             {{ assessment.initiatedBy?.firstName }}

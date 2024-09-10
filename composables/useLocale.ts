@@ -1,3 +1,10 @@
+export const localeFromCookie = (cookie: string) => {
+  let localCookie = cookie
+  localCookie = localCookie.split("; ")
+    .find((row) => row.startsWith("django_language="))
+  return localCookie ? localCookie.split("=")[1] : "fr"
+}
+
 export const useLocale = () => {
   let cookie: string
   if (process.client) {
@@ -5,8 +12,5 @@ export const useLocale = () => {
   } else {
     cookie = useRequestHeaders(["cookie"])["cookie"] || ""
   }
-  cookie = cookie.split("; ")
-    .find((row) => row.startsWith("django_language="))
-  console.log("### uselocale", cookie ? cookie.split("=")[1] : "fr")
-  return cookie ? cookie.split("=")[1] : "fr"
+  return localeFromCookie(cookie)
 }

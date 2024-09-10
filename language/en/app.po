@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-05 08:54+0200\n"
+"POT-Creation-Date: 2024-09-10 09:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,7 +102,7 @@ msgstr "Add a workshop"
 msgid "Ajouter un document"
 msgstr "Add a document"
 
-#: components/assessment/changeExpertModal.vue:40
+#: components/assessment/changeExpertModal.vue:39
 #: pages/compte/evaluation/[id]/index.vue:404
 msgid "Ajouter un expert"
 msgstr "Add an expert"
@@ -114,7 +114,7 @@ msgstr "Add a link"
 #: components/account/editUserInfoModal.vue:54
 #: components/assessment/addDocumentModal.vue:98
 #: components/assessment/addWorkshopModal.vue:89
-#: components/assessment/changeExpertModal.vue:61
+#: components/assessment/changeExpertModal.vue:60
 #: components/assessment/informationsEditModal.vue:82
 #: components/assessment/workshops.vue:149 components/richTextInput.vue:94
 #: components/workshop/informationsEditModal.vue:91
@@ -1052,6 +1052,7 @@ msgstr "Return to the pillar"
 
 #: components/workshop/participantEditModal.vue:48
 #: pages/compte/evaluation/[id]/ateliers/[workshopId]/index.vue:92
+#: pages/compte/index.vue:126
 msgid "Rôle"
 msgstr "Role"
 
@@ -1225,7 +1226,7 @@ msgstr "URL"
 #: components/account/editUserInfoModal.vue:42
 #: components/assessment/addDocumentModal.vue:86
 #: components/assessment/addWorkshopModal.vue:77
-#: components/assessment/changeExpertModal.vue:49
+#: components/assessment/changeExpertModal.vue:48
 #: components/assessment/informationsEditModal.vue:70
 #: components/form/buttons.vue:15 components/form/localisation.vue:120
 #: components/richTextInput.vue:82
@@ -1312,33 +1313,27 @@ msgstr "You can then return to it via the \"My account\" tab."
 msgid "Vous renseigner"
 msgstr "Enquire"
 
+#: pages/compte/index.vue:149
 msgid "participant - non encore rempli"
 msgstr ""
 
+#: components/assessment/addWorkshopModal.vue:66
 msgid "fr-FR"
 msgstr ""
 
+#: components/participation/board/index.vue:27
 msgid "Portée par"
 msgstr ""
 
-#: open_democracy_back/models/assessment_models.py:30
-#: open_democracy_back/models/assessment_models.py:51
-#: open_democracy_back/models/assessment_models.py:82
-#: open_democracy_back/models/assessment_models.py:141
-#: open_democracy_back/models/contents_models.py:159
-#: open_democracy_back/models/contents_models.py:206
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:37
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:126
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:172
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:227
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:331
-#: open_democracy_back/models/questionnaire_and_profiling_models.py:484
+#: pages/compte/index.vue:121
 msgid "Nom"
 msgstr ""
 
+#: pages/resultats/[assessmentId].vue:79
 msgid "Explicitée par :"
 msgstr ""
 
+#: pages/resultats/[assessmentId].vue:102
 msgid "Permet d'expliciter :"
 msgstr ""
 
@@ -2985,4 +2980,12 @@ msgstr ""
 
 #: pages/compte/evaluation/[id]/ateliers/[workshopId]/index.vue:247
 msgid "Supprimer le participant :"
+msgstr ""
+
+#: pages/evaluation/participation/[assessmentId]/index.vue:68
+msgid "lancement d'une évaluation"
+msgstr ""
+
+#: pages/compte/evaluation/[id]/index.vue:412
+msgid "En clôturant l’évaluation, vous mettez fin à l’évaluation et n’autorisez plus de participation. Cette action est irréversible, n’oubliez pas de bien vérifier avant. Si vous êtes accompagnateur et que vous n'avez pas encore payé l'utilisation du DémoMètre pour cette évaluation, Démocratie Ouverte vous enverra une facture."
 msgstr ""

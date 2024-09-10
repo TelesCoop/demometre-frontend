@@ -76,7 +76,7 @@
                 "
               >
                 <p class="is-uppercase is-size-6bis mb-0_5 mt-1">
-                  <!--                  {{ $pgettext("Une question peut être explicitée par une autre", "Explicitée par :") }}-->
+                  {{ $t("Explicitée par :") }}
                 </p>
                 <a
                   v-for="explainsByQuestionId of questionnaireStore
@@ -99,7 +99,7 @@
                 "
               >
                 <p class="is-uppercase is-size-6bis mb-0_5 mt-1">
-                  <!--                  {{ $pgettext("Une question peut être explicitée par une autre", "Permet d'expliciter :") }}-->
+                  {{ $t("Permet d'expliciter :") }}
                 </p>
                 <a
                   class="is-underlined"

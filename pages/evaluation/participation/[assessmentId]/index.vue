@@ -65,7 +65,7 @@
           :disabled="disabled"
         >
           <span>
-            <!--            {{ $pgettext("lancement d'une évaluation", "C'est parti !") }}-->
+            {{ $t("lancement d'une évaluation") }}
           </span>
         </button>
 

@@ -96,6 +96,8 @@ def update():
                 new_translations[message.id[0]] = " | ".join(message.string)
             else:
                 new_translations[message.id] = message.string
+        # sort new_translations by alphabetical key order
+        new_translations = dict(sorted(new_translations.items()))
         write_json_file(locale, new_translations)
 
 
