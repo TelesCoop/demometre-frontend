@@ -63,8 +63,8 @@
                 v-model="date"
                 class="input"
                 type="date"
+                :lang="$t('fr-FR')"
               >
-              <!-- TODO above              :lang="$pgettext('nom de la locale, en-UK en anglais', 'fr-FR')"-->
             </div>
           </div>
         </div>

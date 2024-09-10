@@ -118,12 +118,12 @@
             <thead>
               <tr>
                 <th>
-                <!--                  {{ $pgettext("relatif à une évaluation", "Nom") }}-->
+                  {{ $t("Nom") }}
                 </th>
                 <th>{{ $t("Questionnaire") }}</th>
                 <th>{{ $t("Date de création") }}</th>
                 <th>
-                <!--                  {{ $pgettext("rôle de l'utilisateur dans l'évaluation", "Rôle") }}-->
+                  {{ $t("Rôle") }}
                 </th>
                 <th>{{ $t("Échelon") }}</th>
                 <th>{{ $t("Localité") }}</th>
@@ -144,10 +144,7 @@
                 <td>{{ assessment.surveyName }}</td>
                 <td>{{ new Date(assessment.created).toLocaleDateString() }}</td>
                 <td>
-                  <!--                  {{-->
-                  <!--                    PARTICIPANT_TYPE[assessment.details.role] ||-->
-                  <!--                      $pgettext("l'utilisateur est participant au questionnaire, mais n'a pas commencé à le remplir", "participant - non encore rempli")-->
-                  <!--                  }}-->
+                  {{ PARTICIPANT_TYPE[assessment.details.role] || $t("participant - non encore rempli") }}
                   <template v-if="assessment.details.hasDetailAccess">
                     <span
                       v-if="assessment.details.paymentAmount"

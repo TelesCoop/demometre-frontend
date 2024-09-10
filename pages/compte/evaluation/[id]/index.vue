@@ -72,11 +72,8 @@
           style="row-gap: 3rem; column-gap: 3rem"
         >
           <InformationDetail
-            title="{{ $t(`type d'évaluation`) }}"
-            :value="
-              AssessmentType[assessment.assessmentType?.toUpperCase() || '']
-                .value
-            "
+            :title="$t(`type d'évaluation`)"
+            :value="AssessmentType[assessment.assessmentType?.toUpperCase() || ''].value"
           />
           <InformationDetail
             title="lancée le"
@@ -106,6 +103,7 @@
           <InformationDetail
             v-if="assessment.assessmentType === AssessmentType.WITH_EXPERT.key"
             :value="withExpertValue"
+            :title="$tc('Expert', (assessment.experts || []).length)"
           />
           <!-- TODO above          :title="$ngettext('Expert', 'Experts', (assessment.experts || []).length)"-->
         </div>
@@ -409,7 +407,7 @@ const informationsButtons = computed(() => {
 })
 const confirmCloseAssessment = () => {
   confirm(
-    $t("En clôturant l’évaluation, vous mettez fin à l’évaluation et n’autorisez plus de participation. Cette action est irréversible, n’oubliez pas de bien vérifier avant."),
+    $t("En clôturant l’évaluation, vous mettez fin à l’évaluation et n’autorisez plus de participation. Cette action est irréversible, n’oubliez pas de bien vérifier avant. Si vous êtes accompagnateur et que vous n'avez pas encore payé l'utilisation du DémoMètre pour cette évaluation, Démocratie Ouverte vous enverra une facture."),
     `${$t("Souhaitez-vous clôturer l'évaluation")} ${assessment.value.name} ?`,
     $t("Oui, clôturer l'évaluation"),
     () =>

@@ -45,7 +45,7 @@ export const useAssessmentStore = defineStore("assessment", {
         : $t("de mon inter-communalité")
       )
     },
-    assessments: (state) => {
+    assessments: (state): Assessment[] => {
       return Object.values(state.assessmentById)
     },
     assessmentsWithDetails: (state): Assessment[] => {

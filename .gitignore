@@ -15,3 +15,4 @@ nuxt.d.ts
 !.yarn/sdks
 !.yarn/versions
 __pycache__
+language/extraction.md
