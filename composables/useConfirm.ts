@@ -1,10 +1,10 @@
 import { useMainStore } from "~/stores/mainStore"
-import { useI18n } from "vue-i18n"
+import { i18n } from "~/utils/i18n-util"
 
+const $t = i18n.global.t
 
 export const useConfirm = () => {
   const mainStore = useMainStore()
-  const i18n = useI18n()
   const $t = i18n.t
 
   return (
