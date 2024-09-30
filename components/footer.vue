@@ -15,7 +15,7 @@
             target="_blank"
           >
             <!-- TODO : Put the right year automaticaly -->
-            {{ $t("License") }}
+            {{ $t("Licence") }}
           </a>
           <a
             class="has-text-shade-350"
