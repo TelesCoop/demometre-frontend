@@ -13,7 +13,7 @@
           <span>{{ $t("Commencer") }}</span>
         </button>
         <span class="is-size-7 is-hidden-mobile">
-          <!--          {{ $gettext("appuyez sur <b>Entrer ⏎</b>", {}, true) }}-->
+          {{ $t("appuyez sur Entrer ⏎") }}
         </span>
 
         <!-- Permet d'appuyer sur entrer -->

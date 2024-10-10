@@ -62,7 +62,7 @@
                       <icon name="file-upload-line" />
                     </span>
                     <span class="file-label is-size-7">
-                      {{ $gettext("Choisissez un fichier...") }}
+                      {{ $t("Choisissez un fichier...") }}
                     </span>
                   </span>
                   <span

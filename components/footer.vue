@@ -93,14 +93,14 @@
             href="https://praticable.fr/"
             target="_blank"
           >
-            <!--            {{ $gettext("Designé par <b>Praticable</b>", {}, true) }}-->
+            {{ $t(`Designé par Praticable`) }}
           </a>
           <a
             class="has-text-shade-200"
             href="https://www.telescoop.fr/"
             target="_blank"
           >
-            <!--            {{ $gettext("Réalisé par <b>TelesCoop</b>", {}, true) }}-->
+            {{ $t(`Réalisé par TelesCoop`) }}
           </a>
 
           <!-- <label class="label is-size-7" for="email"
@@ -130,7 +130,7 @@
 
 <script setup lang="ts">
 import { MEDIA_BASE_URL } from "~/composables/api"
-import { useSettingStore } from "~~/stores/settingStore"
+import { useSettingStore } from "~/stores/settingStore"
 
 // const email = ref("")
 const settingStore = useSettingStore()
