@@ -3005,25 +3005,25 @@ msgstr ""
 
 #: components/questionnaire/question-statement.vue:34
 msgid "Moins de {inhabitants} habitants"
-msgstr ""
+msgstr "Less than {inhabitants} habitants"
 
 #: components/response/input/multiple-choice.vue:7
 #: components/response/paper/input/multiple-choice.vue:7
 msgid "Choisissez entre 1 et {n_choices} réponses"
-msgstr ""
+msgstr "Choose between 1 and {n_choices} answers"
 
 #: components/questionnaire/question-statement.vue:28
 msgid "Plus de {inhabitants} habitants"
-msgstr ""
+msgstr "More than {inhabitants} habitants"
 
 #: components/export/survey-questions.vue:9
 msgid "Pillier {name}"
-msgstr ""
+msgstr "Pillar {name}"
 
 #: components/footer.vue:96
 msgid "Designé par"
-msgstr ""
+msgstr "Designed by"
 
 #: components/footer.vue:103
 msgid "Réalisé par"
-msgstr ""
+msgstr "Developed by"
