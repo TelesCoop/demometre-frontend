@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-11 08:30+0200\n"
+"POT-Creation-Date: 2024-10-11 15:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 msgid "Enregistrer"
 msgstr "Save"
 
-#: components/header/navbar.vue:75
+#: components/header/navbar.vue:75 pages/compte/index.vue:72
 msgid "Lancer une évaluation"
 msgstr "Start an evaluation"
 
@@ -406,10 +406,6 @@ msgstr "Answers were entered but not saved. To save them, undo and click on the 
 #: components/analytics/scale-question-chart.vue:11
 msgid "Désactiver la vue simplifiée"
 msgstr "Disable the simplified view"
-
-#: components/footer.vue:96
-msgid "Designé par "
-msgstr "Designated by"
 
 #: pages/compte/index.vue:164
 msgid "Détails"
@@ -948,10 +944,6 @@ msgstr "Questions"
 #: utils/constants.ts:31
 msgid "Rapports d'évaluation"
 msgstr "Evaluation reports"
-
-#: components/footer.vue:103
-msgid "Réalisé par "
-msgstr "Produced by"
 
 #: components/form/localisation.vue:75
 msgid "Rechercher"
@@ -3027,3 +3019,11 @@ msgstr "Designed by"
 #: components/footer.vue:103
 msgid "Réalisé par"
 msgstr "Developed by"
+
+#: pages/compte/index.vue:70
+msgid "Mes évaluations"
+msgstr ""
+
+#: pages/compte/index.vue:71
+msgid "Toutes mes évaluations en cours et terminées"
+msgstr ""
