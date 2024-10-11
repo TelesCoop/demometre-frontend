@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-08 10:59+0200\n"
+"POT-Creation-Date: 2024-10-11 08:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,17 +21,17 @@ msgstr "Save"
 msgid "Lancer une évaluation"
 msgstr "Start an evaluation"
 
-#: components/header/navbar.vue:193
+#: components/header/navbar.vue:195
 msgid "Accueil"
 msgstr "Home"
 
 #: components/footer.vue:10 components/footer.vue:49
-#: components/header/navbar.vue:197 pages/demometre.vue:242
+#: components/header/navbar.vue:199 pages/demometre.vue:242
 #: pages/demometre.vue:243
 msgid "DémoMètre"
 msgstr "DémoMètre"
 
-#: components/footer.vue:67 components/header/navbar.vue:209
+#: components/footer.vue:67 components/header/navbar.vue:211
 msgid "Le projet"
 msgstr "The project"
 
@@ -43,7 +43,7 @@ msgstr "My account"
 msgid "Réinitialiser"
 msgstr "reset"
 
-#: components/footer.vue:61 components/header/navbar.vue:205
+#: components/footer.vue:61 components/header/navbar.vue:207
 #: utils/constants.ts:43
 msgid "Résultats"
 msgstr "Results"
@@ -54,7 +54,7 @@ msgstr "Results"
 msgid "Se connecter"
 msgstr "Log in"
 
-#: components/footer.vue:55 components/header/navbar.vue:201
+#: components/footer.vue:55 components/header/navbar.vue:203
 #: pages/utilisations-possibles.vue:93
 msgid "Utilisations possibles"
 msgstr "Possible uses"
@@ -1315,7 +1315,7 @@ msgstr "Enquire"
 
 #: pages/compte/index.vue:147
 msgid "participant - non encore rempli"
-msgstr ""
+msgstr "participant - not yet filled"
 
 #: components/assessment/addWorkshopModal.vue:66
 msgid "fr-FR"
@@ -1335,7 +1335,7 @@ msgstr "Explained by"
 
 #: pages/resultats/[assessmentId].vue:102
 msgid "Permet d'expliciter :"
-msgstr ""
+msgstr "Helps to clarify:"
 
 #: my_auth/models.py:10 open_democracy_back/models/animator_models.py:10
 msgid "email address"
@@ -2988,4 +2988,42 @@ msgstr ""
 
 #: pages/evaluation/participation/[assessmentId]/index.vue:68
 msgid "lancement d'une évaluation"
+msgstr ""
+
+#: pages/index.vue:45
+msgid "Explorer les articles"
+msgstr ""
+
+#: components/form/buttons.vue:67 components/form/localisation.vue:129
+#: pages/evaluation/index.vue:16
+msgid "appuyez sur Entrer ⏎"
+msgstr ""
+
+#: pages/index.vue:74
+msgid "Explorer les ressources"
+msgstr ""
+
+#: components/questionnaire/question-statement.vue:34
+msgid "Moins de {inhabitants} habitants"
+msgstr ""
+
+#: components/response/input/multiple-choice.vue:7
+#: components/response/paper/input/multiple-choice.vue:7
+msgid "Choisissez entre 1 et {n_choices} réponses"
+msgstr ""
+
+#: components/questionnaire/question-statement.vue:28
+msgid "Plus de {inhabitants} habitants"
+msgstr ""
+
+#: components/export/survey-questions.vue:9
+msgid "Pillier {name}"
+msgstr ""
+
+#: components/footer.vue:96
+msgid "Designé par"
+msgstr ""
+
+#: components/footer.vue:103
+msgid "Réalisé par"
 msgstr ""

@@ -42,7 +42,7 @@
     <PageSection
       :title="pageStore.homePage.blogBlockTitle"
       :intro="pageStore.homePage.blogBlockIntro"
-      :buttons="[{ text: 'Explorer les articles', link: `/blog` }]"
+      :buttons="[{ text: $t('Explorer les articles'), link: `/blog` }]"
     >
       <div class="mb-2">
         <Carousel
@@ -71,7 +71,7 @@
       <PageSection
         :title="pageStore.homePage.resourcesBlockTitle"
         :intro="pageStore.homePage.resourcesBlockTitle"
-        :buttons="[{ text: 'Explorer les ressources', link: `/ressources` }]"
+        :buttons="[{ text: $t('Explorer les ressources'), link: `/ressources` }]"
       >
         <div
           class="mb-2"

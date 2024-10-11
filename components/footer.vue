@@ -93,14 +93,14 @@
             href="https://praticable.fr/"
             target="_blank"
           >
-            {{ $t(`Designé par Praticable`) }}
+            {{ $t(`Designé par`) }} <b>Praticable</b>
           </a>
           <a
             class="has-text-shade-200"
             href="https://www.telescoop.fr/"
             target="_blank"
           >
-            {{ $t(`Réalisé par TelesCoop`) }}
+            {{ $t(`Réalisé par`) }} <b>TelesCoop</b>
           </a>
 
           <!-- <label class="label is-size-7" for="email"
