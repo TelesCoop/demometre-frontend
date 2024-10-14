@@ -1,12 +1,16 @@
+
 msgid ""
 msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-10-14 14:17+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: POEditor.com\n"
-"Project-Id-Version: démomètre\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: Babel 2.8.0\n"
 
 #: components/header/navbar.vue:95
 #: pages/evaluation/[assessmentId]/questionnaire/index.vue:36
@@ -442,7 +446,8 @@ msgstr "Online"
 
 #: components/modal/cancel-participation-modal.vue:16
 msgid "En réinitialisant l'évaluation, vous perdrez l'ensemble de vos réponses."
-msgstr "By resetting the evaluation, \n"
+msgstr ""
+"By resetting the evaluation, \n"
 "you lose all of your answers"
 
 #: pages/resultats/[assessmentId].vue:20
@@ -1308,45 +1313,29 @@ msgstr "You can then return to it via the \"My account\" tab."
 msgid "Vous renseigner"
 msgstr "Enquire"
 
-#: pages/compte/index.vue:145
-msgctxt "l'utilisateur est participant au questionnaire, mais n'a pas commencé à le remplir"
+#: pages/compte/index.vue:147
 msgid "participant - non encore rempli"
 msgstr "participant - not yet filled"
 
-#: pages/evaluation/participation/[assessmentId]/index.vue:67
-msgctxt "lancement d'une évaluation"
-msgid "C'est parti !"
-msgstr "Let's get started!"
-
 #: components/assessment/addWorkshopModal.vue:66
-msgctxt "nom de la locale, en-UK en anglais"
 msgid "fr-FR"
-msgstr "en-UK"
+msgstr "fr-FR"
 
 #: components/participation/board/index.vue:27
-msgctxt "Qui a initié l'évaluation"
 msgid "Portée par"
 msgstr "Carried by"
 
-#: pages/compte/index.vue:120
-msgctxt "relatif à une évaluation"
+#: pages/compte/index.vue:121
 msgid "Nom"
 msgstr "Name"
 
-#: pages/compte/index.vue:123
-msgctxt "rôle de l'utilisateur dans l'évaluation"
-msgid "Rôle"
-msgstr "Role"
-
 #: pages/resultats/[assessmentId].vue:79
-msgctxt "Une question peut être explicitée par une autre"
 msgid "Explicitée par :"
-msgstr "Explained by"
+msgstr "Explained by:"
 
 #: pages/resultats/[assessmentId].vue:102
-msgctxt "Une question peut être explicitée par une autre"
 msgid "Permet d'expliciter :"
-msgstr "Helps to clarify"
+msgstr "Helps to clarify:"
 
 #: my_auth/models.py:10 open_democracy_back/models/animator_models.py:10
 msgid "email address"
@@ -1390,10 +1379,6 @@ msgstr "Workshop"
 msgid "Code"
 msgstr "Code"
 
-#: pages/compte/index.vue:121
-msgid "Nom"
-msgstr "Name"
-
 #: open_democracy_back/models/assessment_models.py:45
 msgid "Régions"
 msgstr "Area"
@@ -1402,15 +1387,12 @@ msgstr "Area"
 msgid "Départements"
 msgstr "Departement"
 
-#: open_democracy_back/models/assessment_models.py:80
-msgctxt "unique code for a city"
 msgid "Code insee"
 msgstr "Insee code"
 
-#: open_democracy_back/models/assessment_models.py:91
-msgctxt "number of inhabitants"
+#: open_democracy_back/models/assessment_models.py:142
 msgid "Population"
-msgstr "Number of inhabitants"
+msgstr "Population"
 
 #: open_democracy_back/models/assessment_models.py:103
 #: open_democracy_back/models/assessment_models.py:134
@@ -1432,10 +1414,6 @@ msgstr "Postal code"
 #: open_democracy_back/models/assessment_models.py:140
 msgid "Code siren"
 msgstr "SIREN code"
-
-#: open_democracy_back/models/assessment_models.py:142
-msgid "Population"
-msgstr "Population"
 
 #: open_democracy_back/models/assessment_models.py:150
 msgid "Liste des communes"
@@ -2696,7 +2674,6 @@ msgstr "Score associated with answers to a percentage question"
 #: open_democracy_back/models/questionnaire_and_profiling_models.py:770
 msgid "4. Questions"
 msgstr "4. Questions\n"
-""
 
 #: open_democracy_back/models/questionnaire_and_profiling_models.py:771
 msgid "4. Question"
@@ -2800,10 +2777,12 @@ msgid "Filter by question"
 msgstr "Filter by question"
 
 #: open_democracy_back/models/questionnaire_and_profiling_models.py:1063
+#, python-format
 msgid "La réponse de la question d'affinage %(question_code)s doit être %(response)s"
 msgstr "The answer to the refinement question %(question_code)s must be %(response)s"
 
 #: open_democracy_back/models/questionnaire_and_profiling_models.py:1076
+#, python-format
 msgid "égale à %(response_choices)s"
 msgstr "equal to %(response_choices)s"
 
@@ -2975,30 +2954,6 @@ msgstr "Cooperation"
 msgid "Commune/EPCI"
 msgstr "Commune/EPCI "
 
-#: pages/compte/index.vue:147
-msgid "participant - non encore rempli"
-msgstr "participant - not yet filled"
-
-#: components/assessment/addWorkshopModal.vue:66
-msgid "fr-FR"
-msgstr "fr-FR"
-
-#: components/participation/board/index.vue:27
-msgid "Portée par"
-msgstr "Carried by"
-
-#: pages/resultats/[assessmentId].vue:79
-msgid "Explicitée par :"
-msgstr "Explained by:"
-
-#: pages/resultats/[assessmentId].vue:102
-msgid "Permet d'expliciter :"
-msgstr "Helps to clarify:"
-
-#: 
-msgid "Code insee"
-msgstr "Insee code"
-
 #: pages/compte/evaluation/[id]/index.vue:411
 msgid "Souhaitez-vous clôturer l'évaluation"
 msgstr "Would you like to close the evaluation"
@@ -3081,3 +3036,6 @@ msgstr "My evaluations"
 msgid "Toutes mes évaluations en cours et terminées"
 msgstr "All my current and completed evaluations"
 
+#: components/analytics/choice-question-chart.vue:61
+msgid "pour le rôle"
+msgstr "for the role"
