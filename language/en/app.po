@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-11 15:47+0200\n"
+"POT-Creation-Date: 2024-10-14 13:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2984,7 +2984,7 @@ msgstr ""
 
 #: pages/index.vue:45
 msgid "Explorer les articles"
-msgstr ""
+msgstr "Browse articles"
 
 #: components/form/buttons.vue:67 components/form/localisation.vue:129
 #: pages/evaluation/index.vue:16
@@ -2993,7 +2993,7 @@ msgstr ""
 
 #: pages/index.vue:74
 msgid "Explorer les ressources"
-msgstr ""
+msgstr "Browse resources"
 
 #: components/questionnaire/question-statement.vue:34
 msgid "Moins de {inhabitants} habitants"
@@ -3022,8 +3022,8 @@ msgstr "Developed by"
 
 #: pages/compte/index.vue:70
 msgid "Mes évaluations"
-msgstr ""
+msgstr "My evaluations"
 
 #: pages/compte/index.vue:71
 msgid "Toutes mes évaluations en cours et terminées"
-msgstr ""
+msgstr "All my current and completed evaluations"
