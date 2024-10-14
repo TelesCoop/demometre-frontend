@@ -511,7 +511,7 @@ msgstr "Assessments completed"
 msgid "Expert"
 msgid_plural "Experts"
 msgstr[0] "Expert"
-msgstr[1] ""
+msgstr[1] "Experts"
 
 #: utils/constants.ts:33
 msgid "Factures"
@@ -1405,7 +1405,7 @@ msgstr "Departement"
 #: open_democracy_back/models/assessment_models.py:80
 msgctxt "unique code for a city"
 msgid "Code insee"
-msgstr ""
+msgstr "Insee code"
 
 #: open_democracy_back/models/assessment_models.py:91
 msgctxt "number of inhabitants"
@@ -1431,7 +1431,7 @@ msgstr "Postal code"
 
 #: open_democracy_back/models/assessment_models.py:140
 msgid "Code siren"
-msgstr ""
+msgstr "SIREN code"
 
 #: open_democracy_back/models/assessment_models.py:142
 msgid "Population"
@@ -1443,7 +1443,7 @@ msgstr "Communes list"
 
 #: open_democracy_back/models/assessment_models.py:164
 msgid "Intercommunalités"
-msgstr ""
+msgstr "Intercommunalities"
 
 #: open_democracy_back/models/assessment_models.py:189
 msgid "A qui c'est adressé"
@@ -2595,7 +2595,7 @@ msgstr "Maximum value of the number field"
 
 #: open_democracy_back/models/questionnaire_and_profiling_models.py:540
 msgid "Granularité minimale du champ nombre (ex: 1, 0.1, 0.01, ...)"
-msgstr ""
+msgstr "Minimum number field granularity (e.g. 1, 0.1, 0.01, ...)"
 
 #: open_democracy_back/models/questionnaire_and_profiling_models.py:550
 msgid "Texte précisant la question et pourquoi elle est posée."
@@ -2720,7 +2720,7 @@ msgstr "If relevant"
 
 #: open_democracy_back/models/questionnaire_and_profiling_models.py:826
 msgid "Score associé linéarisé"
-msgstr ""
+msgstr "Associated linearized score"
 
 #: open_democracy_back/models/questionnaire_and_profiling_models.py:850
 msgid "Réponse possible"
@@ -2801,11 +2801,11 @@ msgstr "Filter by question"
 
 #: open_democracy_back/models/questionnaire_and_profiling_models.py:1063
 msgid "La réponse de la question d'affinage %(question_code)s doit être %(response)s"
-msgstr ""
+msgstr "The answer to the refinement question %(question_code)s must be %(response)s"
 
 #: open_democracy_back/models/questionnaire_and_profiling_models.py:1076
 msgid "égale à %(response_choices)s"
-msgstr ""
+msgstr "equal to %(response_choices)s"
 
 #: open_democracy_back/models/representativity_models.py:26
 msgid "Échelon questionnaire"
@@ -2973,111 +2973,111 @@ msgstr "Cooperation"
 
 #: open_democracy_back/utils.py:105
 msgid "Commune/EPCI"
-msgstr ""
+msgstr "Commune/EPCI "
 
 #: pages/compte/index.vue:147
 msgid "participant - non encore rempli"
-msgstr ""
+msgstr "participant - not yet filled"
 
 #: components/assessment/addWorkshopModal.vue:66
 msgid "fr-FR"
-msgstr ""
+msgstr "fr-FR"
 
 #: components/participation/board/index.vue:27
 msgid "Portée par"
-msgstr ""
+msgstr "Carried by"
 
 #: pages/resultats/[assessmentId].vue:79
 msgid "Explicitée par :"
-msgstr ""
+msgstr "Explained by:"
 
 #: pages/resultats/[assessmentId].vue:102
 msgid "Permet d'expliciter :"
-msgstr ""
+msgstr "Helps to clarify:"
 
 #: 
 msgid "Code insee"
-msgstr ""
+msgstr "Insee code"
 
 #: pages/compte/evaluation/[id]/index.vue:411
 msgid "Souhaitez-vous clôturer l'évaluation"
-msgstr ""
+msgstr "Would you like to close the evaluation"
 
 #: pages/compte/evaluation/[id]/ateliers/[workshopId]/index.vue:247
 msgid "Supprimer le participant :"
-msgstr ""
+msgstr "Remove participant:"
 
 #: components/footer.vue:18
 msgid "Licence"
-msgstr ""
+msgstr "License"
 
 #: pages/compte/evaluation/[id]/index.vue:410
 msgid "En clôturant l’évaluation, vous mettez fin à l’évaluation et n’autorisez plus de participation. Cette action est irréversible, n’oubliez pas de bien vérifier avant. Si vous êtes accompagnateur et que vous n'avez pas encore payé l'utilisation du DémoMètre pour cette évaluation, Démocratie Ouverte vous enverra une facture."
-msgstr ""
+msgstr "By closing the evaluation, you end the evaluation and authorize no further participation. This action is irreversible, so be sure to check beforehand. If you are an accompanying person and have not yet paid for the use of the DemoMeter for this evaluation, Démocratie Ouverte will send you an invoice."
 
 #: pages/resultats/index.vue:47
 msgid "chargement..."
-msgstr ""
+msgstr "loading..."
 
 #: components/modal/save-participation-modal.vue:17
 msgid "Vous pourrez ensuite y revenir via l'onglet Mon compte."
-msgstr ""
+msgstr "You can then return to it via the My Account tab."
 
 #: pages/evaluation/initialisation/index.vue:129
 msgid "Au nom de qui lancez-vous cette évaluation ?"
-msgstr ""
+msgstr "On whose behalf are you launching this evaluation?"
 
 #: components/analytics/choice-question-chart.vue:61
 msgid "for the role"
-msgstr ""
+msgstr "for the role"
 
 #: pages/evaluation/participation/[assessmentId]/index.vue:68
 msgid "lancement d'une évaluation"
-msgstr ""
+msgstr "Launch of an assessment"
 
 #: pages/index.vue:45
 msgid "Explorer les articles"
-msgstr ""
+msgstr "Browse articles"
 
 #: components/form/buttons.vue:67 components/form/localisation.vue:129
 #: pages/evaluation/index.vue:16
 msgid "appuyez sur Entrer ⏎"
-msgstr ""
+msgstr "press Enter ⏎"
 
 #: pages/index.vue:74
 msgid "Explorer les ressources"
-msgstr ""
+msgstr "Browse resources"
 
 #: components/questionnaire/question-statement.vue:34
 msgid "Moins de {inhabitants} habitants"
-msgstr ""
+msgstr "Less than {inhabitants} inhabitants"
 
 #: components/response/input/multiple-choice.vue:7
 #: components/response/paper/input/multiple-choice.vue:7
 msgid "Choisissez entre 1 et {n_choices} réponses"
-msgstr ""
+msgstr "Choose between 1 and {n_choices} answers"
 
 #: components/questionnaire/question-statement.vue:28
 msgid "Plus de {inhabitants} habitants"
-msgstr ""
+msgstr "More than {inhabitants} inhabitants"
 
 #: components/export/survey-questions.vue:9
 msgid "Pillier {name}"
-msgstr ""
+msgstr "Pillar {name}"
 
 #: components/footer.vue:96
 msgid "Designé par"
-msgstr ""
+msgstr "Designed by"
 
 #: components/footer.vue:103
 msgid "Réalisé par"
-msgstr ""
+msgstr "Developed by"
 
 #: pages/compte/index.vue:70
 msgid "Mes évaluations"
-msgstr ""
+msgstr "My evaluations"
 
 #: pages/compte/index.vue:71
 msgid "Toutes mes évaluations en cours et terminées"
-msgstr ""
+msgstr "All my current and completed evaluations"
 
