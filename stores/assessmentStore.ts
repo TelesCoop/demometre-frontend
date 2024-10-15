@@ -12,7 +12,9 @@ import { useApiDelete, useApiGet, useApiPost } from "~/composables/api"
 import { useMessageStore } from "./messageStore"
 import { useUserStore } from "./userStore"
 import { useParticipationStore } from "./participationStore"
-import { useI18n } from "vue-i18n"
+import { i18n } from "~/utils/i18n-util"
+
+const $t = i18n.global.t
 
 export const useAssessmentStore = defineStore("assessment", {
   state: () => ({
@@ -37,15 +39,12 @@ export const useAssessmentStore = defineStore("assessment", {
   }),
   getters: {
     assessmentTypeTitle(): string {
-      const i18n = useI18n()
-      const $t = i18n.t
-
       return (this.currentAssessment?.municipality
         ? $t("de ma ville")
         : $t("de mon inter-communalité")
       )
     },
-    assessments: (state) => {
+    assessments: (state): Assessment[] => {
       return Object.values(state.assessmentById)
     },
     assessmentsWithDetails: (state): Assessment[] => {
@@ -73,7 +72,7 @@ export const useAssessmentStore = defineStore("assessment", {
       )
     },
     myAssessments() {
-      return this.assessments.filter(assessment => !!assessment.details.role)
+      return this.assessments.filter(assessment => !!assessment?.details?.role)
     },
     userHasNoAssessment() {
       return Object.values(this.assessmentById).length == 0
@@ -117,9 +116,6 @@ export const useAssessmentStore = defineStore("assessment", {
       return true
     },
     async addDocument(payload: any, assessmentId: number) {
-      const i18n = useI18n()
-      const $t = i18n.t
-
       const { data, error } = await useApiPost<AssessmentDocumentType>(
         `assessment-documents/`,
         payload,

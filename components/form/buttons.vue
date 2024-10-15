@@ -64,7 +64,7 @@
             : `has-text-${color}-dark`
         "
       >
-        <!--        {{ $gettext("appuyez sur <b>Entrer ⏎</b>", {}, true) }}-->
+        {{ $t("appuyez sur Entrer ⏎") }}
       </span>
     </div>
     <div

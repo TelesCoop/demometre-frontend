@@ -126,7 +126,7 @@
         v-if="canPressEnter()"
         class="is-size-7 is-hidden-mobile"
       >
-        <!--        {{ $gettext("appuyez sur <b>Entrer ⏎</b>", {}, true) }}-->
+        {{ $t("appuyez sur Entrer ⏎") }}
       </span>
     </div>
   </form>

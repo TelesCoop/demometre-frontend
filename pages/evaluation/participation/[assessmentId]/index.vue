@@ -104,22 +104,22 @@ const disabled = computed(() =>
 
 const startParticipationTitleAndDesc = computed(() => {
   switch (assessmentStore.currentAssessment.assessmentType) {
-  case AssessmentType.QUICK.key:
-    return [
-      pageStore.evaluationInitiationPage.oneQuickAssessmentTitle,
-      pageStore.evaluationInitiationPage.oneQuickAssessmentDescription,
-    ]
-  case AssessmentType.PARTICIPATIVE.key:
-    return [
-      pageStore.evaluationInitiationPage.oneParticipationAssessmentTitle,
-      pageStore.evaluationInitiationPage
-        .oneParticipationAssessmentDescription,
-    ]
-  case AssessmentType.WITH_EXPERT.key:
-    return [
-      pageStore.evaluationInitiationPage.oneAssessmentWithExpertTitle,
-      pageStore.evaluationInitiationPage.oneAssessmentWithExpertDescription,
-    ]
+    case AssessmentType.QUICK.key:
+      return [
+        pageStore.evaluationInitiationPage.oneQuickAssessmentTitle,
+        pageStore.evaluationInitiationPage.oneQuickAssessmentDescription,
+      ]
+    case AssessmentType.PARTICIPATIVE.key:
+      return [
+        pageStore.evaluationInitiationPage.oneParticipationAssessmentTitle,
+        pageStore.evaluationInitiationPage
+          .oneParticipationAssessmentDescription,
+      ]
+    case AssessmentType.WITH_EXPERT.key:
+      return [
+        pageStore.evaluationInitiationPage.oneAssessmentWithExpertTitle,
+        pageStore.evaluationInitiationPage.oneAssessmentWithExpertDescription,
+      ]
   }
 })
 

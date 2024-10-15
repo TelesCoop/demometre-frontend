@@ -161,13 +161,18 @@ const emit = defineEmits<{
 }>()
 
 const i18n = useI18n()
+const route = useRoute()
 const $t = i18n.t
+// global locale value is defined here, for some reason it didn´t work in plugins
+i18n.locale.value = useLocale()
+watch(route, () => {
+  i18n.locale.value = useLocale()
+})
 
 const userStore = useUserStore()
 const userStep = useUserStep()
 const participationStore = useParticipationStore()
 const assessmentStore = useAssessmentStore()
-const route = useRoute()
 const isBurgerOpen = ref(false)
 
 const isRouteActive = computed(() => (path) => {

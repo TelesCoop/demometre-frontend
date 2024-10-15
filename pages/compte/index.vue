@@ -67,9 +67,9 @@
       </PageSection>
       <hr>
       <PageSection
-        title="Mes évaluations"
-        intro="Toutes mes évaluations en cours et terminées"
-        :buttons="[{ text: 'Lancer une évaluation', icon: 'arrow-right-line' }]"
+        :title="$t('Mes évaluations')"
+        :intro="$t('Toutes mes évaluations en cours et terminées')"
+        :buttons="[{ text: $t('Lancer une évaluation'), icon: 'arrow-right-line' }]"
         @button-click="newAssessment"
       >
         <div class="tabs is-fullwidth">
@@ -144,10 +144,7 @@
                 <td>{{ assessment.surveyName }}</td>
                 <td>{{ new Date(assessment.created).toLocaleDateString() }}</td>
                 <td>
-                  {{
-                    PARTICIPANT_TYPE[assessment.details.role] ||
-                      $t("participant - non encore rempli")
-                  }}
+                  {{ PARTICIPANT_TYPE[assessment.details.role] || $t("participant - non encore rempli") }}
                   <template v-if="assessment.details.hasDetailAccess">
                     <span
                       v-if="assessment.details.paymentAmount"

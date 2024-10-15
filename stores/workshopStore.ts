@@ -7,7 +7,9 @@ import {
   WorkshopParticipation,
 } from "~/composables/types"
 import { useMessageStore } from "./messageStore"
-import { useI18n } from "vue-i18n"
+import { i18n } from "~/utils/i18n-util"
+
+const $t = i18n.global.t
 
 type FullWorkshop = Workshop & {
   participations: WorkshopParticipation[]
@@ -99,7 +101,6 @@ export const useWorkshopStore = defineStore("workshop", {
       question: Question,
     ) {
       const i18n = useI18n()
-      const $t = i18n.t
       let errorOccured = false
       if (question.objectivity === Objectivity.OBJECTIVE) {
         const apiResponse = await useApiPost<QuestionResponse>(
@@ -139,8 +140,6 @@ export const useWorkshopStore = defineStore("workshop", {
       return true
     },
     async createOrUpdateWorkshop(workshop: Workshop) {
-      const i18n = useI18n()
-      const $t = i18n.t
       const {
         data,
         error,
@@ -162,8 +161,6 @@ export const useWorkshopStore = defineStore("workshop", {
       }
     },
     async deleteParticipation(participationId: number) {
-      const i18n = useI18n()
-      const $t = i18n.t
       const workshopId = this.participationById[participationId].workshopId
       if (!workshopId) {
         useMessageStore().setMessage($t("Impossible de supprimer le participant (impossible de récupérer son atelier)"), "error")

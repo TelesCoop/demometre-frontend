@@ -25,13 +25,13 @@
         v-if="props.question.populationLowerBound"
         :class="`tag is-${props.color}`"
       >
-        <!--        {{ $gettext("Plus de %{ inhabitants } habitants", { inhabitants: props.question.populationLowerBound }) }}-->
+        {{ $t("Plus de {inhabitants} habitants", { inhabitants: props.question.populationLowerBound }) }}
       </span>
       <span
         v-if="props.question.populationUpperBound"
         :class="`tag is-${props.color}`"
       >
-        <!--        {{ $gettext("Moins de %{ inhabitants } habitants", { inhabitants: props.question.populationUpperBound }) }}-->
+        {{ $t("Moins de {inhabitants} habitants", { inhabitants: props.question.populationUpperBound }) }}
       </span>
       <span
         v-if="

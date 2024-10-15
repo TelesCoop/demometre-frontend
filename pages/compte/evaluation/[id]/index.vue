@@ -73,10 +73,7 @@
         >
           <InformationDetail
             :title="$t(`type d'évaluation`)"
-            :value="
-              AssessmentType[assessment.assessmentType?.toUpperCase() || '']
-                .value
-            "
+            :value="AssessmentType[assessment.assessmentType?.toUpperCase() || ''].value"
           />
           <InformationDetail
             title="lancée le"
@@ -108,6 +105,7 @@
             :value="withExpertValue"
             :title="$tc('Expert', (assessment.experts || []).length)"
           />
+          <!-- TODO above          :title="$ngettext('Expert', 'Experts', (assessment.experts || []).length)"-->
         </div>
         <div
           v-if="assessment.details.hasDetailAccess"

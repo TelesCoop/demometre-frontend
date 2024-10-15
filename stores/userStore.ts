@@ -3,7 +3,7 @@ import { User } from "~/composables/types"
 import { useApiGet, useApiPost } from "~/composables/api"
 import { useMessageStore } from "./messageStore"
 import { cleanUserData, getUserData } from "~/composables/actions"
-import { useI18n } from "vue-i18n"
+import { i18n } from "~/utils/i18n-util"
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -38,13 +38,10 @@ export const useUserStore = defineStore("user", {
       this.user = data.value
     },
     async editUser(user: User) {
-      const i18n = useI18n()
-      const $t = i18n.t
-
       const { data, error } = await useApiPatch<User>(
         "auth/edit",
         user,
-        $t("Impossible d'enregistrer les informations, les noms d'utilisateur et adresse mail doivent être uniques"),
+        i18n.global.t("Impossible d'enregistrer les informations, les noms d'utilisateur et adresse mail doivent être uniques"),
       )
       if (!error.value) {
         this.user = data.value
@@ -53,8 +50,6 @@ export const useUserStore = defineStore("user", {
       return false
     },
     async login(email: string, password: string) {
-      const i18n = useI18n()
-      const $t = i18n.t
 
       cleanUserData(true)
       const { data, error } = await useApiPost<User>(
@@ -63,7 +58,7 @@ export const useUserStore = defineStore("user", {
           email,
           password,
         },
-        $t("Impossible de se connecter, vérifiez vos identifiants"),
+        i18n.global.t("Impossible de se connecter, vérifiez vos identifiants"),
       )
       if (!error.value) {
         this.user = data.value!
