@@ -1,20 +1,22 @@
 <template>
-  <Suspense>
-    <template #default>
-      <div class="container is-tight">
-        <Question
-          v-if="context"
-          :context="context"
-          :question-id="questionId"
-          :is-questionnaire="true"
-          :color="color"
-        />
-      </div>
-    </template>
-    <template #fallback>
-      <p>...</p>
-    </template>
-  </Suspense>
+  <NeedsParticipationOrAssessment>
+    <Suspense>
+      <template #default>
+        <div class="container is-tight">
+          <Question
+            v-if="context"
+            :context="context"
+            :question-id="questionId"
+            :is-questionnaire="true"
+            :color="color"
+          />
+        </div>
+      </template>
+      <template #fallback>
+        <p>...</p>
+      </template>
+    </Suspense>
+  </NeedsParticipationOrAssessment>
 </template>
 
 <script setup lang="ts">

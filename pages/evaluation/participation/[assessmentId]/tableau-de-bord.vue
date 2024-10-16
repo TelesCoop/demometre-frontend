@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <NeedsParticipationOrAssessment class="container">
     <section class="section mx-2">
       <h1 class="title is-3 mb-2 has-text-black">
         {{ pageStore.evaluationInitiationPage.dashboardTitle }}
@@ -27,7 +27,7 @@
         </NuxtLink>
       </div>
     </section>
-  </div>
+  </NeedsParticipationOrAssessment>
 </template>
 
 <script setup lang="ts">

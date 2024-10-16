@@ -264,7 +264,7 @@ export const useAssessmentStore = defineStore("assessment", {
       return true
     },
     async getRepresentativityCriterias() {
-      const { data, error } = await useApiGet<RepresentativityCriteria>(
+      const { data, error } = await useApiGet<RepresentativityCriteria[]>(
         "representativity-criterias/",
       )
       if (!error.value) {

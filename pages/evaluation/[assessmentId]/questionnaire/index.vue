@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <NeedsParticipationOrAssessment class="container">
     <section class="columns is-desktop section">
       <div class="column is-5-desktop">
         <PageTitle
@@ -89,7 +89,7 @@
         </section>
       </div>
     </section>
-  </div>
+  </NeedsParticipationOrAssessment>
 </template>
 
 <script setup lang="ts">

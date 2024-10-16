@@ -1,5 +1,5 @@
 <template>
-  <div class="container is-tight">
+  <NeedsParticipationOrAssessment class="container is-tight">
     <Question
       v-if="context"
       :context="context"
@@ -7,7 +7,7 @@
       :is-questionnaire="false"
       color="no-pillar"
     />
-  </div>
+  </NeedsParticipationOrAssessment>
 </template>
 
 <script setup lang="ts">
@@ -16,10 +16,6 @@ import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { QuestionContextProps } from "~/composables/types"
 import { ref } from "vue"
-import { useI18n } from "vue-i18n"
-
-const i18n = useI18n()
-const $t = i18n.t
 
 definePageMeta({
   // title: $t("Affinage"),

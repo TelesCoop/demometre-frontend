@@ -1,5 +1,5 @@
 <template>
-  <div class="container is-tight">
+  <NeedsParticipationOrAssessment class="container is-tight">
     <Question
       v-if="context"
       :context="context"
@@ -7,7 +7,7 @@
       :is-questionnaire="false"
       :color="color"
     />
-  </div>
+  </NeedsParticipationOrAssessment>
 </template>
 
 <script setup lang="ts">

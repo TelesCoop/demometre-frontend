@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <NeedsParticipationOrAssessment>
     <PageSection
       class="column is-8 questionnaire-container"
       :title="
@@ -51,7 +51,7 @@
         </button>
       </div>
     </PageSection>
-  </div>
+  </NeedsParticipationOrAssessment>
 </template>
 
 <script setup lang="ts">

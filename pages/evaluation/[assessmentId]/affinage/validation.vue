@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <NeedsParticipationOrAssessment class="container">
     <section class="section columns is-centered questionnaire-container">
       <div class="column is-8 nav-questionnaire-container">
         <h1 class="title is-3 has-text-black-ter">
@@ -34,7 +34,7 @@
         </button>
       </div>
     </section>
-  </div>
+  </NeedsParticipationOrAssessment>
 </template>
 
 <script setup lang="ts">

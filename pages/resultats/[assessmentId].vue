@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <NeedsParticipationOrAssessment>
     <div class="container">
       <PageTitle
         :title="assessmentStore.assessmentById[assessmentId]?.name"
@@ -166,7 +166,7 @@
         :assessment="assessmentStore.assessmentById[assessmentId]"
       />
     </div>
-  </div>
+  </NeedsParticipationOrAssessment>
 </template>
 
 <script setup lang="ts">
