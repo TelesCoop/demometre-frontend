@@ -21,5 +21,6 @@ export default defineNuxtConfig({
     locales: ["fr", "en"],
     defaultLocale: "fr",
     strategy: "no_prefix",
+    silentTranslationWarn: true,
   },
 })

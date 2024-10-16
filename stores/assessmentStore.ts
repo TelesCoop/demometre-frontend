@@ -35,6 +35,7 @@ export const useAssessmentStore = defineStore("assessment", {
       }
       >{},
     addingExpert: <boolean>false,
+    fetchedAssessment: <Record<number, boolean>>{},
     newAssessment: <Assessment>{},
   }),
   getters: {
@@ -159,7 +160,7 @@ export const useAssessmentStore = defineStore("assessment", {
       this.assessmentsWithResultsLoaded = true
       return true
     },
-    async getAssessment(id) {
+    async getAssessment(id: string | number) {
       const response = await useApiGet<Assessment>(`assessments/${id}/`)
 
       if (response.error.value) {
@@ -173,6 +174,12 @@ export const useAssessmentStore = defineStore("assessment", {
       this.assessmentById[response.data.value.id] = response.data.value
       this.currentAssessmentId = response.data.value.id
       return true
+    },
+    async getAssessmentOnce(id: string | number) {
+      if (!this.fetchedAssessment[id]) {
+        this.fetchedAssessment[id] = true
+        await this.getAssessment(id)
+      }
     },
     async getAssessmentScores(assessmentId) {
       const { data, error } = await useApiGet<Scores>(

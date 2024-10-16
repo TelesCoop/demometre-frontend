@@ -14,4 +14,5 @@ export const i18n = createI18n({
   messages: {
     en: en,
   },
+  silentTranslationWarn: true,
 })

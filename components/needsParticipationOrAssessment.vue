@@ -20,11 +20,13 @@ const ready = ref(false)
 
 const assessmentIdStr: string = ((route.params.assessmentId || route.query.assessment) as string)
 
+console.log("### NeedsParticipationOrAssessment", { assessmentIdStr })
+
 if (assessmentIdStr) {
   const assessmentId = parseInt(assessmentIdStr)
   assessmentStore.currentAssessmentId = assessmentId
   if (!assessmentStore.currentAssessment) {
-    await assessmentStore.getAssessment(assessmentId)
+    await assessmentStore.getAssessmentOnce(assessmentId)
   }
   if (!participationStore.currentParticipationId || participationStore.currentParticipationId === -1) {
     await Promise.all([
@@ -32,8 +34,10 @@ if (assessmentIdStr) {
       participationStore.loadAssessmentOnce(assessmentId),
     ])
   }
+  console.log("### NeedsParticipationOrAssessment done after loading")
   ready.value = true
 } else {
+  console.log("### NeedsParticipationOrAssessment was already ready")
   ready.value = true
 }
 
