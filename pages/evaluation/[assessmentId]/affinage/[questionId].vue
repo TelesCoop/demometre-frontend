@@ -20,7 +20,6 @@ import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   // title: $t("Affinage"),
-  layout: "default-for-assessments",
   step: "profiling",
 })
 

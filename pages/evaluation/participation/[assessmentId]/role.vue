@@ -33,7 +33,6 @@ import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 definePageMeta({
   title: "Question sur le role",
   step: "role",
-  layout: "default-for-assessments",
 })
 
 await useAssessmentIsReady()

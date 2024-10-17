@@ -251,7 +251,6 @@ import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 definePageMeta({
   title: "Initialisation",
   step: "initialization",
-  layout: "default-for-assessments",
 })
 
 await useAssessmentIsReady()

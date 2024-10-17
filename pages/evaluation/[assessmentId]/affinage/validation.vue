@@ -46,7 +46,6 @@ import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 definePageMeta({
   title: "Affinage",
   step: "profiling",
-  layout: "default-for-assessments",
 })
 
 await useAssessmentIsReady()

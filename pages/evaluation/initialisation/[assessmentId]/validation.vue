@@ -46,7 +46,6 @@ import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 definePageMeta({
   // title: $t("Initialisation"),
   step: "initialization-objectives-questions",
-  layout: "default-for-assessments",
 })
 
 await useAssessmentIsReady()
