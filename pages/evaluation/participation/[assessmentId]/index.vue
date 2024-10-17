@@ -88,7 +88,6 @@ import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 definePageMeta({
   title: "Consentement",
   step: "participation",
-  layout: "default-for-assessments",
 })
 
 await useAssessmentIsReady()

@@ -176,11 +176,11 @@ import { useQuestionnaireStore } from "~/stores/questionnaireStore"
 import { Marker, PillarType } from "~/composables/types"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { getStrenghtAndImprovements, getScoreToDisplay } from "~/utils/scores"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Résultats",
   breadcrumb: "Résultats",
-  layout: "default-for-assessments",
 })
 
 const router = useRouter()
@@ -189,7 +189,7 @@ const assessmentStore = useAssessmentStore()
 const route = useRoute()
 const assessmentIdStr: string = (route.params.assessmentId as string)
 const assessmentId = parseInt(assessmentIdStr as string)
-await assessmentStore.assessmentIsReady(assessmentId)
+await useAssessmentIsReady()
 
 const questionnaireStore = useQuestionnaireStore()
 

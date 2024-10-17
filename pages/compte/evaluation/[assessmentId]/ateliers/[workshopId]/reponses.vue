@@ -68,7 +68,6 @@ import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 definePageMeta({
   title: "Réponses",
   breadcrumb: "Réponses",
-  layout: "default-for-assessments",
 })
 
 const assessmentStore = useAssessmentStore()

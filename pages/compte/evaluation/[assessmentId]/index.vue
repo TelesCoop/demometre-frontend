@@ -333,7 +333,6 @@ import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 definePageMeta({
   title: "Évaluation",
   breadcrumb: "Évaluation",
-  layout: "default-for-assessments",
 })
 
 const assessmentStore = useAssessmentStore()
