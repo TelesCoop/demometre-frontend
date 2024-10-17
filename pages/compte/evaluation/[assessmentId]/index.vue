@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="assessment"
     class="container"
   >
     <div class="mb-2">
@@ -329,10 +328,12 @@ import {
 } from "~/utils/constants"
 import { useConfirm } from "~/composables/useConfirm"
 import { useI18n } from "vue-i18n"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Évaluation",
   breadcrumb: "Évaluation",
+  layout: "default-for-assessments",
 })
 
 const assessmentStore = useAssessmentStore()
@@ -347,14 +348,17 @@ const showInformationsEditModal = ref(false)
 const showExpertsEditModal = ref(false)
 const showAddDocumentModal = ref(false)
 
-const assessmentId = parseInt(route.params.id as string)
+const assessmentIdStr: string = (route.params.assessmentId as string)
+const assessmentId = parseInt(assessmentIdStr as string)
+await useAssessmentIsReady()
+
 assessmentStore.currentAssessmentId = assessmentId
 const assessment = computed<Assessment>(
   () => assessmentStore.assessmentById[assessmentId],
 )
 
 const withExpertValue = computed(() => {
-  const experts = assessment.value.experts || []
+  const experts = assessment?.value.experts || []
   if (!experts.length) {
     return $t("Aucun expert pour le moment")
   } else {
@@ -364,12 +368,6 @@ const withExpertValue = computed(() => {
   }
 })
 
-participationStore.getParticipationForAssessmentOnce(assessmentId)
-await participationStore.loadAssessment(assessmentId)
-if (participationStore.status.total == 0) {
-  await participationStore.getParticipationForAssessment(assessmentId)
-  await participationStore.setTotalAndAnsweredQuestionsByPillarName()
-}
 const documentsForCategory = computed(
   () => (category: AssessmentDocumentCategory) => {
     return assessment.value.documents.filter(

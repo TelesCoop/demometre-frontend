@@ -40,6 +40,7 @@
 import { useInitializationJourney } from "~/composables/journey"
 import { usePageStore } from "~/stores/pageStore"
 import { useI18n } from "vue-i18n"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 const i18n = useI18n()
 const $t = i18n.t
@@ -47,7 +48,10 @@ const $t = i18n.t
 definePageMeta({
   // title: $t("Initialisation"),
   step: "initialization-objectives-questions",
+  layout: "default-for-assessments",
 })
+
+await useAssessmentIsReady()
 
 const pageStore = usePageStore()
 if (!pageStore.evaluationInitiationPage.objectiveQuestionsTitle) {

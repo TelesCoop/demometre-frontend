@@ -22,6 +22,7 @@
           :can-submit="canSubmit()"
           :is-questionnaire="props.isQuestionnaire"
           :current-assessment-id="assessmentStore.currentAssessmentId"
+          :required="question.mandatory"
         />
 
         <!-- TAB : responses -->
@@ -144,8 +145,9 @@ const submit = async () => {
     goToNextQuestion()
   }
 }
-const canSubmit = () => isAnswered.value || !question.value.mandatory
-usePressEnter(submit, canSubmit)
+const canSubmit = () => isAnswered.value
+const canPressEnter = () => isAnswered.value || !question.value.mandatory
+usePressEnter(submit, canPressEnter)
 </script>
 
 <style scoped lang="sass">

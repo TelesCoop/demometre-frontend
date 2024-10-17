@@ -41,19 +41,17 @@
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
-import { useAssessmentStore } from "~/stores/assessmentStore"
-import { useI18n } from "vue-i18n"
-
-const i18n = useI18n()
-const $t = i18n.t
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   // title: $t("Initialisation"),
   step: "initialization-objectives-questions",
+  layout: "default-for-assessments",
 })
 
+await useAssessmentIsReady()
+
 const router = useRouter()
-const assessmentStore = useAssessmentStore()
 const pageStore = usePageStore()
 if (!pageStore.evaluationInitiationPage.initializationValidationTitle) {
   pageStore.getEvaluationInitiationPage()

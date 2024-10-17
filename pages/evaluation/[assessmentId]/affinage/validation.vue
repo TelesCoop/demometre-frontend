@@ -41,11 +41,15 @@
 import { usePageStore } from "~/stores/pageStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Affinage",
   step: "profiling",
+  layout: "default-for-assessments",
 })
+
+await useAssessmentIsReady()
 
 const router = useRouter()
 const participationStore = useParticipationStore()

@@ -180,18 +180,22 @@ import { getStrenghtAndImprovements, getScoreToDisplay } from "~/utils/scores"
 definePageMeta({
   title: "Résultats",
   breadcrumb: "Résultats",
+  layout: "default-for-assessments",
 })
 
 const router = useRouter()
 
-const questionnaireStore = useQuestionnaireStore()
 const assessmentStore = useAssessmentStore()
+const route = useRoute()
+const assessmentIdStr: string = (route.params.assessmentId as string)
+const assessmentId = parseInt(assessmentIdStr as string)
+await assessmentStore.assessmentIsReady(assessmentId)
+
+const questionnaireStore = useQuestionnaireStore()
 
 const activePillar = ref<PillarType>()
 const markers = ref<Marker[]>()
 
-const route = useRoute()
-const assessmentId: Ref<number> = ref(+route.params.assessmentId)
 const changeSelectedQuestion = ref<number>(0)
 const activeQuestionId: Ref<number> = ref(
   parseInt(route.query.question as string),

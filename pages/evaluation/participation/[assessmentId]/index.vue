@@ -83,11 +83,15 @@
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useParticipationStore } from "~~/stores/participationStore"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Consentement",
   step: "participation",
+  layout: "default-for-assessments",
 })
+
+await useAssessmentIsReady()
 
 const router = useRouter()
 const pageStore = usePageStore()

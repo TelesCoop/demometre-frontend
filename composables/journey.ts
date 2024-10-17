@@ -116,6 +116,10 @@ export function useProfilingJourney() {
     const participationStore = useParticipationStore()
     const participation = participationStore.participation
     const assessment = assessmentStore.currentAssessment
+    if (assessment == null) {
+      return []
+    }
+
     const responseByQuestionId =
       participationStore.responseByProfilingQuestionId
     const questionIds = profilingStore.orderedQuestionId
@@ -197,8 +201,11 @@ export function useQuestionnaireJourney(pillarName: string) {
 
     const participation = participationStore.participation
     const assessment = assessmentStore.currentAssessment
+    if (assessment == null) {
+      return []
+    }
 
-    const questionIds = questionnaireStore
+    return questionnaireStore
       .getQuestionnaireQuestionByPillarName(assessment.surveyId, pillarName)
       .filter((question: Question) => {
         return (
@@ -210,7 +217,6 @@ export function useQuestionnaireJourney(pillarName: string) {
         )
       })
       .map((question: Question) => question.id)
-    return questionIds
   })
   const nextQuestionId = (
     currentQuestionId: number,
@@ -277,6 +283,9 @@ export function useInitializationJourney() {
 
   const journey = computed(() => {
     // returns a list of question IDs for current assessment, in the right order
+    if (assessmentStore.currentAssessment == null) {
+      return []
+    }
     return questionnaireStore.questionsForSurvey(assessmentStore.currentAssessment.surveyId, "useInitializationJourney")
       .filter((question: Question) => {
         const assessment = assessmentStore.currentAssessment

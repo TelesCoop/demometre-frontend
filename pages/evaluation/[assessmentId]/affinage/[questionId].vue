@@ -16,15 +16,15 @@ import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { QuestionContextProps } from "~/composables/types"
 import { ref } from "vue"
-import { useI18n } from "vue-i18n"
-
-const i18n = useI18n()
-const $t = i18n.t
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   // title: $t("Affinage"),
+  layout: "default-for-assessments",
   step: "profiling",
 })
+
+await useAssessmentIsReady()
 
 const route = useRoute()
 const router = useRouter()
