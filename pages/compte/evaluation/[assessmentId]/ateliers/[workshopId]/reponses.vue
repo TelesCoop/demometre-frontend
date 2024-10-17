@@ -1,5 +1,5 @@
 <template>
-  <NeedsParticipationOrAssessment class="container">
+  <div class="container">
     <NuxtLink
       class="button is-white is-rounded"
       to="."
@@ -53,7 +53,7 @@
         </section>
       </div>
     </div>
-  </NeedsParticipationOrAssessment>
+  </div>
 </template>
 
 <script setup lang="ts">

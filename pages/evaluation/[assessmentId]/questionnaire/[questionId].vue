@@ -1,5 +1,5 @@
 <template>
-  <NeedsParticipationOrAssessment>
+  <div>
     <Suspense>
       <template #default>
         <div class="container is-tight">
@@ -16,7 +16,7 @@
         <p>...</p>
       </template>
     </Suspense>
-  </NeedsParticipationOrAssessment>
+  </div>
 </template>
 
 <script setup lang="ts">

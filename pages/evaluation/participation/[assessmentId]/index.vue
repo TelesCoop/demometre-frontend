@@ -1,84 +1,82 @@
 <template>
-  <NeedsParticipationOrAssessment>
-    <PageSection
-      :title="startParticipationTitleAndDesc[0]"
-      :intro="startParticipationTitleAndDesc[1]"
-      :is-first-element="true"
-      :intro-is-rich-text="true"
-      class="column is-8 questionnaire-container"
+  <PageSection
+    :title="startParticipationTitleAndDesc[0]"
+    :intro="startParticipationTitleAndDesc[1]"
+    :is-first-element="true"
+    :intro-is-rich-text="true"
+    class="column is-8 questionnaire-container"
+  >
+    <form
+      class="nav-questionnaire-container"
+      @submit.prevent="onSubmit"
     >
-      <form
-        class="nav-questionnaire-container"
-        @submit.prevent="onSubmit"
+      <ParticipationConsent
+        class="mt-1_5"
+        type="cgu"
+      />
+      <div
+        v-if="
+          assessmentStore.currentAssessment.assessmentType ===
+            AssessmentType.PARTICIPATIVE.key
+        "
       >
-        <ParticipationConsent
-          class="mt-1_5"
-          type="cgu"
-        />
-        <div
-          v-if="
-            assessmentStore.currentAssessment.assessmentType ===
-              AssessmentType.PARTICIPATIVE.key
-          "
-        >
-          <label class="label has-text-shade-800">{{
-            pageStore.evaluationInitiationPage.addExpertTitle
-          }}</label>
-          <span class="is-family-secondary is-size-6 has-text-shade-600">{{
-            pageStore.evaluationInitiationPage.addExpertDescription
-          }}</span>
-          <div class="buttons mt-1">
-            <!-- <div v-for="bool of [true, false]" :key="bool" class="margin-between">
-              <input
-                :id="bool"
-                v-model="addExpert"
-                type="radio"
-                :value="bool"
-                class="custom-hidden white-on-black-input-checked"
-                name="addExpert"
-              />
-              <label :for="bool" class="button is-shade-600 is-outlined">
-                {{
-                bool
-                ? pageStore.evaluationInitiationPage.addExpertButtonYes
-                : pageStore.evaluationInitiationPage.addExpertButtonNo
-                }}
-              </label>
-            </div>-->
-            <label class="checkbox is-size-7">
-              <input
-                v-model="assessmentStore.addingExpert"
-                type="checkbox"
-              >
-              {{ pageStore.evaluationInitiationPage.addExpertButtonYes }}
+        <label class="label has-text-shade-800">{{
+          pageStore.evaluationInitiationPage.addExpertTitle
+        }}</label>
+        <span class="is-family-secondary is-size-6 has-text-shade-600">{{
+          pageStore.evaluationInitiationPage.addExpertDescription
+        }}</span>
+        <div class="buttons mt-1">
+          <!-- <div v-for="bool of [true, false]" :key="bool" class="margin-between">
+            <input
+              :id="bool"
+              v-model="addExpert"
+              type="radio"
+              :value="bool"
+              class="custom-hidden white-on-black-input-checked"
+              name="addExpert"
+            />
+            <label :for="bool" class="button is-shade-600 is-outlined">
+              {{
+              bool
+              ? pageStore.evaluationInitiationPage.addExpertButtonYes
+              : pageStore.evaluationInitiationPage.addExpertButtonNo
+              }}
             </label>
-          </div>
+          </div>-->
+          <label class="checkbox is-size-7">
+            <input
+              v-model="assessmentStore.addingExpert"
+              type="checkbox"
+            >
+            {{ pageStore.evaluationInitiationPage.addExpertButtonYes }}
+          </label>
         </div>
-        <ButtonsArrowButton
-          color="no-pillar"
-          class="arrow-button-fixed is-left"
-          @click.prevent="goBack"
-        />
+      </div>
+      <ButtonsArrowButton
+        color="no-pillar"
+        class="arrow-button-fixed is-left"
+        @click.prevent="goBack"
+      />
 
-        <div class="buttons mt-4">
-          <button
-            class="button is-shade-600 is-rounded"
-            :disabled="disabled"
-          >
-            <span>
-              {{ $t("lancement d'une évaluation") }}
-            </span>
-          </button>
+      <div class="buttons mt-4">
+        <button
+          class="button is-shade-600 is-rounded"
+          :disabled="disabled"
+        >
+          <span>
+            {{ $t("lancement d'une évaluation") }}
+          </span>
+        </button>
 
-          <!-- Permet d'appuyer sur entrer -->
-          <input
-            type="submit"
-            hidden
-          >
-        </div>
-      </form>
-    </PageSection>
-  </NeedsParticipationOrAssessment>
+        <!-- Permet d'appuyer sur entrer -->
+        <input
+          type="submit"
+          hidden
+        >
+      </div>
+    </form>
+  </PageSection>
 </template>
 
 <script setup lang="ts">

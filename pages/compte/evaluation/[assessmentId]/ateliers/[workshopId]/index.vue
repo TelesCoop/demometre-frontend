@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <template />
     <div class="mb-2">
       <NuxtLink
         class="button is-white is-rounded"
