@@ -197,7 +197,6 @@ export const useAssessmentStore = defineStore("assessment", {
 
 
       this.assessmentsLoaded = true
-      console.log("### getAssessment", response.data.value, response.data)
       this.assessmentById[response.data.value.id] = response.data.value
       this.currentAssessmentId = response.data.value.id
       return true

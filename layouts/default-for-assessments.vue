@@ -85,11 +85,9 @@ const participationStore = useParticipationStore()
 const onRouteChange = async () => {
   const assessmentIdStr: string = (route.params.assessmentId as string)
   const assessmentId = parseInt(assessmentIdStr as string)
-  console.log("### assessment layout watch", assessmentId, route)
   if (isNaN(assessmentId)) {
     return
   }
-  console.log("### launch once from assessement", assessmentId)
   Promise.all([
     assessmentStore.getAssessmentOnce(assessmentId),
     participationStore.getParticipationForAssessmentOnce(assessmentId),

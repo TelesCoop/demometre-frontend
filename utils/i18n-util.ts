@@ -15,4 +15,6 @@ export const i18n = createI18n({
     en: en,
   },
   silentTranslationWarn: true,
+  fallbackWarn: false,
+  missingWarn: false,
 })

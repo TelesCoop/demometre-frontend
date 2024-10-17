@@ -368,13 +368,6 @@ const withExpertValue = computed(() => {
   }
 })
 
-console.log("### launch once from index", assessmentId)
-// participationStore.getParticipationForAssessmentOnce(assessmentId)
-// await participationStore.loadAssessment(assessmentId)
-// if (participationStore.status.total == 0) {
-//   await participationStore.getParticipationForAssessment(assessmentId)
-//   await participationStore.setTotalAndAnsweredQuestionsByPillarName()
-// }
 const documentsForCategory = computed(
   () => (category: AssessmentDocumentCategory) => {
     return assessment.value.documents.filter(
