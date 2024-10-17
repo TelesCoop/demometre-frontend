@@ -246,11 +246,15 @@ import { usePageStore } from "~/stores/pageStore"
 import { InitiatorType, AssessmentType } from "~/composables/types"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { useUserStore } from "~/stores/userStore"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Initialisation",
   step: "initialization",
+  layout: "default-for-assessments",
 })
+
+await useAssessmentIsReady()
 
 const router = useRouter()
 const userStore = useUserStore()

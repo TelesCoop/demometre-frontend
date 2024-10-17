@@ -1,5 +1,5 @@
 <template>
-  <NeedsParticipationOrAssessment>
+  <div>
     <PageSection
       class="column is-8 questionnaire-container"
       :title="
@@ -51,7 +51,7 @@
         </button>
       </div>
     </PageSection>
-  </NeedsParticipationOrAssessment>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -59,21 +59,24 @@ import { usePageStore } from "~/stores/pageStore"
 import { useUserStore } from "~/stores/userStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { User } from "~/composables/types"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Ajout d'un expert",
   breadcrumb: "Ajout d'un expert",
   step: "participation",
+  layout: "default-for-assessments",
 })
 
-const router = useRouter()
 const assessmentStore = useAssessmentStore()
+await useAssessmentIsReady()
+
+const router = useRouter()
 
 const disabled = computed(() =>
-  assessmentStore.newAssessment.conditionsOfSaleConsent ? false : true,
+  !assessmentStore.newAssessment.conditionsOfSaleConsent,
 )
 
-const route = useRoute()
 const userStore = useUserStore()
 const pageStore = usePageStore()
 if (!pageStore.evaluationInitiationPage.initTitle) {

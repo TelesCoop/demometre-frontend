@@ -30,25 +30,27 @@ export const useParticipationStore = defineStore("participation", {
     currentParticipationId: -1,
     currentlyLoadedSubjectiveResponsesAssessmentId: -1,
     currentlyLoadedProfilingResponsesAssessmentId: -1,
+    launchedParticipations: <Record<number, boolean>>{},
     fetchedParticipations: <Record<number, boolean>>{},
-    loadedParticipations: <Record<number, boolean>>{},
+    launchedLoadParticipations: <Record<number, boolean>>{},
+    fetchedLoadParticipations: <Record<number, boolean>>{},
     profilingCurrent: <number[]>[],
     responseByProfilingQuestionId: <
       {
         [key: number]: QuestionResponse
       }
-    >{},
+      >{},
     responseByQuestionnaireQuestionId: <
       {
         [key: number]: QuestionResponse
       }
-    >{},
+      >{},
     newParticipation: <Participation>{},
     participations: <
       {
         [key: number]: Participation
       }
-    >{},
+      >{},
     showCancelParticipationModal: <boolean>false,
     showSaveParticipationModal: <boolean>false,
     totalAndAnsweredQuestionsByPillarName: <Record<string, Status>>{},
@@ -128,11 +130,13 @@ export const useParticipationStore = defineStore("participation", {
     async getParticipationForAssessmentOnce(
       assessmentId: number,
     ): Promise<boolean> {
-      if (this.fetchedParticipations[assessmentId]) {
+      if (this.launchedParticipations[assessmentId]) {
         return true
       }
+      this.launchedParticipations[assessmentId] = true
+      const toReturn = await this.getParticipationForAssessment(assessmentId)
       this.fetchedParticipations[assessmentId] = true
-      return await this.getParticipationForAssessment(assessmentId)
+      return toReturn
     },
     async getParticipations(): Promise<boolean> {
       const response = await useApiGet<Participation[]>("participations")
@@ -207,11 +211,12 @@ export const useParticipationStore = defineStore("participation", {
       ])
     },
     async loadAssessmentOnce(assessmentId: number) {
-      if (this.loadedParticipations[assessmentId]) {
+      if (this.launchedLoadParticipations[assessmentId]) {
         return
       }
-      this.loadedParticipations[assessmentId] = true
+      this.launchedLoadParticipations[assessmentId] = true
       await this.loadAssessment(assessmentId)
+      this.fetchedLoadParticipations[assessmentId] = true
     },
     newAssessment() {
       this.responseByProfilingQuestionId = {}

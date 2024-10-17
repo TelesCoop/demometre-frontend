@@ -1,5 +1,5 @@
 <template>
-  <NeedsParticipationOrAssessment class="container is-tight">
+  <div class="container is-tight">
     <Question
       v-if="context"
       :context="context"
@@ -7,7 +7,7 @@
       :is-questionnaire="false"
       color="no-pillar"
     />
-  </NeedsParticipationOrAssessment>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -16,11 +16,15 @@ import { useProfilingStore } from "~/stores/profilingStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { QuestionContextProps } from "~/composables/types"
 import { ref } from "vue"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   // title: $t("Affinage"),
+  layout: "default-for-assessments",
   step: "profiling",
 })
+
+await useAssessmentIsReady()
 
 const route = useRoute()
 const router = useRouter()

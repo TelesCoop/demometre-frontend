@@ -192,10 +192,12 @@ import { useUserStore } from "~/stores/userStore"
 import { WORKSHOP_CONTEXT_FIELDS, WORKSHOP_MEDIUM, WORKSHOP_TYPES } from "~/utils/constants"
 import { useConfirm } from "~/composables/useConfirm"
 import { useI18n } from "vue-i18n"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Atelier",
   breadcrumb: "Atelier",
+  layout: "default-for-assessments",
 })
 const profilingStore = useProfilingStore()
 const workshopStore = useWorkshopStore()
@@ -206,6 +208,8 @@ const route = useRoute()
 const workshopId: Ref<number> = ref(+route.params.workshopId)
 const i18n = useI18n()
 const $t = i18n.t
+
+await useAssessmentIsReady()
 
 const showInformationsEditModal = ref(false)
 const showParticipantEditModal = ref(false)

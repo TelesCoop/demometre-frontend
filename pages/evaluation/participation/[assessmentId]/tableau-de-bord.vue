@@ -1,5 +1,5 @@
 <template>
-  <NeedsParticipationOrAssessment class="container">
+  <div class="container">
     <section class="section mx-2">
       <h1 class="title is-3 mb-2 has-text-black">
         {{ pageStore.evaluationInitiationPage.dashboardTitle }}
@@ -27,17 +27,21 @@
         </NuxtLink>
       </div>
     </section>
-  </NeedsParticipationOrAssessment>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { usePageStore } from "~/stores/pageStore"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Localisation",
   step: "role",
+  layout: "default-for-assessments",
 })
+
+await useAssessmentIsReady()
 
 const pageStore = usePageStore()
 if (!pageStore.evaluationInitiationPage.dashboardTitle) {

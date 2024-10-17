@@ -1,5 +1,5 @@
 <template>
-  <NeedsParticipationOrAssessment class="container is-tight">
+  <div class="container is-tight">
     <Question
       v-if="context"
       :context="context"
@@ -7,7 +7,7 @@
       :is-questionnaire="false"
       :color="color"
     />
-  </NeedsParticipationOrAssessment>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -16,11 +16,15 @@ import { useParticipationStore } from "~/stores/participationStore"
 import { QuestionContextProps, PillarParams } from "~/composables/types"
 import { Ref, ref } from "vue"
 import { useQuestionnaireStore } from "~/stores/questionnaireStore"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Questions objectives",
   step: "initialization-objectives-questions",
+  layout: "default-for-assessments",
 })
+
+await useAssessmentIsReady()
 
 const route = useRoute()
 const router = useRouter()

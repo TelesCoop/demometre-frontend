@@ -1,5 +1,5 @@
 <template>
-  <NeedsParticipationOrAssessment class="container">
+  <div class="container">
     <section class="section columns is-centered questionnaire-container">
       <div class="column is-8 nav-questionnaire-container">
         <h1 class="title is-3 has-text-black-ter">
@@ -34,18 +34,22 @@
         </button>
       </div>
     </section>
-  </NeedsParticipationOrAssessment>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
 import { useParticipationStore } from "~/stores/participationStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Affinage",
   step: "profiling",
+  layout: "default-for-assessments",
 })
+
+await useAssessmentIsReady()
 
 const router = useRouter()
 const participationStore = useParticipationStore()

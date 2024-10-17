@@ -6,4 +6,7 @@ export default defineI18nConfig(() => ({
   messages: {
     en: en,
   },
+  silentTranslationWarn: true,
+  fallbackWarn: false,
+  missingWarn: false,
 }))

@@ -1,5 +1,5 @@
 <template>
-  <NeedsParticipationOrAssessment class="container is-tight">
+  <div class="container is-tight">
     <h1 class="title is-3 mt-2 has-text-black">
       {{ pageStore.evaluationQuestionnairePage.roleQuestionTitle }}
     </h1>
@@ -20,7 +20,7 @@
       :is-loading="isLoading"
       @submit="onSubmit"
     />
-  </NeedsParticipationOrAssessment>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -28,15 +28,19 @@ import { useParticipationStore } from "~/stores/participationStore"
 import { useProfilingJourney } from "~/composables/journey"
 import { usePageStore } from "~/stores/pageStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Question sur le role",
   step: "role",
+  layout: "default-for-assessments",
 })
 
+await useAssessmentIsReady()
+
+const assessmentStore = useAssessmentStore()
 const router = useRouter()
 const participationStore = useParticipationStore()
-const assessmentStore = useAssessmentStore()
 const pageStore = usePageStore()
 if (!pageStore.evaluationQuestionnairePage.startTitle) {
   pageStore.getEvaluationQuestionnairePage()
