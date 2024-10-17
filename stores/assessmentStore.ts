@@ -126,28 +126,6 @@ export const useAssessmentStore = defineStore("assessment", {
         this.assessmentById[assessmentId].documents.push(data.value)
       }
     },
-    async assessmentIsReady(assessmentId: number) {
-      const participationStore = useParticipationStore()
-      const checkIsReady = () => {
-        return this.fetchedAssessment[assessmentId]
-          && participationStore.fetchedParticipations[assessmentId]
-          && participationStore.fetchedLoadParticipations[assessmentId]
-      }
-      return new Promise((resolve) => {
-        if (checkIsReady()) {
-          resolve(true)
-        }
-        watch([
-          this.fetchedAssessment,
-          participationStore.fetchedParticipations,
-          participationStore.fetchedLoadParticipations,
-        ], () => {
-          if (checkIsReady()) {
-            resolve(true)
-          }
-        })
-      })
-    },
     async deleteDocument(assessmentId, assessmentDocumentId: number) {
       const { error } = await useApiDelete<Scores>(
         `assessment-documents/${assessmentDocumentId}/`,

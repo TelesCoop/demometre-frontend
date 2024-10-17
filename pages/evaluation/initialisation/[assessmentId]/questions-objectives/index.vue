@@ -48,7 +48,6 @@ const $t = i18n.t
 definePageMeta({
   // title: $t("Initialisation"),
   step: "initialization-objectives-questions",
-  layout: "default-for-assessments",
 })
 
 await useAssessmentIsReady()

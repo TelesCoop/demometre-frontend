@@ -197,7 +197,6 @@ import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 definePageMeta({
   title: "Atelier",
   breadcrumb: "Atelier",
-  layout: "default-for-assessments",
 })
 const profilingStore = useProfilingStore()
 const workshopStore = useWorkshopStore()

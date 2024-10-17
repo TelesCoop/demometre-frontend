@@ -65,7 +65,6 @@ definePageMeta({
   title: "Ajout d'un expert",
   breadcrumb: "Ajout d'un expert",
   step: "participation",
-  layout: "default-for-assessments",
 })
 
 const assessmentStore = useAssessmentStore()

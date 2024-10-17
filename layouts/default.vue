@@ -9,7 +9,14 @@
       <HeaderNavbar @change-header-height="onChangeHeaderHight($event)" />
       <div class="default-page-content">
         <Breadcrumb />
-        <slot />
+        <Suspense>
+          <slot />
+          <template #fallback>
+            <div class="is-flex is-align-items-center is-justify-content-center" style="min-height: 400px">
+              <Spinner />
+            </div>
+          </template>
+        </Suspense>
       </div>
       <Footer v-if="showFooter" />
       <Toast
