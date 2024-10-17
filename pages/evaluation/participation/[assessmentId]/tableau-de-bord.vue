@@ -33,11 +33,15 @@
 <script setup lang="ts">
 import { useAssessmentStore } from "~/stores/assessmentStore"
 import { usePageStore } from "~/stores/pageStore"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Localisation",
   step: "role",
+  layout: "default-for-assessments",
 })
+
+await useAssessmentIsReady()
 
 const pageStore = usePageStore()
 if (!pageStore.evaluationInitiationPage.dashboardTitle) {

@@ -126,6 +126,32 @@ export const useAssessmentStore = defineStore("assessment", {
         this.assessmentById[assessmentId].documents.push(data.value)
       }
     },
+    async assessmentIsReady(assessmentId: number) {
+      const participationStore = useParticipationStore()
+      console.log("### assessmentIsReady creating promise", [this.fetchedAssessment[assessmentId], participationStore.fetchedParticipations[assessmentId], participationStore.fetchedLoadParticipations[assessmentId]])
+      const checkIsReady = () => {
+        return this.fetchedAssessment[assessmentId]
+          && participationStore.fetchedParticipations[assessmentId]
+          && participationStore.fetchedLoadParticipations[assessmentId]
+      }
+      return new Promise((resolve) => {
+        if (checkIsReady()) {
+          console.log("### RESOLVING :)")
+          resolve(true)
+        }
+        watch([
+          this.fetchedAssessment,
+          participationStore.fetchedParticipations,
+          participationStore.fetchedLoadParticipations,
+        ], () => {
+          console.log("### assessment is ready ? changes", [this.fetchedAssessment[assessmentId], participationStore.fetchedParticipations[assessmentId], participationStore.fetchedLoadParticipations[assessmentId]])
+          if (checkIsReady()) {
+            console.log("### RESOLVING :)")
+            resolve(true)
+          }
+        })
+      })
+    },
     async deleteDocument(assessmentId, assessmentDocumentId: number) {
       const { error } = await useApiDelete<Scores>(
         `assessment-documents/${assessmentDocumentId}/`,
@@ -171,6 +197,7 @@ export const useAssessmentStore = defineStore("assessment", {
 
 
       this.assessmentsLoaded = true
+      console.log("### getAssessment", response.data.value, response.data)
       this.assessmentById[response.data.value.id] = response.data.value
       this.currentAssessmentId = response.data.value.id
       return true

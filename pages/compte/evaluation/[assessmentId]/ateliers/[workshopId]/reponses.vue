@@ -63,10 +63,12 @@ import { useWorkshopStore } from "~/stores/workshopStore"
 import { usePageStore } from "~/stores/pageStore"
 import { useUserStore } from "~/stores/userStore"
 import { useAssessmentStore } from "~/stores/assessmentStore"
+import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
 
 definePageMeta({
   title: "Réponses",
   breadcrumb: "Réponses",
+  layout: "default-for-assessments",
 })
 
 const assessmentStore = useAssessmentStore()
@@ -77,6 +79,8 @@ const router = useRouter()
 const route = useRoute()
 const workshopId: number = +route.params.workshopId
 const workshopStore = useWorkshopStore()
+
+await useAssessmentIsReady()
 
 const workshop = computed<Workshop>(
   () => workshopStore.workshopById[workshopId],
