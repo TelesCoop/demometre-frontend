@@ -120,6 +120,7 @@ export const usePageStore = defineStore("page", {
         "participation-board-pages/",
       )
       if (!error.value) {
+        console.log("### got board page", data.value, data)
         if (data.value.length) {
           this.participationBoardPage = data.value[0]
         } else {
