@@ -128,7 +128,6 @@ export const useAssessmentStore = defineStore("assessment", {
     },
     async assessmentIsReady(assessmentId: number) {
       const participationStore = useParticipationStore()
-      console.log("### assessmentIsReady creating promise", [this.fetchedAssessment[assessmentId], participationStore.fetchedParticipations[assessmentId], participationStore.fetchedLoadParticipations[assessmentId]])
       const checkIsReady = () => {
         return this.fetchedAssessment[assessmentId]
           && participationStore.fetchedParticipations[assessmentId]
@@ -136,7 +135,6 @@ export const useAssessmentStore = defineStore("assessment", {
       }
       return new Promise((resolve) => {
         if (checkIsReady()) {
-          console.log("### RESOLVING :)")
           resolve(true)
         }
         watch([
@@ -144,9 +142,7 @@ export const useAssessmentStore = defineStore("assessment", {
           participationStore.fetchedParticipations,
           participationStore.fetchedLoadParticipations,
         ], () => {
-          console.log("### assessment is ready ? changes", [this.fetchedAssessment[assessmentId], participationStore.fetchedParticipations[assessmentId], participationStore.fetchedLoadParticipations[assessmentId]])
           if (checkIsReady()) {
-            console.log("### RESOLVING :)")
             resolve(true)
           }
         })
