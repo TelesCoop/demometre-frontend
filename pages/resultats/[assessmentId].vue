@@ -206,11 +206,11 @@ const pillars = computed(() => {
   ].pillars
 })
 
-if (!assessmentStore.assessmentById[assessmentId.value]?.name) {
-  assessmentStore.getAssessment(assessmentId.value)
+if (!assessmentStore.assessmentById[assessmentId]?.name) {
+  assessmentStore.getAssessment(assessmentId)
 }
-if (!assessmentStore.scoresByAssessmentId[assessmentId.value]) {
-  assessmentStore.getAssessmentScores(assessmentId.value)
+if (!assessmentStore.scoresByAssessmentId[assessmentId]) {
+  assessmentStore.getAssessmentScores(assessmentId)
 }
 
 const pillarOfQuestionId = (questionId: number) => {

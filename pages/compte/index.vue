@@ -197,6 +197,10 @@ const router = useRouter()
 const isCurrentAssessmentsTab = ref(true)
 const showEditUserInfoModal = ref(false)
 
+// there might be only one assessment fetched,
+// there might be a new assessment since we last visited the page,
+// we want to make sure we fetch all of them
+assessmentStore.getAssessmentsForUser()
 const currentAssessments = computed(() =>
   assessmentStore.myAssessments.filter((ass) => ass.isCurrent),
 )

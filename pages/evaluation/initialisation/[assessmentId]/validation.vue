@@ -42,6 +42,7 @@
 <script setup lang="ts">
 import { usePageStore } from "~/stores/pageStore"
 import { useAssessmentIsReady } from "~/composables/useAssessmentIsReady"
+import { useAssessmentStore } from "~/stores/assessmentStore"
 
 definePageMeta({
   // title: $t("Initialisation"),
@@ -50,6 +51,7 @@ definePageMeta({
 
 await useAssessmentIsReady()
 
+const assessmentStore = useAssessmentStore()
 const router = useRouter()
 const pageStore = usePageStore()
 if (!pageStore.evaluationInitiationPage.initializationValidationTitle) {

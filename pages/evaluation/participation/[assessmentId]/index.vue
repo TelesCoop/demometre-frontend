@@ -16,7 +16,7 @@
       />
       <div
         v-if="
-          assessmentStore.currentAssessment.assessmentType ===
+          assessmentStore?.currentAssessment.assessmentType ===
             AssessmentType.PARTICIPATIVE.key
         "
       >
@@ -106,6 +106,9 @@ const disabled = computed(() =>
 )
 
 const startParticipationTitleAndDesc = computed(() => {
+  if (assessmentStore.currentAssessment == null) {
+    return []
+  }
   switch (assessmentStore.currentAssessment.assessmentType) {
     case AssessmentType.QUICK.key:
       return [
@@ -134,7 +137,7 @@ function goBack() {
 
 async function onSubmit() {
   if (
-    assessmentStore.currentAssessment.assessmentType ===
+    assessmentStore?.currentAssessment.assessmentType ===
     AssessmentType.PARTICIPATIVE.key &&
     assessmentStore.addingExpert
   ) {
