@@ -102,9 +102,8 @@
           <InformationDetail
             v-if="assessment.assessmentType === AssessmentType.WITH_EXPERT.key"
             :value="withExpertValue"
-            :title="$tc('Expert', (assessment.experts || []).length)"
+            :title="`${$t('Expert')}${(assessment.experts || []).length ? 's' : ''}`"
           />
-          <!-- TODO above          :title="$ngettext('Expert', 'Experts', (assessment.experts || []).length)"-->
         </div>
         <div
           v-if="assessment.details.hasDetailAccess"
